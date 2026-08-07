@@ -46,6 +46,12 @@ const FormVariationsDemo = () => {
     "/esl/footwear": "esl-footwear",
     "/esl/gloves": "esl-gloves",
     "/esl/grounds": "esl-grounds",
+    "/esl/onsite/bucket-trucks": "esl-onsite-bucket-trucks",
+    "/esl/onsite/coverups": "esl-onsite-coverups",
+    "/esl/onsite/grounds": "esl-onsite-grounds",
+    "/esl/onsite/hotsticks": "esl-onsite-hotsticks",
+    "/esl/onsite/jumpers": "esl-onsite-jumpers",
+    "/esl/onsite/line-hoses": "esl-onsite-line-hoses",
   };
   const routePresetType = eslRouteTypeMap[location.pathname];
   const isEslPage = location.pathname === "/esl-items" || !!routePresetType;
@@ -9439,6 +9445,12 @@ const FormVariationsDemo = () => {
                   "esl-footwear": "/esl/footwear",
                   "esl-gloves": "/esl/gloves",
                   "esl-grounds": "/esl/grounds",
+                  "esl-onsite-bucket-trucks": "/esl/onsite/bucket-trucks",
+                  "esl-onsite-coverups": "/esl/onsite/coverups",
+                  "esl-onsite-grounds": "/esl/onsite/grounds",
+                  "esl-onsite-hotsticks": "/esl/onsite/hotsticks",
+                  "esl-onsite-jumpers": "/esl/onsite/jumpers",
+                  "esl-onsite-line-hoses": "/esl/onsite/line-hoses",
                 };
                 if (eslRouteMap[value]) {
                   navigate(eslRouteMap[value]);
@@ -9464,6 +9476,12 @@ const FormVariationsDemo = () => {
                   <SelectItem value="esl-roll-blankets">ESL - Roll Blankets</SelectItem>
                   <SelectItem value="esl-sleeves">ESL - Sleeves</SelectItem>
                   <SelectItem value="itl-gauges">ITL - Gauges</SelectItem>
+                  <SelectItem value="esl-onsite-bucket-trucks">ESL OnSite - Bucket Trucks</SelectItem>
+                  <SelectItem value="esl-onsite-coverups">ESL OnSite - CoverUps</SelectItem>
+                  <SelectItem value="esl-onsite-grounds">ESL OnSite - Grounds</SelectItem>
+                  <SelectItem value="esl-onsite-hotsticks">ESL OnSite - Hotsticks</SelectItem>
+                  <SelectItem value="esl-onsite-jumpers">ESL OnSite - Jumpers</SelectItem>
+                  <SelectItem value="esl-onsite-line-hoses">ESL OnSite - Line Hoses</SelectItem>
                 </SelectContent>
               </Select>
             </div>

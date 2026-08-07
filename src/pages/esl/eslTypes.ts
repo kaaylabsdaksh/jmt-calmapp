@@ -4,7 +4,13 @@ export type EslTypeSlug =
   | "coverups"
   | "footwear"
   | "gloves"
-  | "grounds";
+  | "grounds"
+  | "onsite-bucket-trucks"
+  | "onsite-coverups"
+  | "onsite-grounds"
+  | "onsite-hotsticks"
+  | "onsite-jumpers"
+  | "onsite-line-hoses";
 
 export interface EslTypeConfig {
   slug: EslTypeSlug;
@@ -50,6 +56,48 @@ export const ESL_TYPES: EslTypeConfig[] = [
     dropdownValue: "esl-grounds",
     route: "/esl/grounds",
     description: "Grounds resistance testing workflow",
+  },
+  {
+    slug: "onsite-bucket-trucks",
+    label: "ESL OnSite - Bucket Trucks",
+    dropdownValue: "esl-onsite-bucket-trucks",
+    route: "/esl/onsite/bucket-trucks",
+    description: "Onsite bucket truck testing workflow",
+  },
+  {
+    slug: "onsite-coverups",
+    label: "ESL OnSite - CoverUps",
+    dropdownValue: "esl-onsite-coverups",
+    route: "/esl/onsite/coverups",
+    description: "Onsite CoverUp inspection workflow",
+  },
+  {
+    slug: "onsite-grounds",
+    label: "ESL OnSite - Grounds",
+    dropdownValue: "esl-onsite-grounds",
+    route: "/esl/onsite/grounds",
+    description: "Onsite grounds resistance testing workflow",
+  },
+  {
+    slug: "onsite-hotsticks",
+    label: "ESL OnSite - Hotsticks",
+    dropdownValue: "esl-onsite-hotsticks",
+    route: "/esl/onsite/hotsticks",
+    description: "Onsite hotstick testing workflow",
+  },
+  {
+    slug: "onsite-jumpers",
+    label: "ESL OnSite - Jumpers",
+    dropdownValue: "esl-onsite-jumpers",
+    route: "/esl/onsite/jumpers",
+    description: "Onsite jumper testing workflow",
+  },
+  {
+    slug: "onsite-line-hoses",
+    label: "ESL OnSite - Line Hoses",
+    dropdownValue: "esl-onsite-line-hoses",
+    route: "/esl/onsite/line-hoses",
+    description: "Onsite line hose inspection workflow",
   },
 ];
 

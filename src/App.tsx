@@ -11,6 +11,12 @@ import EslCoverUps from "./pages/esl/EslCoverUps";
 import EslFootwear from "./pages/esl/EslFootwear";
 import EslGloves from "./pages/esl/EslGloves";
 import EslGrounds from "./pages/esl/EslGrounds";
+import EslOnsiteBucketTrucks from "./pages/esl/onsite/EslOnsiteBucketTrucks";
+import EslOnsiteCoverUps from "./pages/esl/onsite/EslOnsiteCoverUps";
+import EslOnsiteGrounds from "./pages/esl/onsite/EslOnsiteGrounds";
+import EslOnsiteHotsticks from "./pages/esl/onsite/EslOnsiteHotsticks";
+import EslOnsiteJumpers from "./pages/esl/onsite/EslOnsiteJumpers";
+import EslOnsiteLineHoses from "./pages/esl/onsite/EslOnsiteLineHoses";
 import EditOrder from "./pages/EditOrder";
 
 import UnusedItemsManagement from "./pages/UnusedItemsManagement";
@@ -66,6 +72,12 @@ const App = () => {
             <Route path="/esl/footwear" element={<EslFootwear />} />
             <Route path="/esl/gloves" element={<EslGloves />} />
             <Route path="/esl/grounds" element={<EslGrounds />} />
+            <Route path="/esl/onsite/bucket-trucks" element={<EslOnsiteBucketTrucks />} />
+            <Route path="/esl/onsite/coverups" element={<EslOnsiteCoverUps />} />
+            <Route path="/esl/onsite/grounds" element={<EslOnsiteGrounds />} />
+            <Route path="/esl/onsite/hotsticks" element={<EslOnsiteHotsticks />} />
+            <Route path="/esl/onsite/jumpers" element={<EslOnsiteJumpers />} />
+            <Route path="/esl/onsite/line-hoses" element={<EslOnsiteLineHoses />} />
             <Route path="/edit-order" element={<EditOrder />} />
 
             <Route path="/work-orders-v2" element={<WorkOrderSearchV2 />} />
