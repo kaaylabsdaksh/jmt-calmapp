@@ -1305,7 +1305,7 @@ const FormVariationsDemo = () => {
 
     // Define explicit tab order for non-ESL types
     const tabOrder = isESLType 
-      ? ['general', 'details', 'testing', 'work-status']
+      ? (isEslOnsiteType ? ['general', 'details'] : ['general', 'details', 'testing', 'work-status'])
       : ['general', 'cost', 'factory-config', 'transit', 'parts', 'options', 'activity-log'];
 
     const tabLabels: Record<string, string> = isESLType
