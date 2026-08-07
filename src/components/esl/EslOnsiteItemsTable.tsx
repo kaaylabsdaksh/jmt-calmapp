@@ -126,7 +126,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
         <Table className="text-[11px]">
           <TableHeader>
             <TableRow className="bg-muted/30 h-7">
-              <TableHead className="w-8 px-1.5 py-1 h-7 text-center">
+              <TableHead className={`w-8 px-1.5 py-1 h-7 text-center ${stickyA} ${view === "extended" ? "bg-muted" : ""}`}>
                 <Checkbox
                   className="h-3 w-3"
                   checked={allSelected}
@@ -135,7 +135,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                   }
                 />
               </TableHead>
-              <TableHead className="w-10 text-[10px] font-medium px-1.5 py-1 h-7" />
+              <TableHead className={`w-14 text-[10px] font-medium px-1.5 py-1 h-7 ${stickyB} ${view === "extended" ? "bg-muted" : ""}`} />
               <TableHead className="w-8 text-[10px] font-medium px-1.5 py-1 h-7">#</TableHead>
               {columns.map((c) => (
                 <TableHead key={c} className="text-[10px] font-medium px-1.5 py-1 h-7 whitespace-nowrap">
@@ -146,23 +146,13 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                 </TableHead>
               ))}
               <TableHead className="w-8 text-[10px] font-medium px-1.5 py-1 h-7">CI</TableHead>
-              <TableHead className="w-8 px-1.5 py-1 h-7 text-center">
-                <Checkbox
-                  className="h-3 w-3"
-                  checked={allSelected}
-                  onCheckedChange={(c) =>
-                    setSelected(c ? Array.from(new Set([...selected, ...pageRows.map((r) => r.id)])) : [])
-                  }
-                />
-              </TableHead>
-              <TableHead className="w-10 px-1.5 py-1 h-7" />
             </TableRow>
           </TableHeader>
           <TableBody>
             {/* Filter row */}
             <TableRow className="bg-background h-6 hover:bg-background">
-              <TableCell className="px-1 py-0.5" />
-              <TableCell className="px-1 py-0.5" />
+              <TableCell className={`px-1 py-0.5 ${stickyA} ${view === "extended" ? "bg-background" : ""}`} />
+              <TableCell className={`px-1 py-0.5 ${stickyB} ${view === "extended" ? "bg-background" : ""}`} />
               <TableCell className="px-1 py-0.5" />
               {columns.map((c) => (
                 <TableCell key={c} className="px-1 py-0.5">
@@ -176,19 +166,19 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                 </TableCell>
               ))}
               <TableCell className="px-1 py-0.5" />
-              <TableCell className="px-1 py-0.5" />
-              <TableCell className="px-1 py-0.5" />
             </TableRow>
 
-            {pageRows.map((r, idx) => (
+            {pageRows.map((r, idx) => {
+              const rowBg = r.cancelled ? "bg-slate-100" : "bg-card";
+              return (
               <TableRow
                 key={r.id}
                 className={`h-6 ${r.cancelled ? "bg-slate-100 line-through text-muted-foreground" : ""}`}
               >
-                <TableCell className="px-1.5 py-0.5 text-center">
+                <TableCell className={`px-1.5 py-0.5 text-center ${stickyA} ${view === "extended" ? rowBg : ""}`}>
                   <Checkbox className="h-3 w-3" checked={selected.includes(r.id)} onCheckedChange={() => toggleRow(r.id)} />
                 </TableCell>
-                <TableCell className="px-1.5 py-0.5">
+                <TableCell className={`px-1.5 py-0.5 ${stickyB} ${view === "extended" ? rowBg : ""}`}>
                   <Button variant="link" size="sm" className="h-auto p-0 text-[11px] text-slate-900 underline gap-1">
                     <Pencil className="h-3 w-3" />Edit
                   </Button>
@@ -212,18 +202,12 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                 <TableCell className="px-1.5 py-0.5">
                   <Button variant="link" size="sm" className="h-auto p-0 text-[11px] text-slate-900 underline">CI</Button>
                 </TableCell>
-                <TableCell className="px-1.5 py-0.5 text-center">
-                  <Checkbox className="h-3 w-3" checked={selected.includes(r.id)} onCheckedChange={() => toggleRow(r.id)} />
-                </TableCell>
-                <TableCell className="px-1.5 py-0.5 text-right">
-                  <Button variant="link" size="sm" className="h-auto p-0 text-[11px] text-slate-900 underline">Edit</Button>
-                </TableCell>
               </TableRow>
-            ))}
+            );})}
 
             {pageRows.length === 0 && (
               <TableRow>
-                <TableCell colSpan={columns.length + 6} className="text-center text-[11px] text-muted-foreground py-6">
+                <TableCell colSpan={columns.length + 4} className="text-center text-[11px] text-muted-foreground py-6">
                   No items match the current filters.
                 </TableCell>
               </TableRow>
