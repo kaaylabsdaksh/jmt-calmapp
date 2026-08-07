@@ -46,6 +46,12 @@ const FormVariationsDemo = () => {
     "/esl/footwear": "esl-footwear",
     "/esl/gloves": "esl-gloves",
     "/esl/grounds": "esl-grounds",
+    "/esl/onsite/bucket-trucks": "esl-onsite-bucket-trucks",
+    "/esl/onsite/coverups": "esl-onsite-coverups",
+    "/esl/onsite/grounds": "esl-onsite-grounds",
+    "/esl/onsite/hotsticks": "esl-onsite-hotsticks",
+    "/esl/onsite/jumpers": "esl-onsite-jumpers",
+    "/esl/onsite/line-hoses": "esl-onsite-line-hoses",
   };
   const routePresetType = eslRouteTypeMap[location.pathname];
   const isEslPage = location.pathname === "/esl-items" || !!routePresetType;
