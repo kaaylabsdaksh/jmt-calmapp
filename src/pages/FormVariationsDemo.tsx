@@ -13770,7 +13770,7 @@ const FormVariationsDemo = () => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel className="h-9 text-xs">Keep editing</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmCancel} className="h-9 text-xs bg-destructive text-destructive-foreground hover:bg-destructive/90">
+            <AlertDialogAction onClick={confirmCancel} className="h-9 text-xs bg-slate-900 text-white hover:bg-slate-800">
               Discard &amp; leave
             </AlertDialogAction>
           </AlertDialogFooter>
