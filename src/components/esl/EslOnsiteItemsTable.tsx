@@ -80,15 +80,25 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
     [view]
   );
 
+  const activeFilters = useMemo(
+    () =>
+      Object.entries(filters).filter(
+        ([k, v]) => v && (columns as readonly string[]).includes(k)
+      ),
+    [filters, columns]
+  );
+
   const filtered = useMemo(() => {
     return rows.filter((r) => {
       if (!showCancelled && r.cancelled) return false;
-      return Object.entries(filters).every(([k, v]) => {
-        if (!v) return true;
-        return String((r as any)[k] ?? "").toLowerCase().includes(v.toLowerCase());
+      return activeFilters.every(([k, v]) => {
+        const raw = (r as any)[k];
+        if (typeof raw === "boolean") return v === "yes" ? raw : !raw;
+        return String(raw ?? "").toLowerCase().includes(v.toLowerCase().trim());
       });
     });
-  }, [rows, filters, showCancelled]);
+  }, [rows, activeFilters, showCancelled]);
+
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
   const current = Math.min(page, totalPages);
