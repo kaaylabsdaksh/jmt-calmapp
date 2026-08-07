@@ -2354,8 +2354,16 @@ const FormVariationsDemo = () => {
                       { key: 'testing', label: 'Testing', qty: 0, costField: 'eslTestCost', editable: false },
                       { key: 'expedite', label: 'Expedite', qty: 0, costField: 'expediteCost', editable: false, hideQty: true },
                       { key: 'emergency', label: 'Emergency', qty: 0, costField: 'emergencyCost', editable: false, hideQty: true },
-                      { key: 'replacement', label: 'Replacement', qty: 0, costField: 'repairCostTotal', editable: true },
-                      { key: 'newSales', label: 'New Sales', qty: 0, costField: 'partsCostTotal', editable: true, defaultCost: '100.00' },
+                      ...(isBucketTrucks
+                        ? [
+                            { key: 'ndt', label: 'NDT', qty: 0, costField: 'ndtCost', editable: false },
+                            { key: 'hydo', label: 'HydO', qty: 0, costField: 'hydoCost', editable: false },
+                            { key: 'specialPricing', label: 'Special Pricing', qty: 0, costField: 'specialPricingCost', editable: true },
+                          ]
+                        : [
+                            { key: 'replacement', label: 'Replacement', qty: 0, costField: 'repairCostTotal', editable: true },
+                            { key: 'newSales', label: 'New Sales', qty: 0, costField: 'partsCostTotal', editable: true, defaultCost: '100.00' },
+                          ]),
                     ];
                     const parse = (v: string) => parseFloat(v || '0') || 0;
                     const totalQty = rows.reduce((s, r) => s + (r.hideQty ? 0 : r.qty), 0);
