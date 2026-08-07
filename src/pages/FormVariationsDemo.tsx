@@ -1205,6 +1205,13 @@ const FormVariationsDemo = () => {
   
   const [activeTab, setActiveTab] = useState('general');
 
+  // Onsite ESL has no Testing/Work Status tabs — fall back to General
+  useEffect(() => {
+    if (isEslOnsiteType && (activeEslTab === 'testing' || activeEslTab === 'work-status')) {
+      setActiveEslTab('general');
+    }
+  }, [isEslOnsiteType, activeEslTab]);
+
   // Keyboard navigation for tabs
   const handleTabKeyDown = (e: React.KeyboardEvent) => {
     const tabs = firstRowTabs.map(t => t.value);
