@@ -4,7 +4,13 @@ export type EslTypeSlug =
   | "coverups"
   | "footwear"
   | "gloves"
-  | "grounds";
+  | "grounds"
+  | "onsite-bucket-trucks"
+  | "onsite-coverups"
+  | "onsite-grounds"
+  | "onsite-hotsticks"
+  | "onsite-jumpers"
+  | "onsite-line-hoses";
 
 export interface EslTypeConfig {
   slug: EslTypeSlug;
