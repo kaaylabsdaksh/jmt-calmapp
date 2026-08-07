@@ -90,6 +90,9 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
   const setCell = (id: number, key: keyof EslOnsiteItem, value: any) =>
     setRows((rs) => rs.map((r) => (r.id === id ? { ...r, [key]: value } : r)));
 
+  const stickyA = view === "extended" ? "sticky left-0 z-20" : "";
+  const stickyB = view === "extended" ? "sticky left-8 z-20" : "";
+
   return (
     <div className="border rounded-lg overflow-hidden bg-card">
       {/* Toolbar */}
@@ -122,7 +125,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
         </label>
       </div>
 
-      {(() => null)()}
+      
 
       <div className="overflow-x-auto">
         <Table className="text-[11px]">
