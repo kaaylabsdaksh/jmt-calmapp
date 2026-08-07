@@ -13165,6 +13165,80 @@ const FormVariationsDemo = () => {
               </Button>
             </div>
           </div>
+        ) : isEslOnsiteType ? (
+          // ESL OnSite General tab footer
+          <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
+            <div className="flex items-center justify-between gap-4 max-w-[1400px] mx-auto">
+              {/* Left side */}
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  onClick={() => toast({ title: "Schedule", description: "Schedule action triggered" })}
+                  className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
+                >
+                  Schedule
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => toast({ title: "Complete", description: "Complete action triggered" })}
+                  className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
+                >
+                  Complete
+                </Button>
+              </div>
+              {/* Right side */}
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => toast({ title: "Create New Group", description: "Group created" })}
+                    className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
+                  >
+                    Create New Group
+                  </Button>
+                  <Select>
+                    <SelectTrigger className="h-9 w-36 text-sm border-border bg-background">
+                      <SelectValue placeholder="Select..." />
+                    </SelectTrigger>
+                    <SelectContent className="bg-background border-border">
+                      <SelectItem value="group1">Group 1</SelectItem>
+                      <SelectItem value="group2">Group 2</SelectItem>
+                      <SelectItem value="group3">Group 3</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <Button
+                  variant="outline"
+                  onClick={handleCancel}
+                  className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
+                >
+                  <X className="h-4 w-4 mr-2" />
+                  Cancel WO
+                </Button>
+                <Button
+                  variant="outline"
+                  className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
+                >
+                  <Printer className="h-4 w-4 mr-2" />
+                  Print WO
+                </Button>
+                <Button
+                  variant="outline"
+                  className="border-border bg-background text-foreground hover:bg-muted font-medium h-9 px-4"
+                >
+                  <FileText className="h-4 w-4 mr-2" />
+                  Sold Report
+                </Button>
+                <Button
+                  onClick={handleSave}
+                  className="bg-emerald-500 hover:bg-emerald-600 text-white font-medium h-9 px-4"
+                >
+                  <Save className="h-4 w-4 mr-2" />
+                  Save
+                </Button>
+              </div>
+            </div>
+          </div>
         ) : (
           // General tab footer - full buttons
           <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-10 py-3 px-6">
