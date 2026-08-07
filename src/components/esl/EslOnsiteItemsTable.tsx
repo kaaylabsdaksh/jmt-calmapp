@@ -165,14 +165,6 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
               <TableHead className={`w-14 text-[10px] font-medium px-1.5 py-1 h-7 ${stickyB} ${view === "extended" ? "bg-muted" : ""}`} />
               <TableHead className={`w-8 text-[10px] font-medium px-1.5 py-1 h-7 text-center ${stickyC} ${view === "extended" ? "bg-muted" : ""}`}>CI</TableHead>
               <TableHead className="w-8 text-[10px] font-medium px-1.5 py-1 h-7">#</TableHead>
-              {columns.map((c) => (
-                <TableHead key={c} className="text-[10px] font-medium px-1.5 py-1 h-7 whitespace-nowrap">
-                  <span className="inline-flex items-center gap-1">
-                    {LABELS[c]}
-                    <Filter className="h-2.5 w-2.5 text-muted-foreground/60" />
-                  </span>
-                </TableHead>
-              ))}
               
               {columns.map((c) => (
                 <TableHead key={c} className="text-[10px] font-medium px-1.5 py-1 h-7 whitespace-nowrap">
