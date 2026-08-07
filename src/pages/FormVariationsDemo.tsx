@@ -3614,14 +3614,17 @@ const FormVariationsDemo = () => {
   );
 
   // ESL-specific sections
-  const renderDetailsSection = () => (
+  const renderDetailsSection = () => {
+    const dt = (formData.type || '').replace('esl-onsite-', 'esl-').replace('itl-onsite-', 'esl-');
+    const isOnsite = /-onsite-/.test(formData.type || '');
+    return (
     <div className="space-y-6">
       {/* Quick Prefill Section - Full Width at Top */}
       <div className="border border-primary/20 rounded-lg p-4 space-y-3">
         <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Quick Prefill</div>
         
-        <div className={`grid grid-cols-1 ${formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks' ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-4`}>
-          {(formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks') && (
+        <div className={`grid grid-cols-1 ${dt === 'esl-grounds' || dt === 'esl-hotsticks' ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-4`}>
+          {(dt === 'esl-grounds' || dt === 'esl-hotsticks') && (
             <div className="flex items-end gap-2">
               <div className="flex-1 space-y-1">
                 <Label htmlFor="prefillRfid" className="text-xs">Prefill w/RFID:</Label>
@@ -3657,7 +3660,7 @@ const FormVariationsDemo = () => {
             <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Identification</span>
           </div>
           <div className="p-3 grid grid-cols-3 gap-2 flex-1">
-            {(formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks') && (
+            {(dt === 'esl-grounds' || dt === 'esl-hotsticks') && (
               <div className="space-y-0.5">
                 <Label htmlFor="rfidDetail" className="text-[11px]">RFID</Label>
                 <Input id="rfidDetail" placeholder="RFID" className="h-7 text-xs" />
@@ -3675,7 +3678,7 @@ const FormVariationsDemo = () => {
               <Label htmlFor="tagNumber" className="text-[11px]">Tag #</Label>
               <Input id="tagNumber" value={formData.tagNumber} onChange={(e) => handleInputChange("tagNumber", e.target.value)} placeholder="Tag #" className="h-7 text-xs" />
             </div>
-            {formData.type === 'esl-grounds' && (
+            {dt === 'esl-grounds' && (
               <div className="space-y-0.5">
                 <Label htmlFor="qtyDetail" className="text-[11px]">Qty</Label>
                 <Input id="qtyDetail" type="number" placeholder="Qty" className="h-7 text-xs" />
@@ -3692,14 +3695,14 @@ const FormVariationsDemo = () => {
           </div>
           <div className="p-3 flex-1">
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-2 gap-y-1.5">
-              {(formData.type === 'esl-blankets'
+              {(dt === 'esl-blankets'
                 ? [
                     { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
                     { id: "detailsClass", label: "Class", key: "itemClass", options: [["class-0","Class 0"],["class-1","Class 1"],["class-2","Class 2"],["class-3","Class 3"],["class-4","Class 4"]] },
                     { id: "detailsSize", label: "Size", key: "size", options: [["18x18","18x18"],["22x22","22x22"],["36x36","36x36"]] },
                     { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["yellow","Yellow"],["orange","Orange"],["red","Red"]] },
                   ]
-                : formData.type === 'esl-coverups'
+                : dt === 'esl-coverups'
                 ? [
                     { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
                     { id: "detailsClass", label: "Class", key: "itemClass", options: [["class-0","Class 0"],["class-1","Class 1"],["class-2","Class 2"],["class-3","Class 3"],["class-4","Class 4"]] },
@@ -3708,21 +3711,21 @@ const FormVariationsDemo = () => {
                     { id: "detailsModelNumber", label: "Model #", key: "model", options: [["m-100","M-100"],["m-200","M-200"],["m-300","M-300"]] },
                     { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["yellow","Yellow"],["orange","Orange"],["red","Red"],["green","Green"]] },
                   ]
-                : formData.type === 'esl-footwear'
+                : dt === 'esl-footwear'
                 ? [
                     { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
                     { id: "detailsModelNumber", label: "Model", key: "model", options: [["m-100","M-100"],["m-200","M-200"],["m-300","M-300"]] },
                     { id: "detailsSize", label: "Size", key: "size", options: [["7","7"],["8","8"],["9","9"],["10","10"],["11","11"],["12","12"],["13","13"]] },
                     { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["brown","Brown"],["tan","Tan"]] },
                   ]
-                : formData.type === 'esl-grounds'
+                : dt === 'esl-grounds'
                 ? [
                     { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
                     { id: "detailsWireSize", label: "Wire Size", key: "wireSize", options: [["2/0","2/0"],["1/0","1/0"],["#2","#2"],["#4","#4"],["#6","#6"]] },
                     { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["yellow","Yellow"],["orange","Orange"],["red","Red"],["green","Green"]] },
                     { id: "detailsGroundType", label: "Ground Type", key: "groundType", options: [["personal","Personal"],["cluster","Cluster"],["jumper","Jumper"],["chain","Chain"]] },
                   ]
-                : formData.type === 'esl-hotsticks'
+                : dt === 'esl-hotsticks'
                 ? [
                     { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["hastings","Hastings"],["novax","Novax"]] },
                     { id: "detailsHotstickType", label: "Hotstick Type", key: "hotstickType", options: [["shotgun","Shotgun"],["telescoping","Telescoping"],["universal","Universal"],["switch","Switch"],["measuring","Measuring"]] },
@@ -3757,7 +3760,7 @@ const FormVariationsDemo = () => {
                   </Select>
                 </div>
               ))}
-              {(formData.type === 'esl-blankets' || formData.type === 'esl-coverups' || formData.type === 'esl-footwear' || formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks') && (
+              {(dt === 'esl-blankets' || dt === 'esl-coverups' || dt === 'esl-footwear' || dt === 'esl-grounds' || dt === 'esl-hotsticks') && (
                 <div className="space-y-0.5">
                   <Label htmlFor="detailsQuantity" className="text-[11px] font-semibold">Quantity</Label>
                   <Input
@@ -3776,7 +3779,7 @@ const FormVariationsDemo = () => {
             </div>
 
 
-            {formData.type === 'esl-footwear' && (
+            {dt === 'esl-footwear' && (
               <div className="mt-2 pt-2 border-t grid grid-cols-2 gap-x-2 gap-y-1">
                 <div className="flex items-baseline gap-1.5">
                   <Label className="text-[11px] font-semibold">Class:</Label>
@@ -3794,26 +3797,26 @@ const FormVariationsDemo = () => {
             <div className="mt-2 pt-2 border-t space-y-1">
               <Label className="text-[11px] font-semibold">State</Label>
               <div className="flex flex-wrap gap-x-4 gap-y-1">
-                {(formData.type === 'esl-blankets'
+                {(dt === 'esl-blankets'
                   ? [
                       { id: "stateNew", key: "newEquip", label: "New" },
                       { id: "stateSlot", key: "slot", label: "Slot" },
                       { id: "stateEyelets", key: "eyelets", label: "Eyelets" },
                       { id: "stateZip", key: "zip", label: "Zip" },
                     ]
-                  : formData.type === 'esl-coverups'
+                  : dt === 'esl-coverups'
                   ? [
                       { id: "stateNew", key: "newEquip", label: "New" },
                       { id: "stateSurplusReplacement", key: "surplusReplacement", label: "Surplus Replacement For" },
                     ]
-                  : formData.type === 'esl-footwear'
+                  : dt === 'esl-footwear'
                   ? [
                       { id: "stateOddLeft", key: "oddLeft", label: "Odd Left" },
                       { id: "stateOddRight", key: "oddRight", label: "Odd Right" },
                       { id: "stateNew", key: "newEquip", label: "New" },
                       { id: "stateSurplusReplacement", key: "surplusReplacement", label: "Surplus Replacement For" },
                     ]
-                  : formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks'
+                  : dt === 'esl-grounds' || dt === 'esl-hotsticks'
                   ? [
                       { id: "stateNew", key: "newEquip", label: "New" },
                     ]
@@ -3915,6 +3918,140 @@ const FormVariationsDemo = () => {
           </div>
         </div>
       </div>
+
+      {/* OnSite: Procedures, Truck & Comment Options */}
+      {isOnsite && (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+          {/* Procedures & Standards */}
+          <div className="border border-border rounded-lg overflow-hidden bg-card flex flex-col">
+            <div className="bg-muted/50 px-3 py-1.5 border-b flex items-center justify-between">
+              <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Procedures &amp; Standards</span>
+              <Button variant="link" size="sm" className="h-auto p-0 text-[11px] text-slate-900 underline">Work Instructions</Button>
+            </div>
+            <div className="p-3 space-y-2 flex-1">
+              <div className="space-y-0.5">
+                <Label className="text-[11px] font-semibold">Procedures Used</Label>
+                <Select value={(formData as any).proceduresUsed || ""} onValueChange={(v) => handleInputChange("proceduresUsed", v)}>
+                  <SelectTrigger className="h-7 text-[11px]"><SelectValue placeholder="Select procedure" /></SelectTrigger>
+                  <SelectContent className="bg-popover border z-50">
+                    <SelectItem value="astm-f479">ASTM F479</SelectItem>
+                    <SelectItem value="astm-f496">ASTM F496</SelectItem>
+                    <SelectItem value="astm-f1236">ASTM F1236</SelectItem>
+                    <SelectItem value="internal-sop">Internal SOP</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-0.5">
+                <Label className="text-[11px] font-semibold">Standards Used</Label>
+                <Input
+                  value={(formData as any).standardsUsed || ""}
+                  onChange={(e) => handleInputChange("standardsUsed", e.target.value)}
+                  placeholder="Standards"
+                  className="h-7 text-[11px]"
+                />
+                <p className="text-[10px] text-muted-foreground">Used as a default for records added</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Truck */}
+          <div className="border border-border rounded-lg overflow-hidden bg-card flex flex-col">
+            <div className="bg-muted/50 px-3 py-1.5 border-b">
+              <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Truck</span>
+            </div>
+            <div className="p-3 space-y-2 flex-1">
+              <div className="space-y-0.5">
+                <Label className="text-[11px] font-semibold">Truck #</Label>
+                <Input
+                  value={(formData as any).truckNumber || ""}
+                  onChange={(e) => handleInputChange("truckNumber", e.target.value)}
+                  placeholder="Truck #"
+                  className="h-7 text-[11px]"
+                />
+                <p className="text-[10px] text-muted-foreground">Used as a default for records added</p>
+              </div>
+              <div className="space-y-1 pt-1 border-t">
+                <Label className="text-[11px] font-semibold">Truck Accessories</Label>
+                <div className="flex flex-wrap gap-x-4 gap-y-1">
+                  {[
+                    { id: "truckCanister", key: "truckCanister", label: "Canister" },
+                    { id: "truckRollUp", key: "truckRollUp", label: "Roll-up" },
+                    { id: "truckBag", key: "truckBag", label: "Bag" },
+                  ].map((opt) => (
+                    <label key={opt.id} htmlFor={opt.id} className="flex items-center gap-1.5 cursor-pointer">
+                      <Checkbox
+                        id={opt.id}
+                        checked={(formData as any)[opt.key]}
+                        onCheckedChange={(checked) => handleInputChange(opt.key, checked)}
+                        className="h-3.5 w-3.5"
+                      />
+                      <span className="text-[11px]">{opt.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div className="pt-1 border-t space-y-0.5">
+                <Label className="text-[11px] font-semibold">Blanks to Add</Label>
+                <div className="flex items-center gap-1.5">
+                  <Input
+                    type="number"
+                    min={0}
+                    value={(formData as any).blanksToAdd || ""}
+                    onChange={(e) => handleInputChange("blanksToAdd", e.target.value.replace(/[^0-9]/g, ""))}
+                    placeholder="0"
+                    className="h-7 text-[11px] w-20"
+                  />
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="h-7 text-[11px]"
+                    onClick={() => {
+                      const n = parseInt((formData as any).blanksToAdd || "0", 10);
+                      if (!n) return;
+                      setItemsTotalCount(itemsTotalCount + n);
+                      toast({ title: `${n} blank item${n > 1 ? "s" : ""} added` });
+                    }}
+                  >
+                    <Plus className="h-3 w-3 mr-1" />Add
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Comment Options */}
+          <div className="border border-border rounded-lg overflow-hidden bg-card flex flex-col">
+            <div className="bg-muted/50 px-3 py-1.5 border-b">
+              <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Comment Options</span>
+            </div>
+            <div className="p-3 space-y-2 flex-1">
+              <div className="space-y-0.5">
+                <Label className="text-[11px] font-semibold">Option</Label>
+                <Select value={(formData as any).commentOption || ""} onValueChange={(v) => handleInputChange("commentOption", v)}>
+                  <SelectTrigger className="h-7 text-[11px]"><SelectValue placeholder="Select option" /></SelectTrigger>
+                  <SelectContent className="bg-popover border z-50">
+                    <SelectItem value="none">None</SelectItem>
+                    <SelectItem value="all-items">Apply to All Items</SelectItem>
+                    <SelectItem value="new-items">Apply to New Items</SelectItem>
+                    <SelectItem value="failed-items">Apply to Failed Items</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-0.5">
+                <Label className="text-[11px] font-semibold">Comments</Label>
+                <Textarea
+                  value={(formData as any).detailsComments || ""}
+                  onChange={(e) => handleInputChange("detailsComments", e.target.value)}
+                  placeholder="Enter comment..."
+                  className="min-h-[76px] text-[11px]"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+
 
 
 
@@ -4902,6 +5039,8 @@ const FormVariationsDemo = () => {
 
     </div>
   );
+  };
+
 
 
   const renderTestingSection = () => {
