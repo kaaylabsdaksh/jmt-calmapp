@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ChevronLeft, ChevronRight, X, CalendarIcon, ChevronDown } from "lucide-react";
-import { format, addMonths, isSameDay, isAfter, isBefore, startOfMonth } from "date-fns";
+import { format, addMonths, isSameDay, isAfter, isBefore, startOfMonth, isValid, parse } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -23,6 +23,104 @@ interface DateRangePickerProps {
   triggerClassName?: string;
 }
 
+// Formats raw digits into MM/DD/YYYY while typing
+function maskDate(raw: string) {
+  const digits = raw.replace(/\D/g, "").slice(0, 8);
+  const parts = [digits.slice(0, 2), digits.slice(2, 4), digits.slice(4, 8)].filter(Boolean);
+  return parts.join("/");
+}
+
+function parseDate(value: string): Date | undefined {
+  if (value.length !== 10) return undefined;
+  const parsed = parse(value, "MM/dd/yyyy", new Date());
+  return isValid(parsed) ? parsed : undefined;
+}
+
+function DateField({
+  label,
+  value,
+  onChange,
+  minDate,
+}: {
+  label: string;
+  value?: Date;
+  onChange: (date: Date | undefined) => void;
+  minDate?: Date;
+}) {
+  const [text, setText] = React.useState(value ? format(value, "MM/dd/yyyy") : "");
+  const [open, setOpen] = React.useState(false);
+  const [month, setMonth] = React.useState<Date>(value ? startOfMonth(value) : startOfMonth(new Date()));
+
+  React.useEffect(() => {
+    setText(value ? format(value, "MM/dd/yyyy") : "");
+    if (value) setMonth(startOfMonth(value));
+  }, [value]);
+
+  const commit = (raw: string) => {
+    const parsed = parseDate(raw);
+    onChange(parsed);
+    if (!parsed && raw.length === 0) onChange(undefined);
+  };
+
+  return (
+    <div className="flex flex-1 min-w-0 items-center bg-background">
+      <input
+        aria-label={label}
+        value={text}
+        placeholder={label === "From" ? "MM/DD/YYYY" : "MM/DD/YYYY"}
+        onChange={(e) => {
+          const masked = maskDate(e.target.value);
+          setText(masked);
+          if (masked.length === 10 || masked.length === 0) commit(masked);
+        }}
+        onBlur={() => commit(text)}
+        className="w-full min-w-0 bg-transparent px-2 text-[11px] outline-none placeholder:text-muted-foreground"
+      />
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <button
+            type="button"
+            aria-label={`Open ${label} calendar`}
+            className="flex items-center justify-center px-1.5 text-muted-foreground hover:text-foreground"
+          >
+            <CalendarIcon className="h-3 w-3" />
+          </button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0 border shadow-xl rounded-lg z-[70]" align="start">
+          <div className="p-3 pointer-events-auto">
+            <div className="flex items-center justify-between mb-2">
+              <button
+                onClick={() => setMonth(addMonths(month, -1))}
+                className={cn(buttonVariants({ variant: "outline" }), "h-7 w-7 p-0 opacity-60 hover:opacity-100")}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <span className="text-sm font-semibold">{format(month, "MMMM yyyy")}</span>
+              <button
+                onClick={() => setMonth(addMonths(month, 1))}
+                className={cn(buttonVariants({ variant: "outline" }), "h-7 w-7 p-0 opacity-60 hover:opacity-100")}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
+            <MonthGrid
+              month={month}
+              isInRange={() => false}
+              isRangeStart={(d) => !!value && isSameDay(d, value)}
+              isRangeEnd={() => false}
+              onDayClick={(d) => {
+                if (minDate && isBefore(d, minDate)) return;
+                onChange(d);
+                setOpen(false);
+              }}
+            />
+          </div>
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+}
+
 function DateRangePicker({
   dateFrom,
   dateTo,
@@ -31,74 +129,16 @@ function DateRangePicker({
   dateType,
   onDateTypeChange,
   dateTypeOptions,
-  className,
   triggerClassName,
 }: DateRangePickerProps) {
-  const [open, setOpen] = React.useState(false);
-  const [leftMonth, setLeftMonth] = React.useState<Date>(
-    dateFrom ? startOfMonth(dateFrom) : startOfMonth(new Date())
-  );
-  const [selectingEnd, setSelectingEnd] = React.useState(false);
-  const [hoverDate, setHoverDate] = React.useState<Date | null>(null);
   const [typeDropdownOpen, setTypeDropdownOpen] = React.useState(false);
-
-  const rightMonth = addMonths(leftMonth, 1);
-
-  const handlePrevMonth = () => setLeftMonth(addMonths(leftMonth, -1));
-  const handleNextMonth = () => setLeftMonth(addMonths(leftMonth, 1));
-
-  const handleDayClick = (day: Date) => {
-    if (!selectingEnd || !dateFrom) {
-      onDateFromChange(day);
-      onDateToChange(undefined);
-      setSelectingEnd(true);
-      setHoverDate(null);
-    } else {
-      if (isBefore(day, dateFrom)) {
-        onDateFromChange(day);
-        onDateToChange(undefined);
-        setSelectingEnd(true);
-      } else {
-        onDateToChange(day);
-        setSelectingEnd(false);
-        setOpen(false);
-      }
-    }
-  };
 
   const clearDates = () => {
     onDateFromChange(undefined);
     onDateToChange(undefined);
-    setSelectingEnd(false);
-    setHoverDate(null);
-    setOpen(false);
   };
 
-  const isInRange = (day: Date) => {
-    if (!dateFrom) return false;
-    const end = dateTo || (selectingEnd && hoverDate ? hoverDate : null);
-    if (!end) return false;
-    return isAfter(day, dateFrom) && isBefore(day, end);
-  };
-
-  const isRangeStart = (day: Date) => dateFrom && isSameDay(day, dateFrom);
-  const isRangeEnd = (day: Date) => {
-    if (dateTo) return isSameDay(day, dateTo);
-    if (selectingEnd && hoverDate) return isSameDay(day, hoverDate);
-    return false;
-  };
-
-  const displayText = () => {
-    if (dateFrom && dateTo) {
-      return `${format(dateFrom, "MMM dd")} – ${format(dateTo, "MMM dd, yyyy")}`;
-    }
-    if (dateFrom) {
-      return `${format(dateFrom, "MMM dd")} – ...`;
-    }
-    return "Select date range";
-  };
-
-  const currentTypeLabel = dateTypeOptions?.find(o => o.value === dateType)?.label || "Created";
+  const currentTypeLabel = dateTypeOptions?.find((o) => o.value === dateType)?.label || "Created";
   const showTypeSegment = dateTypeOptions && onDateTypeChange;
 
   return (
@@ -107,9 +147,7 @@ function DateRangePicker({
       {showTypeSegment && (
         <Popover open={typeDropdownOpen} onOpenChange={setTypeDropdownOpen}>
           <PopoverTrigger asChild>
-            <button
-              className="flex items-center gap-1 px-2 text-[11px] font-medium text-foreground bg-muted/40 border-r border-border hover:bg-muted transition-colors whitespace-nowrap"
-            >
+            <button className="flex items-center gap-1 px-2 text-[11px] font-medium text-foreground bg-muted/40 border-r border-border hover:bg-muted transition-colors whitespace-nowrap">
               {currentTypeLabel}
               <ChevronDown className="h-3 w-3 text-muted-foreground" />
             </button>
@@ -134,105 +172,24 @@ function DateRangePicker({
         </Popover>
       )}
 
-      {/* Right segment: Date Range */}
-      <Popover open={open} onOpenChange={(val) => {
-        setOpen(val);
-        if (!val) {
-          setSelectingEnd(false);
-          setHoverDate(null);
-        }
-      }}>
-        <PopoverTrigger asChild>
-          <button
-            className={cn(
-              "flex-1 flex items-center px-2 text-[11px] text-left bg-background hover:bg-background transition-colors min-w-0",
-              !dateFrom && "text-muted-foreground"
-            )}
-          >
-            <CalendarIcon className="mr-1.5 h-3 w-3 text-muted-foreground flex-shrink-0" />
-            <span className="flex-1 truncate">{displayText()}</span>
-          </button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0 border shadow-xl rounded-lg z-[70]" align="start">
-          <div className={cn("p-4", className)}>
-            {/* Header */}
-            <div className="flex items-center justify-between mb-3">
-              <button
-                onClick={handlePrevMonth}
-                className={cn(buttonVariants({ variant: "outline" }), "h-7 w-7 p-0 opacity-60 hover:opacity-100")}
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </button>
-              <div className="flex gap-8">
-                <span className="text-sm font-semibold">{format(leftMonth, "MMMM yyyy")}</span>
-                <span className="text-sm font-semibold">{format(rightMonth, "MMMM yyyy")}</span>
-              </div>
-              <button
-                onClick={handleNextMonth}
-                className={cn(buttonVariants({ variant: "outline" }), "h-7 w-7 p-0 opacity-60 hover:opacity-100")}
-              >
-                <ChevronRight className="h-4 w-4" />
-              </button>
-            </div>
+      {/* From date */}
+      <DateField label="From" value={dateFrom} onChange={onDateFromChange} />
 
-            {/* Two calendars side by side */}
-            <div className="flex gap-6">
-              <MonthGrid
-                month={leftMonth}
-                dateFrom={dateFrom}
-                dateTo={dateTo}
-                isInRange={isInRange}
-                isRangeStart={isRangeStart}
-                isRangeEnd={isRangeEnd}
-                onDayClick={handleDayClick}
-                onDayHover={selectingEnd ? setHoverDate : undefined}
-              />
-              <MonthGrid
-                month={rightMonth}
-                dateFrom={dateFrom}
-                dateTo={dateTo}
-                isInRange={isInRange}
-                isRangeStart={isRangeStart}
-                isRangeEnd={isRangeEnd}
-                onDayClick={handleDayClick}
-                onDayHover={selectingEnd ? setHoverDate : undefined}
-              />
-            </div>
+      <span className="flex items-center px-1 text-[11px] text-muted-foreground border-l border-r border-border">–</span>
 
-            {/* Footer info */}
-            <div className="flex items-center justify-between mt-3 pt-3 border-t">
-              <div className="flex gap-3">
-                <div className="text-[11px] text-muted-foreground">
-                  <span className="font-medium text-foreground">From:</span>{" "}
-                  {dateFrom ? format(dateFrom, "MMM dd, yyyy") : "—"}
-                </div>
-                <div className="text-[11px] text-muted-foreground">
-                  <span className="font-medium text-foreground">To:</span>{" "}
-                  {dateTo ? format(dateTo, "MMM dd, yyyy") : "—"}
-                </div>
-              </div>
-              {(dateFrom || dateTo) && (
-                <Button variant="ghost" size="sm" className="h-6 text-[10px] px-2" onClick={clearDates}>
-                  Clear dates
-                </Button>
-              )}
-            </div>
-          </div>
-        </PopoverContent>
-      </Popover>
+      {/* To date */}
+      <DateField label="To" value={dateTo} onChange={onDateToChange} minDate={dateFrom} />
 
       {/* Clear button */}
       {(dateFrom || dateTo) && (
-        <span
-          className="flex items-center justify-center px-1.5 text-muted-foreground hover:text-foreground cursor-pointer border-l border-border bg-background"
-          onPointerDown={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            clearDates();
-          }}
+        <button
+          type="button"
+          aria-label="Clear dates"
+          className="flex items-center justify-center px-1.5 text-muted-foreground hover:text-foreground border-l border-border bg-background"
+          onClick={clearDates}
         >
           <X className="h-3 w-3" />
-        </span>
+        </button>
       )}
     </div>
   );
@@ -241,8 +198,6 @@ function DateRangePicker({
 // Individual month grid
 function MonthGrid({
   month,
-  dateFrom,
-  dateTo,
   isInRange,
   isRangeStart,
   isRangeEnd,
@@ -250,8 +205,6 @@ function MonthGrid({
   onDayHover,
 }: {
   month: Date;
-  dateFrom?: Date;
-  dateTo?: Date;
   isInRange: (day: Date) => boolean;
   isRangeStart: (day: Date) => boolean;
   isRangeEnd: (day: Date) => boolean;
@@ -298,7 +251,7 @@ function MonthGrid({
                 inRange && "bg-accent",
                 start && "rounded-l-full bg-accent",
                 end && "rounded-r-full bg-accent",
-                start && end && "rounded-full",
+                start && end && "rounded-full"
               )}
             >
               <button
@@ -310,7 +263,7 @@ function MonthGrid({
                   isPast && "text-muted-foreground/50",
                   isToday && !start && !end && "bg-accent text-accent-foreground font-semibold",
                   (start || end) && "bg-primary text-primary-foreground font-semibold hover:bg-primary/90",
-                  inRange && !start && !end && "text-foreground",
+                  inRange && !start && !end && "text-foreground"
                 )}
               >
                 {day.getDate()}
