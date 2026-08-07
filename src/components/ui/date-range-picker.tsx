@@ -4,7 +4,9 @@ import { format, addMonths, isSameDay, isAfter, isBefore, startOfMonth, isValid,
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
 import { buttonVariants } from "@/components/ui/button";
+
 
 interface DateTypeOption {
   value: string;
@@ -87,35 +89,21 @@ function DateField({
           </button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0 border shadow-xl rounded-lg z-[70]" align="start">
-          <div className="p-3 pointer-events-auto">
-            <div className="flex items-center justify-between mb-2">
-              <button
-                onClick={() => setMonth(addMonths(month, -1))}
-                className={cn(buttonVariants({ variant: "outline" }), "h-7 w-7 p-0 opacity-60 hover:opacity-100")}
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </button>
-              <span className="text-sm font-semibold">{format(month, "MMMM yyyy")}</span>
-              <button
-                onClick={() => setMonth(addMonths(month, 1))}
-                className={cn(buttonVariants({ variant: "outline" }), "h-7 w-7 p-0 opacity-60 hover:opacity-100")}
-              >
-                <ChevronRight className="h-4 w-4" />
-              </button>
-            </div>
-            <MonthGrid
-              month={month}
-              isInRange={() => false}
-              isRangeStart={(d) => !!value && isSameDay(d, value)}
-              isRangeEnd={() => false}
-              onDayClick={(d) => {
-                if (minDate && isBefore(d, minDate)) return;
-                onChange(d);
-                setOpen(false);
-              }}
-            />
-          </div>
+          <Calendar
+            mode="single"
+            selected={value}
+            month={month}
+            onMonthChange={setMonth}
+            disabled={minDate ? { before: minDate } : undefined}
+            onSelect={(d) => {
+              onChange(d ?? undefined);
+              if (d) setOpen(false);
+            }}
+            initialFocus
+            className={cn("p-3 pointer-events-auto")}
+          />
         </PopoverContent>
+
       </Popover>
     </div>
   );
