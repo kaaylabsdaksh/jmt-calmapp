@@ -3614,14 +3614,17 @@ const FormVariationsDemo = () => {
   );
 
   // ESL-specific sections
-  const renderDetailsSection = () => (
+  const renderDetailsSection = () => {
+    const dt = (formData.type || '').replace('esl-onsite-', 'esl-').replace('itl-onsite-', 'esl-');
+    const isOnsite = /-onsite-/.test(formData.type || '');
+    return (
     <div className="space-y-6">
       {/* Quick Prefill Section - Full Width at Top */}
       <div className="border border-primary/20 rounded-lg p-4 space-y-3">
         <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Quick Prefill</div>
         
-        <div className={`grid grid-cols-1 ${formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks' ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-4`}>
-          {(formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks') && (
+        <div className={`grid grid-cols-1 ${dt === 'esl-grounds' || dt === 'esl-hotsticks' ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-4`}>
+          {(dt === 'esl-grounds' || dt === 'esl-hotsticks') && (
             <div className="flex items-end gap-2">
               <div className="flex-1 space-y-1">
                 <Label htmlFor="prefillRfid" className="text-xs">Prefill w/RFID:</Label>
@@ -3657,7 +3660,7 @@ const FormVariationsDemo = () => {
             <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Identification</span>
           </div>
           <div className="p-3 grid grid-cols-3 gap-2 flex-1">
-            {(formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks') && (
+            {(dt === 'esl-grounds' || dt === 'esl-hotsticks') && (
               <div className="space-y-0.5">
                 <Label htmlFor="rfidDetail" className="text-[11px]">RFID</Label>
                 <Input id="rfidDetail" placeholder="RFID" className="h-7 text-xs" />
@@ -3675,7 +3678,7 @@ const FormVariationsDemo = () => {
               <Label htmlFor="tagNumber" className="text-[11px]">Tag #</Label>
               <Input id="tagNumber" value={formData.tagNumber} onChange={(e) => handleInputChange("tagNumber", e.target.value)} placeholder="Tag #" className="h-7 text-xs" />
             </div>
-            {formData.type === 'esl-grounds' && (
+            {dt === 'esl-grounds' && (
               <div className="space-y-0.5">
                 <Label htmlFor="qtyDetail" className="text-[11px]">Qty</Label>
                 <Input id="qtyDetail" type="number" placeholder="Qty" className="h-7 text-xs" />
@@ -3692,14 +3695,14 @@ const FormVariationsDemo = () => {
           </div>
           <div className="p-3 flex-1">
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-2 gap-y-1.5">
-              {(formData.type === 'esl-blankets'
+              {(dt === 'esl-blankets'
                 ? [
                     { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
                     { id: "detailsClass", label: "Class", key: "itemClass", options: [["class-0","Class 0"],["class-1","Class 1"],["class-2","Class 2"],["class-3","Class 3"],["class-4","Class 4"]] },
                     { id: "detailsSize", label: "Size", key: "size", options: [["18x18","18x18"],["22x22","22x22"],["36x36","36x36"]] },
                     { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["yellow","Yellow"],["orange","Orange"],["red","Red"]] },
                   ]
-                : formData.type === 'esl-coverups'
+                : dt === 'esl-coverups'
                 ? [
                     { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
                     { id: "detailsClass", label: "Class", key: "itemClass", options: [["class-0","Class 0"],["class-1","Class 1"],["class-2","Class 2"],["class-3","Class 3"],["class-4","Class 4"]] },
@@ -3708,21 +3711,21 @@ const FormVariationsDemo = () => {
                     { id: "detailsModelNumber", label: "Model #", key: "model", options: [["m-100","M-100"],["m-200","M-200"],["m-300","M-300"]] },
                     { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["yellow","Yellow"],["orange","Orange"],["red","Red"],["green","Green"]] },
                   ]
-                : formData.type === 'esl-footwear'
+                : dt === 'esl-footwear'
                 ? [
                     { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
                     { id: "detailsModelNumber", label: "Model", key: "model", options: [["m-100","M-100"],["m-200","M-200"],["m-300","M-300"]] },
                     { id: "detailsSize", label: "Size", key: "size", options: [["7","7"],["8","8"],["9","9"],["10","10"],["11","11"],["12","12"],["13","13"]] },
                     { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["brown","Brown"],["tan","Tan"]] },
                   ]
-                : formData.type === 'esl-grounds'
+                : dt === 'esl-grounds'
                 ? [
                     { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["cementex","Cementex"],["novax","Novax"]] },
                     { id: "detailsWireSize", label: "Wire Size", key: "wireSize", options: [["2/0","2/0"],["1/0","1/0"],["#2","#2"],["#4","#4"],["#6","#6"]] },
                     { id: "detailsColor", label: "Color", key: "colorIn", options: [["black","Black"],["yellow","Yellow"],["orange","Orange"],["red","Red"],["green","Green"]] },
                     { id: "detailsGroundType", label: "Ground Type", key: "groundType", options: [["personal","Personal"],["cluster","Cluster"],["jumper","Jumper"],["chain","Chain"]] },
                   ]
-                : formData.type === 'esl-hotsticks'
+                : dt === 'esl-hotsticks'
                 ? [
                     { id: "detailsManufacturer", label: "Manufacturer", key: "manufacturer", options: [["3m","3M"],["salisbury","Salisbury"],["chance","Chance"],["hastings","Hastings"],["novax","Novax"]] },
                     { id: "detailsHotstickType", label: "Hotstick Type", key: "hotstickType", options: [["shotgun","Shotgun"],["telescoping","Telescoping"],["universal","Universal"],["switch","Switch"],["measuring","Measuring"]] },
@@ -3757,7 +3760,7 @@ const FormVariationsDemo = () => {
                   </Select>
                 </div>
               ))}
-              {(formData.type === 'esl-blankets' || formData.type === 'esl-coverups' || formData.type === 'esl-footwear' || formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks') && (
+              {(dt === 'esl-blankets' || dt === 'esl-coverups' || dt === 'esl-footwear' || dt === 'esl-grounds' || dt === 'esl-hotsticks') && (
                 <div className="space-y-0.5">
                   <Label htmlFor="detailsQuantity" className="text-[11px] font-semibold">Quantity</Label>
                   <Input
@@ -3776,7 +3779,7 @@ const FormVariationsDemo = () => {
             </div>
 
 
-            {formData.type === 'esl-footwear' && (
+            {dt === 'esl-footwear' && (
               <div className="mt-2 pt-2 border-t grid grid-cols-2 gap-x-2 gap-y-1">
                 <div className="flex items-baseline gap-1.5">
                   <Label className="text-[11px] font-semibold">Class:</Label>
@@ -3794,26 +3797,26 @@ const FormVariationsDemo = () => {
             <div className="mt-2 pt-2 border-t space-y-1">
               <Label className="text-[11px] font-semibold">State</Label>
               <div className="flex flex-wrap gap-x-4 gap-y-1">
-                {(formData.type === 'esl-blankets'
+                {(dt === 'esl-blankets'
                   ? [
                       { id: "stateNew", key: "newEquip", label: "New" },
                       { id: "stateSlot", key: "slot", label: "Slot" },
                       { id: "stateEyelets", key: "eyelets", label: "Eyelets" },
                       { id: "stateZip", key: "zip", label: "Zip" },
                     ]
-                  : formData.type === 'esl-coverups'
+                  : dt === 'esl-coverups'
                   ? [
                       { id: "stateNew", key: "newEquip", label: "New" },
                       { id: "stateSurplusReplacement", key: "surplusReplacement", label: "Surplus Replacement For" },
                     ]
-                  : formData.type === 'esl-footwear'
+                  : dt === 'esl-footwear'
                   ? [
                       { id: "stateOddLeft", key: "oddLeft", label: "Odd Left" },
                       { id: "stateOddRight", key: "oddRight", label: "Odd Right" },
                       { id: "stateNew", key: "newEquip", label: "New" },
                       { id: "stateSurplusReplacement", key: "surplusReplacement", label: "Surplus Replacement For" },
                     ]
-                  : formData.type === 'esl-grounds' || formData.type === 'esl-hotsticks'
+                  : dt === 'esl-grounds' || dt === 'esl-hotsticks'
                   ? [
                       { id: "stateNew", key: "newEquip", label: "New" },
                     ]
