@@ -141,6 +141,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                 />
               </TableHead>
               <TableHead className={`w-14 text-[10px] font-medium px-1.5 py-1 h-7 ${stickyB} ${view === "extended" ? "bg-muted" : ""}`} />
+              <TableHead className={`w-8 text-[10px] font-medium px-1.5 py-1 h-7 text-center ${stickyC} ${view === "extended" ? "bg-muted" : ""}`}>CI</TableHead>
               <TableHead className="w-8 text-[10px] font-medium px-1.5 py-1 h-7">#</TableHead>
               {columns.map((c) => (
                 <TableHead key={c} className="text-[10px] font-medium px-1.5 py-1 h-7 whitespace-nowrap">
@@ -150,7 +151,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                   </span>
                 </TableHead>
               ))}
-              <TableHead className="w-8 text-[10px] font-medium px-1.5 py-1 h-7">CI</TableHead>
+              
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -158,6 +159,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
             <TableRow className="bg-background h-6 hover:bg-background">
               <TableCell className={`px-1 py-0.5 ${stickyA} ${view === "extended" ? "bg-background" : ""}`} />
               <TableCell className={`px-1 py-0.5 ${stickyB} ${view === "extended" ? "bg-background" : ""}`} />
+              <TableCell className={`px-1 py-0.5 ${stickyC} ${view === "extended" ? "bg-background" : ""}`} />
               <TableCell className="px-1 py-0.5" />
               {columns.map((c) => (
                 <TableCell key={c} className="px-1 py-0.5">
@@ -170,7 +172,6 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                   )}
                 </TableCell>
               ))}
-              <TableCell className="px-1 py-0.5" />
             </TableRow>
 
             {pageRows.map((r, idx) => {
@@ -186,6 +187,19 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                 <TableCell className={`px-1.5 py-0.5 ${stickyB} ${view === "extended" ? rowBg : ""}`}>
                   <Button variant="link" size="sm" className="h-auto p-0 text-[11px] text-slate-900 underline gap-1">
                     <Pencil className="h-3 w-3" />Edit
+                  </Button>
+                </TableCell>
+                <TableCell className={`px-1.5 py-0.5 text-center ${stickyC} ${view === "extended" ? rowBg : ""}`}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    title={r.cancelled ? "Item cancelled" : "Cancel item"}
+                    aria-label="Cancel item"
+                    disabled={r.cancelled}
+                    onClick={() => setCancelId(r.id)}
+                    className="h-5 w-5 p-0 text-slate-900 hover:text-red-600"
+                  >
+                    <Ban className="h-3.5 w-3.5" />
                   </Button>
                 </TableCell>
                 <TableCell className="px-1.5 py-0.5 text-muted-foreground">
@@ -204,9 +218,6 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                     )}
                   </TableCell>
                 ))}
-                <TableCell className="px-1.5 py-0.5">
-                  <Button variant="link" size="sm" className="h-auto p-0 text-[11px] text-slate-900 underline">CI</Button>
-                </TableCell>
               </TableRow>
             );})}
 
