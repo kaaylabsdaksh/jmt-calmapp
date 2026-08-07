@@ -6,7 +6,17 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ChevronLeft, ChevronRight, Printer, Pencil, FileText, Filter } from "lucide-react";
+import { ChevronLeft, ChevronRight, Printer, Pencil, FileText, Filter, Ban } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export interface EslOnsiteItem {
   id: number;
@@ -63,6 +73,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
   const [rows, setRows] = useState<EslOnsiteItem[]>(items);
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(1);
+  const [cancelId, setCancelId] = useState<number | null>(null);
 
   const columns = useMemo(
     () => (view === "extended" ? BASIC_COLUMNS : BASIC_COLUMNS.filter((c) => !EXTENDED_ONLY.includes(c as any))),
@@ -92,6 +103,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
 
   const stickyA = view === "extended" ? "sticky left-0 z-20" : "";
   const stickyB = view === "extended" ? "sticky left-8 z-20" : "";
+  const stickyC = view === "extended" ? "sticky left-[88px] z-20" : "";
 
   return (
     <div className="border rounded-lg overflow-hidden bg-card">
@@ -141,6 +153,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                 />
               </TableHead>
               <TableHead className={`w-14 text-[10px] font-medium px-1.5 py-1 h-7 ${stickyB} ${view === "extended" ? "bg-muted" : ""}`} />
+              <TableHead className={`w-8 text-[10px] font-medium px-1.5 py-1 h-7 text-center ${stickyC} ${view === "extended" ? "bg-muted" : ""}`}>CI</TableHead>
               <TableHead className="w-8 text-[10px] font-medium px-1.5 py-1 h-7">#</TableHead>
               {columns.map((c) => (
                 <TableHead key={c} className="text-[10px] font-medium px-1.5 py-1 h-7 whitespace-nowrap">
@@ -150,7 +163,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                   </span>
                 </TableHead>
               ))}
-              <TableHead className="w-8 text-[10px] font-medium px-1.5 py-1 h-7">CI</TableHead>
+              
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -158,6 +171,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
             <TableRow className="bg-background h-6 hover:bg-background">
               <TableCell className={`px-1 py-0.5 ${stickyA} ${view === "extended" ? "bg-background" : ""}`} />
               <TableCell className={`px-1 py-0.5 ${stickyB} ${view === "extended" ? "bg-background" : ""}`} />
+              <TableCell className={`px-1 py-0.5 ${stickyC} ${view === "extended" ? "bg-background" : ""}`} />
               <TableCell className="px-1 py-0.5" />
               {columns.map((c) => (
                 <TableCell key={c} className="px-1 py-0.5">
@@ -170,7 +184,6 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                   )}
                 </TableCell>
               ))}
-              <TableCell className="px-1 py-0.5" />
             </TableRow>
 
             {pageRows.map((r, idx) => {
@@ -186,6 +199,19 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                 <TableCell className={`px-1.5 py-0.5 ${stickyB} ${view === "extended" ? rowBg : ""}`}>
                   <Button variant="link" size="sm" className="h-auto p-0 text-[11px] text-slate-900 underline gap-1">
                     <Pencil className="h-3 w-3" />Edit
+                  </Button>
+                </TableCell>
+                <TableCell className={`px-1.5 py-0.5 text-center ${stickyC} ${view === "extended" ? rowBg : ""}`}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    title={r.cancelled ? "Item cancelled" : "Cancel item"}
+                    aria-label="Cancel item"
+                    disabled={r.cancelled}
+                    onClick={() => setCancelId(r.id)}
+                    className="h-5 w-5 p-0 text-slate-900 hover:text-red-600"
+                  >
+                    <Ban className="h-3.5 w-3.5" />
                   </Button>
                 </TableCell>
                 <TableCell className="px-1.5 py-0.5 text-muted-foreground">
@@ -204,9 +230,6 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
                     )}
                   </TableCell>
                 ))}
-                <TableCell className="px-1.5 py-0.5">
-                  <Button variant="link" size="sm" className="h-auto p-0 text-[11px] text-slate-900 underline">CI</Button>
-                </TableCell>
               </TableRow>
             );})}
 
@@ -272,6 +295,32 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
           </Button>
         </div>
       </div>
+
+      <AlertDialog open={cancelId !== null} onOpenChange={(o) => !o && setCancelId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Cancel this item?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will mark the item as cancelled. It will be hidden unless "Show Cancelled Items" is enabled.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Keep item</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-slate-900 text-white hover:bg-slate-800"
+              onClick={() => {
+                if (cancelId !== null) {
+                  setRows((rs) => rs.map((r) => (r.id === cancelId ? { ...r, cancelled: true } : r)));
+                  setSelected((s) => s.filter((x) => x !== cancelId));
+                }
+                setCancelId(null);
+              }}
+            >
+              Cancel item
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
