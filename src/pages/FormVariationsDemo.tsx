@@ -1808,19 +1808,6 @@ const FormVariationsDemo = () => {
                       </Select>
                     </div>
 
-                    <div className="space-y-0.5">
-                      <Label htmlFor="assignedTo" className="text-[11px] font-medium">Assigned To</Label>
-                      <Select value={formData.assignedTo} onValueChange={(value) => handleInputChange("assignedTo", value)}>
-                        <SelectTrigger className="h-6 text-[11px]">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-popover border z-50">
-                          <SelectItem value="tech1">Technician 1</SelectItem>
-                          <SelectItem value="tech2">Technician 2</SelectItem>
-                          <SelectItem value="tech3">Technician 3</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
 
                     <div className="space-y-0.5">
                       <Label htmlFor="testFreq" className="text-[11px] font-medium">Test Freq <span className="text-destructive">*</span></Label>
