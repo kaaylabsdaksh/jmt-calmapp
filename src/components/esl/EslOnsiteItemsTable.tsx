@@ -73,6 +73,7 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
   const [rows, setRows] = useState<EslOnsiteItem[]>(items);
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(1);
+  const [cancelId, setCancelId] = useState<number | null>(null);
 
   const columns = useMemo(
     () => (view === "extended" ? BASIC_COLUMNS : BASIC_COLUMNS.filter((c) => !EXTENDED_ONLY.includes(c as any))),
@@ -294,6 +295,32 @@ export default function EslOnsiteItemsTable({ items = DEFAULT_ITEMS }: { items?:
           </Button>
         </div>
       </div>
+
+      <AlertDialog open={cancelId !== null} onOpenChange={(o) => !o && setCancelId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Cancel this item?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will mark the item as cancelled. It will be hidden unless "Show Cancelled Items" is enabled.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Keep item</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-slate-900 text-white hover:bg-slate-800"
+              onClick={() => {
+                if (cancelId !== null) {
+                  setRows((rs) => rs.map((r) => (r.id === cancelId ? { ...r, cancelled: true } : r)));
+                  setSelected((s) => s.filter((x) => x !== cancelId));
+                }
+                setCancelId(null);
+              }}
+            >
+              Cancel item
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
