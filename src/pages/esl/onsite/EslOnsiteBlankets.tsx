@@ -227,31 +227,16 @@ const EslOnsiteBlankets = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-muted/20">
-      <header className="sticky top-0 z-30 border-b bg-card">
-        <div className="px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
-          <div className="min-w-0">
-            <div className="flex items-center gap-2">
-              <h1 className="text-sm font-semibold truncate">
-                Report # 00000.00-803810-Blankets
-              </h1>
-              <Badge variant="secondary" className="text-[10px] uppercase">
-                ESL OnSite
-              </Badge>
-              <Badge className="bg-yellow-400 text-black hover:bg-yellow-400 text-[10px]">
-                {priority}
-              </Badge>
-            </div>
-            <p className="text-[11px] text-muted-foreground">
-              Onsite blanket inspection workflow
-            </p>
+      <main className="flex-1 px-4 py-3">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Badge variant="secondary" className="text-[10px] uppercase">ESL OnSite</Badge>
+            <Badge className="bg-yellow-400 text-black hover:bg-yellow-400 text-[10px]">{priority}</Badge>
+            <span className="text-[11px] text-muted-foreground">Report # 00000.00-803810-Blankets</span>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" className="h-7 text-[11px]">
-              Prev
-            </Button>
-            <Button variant="outline" size="sm" className="h-7 text-[11px]" disabled>
-              Next
-            </Button>
+            <Button variant="outline" size="sm" className="h-7 text-[11px]">Prev</Button>
+            <Button variant="outline" size="sm" className="h-7 text-[11px]" disabled>Next</Button>
             <Select
               value="esl-onsite-blankets"
               onValueChange={(v) => {
@@ -272,9 +257,7 @@ const EslOnsiteBlankets = () => {
             </Select>
           </div>
         </div>
-      </header>
 
-      <main className="flex-1 px-4 py-3">
         <Tabs defaultValue="general" className="space-y-3">
           <TabsList className="h-8">
             <TabsTrigger value="general" className="text-[11px] h-6">
