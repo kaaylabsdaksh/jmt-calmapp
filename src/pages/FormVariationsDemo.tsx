@@ -978,6 +978,9 @@ const FormVariationsDemo = () => {
     toShipping: false,
     multiParts: false,
     lostEquipment: false,
+    toCustomerPickup: false,
+    toLogistics: false,
+
     redTag: false,
     
     // Factory Information  
