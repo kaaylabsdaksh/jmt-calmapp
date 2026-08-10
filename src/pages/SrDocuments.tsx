@@ -437,11 +437,17 @@ const SrDocuments = () => {
                             </button>
                           </TableCell>
                           <TableCell className="py-2">
-                            <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-                              <FileText className="h-3.5 w-3.5" />
+                            <a
+                              href="#"
+                              onClick={(e) => e.preventDefault()}
+                              title={r.file}
+                              className="inline-flex items-center gap-1.5 text-xs text-slate-900 hover:underline"
+                            >
+                              <FileText className="h-3.5 w-3.5 text-muted-foreground" />
                               {r.file}
-                            </span>
+                            </a>
                           </TableCell>
+
                           <TableCell className="py-2 max-w-[14rem]">
                             <TruncCell text={r.accounts.join(", ")} />
                           </TableCell>
