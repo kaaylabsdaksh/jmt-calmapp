@@ -597,8 +597,31 @@ const SrDocumentDetail = () => {
               </CardContent>
             </Card>
           </div>
+          <div className="h-14" />
         </div>
       </main>
+
+      {/* Sticky footer */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+        <div className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-2 flex items-center justify-end gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-8 text-xs"
+            onClick={() => navigate("/manage-customers/sr-documents")}
+          >
+            Back
+          </Button>
+          <Button
+            size="sm"
+            className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
+            onClick={() => toast({ title: "Saved", description: `${sr} updated.` })}
+          >
+            <Save className="h-3.5 w-3.5 mr-1.5" />Save
+          </Button>
+        </div>
+      </div>
+
 
       <AlertDialog open={!!deleteId} onOpenChange={(o) => !o && setDeleteId(null)}>
         <AlertDialogContent>
