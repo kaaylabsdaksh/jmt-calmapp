@@ -41,6 +41,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { format } from "date-fns";
 import ModernTopNav from "@/components/modern/ModernTopNav";
+import NewSrDialog from "@/components/sr/NewSrDialog";
 
 
 type SrDoc = {
@@ -231,6 +232,7 @@ const SrDocuments = () => {
   const [applied, setApplied] = useState({ ...emptyFilters });
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState("10");
+  const [newOpen, setNewOpen] = useState(false);
 
   const setField = (k: keyof typeof emptyFilters, v: string) =>
     setDraft((p) => ({ ...p, [k]: v }));
@@ -315,12 +317,19 @@ const SrDocuments = () => {
               <Button
                 size="sm"
                 className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
-                onClick={() => toast({ title: "Add New SR Document", description: "New SR document form." })}
+                onClick={() => setNewOpen(true)}
               >
                 <Plus className="h-3.5 w-3.5 mr-1.5" />Add New
               </Button>
             </div>
           </div>
+
+          <NewSrDialog
+            open={newOpen}
+            onOpenChange={setNewOpen}
+            onCreated={(sr) => navigate(`/manage-customers/sr-documents/${sr}`)}
+          />
+
 
           {/* Filters */}
           <Card>
