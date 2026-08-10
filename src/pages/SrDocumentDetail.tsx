@@ -170,6 +170,7 @@ const SrDocumentDetail = () => {
   const [items, setItems] = useState<Instruction[]>(SEED);
   const [draft, setDraft] = useState({ ...emptyDraft });
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [editDraft, setEditDraft] = useState({ ...emptyDraft });
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [acctSearch, setAcctSearch] = useState("");
   const [pdfDescription, setPdfDescription] = useState("");
