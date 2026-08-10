@@ -204,41 +204,45 @@ const SrDocumentDetail = () => {
       return;
     }
     const stamp = "Today - Current User";
-    if (editingId) {
-      setItems((p) =>
-        p.map((i) =>
-          i.id === editingId
-            ? { ...i, ...draft, text: draft.text, modified: stamp }
-            : i
-        )
-      );
-      toast({ title: "Instruction updated" });
-    } else {
-      setItems((p) => [
-        ...p,
-        {
-          id: crypto.randomUUID(),
-          ...draft,
-          created: stamp,
-          modified: stamp,
-          line: String(p.filter((x) => x.type === draft.type).length + 1),
-        },
-      ]);
-      toast({ title: "Instruction added" });
-    }
+    setItems((p) => [
+      ...p,
+      {
+        id: crypto.randomUUID(),
+        ...draft,
+        created: stamp,
+        modified: stamp,
+        line: String(p.filter((x) => x.type === draft.type).length + 1),
+      },
+    ]);
+    toast({ title: "Instruction added" });
     setDraft({ ...emptyDraft });
-    setEditingId(null);
   };
 
   const startEdit = (i: Instruction) => {
     setEditingId(i.id);
-    setDraft({
+    setEditDraft({
       type: i.type,
       requestedBy: i.requestedBy,
       submittedBy: i.submittedBy,
       text: i.text,
     });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const saveEdit = () => {
+    if (!editDraft.type || !editDraft.text.trim()) {
+      toast({
+        title: "Missing information",
+        description: "Type and instructions are required.",
+        variant: "destructive",
+      });
+      return;
+    }
+    const stamp = "Today - Current User";
+    setItems((p) =>
+      p.map((i) => (i.id === editingId ? { ...i, ...editDraft, modified: stamp } : i))
+    );
+    toast({ title: "Instruction updated" });
+    setEditingId(null);
   };
 
   const toggleBold = (id: string) =>
@@ -246,6 +250,7 @@ const SrDocumentDetail = () => {
 
   const setLine = (id: string, line: string) =>
     setItems((p) => p.map((i) => (i.id === id ? { ...i, line } : i)));
+
 
   return (
     <div className="bg-background min-h-full">
