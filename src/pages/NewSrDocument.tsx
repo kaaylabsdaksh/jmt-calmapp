@@ -247,8 +247,8 @@ export default function NewSrDocument() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-3 pt-0 space-y-2">
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="space-y-1">
+                  <div className="flex items-end gap-2">
+                    <div className="space-y-1 flex-1">
                       <Label className="text-[11px] font-medium text-muted-foreground">
                         Acct #
                       </Label>
@@ -260,7 +260,7 @@ export default function NewSrDocument() {
                         placeholder="0540.00"
                       />
                     </div>
-                    <div className="space-y-1">
+                    <div className="space-y-1 flex-1">
                       <Label className="text-[11px] font-medium text-muted-foreground">
                         Customer
                       </Label>
@@ -272,15 +272,16 @@ export default function NewSrDocument() {
                         placeholder="Customer name"
                       />
                     </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-8 text-xs shrink-0"
+                      onClick={addAcct}
+                    >
+                      <Plus className="h-3.5 w-3.5 mr-1" />Add
+                    </Button>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-8 text-xs w-full"
-                    onClick={addAcct}
-                  >
-                    <Plus className="h-3.5 w-3.5 mr-1" />Add Account
-                  </Button>
+
                   {accts.length > 0 && (
                     <div className="rounded-md border divide-y">
                       {accts.map((a) => (
