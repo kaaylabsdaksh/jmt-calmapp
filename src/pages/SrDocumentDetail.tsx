@@ -351,16 +351,13 @@ const SrDocumentDetail = () => {
                       variant="ghost"
                       size="sm"
                       className="h-8 text-xs"
-                      onClick={() => {
-                        setDraft({ ...emptyDraft });
-                        setEditingId(null);
-                      }}
+                      onClick={() => setDraft({ ...emptyDraft })}
                     >
                       <X className="h-3.5 w-3.5 mr-1.5" />Clear
                     </Button>
                     <Button size="sm" className="h-8 text-xs" onClick={handleAdd}>
                       <Plus className="h-3.5 w-3.5 mr-1.5" />
-                      {editingId ? "Update" : "Add"}
+                      Add
                     </Button>
                   </div>
                 </CardContent>
