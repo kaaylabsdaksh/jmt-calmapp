@@ -608,13 +608,17 @@ const MultiSelect = ({
   options,
   values,
   onChange,
+  searchable = false,
 }: {
   label: string;
   options: string[];
   values: string[];
   onChange: (v: string[]) => void;
+  searchable?: boolean;
 }) => {
+  const [query, setQuery] = useState("");
   const display = values.length === 0 ? "All" : values.length === 1 ? values[0] : `${values.length} selected`;
+  const filtered = query.trim() ? options.filter((o) => o.toLowerCase().includes(query.trim().toLowerCase())) : options;
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -631,6 +635,17 @@ const MultiSelect = ({
         </button>
       </PopoverTrigger>
       <PopoverContent className="w-52 p-2" align="start">
+        {searchable && (
+          <div className="relative mb-1.5">
+            <Search className="absolute left-2 top-1/2 h-3 w-3 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={`Search ${label.toLowerCase()}...`}
+              className="h-7 pl-7 text-xs"
+            />
+          </div>
+        )}
         <div className="flex max-h-64 flex-col gap-0.5 overflow-y-auto">
           <button
             onClick={() => onChange([])}
@@ -638,7 +653,10 @@ const MultiSelect = ({
           >
             All
           </button>
-          {options.map((o) => (
+          {filtered.length === 0 && (
+            <div className="px-2 py-3 text-center text-xs text-muted-foreground">No matches</div>
+          )}
+          {filtered.map((o) => (
             <button
               key={o}
               onClick={() => onChange(values.includes(o) ? values.filter((v) => v !== o) : [...values, o])}
@@ -655,6 +673,7 @@ const MultiSelect = ({
     </Popover>
   );
 };
+
 
 /* -------------------------------------------------------------------------- */
 /* Page                                                                        */
@@ -924,7 +943,7 @@ const AccountAdminView = () => {
                       ))}
                     </div>
 
-                    <MultiSelect label="Customer Group" options={CUSTOMER_GROUPS} values={groups} onChange={setGroups} />
+                    <MultiSelect label="Customer Group" options={CUSTOMER_GROUPS} values={groups} onChange={setGroups} searchable />
 
 
                     <div className="ml-auto flex items-center gap-2">
