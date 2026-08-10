@@ -42,6 +42,7 @@ import RetestFollowUp from "./pages/RetestFollowUp";
 import CustomerDocumentReviews from "./pages/CustomerDocumentReviews";
 import EditCdr from "./pages/EditCdr";
 import NewCdr from "./pages/NewCdr";
+import SrDocuments from "./pages/SrDocuments";
 import ContractReviews from "./pages/ContractReviews";
 import EditContractReview from "./pages/EditContractReview";
 import NewContractReview from "./pages/NewContractReview";
@@ -104,6 +105,8 @@ const App = () => {
             <Route path="/manage-customers/cdr" element={<CustomerDocumentReviews />} />
             <Route path="/manage-customers/cdr/new" element={<NewCdr />} />
             <Route path="/manage-customers/cdr/:cdrId" element={<EditCdr />} />
+            <Route path="/manage-customers/sr-documents" element={<SrDocuments />} />
+
 
             <Route path="/manage-customers/contract-reviews" element={<ContractReviews />} />
             <Route path="/manage-customers/contract-reviews/new" element={<NewContractReview />} />
