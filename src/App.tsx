@@ -44,6 +44,7 @@ import EditCdr from "./pages/EditCdr";
 import NewCdr from "./pages/NewCdr";
 import SrDocuments from "./pages/SrDocuments";
 import SrDocumentDetail from "./pages/SrDocumentDetail";
+import NewSrDocument from "./pages/NewSrDocument";
 import ContractReviews from "./pages/ContractReviews";
 import EditContractReview from "./pages/EditContractReview";
 import NewContractReview from "./pages/NewContractReview";
@@ -107,6 +108,7 @@ const App = () => {
             <Route path="/manage-customers/cdr/new" element={<NewCdr />} />
             <Route path="/manage-customers/cdr/:cdrId" element={<EditCdr />} />
             <Route path="/manage-customers/sr-documents" element={<SrDocuments />} />
+            <Route path="/manage-customers/sr-documents/new" element={<NewSrDocument />} />
             <Route path="/manage-customers/sr-documents/:sr" element={<SrDocumentDetail />} />
 
 
