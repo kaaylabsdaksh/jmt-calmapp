@@ -70,9 +70,16 @@ type Instruction = {
 const TYPES = [
   "Customer Service",
   "Sales",
-  "Accounting",
+  "Rental",
+  "Receiving",
+  "To Factory",
+  "Lab",
+  "QA",
+  "Metrology",
+  "Pricing/Quoting",
+  "A/R",
+  "Delivery",
   "Shipping",
-  "Quality",
 ];
 
 const SEED: Instruction[] = [
