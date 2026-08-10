@@ -24,6 +24,9 @@ const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
   "/manage-customers/contract-reviews": { title: "Contract Reviews", crumbs: [{ label: "Home", to: "/" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Contract Reviews" }] },
   "/manage-customers/contract-reviews/new": { title: "Add New Contract Review", crumbs: [{ label: "Home", to: "/" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Contract Reviews", to: "/manage-customers/contract-reviews" }, { label: "Add New Contract Review" }] },
   "/manage-customers/contract-reviews/:reviewId": { title: "Edit Contract Review", crumbs: [{ label: "Home", to: "/" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Contract Reviews", to: "/manage-customers/contract-reviews" }, { label: "Edit Contract Review" }] },
+  "/manage-customers/sr-documents": { title: "SR Documents", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "SR Documents" }] },
+  "/manage-customers/sr-documents/:sr": { title: "SR Document Details", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "SR Documents", to: "/manage-customers/sr-documents" }, { label: "SR Document Details" }] },
+  "/manage-customers/retest-followup": { title: "Retest Follow-up", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Retest Follow-up" }] },
   "/manage-customers/:accountNumber": { title: "Customer Details", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Customer Details" }] },
 };
 
@@ -45,11 +48,14 @@ const ModernTopNav = () => {
   const exactMeta = routeMeta[location.pathname];
   const cdrDetailMatch = !exactMeta && /^\/manage-customers\/cdr\/[^/]+$/.test(location.pathname);
   const contractReviewDetailMatch = !exactMeta && /^\/manage-customers\/contract-reviews\/[^/]+$/.test(location.pathname);
-  const customerDetailMatch = !exactMeta && !cdrDetailMatch && !contractReviewDetailMatch && /^\/manage-customers\/[^/]+$/.test(location.pathname);
+  const srDetailMatch = !exactMeta && /^\/manage-customers\/sr-documents\/[^/]+$/.test(location.pathname);
+  const customerDetailMatch = !exactMeta && !cdrDetailMatch && !contractReviewDetailMatch && !srDetailMatch && /^\/manage-customers\/[^/]+$/.test(location.pathname);
   const meta = contractReviewDetailMatch
     ? routeMeta["/manage-customers/contract-reviews/:reviewId"]
     : cdrDetailMatch
     ? routeMeta["/manage-customers/cdr/:cdrId"]
+    : srDetailMatch
+    ? routeMeta["/manage-customers/sr-documents/:sr"]
     : customerDetailMatch
     ? routeMeta["/manage-customers/:accountNumber"]
     : exactMeta ?? routeMeta["/"];
