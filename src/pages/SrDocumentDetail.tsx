@@ -284,7 +284,7 @@ const SrDocumentDetail = () => {
               <Card>
                 <CardHeader className="p-3 pb-2">
                   <CardTitle className="text-xs font-semibold">
-                    {editingId ? "Edit Instruction" : "Add Instruction"}
+                    Add Instruction
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-3 pt-0 space-y-2">
