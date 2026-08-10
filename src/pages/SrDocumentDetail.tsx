@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   Plus,
@@ -534,8 +534,8 @@ const SrDocumentDetail = () => {
                     </TableHeader>
                     <TableBody>
                       {grouped.map(([type, rows]) => (
-                        <>
-                          <TableRow key={type} className="bg-muted/30 hover:bg-muted/30">
+                        <Fragment key={type}>
+                          <TableRow className="bg-muted/30 hover:bg-muted/30">
                             <TableCell colSpan={7} className="py-1.5">
                               <span className="text-[11px] font-semibold uppercase tracking-wide">
                                 {type}
@@ -604,7 +604,7 @@ const SrDocumentDetail = () => {
                               </TableCell>
                             </TableRow>
                           ))}
-                        </>
+                        </Fragment>
                       ))}
                     </TableBody>
                   </Table>
