@@ -232,6 +232,7 @@ const SrDocuments = () => {
   const [applied, setApplied] = useState({ ...emptyFilters });
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState("10");
+  const [newOpen, setNewOpen] = useState(false);
 
   const setField = (k: keyof typeof emptyFilters, v: string) =>
     setDraft((p) => ({ ...p, [k]: v }));
