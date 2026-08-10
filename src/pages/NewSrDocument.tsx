@@ -411,73 +411,8 @@ export default function NewSrDocument() {
           </Card>
 
           {/* Comments */}
-          <Card>
-            <CardHeader className="p-3 pb-2">
-              <CardTitle className="text-xs font-semibold">Comments</CardTitle>
-            </CardHeader>
-            <CardContent className="p-3 pt-0 space-y-2">
-              <div className="flex flex-col sm:flex-row items-start sm:items-end gap-2">
-                <div className="space-y-1 w-full sm:w-40">
-                  <Label className="text-[11px] font-medium text-muted-foreground">Type</Label>
-                  <Select value={commentType} onValueChange={setCommentType}>
-                    <SelectTrigger className="h-8 text-xs">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-popover z-50">
-                      {["Other", ...SR_TYPES].map((t) => (
-                        <SelectItem key={t} value={t} className="text-xs">
-                          {t}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1 flex-1 w-full">
-                  <Label className="text-[11px] font-medium text-muted-foreground">Comment</Label>
-                  <Textarea
-                    rows={2}
-                    className="text-xs resize-none"
-                    value={commentText}
-                    onChange={(e) => setCommentText(e.target.value)}
-                  />
-                </div>
-                <Button size="sm" className="h-8 text-xs" onClick={addComment}>
-                  <Plus className="h-3.5 w-3.5 mr-1" />Add
-                </Button>
-              </div>
+          <WorkOrderItemComments />
 
-              <div className="rounded-md border overflow-x-auto">
-                <table className="w-full text-xs">
-                  <thead className="bg-muted/50">
-                    <tr className="text-left text-[11px] text-muted-foreground">
-                      <th className="px-3 py-1.5 font-medium w-32">Type</th>
-                      <th className="px-3 py-1.5 font-medium w-32">Created By</th>
-                      <th className="px-3 py-1.5 font-medium w-40">Date Entered</th>
-                      <th className="px-3 py-1.5 font-medium">Comment</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {comments.length === 0 ? (
-                      <tr>
-                        <td colSpan={4} className="px-3 py-6 text-center text-muted-foreground">
-                          No data to display
-                        </td>
-                      </tr>
-                    ) : (
-                      comments.map((c) => (
-                        <tr key={c.id} className="border-t">
-                          <td className="px-3 py-1.5">{c.type}</td>
-                          <td className="px-3 py-1.5">{c.createdBy}</td>
-                          <td className="px-3 py-1.5">{c.date}</td>
-                          <td className="px-3 py-1.5">{c.text}</td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
 
           <div className="h-14" />
         </div>
