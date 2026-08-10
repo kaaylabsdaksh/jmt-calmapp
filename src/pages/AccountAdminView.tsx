@@ -909,26 +909,8 @@ const AccountAdminView = () => {
                       ))}
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-1">
-                      <span className="mr-1 text-[10px] uppercase tracking-wide text-muted-foreground">
-                        Customer Group
-                      </span>
-                      {CUSTOMER_GROUPS.map((g) => (
-                        <button
-                          key={g}
-                          onClick={() =>
-                            setGroups((prev) => (prev.includes(g) ? prev.filter((x) => x !== g) : [...prev, g]))
-                          }
-                          className={`h-6 w-6 rounded-full border text-[11px] font-semibold transition-colors ${
-                            groups.includes(g)
-                              ? "border-primary bg-primary text-primary-foreground"
-                              : "border-border bg-card text-muted-foreground hover:border-foreground/30 hover:text-foreground"
-                          }`}
-                        >
-                          {g}
-                        </button>
-                      ))}
-                    </div>
+                    <MultiSelect label="Customer Group" options={CUSTOMER_GROUPS} values={groups} onChange={setGroups} />
+
 
                     <div className="ml-auto flex items-center gap-2">
 
