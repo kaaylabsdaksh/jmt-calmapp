@@ -44,6 +44,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 
@@ -162,6 +170,7 @@ const SrDocumentDetail = () => {
   const [items, setItems] = useState<Instruction[]>(SEED);
   const [draft, setDraft] = useState({ ...emptyDraft });
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [editDraft, setEditDraft] = useState({ ...emptyDraft });
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [acctSearch, setAcctSearch] = useState("");
   const [pdfDescription, setPdfDescription] = useState("");
@@ -196,41 +205,45 @@ const SrDocumentDetail = () => {
       return;
     }
     const stamp = "Today - Current User";
-    if (editingId) {
-      setItems((p) =>
-        p.map((i) =>
-          i.id === editingId
-            ? { ...i, ...draft, text: draft.text, modified: stamp }
-            : i
-        )
-      );
-      toast({ title: "Instruction updated" });
-    } else {
-      setItems((p) => [
-        ...p,
-        {
-          id: crypto.randomUUID(),
-          ...draft,
-          created: stamp,
-          modified: stamp,
-          line: String(p.filter((x) => x.type === draft.type).length + 1),
-        },
-      ]);
-      toast({ title: "Instruction added" });
-    }
+    setItems((p) => [
+      ...p,
+      {
+        id: crypto.randomUUID(),
+        ...draft,
+        created: stamp,
+        modified: stamp,
+        line: String(p.filter((x) => x.type === draft.type).length + 1),
+      },
+    ]);
+    toast({ title: "Instruction added" });
     setDraft({ ...emptyDraft });
-    setEditingId(null);
   };
 
   const startEdit = (i: Instruction) => {
     setEditingId(i.id);
-    setDraft({
+    setEditDraft({
       type: i.type,
       requestedBy: i.requestedBy,
       submittedBy: i.submittedBy,
       text: i.text,
     });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const saveEdit = () => {
+    if (!editDraft.type || !editDraft.text.trim()) {
+      toast({
+        title: "Missing information",
+        description: "Type and instructions are required.",
+        variant: "destructive",
+      });
+      return;
+    }
+    const stamp = "Today - Current User";
+    setItems((p) =>
+      p.map((i) => (i.id === editingId ? { ...i, ...editDraft, modified: stamp } : i))
+    );
+    toast({ title: "Instruction updated" });
+    setEditingId(null);
   };
 
   const toggleBold = (id: string) =>
@@ -238,6 +251,7 @@ const SrDocumentDetail = () => {
 
   const setLine = (id: string, line: string) =>
     setItems((p) => p.map((i) => (i.id === id ? { ...i, line } : i)));
+
 
   return (
     <div className="bg-background min-h-full">
@@ -270,7 +284,7 @@ const SrDocumentDetail = () => {
               <Card>
                 <CardHeader className="p-3 pb-2">
                   <CardTitle className="text-xs font-semibold">
-                    {editingId ? "Edit Instruction" : "Add Instruction"}
+                    Add Instruction
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-3 pt-0 space-y-2">
@@ -337,16 +351,13 @@ const SrDocumentDetail = () => {
                       variant="ghost"
                       size="sm"
                       className="h-8 text-xs"
-                      onClick={() => {
-                        setDraft({ ...emptyDraft });
-                        setEditingId(null);
-                      }}
+                      onClick={() => setDraft({ ...emptyDraft })}
                     >
                       <X className="h-3.5 w-3.5 mr-1.5" />Clear
                     </Button>
                     <Button size="sm" className="h-8 text-xs" onClick={handleAdd}>
                       <Plus className="h-3.5 w-3.5 mr-1.5" />
-                      {editingId ? "Update" : "Add"}
+                      Add
                     </Button>
                   </div>
                 </CardContent>
@@ -628,6 +639,93 @@ const SrDocumentDetail = () => {
         </div>
       </div>
 
+
+      <Dialog open={!!editingId} onOpenChange={(o) => !o && setEditingId(null)}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="text-base">Edit Instruction</DialogTitle>
+            <DialogDescription className="text-xs">
+              Update the details of this instruction for {sr}.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3">
+            <div className="space-y-1">
+              <Label className="text-[11px] font-medium text-muted-foreground">
+                Type <span className="text-destructive">*</span>
+              </Label>
+              <Select
+                value={editDraft.type}
+                onValueChange={(v) => setEditDraft((p) => ({ ...p, type: v }))}
+              >
+                <SelectTrigger className="h-8 text-xs">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover z-50">
+                  {TYPES.map((t) => (
+                    <SelectItem key={t} value={t} className="text-xs">
+                      {t}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <Label className="text-[11px] font-medium text-muted-foreground">
+                  Requested By
+                </Label>
+                <Input
+                  className="h-8 text-xs"
+                  value={editDraft.requestedBy}
+                  onChange={(e) =>
+                    setEditDraft((p) => ({ ...p, requestedBy: e.target.value }))
+                  }
+                />
+              </div>
+              <div className="space-y-1">
+                <Label className="text-[11px] font-medium text-muted-foreground">
+                  Submitted By
+                </Label>
+                <Input
+                  className="h-8 text-xs"
+                  value={editDraft.submittedBy}
+                  onChange={(e) =>
+                    setEditDraft((p) => ({ ...p, submittedBy: e.target.value }))
+                  }
+                />
+              </div>
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[11px] font-medium text-muted-foreground">
+                Instructions <span className="text-destructive">*</span>
+              </Label>
+              <Textarea
+                rows={6}
+                className="text-xs resize-none"
+                value={editDraft.text}
+                onChange={(e) => setEditDraft((p) => ({ ...p, text: e.target.value }))}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 text-xs"
+              onClick={() => setEditingId(null)}
+            >
+              Cancel
+            </Button>
+            <Button
+              size="sm"
+              className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
+              onClick={saveEdit}
+            >
+              <Save className="h-3.5 w-3.5 mr-1.5" />Update
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <AlertDialog open={!!deleteId} onOpenChange={(o) => !o && setDeleteId(null)}>
         <AlertDialogContent>
