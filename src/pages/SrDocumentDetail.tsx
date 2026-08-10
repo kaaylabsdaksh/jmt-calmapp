@@ -262,9 +262,9 @@ const SrDocumentDetail = () => {
 
           </div>
 
-          <div className="grid grid-cols-1 xl:grid-cols-[340px_1fr] gap-4 items-start">
+          <div className="grid grid-cols-1 xl:grid-cols-[320px_1fr] gap-4 items-start">
             {/* Left column */}
-            <div className="space-y-4">
+            <div className="space-y-4 xl:sticky xl:top-4 xl:max-h-[calc(100vh-8rem)] xl:overflow-y-auto xl:pr-1">
               {/* Add instruction */}
               <Card>
                 <CardHeader className="p-3 pb-2">
