@@ -925,7 +925,7 @@ const AccountAdminView = () => {
                       />
                     </div>
 
-                    <MultiSelect label="Location" options={LOCATIONS} values={locations} onChange={setLocations} />
+                    <MultiSelect label="Location" options={LOCATIONS} values={locations} onChange={setLocations} searchable />
 
                     <div className="inline-flex items-center gap-1 rounded-lg border border-border bg-muted/40 p-0.5">
                       {(["All", "Regular", "Onsite"] as const).map((t) => (
