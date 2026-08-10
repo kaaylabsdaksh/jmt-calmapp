@@ -107,6 +107,7 @@ const App = () => {
             <Route path="/manage-customers/cdr/new" element={<NewCdr />} />
             <Route path="/manage-customers/cdr/:cdrId" element={<EditCdr />} />
             <Route path="/manage-customers/sr-documents" element={<SrDocuments />} />
+            <Route path="/manage-customers/sr-documents/new" element={<NewSrDocument />} />
             <Route path="/manage-customers/sr-documents/:sr" element={<SrDocumentDetail />} />
 
 
