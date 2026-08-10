@@ -189,6 +189,7 @@ const SrDocumentDetail = () => {
 
   const grouped = useMemo(() => {
     const map = new Map<string, Instruction[]>();
+    TYPES.forEach((t) => map.set(t, []));
     items.forEach((i) => {
       map.set(i.type, [...(map.get(i.type) || []), i]);
     });
