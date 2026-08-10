@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Plus, X, Upload, Users, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -50,6 +50,57 @@ export default function NewSrDocument() {
   const [accts, setAccts] = useState<Acct[]>([]);
   const [acct, setAcct] = useState("");
   const [customer, setCustomer] = useState("");
+  const [added, setAdded] = useState<
+    { id: string; type: string; text: string; requestedBy: string; submittedBy: string; created: string; line: number }[]
+  >([]);
+  const [commentType, setCommentType] = useState("Other");
+  const [commentText, setCommentText] = useState("");
+  const [comments, setComments] = useState<
+    { id: string; type: string; createdBy: string; date: string; text: string }[]
+  >([]);
+
+  const addInstruction = () => {
+    if (!type || !instructions.trim()) {
+      toast({
+        title: "Missing required fields",
+        description: "Type and Instructions are required.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setAdded((p) => [
+      ...p,
+      {
+        id: `${Date.now()}`,
+        type,
+        text: instructions.trim(),
+        requestedBy: requestedBy || "—",
+        submittedBy: submittedBy || "—",
+        created: new Date().toLocaleDateString("en-US"),
+        line: p.length + 1,
+      },
+    ]);
+    setType("");
+    setRequestedBy("");
+    setSubmittedBy("");
+    setInstructions("");
+  };
+
+  const addComment = () => {
+    if (!commentText.trim()) return;
+    setComments((p) => [
+      ...p,
+      {
+        id: `${Date.now()}`,
+        type: commentType,
+        createdBy: "Admin User",
+        date: new Date().toLocaleString("en-US"),
+        text: commentText.trim(),
+      },
+    ]);
+    setCommentText("");
+  };
+
 
   const addAcct = () => {
     if (!acct.trim()) return;
@@ -147,19 +198,40 @@ export default function NewSrDocument() {
                     placeholder="Type the special requirement..."
                   />
                 </div>
-                <div className="space-y-1 max-w-[200px]">
-                  <Label className="text-[11px] font-medium text-muted-foreground">
-                    Review Date
-                  </Label>
-                  <Input
-                    className="h-8 text-xs"
-                    placeholder="MM/DD/YYYY"
-                    value={reviewDate}
-                    onChange={(e) => setReviewDate(e.target.value)}
-                  />
+                <div className="flex items-end justify-between gap-2">
+                  <div className="space-y-1 max-w-[200px]">
+                    <Label className="text-[11px] font-medium text-muted-foreground">
+                      Review Date
+                    </Label>
+                    <Input
+                      className="h-8 text-xs"
+                      placeholder="MM/DD/YYYY"
+                      value={reviewDate}
+                      onChange={(e) => setReviewDate(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-8 text-xs"
+                      onClick={() => {
+                        setType("");
+                        setRequestedBy("");
+                        setSubmittedBy("");
+                        setInstructions("");
+                      }}
+                    >
+                      Clear
+                    </Button>
+                    <Button size="sm" className="h-8 text-xs" onClick={addInstruction}>
+                      <Plus className="h-3.5 w-3.5 mr-1" />Add
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
+
 
             <div className="space-y-4">
               {/* Accounts */}
@@ -279,6 +351,133 @@ export default function NewSrDocument() {
               </Card>
             </div>
           </div>
+
+          {/* Instructions list grouped by type */}
+          <Card>
+            <CardHeader className="p-3 pb-2">
+              <CardTitle className="text-xs font-semibold">Instructions</CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead className="bg-muted/50">
+                    <tr className="text-left text-[11px] text-muted-foreground">
+                      <th className="px-3 py-1.5 font-medium">Instructions</th>
+                      <th className="px-3 py-1.5 font-medium w-32">Requested By</th>
+                      <th className="px-3 py-1.5 font-medium w-32">Submitted By</th>
+                      <th className="px-3 py-1.5 font-medium w-24">Created</th>
+                      <th className="px-3 py-1.5 font-medium w-24">Modified</th>
+                      <th className="px-3 py-1.5 font-medium w-16">Line #</th>
+                      <th className="px-3 py-1.5 w-10" />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {SR_TYPES.map((t) => {
+                      const rows = added.filter((a) => a.type === t);
+                      return (
+                        <Fragment key={t}>
+                          <tr className="border-t bg-muted/20">
+                            <td colSpan={7} className="px-3 py-1.5 font-semibold">
+                              {t}
+                            </td>
+                          </tr>
+                          {rows.map((r) => (
+                            <tr key={r.id} className="border-t group">
+                              <td className="px-3 py-1.5 pl-6">{r.text}</td>
+                              <td className="px-3 py-1.5">{r.requestedBy}</td>
+                              <td className="px-3 py-1.5">{r.submittedBy}</td>
+                              <td className="px-3 py-1.5">{r.created}</td>
+                              <td className="px-3 py-1.5">—</td>
+                              <td className="px-3 py-1.5">{r.line}</td>
+                              <td className="px-3 py-1.5 text-right">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100 text-destructive"
+                                  onClick={() => setAdded((p) => p.filter((x) => x.id !== r.id))}
+                                >
+                                  <X className="h-3.5 w-3.5" />
+                                </Button>
+                              </td>
+                            </tr>
+                          ))}
+                        </Fragment>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Comments */}
+          <Card>
+            <CardHeader className="p-3 pb-2">
+              <CardTitle className="text-xs font-semibold">Comments</CardTitle>
+            </CardHeader>
+            <CardContent className="p-3 pt-0 space-y-2">
+              <div className="flex flex-col sm:flex-row items-start sm:items-end gap-2">
+                <div className="space-y-1 w-full sm:w-40">
+                  <Label className="text-[11px] font-medium text-muted-foreground">Type</Label>
+                  <Select value={commentType} onValueChange={setCommentType}>
+                    <SelectTrigger className="h-8 text-xs">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover z-50">
+                      {["Other", ...SR_TYPES].map((t) => (
+                        <SelectItem key={t} value={t} className="text-xs">
+                          {t}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1 flex-1 w-full">
+                  <Label className="text-[11px] font-medium text-muted-foreground">Comment</Label>
+                  <Textarea
+                    rows={2}
+                    className="text-xs resize-none"
+                    value={commentText}
+                    onChange={(e) => setCommentText(e.target.value)}
+                  />
+                </div>
+                <Button size="sm" className="h-8 text-xs" onClick={addComment}>
+                  <Plus className="h-3.5 w-3.5 mr-1" />Add
+                </Button>
+              </div>
+
+              <div className="rounded-md border overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead className="bg-muted/50">
+                    <tr className="text-left text-[11px] text-muted-foreground">
+                      <th className="px-3 py-1.5 font-medium w-32">Type</th>
+                      <th className="px-3 py-1.5 font-medium w-32">Created By</th>
+                      <th className="px-3 py-1.5 font-medium w-40">Date Entered</th>
+                      <th className="px-3 py-1.5 font-medium">Comment</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {comments.length === 0 ? (
+                      <tr>
+                        <td colSpan={4} className="px-3 py-6 text-center text-muted-foreground">
+                          No data to display
+                        </td>
+                      </tr>
+                    ) : (
+                      comments.map((c) => (
+                        <tr key={c.id} className="border-t">
+                          <td className="px-3 py-1.5">{c.type}</td>
+                          <td className="px-3 py-1.5">{c.createdBy}</td>
+                          <td className="px-3 py-1.5">{c.date}</td>
+                          <td className="px-3 py-1.5">{c.text}</td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
 
           <div className="h-14" />
         </div>
