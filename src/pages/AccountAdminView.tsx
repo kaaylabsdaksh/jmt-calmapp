@@ -9,7 +9,7 @@ import {
   ChevronDown,
   ChevronRight,
   X,
-  Columns3,
+  SlidersHorizontal,
   Inbox,
   AlertTriangle,
   Zap,
