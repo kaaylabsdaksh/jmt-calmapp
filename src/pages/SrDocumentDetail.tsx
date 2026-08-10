@@ -173,6 +173,9 @@ const SrDocumentDetail = () => {
   const [editDraft, setEditDraft] = useState({ ...emptyDraft });
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [acctSearch, setAcctSearch] = useState("");
+  const [acctList, setAcctList] = useState(ACCOUNTS);
+  const [showAcctAdd, setShowAcctAdd] = useState(false);
+  const [newAcct, setNewAcct] = useState({ acct: "", customer: "" });
   const [pdfDescription, setPdfDescription] = useState("");
   const [pdfName, setPdfName] = useState("");
   const [files, setFiles] = useState<{ name: string; description: string }[]>([]);
@@ -187,13 +190,35 @@ const SrDocumentDetail = () => {
 
   const accounts = useMemo(
     () =>
-      ACCOUNTS.filter(
+      acctList.filter(
         (a) =>
           a.acct.includes(acctSearch) ||
           a.customer.toLowerCase().includes(acctSearch.toLowerCase())
       ),
-    [acctSearch]
+    [acctSearch, acctList]
   );
+
+  const handleAddAccount = () => {
+    const acct = newAcct.acct.trim();
+    if (!acct) {
+      toast({ title: "Account # required", variant: "destructive" });
+      return;
+    }
+    if (acctList.some((a) => a.acct === acct)) {
+      toast({ title: "Account already linked", variant: "destructive" });
+      return;
+    }
+    setAcctList((p) => [...p, { acct, customer: newAcct.customer.trim() || "—" }]);
+    setNewAcct({ acct: "", customer: "" });
+    setShowAcctAdd(false);
+    toast({ title: "Account added", description: acct });
+  };
+
+  const handleRemoveAccount = (acct: string) => {
+    setAcctList((p) => p.filter((a) => a.acct !== acct));
+    toast({ title: "Account removed", description: acct });
+  };
+
 
   const handleAdd = () => {
     if (!draft.type || !draft.text.trim()) {
@@ -265,7 +290,7 @@ const SrDocumentDetail = () => {
                 <h1 className="text-xl font-semibold tracking-tight">{sr}</h1>
                 <p className="text-xs text-muted-foreground">
                   Special requirements document · {items.length} instruction
-                  {items.length === 1 ? "" : "s"} · {ACCOUNTS.length} accounts
+                  {items.length === 1 ? "" : "s"} · {acctList.length} accounts
                 </p>
               </div>
               <Badge variant="secondary" className="h-5 text-[10px]">
@@ -369,21 +394,49 @@ const SrDocumentDetail = () => {
                   <CardTitle className="text-xs font-semibold inline-flex items-center gap-1.5">
                     <Users className="h-3.5 w-3.5" />Accounts
                     <Badge variant="secondary" className="h-4 text-[10px] ml-1">
-                      {ACCOUNTS.length}
+                      {acctList.length}
                     </Badge>
                   </CardTitle>
                   <Button
                     variant="outline"
                     size="sm"
                     className="h-7 text-[11px]"
-                    onClick={() =>
-                      toast({ title: "Add / Remove Accounts", description: "Account picker." })
-                    }
+                    onClick={() => setShowAcctAdd((v) => !v)}
                   >
-                    Add / Remove
+                    {showAcctAdd ? (
+                      <>
+                        <X className="h-3.5 w-3.5 mr-1" />Close
+                      </>
+                    ) : (
+                      <>
+                        <Plus className="h-3.5 w-3.5 mr-1" />Add Account
+                      </>
+                    )}
                   </Button>
                 </CardHeader>
                 <CardContent className="p-3 pt-0 space-y-2">
+                  {showAcctAdd && (
+                    <div className="rounded-md border p-2 space-y-2 bg-muted/30">
+                      <Input
+                        value={newAcct.acct}
+                        onChange={(e) => setNewAcct((p) => ({ ...p, acct: e.target.value }))}
+                        placeholder="Acct # (e.g. 0540.20)"
+                        className="h-8 text-xs"
+                      />
+                      <Input
+                        value={newAcct.customer}
+                        onChange={(e) => setNewAcct((p) => ({ ...p, customer: e.target.value }))}
+                        placeholder="Customer name"
+                        className="h-8 text-xs"
+                        onKeyDown={(e) => e.key === "Enter" && handleAddAccount()}
+                      />
+                      <div className="flex justify-end">
+                        <Button size="sm" className="h-7 text-[11px]" onClick={handleAddAccount}>
+                          <Plus className="h-3.5 w-3.5 mr-1" />Add
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                   <div className="relative">
                     <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
                     <Input
@@ -402,18 +455,28 @@ const SrDocumentDetail = () => {
                       accounts.map((a) => (
                         <div
                           key={a.acct}
-                          className="flex items-center gap-2 px-2 py-1.5 hover:bg-muted/40"
+                          className="group flex items-center gap-2 px-2 py-1.5 hover:bg-muted/40"
                         >
                           <span className="text-xs font-medium text-slate-900 w-16 shrink-0">
                             {a.acct}
                           </span>
-                          <span className="text-xs text-muted-foreground truncate">
+                          <span className="text-xs text-muted-foreground truncate flex-1">
                             {a.customer}
                           </span>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100 text-destructive"
+                            onClick={() => handleRemoveAccount(a.acct)}
+                            aria-label={`Remove account ${a.acct}`}
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
                         </div>
                       ))
                     )}
                   </div>
+
                 </CardContent>
               </Card>
 
