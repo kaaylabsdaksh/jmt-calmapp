@@ -43,6 +43,8 @@ export default function NewSrDocument() {
   const [submittedBy, setSubmittedBy] = useState("");
   const [instructions, setInstructions] = useState("");
   const [reviewDate, setReviewDate] = useState("");
+  const [lastGenerated, setLastGenerated] = useState("");
+
   const [description, setDescription] = useState("");
   const [pdfName, setPdfName] = useState("");
   const [accts, setAccts] = useState<Acct[]>([]);
