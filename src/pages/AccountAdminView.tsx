@@ -943,7 +943,7 @@ const AccountAdminView = () => {
                       ))}
                     </div>
 
-                    <MultiSelect label="Customer Group" options={CUSTOMER_GROUPS} values={groups} onChange={setGroups} />
+                    <MultiSelect label="Customer Group" options={CUSTOMER_GROUPS} values={groups} onChange={setGroups} searchable />
 
 
                     <div className="ml-auto flex items-center gap-2">
