@@ -50,6 +50,57 @@ export default function NewSrDocument() {
   const [accts, setAccts] = useState<Acct[]>([]);
   const [acct, setAcct] = useState("");
   const [customer, setCustomer] = useState("");
+  const [added, setAdded] = useState<
+    { id: string; type: string; text: string; requestedBy: string; submittedBy: string; created: string; line: number }[]
+  >([]);
+  const [commentType, setCommentType] = useState("Other");
+  const [commentText, setCommentText] = useState("");
+  const [comments, setComments] = useState<
+    { id: string; type: string; createdBy: string; date: string; text: string }[]
+  >([]);
+
+  const addInstruction = () => {
+    if (!type || !instructions.trim()) {
+      toast({
+        title: "Missing required fields",
+        description: "Type and Instructions are required.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setAdded((p) => [
+      ...p,
+      {
+        id: `${Date.now()}`,
+        type,
+        text: instructions.trim(),
+        requestedBy: requestedBy || "—",
+        submittedBy: submittedBy || "—",
+        created: new Date().toLocaleDateString("en-US"),
+        line: p.length + 1,
+      },
+    ]);
+    setType("");
+    setRequestedBy("");
+    setSubmittedBy("");
+    setInstructions("");
+  };
+
+  const addComment = () => {
+    if (!commentText.trim()) return;
+    setComments((p) => [
+      ...p,
+      {
+        id: `${Date.now()}`,
+        type: commentType,
+        createdBy: "Admin User",
+        date: new Date().toLocaleString("en-US"),
+        text: commentText.trim(),
+      },
+    ]);
+    setCommentText("");
+  };
+
 
   const addAcct = () => {
     if (!acct.trim()) return;
