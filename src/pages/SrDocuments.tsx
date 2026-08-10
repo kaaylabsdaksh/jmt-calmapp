@@ -281,23 +281,16 @@ const SrDocuments = () => {
   ) => (
     <div className="space-y-1">
       <Label className="text-[11px] font-medium text-muted-foreground">{label}</Label>
-      <div className="flex items-center gap-1.5">
-        <Input
-          type="date"
-          value={draft[fromKey]}
-          onChange={(e) => setField(fromKey, e.target.value)}
-          className="h-8 text-xs"
-        />
-        <span className="text-[11px] text-muted-foreground">to</span>
-        <Input
-          type="date"
-          value={draft[toKey]}
-          onChange={(e) => setField(toKey, e.target.value)}
-          className="h-8 text-xs"
-        />
-      </div>
+      <DateRangePicker
+        dateFrom={draft[fromKey] ? new Date(draft[fromKey]) : undefined}
+        dateTo={draft[toKey] ? new Date(draft[toKey]) : undefined}
+        onDateFromChange={(d) => setField(fromKey, d ? format(d, "yyyy-MM-dd") : "")}
+        onDateToChange={(d) => setField(toKey, d ? format(d, "yyyy-MM-dd") : "")}
+        triggerClassName="h-8 w-full bg-background"
+      />
     </div>
   );
+
 
   return (
     <div className="bg-background min-h-full">
