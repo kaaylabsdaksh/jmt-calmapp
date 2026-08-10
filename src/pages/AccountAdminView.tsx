@@ -584,6 +584,21 @@ const BatchRow = ({
   );
 };
 
+const FilterPill = ({ label, onRemove }: { label: string; onRemove: () => void }) => (
+  <span className="inline-flex items-center gap-1 rounded-full border border-border bg-muted/60 py-0.5 pl-2 pr-1 text-[11px] font-medium text-foreground">
+    {label}
+    <button
+      onClick={onRemove}
+      aria-label={`Remove ${label}`}
+      className="rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+    >
+      <X className="h-3 w-3" />
+    </button>
+  </span>
+);
+
+
+
 /* -------------------------------------------------------------------------- */
 /* Multi select filter                                                         */
 /* -------------------------------------------------------------------------- */
