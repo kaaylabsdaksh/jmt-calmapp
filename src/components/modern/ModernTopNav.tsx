@@ -48,11 +48,14 @@ const ModernTopNav = () => {
   const exactMeta = routeMeta[location.pathname];
   const cdrDetailMatch = !exactMeta && /^\/manage-customers\/cdr\/[^/]+$/.test(location.pathname);
   const contractReviewDetailMatch = !exactMeta && /^\/manage-customers\/contract-reviews\/[^/]+$/.test(location.pathname);
-  const customerDetailMatch = !exactMeta && !cdrDetailMatch && !contractReviewDetailMatch && /^\/manage-customers\/[^/]+$/.test(location.pathname);
+  const srDetailMatch = !exactMeta && /^\/manage-customers\/sr-documents\/[^/]+$/.test(location.pathname);
+  const customerDetailMatch = !exactMeta && !cdrDetailMatch && !contractReviewDetailMatch && !srDetailMatch && /^\/manage-customers\/[^/]+$/.test(location.pathname);
   const meta = contractReviewDetailMatch
     ? routeMeta["/manage-customers/contract-reviews/:reviewId"]
     : cdrDetailMatch
     ? routeMeta["/manage-customers/cdr/:cdrId"]
+    : srDetailMatch
+    ? routeMeta["/manage-customers/sr-documents/:sr"]
     : customerDetailMatch
     ? routeMeta["/manage-customers/:accountNumber"]
     : exactMeta ?? routeMeta["/"];
