@@ -309,14 +309,6 @@ const SrDocuments = () => {
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-8 text-xs"
-                onClick={() => toast({ title: "Refreshed", description: "SR documents reloaded." })}
-              >
-                <RefreshCw className="h-3.5 w-3.5 mr-1.5" />Refresh
-              </Button>
               <Button variant="outline" size="sm" className="h-8 text-xs">
                 <Download className="h-3.5 w-3.5 mr-1.5" />Export
               </Button>
