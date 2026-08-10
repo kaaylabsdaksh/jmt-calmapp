@@ -173,6 +173,9 @@ const SrDocumentDetail = () => {
   const [editDraft, setEditDraft] = useState({ ...emptyDraft });
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [acctSearch, setAcctSearch] = useState("");
+  const [acctList, setAcctList] = useState(ACCOUNTS);
+  const [showAcctAdd, setShowAcctAdd] = useState(false);
+  const [newAcct, setNewAcct] = useState({ acct: "", customer: "" });
   const [pdfDescription, setPdfDescription] = useState("");
   const [pdfName, setPdfName] = useState("");
   const [files, setFiles] = useState<{ name: string; description: string }[]>([]);
