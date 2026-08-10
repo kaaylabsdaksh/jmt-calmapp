@@ -767,9 +767,8 @@ const SrDocumentDetail = () => {
             </Button>
           </div>
         </div>
-
-        </div>
       </div>
+
 
 
       <Dialog open={!!editingId} onOpenChange={(o) => !o && setEditingId(null)}>
