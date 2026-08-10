@@ -290,15 +290,8 @@ export default function NewSrDocument() {
           <div>Admin User · {new Date().toLocaleDateString("en-US")}</div>
         </div>
 
-        <div className="flex items-center gap-1.5">
-          <Label className="text-[11px] text-muted-foreground whitespace-nowrap">Review Date</Label>
-          <Input
-            value={reviewDate}
-            onChange={(e) => setReviewDate(e.target.value)}
-            placeholder="MM/DD/YYYY"
-            className="h-8 w-28 text-xs"
-          />
-        </div>
+
+
 
         <div className="flex flex-wrap items-center gap-1.5">
           <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-customers/sr-documents")}>
