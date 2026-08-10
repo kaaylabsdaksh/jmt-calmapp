@@ -543,13 +543,21 @@ const SrDocumentDetail = () => {
                           className="flex items-center justify-between gap-2 px-2 py-1.5"
                         >
                           <div className="min-w-0">
-                            <p className="text-xs truncate">{f.name}</p>
+                            <a
+                              href="#"
+                              onClick={(e) => e.preventDefault()}
+                              title={f.name}
+                              className="block text-xs truncate text-slate-900 underline underline-offset-2 hover:text-slate-600"
+                            >
+                              {f.name}
+                            </a>
                             {f.description && (
                               <p className="text-[10px] text-muted-foreground truncate">
                                 {f.description}
                               </p>
                             )}
                           </div>
+
                           <Button
                             variant="ghost"
                             size="sm"
