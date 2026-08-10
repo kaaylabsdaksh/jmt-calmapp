@@ -290,7 +290,7 @@ const SrDocumentDetail = () => {
                 <h1 className="text-xl font-semibold tracking-tight">{sr}</h1>
                 <p className="text-xs text-muted-foreground">
                   Special requirements document · {items.length} instruction
-                  {items.length === 1 ? "" : "s"} · {ACCOUNTS.length} accounts
+                  {items.length === 1 ? "" : "s"} · {acctList.length} accounts
                 </p>
               </div>
               <Badge variant="secondary" className="h-5 text-[10px]">
