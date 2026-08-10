@@ -258,23 +258,8 @@ const SrDocumentDetail = () => {
                 {sr}.pdf
               </Badge>
             </div>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-8 text-xs"
-                onClick={() => navigate("/manage-customers/sr-documents")}
-              >
-                Back
-              </Button>
-              <Button
-                size="sm"
-                className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
-                onClick={() => toast({ title: "Saved", description: `${sr} updated.` })}
-              >
-                <Save className="h-3.5 w-3.5 mr-1.5" />Save
-              </Button>
-            </div>
+            <div />
+
           </div>
 
           <div className="grid grid-cols-1 xl:grid-cols-[340px_1fr] gap-4 items-start">
