@@ -494,8 +494,9 @@ const SrDocumentDetail = () => {
               </Card>
             </div>
 
-            {/* Right: instructions */}
+            {/* Instructions table (full width) */}
             <Card>
+
               <CardContent className="p-0">
                 <div className="overflow-x-auto">
                   <Table>
