@@ -319,14 +319,6 @@ const SrDocuments = () => {
               >
                 <Plus className="h-3.5 w-3.5 mr-1.5" />Add New
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-8 text-xs"
-                onClick={() => navigate("/manage-customers")}
-              >
-                Back
-              </Button>
             </div>
           </div>
 
