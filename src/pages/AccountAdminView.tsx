@@ -771,6 +771,20 @@ const AccountAdminView = () => {
     });
   };
 
+  const reorderColumns = (from: ColumnKey, to: ColumnKey) => {
+    if (from === to) return;
+    setColumnOrder((prev) => {
+      const next = [...prev];
+      const fromIdx = next.indexOf(from);
+      const toIdx = next.indexOf(to);
+      if (fromIdx < 0 || toIdx < 0) return prev;
+      next.splice(fromIdx, 1);
+      next.splice(toIdx, 0, from);
+      return next;
+    });
+  };
+
+
   const resetColumns = () => {
     setColumnOrder(ALL_COLUMNS.map((c) => c.key));
     setVisibleColumns(ALL_COLUMNS.map((c) => c.key));
