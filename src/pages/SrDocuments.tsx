@@ -317,12 +317,19 @@ const SrDocuments = () => {
               <Button
                 size="sm"
                 className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
-                onClick={() => toast({ title: "Add New SR Document", description: "New SR document form." })}
+                onClick={() => setNewOpen(true)}
               >
                 <Plus className="h-3.5 w-3.5 mr-1.5" />Add New
               </Button>
             </div>
           </div>
+
+          <NewSrDialog
+            open={newOpen}
+            onOpenChange={setNewOpen}
+            onCreated={(sr) => navigate(`/manage-customers/sr-documents/${sr}`)}
+          />
+
 
           {/* Filters */}
           <Card>
