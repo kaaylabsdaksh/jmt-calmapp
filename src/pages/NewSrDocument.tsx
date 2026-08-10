@@ -43,6 +43,8 @@ export default function NewSrDocument() {
   const [submittedBy, setSubmittedBy] = useState("");
   const [instructions, setInstructions] = useState("");
   const [reviewDate, setReviewDate] = useState("");
+  const [lastGenerated, setLastGenerated] = useState("");
+
   const [description, setDescription] = useState("");
   const [pdfName, setPdfName] = useState("");
   const [accts, setAccts] = useState<Acct[]>([]);
@@ -282,23 +284,79 @@ export default function NewSrDocument() {
         </div>
       </main>
 
-      <div className="fixed bottom-0 right-0 left-[var(--sidebar-width,16rem)] z-40 border-t bg-background/95 backdrop-blur px-4 py-2 flex items-center justify-end gap-2">
-        <Button
-          variant="outline"
-          size="sm"
-          className="h-8 text-xs"
-          onClick={() => navigate("/manage-customers/sr-documents")}
-        >
-          Cancel
-        </Button>
-        <Button
-          size="sm"
-          className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
-          onClick={handleCreate}
-        >
-          Create SR Document
-        </Button>
+      <div className="fixed bottom-0 right-0 left-[var(--sidebar-width,16rem)] z-40 border-t bg-background/95 backdrop-blur px-4 py-2 flex flex-wrap items-center gap-x-4 gap-y-2">
+        <div className="text-[10px] leading-tight text-muted-foreground">
+          <div className="font-semibold text-foreground">Created by</div>
+          <div>Admin User · {new Date().toLocaleDateString("en-US")}</div>
+        </div>
+
+        <div className="flex items-center gap-1.5">
+          <Label className="text-[11px] text-muted-foreground whitespace-nowrap">Review Date</Label>
+          <Input
+            value={reviewDate}
+            onChange={(e) => setReviewDate(e.target.value)}
+            placeholder="MM/DD/YYYY"
+            className="h-8 w-28 text-xs"
+          />
+        </div>
+
+        <div className="flex flex-wrap items-center gap-1.5">
+          <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-customers/sr-documents")}>
+            Back
+          </Button>
+          <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => toast({ title: "Line #'s updated" })}>
+            Update Line #'s
+          </Button>
+          <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => toast({ title: "PDF generated" })}>
+            Generate PDF
+          </Button>
+          <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => toast({ title: "Shipping notified" })}>
+            Notify Shipping
+          </Button>
+          <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => toast({ title: "Delivery notified" })}>
+            Notify Delivery
+          </Button>
+        </div>
+
+        <div className="flex items-center gap-1.5">
+          <Label className="text-[11px] text-muted-foreground whitespace-nowrap">Last Generated</Label>
+          <Select value={lastGenerated} onValueChange={setLastGenerated}>
+            <SelectTrigger className="h-8 w-36 text-xs">
+              <SelectValue placeholder="Select" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="none">—</SelectItem>
+            </SelectContent>
+          </Select>
+          {pdfName && (
+            <button
+              type="button"
+              className="text-xs text-slate-900 underline underline-offset-2 hover:text-slate-700"
+              onClick={() => toast({ title: "Opening PDF", description: pdfName })}
+            >
+              {pdfName}
+            </button>
+          )}
+        </div>
+
+        <div className="ml-auto flex items-center gap-4">
+          <div className="text-[10px] leading-tight text-muted-foreground text-right">
+            <div className="font-semibold text-foreground">Modified by</div>
+            <div>Admin User · {new Date().toLocaleDateString("en-US")}</div>
+          </div>
+          <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-customers/sr-documents")}>
+            Cancel
+          </Button>
+          <Button
+            size="sm"
+            className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
+            onClick={handleCreate}
+          >
+            Save
+          </Button>
+        </div>
       </div>
+
     </div>
   );
 }
