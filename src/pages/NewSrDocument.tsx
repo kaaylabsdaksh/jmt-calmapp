@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import ModernTopNav from "@/components/modern/ModernTopNav";
+import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
+
 
 const SR_TYPES = [
   "Customer Service",
