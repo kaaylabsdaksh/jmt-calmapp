@@ -831,8 +831,30 @@ const AccountAdminView = () => {
                   return (
                     <div
                       key={key}
-                      className="flex items-center gap-2 rounded-md px-2 py-1 text-xs text-foreground hover:bg-muted"
+                      draggable
+                      onDragStart={() => setDragCol(key)}
+                      onDragOver={(e) => {
+                        e.preventDefault();
+                        setDragOverCol(key);
+                      }}
+                      onDragLeave={() => setDragOverCol((p) => (p === key ? null : p))}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        if (dragCol) reorderColumns(dragCol, key);
+                        setDragCol(null);
+                        setDragOverCol(null);
+                      }}
+                      onDragEnd={() => {
+                        setDragCol(null);
+                        setDragOverCol(null);
+                      }}
+                      className={cn(
+                        "flex items-center gap-2 rounded-md px-2 py-1 text-xs text-foreground hover:bg-muted",
+                        dragCol === key && "opacity-50",
+                        dragOverCol === key && dragCol !== key && "ring-1 ring-primary"
+                      )}
                     >
+                      <GripVertical className="h-3.5 w-3.5 shrink-0 cursor-grab text-muted-foreground active:cursor-grabbing" />
                       <button
                         onClick={() =>
                           setVisibleColumns((prev) =>
@@ -863,6 +885,7 @@ const AccountAdminView = () => {
                     </div>
                   );
                 })}
+
               </div>
             </PopoverContent>
           </Popover>
