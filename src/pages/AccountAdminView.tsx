@@ -8,6 +8,9 @@ import {
   Bookmark,
   ChevronDown,
   ChevronRight,
+  ChevronUp,
+  RotateCcw,
+
   X,
   SlidersHorizontal,
   Inbox,
@@ -688,6 +691,8 @@ const AccountAdminView = () => {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [visibleColumns, setVisibleColumns] = useState<ColumnKey[]>(ALL_COLUMNS.map((c) => c.key));
+  const [columnOrder, setColumnOrder] = useState<ColumnKey[]>(ALL_COLUMNS.map((c) => c.key));
+
   const [followUpOpen, setFollowUpOpen] = useState(true);
   const [upcomingOpen, setUpcomingOpen] = useState(true);
   const [poDialog, setPoDialog] = useState<string | null>(null);
@@ -751,7 +756,27 @@ const AccountAdminView = () => {
   }, [filtered, needsFollowUp.length]);
 
 
-  const columns = ALL_COLUMNS.filter((c) => visibleColumns.includes(c.key)).map((c) => c.key);
+  const orderedColumns = columnOrder
+    .map((k) => ALL_COLUMNS.find((c) => c.key === k)!)
+    .filter((c) => c && visibleColumns.includes(c.key));
+  const columns = orderedColumns.map((c) => c.key);
+
+  const moveColumn = (index: number, dir: -1 | 1) => {
+    setColumnOrder((prev) => {
+      const target = index + dir;
+      if (target < 0 || target >= prev.length) return prev;
+      const next = [...prev];
+      [next[index], next[target]] = [next[target], next[index]];
+      return next;
+    });
+  };
+
+  const resetColumns = () => {
+    setColumnOrder(ALL_COLUMNS.map((c) => c.key));
+    setVisibleColumns(ALL_COLUMNS.map((c) => c.key));
+  };
+
+
 
   const renderSection = (
     title: string,
@@ -776,26 +801,59 @@ const AccountAdminView = () => {
               </Button>
 
             </PopoverTrigger>
-            <PopoverContent align="end" className="w-56 p-2">
+            <PopoverContent align="end" className="w-64 p-2">
+              <div className="mb-1.5 flex items-center justify-between px-1">
+                <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                  Columns
+                </span>
+                <Button variant="ghost" size="sm" className="h-6 gap-1 px-1.5 text-[11px]" onClick={resetColumns}>
+                  <RotateCcw className="h-3 w-3" />
+                  Reset
+                </Button>
+              </div>
               <div className="flex max-h-72 flex-col gap-0.5 overflow-y-auto">
-                {ALL_COLUMNS.map((c) => (
-                  <button
-                    key={c.key}
-                    onClick={() =>
-                      setVisibleColumns((prev) =>
-                        prev.includes(c.key) ? prev.filter((k) => k !== c.key) : [...prev, c.key]
-                      )
-                    }
-                    className="flex items-center gap-2 rounded-md px-2 py-1.5 text-left text-xs text-foreground hover:bg-muted"
-                  >
-                    <Checkbox checked={visibleColumns.includes(c.key)} className="pointer-events-none h-3.5 w-3.5" />
-                    {c.label}
-                  </button>
-                ))}
+                {columnOrder.map((key, idx) => {
+                  const c = ALL_COLUMNS.find((col) => col.key === key)!;
+                  return (
+                    <div
+                      key={key}
+                      className="flex items-center gap-2 rounded-md px-2 py-1 text-xs text-foreground hover:bg-muted"
+                    >
+                      <button
+                        onClick={() =>
+                          setVisibleColumns((prev) =>
+                            prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
+                          )
+                        }
+                        className="flex flex-1 items-center gap-2 text-left"
+                      >
+                        <Checkbox checked={visibleColumns.includes(key)} className="pointer-events-none h-3.5 w-3.5" />
+                        {c.label}
+                      </button>
+                      <button
+                        onClick={() => moveColumn(idx, -1)}
+                        disabled={idx === 0}
+                        className="rounded p-0.5 text-muted-foreground hover:bg-background hover:text-foreground disabled:opacity-30"
+                        title="Move up"
+                      >
+                        <ChevronUp className="h-3 w-3" />
+                      </button>
+                      <button
+                        onClick={() => moveColumn(idx, 1)}
+                        disabled={idx === columnOrder.length - 1}
+                        className="rounded p-0.5 text-muted-foreground hover:bg-background hover:text-foreground disabled:opacity-30"
+                        title="Move down"
+                      >
+                        <ChevronDown className="h-3 w-3" />
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
             </PopoverContent>
           </Popover>
         </div>
+
 
         <CollapsibleContent>
           <CardContent className="p-0">
@@ -821,11 +879,12 @@ const AccountAdminView = () => {
                   <thead className="sticky top-0 z-10 bg-card">
                     <tr className="text-left text-[10px] uppercase tracking-wide text-muted-foreground">
                       <th className="w-8 px-0 py-2" />
-                      {ALL_COLUMNS.filter((c) => visibleColumns.includes(c.key)).map((c) => (
+                      {orderedColumns.map((c) => (
                         <th key={c.key} className="whitespace-nowrap px-3 py-2 font-semibold">
                           {c.label}
                         </th>
                       ))}
+
                     </tr>
                   </thead>
                   <tbody>
