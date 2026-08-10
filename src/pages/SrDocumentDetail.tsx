@@ -190,13 +190,35 @@ const SrDocumentDetail = () => {
 
   const accounts = useMemo(
     () =>
-      ACCOUNTS.filter(
+      acctList.filter(
         (a) =>
           a.acct.includes(acctSearch) ||
           a.customer.toLowerCase().includes(acctSearch.toLowerCase())
       ),
-    [acctSearch]
+    [acctSearch, acctList]
   );
+
+  const handleAddAccount = () => {
+    const acct = newAcct.acct.trim();
+    if (!acct) {
+      toast({ title: "Account # required", variant: "destructive" });
+      return;
+    }
+    if (acctList.some((a) => a.acct === acct)) {
+      toast({ title: "Account already linked", variant: "destructive" });
+      return;
+    }
+    setAcctList((p) => [...p, { acct, customer: newAcct.customer.trim() || "—" }]);
+    setNewAcct({ acct: "", customer: "" });
+    setShowAcctAdd(false);
+    toast({ title: "Account added", description: acct });
+  };
+
+  const handleRemoveAccount = (acct: string) => {
+    setAcctList((p) => p.filter((a) => a.acct !== acct));
+    toast({ title: "Account removed", description: acct });
+  };
+
 
   const handleAdd = () => {
     if (!draft.type || !draft.text.trim()) {
