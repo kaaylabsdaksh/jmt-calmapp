@@ -821,11 +821,12 @@ const AccountAdminView = () => {
                   <thead className="sticky top-0 z-10 bg-card">
                     <tr className="text-left text-[10px] uppercase tracking-wide text-muted-foreground">
                       <th className="w-8 px-0 py-2" />
-                      {ALL_COLUMNS.filter((c) => visibleColumns.includes(c.key)).map((c) => (
+                      {orderedColumns.map((c) => (
                         <th key={c.key} className="whitespace-nowrap px-3 py-2 font-semibold">
                           {c.label}
                         </th>
                       ))}
+
                     </tr>
                   </thead>
                   <tbody>
