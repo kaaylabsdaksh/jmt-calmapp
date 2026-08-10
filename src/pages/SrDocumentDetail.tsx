@@ -640,6 +640,93 @@ const SrDocumentDetail = () => {
       </div>
 
 
+      <Dialog open={!!editingId} onOpenChange={(o) => !o && setEditingId(null)}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="text-base">Edit Instruction</DialogTitle>
+            <DialogDescription className="text-xs">
+              Update the details of this instruction for {sr}.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3">
+            <div className="space-y-1">
+              <Label className="text-[11px] font-medium text-muted-foreground">
+                Type <span className="text-destructive">*</span>
+              </Label>
+              <Select
+                value={editDraft.type}
+                onValueChange={(v) => setEditDraft((p) => ({ ...p, type: v }))}
+              >
+                <SelectTrigger className="h-8 text-xs">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent className="bg-popover z-50">
+                  {TYPES.map((t) => (
+                    <SelectItem key={t} value={t} className="text-xs">
+                      {t}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <Label className="text-[11px] font-medium text-muted-foreground">
+                  Requested By
+                </Label>
+                <Input
+                  className="h-8 text-xs"
+                  value={editDraft.requestedBy}
+                  onChange={(e) =>
+                    setEditDraft((p) => ({ ...p, requestedBy: e.target.value }))
+                  }
+                />
+              </div>
+              <div className="space-y-1">
+                <Label className="text-[11px] font-medium text-muted-foreground">
+                  Submitted By
+                </Label>
+                <Input
+                  className="h-8 text-xs"
+                  value={editDraft.submittedBy}
+                  onChange={(e) =>
+                    setEditDraft((p) => ({ ...p, submittedBy: e.target.value }))
+                  }
+                />
+              </div>
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[11px] font-medium text-muted-foreground">
+                Instructions <span className="text-destructive">*</span>
+              </Label>
+              <Textarea
+                rows={6}
+                className="text-xs resize-none"
+                value={editDraft.text}
+                onChange={(e) => setEditDraft((p) => ({ ...p, text: e.target.value }))}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 text-xs"
+              onClick={() => setEditingId(null)}
+            >
+              Cancel
+            </Button>
+            <Button
+              size="sm"
+              className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
+              onClick={saveEdit}
+            >
+              <Save className="h-3.5 w-3.5 mr-1.5" />Update
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <AlertDialog open={!!deleteId} onOpenChange={(o) => !o && setDeleteId(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
