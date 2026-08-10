@@ -10,6 +10,7 @@ import {
   ChevronRight,
   ChevronUp,
   RotateCcw,
+  GripVertical,
 
   X,
   SlidersHorizontal,
@@ -38,6 +39,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -692,6 +694,8 @@ const AccountAdminView = () => {
   const [loading, setLoading] = useState(false);
   const [visibleColumns, setVisibleColumns] = useState<ColumnKey[]>(ALL_COLUMNS.map((c) => c.key));
   const [columnOrder, setColumnOrder] = useState<ColumnKey[]>(ALL_COLUMNS.map((c) => c.key));
+  const [dragCol, setDragCol] = useState<ColumnKey | null>(null);
+  const [dragOverCol, setDragOverCol] = useState<ColumnKey | null>(null);
 
   const [followUpOpen, setFollowUpOpen] = useState(true);
   const [upcomingOpen, setUpcomingOpen] = useState(true);
@@ -771,6 +775,20 @@ const AccountAdminView = () => {
     });
   };
 
+  const reorderColumns = (from: ColumnKey, to: ColumnKey) => {
+    if (from === to) return;
+    setColumnOrder((prev) => {
+      const next = [...prev];
+      const fromIdx = next.indexOf(from);
+      const toIdx = next.indexOf(to);
+      if (fromIdx < 0 || toIdx < 0) return prev;
+      next.splice(fromIdx, 1);
+      next.splice(toIdx, 0, from);
+      return next;
+    });
+  };
+
+
   const resetColumns = () => {
     setColumnOrder(ALL_COLUMNS.map((c) => c.key));
     setVisibleColumns(ALL_COLUMNS.map((c) => c.key));
@@ -817,8 +835,30 @@ const AccountAdminView = () => {
                   return (
                     <div
                       key={key}
-                      className="flex items-center gap-2 rounded-md px-2 py-1 text-xs text-foreground hover:bg-muted"
+                      draggable
+                      onDragStart={() => setDragCol(key)}
+                      onDragOver={(e) => {
+                        e.preventDefault();
+                        setDragOverCol(key);
+                      }}
+                      onDragLeave={() => setDragOverCol((p) => (p === key ? null : p))}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        if (dragCol) reorderColumns(dragCol, key);
+                        setDragCol(null);
+                        setDragOverCol(null);
+                      }}
+                      onDragEnd={() => {
+                        setDragCol(null);
+                        setDragOverCol(null);
+                      }}
+                      className={cn(
+                        "flex items-center gap-2 rounded-md px-2 py-1 text-xs text-foreground hover:bg-muted",
+                        dragCol === key && "opacity-50",
+                        dragOverCol === key && dragCol !== key && "ring-1 ring-primary"
+                      )}
                     >
+                      <GripVertical className="h-3.5 w-3.5 shrink-0 cursor-grab text-muted-foreground active:cursor-grabbing" />
                       <button
                         onClick={() =>
                           setVisibleColumns((prev) =>
@@ -849,6 +889,7 @@ const AccountAdminView = () => {
                     </div>
                   );
                 })}
+
               </div>
             </PopoverContent>
           </Popover>
