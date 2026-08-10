@@ -70,9 +70,16 @@ type Instruction = {
 const TYPES = [
   "Customer Service",
   "Sales",
-  "Accounting",
+  "Rental",
+  "Receiving",
+  "To Factory",
+  "Lab",
+  "QA",
+  "Metrology",
+  "Pricing/Quoting",
+  "A/R",
+  "Delivery",
   "Shipping",
-  "Quality",
 ];
 
 const SEED: Instruction[] = [
@@ -182,6 +189,7 @@ const SrDocumentDetail = () => {
 
   const grouped = useMemo(() => {
     const map = new Map<string, Instruction[]>();
+    TYPES.forEach((t) => map.set(t, []));
     items.forEach((i) => {
       map.set(i.type, [...(map.get(i.type) || []), i]);
     });
