@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Plus, X, Upload, Users, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -375,8 +375,8 @@ export default function NewSrDocument() {
                     {SR_TYPES.map((t) => {
                       const rows = added.filter((a) => a.type === t);
                       return (
-                        <>
-                          <tr key={t} className="border-t bg-muted/20">
+                        <Fragment key={t}>
+                          <tr className="border-t bg-muted/20">
                             <td colSpan={7} className="px-3 py-1.5 font-semibold">
                               {t}
                             </td>
@@ -401,7 +401,7 @@ export default function NewSrDocument() {
                               </td>
                             </tr>
                           ))}
-                        </>
+                        </Fragment>
                       );
                     })}
                   </tbody>
