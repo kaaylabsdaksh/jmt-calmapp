@@ -560,7 +560,7 @@ const SrDocumentDetail = () => {
                               </TableCell>
 
                               <TableCell className="py-2">
-                                <div className="flex items-center justify-end gap-0.5">
+                                <div className="flex items-center justify-end gap-0.5 opacity-60 group-hover:opacity-100 transition-opacity">
                                   <Button
                                     variant="ghost"
                                     size="sm"
@@ -590,13 +590,7 @@ const SrDocumentDetail = () => {
                                   </Button>
                                 </div>
                               </TableCell>
-                              <TableCell className="py-2">
-                                <Input
-                                  value={r.line}
-                                  onChange={(e) => setLine(r.id, e.target.value)}
-                                  className="h-7 w-14 text-xs text-center"
-                                />
-                              </TableCell>
+
                             </TableRow>
                           ))}
                         </Fragment>
