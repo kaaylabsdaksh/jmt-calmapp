@@ -702,74 +702,24 @@ const SrDocumentDetail = () => {
 
       {/* Sticky footer */}
       <div className="fixed bottom-0 left-[var(--sidebar-width,16rem)] right-0 z-40 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-        <div className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-2 flex flex-wrap items-center gap-x-4 gap-y-2">
-          <div className="text-[10px] leading-tight text-muted-foreground">
-            <div className="font-semibold text-foreground">Created by</div>
-            <div>Admin User · 08/10/2026 03:40 AM</div>
-          </div>
-
-          <div className="flex items-center gap-1.5">
-            <Label className="text-[11px] text-muted-foreground whitespace-nowrap">Review Date</Label>
-            <Input
-              value={reviewDate}
-              onChange={(e) => setReviewDate(e.target.value)}
-              placeholder="MM/DD/YYYY"
-              className="h-8 w-28 text-xs"
-            />
-          </div>
-
-          <div className="flex flex-wrap items-center gap-1.5">
-            <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-customers/sr-documents")}>
-              Back
-            </Button>
-            <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => toast({ title: "Line #'s updated" })}>
-              Update Line #'s
-            </Button>
-            <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => toast({ title: "PDF generated", description: `${sr}.pdf` })}>
-              Generate PDF
-            </Button>
-            <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => toast({ title: "Shipping notified" })}>
-              Notify Shipping
-            </Button>
-            <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => toast({ title: "Delivery notified" })}>
-              Notify Delivery
-            </Button>
-          </div>
-
-          <div className="flex items-center gap-1.5">
-            <Label className="text-[11px] text-muted-foreground whitespace-nowrap">Last Generated</Label>
-            <Select value={lastGenerated} onValueChange={setLastGenerated}>
-              <SelectTrigger className="h-8 w-36 text-xs">
-                <SelectValue placeholder="Select" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="08/10/2026 03:40 AM">08/10/2026 03:40 AM</SelectItem>
-                <SelectItem value="07/22/2026 11:05 AM">07/22/2026 11:05 AM</SelectItem>
-              </SelectContent>
-            </Select>
-            <button
-              type="button"
-              className="text-xs text-slate-900 underline underline-offset-2 hover:text-slate-700"
-              onClick={() => toast({ title: "Opening PDF", description: `${sr}.pdf` })}
-            >
-              {sr}.pdf
-            </button>
-          </div>
-
-          <div className="ml-auto flex items-center gap-4">
-            <div className="text-[10px] leading-tight text-muted-foreground text-right">
-              <div className="font-semibold text-foreground">Modified by</div>
-              <div>Admin User · 08/10/2026 03:40 AM</div>
-            </div>
-            <Button
-              size="sm"
-              className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
-              onClick={() => toast({ title: "Saved", description: `${sr} updated.` })}
-            >
-              <Save className="h-3.5 w-3.5 mr-1.5" />Save
-            </Button>
-          </div>
+        <div className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-2 flex items-center justify-end gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-8 text-xs"
+            onClick={() => navigate("/manage-customers/sr-documents")}
+          >
+            Back
+          </Button>
+          <Button
+            size="sm"
+            className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
+            onClick={() => toast({ title: "Saved", description: `${sr} updated.` })}
+          >
+            <Save className="h-3.5 w-3.5 mr-1.5" />Save
+          </Button>
         </div>
+
       </div>
 
 
