@@ -262,9 +262,9 @@ const SrDocumentDetail = () => {
 
           </div>
 
-          <div className="grid grid-cols-1 xl:grid-cols-[340px_1fr] gap-4 items-start">
+          <div className="grid grid-cols-1 xl:grid-cols-[320px_1fr] gap-4 items-start">
             {/* Left column */}
-            <div className="space-y-4">
+            <div className="space-y-4 xl:sticky xl:top-4 xl:max-h-[calc(100vh-8rem)] xl:overflow-y-auto xl:pr-1">
               {/* Add instruction */}
               <Card>
                 <CardHeader className="p-3 pb-2">
@@ -498,30 +498,26 @@ const SrDocumentDetail = () => {
               <CardContent className="p-0">
                 <div className="overflow-x-auto">
                   <Table>
-                    <TableHeader>
-                      <TableRow className="bg-muted/50 hover:bg-muted/50">
-                        <TableHead className="text-[11px] font-semibold min-w-[24rem]">
+                    <TableHeader className="sticky top-0 z-10">
+                      <TableRow className="bg-muted hover:bg-muted">
+                        <TableHead className="text-[11px] font-semibold w-14 text-center">
+                          Line
+                        </TableHead>
+                        <TableHead className="text-[11px] font-semibold min-w-[28rem]">
                           Instructions
                         </TableHead>
-                        <TableHead className="text-[11px] font-semibold w-36">
-                          Requested By
-                        </TableHead>
-                        <TableHead className="text-[11px] font-semibold w-36">
-                          Submitted By
-                        </TableHead>
-                        <TableHead className="text-[11px] font-semibold w-40">Created</TableHead>
-                        <TableHead className="text-[11px] font-semibold w-40">Modified</TableHead>
-                        <TableHead className="text-[11px] font-semibold w-28 text-right">
+                        <TableHead className="text-[11px] font-semibold w-44">People</TableHead>
+                        <TableHead className="text-[11px] font-semibold w-44">History</TableHead>
+                        <TableHead className="text-[11px] font-semibold w-24 text-right">
                           Actions
                         </TableHead>
-                        <TableHead className="text-[11px] font-semibold w-20">Line #</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {grouped.map(([type, rows]) => (
                         <Fragment key={type}>
-                          <TableRow className="bg-muted/30 hover:bg-muted/30">
-                            <TableCell colSpan={7} className="py-1.5">
+                          <TableRow className="bg-muted/40 hover:bg-muted/40">
+                            <TableCell colSpan={5} className="py-1.5">
                               <span className="text-[11px] font-semibold uppercase tracking-wide">
                                 {type}
                               </span>
@@ -531,26 +527,40 @@ const SrDocumentDetail = () => {
                             </TableCell>
                           </TableRow>
                           {rows.map((r) => (
-                            <TableRow key={r.id} className="hover:bg-muted/40 align-top">
+                            <TableRow key={r.id} className="group hover:bg-muted/40 align-top">
+                              <TableCell className="py-2 text-center">
+                                <Input
+                                  value={r.line}
+                                  onChange={(e) => setLine(r.id, e.target.value)}
+                                  className="h-7 w-10 text-xs text-center px-1 mx-auto"
+                                />
+                              </TableCell>
                               <TableCell className="py-2">
                                 <p
-                                  className={`text-xs leading-relaxed ${
-                                    r.bold ? "font-semibold text-foreground" : "text-muted-foreground"
+                                  className={`text-xs leading-relaxed max-w-[52rem] ${
+                                    r.bold ? "font-semibold text-foreground" : "text-foreground/80"
                                   }`}
                                 >
                                   {r.text}
                                 </p>
                               </TableCell>
-                              <TableCell className="py-2 text-xs">{r.requestedBy}</TableCell>
-                              <TableCell className="py-2 text-xs">{r.submittedBy}</TableCell>
-                              <TableCell className="py-2 text-[11px] text-muted-foreground whitespace-nowrap">
-                                {r.created}
-                              </TableCell>
-                              <TableCell className="py-2 text-[11px] text-muted-foreground whitespace-nowrap">
-                                {r.modified}
-                              </TableCell>
                               <TableCell className="py-2">
-                                <div className="flex items-center justify-end gap-0.5">
+                                <p className="text-xs">{r.requestedBy}</p>
+                                <p className="text-[10px] text-muted-foreground">
+                                  Submitted: {r.submittedBy}
+                                </p>
+                              </TableCell>
+                              <TableCell className="py-2 whitespace-nowrap">
+                                <p className="text-[11px] text-muted-foreground">
+                                  Created {r.created}
+                                </p>
+                                <p className="text-[10px] text-muted-foreground/80">
+                                  Modified {r.modified}
+                                </p>
+                              </TableCell>
+
+                              <TableCell className="py-2">
+                                <div className="flex items-center justify-end gap-0.5 opacity-60 group-hover:opacity-100 transition-opacity">
                                   <Button
                                     variant="ghost"
                                     size="sm"
@@ -580,13 +590,7 @@ const SrDocumentDetail = () => {
                                   </Button>
                                 </div>
                               </TableCell>
-                              <TableCell className="py-2">
-                                <Input
-                                  value={r.line}
-                                  onChange={(e) => setLine(r.id, e.target.value)}
-                                  className="h-7 w-14 text-xs text-center"
-                                />
-                              </TableCell>
+
                             </TableRow>
                           ))}
                         </Fragment>
