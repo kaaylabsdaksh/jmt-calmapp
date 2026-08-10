@@ -927,21 +927,39 @@ const AccountAdminView = () => {
 
                     <MultiSelect label="Location" options={LOCATIONS} values={locations} onChange={setLocations} searchable />
 
-                    <div className="inline-flex items-center gap-1 rounded-lg border border-border bg-muted/40 p-0.5">
-                      {(["All", "Regular", "Onsite"] as const).map((t) => (
+                    <Popover>
+                      <PopoverTrigger asChild>
                         <button
-                          key={t}
-                          onClick={() => setArrivalType(t)}
-                          className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${
-                            arrivalType === t
-                              ? "bg-card text-foreground shadow-sm"
-                              : "text-muted-foreground hover:text-foreground"
+                          className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-all hover:shadow-sm ${
+                            arrivalType !== "All"
+                              ? "border-primary bg-primary text-primary-foreground shadow-sm"
+                              : "border-border bg-card text-foreground hover:border-foreground/30"
                           }`}
                         >
-                          {t}
+                          <span className="opacity-70">Arrival Type:</span>
+                          <span className="font-semibold">{arrivalType}</span>
+                          <ChevronDown className="h-3 w-3 opacity-50" />
                         </button>
-                      ))}
-                    </div>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-40 p-2" align="start">
+                        <div className="flex flex-col gap-0.5">
+                          {(["All", "Regular", "Onsite"] as const).map((t) => (
+                            <button
+                              key={t}
+                              onClick={() => setArrivalType(t)}
+                              className={`rounded-md px-2 py-1.5 text-left text-xs transition-colors ${
+                                arrivalType === t
+                                  ? "bg-primary/10 font-medium text-foreground"
+                                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                              }`}
+                            >
+                              {t}
+                            </button>
+                          ))}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+
 
                     <MultiSelect label="Customer Group" options={CUSTOMER_GROUPS} values={groups} onChange={setGroups} searchable />
 
