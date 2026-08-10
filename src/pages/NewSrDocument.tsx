@@ -337,9 +337,6 @@ export default function NewSrDocument() {
             <div className="font-semibold text-foreground">Modified by</div>
             <div>Admin User · {new Date().toLocaleDateString("en-US")}</div>
           </div>
-          <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-customers/sr-documents")}>
-            Cancel
-          </Button>
           <Button
             size="sm"
             className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
