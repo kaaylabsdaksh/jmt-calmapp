@@ -902,10 +902,6 @@ const AccountAdminView = () => {
                       <Button variant="outline" size="sm" className="h-8 text-xs" onClick={resetFilters}>
                         Clear
                       </Button>
-                      <Button variant="ghost" size="sm" className="h-8 gap-1 text-xs" onClick={resetFilters}>
-                        <X className="h-3.5 w-3.5" />
-                        Reset Filters
-                      </Button>
                     </div>
                   </div>
                 </CardContent>
