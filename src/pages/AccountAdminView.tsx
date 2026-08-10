@@ -688,6 +688,8 @@ const AccountAdminView = () => {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [visibleColumns, setVisibleColumns] = useState<ColumnKey[]>(ALL_COLUMNS.map((c) => c.key));
+  const [columnOrder, setColumnOrder] = useState<ColumnKey[]>(ALL_COLUMNS.map((c) => c.key));
+
   const [followUpOpen, setFollowUpOpen] = useState(true);
   const [upcomingOpen, setUpcomingOpen] = useState(true);
   const [poDialog, setPoDialog] = useState<string | null>(null);
