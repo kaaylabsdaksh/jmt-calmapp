@@ -9,7 +9,7 @@ import {
   ChevronDown,
   ChevronRight,
   X,
-  Columns3,
+  SlidersHorizontal,
   Inbox,
   AlertTriangle,
   Zap,
@@ -737,10 +737,10 @@ const AccountAdminView = () => {
           </CollapsibleTrigger>
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="outline" size="sm" className="h-7 gap-1.5 text-xs">
-                <Columns3 className="h-3.5 w-3.5" />
-                Columns
+              <Button variant="outline" size="icon" className="h-7 w-7" title="Columns">
+                <SlidersHorizontal className="h-3.5 w-3.5" />
               </Button>
+
             </PopoverTrigger>
             <PopoverContent align="end" className="w-56 p-2">
               <div className="flex max-h-72 flex-col gap-0.5 overflow-y-auto">
