@@ -431,9 +431,7 @@ const SrDocuments = () => {
                           <TableCell className="py-2">
                             <button
                               className="text-xs font-medium text-slate-900 hover:underline"
-                              onClick={() =>
-                                toast({ title: r.sr, description: "Opening SR document details." })
-                              }
+                              onClick={() => navigate(`/manage-customers/sr-documents/${r.sr}`)}
                             >
                               {r.sr}
                             </button>
