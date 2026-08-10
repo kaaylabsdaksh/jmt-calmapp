@@ -761,6 +761,22 @@ const AccountAdminView = () => {
     .filter((c) => c && visibleColumns.includes(c.key));
   const columns = orderedColumns.map((c) => c.key);
 
+  const moveColumn = (index: number, dir: -1 | 1) => {
+    setColumnOrder((prev) => {
+      const target = index + dir;
+      if (target < 0 || target >= prev.length) return prev;
+      const next = [...prev];
+      [next[index], next[target]] = [next[target], next[index]];
+      return next;
+    });
+  };
+
+  const resetColumns = () => {
+    setColumnOrder(ALL_COLUMNS.map((c) => c.key));
+    setVisibleColumns(ALL_COLUMNS.map((c) => c.key));
+  };
+
+
 
   const renderSection = (
     title: string,
