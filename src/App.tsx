@@ -42,6 +42,7 @@ import RetestFollowUp from "./pages/RetestFollowUp";
 import CustomerDocumentReviews from "./pages/CustomerDocumentReviews";
 import EditCdr from "./pages/EditCdr";
 import NewCdr from "./pages/NewCdr";
+import SrDocuments from "./pages/SrDocuments";
 import ContractReviews from "./pages/ContractReviews";
 import EditContractReview from "./pages/EditContractReview";
 import NewContractReview from "./pages/NewContractReview";
