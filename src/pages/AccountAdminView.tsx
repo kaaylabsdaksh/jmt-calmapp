@@ -927,6 +927,38 @@ const AccountAdminView = () => {
                       </Button>
                     </div>
                   </div>
+
+                  {(search.trim() || locations.length > 0 || groups.length > 0 || arrivalType !== "All") && (
+                    <div className="flex flex-wrap items-center gap-1.5 border-t border-border pt-2">
+                      <span className="text-[10px] uppercase tracking-wide text-muted-foreground">Filters</span>
+                      {search.trim() && (
+                        <FilterPill label={`Search: ${search.trim()}`} onRemove={() => setSearch("")} />
+                      )}
+                      {arrivalType !== "All" && (
+                        <FilterPill label={`Type: ${arrivalType}`} onRemove={() => setArrivalType("All")} />
+                      )}
+                      {locations.map((l) => (
+                        <FilterPill
+                          key={`loc-${l}`}
+                          label={`Location: ${l}`}
+                          onRemove={() => setLocations(locations.filter((x) => x !== l))}
+                        />
+                      ))}
+                      {groups.map((g) => (
+                        <FilterPill
+                          key={`grp-${g}`}
+                          label={`Group: ${g}`}
+                          onRemove={() => setGroups(groups.filter((x) => x !== g))}
+                        />
+                      ))}
+                      <button
+                        onClick={resetFilters}
+                        className="ml-1 text-[11px] font-medium text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+                      >
+                        Clear all
+                      </button>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 
