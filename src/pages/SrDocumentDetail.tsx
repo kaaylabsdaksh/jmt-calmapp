@@ -186,6 +186,9 @@ const SrDocumentDetail = () => {
   const [pdfDescription, setPdfDescription] = useState("");
   const [pdfName, setPdfName] = useState("");
   const [files, setFiles] = useState<{ name: string; description: string }[]>([]);
+  const [reviewDate, setReviewDate] = useState("08/10/2027");
+  const [lastGenerated, setLastGenerated] = useState("08/10/2026 03:40 AM");
+
 
   const grouped = useMemo(() => {
     const map = new Map<string, Instruction[]>();
