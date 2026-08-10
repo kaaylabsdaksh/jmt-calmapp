@@ -727,15 +727,42 @@ const AccountAdminView = () => {
   ) => (
     <Collapsible open={open} onOpenChange={setOpen}>
       <Card className="overflow-hidden">
-        <CollapsibleTrigger asChild>
-          <button className="flex w-full items-center justify-between border-b border-border bg-muted/40 px-4 py-2.5 text-left transition-colors hover:bg-muted/60">
-            <div className="flex items-center gap-2">
+        <div className="flex w-full items-center justify-between border-b border-border bg-muted/40 px-4 py-2.5">
+          <CollapsibleTrigger asChild>
+            <button className="flex flex-1 items-center gap-2 text-left">
               {open ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
               <span className="text-sm font-semibold text-foreground">{title}</span>
               <Badge variant="secondary" className="text-[10px]">{list.length}</Badge>
-            </div>
-          </button>
-        </CollapsibleTrigger>
+            </button>
+          </CollapsibleTrigger>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline" size="sm" className="h-7 gap-1.5 text-xs">
+                <Columns3 className="h-3.5 w-3.5" />
+                Columns
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent align="end" className="w-56 p-2">
+              <div className="flex max-h-72 flex-col gap-0.5 overflow-y-auto">
+                {ALL_COLUMNS.map((c) => (
+                  <button
+                    key={c.key}
+                    onClick={() =>
+                      setVisibleColumns((prev) =>
+                        prev.includes(c.key) ? prev.filter((k) => k !== c.key) : [...prev, c.key]
+                      )
+                    }
+                    className="flex items-center gap-2 rounded-md px-2 py-1.5 text-left text-xs text-foreground hover:bg-muted"
+                  >
+                    <Checkbox checked={visibleColumns.includes(c.key)} className="pointer-events-none h-3.5 w-3.5" />
+                    {c.label}
+                  </button>
+                ))}
+              </div>
+            </PopoverContent>
+          </Popover>
+        </div>
+
         <CollapsibleContent>
           <CardContent className="p-0">
             {loading ? (
