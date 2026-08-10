@@ -818,28 +818,20 @@ const AccountAdminView = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" onClick={refresh}>
+              <Button variant="outline" size="icon" className="h-8 w-8" onClick={refresh} title="Refresh" aria-label="Refresh">
                 <RefreshCw className="h-3.5 w-3.5" />
-                Refresh
               </Button>
               <Button
                 variant="outline"
-                size="sm"
-                className="h-8 gap-1.5 text-xs"
+                size="icon"
+                className="h-8 w-8"
+                title="Export"
+                aria-label="Export"
                 onClick={() => toast({ title: "Export complete", description: "Batch queue exported to Excel." })}
               >
                 <Download className="h-3.5 w-3.5" />
-                Export
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-8 gap-1.5 text-xs"
-                onClick={() => toast({ title: "View saved", description: "Current filters saved as a view." })}
-              >
-                <Bookmark className="h-3.5 w-3.5" />
-                Saved Views
-              </Button>
+
             </div>
           </div>
         </header>
