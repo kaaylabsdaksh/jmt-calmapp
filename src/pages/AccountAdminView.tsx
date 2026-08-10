@@ -751,7 +751,11 @@ const AccountAdminView = () => {
   }, [filtered, needsFollowUp.length]);
 
 
-  const columns = ALL_COLUMNS.filter((c) => visibleColumns.includes(c.key)).map((c) => c.key);
+  const orderedColumns = columnOrder
+    .map((k) => ALL_COLUMNS.find((c) => c.key === k)!)
+    .filter((c) => c && visibleColumns.includes(c.key));
+  const columns = orderedColumns.map((c) => c.key);
+
 
   const renderSection = (
     title: string,
