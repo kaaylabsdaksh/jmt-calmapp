@@ -845,19 +845,29 @@ const AccountAdminView = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="icon" className="h-8 w-8" onClick={refresh} title="Refresh" aria-label="Refresh">
-                <RefreshCw className="h-3.5 w-3.5" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-8 w-8"
-                title="Export"
-                aria-label="Export"
-                onClick={() => toast({ title: "Export complete", description: "Batch queue exported to Excel." })}
-              >
-                <Download className="h-3.5 w-3.5" />
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="outline" size="icon" className="h-8 w-8" onClick={refresh} aria-label="Refresh">
+                    <RefreshCw className="h-3.5 w-3.5" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent className="text-xs">Refresh</TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-8 w-8"
+                    aria-label="Export"
+                    onClick={() => toast({ title: "Export complete", description: "Batch queue exported to Excel." })}
+                  >
+                    <Download className="h-3.5 w-3.5" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent className="text-xs">Export</TooltipContent>
+              </Tooltip>
+
 
             </div>
           </div>
