@@ -147,19 +147,40 @@ export default function NewSrDocument() {
                     placeholder="Type the special requirement..."
                   />
                 </div>
-                <div className="space-y-1 max-w-[200px]">
-                  <Label className="text-[11px] font-medium text-muted-foreground">
-                    Review Date
-                  </Label>
-                  <Input
-                    className="h-8 text-xs"
-                    placeholder="MM/DD/YYYY"
-                    value={reviewDate}
-                    onChange={(e) => setReviewDate(e.target.value)}
-                  />
+                <div className="flex items-end justify-between gap-2">
+                  <div className="space-y-1 max-w-[200px]">
+                    <Label className="text-[11px] font-medium text-muted-foreground">
+                      Review Date
+                    </Label>
+                    <Input
+                      className="h-8 text-xs"
+                      placeholder="MM/DD/YYYY"
+                      value={reviewDate}
+                      onChange={(e) => setReviewDate(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-8 text-xs"
+                      onClick={() => {
+                        setType("");
+                        setRequestedBy("");
+                        setSubmittedBy("");
+                        setInstructions("");
+                      }}
+                    >
+                      Clear
+                    </Button>
+                    <Button size="sm" className="h-8 text-xs" onClick={addInstruction}>
+                      <Plus className="h-3.5 w-3.5 mr-1" />Add
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
+
 
             <div className="space-y-4">
               {/* Accounts */}
