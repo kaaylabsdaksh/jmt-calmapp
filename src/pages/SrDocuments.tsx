@@ -41,6 +41,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { format } from "date-fns";
 import ModernTopNav from "@/components/modern/ModernTopNav";
+import NewSrDialog from "@/components/sr/NewSrDialog";
 
 
 type SrDoc = {
