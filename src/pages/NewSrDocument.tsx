@@ -294,9 +294,6 @@ export default function NewSrDocument() {
 
 
         <div className="flex flex-wrap items-center gap-1.5">
-          <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-customers/sr-documents")}>
-            Back
-          </Button>
           <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => toast({ title: "Line #'s updated" })}>
             Update Line #'s
           </Button>
