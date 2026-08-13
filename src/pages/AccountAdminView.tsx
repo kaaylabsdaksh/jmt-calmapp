@@ -743,7 +743,7 @@ const AccountAdminView = () => {
   }, []);
 
   const saveFilterDefaults = () => {
-    const payload = { search, locations, arrivalType, groups, divisions };
+    const payload = { search, locations, arrivalType, groups, divisions, invoiceStatuses };
     localStorage.setItem("accountAdminFilters", JSON.stringify(payload));
     toast({ title: "Filter defaults saved", description: "Current filters will be applied on your next visit." });
   };
@@ -753,6 +753,7 @@ const AccountAdminView = () => {
     setArrivalType("All");
     setGroups([]);
     setDivisions([]);
+    setInvoiceStatuses([]);
     setSearch("");
     toast({ title: "Filters reset", description: "Showing all qualifying batches." });
   };
