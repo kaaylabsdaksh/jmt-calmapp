@@ -189,6 +189,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     location: "Baton Rouge",
     arrivalType: "Regular",
     customerGroup: "1",
+    division: "Distribution",
     lastComment: "Left voicemail with AP contact regarding outstanding PO.",
     lastCommentAge: "3 days ago",
     followUp: "2026-07-28",
