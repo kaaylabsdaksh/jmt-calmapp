@@ -734,6 +734,7 @@ const AccountAdminView = () => {
         }
         if (Array.isArray(parsed.groups)) setGroups(parsed.groups);
         if (Array.isArray(parsed.divisions)) setDivisions(parsed.divisions);
+        if (Array.isArray(parsed.invoiceStatuses)) setInvoiceStatuses(parsed.invoiceStatuses);
         if (typeof parsed.search === "string") setSearch(parsed.search);
       }
     } catch {
