@@ -93,6 +93,7 @@ interface AdminBatch {
 
 const LOCATIONS = ["Port Arthur", "Houston", "Baton Rouge", "Odessa", "Norco"];
 const CUSTOMER_GROUPS = ["A", "B", "C", "D", "E", "0", "1", "2", "3", "4"];
+const DIVISIONS = ["Transmission", "Distribution", "Substation", "Industrial", "Generation"];
 
 const mkItems = (wo: string, defs: Partial<AdminItem>[]): AdminItem[] =>
   defs.map((d, i) => ({
