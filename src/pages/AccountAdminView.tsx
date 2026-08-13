@@ -1119,6 +1119,8 @@ const AccountAdminView = () => {
 
                     <MultiSelect label="Division" options={DIVISIONS} values={divisions} onChange={setDivisions} searchable />
 
+                    <MultiSelect label="Invoice Status" options={INVOICE_STATUSES} values={invoiceStatuses} onChange={setInvoiceStatuses} searchable />
+
 
                     <div className="ml-auto flex items-center gap-2">
                       <Button
