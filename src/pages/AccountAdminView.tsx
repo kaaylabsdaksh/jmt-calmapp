@@ -146,6 +146,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     location: "Norco",
     arrivalType: "Onsite",
     customerGroup: "B",
+    division: "Industrial",
     lastComment: "Customer requested consolidated delivery ticket for all onsite items.",
     lastCommentAge: "1 day ago",
     followUp: "2026-08-03",
