@@ -745,7 +745,7 @@ const AccountAdminView = () => {
   }, []);
 
   const saveFilterDefaults = () => {
-    const payload = { search, locations, arrivalType, groups, divisions, invoiceStatuses };
+    const payload = { search, locations, arrivalType, groups, divisions, invoiceStatuses, excludeOpenItems };
     localStorage.setItem("accountAdminFilters", JSON.stringify(payload));
     toast({ title: "Filter defaults saved", description: "Current filters will be applied on your next visit." });
   };
@@ -756,6 +756,7 @@ const AccountAdminView = () => {
     setGroups([]);
     setDivisions([]);
     setInvoiceStatuses([]);
+    setExcludeOpenItems(false);
     setSearch("");
     toast({ title: "Filters reset", description: "Showing all qualifying batches." });
   };
