@@ -340,7 +340,7 @@ export default function BulkContractPricingUpdate() {
                   <DollarSign className="h-3.5 w-3.5 text-muted-foreground" />Default Pricing
                 </Label>
               </div>
-              <fieldset disabled={!defaultOn} className="space-y-2 disabled:opacity-60">
+              <fieldset disabled={!defaultOn} className="space-y-2">
                 <RadioGroup value={rateMode} onValueChange={(v) => setRateMode(v as "hourly" | "pct")} className="grid gap-2 sm:grid-cols-2">
                   <div className="space-y-1">
                     <div className="flex items-center gap-1.5">
@@ -388,7 +388,7 @@ export default function BulkContractPricingUpdate() {
                 <Checkbox id="eslOn" checked={eslOn} onCheckedChange={(v) => setEslOn(!!v)} />
                 <Label htmlFor="eslOn" className="text-xs font-semibold">ESL Pricing</Label>
               </div>
-              <fieldset disabled={!eslOn} className="space-y-2 disabled:opacity-60">
+              <fieldset disabled={!eslOn} className="space-y-2">
                 <div className="space-y-1">
                   <Label className={label}>ESL Contract</Label>
                   <RadioGroup value={eslValue} onValueChange={(v) => setEslValue(v as "yes" | "no")} className="flex items-center gap-4 pt-0.5">
