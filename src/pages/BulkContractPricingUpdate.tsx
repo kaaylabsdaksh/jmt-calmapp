@@ -296,6 +296,8 @@ export default function BulkContractPricingUpdate() {
                   items={chosen}
                   highlight={chosenHighlight}
                   onToggle={(a) => toggle(chosenHighlight, setChosenHighlight, a)}
+                  onAction={removeAccount}
+                  mode="chosen"
                   empty="Select accounts on the left and move them here"
                 />
               </div>
