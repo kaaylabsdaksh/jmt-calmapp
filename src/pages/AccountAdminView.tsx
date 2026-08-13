@@ -1089,14 +1089,16 @@ const AccountAdminView = () => {
 
 
                     <div className="ml-auto flex items-center gap-2">
-
-
                       <Button
                         size="sm"
                         className="h-8 text-xs"
                         onClick={() => toast({ title: "Filters applied", description: `${filtered.length} batches match.` })}
                       >
                         Search
+                      </Button>
+                      <Button variant="outline" size="sm" className="h-8 text-xs" onClick={saveFilterDefaults}>
+                        <Bookmark className="mr-1.5 h-3.5 w-3.5" />
+                        Save Filters
                       </Button>
                       <Button variant="outline" size="sm" className="h-8 text-xs" onClick={resetFilters}>
                         Clear
