@@ -77,6 +77,7 @@ interface AdminBatch {
   location: string;
   arrivalType: "Regular" | "Onsite";
   customerGroup: string;
+  division: string;
   lastComment: string;
   lastCommentAge: string;
   followUp: string;
