@@ -211,6 +211,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     location: "Odessa",
     arrivalType: "Onsite",
     customerGroup: "D",
+    division: "Industrial",
     lastComment: "Quote #Q-4471 sent for the replacement torque wrenches.",
     lastCommentAge: "6 hours ago",
     followUp: "2026-08-06",
