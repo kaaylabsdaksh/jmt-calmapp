@@ -523,7 +523,10 @@ const BatchRow = ({
         );
       case "actions":
         return (
-          <td key={key} className="whitespace-nowrap px-3 py-2">
+          <td
+            key={key}
+            className="sticky right-0 z-10 whitespace-nowrap bg-card px-3 py-2 shadow-[-2px_0_4px_rgba(0,0,0,0.05)] group-hover:bg-muted/40"
+          >
             <div className="flex items-center gap-1.5">
               {["Delivery Ticket", "Quote", "Follow Up", "Ready to Bill"].map((label) => (
                 <Button key={label} variant="outline" size="sm" className="h-7 px-2 text-[11px]">
@@ -540,7 +543,7 @@ const BatchRow = ({
 
   return (
     <>
-      <tr className="border-t border-border transition-colors hover:bg-muted/40">
+      <tr className="group border-t border-border transition-colors hover:bg-muted/40">
         <td className="w-8 py-0 pl-0 pr-0">
           <div className="flex items-stretch">
             <div className={`w-[3px] self-stretch ${BORDER_BY_PRIORITY[priority]}`} style={{ minHeight: 40 }} />
@@ -945,7 +948,13 @@ const AccountAdminView = () => {
                     <tr className="text-left text-[10px] uppercase tracking-wide text-muted-foreground">
                       <th className="w-8 px-0 py-2" />
                       {orderedColumns.map((c) => (
-                        <th key={c.key} className="whitespace-nowrap px-3 py-2 font-semibold">
+                        <th
+                          key={c.key}
+                          className={cn(
+                            "whitespace-nowrap px-3 py-2 font-semibold",
+                            c.key === "actions" && "sticky right-0 z-20 bg-card shadow-[-2px_0_4px_rgba(0,0,0,0.05)]"
+                          )}
+                        >
                           {c.label}
                         </th>
                       ))}
