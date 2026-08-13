@@ -352,7 +352,7 @@ export default function BulkContractPricingUpdate() {
                   <div className="space-y-1">
                     <div className="flex items-center gap-1.5">
                       <RadioGroupItem value="pct" id="pct" className="h-3.5 w-3.5" />
-                      <Label htmlFor="pct" className={label}>Pct</Label>
+                      <Label htmlFor="pct" className={label}>Percentage</Label>
                     </div>
                     <Input value={pct} onChange={(e) => setPct(e.target.value)} disabled={rateMode !== "pct"} placeholder="0" className={field} />
                   </div>
