@@ -100,6 +100,18 @@ export default function BulkContractPricingUpdate() {
     setChosenHighlight([]);
   };
 
+  const addAccount = (acct: string) => {
+    if (!selectedAccts.includes(acct)) {
+      setSelectedAccts((prev) => [...prev, acct]);
+    }
+    setAvailableHighlight((prev) => prev.filter((a) => a !== acct));
+  };
+
+  const removeAccount = (acct: string) => {
+    setSelectedAccts((prev) => prev.filter((a) => a !== acct));
+    setChosenHighlight((prev) => prev.filter((a) => a !== acct));
+  };
+
   const canSubmit = selectedAccts.length > 0 && (defaultOn || eslOn);
 
   const submit = () => {
