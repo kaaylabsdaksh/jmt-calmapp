@@ -1125,6 +1125,22 @@ const AccountAdminView = () => {
 
                     <MultiSelect label="Invoice Status" options={INVOICE_STATUSES} values={invoiceStatuses} onChange={setInvoiceStatuses} searchable />
 
+                    <label
+                      className={cn(
+                        "inline-flex cursor-pointer items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-all hover:shadow-sm",
+                        excludeOpenItems
+                          ? "border-slate-900 bg-slate-900 text-white"
+                          : "border-border bg-card text-foreground hover:border-foreground/30"
+                      )}
+                    >
+                      <Checkbox
+                        checked={excludeOpenItems}
+                        onCheckedChange={(v) => setExcludeOpenItems(v === true)}
+                        className="h-3.5 w-3.5 border-current data-[state=checked]:bg-white data-[state=checked]:text-slate-900"
+                      />
+                      <span>Exclude Open Items</span>
+                    </label>
+
 
                     <div className="ml-auto flex items-center gap-2">
                       <Button
