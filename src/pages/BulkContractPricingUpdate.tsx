@@ -46,9 +46,11 @@ export default function BulkContractPricingUpdate() {
   const { toast } = useToast();
 
   const [filter, setFilter] = useState("");
+  const [chosenFilter, setChosenFilter] = useState("");
   const [selectedAccts, setSelectedAccts] = useState<string[]>(["00000.00"]);
   const [availableHighlight, setAvailableHighlight] = useState<string[]>([]);
   const [chosenHighlight, setChosenHighlight] = useState<string[]>([]);
+
 
   // Default section
   const [defaultOn, setDefaultOn] = useState(false);
