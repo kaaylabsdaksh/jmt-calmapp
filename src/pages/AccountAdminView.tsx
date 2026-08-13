@@ -523,7 +523,10 @@ const BatchRow = ({
         );
       case "actions":
         return (
-          <td key={key} className="whitespace-nowrap px-3 py-2">
+          <td
+            key={key}
+            className="sticky right-0 z-10 whitespace-nowrap bg-card px-3 py-2 shadow-[-2px_0_4px_rgba(0,0,0,0.05)] group-hover:bg-muted/40"
+          >
             <div className="flex items-center gap-1.5">
               {["Delivery Ticket", "Quote", "Follow Up", "Ready to Bill"].map((label) => (
                 <Button key={label} variant="outline" size="sm" className="h-7 px-2 text-[11px]">
