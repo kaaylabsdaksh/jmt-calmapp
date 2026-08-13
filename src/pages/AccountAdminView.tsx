@@ -1116,6 +1116,9 @@ const AccountAdminView = () => {
                       >
                         Search
                       </Button>
+                      <Button variant="outline" size="sm" className="h-8 text-xs" onClick={resetFilters}>
+                        Clear
+                      </Button>
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Button variant="outline" size="icon" className="h-8 w-8" onClick={saveFilterDefaults}>
@@ -1124,9 +1127,6 @@ const AccountAdminView = () => {
                         </TooltipTrigger>
                         <TooltipContent side="bottom">Save Filters</TooltipContent>
                       </Tooltip>
-                      <Button variant="outline" size="sm" className="h-8 text-xs" onClick={resetFilters}>
-                        Clear
-                      </Button>
                     </div>
                   </div>
 
