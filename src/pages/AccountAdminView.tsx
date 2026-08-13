@@ -78,6 +78,7 @@ interface AdminBatch {
   arrivalType: "Regular" | "Onsite";
   customerGroup: string;
   division: string;
+  invoiceStatus: string;
   lastComment: string;
   lastCommentAge: string;
   followUp: string;
@@ -94,6 +95,7 @@ interface AdminBatch {
 const LOCATIONS = ["Port Arthur", "Houston", "Baton Rouge", "Odessa", "Norco"];
 const CUSTOMER_GROUPS = ["A", "B", "C", "D", "E", "0", "1", "2", "3", "4"];
 const DIVISIONS = ["Transmission", "Distribution", "Substation", "Industrial", "Generation"];
+const INVOICE_STATUSES = ["Pending", "Approved", "Sent", "Paid", "Disputed", "Invoiced"];
 
 const mkItems = (wo: string, defs: Partial<AdminItem>[]): AdminItem[] =>
   defs.map((d, i) => ({
@@ -130,6 +132,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     deliverBy: "2026-08-05",
     salesOrder: "SO-88120",
     status: "AR Invoicing",
+    invoiceStatus: "Pending",
     items: mkItems("100212", [
       { priority: "EMERGENCY", qualifying: true, itemStatus: "AR Invoicing", minorStatus: "Hold - Billing" },
       { priority: "RUSH", qualifying: true, manufacturer: "DRUCK", model: "DPI 611" },
@@ -153,6 +156,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     deliverBy: "2026-08-11",
     salesOrder: "SO-88144",
     status: "Ready for Departure",
+    invoiceStatus: "Sent",
     items: mkItems("100218", [
       { priority: "EXPEDITE", qualifying: true, departureType: "Customer Pickup" },
       { priority: "NORMAL", qualifying: true, manufacturer: "PROTO", model: "6062C" },
@@ -175,6 +179,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     deliverBy: "2026-08-19",
     salesOrder: "SO-88171",
     status: "Ready to Bill",
+    invoiceStatus: "Approved",
     items: mkItems("100224", [
       { priority: "RUSH", qualifying: true, itemStatus: "Ready to Bill" },
       { manufacturer: "ASHCROFT", model: "TG-60" },
@@ -196,6 +201,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     deliverBy: "2026-08-02",
     salesOrder: "SO-88203",
     status: "Waiting on Customer",
+    invoiceStatus: "Disputed",
     items: mkItems("100231", [
       { priority: "EXPEDITE", qualifying: true, minorStatus: "Awaiting PO" },
       { priority: "NORMAL", qualifying: false, manufacturer: "FLUKE", model: "726" },
@@ -218,6 +224,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     deliverBy: "2026-08-21",
     salesOrder: "SO-88240",
     status: "AR Invoicing",
+    invoiceStatus: "Invoiced",
     items: mkItems("100240", [
       { priority: "NORMAL", qualifying: true, manufacturer: "PROTO", model: "6062D" },
       { manufacturer: "FLUKE", model: "87V" },
@@ -240,6 +247,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     deliverBy: "2026-08-26",
     salesOrder: "SO-88266",
     status: "Completed",
+    invoiceStatus: "Paid",
     items: mkItems("100255", [
       { priority: "RUSH", qualifying: true, itemStatus: "Ready for Departure" },
       { closed: true, itemStatus: "Closed", minorStatus: "Completed" },
@@ -702,6 +710,7 @@ const AccountAdminView = () => {
   const [arrivalType, setArrivalType] = useState<"All" | "Regular" | "Onsite">("All");
   const [groups, setGroups] = useState<string[]>([]);
   const [divisions, setDivisions] = useState<string[]>([]);
+  const [invoiceStatuses, setInvoiceStatuses] = useState<string[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [visibleColumns, setVisibleColumns] = useState<ColumnKey[]>(ALL_COLUMNS.map((c) => c.key));
@@ -725,6 +734,7 @@ const AccountAdminView = () => {
         }
         if (Array.isArray(parsed.groups)) setGroups(parsed.groups);
         if (Array.isArray(parsed.divisions)) setDivisions(parsed.divisions);
+        if (Array.isArray(parsed.invoiceStatuses)) setInvoiceStatuses(parsed.invoiceStatuses);
         if (typeof parsed.search === "string") setSearch(parsed.search);
       }
     } catch {
@@ -733,7 +743,7 @@ const AccountAdminView = () => {
   }, []);
 
   const saveFilterDefaults = () => {
-    const payload = { search, locations, arrivalType, groups, divisions };
+    const payload = { search, locations, arrivalType, groups, divisions, invoiceStatuses };
     localStorage.setItem("accountAdminFilters", JSON.stringify(payload));
     toast({ title: "Filter defaults saved", description: "Current filters will be applied on your next visit." });
   };
@@ -743,6 +753,7 @@ const AccountAdminView = () => {
     setArrivalType("All");
     setGroups([]);
     setDivisions([]);
+    setInvoiceStatuses([]);
     setSearch("");
     toast({ title: "Filters reset", description: "Showing all qualifying batches." });
   };
@@ -763,6 +774,7 @@ const AccountAdminView = () => {
       if (arrivalType !== "All" && b.arrivalType !== arrivalType) return false;
       if (groups.length && !groups.includes(b.customerGroup)) return false;
       if (divisions.length && !divisions.includes(b.division)) return false;
+      if (invoiceStatuses.length && !invoiceStatuses.includes(b.invoiceStatus)) return false;
       if (
         q &&
         ![b.woNumber, b.customer, b.account, b.contact, b.salesOrder].some((v) => v.toLowerCase().includes(q))
@@ -770,7 +782,7 @@ const AccountAdminView = () => {
         return false;
       return true;
     });
-  }, [locations, arrivalType, groups, divisions, search]);
+  }, [locations, arrivalType, groups, divisions, invoiceStatuses, search]);
 
   const sortBatches = (list: AdminBatch[]) =>
     [...list].sort((a, b) => {
@@ -1107,6 +1119,8 @@ const AccountAdminView = () => {
 
                     <MultiSelect label="Division" options={DIVISIONS} values={divisions} onChange={setDivisions} searchable />
 
+                    <MultiSelect label="Invoice Status" options={INVOICE_STATUSES} values={invoiceStatuses} onChange={setInvoiceStatuses} searchable />
+
 
                     <div className="ml-auto flex items-center gap-2">
                       <Button
@@ -1130,7 +1144,7 @@ const AccountAdminView = () => {
                     </div>
                   </div>
 
-                  {(search.trim() || locations.length > 0 || groups.length > 0 || divisions.length > 0 || arrivalType !== "All") && (
+                  {(search.trim() || locations.length > 0 || groups.length > 0 || divisions.length > 0 || invoiceStatuses.length > 0 || arrivalType !== "All") && (
                     <div className="flex flex-wrap items-center gap-1.5 border-t border-border pt-2">
                       <span className="text-[10px] uppercase tracking-wide text-muted-foreground">Filters</span>
                       {search.trim() && (
@@ -1158,6 +1172,13 @@ const AccountAdminView = () => {
                           key={`div-${d}`}
                           label={`Division: ${d}`}
                           onRemove={() => setDivisions(divisions.filter((x) => x !== d))}
+                        />
+                      ))}
+                      {invoiceStatuses.map((s) => (
+                        <FilterPill
+                          key={`inv-${s}`}
+                          label={`Invoice Status: ${s}`}
+                          onRemove={() => setInvoiceStatuses(invoiceStatuses.filter((x) => x !== s))}
                         />
                       ))}
                       <button
