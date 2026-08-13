@@ -762,6 +762,7 @@ const AccountAdminView = () => {
       if (locations.length && !locations.includes(b.location)) return false;
       if (arrivalType !== "All" && b.arrivalType !== arrivalType) return false;
       if (groups.length && !groups.includes(b.customerGroup)) return false;
+      if (divisions.length && !divisions.includes(b.division)) return false;
       if (
         q &&
         ![b.woNumber, b.customer, b.account, b.contact, b.salesOrder].some((v) => v.toLowerCase().includes(q))
@@ -769,7 +770,7 @@ const AccountAdminView = () => {
         return false;
       return true;
     });
-  }, [locations, arrivalType, groups, search]);
+  }, [locations, arrivalType, groups, divisions, search]);
 
   const sortBatches = (list: AdminBatch[]) =>
     [...list].sort((a, b) => {
