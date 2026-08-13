@@ -993,9 +993,6 @@ const AccountAdminView = () => {
                 <h1 className="text-base font-semibold leading-tight text-foreground sm:text-lg">
                   Account Admin View
                 </h1>
-                <p className="hidden text-xs text-muted-foreground sm:block">
-                  Manage AR-Invoicing batches, prioritize follow-ups, and monitor account administration workflows.
-                </p>
                 <Breadcrumb className="mt-1 hidden sm:block">
                   <BreadcrumbList>
                     <BreadcrumbItem>
