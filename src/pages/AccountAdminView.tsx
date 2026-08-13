@@ -543,7 +543,7 @@ const BatchRow = ({
 
   return (
     <>
-      <tr className="border-t border-border transition-colors hover:bg-muted/40">
+      <tr className="group border-t border-border transition-colors hover:bg-muted/40">
         <td className="w-8 py-0 pl-0 pr-0">
           <div className="flex items-stretch">
             <div className={`w-[3px] self-stretch ${BORDER_BY_PRIORITY[priority]}`} style={{ minHeight: 40 }} />
