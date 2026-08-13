@@ -77,6 +77,7 @@ interface AdminBatch {
   location: string;
   arrivalType: "Regular" | "Onsite";
   customerGroup: string;
+  division: string;
   lastComment: string;
   lastCommentAge: string;
   followUp: string;
@@ -92,6 +93,7 @@ interface AdminBatch {
 
 const LOCATIONS = ["Port Arthur", "Houston", "Baton Rouge", "Odessa", "Norco"];
 const CUSTOMER_GROUPS = ["A", "B", "C", "D", "E", "0", "1", "2", "3", "4"];
+const DIVISIONS = ["Transmission", "Distribution", "Substation", "Industrial", "Generation"];
 
 const mkItems = (wo: string, defs: Partial<AdminItem>[]): AdminItem[] =>
   defs.map((d, i) => ({
@@ -121,6 +123,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     location: "Baton Rouge",
     arrivalType: "Regular",
     customerGroup: "A",
+    division: "Industrial",
     lastComment: "Waiting for customer approval on revised quote before we can invoice the remaining four items.",
     lastCommentAge: "2 hours ago",
     followUp: "2026-07-30",
@@ -143,6 +146,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     location: "Norco",
     arrivalType: "Onsite",
     customerGroup: "B",
+    division: "Industrial",
     lastComment: "Customer requested consolidated delivery ticket for all onsite items.",
     lastCommentAge: "1 day ago",
     followUp: "2026-08-03",
@@ -164,6 +168,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     location: "Port Arthur",
     arrivalType: "Regular",
     customerGroup: "C",
+    division: "Industrial",
     lastComment: "PO received, ready to bill once freight cost posts.",
     lastCommentAge: "4 hours ago",
     followUp: "2026-08-04",
@@ -184,6 +189,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     location: "Baton Rouge",
     arrivalType: "Regular",
     customerGroup: "1",
+    division: "Distribution",
     lastComment: "Left voicemail with AP contact regarding outstanding PO.",
     lastCommentAge: "3 days ago",
     followUp: "2026-07-28",
@@ -205,6 +211,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     location: "Odessa",
     arrivalType: "Onsite",
     customerGroup: "D",
+    division: "Industrial",
     lastComment: "Quote #Q-4471 sent for the replacement torque wrenches.",
     lastCommentAge: "6 hours ago",
     followUp: "2026-08-06",
@@ -226,6 +233,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     location: "Houston",
     arrivalType: "Regular",
     customerGroup: "2",
+    division: "Industrial",
     lastComment: "Billing exception cleared, awaiting final departure scan.",
     lastCommentAge: "30 minutes ago",
     followUp: "2026-08-12",
@@ -693,6 +701,7 @@ const AccountAdminView = () => {
   const [locations, setLocations] = useState<string[]>([]);
   const [arrivalType, setArrivalType] = useState<"All" | "Regular" | "Onsite">("All");
   const [groups, setGroups] = useState<string[]>([]);
+  const [divisions, setDivisions] = useState<string[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [visibleColumns, setVisibleColumns] = useState<ColumnKey[]>(ALL_COLUMNS.map((c) => c.key));
@@ -715,6 +724,7 @@ const AccountAdminView = () => {
           setArrivalType(parsed.arrivalType);
         }
         if (Array.isArray(parsed.groups)) setGroups(parsed.groups);
+        if (Array.isArray(parsed.divisions)) setDivisions(parsed.divisions);
         if (typeof parsed.search === "string") setSearch(parsed.search);
       }
     } catch {
@@ -723,7 +733,7 @@ const AccountAdminView = () => {
   }, []);
 
   const saveFilterDefaults = () => {
-    const payload = { search, locations, arrivalType, groups };
+    const payload = { search, locations, arrivalType, groups, divisions };
     localStorage.setItem("accountAdminFilters", JSON.stringify(payload));
     toast({ title: "Filter defaults saved", description: "Current filters will be applied on your next visit." });
   };
@@ -732,6 +742,7 @@ const AccountAdminView = () => {
     setLocations([]);
     setArrivalType("All");
     setGroups([]);
+    setDivisions([]);
     setSearch("");
     toast({ title: "Filters reset", description: "Showing all qualifying batches." });
   };
@@ -751,6 +762,7 @@ const AccountAdminView = () => {
       if (locations.length && !locations.includes(b.location)) return false;
       if (arrivalType !== "All" && b.arrivalType !== arrivalType) return false;
       if (groups.length && !groups.includes(b.customerGroup)) return false;
+      if (divisions.length && !divisions.includes(b.division)) return false;
       if (
         q &&
         ![b.woNumber, b.customer, b.account, b.contact, b.salesOrder].some((v) => v.toLowerCase().includes(q))
@@ -758,7 +770,7 @@ const AccountAdminView = () => {
         return false;
       return true;
     });
-  }, [locations, arrivalType, groups, search]);
+  }, [locations, arrivalType, groups, divisions, search]);
 
   const sortBatches = (list: AdminBatch[]) =>
     [...list].sort((a, b) => {
@@ -1093,6 +1105,8 @@ const AccountAdminView = () => {
 
                     <MultiSelect label="Customer Group" options={CUSTOMER_GROUPS} values={groups} onChange={setGroups} searchable />
 
+                    <MultiSelect label="Division" options={DIVISIONS} values={divisions} onChange={setDivisions} searchable />
+
 
                     <div className="ml-auto flex items-center gap-2">
                       <Button
@@ -1116,7 +1130,7 @@ const AccountAdminView = () => {
                     </div>
                   </div>
 
-                  {(search.trim() || locations.length > 0 || groups.length > 0 || arrivalType !== "All") && (
+                  {(search.trim() || locations.length > 0 || groups.length > 0 || divisions.length > 0 || arrivalType !== "All") && (
                     <div className="flex flex-wrap items-center gap-1.5 border-t border-border pt-2">
                       <span className="text-[10px] uppercase tracking-wide text-muted-foreground">Filters</span>
                       {search.trim() && (
@@ -1137,6 +1151,13 @@ const AccountAdminView = () => {
                           key={`grp-${g}`}
                           label={`Group: ${g}`}
                           onRemove={() => setGroups(groups.filter((x) => x !== g))}
+                        />
+                      ))}
+                      {divisions.map((d) => (
+                        <FilterPill
+                          key={`div-${d}`}
+                          label={`Division: ${d}`}
+                          onRemove={() => setDivisions(divisions.filter((x) => x !== d))}
                         />
                       ))}
                       <button
