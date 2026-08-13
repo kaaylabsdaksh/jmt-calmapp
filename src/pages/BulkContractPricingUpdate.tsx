@@ -84,9 +84,12 @@ export default function BulkContractPricingUpdate() {
     [filter, selectedAccts],
   );
   const chosen = useMemo(
-    () => ALL_ACCOUNTS.filter((a) => selectedAccts.includes(a.acct)),
-    [selectedAccts],
+    () => ALL_ACCOUNTS.filter((a) => selectedAccts.includes(a.acct)).filter((a) =>
+      `${a.acct} ${a.name}`.toLowerCase().includes(chosenFilter.toLowerCase()),
+    ),
+    [selectedAccts, chosenFilter],
   );
+
 
   const toggle = (list: string[], setList: (v: string[]) => void, acct: string) =>
     setList(list.includes(acct) ? list.filter((a) => a !== acct) : [...list, acct]);
