@@ -1164,7 +1164,7 @@ const AccountAdminView = () => {
                     </div>
                   </div>
 
-                  {(search.trim() || locations.length > 0 || groups.length > 0 || divisions.length > 0 || invoiceStatuses.length > 0 || arrivalType !== "All") && (
+                  {(search.trim() || locations.length > 0 || groups.length > 0 || divisions.length > 0 || invoiceStatuses.length > 0 || excludeOpenItems || arrivalType !== "All") && (
                     <div className="flex flex-wrap items-center gap-1.5 border-t border-border pt-2">
                       <span className="text-[10px] uppercase tracking-wide text-muted-foreground">Filters</span>
                       {search.trim() && (
@@ -1201,6 +1201,9 @@ const AccountAdminView = () => {
                           onRemove={() => setInvoiceStatuses(invoiceStatuses.filter((x) => x !== s))}
                         />
                       ))}
+                      {excludeOpenItems && (
+                        <FilterPill label="Exclude Open Items" onRemove={() => setExcludeOpenItems(false)} />
+                      )}
                       <button
                         onClick={resetFilters}
                         className="ml-1 text-[11px] font-medium text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
