@@ -123,6 +123,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     location: "Baton Rouge",
     arrivalType: "Regular",
     customerGroup: "A",
+    division: "Industrial",
     lastComment: "Waiting for customer approval on revised quote before we can invoice the remaining four items.",
     lastCommentAge: "2 hours ago",
     followUp: "2026-07-30",
