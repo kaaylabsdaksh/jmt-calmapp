@@ -145,7 +145,7 @@ export default function BulkContractPricingUpdate() {
   }) => (
     <div className="h-56 overflow-y-auto rounded-md border bg-background">
       {items.length === 0 ? (
-        <div className="flex h-full items-center justify-center px-3 text-center text-[11px] text-muted-foreground">{empty}</div>
+        <div className="flex h-full items-center justify-center px-3 text-center text-[11px] text-foreground/80">{empty}</div>
       ) : (
         items.map((a) => {
           const active = highlight.includes(a.acct);
@@ -183,7 +183,7 @@ export default function BulkContractPricingUpdate() {
                       onAction(a.acct);
                     }
                   }}
-                  className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-foreground transition-all duration-200 hover:scale-110 hover:bg-success hover:text-success-foreground hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-success/40"
+                  className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-foreground transition-all duration-200 hover:scale-110 hover:bg-green-700 hover:text-white hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-1"
                 >
                   <Plus className="h-3.5 w-3.5" />
                 </span>
@@ -203,12 +203,12 @@ export default function BulkContractPricingUpdate() {
                       onAction(a.acct);
                     }
                   }}
-                  className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-foreground transition-all duration-200 hover:scale-110 hover:bg-destructive hover:text-destructive-foreground hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive/40"
+                  className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-foreground transition-all duration-200 hover:scale-110 hover:bg-red-700 hover:text-white hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-700 focus-visible:ring-offset-1"
                 >
                   <Minus className="h-3.5 w-3.5" />
                 </span>
               )}
-              {!mode && active && <Check className="h-3.5 w-3.5 shrink-0 text-primary" />}
+              {!mode && active && <Check className="h-3.5 w-3.5 shrink-0 text-foreground" />}
             </div>
           );
         })
@@ -287,12 +287,12 @@ export default function BulkContractPricingUpdate() {
                 </div>
                 <div className="flex min-h-[28px] flex-wrap gap-1 rounded-md border border-dashed bg-muted/40 px-1.5 py-1">
                   {chosen.length === 0 ? (
-                    <span className="px-1 py-0.5 text-[10px] text-muted-foreground">No accounts selected</span>
+                    <span className="px-1 py-0.5 text-[10px] text-foreground/80">No accounts selected</span>
                   ) : (
                     chosen.map((a) => (
                       <span key={a.acct} className="inline-flex items-center gap-1 rounded-full bg-background px-2 py-0.5 text-[10px] font-medium text-slate-900 shadow-sm">
                         {a.acct}
-                        <X className="h-3 w-3 cursor-pointer text-muted-foreground" onClick={() => setSelectedAccts(selectedAccts.filter((x) => x !== a.acct))} />
+                        <X className="h-3 w-3 cursor-pointer text-foreground/80" onClick={() => setSelectedAccts(selectedAccts.filter((x) => x !== a.acct))} />
                       </span>
                     ))
                   )}
@@ -340,7 +340,7 @@ export default function BulkContractPricingUpdate() {
                   <DollarSign className="h-3.5 w-3.5 text-muted-foreground" />Default Pricing
                 </Label>
               </div>
-              <fieldset disabled={!defaultOn} className="space-y-2 disabled:opacity-60">
+              <fieldset disabled={!defaultOn} className="space-y-2">
                 <RadioGroup value={rateMode} onValueChange={(v) => setRateMode(v as "hourly" | "pct")} className="grid gap-2 sm:grid-cols-2">
                   <div className="space-y-1">
                     <div className="flex items-center gap-1.5">
@@ -364,13 +364,13 @@ export default function BulkContractPricingUpdate() {
                 </div>
                 <div className="space-y-1">
                   <Label className={label}>Contract File</Label>
-                  <label className="flex h-7 cursor-pointer items-center gap-2 rounded-md border border-dashed px-2 text-[11px] text-muted-foreground hover:bg-muted/60">
+                  <label className="flex h-7 cursor-pointer items-center gap-2 rounded-md border border-dashed px-2 text-[11px] text-foreground/80 hover:bg-muted/60">
                     <Upload className="h-3.5 w-3.5" />
                     <span className="truncate">{defFile || "Browse for a file"}</span>
                     <input type="file" className="hidden" onChange={(e) => setDefFile(e.target.files?.[0]?.name ?? "")} />
                   </label>
                   {defFile && (
-                    <div className="flex items-center gap-1 text-[10px] text-muted-foreground"><Paperclip className="h-3 w-3" />{defFile}
+                    <div className="flex items-center gap-1 text-[10px] text-foreground/80"><Paperclip className="h-3 w-3" />{defFile}
                       <button type="button" className="underline-offset-2 hover:underline" onClick={() => setDefFile("")}>remove</button>
                     </div>
                   )}
@@ -388,7 +388,7 @@ export default function BulkContractPricingUpdate() {
                 <Checkbox id="eslOn" checked={eslOn} onCheckedChange={(v) => setEslOn(!!v)} />
                 <Label htmlFor="eslOn" className="text-xs font-semibold">ESL Pricing</Label>
               </div>
-              <fieldset disabled={!eslOn} className="space-y-2 disabled:opacity-60">
+              <fieldset disabled={!eslOn} className="space-y-2">
                 <div className="space-y-1">
                   <Label className={label}>ESL Contract</Label>
                   <RadioGroup value={eslValue} onValueChange={(v) => setEslValue(v as "yes" | "no")} className="flex items-center gap-4 pt-0.5">
@@ -402,13 +402,13 @@ export default function BulkContractPricingUpdate() {
                 </div>
                 <div className="space-y-1">
                   <Label className={label}>ESL File</Label>
-                  <label className="flex h-7 cursor-pointer items-center gap-2 rounded-md border border-dashed px-2 text-[11px] text-muted-foreground hover:bg-muted/60">
+                  <label className="flex h-7 cursor-pointer items-center gap-2 rounded-md border border-dashed px-2 text-[11px] text-foreground/80 hover:bg-muted/60">
                     <Upload className="h-3.5 w-3.5" />
                     <span className="truncate">{eslFile || "Browse for a file"}</span>
                     <input type="file" className="hidden" onChange={(e) => setEslFile(e.target.files?.[0]?.name ?? "")} />
                   </label>
                   {eslFile && (
-                    <div className="flex items-center gap-1 text-[10px] text-muted-foreground"><Paperclip className="h-3 w-3" />{eslFile}
+                    <div className="flex items-center gap-1 text-[10px] text-foreground/80"><Paperclip className="h-3 w-3" />{eslFile}
                       <button type="button" className="underline-offset-2 hover:underline" onClick={() => setEslFile("")}>remove</button>
                     </div>
                   )}
@@ -445,7 +445,7 @@ export default function BulkContractPricingUpdate() {
           </span>
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-customers")}>Cancel</Button>
-            <Button size="sm" className="h-8 bg-green-600 text-xs text-white hover:bg-green-700" disabled={!canSubmit} onClick={() => setConfirmOpen(true)}>
+            <Button size="sm" className="h-8 bg-green-700 text-xs text-white hover:bg-green-800 disabled:opacity-100 disabled:bg-muted disabled:text-foreground/70" disabled={!canSubmit} onClick={() => setConfirmOpen(true)}>
               Update Accounts
             </Button>
           </div>
@@ -462,7 +462,7 @@ export default function BulkContractPricingUpdate() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel className="h-8 text-xs">Cancel</AlertDialogCancel>
-            <AlertDialogAction className="h-8 bg-green-600 text-xs text-white hover:bg-green-700" onClick={submit}>Update Accounts</AlertDialogAction>
+            <AlertDialogAction className="h-8 bg-green-700 text-xs text-white hover:bg-green-800 disabled:opacity-100 disabled:bg-muted disabled:text-foreground/70" onClick={submit}>Update Accounts</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
