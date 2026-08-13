@@ -233,6 +233,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     location: "Houston",
     arrivalType: "Regular",
     customerGroup: "2",
+    division: "Industrial",
     lastComment: "Billing exception cleared, awaiting final departure scan.",
     lastCommentAge: "30 minutes ago",
     followUp: "2026-08-12",
