@@ -168,6 +168,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     location: "Port Arthur",
     arrivalType: "Regular",
     customerGroup: "C",
+    division: "Industrial",
     lastComment: "PO received, ready to bill once freight cost posts.",
     lastCommentAge: "4 hours ago",
     followUp: "2026-08-04",
