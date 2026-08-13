@@ -445,7 +445,7 @@ export default function BulkContractPricingUpdate() {
           </span>
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-customers")}>Cancel</Button>
-            <Button size="sm" className="h-8 bg-green-700 text-xs text-white hover:bg-green-800 disabled:opacity-100 disabled:bg-muted disabled:text-foreground/70" disabled={!canSubmit} onClick={() => setConfirmOpen(true)}>
+            <Button size="sm" className="h-8 bg-slate-900 text-xs text-white hover:bg-slate-800 disabled:opacity-100 disabled:bg-muted disabled:text-foreground/70" disabled={!canSubmit} onClick={() => setConfirmOpen(true)}>
               Update Accounts
             </Button>
           </div>
@@ -462,7 +462,7 @@ export default function BulkContractPricingUpdate() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel className="h-8 text-xs">Cancel</AlertDialogCancel>
-            <AlertDialogAction className="h-8 bg-green-700 text-xs text-white hover:bg-green-800 disabled:opacity-100 disabled:bg-muted disabled:text-foreground/70" onClick={submit}>Update Accounts</AlertDialogAction>
+            <AlertDialogAction className="h-8 bg-slate-900 text-xs text-white hover:bg-slate-800 disabled:opacity-100 disabled:bg-muted disabled:text-foreground/70" onClick={submit}>Update Accounts</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
