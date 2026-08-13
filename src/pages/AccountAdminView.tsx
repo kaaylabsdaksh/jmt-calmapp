@@ -702,6 +702,29 @@ const AccountAdminView = () => {
   const [poDialog, setPoDialog] = useState<string | null>(null);
   const [soDialog, setSoDialog] = useState<string | null>(null);
 
+  React.useEffect(() => {
+    try {
+      const saved = localStorage.getItem("accountAdminFilters");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed.locations)) setLocations(parsed.locations);
+        if (parsed.arrivalType === "All" || parsed.arrivalType === "Regular" || parsed.arrivalType === "Onsite") {
+          setArrivalType(parsed.arrivalType);
+        }
+        if (Array.isArray(parsed.groups)) setGroups(parsed.groups);
+        if (typeof parsed.search === "string") setSearch(parsed.search);
+      }
+    } catch {
+      // ignore corrupted storage
+    }
+  }, []);
+
+  const saveFilterDefaults = () => {
+    const payload = { search, locations, arrivalType, groups };
+    localStorage.setItem("accountAdminFilters", JSON.stringify(payload));
+    toast({ title: "Filter defaults saved", description: "Current filters will be applied on your next visit." });
+  };
+
   const resetFilters = () => {
     setLocations([]);
     setArrivalType("All");
@@ -709,6 +732,7 @@ const AccountAdminView = () => {
     setSearch("");
     toast({ title: "Filters reset", description: "Showing all qualifying batches." });
   };
+
 
   const refresh = () => {
     setLoading(true);
