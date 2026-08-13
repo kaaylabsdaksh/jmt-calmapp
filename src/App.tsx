@@ -46,6 +46,7 @@ import SrDocuments from "./pages/SrDocuments";
 import SrDocumentDetail from "./pages/SrDocumentDetail";
 import NewSrDocument from "./pages/NewSrDocument";
 import ContractReviews from "./pages/ContractReviews";
+import BulkContractPricingUpdate from "./pages/BulkContractPricingUpdate";
 import EditContractReview from "./pages/EditContractReview";
 import NewContractReview from "./pages/NewContractReview";
 import WhatsNew from "./pages/WhatsNew";
@@ -110,6 +111,9 @@ const App = () => {
             <Route path="/manage-customers/sr-documents" element={<SrDocuments />} />
             <Route path="/manage-customers/sr-documents/new" element={<NewSrDocument />} />
             <Route path="/manage-customers/sr-documents/:sr" element={<SrDocumentDetail />} />
+
+
+            <Route path="/manage-customers/bulk-contract-pricing" element={<BulkContractPricingUpdate />} />
 
 
             <Route path="/manage-customers/contract-reviews" element={<ContractReviews />} />
