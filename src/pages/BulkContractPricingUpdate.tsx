@@ -46,9 +46,11 @@ export default function BulkContractPricingUpdate() {
   const { toast } = useToast();
 
   const [filter, setFilter] = useState("");
+  const [chosenFilter, setChosenFilter] = useState("");
   const [selectedAccts, setSelectedAccts] = useState<string[]>(["00000.00"]);
   const [availableHighlight, setAvailableHighlight] = useState<string[]>([]);
   const [chosenHighlight, setChosenHighlight] = useState<string[]>([]);
+
 
   // Default section
   const [defaultOn, setDefaultOn] = useState(false);
@@ -82,9 +84,12 @@ export default function BulkContractPricingUpdate() {
     [filter, selectedAccts],
   );
   const chosen = useMemo(
-    () => ALL_ACCOUNTS.filter((a) => selectedAccts.includes(a.acct)),
-    [selectedAccts],
+    () => ALL_ACCOUNTS.filter((a) => selectedAccts.includes(a.acct)).filter((a) =>
+      `${a.acct} ${a.name}`.toLowerCase().includes(chosenFilter.toLowerCase()),
+    ),
+    [selectedAccts, chosenFilter],
   );
+
 
   const toggle = (list: string[], setList: (v: string[]) => void, acct: string) =>
     setList(list.includes(acct) ? list.filter((a) => a !== acct) : [...list, acct]);
@@ -292,15 +297,25 @@ export default function BulkContractPricingUpdate() {
                     ))
                   )}
                 </div>
+                <div className="relative">
+                  <Search className="pointer-events-none absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    value={chosenFilter}
+                    onChange={(e) => setChosenFilter(e.target.value)}
+                    placeholder="Search selected accounts"
+                    className={`${field} pl-7`}
+                  />
+                </div>
                 <ListBox
                   items={chosen}
                   highlight={chosenHighlight}
                   onToggle={(a) => toggle(chosenHighlight, setChosenHighlight, a)}
                   onAction={removeAccount}
                   mode="chosen"
-                  empty="Select accounts on the left and move them here"
+                  empty="No selected accounts match the search"
                 />
               </div>
+
             </div>
           </CardContent>
         </Card>
