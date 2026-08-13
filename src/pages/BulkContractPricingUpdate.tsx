@@ -277,8 +277,8 @@ export default function BulkContractPricingUpdate() {
                   </div>
                 </RadioGroup>
                 <div className="grid gap-2 sm:grid-cols-3">
-                  <div className="space-y-1"><Label className={label}>Exp. Date</Label><ModernDatePicker date={defExp} onDateChange={setDefExp} /></div>
-                  <div className="space-y-1"><Label className={label}>Review Date</Label><ModernDatePicker date={defReview} onDateChange={setDefReview} /></div>
+                  <div className="space-y-1"><Label className={label}>Exp. Date</Label><ModernDatePicker value={defExp} onChange={setDefExp} size="sm" /></div>
+                  <div className="space-y-1"><Label className={label}>Review Date</Label><ModernDatePicker value={defReview} onChange={setDefReview} size="sm" /></div>
                   <div className="space-y-1"><Label className={label}>Labor Rate</Label><Input value={laborRate} onChange={(e) => setLaborRate(e.target.value)} placeholder="0.00" className={field} /></div>
                 </div>
                 <div className="space-y-1">
@@ -316,8 +316,8 @@ export default function BulkContractPricingUpdate() {
                   </RadioGroup>
                 </div>
                 <div className="grid gap-2 sm:grid-cols-2">
-                  <div className="space-y-1"><Label className={label}>Exp. Date</Label><ModernDatePicker date={eslExp} onDateChange={setEslExp} /></div>
-                  <div className="space-y-1"><Label className={label}>Review Date</Label><ModernDatePicker date={eslReview} onDateChange={setEslReview} /></div>
+                  <div className="space-y-1"><Label className={label}>Exp. Date</Label><ModernDatePicker value={eslExp} onChange={setEslExp} size="sm" /></div>
+                  <div className="space-y-1"><Label className={label}>Review Date</Label><ModernDatePicker value={eslReview} onChange={setEslReview} size="sm" /></div>
                 </div>
                 <div className="space-y-1">
                   <Label className={label}>ESL File</Label>
