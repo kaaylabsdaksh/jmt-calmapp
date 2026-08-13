@@ -1127,17 +1127,22 @@ const AccountAdminView = () => {
 
                     <label
                       className={cn(
-                        "inline-flex cursor-pointer items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-all hover:shadow-sm",
+                        "inline-flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold transition-all hover:shadow-sm",
                         excludeOpenItems
-                          ? "border-slate-900 bg-slate-900 text-white"
+                          ? "border-slate-900 bg-slate-900 text-white shadow-sm"
                           : "border-border bg-card text-foreground hover:border-foreground/30"
                       )}
                     >
                       <Checkbox
                         checked={excludeOpenItems}
                         onCheckedChange={(v) => setExcludeOpenItems(v === true)}
-                        className="h-3.5 w-3.5 border-current data-[state=checked]:bg-white data-[state=checked]:text-slate-900"
+                        className={cn(
+                          "h-4 w-4 rounded-[4px] border-current",
+                          excludeOpenItems &&
+                            "border-primary bg-primary text-primary-foreground data-[state=checked]:border-primary data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                        )}
                       />
+
                       <span>Exclude Open Items</span>
                     </label>
 
