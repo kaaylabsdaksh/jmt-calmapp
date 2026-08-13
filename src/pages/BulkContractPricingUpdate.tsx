@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Check, DollarSign, Paperclip, Search, Upload, Users, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, DollarSign, Minus, Paperclip, Plus, Search, Upload, Users, X } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
