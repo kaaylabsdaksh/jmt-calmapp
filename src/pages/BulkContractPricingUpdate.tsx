@@ -256,6 +256,8 @@ export default function BulkContractPricingUpdate() {
                   items={available}
                   highlight={availableHighlight}
                   onToggle={(a) => toggle(availableHighlight, setAvailableHighlight, a)}
+                  onAction={addAccount}
+                  mode="available"
                   empty="No accounts match the filter"
                 />
               </div>
