@@ -344,14 +344,14 @@ export default function BulkContractPricingUpdate() {
                 <RadioGroup value={rateMode} onValueChange={(v) => setRateMode(v as "hourly" | "pct")} className="grid gap-2 sm:grid-cols-2">
                   <div className="space-y-1">
                     <div className="flex items-center gap-1.5">
-                      <RadioGroupItem value="hourly" id="hourly" className="h-3.5 w-3.5" />
+                      <RadioGroupItem value="hourly" id="hourly" className="h-3.5 w-3.5 border-green-600 text-green-600 focus-visible:ring-green-600" />
                       <Label htmlFor="hourly" className={label}>Hourly</Label>
                     </div>
                     <Input value={hourly} onChange={(e) => setHourly(e.target.value)} disabled={rateMode !== "hourly"} placeholder="0.00" className={field} />
                   </div>
                   <div className="space-y-1">
                     <div className="flex items-center gap-1.5">
-                      <RadioGroupItem value="pct" id="pct" className="h-3.5 w-3.5" />
+                      <RadioGroupItem value="pct" id="pct" className="h-3.5 w-3.5 border-green-600 text-green-600 focus-visible:ring-green-600" />
                       <Label htmlFor="pct" className={label}>Percentage</Label>
                     </div>
                     <Input value={pct} onChange={(e) => setPct(e.target.value)} disabled={rateMode !== "pct"} placeholder="0" className={field} />
@@ -392,8 +392,8 @@ export default function BulkContractPricingUpdate() {
                 <div className="space-y-1">
                   <Label className={label}>ESL Contract</Label>
                   <RadioGroup value={eslValue} onValueChange={(v) => setEslValue(v as "yes" | "no")} className="flex items-center gap-4 pt-0.5">
-                    <div className="flex items-center gap-1.5"><RadioGroupItem value="yes" id="eslYes" className="h-3.5 w-3.5" /><Label htmlFor="eslYes" className="text-[11px]">Yes</Label></div>
-                    <div className="flex items-center gap-1.5"><RadioGroupItem value="no" id="eslNo" className="h-3.5 w-3.5" /><Label htmlFor="eslNo" className="text-[11px]">No</Label></div>
+                    <div className="flex items-center gap-1.5"><RadioGroupItem value="yes" id="eslYes" className="h-3.5 w-3.5 border-green-600 text-green-600 focus-visible:ring-green-600" /><Label htmlFor="eslYes" className="text-[11px]">Yes</Label></div>
+                    <div className="flex items-center gap-1.5"><RadioGroupItem value="no" id="eslNo" className="h-3.5 w-3.5 border-green-600 text-green-600 focus-visible:ring-green-600" /><Label htmlFor="eslNo" className="text-[11px]">No</Label></div>
                   </RadioGroup>
                 </div>
                 <div className="grid gap-2 sm:grid-cols-2">
