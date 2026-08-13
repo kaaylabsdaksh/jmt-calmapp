@@ -1102,10 +1102,14 @@ const AccountAdminView = () => {
                       >
                         Search
                       </Button>
-                      <Button variant="outline" size="sm" className="h-8 text-xs" onClick={saveFilterDefaults}>
-                        <Bookmark className="mr-1.5 h-3.5 w-3.5" />
-                        Save Filters
-                      </Button>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button variant="outline" size="icon" className="h-8 w-8" onClick={saveFilterDefaults}>
+                            <Bookmark className="h-3.5 w-3.5" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent side="bottom">Save Filters</TooltipContent>
+                      </Tooltip>
                       <Button variant="outline" size="sm" className="h-8 text-xs" onClick={resetFilters}>
                         Clear
                       </Button>
