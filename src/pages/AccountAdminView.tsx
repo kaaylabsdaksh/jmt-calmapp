@@ -1144,7 +1144,7 @@ const AccountAdminView = () => {
                     </div>
                   </div>
 
-                  {(search.trim() || locations.length > 0 || groups.length > 0 || divisions.length > 0 || arrivalType !== "All") && (
+                  {(search.trim() || locations.length > 0 || groups.length > 0 || divisions.length > 0 || invoiceStatuses.length > 0 || arrivalType !== "All") && (
                     <div className="flex flex-wrap items-center gap-1.5 border-t border-border pt-2">
                       <span className="text-[10px] uppercase tracking-wide text-muted-foreground">Filters</span>
                       {search.trim() && (
@@ -1172,6 +1172,13 @@ const AccountAdminView = () => {
                           key={`div-${d}`}
                           label={`Division: ${d}`}
                           onRemove={() => setDivisions(divisions.filter((x) => x !== d))}
+                        />
+                      ))}
+                      {invoiceStatuses.map((s) => (
+                        <FilterPill
+                          key={`inv-${s}`}
+                          label={`Invoice Status: ${s}`}
+                          onRemove={() => setInvoiceStatuses(invoiceStatuses.filter((x) => x !== s))}
                         />
                       ))}
                       <button
