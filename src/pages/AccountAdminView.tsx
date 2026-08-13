@@ -711,6 +711,7 @@ const AccountAdminView = () => {
   const [groups, setGroups] = useState<string[]>([]);
   const [divisions, setDivisions] = useState<string[]>([]);
   const [invoiceStatuses, setInvoiceStatuses] = useState<string[]>([]);
+  const [excludeOpenItems, setExcludeOpenItems] = useState(false);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [visibleColumns, setVisibleColumns] = useState<ColumnKey[]>(ALL_COLUMNS.map((c) => c.key));
