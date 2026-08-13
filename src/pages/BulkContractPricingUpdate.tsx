@@ -115,11 +115,15 @@ export default function BulkContractPricingUpdate() {
     items,
     highlight,
     onToggle,
+    onAction,
+    mode,
     empty,
   }: {
     items: Account[];
     highlight: string[];
     onToggle: (acct: string) => void;
+    onAction?: (acct: string) => void;
+    mode?: "available" | "chosen";
     empty: string;
   }) => (
     <div className="h-56 overflow-y-auto rounded-md border bg-background">
@@ -128,12 +132,18 @@ export default function BulkContractPricingUpdate() {
       ) : (
         items.map((a) => {
           const active = highlight.includes(a.acct);
+          const isAvailable = mode === "available";
+          const isChosen = mode === "chosen";
           return (
-            <button
+            <div
               key={a.acct}
-              type="button"
+              role="button"
+              tabIndex={0}
               onClick={() => onToggle(a.acct)}
-              className={`flex w-full items-center justify-between gap-2 border-b px-2.5 py-1.5 text-left text-xs last:border-0 transition-colors ${
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") onToggle(a.acct);
+              }}
+              className={`group flex w-full items-center justify-between gap-2 border-b px-2.5 py-1.5 text-left text-xs last:border-0 transition-colors ${
                 active ? "bg-primary/10 text-foreground" : "hover:bg-muted/60"
               }`}
             >
@@ -141,8 +151,48 @@ export default function BulkContractPricingUpdate() {
                 <span className="font-medium text-slate-900">{a.acct}</span>
                 <span className="text-muted-foreground"> — {a.name}</span>
               </span>
-              {active && <Check className="h-3.5 w-3.5 shrink-0 text-primary" />}
-            </button>
+              {isAvailable && onAction && (
+                <span
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Add ${a.acct}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onAction(a.acct);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.stopPropagation();
+                      onAction(a.acct);
+                    }
+                  }}
+                  className="shrink-0 rounded p-0.5 text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary"
+                >
+                  <Plus className="h-3.5 w-3.5" />
+                </span>
+              )}
+              {isChosen && onAction && (
+                <span
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Remove ${a.acct}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onAction(a.acct);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.stopPropagation();
+                      onAction(a.acct);
+                    }
+                  }}
+                  className="shrink-0 rounded p-0.5 text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
+                >
+                  <Minus className="h-3.5 w-3.5" />
+                </span>
+              )}
+              {!mode && active && <Check className="h-3.5 w-3.5 shrink-0 text-primary" />}
+            </div>
           );
         })
       )}
