@@ -208,7 +208,7 @@ export default function BulkContractPricingUpdate() {
                   <Minus className="h-3.5 w-3.5" />
                 </span>
               )}
-              {!mode && active && <Check className="h-3.5 w-3.5 shrink-0 text-primary" />}
+              {!mode && active && <Check className="h-3.5 w-3.5 shrink-0 text-foreground" />}
             </div>
           );
         })
