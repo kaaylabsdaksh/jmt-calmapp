@@ -724,6 +724,7 @@ const AccountAdminView = () => {
           setArrivalType(parsed.arrivalType);
         }
         if (Array.isArray(parsed.groups)) setGroups(parsed.groups);
+        if (Array.isArray(parsed.divisions)) setDivisions(parsed.divisions);
         if (typeof parsed.search === "string") setSearch(parsed.search);
       }
     } catch {
@@ -732,7 +733,7 @@ const AccountAdminView = () => {
   }, []);
 
   const saveFilterDefaults = () => {
-    const payload = { search, locations, arrivalType, groups };
+    const payload = { search, locations, arrivalType, groups, divisions };
     localStorage.setItem("accountAdminFilters", JSON.stringify(payload));
     toast({ title: "Filter defaults saved", description: "Current filters will be applied on your next visit." });
   };
@@ -741,6 +742,7 @@ const AccountAdminView = () => {
     setLocations([]);
     setArrivalType("All");
     setGroups([]);
+    setDivisions([]);
     setSearch("");
     toast({ title: "Filters reset", description: "Showing all qualifying batches." });
   };
