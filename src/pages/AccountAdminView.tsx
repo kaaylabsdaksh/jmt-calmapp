@@ -132,6 +132,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     deliverBy: "2026-08-05",
     salesOrder: "SO-88120",
     status: "AR Invoicing",
+    invoiceStatus: "Pending",
     items: mkItems("100212", [
       { priority: "EMERGENCY", qualifying: true, itemStatus: "AR Invoicing", minorStatus: "Hold - Billing" },
       { priority: "RUSH", qualifying: true, manufacturer: "DRUCK", model: "DPI 611" },
@@ -155,6 +156,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     deliverBy: "2026-08-11",
     salesOrder: "SO-88144",
     status: "Ready for Departure",
+    invoiceStatus: "Sent",
     items: mkItems("100218", [
       { priority: "EXPEDITE", qualifying: true, departureType: "Customer Pickup" },
       { priority: "NORMAL", qualifying: true, manufacturer: "PROTO", model: "6062C" },
@@ -177,6 +179,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     deliverBy: "2026-08-19",
     salesOrder: "SO-88171",
     status: "Ready to Bill",
+    invoiceStatus: "Approved",
     items: mkItems("100224", [
       { priority: "RUSH", qualifying: true, itemStatus: "Ready to Bill" },
       { manufacturer: "ASHCROFT", model: "TG-60" },
@@ -198,6 +201,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     deliverBy: "2026-08-02",
     salesOrder: "SO-88203",
     status: "Waiting on Customer",
+    invoiceStatus: "Disputed",
     items: mkItems("100231", [
       { priority: "EXPEDITE", qualifying: true, minorStatus: "Awaiting PO" },
       { priority: "NORMAL", qualifying: false, manufacturer: "FLUKE", model: "726" },
@@ -220,6 +224,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     deliverBy: "2026-08-21",
     salesOrder: "SO-88240",
     status: "AR Invoicing",
+    invoiceStatus: "Invoiced",
     items: mkItems("100240", [
       { priority: "NORMAL", qualifying: true, manufacturer: "PROTO", model: "6062D" },
       { manufacturer: "FLUKE", model: "87V" },
@@ -242,6 +247,7 @@ const MOCK_BATCHES: AdminBatch[] = [
     deliverBy: "2026-08-26",
     salesOrder: "SO-88266",
     status: "Completed",
+    invoiceStatus: "Paid",
     items: mkItems("100255", [
       { priority: "RUSH", qualifying: true, itemStatus: "Ready for Departure" },
       { closed: true, itemStatus: "Closed", minorStatus: "Completed" },
