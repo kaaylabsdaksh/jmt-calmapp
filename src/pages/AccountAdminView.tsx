@@ -711,6 +711,7 @@ const AccountAdminView = () => {
   const [groups, setGroups] = useState<string[]>([]);
   const [divisions, setDivisions] = useState<string[]>([]);
   const [invoiceStatuses, setInvoiceStatuses] = useState<string[]>([]);
+  const [excludeOpenItems, setExcludeOpenItems] = useState(false);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [visibleColumns, setVisibleColumns] = useState<ColumnKey[]>(ALL_COLUMNS.map((c) => c.key));
@@ -735,6 +736,7 @@ const AccountAdminView = () => {
         if (Array.isArray(parsed.groups)) setGroups(parsed.groups);
         if (Array.isArray(parsed.divisions)) setDivisions(parsed.divisions);
         if (Array.isArray(parsed.invoiceStatuses)) setInvoiceStatuses(parsed.invoiceStatuses);
+        if (typeof parsed.excludeOpenItems === "boolean") setExcludeOpenItems(parsed.excludeOpenItems);
         if (typeof parsed.search === "string") setSearch(parsed.search);
       }
     } catch {
@@ -743,7 +745,7 @@ const AccountAdminView = () => {
   }, []);
 
   const saveFilterDefaults = () => {
-    const payload = { search, locations, arrivalType, groups, divisions, invoiceStatuses };
+    const payload = { search, locations, arrivalType, groups, divisions, invoiceStatuses, excludeOpenItems };
     localStorage.setItem("accountAdminFilters", JSON.stringify(payload));
     toast({ title: "Filter defaults saved", description: "Current filters will be applied on your next visit." });
   };
@@ -754,6 +756,7 @@ const AccountAdminView = () => {
     setGroups([]);
     setDivisions([]);
     setInvoiceStatuses([]);
+    setExcludeOpenItems(false);
     setSearch("");
     toast({ title: "Filters reset", description: "Showing all qualifying batches." });
   };
@@ -775,6 +778,7 @@ const AccountAdminView = () => {
       if (groups.length && !groups.includes(b.customerGroup)) return false;
       if (divisions.length && !divisions.includes(b.division)) return false;
       if (invoiceStatuses.length && !invoiceStatuses.includes(b.invoiceStatus)) return false;
+      if (excludeOpenItems && b.items.some((i) => !i.closed)) return false;
       if (
         q &&
         ![b.woNumber, b.customer, b.account, b.contact, b.salesOrder].some((v) => v.toLowerCase().includes(q))
@@ -782,7 +786,7 @@ const AccountAdminView = () => {
         return false;
       return true;
     });
-  }, [locations, arrivalType, groups, divisions, invoiceStatuses, search]);
+  }, [locations, arrivalType, groups, divisions, invoiceStatuses, excludeOpenItems, search]);
 
   const sortBatches = (list: AdminBatch[]) =>
     [...list].sort((a, b) => {
@@ -1121,6 +1125,22 @@ const AccountAdminView = () => {
 
                     <MultiSelect label="Invoice Status" options={INVOICE_STATUSES} values={invoiceStatuses} onChange={setInvoiceStatuses} searchable />
 
+                    <label
+                      className={cn(
+                        "inline-flex cursor-pointer items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-all hover:shadow-sm",
+                        excludeOpenItems
+                          ? "border-slate-900 bg-slate-900 text-white"
+                          : "border-border bg-card text-foreground hover:border-foreground/30"
+                      )}
+                    >
+                      <Checkbox
+                        checked={excludeOpenItems}
+                        onCheckedChange={(v) => setExcludeOpenItems(v === true)}
+                        className="h-3.5 w-3.5 border-current data-[state=checked]:bg-white data-[state=checked]:text-slate-900"
+                      />
+                      <span>Exclude Open Items</span>
+                    </label>
+
 
                     <div className="ml-auto flex items-center gap-2">
                       <Button
@@ -1144,7 +1164,7 @@ const AccountAdminView = () => {
                     </div>
                   </div>
 
-                  {(search.trim() || locations.length > 0 || groups.length > 0 || divisions.length > 0 || invoiceStatuses.length > 0 || arrivalType !== "All") && (
+                  {(search.trim() || locations.length > 0 || groups.length > 0 || divisions.length > 0 || invoiceStatuses.length > 0 || excludeOpenItems || arrivalType !== "All") && (
                     <div className="flex flex-wrap items-center gap-1.5 border-t border-border pt-2">
                       <span className="text-[10px] uppercase tracking-wide text-muted-foreground">Filters</span>
                       {search.trim() && (
@@ -1181,6 +1201,9 @@ const AccountAdminView = () => {
                           onRemove={() => setInvoiceStatuses(invoiceStatuses.filter((x) => x !== s))}
                         />
                       ))}
+                      {excludeOpenItems && (
+                        <FilterPill label="Exclude Open Items" onRemove={() => setExcludeOpenItems(false)} />
+                      )}
                       <button
                         onClick={resetFilters}
                         className="ml-1 text-[11px] font-medium text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
