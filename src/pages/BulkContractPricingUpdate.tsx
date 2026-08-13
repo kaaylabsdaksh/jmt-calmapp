@@ -183,7 +183,7 @@ export default function BulkContractPricingUpdate() {
                       onAction(a.acct);
                     }
                   }}
-                  className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-foreground transition-all duration-200 hover:scale-110 hover:bg-success hover:text-success-foreground hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-success/40"
+                  className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-foreground transition-all duration-200 hover:scale-110 hover:bg-green-700 hover:text-white hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-1"
                 >
                   <Plus className="h-3.5 w-3.5" />
                 </span>
