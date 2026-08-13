@@ -198,7 +198,7 @@ export default function BulkContractPricingUpdate() {
                       onAction(a.acct);
                     }
                   }}
-                  className="shrink-0 rounded p-0.5 text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
+                  className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-all duration-200 hover:scale-110 hover:bg-destructive/15 hover:text-destructive hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive/40"
                 >
                   <Minus className="h-3.5 w-3.5" />
                 </span>
