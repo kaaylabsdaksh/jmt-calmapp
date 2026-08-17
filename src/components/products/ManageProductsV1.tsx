@@ -190,10 +190,6 @@ const ManageProductsV1 = () => {
               <h1 className="text-xl font-semibold tracking-tight">Manage Products</h1>
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="link" size="sm" className="h-8 text-xs text-slate-900 px-1">
-                <ExternalLink className="h-3.5 w-3.5 mr-1.5" />
-                Competitive Price Guide
-              </Button>
               <Button variant="outline" size="sm" className="h-8 text-xs">
                 <Download className="h-3.5 w-3.5 mr-1.5" />
                 Export
