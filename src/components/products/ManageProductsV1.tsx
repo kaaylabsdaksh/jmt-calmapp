@@ -214,6 +214,53 @@ const ManageProductsV1 = () => {
               <h1 className="text-xl font-semibold tracking-tight">Manage Products</h1>
             </div>
             <div className="flex items-center gap-2">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" size="sm" className="h-8 text-xs">
+                    <Columns3 className="h-3.5 w-3.5 mr-1.5" />
+                    Columns
+                    {hiddenCols.length > 0 && (
+                      <span className="ml-1.5 rounded-full bg-muted px-1.5 text-[10px]">
+                        {COLUMNS.length - hiddenCols.length}/{COLUMNS.length}
+                      </span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent align="end" className="w-64 p-0 bg-popover z-50">
+                  <div className="flex items-center justify-between border-b px-3 py-2">
+                    <span className="text-xs font-semibold">Customize columns</span>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-6 px-2 text-[11px]"
+                      onClick={() => updateHidden([])}
+                    >
+                      Reset
+                    </Button>
+                  </div>
+                  <div className="max-h-72 overflow-y-auto p-2 space-y-0.5">
+                    {COLUMNS.map((c) => {
+                      const locked = c.key === "id";
+                      return (
+                        <label
+                          key={c.key}
+                          className={`flex items-center gap-2 rounded px-2 py-1.5 text-xs ${
+                            locked ? "opacity-60" : "cursor-pointer hover:bg-muted/60"
+                          }`}
+                        >
+                          <Checkbox
+                            checked={locked || !hiddenCols.includes(c.key)}
+                            disabled={locked}
+                            onCheckedChange={() => !locked && toggleCol(c.key)}
+                            className="h-3.5 w-3.5"
+                          />
+                          <span>{c.label}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                </PopoverContent>
+              </Popover>
               <Button variant="outline" size="sm" className="h-8 text-xs">
                 <Download className="h-3.5 w-3.5 mr-1.5" />
                 Export
