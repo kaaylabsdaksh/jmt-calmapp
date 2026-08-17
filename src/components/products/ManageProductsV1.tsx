@@ -153,10 +153,10 @@ const ManageProductsV1 = () => {
       if (multiSelects.rentalCategory.length > 0 && !multiSelects.rentalCategory.includes(p.rental)) return false;
       return COLUMNS.every((c) => {
         const v = columnFilters[c.key];
-        if (!v) return true;
-        return String(p[c.key as keyof Product] ?? "")
-          .toLowerCase()
-          .includes(v.toLowerCase());
+        if (!v || v === "all") return true;
+        const cell = String(p[c.key as keyof Product] ?? "");
+        if (c.type === "select") return cell.toLowerCase() === v.toLowerCase();
+        return cell.toLowerCase().includes(v.toLowerCase());
       });
     });
   }, [generalSearch, selects, multiSelects, columnFilters]);
