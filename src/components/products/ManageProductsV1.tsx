@@ -130,6 +130,8 @@ const emptyMultiSelects = { techCategory: [] as string[], rentalCategory: [] as 
 const emptyChecks = Object.fromEntries(CHECK_FILTERS.map((f) => [f.key, false])) as Record<string, boolean>;
 const emptyColumnFilters = Object.fromEntries(COLUMNS.map((c) => [c.key, ""])) as Record<string, string>;
 const HIDDEN_COLS_KEY = "manage-products-hidden-columns";
+const COL_ORDER_KEY = "manage-products-column-order";
+const DEFAULT_ORDER = COLUMNS.map((c) => c.key as string);
 
 const ManageProductsV1 = () => {
   const [generalSearch, setGeneralSearch] = useState("");
@@ -148,10 +150,25 @@ const ManageProductsV1 = () => {
       return [];
     }
   });
+  const [colOrder, setColOrder] = useState<string[]>(() => {
+    try {
+      const saved: string[] = JSON.parse(localStorage.getItem(COL_ORDER_KEY) || "null") || DEFAULT_ORDER;
+      const valid = saved.filter((k) => DEFAULT_ORDER.includes(k));
+      return [...valid, ...DEFAULT_ORDER.filter((k) => !valid.includes(k))];
+    } catch {
+      return DEFAULT_ORDER;
+    }
+  });
+  const [dragKey, setDragKey] = useState<string | null>(null);
+
+  const orderedColumns = useMemo(
+    () => colOrder.map((k) => COLUMNS.find((c) => c.key === k)!).filter(Boolean),
+    [colOrder]
+  );
 
   const visibleColumns = useMemo(
-    () => COLUMNS.filter((c) => c.key === "id" || !hiddenCols.includes(c.key)),
-    [hiddenCols]
+    () => orderedColumns.filter((c) => c.key === "id" || !hiddenCols.includes(c.key)),
+    [orderedColumns, hiddenCols]
   );
 
   const updateHidden = (next: string[]) => {
@@ -161,8 +178,24 @@ const ManageProductsV1 = () => {
     } catch {}
   };
 
+  const updateOrder = (next: string[]) => {
+    setColOrder(next);
+    try {
+      localStorage.setItem(COL_ORDER_KEY, JSON.stringify(next));
+    } catch {}
+  };
+
+  const moveColumn = (from: string, to: string) => {
+    if (from === to) return;
+    const next = colOrder.filter((k) => k !== from);
+    const idx = next.indexOf(to);
+    next.splice(idx < 0 ? next.length : idx, 0, from);
+    updateOrder(next);
+  };
+
   const toggleCol = (key: string) =>
     updateHidden(hiddenCols.includes(key) ? hiddenCols.filter((k) => k !== key) : [...hiddenCols, key]);
+
 
   const rows = useMemo(() => {
     return PRODUCTS.filter((p) => {
