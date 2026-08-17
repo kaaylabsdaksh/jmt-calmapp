@@ -190,38 +190,38 @@ const ManageProductsV1 = () => {
 
           {/* Filters */}
           <Card>
-            <CardContent className="p-3 space-y-3">
+            <CardContent className="p-3 space-y-2.5">
               {/* General Search */}
-              <div className="space-y-1">
-                <Label className="text-[11px] font-medium text-muted-foreground">General Search</Label>
+              <div className="space-y-0.5">
+                <Label className="text-[10px] font-medium text-muted-foreground">General Search</Label>
                 <div className="relative max-w-xl">
                   <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
                   <Input
                     value={generalSearch}
                     onChange={(e) => setGeneralSearch(e.target.value)}
                     placeholder="Manufacturer, model or description"
-                    className="h-8 text-xs pl-8"
+                    className="h-7 text-[11px] pl-8"
                   />
                 </div>
               </div>
 
               {/* Category selects */}
-              <div className="flex flex-nowrap gap-3 overflow-x-auto pb-1">
+              <div className="flex flex-nowrap gap-2 overflow-x-auto pb-1">
                 {SELECT_FILTERS.map((f) => (
-                  <div key={f.key} className="space-y-1 min-w-[150px] flex-1">
-                    <Label className="text-[11px] font-medium text-muted-foreground whitespace-nowrap">
+                  <div key={f.key} className="space-y-0.5 min-w-[130px] flex-1">
+                    <Label className="text-[10px] font-medium text-muted-foreground whitespace-nowrap">
                       {f.label}
                     </Label>
                     <Select
                       value={selects[f.key] || undefined}
                       onValueChange={(v) => setSelects((p) => ({ ...p, [f.key]: v }))}
                     >
-                      <SelectTrigger className="h-8 text-xs">
+                      <SelectTrigger className="h-7 text-[11px] px-2">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent className="bg-popover z-50">
                         {f.options.map((o) => (
-                          <SelectItem key={o} value={o} className="text-xs">
+                          <SelectItem key={o} value={o} className="text-[11px]">
                             {o}
                           </SelectItem>
                         ))}
@@ -236,16 +236,16 @@ const ManageProductsV1 = () => {
                 {CHECK_FILTERS.map((f) => (
                   <label
                     key={f.key}
-                    className="flex items-center gap-2 rounded-md border bg-muted/30 px-2 py-1.5 cursor-pointer hover:bg-muted/60 transition-colors"
+                    className="flex items-center gap-1.5 rounded-md border bg-muted/30 px-2 py-1 cursor-pointer hover:bg-muted/60 transition-colors"
                   >
                     <Checkbox
                       checked={checks[f.key]}
                       onCheckedChange={(v) =>
                         setChecks((p) => ({ ...p, [f.key]: Boolean(v) }))
                       }
-                      className="h-3.5 w-3.5"
+                      className="h-3 w-3"
                     />
-                    <span className="text-[11px] leading-tight">{f.label}</span>
+                    <span className="text-[10px] leading-tight">{f.label}</span>
                   </label>
                 ))}
               </div>
