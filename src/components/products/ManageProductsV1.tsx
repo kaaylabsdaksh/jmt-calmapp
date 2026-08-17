@@ -267,32 +267,48 @@ const ManageProductsV1 = () => {
                       variant="ghost"
                       size="sm"
                       className="h-6 px-2 text-[11px]"
-                      onClick={() => updateHidden([])}
+                      onClick={() => {
+                        updateHidden([]);
+                        updateOrder(DEFAULT_ORDER);
+                      }}
                     >
                       Reset
                     </Button>
                   </div>
+                  <div className="px-3 pt-2 text-[10px] text-muted-foreground">
+                    Drag the handle to rearrange columns
+                  </div>
                   <div className="max-h-72 overflow-y-auto p-2 space-y-0.5">
-                    {COLUMNS.map((c) => {
+                    {orderedColumns.map((c) => {
                       const locked = c.key === "id";
                       return (
-                        <label
+                        <div
                           key={c.key}
+                          draggable
+                          onDragStart={() => setDragKey(c.key)}
+                          onDragOver={(e) => e.preventDefault()}
+                          onDrop={() => {
+                            if (dragKey) moveColumn(dragKey, c.key);
+                            setDragKey(null);
+                          }}
+                          onDragEnd={() => setDragKey(null)}
                           className={`flex items-center gap-2 rounded px-2 py-1.5 text-xs ${
-                            locked ? "opacity-60" : "cursor-pointer hover:bg-muted/60"
+                            dragKey === c.key ? "bg-muted" : "hover:bg-muted/60"
                           }`}
                         >
+                          <GripVertical className="h-3.5 w-3.5 shrink-0 cursor-grab text-muted-foreground active:cursor-grabbing" />
                           <Checkbox
                             checked={locked || !hiddenCols.includes(c.key)}
                             disabled={locked}
                             onCheckedChange={() => !locked && toggleCol(c.key)}
                             className="h-3.5 w-3.5"
                           />
-                          <span>{c.label}</span>
-                        </label>
+                          <span className={locked ? "opacity-60" : ""}>{c.label}</span>
+                        </div>
                       );
                     })}
                   </div>
+
                 </PopoverContent>
               </Popover>
               <Button variant="outline" size="sm" className="h-8 text-xs">
