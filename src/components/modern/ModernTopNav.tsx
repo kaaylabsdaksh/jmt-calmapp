@@ -17,6 +17,7 @@ const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
   "/onsite-projects": { title: "Onsite Projects", crumbs: [{ label: "Home", to: "/" }, { label: "Onsite Projects" }] },
   "/onsite-projects/new": { title: "Onsite Project # XXX", crumbs: [{ label: "Onsite Projects", to: "/onsite-projects" }, { label: "New Project" }] },
   "/manage-customers": { title: "Manage Customers", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers" }] },
+  "/manage-products": { title: "Manage Products", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Products" }] },
   "/manage-customers/retest-notices": { title: "Retest Notice Management", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Retest Notices" }] },
   "/manage-customers/cdr": { title: "Customer Document Reviews", crumbs: [{ label: "Home", to: "/" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Manage CDR" }] },
   "/manage-customers/cdr/new": { title: "Add New CDR", crumbs: [{ label: "Home", to: "/" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Manage CDR", to: "/manage-customers/cdr" }, { label: "Add New CDR" }] },
