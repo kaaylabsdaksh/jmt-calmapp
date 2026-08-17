@@ -228,10 +228,10 @@ const ManageProductsV1 = () => {
                 </div>
 
                 {/* Right: category selects */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="flex flex-nowrap gap-3 overflow-x-auto pb-1">
                   {SELECT_FILTERS.map((f) => (
-                    <div key={f.key} className="space-y-1">
-                      <Label className="text-[11px] font-medium text-muted-foreground">
+                    <div key={f.key} className="space-y-1 min-w-[150px] flex-1">
+                      <Label className="text-[11px] font-medium text-muted-foreground whitespace-nowrap">
                         {f.label}
                       </Label>
                       <Select
