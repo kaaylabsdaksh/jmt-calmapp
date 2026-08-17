@@ -402,7 +402,7 @@ function WorkflowButton({
   variant?: "default" | "danger" | "warn" | "approve";
 }) {
   const variantClass = {
-    default: "bg-primary hover:bg-primary/90 text-foreground-foreground",
+    default: "bg-primary hover:bg-primary/90 text-primary-foreground",
     danger: "bg-red-700 hover:bg-red-800 text-white",
     warn: "bg-amber-600 hover:bg-amber-700 text-white",
     approve: "bg-green-600 hover:bg-green-700 text-white",
