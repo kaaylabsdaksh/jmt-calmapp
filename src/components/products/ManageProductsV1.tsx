@@ -10,8 +10,9 @@ import {
   ExternalLink,
   ChevronLeft,
   ChevronRight,
-
+  Columns3,
 } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -128,6 +129,7 @@ const emptySelects = Object.fromEntries(SELECT_FILTERS.map((f) => [f.key, ""])) 
 const emptyMultiSelects = { techCategory: [] as string[], rentalCategory: [] as string[] };
 const emptyChecks = Object.fromEntries(CHECK_FILTERS.map((f) => [f.key, false])) as Record<string, boolean>;
 const emptyColumnFilters = Object.fromEntries(COLUMNS.map((c) => [c.key, ""])) as Record<string, string>;
+const HIDDEN_COLS_KEY = "manage-products-hidden-columns";
 
 const ManageProductsV1 = () => {
   const [generalSearch, setGeneralSearch] = useState("");
@@ -139,6 +141,28 @@ const ManageProductsV1 = () => {
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({ ...emptyColumnFilters });
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState("25");
+  const [hiddenCols, setHiddenCols] = useState<string[]>(() => {
+    try {
+      return JSON.parse(localStorage.getItem(HIDDEN_COLS_KEY) || "[]");
+    } catch {
+      return [];
+    }
+  });
+
+  const visibleColumns = useMemo(
+    () => COLUMNS.filter((c) => c.key === "id" || !hiddenCols.includes(c.key)),
+    [hiddenCols]
+  );
+
+  const updateHidden = (next: string[]) => {
+    setHiddenCols(next);
+    try {
+      localStorage.setItem(HIDDEN_COLS_KEY, JSON.stringify(next));
+    } catch {}
+  };
+
+  const toggleCol = (key: string) =>
+    updateHidden(hiddenCols.includes(key) ? hiddenCols.filter((k) => k !== key) : [...hiddenCols, key]);
 
   const rows = useMemo(() => {
     return PRODUCTS.filter((p) => {
@@ -191,6 +215,53 @@ const ManageProductsV1 = () => {
               <h1 className="text-xl font-semibold tracking-tight">Manage Products</h1>
             </div>
             <div className="flex items-center gap-2">
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" size="sm" className="h-8 text-xs">
+                    <Columns3 className="h-3.5 w-3.5 mr-1.5" />
+                    Columns
+                    {hiddenCols.length > 0 && (
+                      <span className="ml-1.5 rounded-full bg-muted px-1.5 text-[10px]">
+                        {COLUMNS.length - hiddenCols.length}/{COLUMNS.length}
+                      </span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent align="end" className="w-64 p-0 bg-popover z-50">
+                  <div className="flex items-center justify-between border-b px-3 py-2">
+                    <span className="text-xs font-semibold">Customize columns</span>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-6 px-2 text-[11px]"
+                      onClick={() => updateHidden([])}
+                    >
+                      Reset
+                    </Button>
+                  </div>
+                  <div className="max-h-72 overflow-y-auto p-2 space-y-0.5">
+                    {COLUMNS.map((c) => {
+                      const locked = c.key === "id";
+                      return (
+                        <label
+                          key={c.key}
+                          className={`flex items-center gap-2 rounded px-2 py-1.5 text-xs ${
+                            locked ? "opacity-60" : "cursor-pointer hover:bg-muted/60"
+                          }`}
+                        >
+                          <Checkbox
+                            checked={locked || !hiddenCols.includes(c.key)}
+                            disabled={locked}
+                            onCheckedChange={() => !locked && toggleCol(c.key)}
+                            className="h-3.5 w-3.5"
+                          />
+                          <span>{c.label}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                </PopoverContent>
+              </Popover>
               <Button variant="outline" size="sm" className="h-8 text-xs">
                 <Download className="h-3.5 w-3.5 mr-1.5" />
                 Export
@@ -314,7 +385,7 @@ const ManageProductsV1 = () => {
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-muted/50 hover:bg-muted/50">
-                      {COLUMNS.map((c) => (
+                      {visibleColumns.map((c) => (
                         <TableHead
                           key={c.key}
                           className={`text-[11px] font-semibold align-top ${c.width} min-w-[7rem]`}
@@ -377,7 +448,7 @@ const ManageProductsV1 = () => {
                   <TableBody>
                     {pageRows.length === 0 ? (
                       <TableRow>
-                        <TableCell colSpan={COLUMNS.length} className="py-14 text-center">
+                        <TableCell colSpan={visibleColumns.length} className="py-14 text-center">
                           <Inbox className="h-8 w-8 mx-auto mb-2 text-muted-foreground/40" />
                           <p className="text-xs text-muted-foreground">No data to display</p>
                         </TableCell>
@@ -385,7 +456,7 @@ const ManageProductsV1 = () => {
                     ) : (
                       pageRows.map((p) => (
                         <TableRow key={p.id} className="hover:bg-muted/40">
-                          {COLUMNS.map((c) => (
+                          {visibleColumns.map((c) => (
                             <TableCell key={c.key} className="py-2 text-xs">
                               {c.key === "id" ? (
                                 <Link
