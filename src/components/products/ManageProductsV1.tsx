@@ -222,7 +222,7 @@ const ManageProductsV1 = () => {
                     </Label>
                     {"multi" in f && f.multi ? (
                       <MultiSelect
-                        options={f.options}
+                        options={[...f.options]}
                         values={multiSelects[f.key as keyof typeof multiSelects]}
                         onChange={(v) => setMultiSelects((p) => ({ ...p, [f.key]: v }))}
                         max={3}
