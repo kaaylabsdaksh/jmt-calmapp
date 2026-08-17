@@ -136,6 +136,7 @@ const COL_ORDER_KEY = "manage-products-column-order";
 const DEFAULT_ORDER = COLUMNS.map((c) => c.key as string);
 
 const ManageProductsV1 = () => {
+  const navigate = useNavigate();
   const [generalSearch, setGeneralSearch] = useState("");
   const [selects, setSelects] = useState<Record<string, string>>({ ...emptySelects });
   const [multiSelects, setMultiSelects] = useState<{ techCategory: string[]; rentalCategory: string[] }>({
