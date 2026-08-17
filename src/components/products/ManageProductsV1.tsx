@@ -70,15 +70,11 @@ const SELECT_FILTERS = [
     label: "Technical/Labs Category",
     options: ["Electrical", "Mechanical", "Temperature", "Pressure"],
   },
-  { key: "techCategory2", label: "2nd Category", options: ["Meters", "Calibrators", "Sensors"] },
-  { key: "techCategory3", label: "3rd Category", options: ["Digital", "Analog"] },
   {
     key: "rentalCategory",
     label: "Rental/Sales Category",
     options: ["Rental", "Sales", "Both"],
   },
-  { key: "rentalCategory2", label: "2nd Category", options: ["Standard", "Premium"] },
-  { key: "rentalCategory3", label: "3rd Category", options: ["Short Term", "Long Term"] },
 ] as const;
 
 const CHECK_FILTERS = [
