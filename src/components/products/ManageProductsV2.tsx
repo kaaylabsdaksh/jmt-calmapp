@@ -281,6 +281,9 @@ const ManageProductsV2 = () => {
   const [filtersOpen, setFiltersOpen] = useState(true);
   const [generalSearch, setGeneralSearch] = useState("");
   const [selects, setSelects] = useState<Record<string, string>>({ ...emptySelects });
+  const [multiSelects, setMultiSelects] = useState<{ techCategory: string[]; rentalCategory: string[] }>({
+    ...emptyMultiSelects,
+  });
   const [checks, setChecks] = useState<Record<string, boolean>>({ ...emptyChecks });
   const [resultSearch, setResultSearch] = useState("");
   const [visible, setVisible] = useState<(keyof Product)[]>(DEFAULT_VISIBLE);
@@ -294,6 +297,7 @@ const ManageProductsV2 = () => {
   const activeCount =
     (generalSearch ? 1 : 0) +
     Object.values(selects).filter(Boolean).length +
+    Object.values(multiSelects).reduce((acc, v) => acc + v.length, 0) +
     Object.values(checks).filter(Boolean).length;
 
   const rows = useMemo(() => {
@@ -304,7 +308,11 @@ const ManageProductsV2 = () => {
       if (term && !haystack.includes(term)) return false;
       if (inner && !haystack.includes(inner)) return false;
       if (selects.labCode && p.lc !== selects.labCode) return false;
-      if (selects.techCategory && p.groupType !== selects.techCategory) return false;
+      if (multiSelects.techCategory.length > 0 && !multiSelects.techCategory.includes(p.groupType)) return false;
+      if (multiSelects.rentalCategory.length > 0) {
+        const rentalValue = p.rental ? "Rental" : "Sales";
+        if (!multiSelects.rentalCategory.includes(rentalValue) && !multiSelects.rentalCategory.includes("Both")) return false;
+      }
       if (checks.onlyProductReview && p.prStatus === "—") return false;
       if (checks.includeRental && !p.rental) return false;
       if (!checks.showTemplate && p.status === "Template") return false;
@@ -315,7 +323,7 @@ const ManageProductsV2 = () => {
       const bv = String(b[sortKey as keyof Product] ?? "");
       return sortAsc ? av.localeCompare(bv) : bv.localeCompare(av);
     });
-  }, [products, generalSearch, resultSearch, selects, checks, sortKey, sortAsc]);
+  }, [products, generalSearch, resultSearch, selects, multiSelects, checks, sortKey, sortAsc]);
 
   const size = Number(pageSize);
   const totalPages = Math.max(1, Math.ceil(rows.length / size));
@@ -327,6 +335,7 @@ const ManageProductsV2 = () => {
   const handleClear = () => {
     setGeneralSearch("");
     setSelects({ ...emptySelects });
+    setMultiSelects({ ...emptyMultiSelects });
     setChecks({ ...emptyChecks });
     setResultSearch("");
     setPage(1);
