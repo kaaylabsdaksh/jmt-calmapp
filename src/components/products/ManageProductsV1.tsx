@@ -11,6 +11,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Columns3,
+  GripVertical,
+
 } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
@@ -130,6 +132,8 @@ const emptyMultiSelects = { techCategory: [] as string[], rentalCategory: [] as 
 const emptyChecks = Object.fromEntries(CHECK_FILTERS.map((f) => [f.key, false])) as Record<string, boolean>;
 const emptyColumnFilters = Object.fromEntries(COLUMNS.map((c) => [c.key, ""])) as Record<string, string>;
 const HIDDEN_COLS_KEY = "manage-products-hidden-columns";
+const COL_ORDER_KEY = "manage-products-column-order";
+const DEFAULT_ORDER = COLUMNS.map((c) => c.key as string);
 
 const ManageProductsV1 = () => {
   const [generalSearch, setGeneralSearch] = useState("");
@@ -148,10 +152,25 @@ const ManageProductsV1 = () => {
       return [];
     }
   });
+  const [colOrder, setColOrder] = useState<string[]>(() => {
+    try {
+      const saved: string[] = JSON.parse(localStorage.getItem(COL_ORDER_KEY) || "null") || DEFAULT_ORDER;
+      const valid = saved.filter((k) => DEFAULT_ORDER.includes(k));
+      return [...valid, ...DEFAULT_ORDER.filter((k) => !valid.includes(k))];
+    } catch {
+      return DEFAULT_ORDER;
+    }
+  });
+  const [dragKey, setDragKey] = useState<string | null>(null);
+
+  const orderedColumns = useMemo(
+    () => colOrder.map((k) => COLUMNS.find((c) => c.key === k)!).filter(Boolean),
+    [colOrder]
+  );
 
   const visibleColumns = useMemo(
-    () => COLUMNS.filter((c) => c.key === "id" || !hiddenCols.includes(c.key)),
-    [hiddenCols]
+    () => orderedColumns.filter((c) => c.key === "id" || !hiddenCols.includes(c.key)),
+    [orderedColumns, hiddenCols]
   );
 
   const updateHidden = (next: string[]) => {
@@ -161,8 +180,24 @@ const ManageProductsV1 = () => {
     } catch {}
   };
 
+  const updateOrder = (next: string[]) => {
+    setColOrder(next);
+    try {
+      localStorage.setItem(COL_ORDER_KEY, JSON.stringify(next));
+    } catch {}
+  };
+
+  const moveColumn = (from: string, to: string) => {
+    if (from === to) return;
+    const next = colOrder.filter((k) => k !== from);
+    const idx = next.indexOf(to);
+    next.splice(idx < 0 ? next.length : idx, 0, from);
+    updateOrder(next);
+  };
+
   const toggleCol = (key: string) =>
     updateHidden(hiddenCols.includes(key) ? hiddenCols.filter((k) => k !== key) : [...hiddenCols, key]);
+
 
   const rows = useMemo(() => {
     return PRODUCTS.filter((p) => {
@@ -234,32 +269,48 @@ const ManageProductsV1 = () => {
                       variant="ghost"
                       size="sm"
                       className="h-6 px-2 text-[11px]"
-                      onClick={() => updateHidden([])}
+                      onClick={() => {
+                        updateHidden([]);
+                        updateOrder(DEFAULT_ORDER);
+                      }}
                     >
                       Reset
                     </Button>
                   </div>
+                  <div className="px-3 pt-2 text-[10px] text-muted-foreground">
+                    Drag the handle to rearrange columns
+                  </div>
                   <div className="max-h-72 overflow-y-auto p-2 space-y-0.5">
-                    {COLUMNS.map((c) => {
+                    {orderedColumns.map((c) => {
                       const locked = c.key === "id";
                       return (
-                        <label
+                        <div
                           key={c.key}
+                          draggable
+                          onDragStart={() => setDragKey(c.key)}
+                          onDragOver={(e) => e.preventDefault()}
+                          onDrop={() => {
+                            if (dragKey) moveColumn(dragKey, c.key);
+                            setDragKey(null);
+                          }}
+                          onDragEnd={() => setDragKey(null)}
                           className={`flex items-center gap-2 rounded px-2 py-1.5 text-xs ${
-                            locked ? "opacity-60" : "cursor-pointer hover:bg-muted/60"
+                            dragKey === c.key ? "bg-muted" : "hover:bg-muted/60"
                           }`}
                         >
+                          <GripVertical className="h-3.5 w-3.5 shrink-0 cursor-grab text-muted-foreground active:cursor-grabbing" />
                           <Checkbox
                             checked={locked || !hiddenCols.includes(c.key)}
                             disabled={locked}
                             onCheckedChange={() => !locked && toggleCol(c.key)}
                             className="h-3.5 w-3.5"
                           />
-                          <span>{c.label}</span>
-                        </label>
+                          <span className={locked ? "opacity-60" : ""}>{c.label}</span>
+                        </div>
                       );
                     })}
                   </div>
+
                 </PopoverContent>
               </Popover>
               <Button variant="outline" size="sm" className="h-8 text-xs">
@@ -388,10 +439,26 @@ const ManageProductsV1 = () => {
                       {visibleColumns.map((c) => (
                         <TableHead
                           key={c.key}
-                          className={`text-[11px] font-semibold align-top ${c.width} min-w-[7rem]`}
+                          onDragOver={(e) => e.preventDefault()}
+                          onDrop={() => {
+                            if (dragKey) moveColumn(dragKey, c.key);
+                            setDragKey(null);
+                          }}
+                          className={`text-[11px] font-semibold align-top ${c.width} min-w-[7rem] ${
+                            dragKey === c.key ? "bg-muted" : ""
+                          }`}
                         >
                           <div className="space-y-1 py-1">
-                            <div className="whitespace-nowrap">{c.label}</div>
+                            <div
+                              draggable
+                              onDragStart={() => setDragKey(c.key)}
+                              onDragEnd={() => setDragKey(null)}
+                              className="group flex cursor-grab items-center gap-1 whitespace-nowrap active:cursor-grabbing"
+                            >
+                              <GripVertical className="h-3 w-3 shrink-0 text-muted-foreground/40 group-hover:text-muted-foreground" />
+                              {c.label}
+                            </div>
+
                             {c.type === "select" ? (
                               <Select
                                 value={columnFilters[c.key] || undefined}
