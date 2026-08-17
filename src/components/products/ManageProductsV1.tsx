@@ -4,7 +4,6 @@ import {
   Search,
   X,
   Plus,
-  Download,
   Inbox,
   ClipboardCheck,
   ExternalLink,
@@ -190,10 +189,6 @@ const ManageProductsV1 = () => {
               <h1 className="text-xl font-semibold tracking-tight">Manage Products</h1>
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" className="h-8 text-xs">
-                <Download className="h-3.5 w-3.5 mr-1.5" />
-                Export
-              </Button>
               <Button size="sm" className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white">
                 <Plus className="h-3.5 w-3.5 mr-1.5" />
                 Add New
