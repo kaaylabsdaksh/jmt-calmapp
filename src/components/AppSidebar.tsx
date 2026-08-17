@@ -89,7 +89,7 @@ const quickActionCategories = {
   ],
   "Product & Customer": [
     { title: "Manage Manufacturers", icon: Settings },
-    { title: "Manage Products", icon: Tags },
+    { title: "Manage Products", icon: Tags, url: "/manage-products" },
     { title: "Manage Customers", icon: Users, url: "/manage-customers" },
     { title: "Search Multiple ID's", icon: FileText },
   ],
