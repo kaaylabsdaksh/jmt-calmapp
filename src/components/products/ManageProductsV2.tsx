@@ -27,6 +27,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
+import { MultiSelect } from "@/components/ui/multi-select";
 import {
   Table,
   TableBody,
@@ -201,8 +202,9 @@ const SELECT_FILTERS = [
     key: "techCategory",
     label: "Technical/Labs Category",
     options: ["Electrical", "Mechanical", "Temperature", "Pressure"],
+    multi: true,
   },
-  { key: "rentalCategory", label: "Rental/Sales Category", options: ["Rental", "Sales", "Both"] },
+  { key: "rentalCategory", label: "Rental/Sales Category", options: ["Rental", "Sales", "Both"], multi: true },
 ] as const;
 
 const CHECK_FILTERS = [
@@ -246,6 +248,7 @@ const SORTS = [
 ] as const;
 
 const emptySelects = Object.fromEntries(SELECT_FILTERS.map((f) => [f.key, ""])) as Record<string, string>;
+const emptyMultiSelects = { techCategory: [] as string[], rentalCategory: [] as string[] };
 const emptyChecks = Object.fromEntries(CHECK_FILTERS.map((f) => [f.key, false])) as Record<string, boolean>;
 
 const statusClass = (status: Product["status"]) => {
@@ -278,6 +281,9 @@ const ManageProductsV2 = () => {
   const [filtersOpen, setFiltersOpen] = useState(true);
   const [generalSearch, setGeneralSearch] = useState("");
   const [selects, setSelects] = useState<Record<string, string>>({ ...emptySelects });
+  const [multiSelects, setMultiSelects] = useState<{ techCategory: string[]; rentalCategory: string[] }>({
+    ...emptyMultiSelects,
+  });
   const [checks, setChecks] = useState<Record<string, boolean>>({ ...emptyChecks });
   const [resultSearch, setResultSearch] = useState("");
   const [visible, setVisible] = useState<(keyof Product)[]>(DEFAULT_VISIBLE);
@@ -291,6 +297,7 @@ const ManageProductsV2 = () => {
   const activeCount =
     (generalSearch ? 1 : 0) +
     Object.values(selects).filter(Boolean).length +
+    Object.values(multiSelects).reduce((acc, v) => acc + v.length, 0) +
     Object.values(checks).filter(Boolean).length;
 
   const rows = useMemo(() => {
@@ -301,7 +308,11 @@ const ManageProductsV2 = () => {
       if (term && !haystack.includes(term)) return false;
       if (inner && !haystack.includes(inner)) return false;
       if (selects.labCode && p.lc !== selects.labCode) return false;
-      if (selects.techCategory && p.groupType !== selects.techCategory) return false;
+      if (multiSelects.techCategory.length > 0 && !multiSelects.techCategory.includes(p.groupType)) return false;
+      if (multiSelects.rentalCategory.length > 0) {
+        const rentalValue = p.rental ? "Rental" : "Sales";
+        if (!multiSelects.rentalCategory.includes(rentalValue) && !multiSelects.rentalCategory.includes("Both")) return false;
+      }
       if (checks.onlyProductReview && p.prStatus === "—") return false;
       if (checks.includeRental && !p.rental) return false;
       if (!checks.showTemplate && p.status === "Template") return false;
@@ -312,7 +323,7 @@ const ManageProductsV2 = () => {
       const bv = String(b[sortKey as keyof Product] ?? "");
       return sortAsc ? av.localeCompare(bv) : bv.localeCompare(av);
     });
-  }, [products, generalSearch, resultSearch, selects, checks, sortKey, sortAsc]);
+  }, [products, generalSearch, resultSearch, selects, multiSelects, checks, sortKey, sortAsc]);
 
   const size = Number(pageSize);
   const totalPages = Math.max(1, Math.ceil(rows.length / size));
@@ -324,6 +335,7 @@ const ManageProductsV2 = () => {
   const handleClear = () => {
     setGeneralSearch("");
     setSelects({ ...emptySelects });
+    setMultiSelects({ ...emptyMultiSelects });
     setChecks({ ...emptyChecks });
     setResultSearch("");
     setPage(1);
@@ -447,21 +459,31 @@ const ManageProductsV2 = () => {
                     {SELECT_FILTERS.map((f) => (
                       <div key={f.key} className="space-y-0.5 min-w-[130px] flex-1">
                         <Label className="text-[10px] font-medium text-muted-foreground whitespace-nowrap">{f.label}</Label>
-                        <Select
-                          value={selects[f.key] || undefined}
-                          onValueChange={(v) => setSelects((p) => ({ ...p, [f.key]: v }))}
-                        >
-                          <SelectTrigger className="h-7 text-[11px] px-2">
-                            <SelectValue placeholder="All" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-popover z-50">
-                            {f.options.map((o) => (
-                              <SelectItem key={o} value={o} className="text-[11px]">
-                                {o}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        {"multi" in f && f.multi ? (
+                          <MultiSelect
+                            options={[...f.options]}
+                            values={multiSelects[f.key as keyof typeof multiSelects]}
+                            onChange={(v) => setMultiSelects((p) => ({ ...p, [f.key]: v }))}
+                            max={3}
+                            placeholder="All"
+                          />
+                        ) : (
+                          <Select
+                            value={selects[f.key] || undefined}
+                            onValueChange={(v) => setSelects((p) => ({ ...p, [f.key]: v }))}
+                          >
+                            <SelectTrigger className="h-7 text-[11px] px-2">
+                              <SelectValue placeholder="All" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-popover z-50">
+                              {f.options.map((o) => (
+                                <SelectItem key={o} value={o} className="text-[11px]">
+                                  {o}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        )}
                       </div>
                     ))}
                   </div>

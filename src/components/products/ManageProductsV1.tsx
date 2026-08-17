@@ -17,6 +17,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { MultiSelect } from "@/components/ui/multi-select";
 import {
   Table,
   TableBody,
@@ -69,11 +70,13 @@ const SELECT_FILTERS = [
     key: "techCategory",
     label: "Technical/Labs Category",
     options: ["Electrical", "Mechanical", "Temperature", "Pressure"],
+    multi: true,
   },
   {
     key: "rentalCategory",
     label: "Rental/Sales Category",
     options: ["Rental", "Sales", "Both"],
+    multi: true,
   },
 ] as const;
 
@@ -109,12 +112,16 @@ const COLUMNS = [
 ] as const;
 
 const emptySelects = Object.fromEntries(SELECT_FILTERS.map((f) => [f.key, ""])) as Record<string, string>;
+const emptyMultiSelects = { techCategory: [] as string[], rentalCategory: [] as string[] };
 const emptyChecks = Object.fromEntries(CHECK_FILTERS.map((f) => [f.key, false])) as Record<string, boolean>;
 const emptyColumnFilters = Object.fromEntries(COLUMNS.map((c) => [c.key, ""])) as Record<string, string>;
 
 const ManageProductsV1 = () => {
   const [generalSearch, setGeneralSearch] = useState("");
   const [selects, setSelects] = useState<Record<string, string>>({ ...emptySelects });
+  const [multiSelects, setMultiSelects] = useState<{ techCategory: string[]; rentalCategory: string[] }>({
+    ...emptyMultiSelects,
+  });
   const [checks, setChecks] = useState<Record<string, boolean>>({ ...emptyChecks });
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({ ...emptyColumnFilters });
   const [page, setPage] = useState(1);
@@ -129,6 +136,9 @@ const ManageProductsV1 = () => {
           .includes(generalSearch.toLowerCase())
       )
         return false;
+      if (selects.labCode && p.lc !== selects.labCode) return false;
+      if (multiSelects.techCategory.length > 0 && !multiSelects.techCategory.includes(p.groupType)) return false;
+      if (multiSelects.rentalCategory.length > 0 && !multiSelects.rentalCategory.includes(p.rental)) return false;
       return COLUMNS.every((c) => {
         const v = columnFilters[c.key];
         if (!v) return true;
@@ -137,7 +147,7 @@ const ManageProductsV1 = () => {
           .includes(v.toLowerCase());
       });
     });
-  }, [generalSearch, columnFilters]);
+  }, [generalSearch, selects, multiSelects, columnFilters]);
 
   const size = Number(pageSize);
   const totalPages = Math.max(1, Math.ceil(rows.length / size));
@@ -147,12 +157,14 @@ const ManageProductsV1 = () => {
   const activeCount =
     (generalSearch ? 1 : 0) +
     Object.values(selects).filter(Boolean).length +
+    Object.values(multiSelects).reduce((acc, v) => acc + v.length, 0) +
     Object.values(checks).filter(Boolean).length +
     Object.values(columnFilters).filter(Boolean).length;
 
   const handleClear = () => {
     setGeneralSearch("");
     setSelects({ ...emptySelects });
+    setMultiSelects({ ...emptyMultiSelects });
     setChecks({ ...emptyChecks });
     setColumnFilters({ ...emptyColumnFilters });
     setPage(1);
@@ -208,21 +220,31 @@ const ManageProductsV1 = () => {
                     <Label className="text-[10px] font-medium text-muted-foreground whitespace-nowrap">
                       {f.label}
                     </Label>
-                    <Select
-                      value={selects[f.key] || undefined}
-                      onValueChange={(v) => setSelects((p) => ({ ...p, [f.key]: v }))}
-                    >
-                      <SelectTrigger className="h-7 text-[11px] px-2">
-                        <SelectValue placeholder="All" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-popover z-50">
-                        {f.options.map((o) => (
-                          <SelectItem key={o} value={o} className="text-[11px]">
-                            {o}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    {"multi" in f && f.multi ? (
+                      <MultiSelect
+                        options={[...f.options]}
+                        values={multiSelects[f.key as keyof typeof multiSelects]}
+                        onChange={(v) => setMultiSelects((p) => ({ ...p, [f.key]: v }))}
+                        max={3}
+                        placeholder="All"
+                      />
+                    ) : (
+                      <Select
+                        value={selects[f.key] || undefined}
+                        onValueChange={(v) => setSelects((p) => ({ ...p, [f.key]: v }))}
+                      >
+                        <SelectTrigger className="h-7 text-[11px] px-2">
+                          <SelectValue placeholder="All" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-popover z-50">
+                          {f.options.map((o) => (
+                            <SelectItem key={o} value={o} className="text-[11px]">
+                              {o}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
                   </div>
                 ))}
               </div>
