@@ -169,9 +169,6 @@ const ManageProductsV1 = () => {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h1 className="text-xl font-semibold tracking-tight">Manage Products</h1>
-              <p className="text-xs text-muted-foreground">
-                Search, review and maintain the product catalog.
-              </p>
             </div>
             <div className="flex items-center gap-2">
               <Button variant="link" size="sm" className="h-8 text-xs text-slate-900 px-1">
