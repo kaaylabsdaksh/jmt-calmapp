@@ -207,14 +207,24 @@ const ManageProductsV1 = () => {
               {/* General Search */}
               <div className="space-y-0.5">
                 <Label className="text-[10px] font-medium text-muted-foreground">General Search</Label>
-                <div className="relative max-w-xl">
-                  <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
-                  <Input
-                    value={generalSearch}
-                    onChange={(e) => setGeneralSearch(e.target.value)}
-                    placeholder="Manufacturer, model or description"
-                    className="h-7 text-[11px] pl-8"
-                  />
+                <div className="flex items-center gap-2">
+                  <div className="relative max-w-xl flex-1">
+                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+                    <Input
+                      value={generalSearch}
+                      onChange={(e) => setGeneralSearch(e.target.value)}
+                      placeholder="Manufacturer, model or description"
+                      className="h-7 text-[11px] pl-8"
+                    />
+                  </div>
+                  <Button variant="outline" size="sm" className="h-7 text-[11px]">
+                    <ClipboardCheck className="h-3.5 w-3.5 mr-1.5" />
+                    Product Reviews
+                  </Button>
+                  <Button variant="outline" size="sm" className="h-7 text-[11px]">
+                    <ExternalLink className="h-3.5 w-3.5 mr-1.5" />
+                    Competitive Price Guide
+                  </Button>
                 </div>
               </div>
 
