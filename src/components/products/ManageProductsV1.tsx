@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Search,
   X,
@@ -136,6 +136,7 @@ const COL_ORDER_KEY = "manage-products-column-order";
 const DEFAULT_ORDER = COLUMNS.map((c) => c.key as string);
 
 const ManageProductsV1 = () => {
+  const navigate = useNavigate();
   const [generalSearch, setGeneralSearch] = useState("");
   const [selects, setSelects] = useState<Record<string, string>>({ ...emptySelects });
   const [multiSelects, setMultiSelects] = useState<{ techCategory: string[]; rentalCategory: string[] }>({
@@ -250,7 +251,11 @@ const ManageProductsV1 = () => {
               <h1 className="text-xl font-semibold tracking-tight">Manage Products</h1>
             </div>
             <div className="flex items-center gap-2">
-              <Button size="sm" className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white">
+              <Button
+                size="sm"
+                className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
+                onClick={() => navigate("/manage-products/new")}
+              >
                 <Plus className="h-3.5 w-3.5 mr-1.5" />
                 Add New
               </Button>
