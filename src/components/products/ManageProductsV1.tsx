@@ -377,7 +377,7 @@ const ManageProductsV1 = () => {
                   <TableBody>
                     {pageRows.length === 0 ? (
                       <TableRow>
-                        <TableCell colSpan={COLUMNS.length} className="py-14 text-center">
+                        <TableCell colSpan={visibleColumns.length} className="py-14 text-center">
                           <Inbox className="h-8 w-8 mx-auto mb-2 text-muted-foreground/40" />
                           <p className="text-xs text-muted-foreground">No data to display</p>
                         </TableCell>
