@@ -314,7 +314,7 @@ const ManageProductsV1 = () => {
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-muted/50 hover:bg-muted/50">
-                      {COLUMNS.map((c) => (
+                      {visibleColumns.map((c) => (
                         <TableHead
                           key={c.key}
                           className={`text-[11px] font-semibold align-top ${c.width} min-w-[7rem]`}
