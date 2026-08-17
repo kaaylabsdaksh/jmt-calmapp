@@ -4,7 +4,6 @@ import {
   Search,
   X,
   Plus,
-  Download,
   Inbox,
   ClipboardCheck,
   ExternalLink,
