@@ -139,6 +139,28 @@ const ManageProductsV1 = () => {
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({ ...emptyColumnFilters });
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState("25");
+  const [hiddenCols, setHiddenCols] = useState<string[]>(() => {
+    try {
+      return JSON.parse(localStorage.getItem(HIDDEN_COLS_KEY) || "[]");
+    } catch {
+      return [];
+    }
+  });
+
+  const visibleColumns = useMemo(
+    () => COLUMNS.filter((c) => c.key === "id" || !hiddenCols.includes(c.key)),
+    [hiddenCols]
+  );
+
+  const updateHidden = (next: string[]) => {
+    setHiddenCols(next);
+    try {
+      localStorage.setItem(HIDDEN_COLS_KEY, JSON.stringify(next));
+    } catch {}
+  };
+
+  const toggleCol = (key: string) =>
+    updateHidden(hiddenCols.includes(key) ? hiddenCols.filter((k) => k !== key) : [...hiddenCols, key]);
 
   const rows = useMemo(() => {
     return PRODUCTS.filter((p) => {
