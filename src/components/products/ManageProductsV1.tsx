@@ -297,10 +297,6 @@ const ManageProductsV1 = () => {
                   )}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Button variant="outline" size="sm" className="h-8 text-xs">
-                    <ClipboardCheck className="h-3.5 w-3.5 mr-1.5" />
-                    Product Reviews
-                  </Button>
                   <Button variant="ghost" size="sm" className="h-8 text-xs" onClick={handleClear}>
                     <X className="h-3.5 w-3.5 mr-1.5" />
                     Clear
