@@ -191,67 +191,63 @@ const ManageProductsV1 = () => {
           {/* Filters */}
           <Card>
             <CardContent className="p-3 space-y-3">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {/* Left: search + toggles */}
-                <div className="space-y-3">
-                  <div className="space-y-1">
-                    <Label className="text-[11px] font-medium text-muted-foreground">
-                      General Search
-                    </Label>
-                    <div className="relative">
-                      <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
-                      <Input
-                        value={generalSearch}
-                        onChange={(e) => setGeneralSearch(e.target.value)}
-                        placeholder="Manufacturer, model or description"
-                        className="h-8 text-xs pl-8"
-                      />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                    {CHECK_FILTERS.map((f) => (
-                      <label
-                        key={f.key}
-                        className="flex items-center gap-2 rounded-md border bg-muted/30 px-2 py-1.5 cursor-pointer hover:bg-muted/60 transition-colors"
-                      >
-                        <Checkbox
-                          checked={checks[f.key]}
-                          onCheckedChange={(v) =>
-                            setChecks((p) => ({ ...p, [f.key]: Boolean(v) }))
-                          }
-                          className="h-3.5 w-3.5"
-                        />
-                        <span className="text-[11px] leading-tight">{f.label}</span>
-                      </label>
-                    ))}
-                  </div>
+              {/* General Search */}
+              <div className="space-y-1">
+                <Label className="text-[11px] font-medium text-muted-foreground">General Search</Label>
+                <div className="relative max-w-xl">
+                  <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+                  <Input
+                    value={generalSearch}
+                    onChange={(e) => setGeneralSearch(e.target.value)}
+                    placeholder="Manufacturer, model or description"
+                    className="h-8 text-xs pl-8"
+                  />
                 </div>
+              </div>
 
-                {/* Right: category selects */}
-                <div className="flex flex-nowrap gap-3 overflow-x-auto pb-1">
-                  {SELECT_FILTERS.map((f) => (
-                    <div key={f.key} className="space-y-1 min-w-[150px] flex-1">
-                      <Label className="text-[11px] font-medium text-muted-foreground whitespace-nowrap">
-                        {f.label}
-                      </Label>
-                      <Select
-                        value={selects[f.key] || undefined}
-                        onValueChange={(v) => setSelects((p) => ({ ...p, [f.key]: v }))}
-                      >
-                        <SelectTrigger className="h-8 text-xs">
-                          <SelectValue placeholder="All" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-popover z-50">
-                          {f.options.map((o) => (
-                            <SelectItem key={o} value={o} className="text-xs">
-                              {o}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  ))}
-                </div>
+              {/* Category selects */}
+              <div className="flex flex-nowrap gap-3 overflow-x-auto pb-1">
+                {SELECT_FILTERS.map((f) => (
+                  <div key={f.key} className="space-y-1 min-w-[150px] flex-1">
+                    <Label className="text-[11px] font-medium text-muted-foreground whitespace-nowrap">
+                      {f.label}
+                    </Label>
+                    <Select
+                      value={selects[f.key] || undefined}
+                      onValueChange={(v) => setSelects((p) => ({ ...p, [f.key]: v }))}
+                    >
+                      <SelectTrigger className="h-8 text-xs">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover z-50">
+                        {f.options.map((o) => (
+                          <SelectItem key={o} value={o} className="text-xs">
+                            {o}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                ))}
+              </div>
+
+              {/* Check filters */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+                {CHECK_FILTERS.map((f) => (
+                  <label
+                    key={f.key}
+                    className="flex items-center gap-2 rounded-md border bg-muted/30 px-2 py-1.5 cursor-pointer hover:bg-muted/60 transition-colors"
+                  >
+                    <Checkbox
+                      checked={checks[f.key]}
+                      onCheckedChange={(v) =>
+                        setChecks((p) => ({ ...p, [f.key]: Boolean(v) }))
+                      }
+                      className="h-3.5 w-3.5"
+                    />
+                    <span className="text-[11px] leading-tight">{f.label}</span>
+                  </label>
+                ))}
               </div>
 
               <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t">
