@@ -128,6 +128,7 @@ const emptySelects = Object.fromEntries(SELECT_FILTERS.map((f) => [f.key, ""])) 
 const emptyMultiSelects = { techCategory: [] as string[], rentalCategory: [] as string[] };
 const emptyChecks = Object.fromEntries(CHECK_FILTERS.map((f) => [f.key, false])) as Record<string, boolean>;
 const emptyColumnFilters = Object.fromEntries(COLUMNS.map((c) => [c.key, ""])) as Record<string, string>;
+const HIDDEN_COLS_KEY = "manage-products-hidden-columns";
 
 const ManageProductsV1 = () => {
   const [generalSearch, setGeneralSearch] = useState("");
