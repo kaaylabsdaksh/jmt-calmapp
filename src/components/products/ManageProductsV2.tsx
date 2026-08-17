@@ -202,8 +202,9 @@ const SELECT_FILTERS = [
     key: "techCategory",
     label: "Technical/Labs Category",
     options: ["Electrical", "Mechanical", "Temperature", "Pressure"],
+    multi: true,
   },
-  { key: "rentalCategory", label: "Rental/Sales Category", options: ["Rental", "Sales", "Both"] },
+  { key: "rentalCategory", label: "Rental/Sales Category", options: ["Rental", "Sales", "Both"], multi: true },
 ] as const;
 
 const CHECK_FILTERS = [
@@ -247,6 +248,7 @@ const SORTS = [
 ] as const;
 
 const emptySelects = Object.fromEntries(SELECT_FILTERS.map((f) => [f.key, ""])) as Record<string, string>;
+const emptyMultiSelects = { techCategory: [] as string[], rentalCategory: [] as string[] };
 const emptyChecks = Object.fromEntries(CHECK_FILTERS.map((f) => [f.key, false])) as Record<string, boolean>;
 
 const statusClass = (status: Product["status"]) => {
