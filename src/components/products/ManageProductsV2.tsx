@@ -447,10 +447,10 @@ const ManageProductsV2 = () => {
                   <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                     Product Filters
                   </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  <div className="flex flex-nowrap gap-3 overflow-x-auto pb-1">
                     {SELECT_FILTERS.map((f) => (
-                      <div key={f.key} className="space-y-1">
-                        <Label className="text-[11px] font-medium text-muted-foreground">{f.label}</Label>
+                      <div key={f.key} className="space-y-1 min-w-[150px] flex-1">
+                        <Label className="text-[11px] font-medium text-muted-foreground whitespace-nowrap">{f.label}</Label>
                         <Select
                           value={selects[f.key] || undefined}
                           onValueChange={(v) => setSelects((p) => ({ ...p, [f.key]: v }))}
