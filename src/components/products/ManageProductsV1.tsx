@@ -6,7 +6,6 @@ import {
   Download,
   Inbox,
   ClipboardCheck,
-  Menu as MenuIcon,
   ExternalLink,
   ChevronLeft,
   ChevronRight,
@@ -33,12 +32,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 type Product = {
   id: string;
@@ -282,19 +275,6 @@ const ManageProductsV1 = () => {
                   )}
                 </div>
                 <div className="flex items-center gap-2">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="outline" size="sm" className="h-8 text-xs">
-                        <MenuIcon className="h-3.5 w-3.5 mr-1.5" />
-                        Menu
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="bg-popover z-50">
-                      <DropdownMenuItem className="text-xs">Manage Categories</DropdownMenuItem>
-                      <DropdownMenuItem className="text-xs">Manage Templates</DropdownMenuItem>
-                      <DropdownMenuItem className="text-xs">Set Default View</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
                   <Button variant="outline" size="sm" className="h-8 text-xs">
                     <ClipboardCheck className="h-3.5 w-3.5 mr-1.5" />
                     Product Reviews
