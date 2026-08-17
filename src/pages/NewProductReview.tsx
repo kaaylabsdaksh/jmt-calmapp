@@ -191,45 +191,6 @@ export default function NewProductReview() {
                 </CardContent>
               </Card>
 
-              {/* Footer actions */}
-              <div className="flex flex-col gap-3 border-t pt-4">
-                <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground">
-                  <span>Item Created by: Felicia N Cooper, 03/20/2026 08:17 AM</span>
-                  <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-products")}>
-                      <X className="h-3.5 w-3.5 mr-1.5" />
-                      Cancel
-                    </Button>
-                    <Button variant="outline" size="sm" className="h-8 text-xs">
-                      <ArrowLeft className="h-3.5 w-3.5 mr-1.5" />
-                      Back
-                    </Button>
-                    <Button variant="outline" size="sm" className="h-8 text-xs">
-                      <Mail className="h-3.5 w-3.5 mr-1.5" />
-                      Email Cust
-                    </Button>
-                    <Button variant="outline" size="sm" className="h-8 text-xs">
-                      <List className="h-3.5 w-3.5 mr-1.5" />
-                      Items
-                    </Button>
-                    <Button size="sm" className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white">
-                      <Save className="h-3.5 w-3.5 mr-1.5" />
-                      Save
-                    </Button>
-                  </div>
-                  <span>Item Modified by: Thomas W. Blouin, 03/20/2026 03:36 PM</span>
-                </div>
-
-                {/* Routing workflow */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1">
-                  <WorkflowButton label="To Lab Management" />
-                  <WorkflowButton label="To Metrology" />
-                  <WorkflowButton label="To Lead Tech" />
-                  <WorkflowButton label="Cancel Review" variant="danger" />
-                  <WorkflowButton label="Cannot Service" variant="warn" />
-                  <WorkflowButton label="Approve Capability" variant="approve" />
-                  <WorkflowButton label="Approve PR Completion" variant="approve" />
-                </div>
 
                 {/* Log table */}
                 <Card>
@@ -272,7 +233,6 @@ export default function NewProductReview() {
                     </Table>
                   </CardContent>
                 </Card>
-              </div>
             </TabsContent>
 
             <TabsContent value="capable" className="mt-4 space-y-4">
@@ -352,6 +312,46 @@ export default function NewProductReview() {
           </Tabs>
         </div>
       </main>
+
+      {/* Sticky footer actions */}
+      <div className="sticky bottom-0 z-30 w-full border-t bg-white shadow-[0_-1px_3px_rgba(0,0,0,0.06)] px-2 sm:px-4 lg:px-6 py-2 space-y-2">
+        <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground">
+          <span>Item Created by: Felicia N Cooper, 03/20/2026 08:17 AM</span>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-products")}>
+              <X className="h-3.5 w-3.5 mr-1.5" />
+              Cancel
+            </Button>
+            <Button variant="outline" size="sm" className="h-8 text-xs">
+              <ArrowLeft className="h-3.5 w-3.5 mr-1.5" />
+              Back
+            </Button>
+            <Button variant="outline" size="sm" className="h-8 text-xs">
+              <Mail className="h-3.5 w-3.5 mr-1.5" />
+              Email Cust
+            </Button>
+            <Button variant="outline" size="sm" className="h-8 text-xs">
+              <List className="h-3.5 w-3.5 mr-1.5" />
+              Items
+            </Button>
+            <Button size="sm" className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white">
+              <Save className="h-3.5 w-3.5 mr-1.5" />
+              Save
+            </Button>
+          </div>
+          <span>Item Modified by: Thomas W. Blouin, 03/20/2026 03:36 PM</span>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1">
+          <WorkflowButton label="To Lab Management" />
+          <WorkflowButton label="To Metrology" />
+          <WorkflowButton label="To Lead Tech" />
+          <WorkflowButton label="Cancel Review" variant="danger" />
+          <WorkflowButton label="Cannot Service" variant="warn" />
+          <WorkflowButton label="Approve Capability" variant="approve" />
+          <WorkflowButton label="Approve PR Completion" variant="approve" />
+        </div>
+      </div>
     </div>
   );
 }
