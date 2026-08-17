@@ -134,7 +134,7 @@ export default function NewProductReview() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4">
                     {/* Column 1 */}
                     <div className="space-y-3">
-                      <div className="text-xs font-semibold text-primary border-b pb-1">Item Identification</div>
+                      <div className="text-xs font-semibold text-foreground border-b pb-1">Item Identification</div>
                       <FieldRow label="PR Item #" value="PR18917-001" readOnly />
                       <FieldRow label="Due Date" value="03/21/2026" />
                       <FieldRow label="PR Item Status" value="Lab Management" />
