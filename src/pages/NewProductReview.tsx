@@ -140,7 +140,7 @@ export default function NewProductReview() {
                       <FieldRow label="PR Item Status" value="Lab Management" />
                       <FieldRow label="Division" value="Lab" />
 
-                      <div className="text-xs font-semibold text-primary border-b pb-1 pt-2">Product</div>
+                      <div className="text-xs font-semibold text-foreground border-b pb-1 pt-2">Product</div>
                       <FieldRow label="Manufacturer" value="AMTI" />
                       <FieldRow label="Model" value="MC3A-500" />
                       <FieldRow label="Description" value="LOAD CELL" />
@@ -149,7 +149,7 @@ export default function NewProductReview() {
 
                     {/* Column 2 */}
                     <div className="space-y-3">
-                      <div className="text-xs font-semibold text-primary border-b pb-1">Specification</div>
+                      <div className="text-xs font-semibold text-foreground border-b pb-1">Specification</div>
                       <FieldRow label="Accuracy" />
                       <FieldRow label="Range" />
                       <FieldRow label="Option" />
@@ -157,7 +157,7 @@ export default function NewProductReview() {
                       <FieldRow label="Category 5" />
                       <FieldRow label="Category 6" />
 
-                      <div className="text-xs font-semibold text-primary border-b pb-1 pt-2">
+                      <div className="text-xs font-semibold text-foreground border-b pb-1 pt-2">
                         Physical Dimensions
                         <span className="ml-2 rounded bg-yellow-400 px-1 text-[9px] text-black">NEW</span>
                       </div>
@@ -169,7 +169,7 @@ export default function NewProductReview() {
 
                     {/* Column 3 */}
                     <div className="space-y-3">
-                      <div className="text-xs font-semibold text-primary border-b pb-1">Accreditation & Cost</div>
+                      <div className="text-xs font-semibold text-foreground border-b pb-1">Accreditation & Cost</div>
                       <CheckboxRow label="Requested 17025" />
                       <FieldRow label="Accredited Cal" />
                       <FieldRow label="Cal/Cert Cost" value="0.00" />
@@ -179,7 +179,7 @@ export default function NewProductReview() {
                       <CheckboxRow label="Override Zero Price" />
                       <CheckboxRow label="Equipment at JM" />
 
-                      <div className="text-xs font-semibold text-primary border-b pb-1 pt-2">
+                      <div className="text-xs font-semibold text-foreground border-b pb-1 pt-2">
                         Servicing Readiness
                         <span className="ml-2 rounded bg-yellow-400 px-1 text-[9px] text-black">NEW</span>
                       </div>
@@ -318,7 +318,7 @@ export default function NewProductReview() {
 
               <Card>
                 <CardContent className="p-4">
-                  <div className="text-xs font-semibold text-primary mb-2">Breakdown of Matrix (Definitions)</div>
+                  <div className="text-xs font-semibold text-foreground mb-2">Breakdown of Matrix (Definitions)</div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-xs">
                     {LEGEND.map((l) => (
                       <div key={l.term} className="flex gap-2">
@@ -402,7 +402,7 @@ function WorkflowButton({
   variant?: "default" | "danger" | "warn" | "approve";
 }) {
   const variantClass = {
-    default: "bg-primary hover:bg-primary/90 text-primary-foreground",
+    default: "bg-primary hover:bg-primary/90 text-foreground-foreground",
     danger: "bg-red-700 hover:bg-red-800 text-white",
     warn: "bg-amber-600 hover:bg-amber-700 text-white",
     approve: "bg-green-600 hover:bg-green-700 text-white",
