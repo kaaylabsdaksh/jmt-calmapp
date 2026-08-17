@@ -118,50 +118,54 @@ const ModernTopNav = () => {
               <span className="sm:hidden">Add</span>
             </Button>
           )}
-          {location.pathname === "/onsite-projects" ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+          {location.pathname !== "/manage-products" && (
+            <>
+              {location.pathname === "/onsite-projects" ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="p-2 rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
+                      title="Export"
+                    >
+                      <Download className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem className="text-xs">
+                      <FileSpreadsheet className="h-3.5 w-3.5 mr-2" />
+                      Export
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="text-xs">
+                      <FileText className="h-3.5 w-3.5 mr-2" />
+                      Export with Details
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : location.pathname !== "/onsite-projects/vehicle-standards" ? (
                 <Button
                   variant="ghost"
                   size="sm"
                   className="p-2 rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
-                  title="Export"
+                  title="Download"
                 >
                   <Download className="h-4 w-4" />
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem className="text-xs">
-                  <FileSpreadsheet className="h-3.5 w-3.5 mr-2" />
-                  Export
-                </DropdownMenuItem>
-                <DropdownMenuItem className="text-xs">
-                  <FileText className="h-3.5 w-3.5 mr-2" />
-                  Export with Details
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : location.pathname !== "/onsite-projects/vehicle-standards" ? (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="p-2 rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
-              title="Download"
-            >
-              <Download className="h-4 w-4" />
-            </Button>
-          ) : null}
-          {location.pathname !== "/onsite-projects" && location.pathname !== "/onsite-projects/vehicle-standards" && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="p-2 rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
-              title="Settings"
-            >
-              <Settings className="h-4 w-4" />
-            </Button>
+              ) : null}
+              {location.pathname !== "/onsite-projects" && location.pathname !== "/onsite-projects/vehicle-standards" && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="p-2 rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-md transition-all duration-300 transform hover:scale-105"
+                  title="Settings"
+                >
+                  <Settings className="h-4 w-4" />
+                </Button>
+              )}
+              <HelpMenu />
+            </>
           )}
-          <HelpMenu />
         </div>
       </div>
     </header>
