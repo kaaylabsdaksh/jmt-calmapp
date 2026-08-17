@@ -233,7 +233,6 @@ export default function NewProductReview() {
                     </Table>
                   </CardContent>
                 </Card>
-              </div>
             </TabsContent>
 
             <TabsContent value="capable" className="mt-4 space-y-4">
