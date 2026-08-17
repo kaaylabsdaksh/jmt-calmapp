@@ -385,7 +385,7 @@ const ManageProductsV1 = () => {
                     ) : (
                       pageRows.map((p) => (
                         <TableRow key={p.id} className="hover:bg-muted/40">
-                          {COLUMNS.map((c) => (
+                          {visibleColumns.map((c) => (
                             <TableCell key={c.key} className="py-2 text-xs">
                               {c.key === "id" ? (
                                 <Link
