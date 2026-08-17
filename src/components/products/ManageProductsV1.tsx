@@ -119,6 +119,9 @@ const emptyColumnFilters = Object.fromEntries(COLUMNS.map((c) => [c.key, ""])) a
 const ManageProductsV1 = () => {
   const [generalSearch, setGeneralSearch] = useState("");
   const [selects, setSelects] = useState<Record<string, string>>({ ...emptySelects });
+  const [multiSelects, setMultiSelects] = useState<{ techCategory: string[]; rentalCategory: string[] }>({
+    ...emptyMultiSelects,
+  });
   const [checks, setChecks] = useState<Record<string, boolean>>({ ...emptyChecks });
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({ ...emptyColumnFilters });
   const [page, setPage] = useState(1);
@@ -133,6 +136,9 @@ const ManageProductsV1 = () => {
           .includes(generalSearch.toLowerCase())
       )
         return false;
+      if (selects.labCode && p.lc !== selects.labCode) return false;
+      if (multiSelects.techCategory.length > 0 && !multiSelects.techCategory.includes(p.groupType)) return false;
+      if (multiSelects.rentalCategory.length > 0 && !multiSelects.rentalCategory.includes(p.rental)) return false;
       return COLUMNS.every((c) => {
         const v = columnFilters[c.key];
         if (!v) return true;
@@ -141,7 +147,7 @@ const ManageProductsV1 = () => {
           .includes(v.toLowerCase());
       });
     });
-  }, [generalSearch, columnFilters]);
+  }, [generalSearch, selects, multiSelects, columnFilters]);
 
   const size = Number(pageSize);
   const totalPages = Math.max(1, Math.ceil(rows.length / size));
@@ -151,12 +157,14 @@ const ManageProductsV1 = () => {
   const activeCount =
     (generalSearch ? 1 : 0) +
     Object.values(selects).filter(Boolean).length +
+    Object.values(multiSelects).reduce((acc, v) => acc + v.length, 0) +
     Object.values(checks).filter(Boolean).length +
     Object.values(columnFilters).filter(Boolean).length;
 
   const handleClear = () => {
     setGeneralSearch("");
     setSelects({ ...emptySelects });
+    setMultiSelects({ ...emptyMultiSelects });
     setChecks({ ...emptyChecks });
     setColumnFilters({ ...emptyColumnFilters });
     setPage(1);
