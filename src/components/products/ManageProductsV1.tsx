@@ -436,6 +436,18 @@ const ManageProductsV1 = () => {
               </div>
             </CardContent>
           </Card>
+
+      {/* Sticky footer */}
+      <div className="sticky bottom-0 z-20 bg-background border-t px-4 py-2.5 flex items-center justify-end gap-2 shadow-[0_-2px_8px_rgba(0,0,0,0.04)]">
+        <Button variant="outline" size="sm" className="h-8 text-xs">
+          <ClipboardCheck className="h-3.5 w-3.5 mr-1.5" />
+          Product Reviews
+        </Button>
+        <Button variant="outline" size="sm" className="h-8 text-xs">
+          <ExternalLink className="h-3.5 w-3.5 mr-1.5" />
+          Competitive Price Guide
+        </Button>
+      </div>
     </div>
   );
 };
