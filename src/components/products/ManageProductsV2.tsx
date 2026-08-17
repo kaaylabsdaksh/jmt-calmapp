@@ -444,23 +444,23 @@ const ManageProductsV2 = () => {
                 </div>
 
                 <div>
-                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                  <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
                     Product Filters
                   </p>
-                  <div className="flex flex-nowrap gap-3 overflow-x-auto pb-1">
+                  <div className="flex flex-nowrap gap-2 overflow-x-auto pb-1">
                     {SELECT_FILTERS.map((f) => (
-                      <div key={f.key} className="space-y-1 min-w-[150px] flex-1">
-                        <Label className="text-[11px] font-medium text-muted-foreground whitespace-nowrap">{f.label}</Label>
+                      <div key={f.key} className="space-y-0.5 min-w-[130px] flex-1">
+                        <Label className="text-[10px] font-medium text-muted-foreground whitespace-nowrap">{f.label}</Label>
                         <Select
                           value={selects[f.key] || undefined}
                           onValueChange={(v) => setSelects((p) => ({ ...p, [f.key]: v }))}
                         >
-                          <SelectTrigger className="h-8 text-xs">
+                          <SelectTrigger className="h-7 text-[11px] px-2">
                             <SelectValue placeholder="All" />
                           </SelectTrigger>
                           <SelectContent className="bg-popover z-50">
                             {f.options.map((o) => (
-                              <SelectItem key={o} value={o} className="text-xs">
+                              <SelectItem key={o} value={o} className="text-[11px]">
                                 {o}
                               </SelectItem>
                             ))}
@@ -472,7 +472,7 @@ const ManageProductsV2 = () => {
                 </div>
 
                 <div>
-                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                  <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
                     Additional Filters
                   </p>
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
@@ -480,16 +480,16 @@ const ManageProductsV2 = () => {
                       <label
                         key={f.key}
                         className={cn(
-                          "flex items-center gap-2 rounded-md border px-2 py-1.5 cursor-pointer transition-colors",
+                          "flex items-center gap-1.5 rounded-md border px-2 py-1 cursor-pointer transition-colors",
                           checks[f.key] ? "bg-slate-900 border-slate-900 text-white" : "bg-muted/30 hover:bg-muted/60",
                         )}
                       >
                         <Checkbox
                           checked={checks[f.key]}
                           onCheckedChange={(v) => setChecks((p) => ({ ...p, [f.key]: Boolean(v) }))}
-                          className="h-3.5 w-3.5 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                          className="h-3 w-3 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                         />
-                        <span className="text-[11px] leading-tight">{f.label}</span>
+                        <span className="text-[10px] leading-tight">{f.label}</span>
                       </label>
                     ))}
                   </div>
