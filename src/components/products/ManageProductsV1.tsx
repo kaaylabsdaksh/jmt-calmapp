@@ -220,21 +220,31 @@ const ManageProductsV1 = () => {
                     <Label className="text-[10px] font-medium text-muted-foreground whitespace-nowrap">
                       {f.label}
                     </Label>
-                    <Select
-                      value={selects[f.key] || undefined}
-                      onValueChange={(v) => setSelects((p) => ({ ...p, [f.key]: v }))}
-                    >
-                      <SelectTrigger className="h-7 text-[11px] px-2">
-                        <SelectValue placeholder="All" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-popover z-50">
-                        {f.options.map((o) => (
-                          <SelectItem key={o} value={o} className="text-[11px]">
-                            {o}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    {"multi" in f && f.multi ? (
+                      <MultiSelect
+                        options={f.options}
+                        values={multiSelects[f.key as keyof typeof multiSelects]}
+                        onChange={(v) => setMultiSelects((p) => ({ ...p, [f.key]: v }))}
+                        max={3}
+                        placeholder="All"
+                      />
+                    ) : (
+                      <Select
+                        value={selects[f.key] || undefined}
+                        onValueChange={(v) => setSelects((p) => ({ ...p, [f.key]: v }))}
+                      >
+                        <SelectTrigger className="h-7 text-[11px] px-2">
+                          <SelectValue placeholder="All" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-popover z-50">
+                          {f.options.map((o) => (
+                            <SelectItem key={o} value={o} className="text-[11px]">
+                              {o}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
                   </div>
                 ))}
               </div>
