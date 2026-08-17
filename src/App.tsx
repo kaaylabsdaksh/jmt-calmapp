@@ -38,6 +38,7 @@ import DeliveryTickets from "./pages/DeliveryTickets";
 import ManageCustomers from "./pages/ManageCustomers";
 import ManageProducts from "./pages/ManageProducts";
 import ProductDetail from "./pages/ProductDetail";
+import NewProductReview from "./pages/NewProductReview";
 import EditCustomer from "./pages/EditCustomer";
 import RetestNotices from "./pages/RetestNotices";
 import RetestFollowUp from "./pages/RetestFollowUp";
