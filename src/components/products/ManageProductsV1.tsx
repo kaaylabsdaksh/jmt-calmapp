@@ -325,7 +325,16 @@ const ManageProductsV1 = () => {
                         <TableRow key={p.id} className="hover:bg-muted/40">
                           {COLUMNS.map((c) => (
                             <TableCell key={c.key} className="py-2 text-xs">
-                              {String(p[c.key as keyof Product] ?? "")}
+                              {c.key === "id" ? (
+                                <Link
+                                  to={`/manage-products/${p.id}`}
+                                  className="text-slate-900 hover:text-slate-700 hover:underline font-medium"
+                                >
+                                  {p.id}
+                                </Link>
+                              ) : (
+                                String(p[c.key as keyof Product] ?? "")
+                              )}
                             </TableCell>
                           ))}
                         </TableRow>
