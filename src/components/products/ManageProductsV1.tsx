@@ -66,17 +66,58 @@ const COLUMNS = [
   { key: "model", label: "Model", width: "w-28", type: "input" },
   { key: "description", label: "Product Description", width: "w-56", type: "input" },
   { key: "alias", label: "Alias", width: "w-28", type: "input" },
-  { key: "lc", label: "LC", width: "w-20", type: "select" },
+  { key: "lc", label: "LC", width: "w-20", type: "select", options: ["B", "C", "D", "E", "ES", "F", "M"] },
   { key: "locations", label: "Capable Location(s)", width: "w-48", type: "input" },
-  { key: "tf", label: "TF", width: "w-16", type: "select" },
+  { key: "tf", label: "TF", width: "w-16", type: "select", options: ["No", "Yes"] },
   { key: "calCost", label: "Cal/Cert Cost", width: "w-24", type: "input" },
-  { key: "groupType", label: "Group Type", width: "w-28", type: "select" },
-  { key: "productType", label: "Product Type", width: "w-28", type: "select" },
-  { key: "accredCal", label: "Accred Cal", width: "w-24", type: "select" },
-  { key: "status", label: "Status", width: "w-28", type: "select" },
+  { key: "groupType", label: "Group Type", width: "w-28", type: "select", options: ["ESL", "ITL", "Dimensional"] },
+  {
+    key: "productType",
+    label: "Product Type",
+    width: "w-28",
+    type: "select",
+    options: [
+      "Arc Flash",
+      "Blankets",
+      "Bucket Trucks",
+      "CoverUps",
+      "Footwear",
+      "Gage Block Sets",
+      "Gloves",
+      "Hoses",
+      "Jumpers",
+      "Line Hose",
+      "Sleeves",
+      "Tools",
+    ],
+  },
+  { key: "accredCal", label: "Accred Cal", width: "w-24", type: "select", options: ["No", "Yes"] },
+  {
+    key: "status",
+    label: "Status",
+    width: "w-28",
+    type: "select",
+    options: ["ACTIVE", "INACTIVE", "PENDING", "APPROVED, AWAITING PRICING"],
+  },
   { key: "prItem", label: "PR Item", width: "w-24", type: "input" },
-  { key: "prStatus", label: "PR Status", width: "w-28", type: "select" },
-  { key: "rental", label: "Rental", width: "w-24", type: "select" },
+  {
+    key: "prStatus",
+    label: "PR Status",
+    width: "w-28",
+    type: "select",
+    options: [
+      "Awaiting Review",
+      "Review Initiated",
+      "Initiator",
+      "Metrology",
+      "Lab Management",
+      "Lead Tech",
+      "Sales",
+      "Completed",
+    ],
+  },
+  { key: "rental", label: "Rental", width: "w-24", type: "select", options: ["No", "Yes"] },
+
   { key: "option", label: "Option", width: "w-24", type: "input" },
   { key: "range", label: "Range", width: "w-24", type: "input" },
   { key: "accuracy", label: "Accuracy", width: "w-24", type: "input" },
@@ -112,10 +153,10 @@ const ManageProductsV1 = () => {
       if (multiSelects.rentalCategory.length > 0 && !multiSelects.rentalCategory.includes(p.rental)) return false;
       return COLUMNS.every((c) => {
         const v = columnFilters[c.key];
-        if (!v) return true;
-        return String(p[c.key as keyof Product] ?? "")
-          .toLowerCase()
-          .includes(v.toLowerCase());
+        if (!v || v === "all") return true;
+        const cell = String(p[c.key as keyof Product] ?? "");
+        if (c.type === "select") return cell.toLowerCase() === v.toLowerCase();
+        return cell.toLowerCase().includes(v.toLowerCase());
       });
     });
   }, [generalSearch, selects, multiSelects, columnFilters]);
@@ -291,10 +332,15 @@ const ManageProductsV1 = () => {
                                 <SelectTrigger className="h-6 text-[11px] px-2 font-normal bg-background">
                                   <SelectValue placeholder="All" />
                                 </SelectTrigger>
-                                <SelectContent className="bg-popover z-50">
+                                <SelectContent className="bg-popover z-50 max-h-56">
                                   <SelectItem value="all" className="text-xs">
                                     All
                                   </SelectItem>
+                                  {((c as { options?: readonly string[] }).options ?? []).map((o) => (
+                                    <SelectItem key={o} value={o} className="text-xs">
+                                      {o}
+                                    </SelectItem>
+                                  ))}
                                 </SelectContent>
                               </Select>
                             ) : (
