@@ -439,23 +439,10 @@ const ManageProductsV1 = () => {
                       {visibleColumns.map((c) => (
                         <TableHead
                           key={c.key}
-                          onDragOver={(e) => e.preventDefault()}
-                          onDrop={() => {
-                            if (dragKey) moveColumn(dragKey, c.key);
-                            setDragKey(null);
-                          }}
-                          className={`text-[11px] font-semibold align-top ${c.width} min-w-[7rem] ${
-                            dragKey === c.key ? "bg-muted" : ""
-                          }`}
+                          className={`text-[11px] font-semibold align-top ${c.width} min-w-[7rem]`}
                         >
                           <div className="space-y-1 py-1">
-                            <div
-                              draggable
-                              onDragStart={() => setDragKey(c.key)}
-                              onDragEnd={() => setDragKey(null)}
-                              className="group flex cursor-grab items-center gap-1 whitespace-nowrap active:cursor-grabbing"
-                            >
-                              <GripVertical className="h-3 w-3 shrink-0 text-muted-foreground/40 group-hover:text-muted-foreground" />
+                            <div className="flex items-center gap-1 whitespace-nowrap">
                               {c.label}
                             </div>
 
