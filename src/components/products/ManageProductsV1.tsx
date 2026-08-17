@@ -163,9 +163,7 @@ const ManageProductsV1 = () => {
   };
 
   return (
-    <div className="bg-background min-h-full">
-      <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-5">
-        <div className="space-y-4">
+    <div className="space-y-4">
           {/* Header */}
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
@@ -415,8 +413,6 @@ const ManageProductsV1 = () => {
               </div>
             </CardContent>
           </Card>
-        </div>
-      </main>
     </div>
   );
 };
