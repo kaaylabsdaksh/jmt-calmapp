@@ -332,10 +332,15 @@ const ManageProductsV1 = () => {
                                 <SelectTrigger className="h-6 text-[11px] px-2 font-normal bg-background">
                                   <SelectValue placeholder="All" />
                                 </SelectTrigger>
-                                <SelectContent className="bg-popover z-50">
+                                <SelectContent className="bg-popover z-50 max-h-56">
                                   <SelectItem value="all" className="text-xs">
                                     All
                                   </SelectItem>
+                                  {((c as { options?: readonly string[] }).options ?? []).map((o) => (
+                                    <SelectItem key={o} value={o} className="text-xs">
+                                      {o}
+                                    </SelectItem>
+                                  ))}
                                 </SelectContent>
                               </Select>
                             ) : (
