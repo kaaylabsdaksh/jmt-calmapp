@@ -317,7 +317,7 @@ const ManageProductsV1 = () => {
                       {COLUMNS.map((c) => (
                         <TableHead
                           key={c.key}
-                          className={`text-[11px] font-semibold align-top ${c.width}`}
+                          className={`text-[11px] font-semibold align-top ${c.width} min-w-[7rem]`}
                         >
                           <div className="space-y-1 py-1">
                             <div className="whitespace-nowrap">{c.label}</div>
