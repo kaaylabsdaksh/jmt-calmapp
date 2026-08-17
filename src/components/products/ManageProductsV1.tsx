@@ -440,7 +440,7 @@ const ManageProductsV1 = () => {
                       {visibleColumns.map((c) => (
                         <TableHead
                           key={c.key}
-                          className={`text-[11px] font-semibold align-top ${c.width} min-w-[7rem]`}
+                          className={`text-[11px] font-semibold align-top px-2 ${c.width} min-w-[7rem]`}
                         >
                           <div className="space-y-1 py-1">
                             <div className="flex items-center gap-1 whitespace-nowrap">
@@ -512,7 +512,7 @@ const ManageProductsV1 = () => {
                       pageRows.map((p) => (
                         <TableRow key={p.id} className="hover:bg-muted/40">
                           {visibleColumns.map((c) => (
-                            <TableCell key={c.key} className="py-2 text-xs">
+                            <TableCell key={c.key} className="py-2 px-2 text-xs">
                               {c.key === "id" ? (
                                 <Link
                                   to={`/manage-products/${p.id}`}
