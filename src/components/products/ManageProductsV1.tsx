@@ -70,11 +70,13 @@ const SELECT_FILTERS = [
     key: "techCategory",
     label: "Technical/Labs Category",
     options: ["Electrical", "Mechanical", "Temperature", "Pressure"],
+    multi: true,
   },
   {
     key: "rentalCategory",
     label: "Rental/Sales Category",
     options: ["Rental", "Sales", "Both"],
+    multi: true,
   },
 ] as const;
 
@@ -110,6 +112,7 @@ const COLUMNS = [
 ] as const;
 
 const emptySelects = Object.fromEntries(SELECT_FILTERS.map((f) => [f.key, ""])) as Record<string, string>;
+const emptyMultiSelects = { techCategory: [] as string[], rentalCategory: [] as string[] };
 const emptyChecks = Object.fromEntries(CHECK_FILTERS.map((f) => [f.key, false])) as Record<string, boolean>;
 const emptyColumnFilters = Object.fromEntries(COLUMNS.map((c) => [c.key, ""])) as Record<string, string>;
 
