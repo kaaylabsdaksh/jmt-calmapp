@@ -55,7 +55,10 @@ const ModernTopNav = () => {
   const contractReviewDetailMatch = !exactMeta && /^\/manage-customers\/contract-reviews\/[^/]+$/.test(location.pathname);
   const srDetailMatch = !exactMeta && /^\/manage-customers\/sr-documents\/[^/]+$/.test(location.pathname);
   const customerDetailMatch = !exactMeta && !cdrDetailMatch && !contractReviewDetailMatch && !srDetailMatch && /^\/manage-customers\/[^/]+$/.test(location.pathname);
-  const meta = contractReviewDetailMatch
+  const productDetailMatch = !exactMeta && /^\/manage-products\/[^/]+$/.test(location.pathname);
+  const meta = productDetailMatch
+    ? routeMeta["/manage-products/:id"]
+    : contractReviewDetailMatch
     ? routeMeta["/manage-customers/contract-reviews/:reviewId"]
     : cdrDetailMatch
     ? routeMeta["/manage-customers/cdr/:cdrId"]
