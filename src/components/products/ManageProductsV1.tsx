@@ -368,14 +368,14 @@ const ManageProductsV1 = () => {
               <div className="flex items-center justify-end gap-2 border-b px-3 py-2">
                 <Popover>
                   <PopoverTrigger asChild>
-                    <Button variant="outline" size="sm" className="h-8 text-xs">
-                      <Columns3 className="h-3.5 w-3.5 mr-1.5" />
-                      Columns
-                      {hiddenCols.length > 0 && (
-                        <span className="ml-1.5 rounded-full bg-muted px-1.5 text-[10px]">
-                          {COLUMNS.length - hiddenCols.length}/{COLUMNS.length}
-                        </span>
-                      )}
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-8 w-8 p-0"
+                      aria-label="Customize columns"
+                      title="Customize columns"
+                    >
+                      <Columns3 className="h-3.5 w-3.5" />
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent align="end" className="w-64 p-0 bg-popover z-50">
