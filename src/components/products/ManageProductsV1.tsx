@@ -343,14 +343,31 @@ const ManageProductsV1 = () => {
                                 </SelectContent>
                               </Select>
                             ) : (
-                              <Input
-                                value={columnFilters[c.key]}
-                                onChange={(e) =>
-                                  setColumnFilters((p) => ({ ...p, [c.key]: e.target.value }))
-                                }
-                                placeholder="Filter"
-                                className="h-6 text-[11px] px-2 font-normal bg-background"
-                              />
+                              <div className="relative">
+                                <Input
+                                  value={columnFilters[c.key]}
+                                  onChange={(e) =>
+                                    setColumnFilters((p) => ({ ...p, [c.key]: e.target.value }))
+                                  }
+                                  title={columnFilters[c.key] || undefined}
+                                  placeholder="Filter"
+                                  className={`h-7 w-full min-w-[6.5rem] text-[11px] pl-2 font-normal bg-background ${
+                                    columnFilters[c.key] ? "pr-6" : "pr-2"
+                                  }`}
+                                />
+                                {columnFilters[c.key] && (
+                                  <button
+                                    type="button"
+                                    aria-label={`Clear ${c.label} filter`}
+                                    onClick={() =>
+                                      setColumnFilters((p) => ({ ...p, [c.key]: "" }))
+                                    }
+                                    className="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                                  >
+                                    <X className="h-3 w-3" />
+                                  </button>
+                                )}
+                              </div>
                             )}
                           </div>
                         </TableHead>
