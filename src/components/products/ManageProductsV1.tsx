@@ -270,7 +270,7 @@ const ManageProductsV1 = () => {
                       onCheckedChange={(v) =>
                         setChecks((p) => ({ ...p, [f.key]: Boolean(v) }))
                       }
-                      className="h-3 w-3"
+                      className="h-3.5 w-3.5 rounded-[3px] border data-[state=checked]:border-primary [&_svg]:h-2.5 [&_svg]:w-2.5 [&_svg]:stroke-[3]"
                     />
                     <span className="text-[10px] leading-tight">{f.label}</span>
                   </label>
