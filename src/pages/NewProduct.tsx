@@ -1,6 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Save, X, Plus, MessageSquare, ClipboardList } from "lucide-react";
+import {
+  Save,
+  X,
+  Plus,
+  MessageSquare,
+  ClipboardList,
+  Boxes,
+  Gauge,
+  DollarSign,
+  Ruler,
+  MapPin,
+  FlaskConical,
+  Tags,
+  type LucideIcon,
+} from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
