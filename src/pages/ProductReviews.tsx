@@ -191,17 +191,21 @@ const ProductReviews = () => {
               </div>
               <div className="space-y-0.5">
                 <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">Created From / To</Label>
-                <div className="flex items-center gap-1">
-                  <Input type="date" value={createdFrom} onChange={(e) => setCreatedFrom(e.target.value)} className="h-7 text-[11px] px-2" />
-                  <Input type="date" value={createdTo} onChange={(e) => setCreatedTo(e.target.value)} className="h-7 text-[11px] px-2" />
-                </div>
+                <DateRangePicker
+                  dateFrom={createdFrom}
+                  dateTo={createdTo}
+                  onDateFromChange={setCreatedFrom}
+                  onDateToChange={setCreatedTo}
+                />
               </div>
               <div className="space-y-0.5">
                 <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">Due From / To</Label>
-                <div className="flex items-center gap-1">
-                  <Input type="date" value={dueFrom} onChange={(e) => setDueFrom(e.target.value)} className="h-7 text-[11px] px-2" />
-                  <Input type="date" value={dueTo} onChange={(e) => setDueTo(e.target.value)} className="h-7 text-[11px] px-2" />
-                </div>
+                <DateRangePicker
+                  dateFrom={dueFrom}
+                  dateTo={dueTo}
+                  onDateFromChange={setDueFrom}
+                  onDateToChange={setDueTo}
+                />
               </div>
             </div>
 
