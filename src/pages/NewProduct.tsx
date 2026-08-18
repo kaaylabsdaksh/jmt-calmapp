@@ -314,53 +314,88 @@ export default function NewProduct() {
   );
 }
 
-function SectionTitle({ children, className }: { children: React.ReactNode; className?: string }) {
+function SectionCard({
+  icon: Icon,
+  title,
+  action,
+  children,
+}: {
+  icon: LucideIcon;
+  title: string;
+  action?: React.ReactNode;
+  children: React.ReactNode;
+}) {
   return (
-    <div className={cn("text-xs font-semibold text-foreground border-b pb-1", className)}>{children}</div>
+    <Card className="border-border/70 shadow-sm">
+      <CardContent className="p-4">
+        <div className="flex items-center justify-between gap-2 mb-3">
+          <div className="flex items-center gap-2">
+            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-muted">
+              <Icon className="h-3.5 w-3.5 text-muted-foreground" />
+            </span>
+            <div className="text-xs font-semibold tracking-tight">{title}</div>
+          </div>
+          {action}
+        </div>
+        {children}
+      </CardContent>
+    </Card>
   );
 }
 
-function FieldRow({
+function FieldLabel({ label, required }: { label: string; required?: boolean }) {
+  return (
+    <Label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+      {label}
+      {required && <span className="text-destructive ml-0.5">*</span>}
+    </Label>
+  );
+}
+
+function TextField({
   label,
   placeholder,
   required,
-  labelWidth = "w-36",
+  prefix,
+  className,
 }: {
   label: string;
   placeholder?: string;
   required?: boolean;
-  labelWidth?: string;
+  prefix?: string;
+  className?: string;
 }) {
   return (
-    <div className="flex items-center gap-2">
-      <Label className={cn("text-[11px] font-medium text-right shrink-0", labelWidth)}>
-        {label}
-        {required && <span className="text-destructive ml-0.5">*</span>}
-      </Label>
-      <Input placeholder={placeholder} className="h-7 text-xs" />
+    <div className={cn("space-y-1", className)}>
+      <FieldLabel label={label} required={required} />
+      <div className="relative">
+        {prefix && (
+          <span className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground">
+            {prefix}
+          </span>
+        )}
+        <Input placeholder={placeholder} className={cn("h-8 text-xs", prefix && "pl-5")} />
+      </div>
     </div>
   );
 }
 
-function SelectRow({
+function SelectField({
   label,
   options,
   required,
-  labelWidth = "w-36",
+  className,
 }: {
   label: string;
   options: string[];
   required?: boolean;
-  labelWidth?: string;
+  className?: string;
 }) {
   return (
-    <div className="flex items-center gap-2">
-      <Label className={cn("text-[11px] font-medium text-right shrink-0", labelWidth)}>
-        {label}
-        {required && <span className="text-destructive ml-0.5">*</span>}
-      </Label>
+    <div className={cn("space-y-1", className)}>
+      <FieldLabel label={label} required={required} />
       <Select>
-        <SelectTrigger className="h-7 text-xs">
+        <SelectTrigger className="h-8 text-xs">
           <SelectValue placeholder="Select" />
         </SelectTrigger>
         <SelectContent>
@@ -373,11 +408,27 @@ function SelectRow({
   );
 }
 
-function CheckboxRow({ label, labelWidth = "w-36" }: { label: string; labelWidth?: string }) {
+function TogglePill({ label }: { label: string }) {
+  const [on, setOn] = useState(false);
   return (
-    <div className="flex items-center gap-2">
-      <Label className={cn("text-[11px] font-medium text-right shrink-0", labelWidth)}>{label}</Label>
-      <Checkbox className="h-4 w-4" />
-    </div>
+    <button
+      type="button"
+      onClick={() => setOn((v) => !v)}
+      className={cn(
+        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] transition-colors",
+        on
+          ? "bg-slate-900 text-slate-50 border-slate-900"
+          : "bg-background text-muted-foreground hover:bg-muted",
+      )}
+    >
+      <span
+        className={cn(
+          "h-1.5 w-1.5 rounded-full",
+          on ? "bg-emerald-400" : "bg-muted-foreground/40",
+        )}
+      />
+      {label}
+    </button>
   );
 }
+
