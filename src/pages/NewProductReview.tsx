@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   
   Save,
@@ -105,7 +105,13 @@ export default function NewProductReview() {
             <div>
               <div className="text-lg font-semibold tracking-tight">New Product Review</div>
               <div className="text-xs text-muted-foreground">
-                Account: 8639.03 - Trescal Inc &nbsp;|&nbsp; Quote: 86355
+                <Link to="/manage-customers/8639" className="hover:text-primary hover:underline">
+                  Account: 8639.03 - Trescal Inc
+                </Link>
+                <span className="mx-2">|</span>
+                <Link to="/quotes/86355" className="hover:text-primary hover:underline">
+                  Quote: 86355
+                </Link>
               </div>
             </div>
             <div className="text-[10px] text-muted-foreground">
