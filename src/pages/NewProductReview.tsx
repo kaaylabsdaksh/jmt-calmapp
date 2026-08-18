@@ -325,7 +325,25 @@ export default function NewProductReview() {
 
       {/* Sticky footer actions */}
       <div className="sticky bottom-0 z-30 w-full border-t bg-white shadow-[0_-1px_3px_rgba(0,0,0,0.06)] px-2 sm:px-4 lg:px-6 py-2">
-        <div className="flex items-center justify-end gap-2">
+        <div className="flex items-center justify-between gap-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="h-8 text-xs">
+                <MoreHorizontal className="h-3.5 w-3.5 mr-1.5" />
+                More Actions
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="min-w-[12rem]">
+              <DropdownMenuItem className="text-xs">To Lab Management</DropdownMenuItem>
+              <DropdownMenuItem className="text-xs">To Metrology</DropdownMenuItem>
+              <DropdownMenuItem className="text-xs">To Lead Tech</DropdownMenuItem>
+              <DropdownMenuItem className="text-xs">Cancel Review</DropdownMenuItem>
+              <DropdownMenuItem className="text-xs">Cannot Service</DropdownMenuItem>
+              <DropdownMenuItem className="text-xs">Approve Capability</DropdownMenuItem>
+              <DropdownMenuItem className="text-xs">Approve PR Completion</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-products")}>
               <X className="h-3.5 w-3.5 mr-1.5" />
               Cancel
@@ -338,23 +356,6 @@ export default function NewProductReview() {
               <Mail className="h-3.5 w-3.5 mr-1.5" />
               Email Cust
             </Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="h-8 text-xs">
-                  <MoreHorizontal className="h-3.5 w-3.5 mr-1.5" />
-                  More Actions
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="min-w-[12rem]">
-                <DropdownMenuItem className="text-xs">To Lab Management</DropdownMenuItem>
-                <DropdownMenuItem className="text-xs">To Metrology</DropdownMenuItem>
-                <DropdownMenuItem className="text-xs">To Lead Tech</DropdownMenuItem>
-                <DropdownMenuItem className="text-xs">Cancel Review</DropdownMenuItem>
-                <DropdownMenuItem className="text-xs">Cannot Service</DropdownMenuItem>
-                <DropdownMenuItem className="text-xs">Approve Capability</DropdownMenuItem>
-                <DropdownMenuItem className="text-xs">Approve PR Completion</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
             <Button size="sm" className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white">
               <Save className="h-3.5 w-3.5 mr-1.5" />
               Save
