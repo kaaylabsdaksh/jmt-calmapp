@@ -114,9 +114,9 @@ export default function NewProductReview() {
   };
 
   return (
-    <div className="bg-background min-h-full">
+    <div className="bg-background min-h-screen flex flex-col">
       <ModernTopNav />
-      <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-5">
+      <main className="flex-1 w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-5">
         <div className="max-w-7xl mx-auto space-y-4">
           {/* Legacy-style subheader */}
           <div className="flex flex-wrap items-center justify-between gap-3 border-b pb-3">
