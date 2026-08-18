@@ -133,12 +133,6 @@ export default function NewProductReview() {
             </TabsList>
 
             <TabsContent value="details" className="mt-4 space-y-4">
-              {/* Removed callout */}
-              <div className="rounded border border-dashed border-destructive/50 bg-destructive/5 p-3 text-xs text-destructive/90">
-                Removed from this view: <b>Location</b>, <b>Work to be Performed</b>, <b>Action Code</b>,{" "}
-                <b>R&D</b>, the Capable Location checkbox grid, and the product-use box. Capable locations now live on their own tab.
-              </div>
-
               <Card>
                 <CardContent className="p-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4">
