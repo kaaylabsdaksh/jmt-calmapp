@@ -131,24 +131,24 @@ const ProductReviews = () => {
       <ModernTopNav />
       <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-5 space-y-3">
         <Card className="border-border/60">
-          <CardContent className="p-3 sm:p-4 space-y-3">
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-2">
+          <CardContent className="p-2 sm:p-3 space-y-2">
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-x-2 gap-y-1.5">
               {TEXT_FILTERS.map((f) => (
-                <div key={f.key} className="space-y-1">
-                  <Label className="text-[11px] uppercase tracking-wide text-muted-foreground">{f.label}</Label>
+                <div key={f.key} className="space-y-0.5">
+                  <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">{f.label}</Label>
                   <Input
                     value={text[f.key]}
                     onChange={(e) => {
                       setText((p) => ({ ...p, [f.key]: e.target.value }));
                       setPage(1);
                     }}
-                    className="h-8 text-xs"
+                    className="h-7 text-[11px] px-2"
                   />
                 </div>
               ))}
               {SELECT_FILTERS.map((f) => (
-                <div key={f.key} className="space-y-1">
-                  <Label className="text-[11px] uppercase tracking-wide text-muted-foreground">{f.label}</Label>
+                <div key={f.key} className="space-y-0.5">
+                  <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">{f.label}</Label>
                   <Select
                     value={selects[f.key] || undefined}
                     onValueChange={(v) => {
@@ -156,7 +156,7 @@ const ProductReviews = () => {
                       setPage(1);
                     }}
                   >
-                    <SelectTrigger className="h-8 text-xs">
+                    <SelectTrigger className="h-7 text-[11px] px-2">
                       <SelectValue placeholder="All" />
                     </SelectTrigger>
                     <SelectContent>
@@ -169,45 +169,45 @@ const ProductReviews = () => {
                   </Select>
                 </div>
               ))}
-              <div className="space-y-1">
-                <Label className="text-[11px] uppercase tracking-wide text-muted-foreground">Created By</Label>
-                <Input value={createdBy} onChange={(e) => setCreatedBy(e.target.value)} className="h-8 text-xs" />
+              <div className="space-y-0.5">
+                <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">Created By</Label>
+                <Input value={createdBy} onChange={(e) => setCreatedBy(e.target.value)} className="h-7 text-[11px] px-2" />
               </div>
-              <div className="space-y-1">
-                <Label className="text-[11px] uppercase tracking-wide text-muted-foreground">Created From / To</Label>
-                <div className="flex items-center gap-1.5">
-                  <Input type="date" value={createdFrom} onChange={(e) => setCreatedFrom(e.target.value)} className="h-8 text-xs" />
-                  <Input type="date" value={createdTo} onChange={(e) => setCreatedTo(e.target.value)} className="h-8 text-xs" />
+              <div className="space-y-0.5">
+                <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">Created From / To</Label>
+                <div className="flex items-center gap-1">
+                  <Input type="date" value={createdFrom} onChange={(e) => setCreatedFrom(e.target.value)} className="h-7 text-[11px] px-2" />
+                  <Input type="date" value={createdTo} onChange={(e) => setCreatedTo(e.target.value)} className="h-7 text-[11px] px-2" />
                 </div>
               </div>
-              <div className="space-y-1">
-                <Label className="text-[11px] uppercase tracking-wide text-muted-foreground">Due From / To</Label>
-                <div className="flex items-center gap-1.5">
-                  <Input type="date" value={dueFrom} onChange={(e) => setDueFrom(e.target.value)} className="h-8 text-xs" />
-                  <Input type="date" value={dueTo} onChange={(e) => setDueTo(e.target.value)} className="h-8 text-xs" />
+              <div className="space-y-0.5">
+                <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">Due From / To</Label>
+                <div className="flex items-center gap-1">
+                  <Input type="date" value={dueFrom} onChange={(e) => setDueFrom(e.target.value)} className="h-7 text-[11px] px-2" />
+                  <Input type="date" value={dueTo} onChange={(e) => setDueTo(e.target.value)} className="h-7 text-[11px] px-2" />
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-end gap-2 pt-1">
-              <Button variant="ghost" size="sm" className="h-8 text-xs" onClick={clearAll}>
+            <div className="flex flex-wrap items-center justify-end gap-1.5 pt-0.5">
+              <Button variant="ghost" size="sm" className="h-7 text-[11px] px-2" onClick={clearAll}>
                 <X className="h-3.5 w-3.5 mr-1.5" />
                 Clear
               </Button>
-              <Button size="sm" className="h-8 text-xs" onClick={() => setPage(1)}>
+              <Button size="sm" className="h-7 text-[11px] px-2" onClick={() => setPage(1)}>
                 <Search className="h-3.5 w-3.5 mr-1.5" />
                 Search
               </Button>
               <Button
                 size="sm"
                 variant="outline"
-                className="h-8 text-xs"
+                className="h-7 text-[11px] px-2"
                 onClick={() => navigate("/manage-products/product-review/new")}
               >
                 <Plus className="h-3.5 w-3.5 mr-1.5" />
                 Add New
               </Button>
-              <Button size="sm" variant="outline" className="h-8 text-xs" onClick={() => navigate("/manage-products")}>
+              <Button size="sm" variant="outline" className="h-7 text-[11px] px-2" onClick={() => navigate("/manage-products")}>
                 <Package className="h-3.5 w-3.5 mr-1.5" />
                 Products
               </Button>
