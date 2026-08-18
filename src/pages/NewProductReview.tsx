@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  ArrowLeft,
+  
   Save,
   X,
   Mail,
@@ -341,10 +341,6 @@ export default function NewProductReview() {
             <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-products")}>
               <X className="h-3.5 w-3.5 mr-1.5" />
               Cancel
-            </Button>
-            <Button variant="outline" size="sm" className="h-8 text-xs">
-              <ArrowLeft className="h-3.5 w-3.5 mr-1.5" />
-              Back
             </Button>
             <Button variant="outline" size="sm" className="h-8 text-xs">
               <Mail className="h-3.5 w-3.5 mr-1.5" />
