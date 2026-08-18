@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
+import { DateRangePicker } from "@/components/ui/date-range-picker";
 import {
   Table,
   TableBody,
@@ -21,6 +22,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+function parseDate(value: string): Date | undefined {
+  if (!value) return undefined;
+  const [m, d, y] = value.split("/");
+  const date = new Date(Number(y), Number(m) - 1, Number(d));
+  return date.getFullYear() === Number(y) && date.getMonth() === Number(m) - 1 && date.getDate() === Number(d) ? date : undefined;
+}
+
+function formatDate(value: Date | undefined): string {
+  if (!value) return "";
+  const m = String(value.getMonth() + 1).padStart(2, "0");
+  const d = String(value.getDate()).padStart(2, "0");
+  const y = value.getFullYear();
+  return `${m}/${d}/${y}`;
+}
 
 type Review = {
   pr: string;
@@ -85,10 +101,10 @@ const ProductReviews = () => {
   const [text, setText] = useState<Record<string, string>>({ ...emptyText });
   const [selects, setSelects] = useState<Record<string, string>>({ ...emptySelect });
   const [createdBy, setCreatedBy] = useState("");
-  const [createdFrom, setCreatedFrom] = useState("");
-  const [createdTo, setCreatedTo] = useState("");
-  const [dueFrom, setDueFrom] = useState("");
-  const [dueTo, setDueTo] = useState("");
+  const [createdFrom, setCreatedFrom] = useState<Date | undefined>(undefined);
+  const [createdTo, setCreatedTo] = useState<Date | undefined>(undefined);
+  const [dueFrom, setDueFrom] = useState<Date | undefined>(undefined);
+  const [dueTo, setDueTo] = useState<Date | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState("10");
 
@@ -119,10 +135,10 @@ const ProductReviews = () => {
     setText({ ...emptyText });
     setSelects({ ...emptySelect });
     setCreatedBy("");
-    setCreatedFrom("");
-    setCreatedTo("");
-    setDueFrom("");
-    setDueTo("");
+    setCreatedFrom(undefined);
+    setCreatedTo(undefined);
+    setDueFrom(undefined);
+    setDueTo(undefined);
     setPage(1);
   };
 
