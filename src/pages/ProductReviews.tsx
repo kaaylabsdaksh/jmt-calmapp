@@ -221,19 +221,21 @@ const ProductReviews = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-end gap-1.5 pt-0.5">
-              <Button variant="ghost" size="sm" className="h-7 text-[11px] px-2" onClick={clearAll}>
-                <X className="h-3.5 w-3.5 mr-1.5" />
-                Clear
-              </Button>
-              <Button size="sm" className="h-7 text-[11px] px-2" onClick={() => setPage(1)}>
-                <Search className="h-3.5 w-3.5 mr-1.5" />
-                Search
-              </Button>
+            <div className="flex flex-wrap items-center justify-between gap-1.5 pt-0.5">
               <Button size="sm" variant="outline" className="h-7 text-[11px] px-2" onClick={() => navigate("/manage-products")}>
                 <Package className="h-3.5 w-3.5 mr-1.5" />
                 Products
               </Button>
+              <div className="flex items-center gap-1.5">
+                <Button variant="ghost" size="sm" className="h-7 text-[11px] px-2" onClick={clearAll}>
+                  <X className="h-3.5 w-3.5 mr-1.5" />
+                  Clear
+                </Button>
+                <Button size="sm" className="h-7 text-[11px] px-2" onClick={() => setPage(1)}>
+                  <Search className="h-3.5 w-3.5 mr-1.5" />
+                  Search
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
