@@ -341,17 +341,20 @@ const ManageProductsV1 = () => {
               </div>
 
               <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t">
-                <div className="text-[11px] text-muted-foreground">
-                  {activeCount > 0 ? (
-                    <span className="inline-flex items-center gap-1.5">
-                      <Badge variant="secondary" className="h-5 text-[10px]">
-                        {activeCount} filter{activeCount > 1 ? "s" : ""} applied
-                      </Badge>
-                      {rows.length} product{rows.length === 1 ? "" : "s"} found
-                    </span>
-                  ) : (
-                    <>Showing all {rows.length} products</>
-                  )}
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-8 text-xs"
+                    onClick={() => navigate("/manage-products/product-reviews")}
+                  >
+                    <ClipboardCheck className="h-3.5 w-3.5 mr-1.5" />
+                    Product Reviews
+                  </Button>
+                  <Button variant="outline" size="sm" className="h-8 text-xs">
+                    <ExternalLink className="h-3.5 w-3.5 mr-1.5" />
+                    Competitive Price Guide
+                  </Button>
                 </div>
                 <div className="flex items-center gap-2">
                   <Button variant="ghost" size="sm" className="h-8 text-xs" onClick={handleClear}>
