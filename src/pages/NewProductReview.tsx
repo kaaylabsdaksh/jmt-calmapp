@@ -404,23 +404,3 @@ function CheckboxRow({ label }: { label: string }) {
     </div>
   );
 }
-
-function WorkflowButton({
-  label,
-  variant = "default",
-}: {
-  label: string;
-  variant?: "default" | "danger" | "warn" | "approve";
-}) {
-  const variantClass = {
-    default: "bg-primary hover:bg-primary/90 text-primary-foreground",
-    danger: "bg-red-700 hover:bg-red-800 text-white",
-    warn: "bg-amber-600 hover:bg-amber-700 text-white",
-    approve: "bg-green-600 hover:bg-green-700 text-white",
-  };
-  return (
-    <Button size="sm" className={cn("h-8 text-[11px] px-2", variantClass[variant])}>
-      {label}
-    </Button>
-  );
-}
