@@ -357,12 +357,26 @@ export default function NewProductReview() {
                     </div>
                     <div className="space-y-1.5">
                       <Label className="text-[11px] font-medium text-muted-foreground">Select File</Label>
-                      <Input
-                        type="file"
-                        className="h-8 text-xs file:mr-2 file:text-xs file:border-0 file:bg-muted file:px-2 file:py-1 file:rounded"
-                        onChange={(e) => setDocFile(e.target.files?.[0]?.name ?? "")}
-                      />
+                      <label
+                        htmlFor="pr-doc-file"
+                        className="flex h-8 items-center gap-2 rounded-md border border-input bg-background px-2 text-xs cursor-pointer hover:bg-muted/50 transition-colors"
+                      >
+                        <span className="inline-flex items-center gap-1 rounded bg-muted px-1.5 py-0.5 text-[10px] font-medium shrink-0">
+                          <Upload className="h-3 w-3" />
+                          Browse
+                        </span>
+                        <span className={cn("truncate", !docFile && "text-muted-foreground")}>
+                          {docFile || "No file selected"}
+                        </span>
+                        <input
+                          id="pr-doc-file"
+                          type="file"
+                          className="sr-only"
+                          onChange={(e) => setDocFile(e.target.files?.[0]?.name ?? "")}
+                        />
+                      </label>
                     </div>
+
                     <Button
                       size="sm"
                       className="h-8 text-xs bg-success text-success-foreground hover:bg-success/90 w-full"
