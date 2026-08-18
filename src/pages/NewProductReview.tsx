@@ -107,6 +107,11 @@ export default function NewProductReview() {
               <div className="text-xs text-muted-foreground">
                 Account: 8639.03 - Trescal Inc &nbsp;|&nbsp; Quote: 86355
               </div>
+              <div className="text-[10px] text-muted-foreground mt-1">
+                Item Created by: Felicia N Cooper, 03/20/2026 08:17 AM
+                <span className="mx-2">|</span>
+                Item Modified by: Thomas W. Blouin, 03/20/2026 03:36 PM
+              </div>
             </div>
             <Badge className="text-[10px] bg-yellow-400 text-black hover:bg-yellow-400">New</Badge>
           </div>
@@ -321,12 +326,7 @@ export default function NewProductReview() {
 
       {/* Sticky footer actions */}
       <div className="sticky bottom-0 z-30 w-full border-t bg-white shadow-[0_-1px_3px_rgba(0,0,0,0.06)] px-2 sm:px-4 lg:px-6 py-2">
-        <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground">
-          <div className="space-y-1">
-            <span>Item Created by: Felicia N Cooper, 03/20/2026 08:17 AM</span>
-            <span className="block">Item Modified by: Thomas W. Blouin, 03/20/2026 03:36 PM</span>
-          </div>
-          <div className="flex items-center gap-2">
+        <div className="flex items-center justify-end gap-2">
             <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-products")}>
               <X className="h-3.5 w-3.5 mr-1.5" />
               Cancel
