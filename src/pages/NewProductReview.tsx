@@ -5,7 +5,7 @@ import {
   Save,
   X,
   Mail,
-  List,
+  MoreHorizontal,
   Check,
   AlertTriangle,
   Ban,
@@ -16,6 +16,12 @@ import {
   GripVertical,
 } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -314,9 +320,12 @@ export default function NewProductReview() {
       </main>
 
       {/* Sticky footer actions */}
-      <div className="sticky bottom-0 z-30 w-full border-t bg-white shadow-[0_-1px_3px_rgba(0,0,0,0.06)] px-2 sm:px-4 lg:px-6 py-2 space-y-2">
+      <div className="sticky bottom-0 z-30 w-full border-t bg-white shadow-[0_-1px_3px_rgba(0,0,0,0.06)] px-2 sm:px-4 lg:px-6 py-2">
         <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground">
-          <span>Item Created by: Felicia N Cooper, 03/20/2026 08:17 AM</span>
+          <div className="space-y-1">
+            <span>Item Created by: Felicia N Cooper, 03/20/2026 08:17 AM</span>
+            <span className="block">Item Modified by: Thomas W. Blouin, 03/20/2026 03:36 PM</span>
+          </div>
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-products")}>
               <X className="h-3.5 w-3.5 mr-1.5" />
@@ -330,26 +339,28 @@ export default function NewProductReview() {
               <Mail className="h-3.5 w-3.5 mr-1.5" />
               Email Cust
             </Button>
-            <Button variant="outline" size="sm" className="h-8 text-xs">
-              <List className="h-3.5 w-3.5 mr-1.5" />
-              Items
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="h-8 text-xs">
+                  <MoreHorizontal className="h-3.5 w-3.5 mr-1.5" />
+                  More Actions
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="min-w-[12rem]">
+                <DropdownMenuItem className="text-xs">To Lab Management</DropdownMenuItem>
+                <DropdownMenuItem className="text-xs">To Metrology</DropdownMenuItem>
+                <DropdownMenuItem className="text-xs">To Lead Tech</DropdownMenuItem>
+                <DropdownMenuItem className="text-xs">Cancel Review</DropdownMenuItem>
+                <DropdownMenuItem className="text-xs">Cannot Service</DropdownMenuItem>
+                <DropdownMenuItem className="text-xs">Approve Capability</DropdownMenuItem>
+                <DropdownMenuItem className="text-xs">Approve PR Completion</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Button size="sm" className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white">
               <Save className="h-3.5 w-3.5 mr-1.5" />
               Save
             </Button>
           </div>
-          <span>Item Modified by: Thomas W. Blouin, 03/20/2026 03:36 PM</span>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1">
-          <WorkflowButton label="To Lab Management" />
-          <WorkflowButton label="To Metrology" />
-          <WorkflowButton label="To Lead Tech" />
-          <WorkflowButton label="Cancel Review" variant="danger" />
-          <WorkflowButton label="Cannot Service" variant="warn" />
-          <WorkflowButton label="Approve Capability" variant="approve" />
-          <WorkflowButton label="Approve PR Completion" variant="approve" />
         </div>
       </div>
     </div>
