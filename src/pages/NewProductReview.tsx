@@ -319,120 +319,144 @@ export default function NewProductReview() {
               </Card>
             </TabsContent>
 
-            <TabsContent value="documents" className="mt-4">
+            <TabsContent value="documents" className="mt-4 space-y-4">
+              {/* Upload document card */}
               <Card>
                 <CardContent className="p-4">
-                  <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
-                    {/* Upload form */}
-                    <div className="space-y-3">
-                      <div className="text-xs font-semibold border-b pb-1">Add Document</div>
-                      <div className="space-y-1">
-                        <Label className="text-[10px] font-medium text-muted-foreground">Select Document Type</Label>
-                        <Select value={docType} onValueChange={setDocType}>
-                          <SelectTrigger className="h-7 text-xs">
-                            <SelectValue placeholder="Select..." />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {["Other", "Instruction Sheet", "Manual", "Datasheet", "Quote", "Certificate", "Email"].map((t) => (
-                              <SelectItem key={t} value={t} className="text-xs">{t}</SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[10px] font-medium text-muted-foreground">Add Document Description</Label>
-                        <Input
-                          className="h-7 text-xs"
-                          value={docDescription}
-                          onChange={(e) => setDocDescription(e.target.value)}
-                          placeholder="Description"
-                        />
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-[10px] font-medium text-muted-foreground">Select Document</Label>
-                        <div className="flex items-center gap-2">
-                          <Input
-                            type="file"
-                            className="h-7 text-xs file:mr-2 file:text-xs file:border-0 file:bg-muted file:px-2 file:py-0.5 file:rounded"
-                            onChange={(e) => setDocFile(e.target.files?.[0]?.name ?? "")}
-                          />
-                        </div>
-                      </div>
-                      <Button
-                        size="sm"
-                        className="h-7 text-xs bg-green-600 hover:bg-green-700 text-white w-full"
-                        disabled={!docType || !docFile}
-                        onClick={() => {
-                          setDocs((prev) => [
-                            ...prev,
-                            {
-                              id: `${Date.now()}`,
-                              type: docType,
-                              name: docFile,
-                              description: docDescription,
-                              uploadedBy: "Jay R Jackson",
-                              uploadedDate: new Date().toLocaleDateString("en-US"),
-                            },
-                          ]);
-                          setDocType("");
-                          setDocDescription("");
-                          setDocFile("");
-                        }}
-                      >
-                        Upload Document
-                      </Button>
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
+                      <FileText className="h-4 w-4 text-primary" />
                     </div>
+                    <div>
+                      <h3 className="text-sm font-semibold">Add Document</h3>
+                      <p className="text-[10px] text-muted-foreground">Upload supporting files for this product review.</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
+                    <div className="space-y-1.5">
+                      <Label className="text-[11px] font-medium text-muted-foreground">Document Type</Label>
+                      <Select value={docType} onValueChange={setDocType}>
+                        <SelectTrigger className="h-8 text-xs">
+                          <SelectValue placeholder="Select type..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {["Other", "Instruction Sheet", "Manual", "Datasheet", "Quote", "Certificate", "Email"].map((t) => (
+                            <SelectItem key={t} value={t} className="text-xs">{t}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label className="text-[11px] font-medium text-muted-foreground">Description</Label>
+                      <Input
+                        className="h-8 text-xs"
+                        value={docDescription}
+                        onChange={(e) => setDocDescription(e.target.value)}
+                        placeholder="Brief description..."
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label className="text-[11px] font-medium text-muted-foreground">Select File</Label>
+                      <Input
+                        type="file"
+                        className="h-8 text-xs file:mr-2 file:text-xs file:border-0 file:bg-muted file:px-2 file:py-1 file:rounded"
+                        onChange={(e) => setDocFile(e.target.files?.[0]?.name ?? "")}
+                      />
+                    </div>
+                    <Button
+                      size="sm"
+                      className="h-8 text-xs bg-success text-success-foreground hover:bg-success/90 w-full"
+                      disabled={!docType || !docFile}
+                      onClick={() => {
+                        setDocs((prev) => [
+                          ...prev,
+                          {
+                            id: `${Date.now()}`,
+                            type: docType,
+                            name: docFile,
+                            description: docDescription,
+                            uploadedBy: "Jay R Jackson",
+                            uploadedDate: new Date().toLocaleDateString("en-US"),
+                          },
+                        ]);
+                        setDocType("");
+                        setDocDescription("");
+                        setDocFile("");
+                      }}
+                    >
+                      Upload Document
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
 
-                    {/* Documents table */}
-                    <div className="border rounded-md overflow-hidden">
-                      <Table>
-                        <TableHeader>
-                          <TableRow className="bg-muted/50">
-                            <TableHead className="h-8 text-[11px] px-2">Type</TableHead>
-                            <TableHead className="h-8 text-[11px] px-2">Document</TableHead>
-                            <TableHead className="h-8 text-[11px] px-2">Description</TableHead>
-                            <TableHead className="h-8 text-[11px] px-2">Uploaded By</TableHead>
-                            <TableHead className="h-8 text-[11px] px-2">Uploaded Date</TableHead>
-                            <TableHead className="h-8 text-[11px] px-2 w-16"></TableHead>
+              {/* Attached documents card */}
+              <Card className="overflow-hidden">
+                <CardContent className="p-0">
+                  <div className="flex items-center justify-between px-4 py-3 border-b bg-muted/30">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-sm font-semibold">Attached Documents</h3>
+                      <span className="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-muted text-[10px] font-medium text-muted-foreground">
+                        {docs.length}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow className="bg-muted/50 hover:bg-muted/50">
+                          <TableHead className="h-8 text-[11px] px-3 font-semibold">Type</TableHead>
+                          <TableHead className="h-8 text-[11px] px-3 font-semibold">Document</TableHead>
+                          <TableHead className="h-8 text-[11px] px-3 font-semibold">Description</TableHead>
+                          <TableHead className="h-8 text-[11px] px-3 font-semibold">Uploaded By</TableHead>
+                          <TableHead className="h-8 text-[11px] px-3 font-semibold">Uploaded Date</TableHead>
+                          <TableHead className="h-8 text-[11px] px-3 w-12"></TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {docs.length === 0 ? (
+                          <TableRow>
+                            <TableCell colSpan={6} className="text-center py-8">
+                              <FileText className="h-8 w-8 mx-auto mb-2 text-muted-foreground/40" />
+                              <p className="text-xs text-muted-foreground">No documents attached.</p>
+                              <p className="text-[10px] text-muted-foreground mt-0.5">Upload a document to attach it to this review.</p>
+                            </TableCell>
                           </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {docs.length === 0 ? (
-                            <TableRow>
-                              <TableCell colSpan={6} className="text-center text-xs text-muted-foreground py-6">
-                                No documents attached.
+                        ) : (
+                          docs.map((d) => (
+                            <TableRow key={d.id} className="group">
+                              <TableCell className="text-[11px] px-3 py-2">
+                                <span className="inline-flex items-center px-2 py-0.5 rounded bg-secondary text-[10px] font-medium">
+                                  {d.type}
+                                </span>
+                              </TableCell>
+                              <TableCell className="text-[11px] px-3 py-2">
+                                <button className="font-medium text-foreground hover:text-primary hover:underline underline-offset-2">
+                                  {d.name}
+                                </button>
+                              </TableCell>
+                              <TableCell className="text-[11px] px-3 py-2 text-muted-foreground">{d.description}</TableCell>
+                              <TableCell className="text-[11px] px-3 py-2">{d.uploadedBy}</TableCell>
+                              <TableCell className="text-[11px] px-3 py-2 text-muted-foreground">{d.uploadedDate}</TableCell>
+                              <TableCell className="text-[11px] px-3 py-2 text-right">
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity"
+                                  onClick={() => setDocs((prev) => prev.filter((x) => x.id !== d.id))}
+                                >
+                                  <X className="h-3.5 w-3.5 text-destructive" />
+                                </Button>
                               </TableCell>
                             </TableRow>
-                          ) : (
-                            docs.map((d) => (
-                              <TableRow key={d.id}>
-                                <TableCell className="text-[11px] px-2 py-1.5">{d.type}</TableCell>
-                                <TableCell className="text-[11px] px-2 py-1.5">
-                                  <button className="text-slate-900 underline underline-offset-2 hover:text-slate-600">
-                                    {d.name}
-                                  </button>
-                                </TableCell>
-                                <TableCell className="text-[11px] px-2 py-1.5">{d.description}</TableCell>
-                                <TableCell className="text-[11px] px-2 py-1.5">{d.uploadedBy}</TableCell>
-                                <TableCell className="text-[11px] px-2 py-1.5">{d.uploadedDate}</TableCell>
-                                <TableCell className="text-[11px] px-2 py-1.5 text-right">
-                                  <button
-                                    className="text-destructive hover:underline"
-                                    onClick={() => setDocs((prev) => prev.filter((x) => x.id !== d.id))}
-                                  >
-                                    Delete
-                                  </button>
-                                </TableCell>
-                              </TableRow>
-                            ))
-                          )}
-                        </TableBody>
-                      </Table>
-                      <div className="flex items-center justify-between border-t bg-muted/30 px-2 py-1.5 text-[11px] text-muted-foreground">
-                        <span>Page 1 of 1 ({docs.length} records)</span>
-                        <span>Page size: 10</span>
-                      </div>
-                    </div>
+                          ))
+                        )}
+                      </TableBody>
+                    </Table>
+                  </div>
+                  <div className="flex items-center justify-between border-t px-4 py-2 text-[11px] text-muted-foreground bg-muted/30">
+                    <span>Showing {docs.length} record{docs.length === 1 ? "" : "s"}</span>
+                    <span>Page 1 of 1</span>
                   </div>
                 </CardContent>
               </Card>
