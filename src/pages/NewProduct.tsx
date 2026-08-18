@@ -63,6 +63,8 @@ export default function NewProduct() {
     setComment("");
   };
 
+  const selectedLocations = Object.values(locations).filter(Boolean).length;
+
   return (
     <div className="bg-background min-h-full flex flex-col">
       <ModernTopNav />
@@ -86,120 +88,143 @@ export default function NewProduct() {
             </div>
           </div>
 
-          {/* Main 3-column form */}
-          <Card>
-            <CardContent className="p-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-4">
-                {/* Column 1 — Identification */}
-                <div className="space-y-3">
-                  <SectionTitle>Product Identification</SectionTitle>
-                  <SelectRow label="Group Type" options={GROUP_TYPES} />
-                  <SelectRow label="Product Type" options={PRODUCT_TYPES} />
-                  <CheckboxRow label="To Factory" />
-                  <SelectRow label="Manufacturer" options={MANUFACTURERS} required />
-                  <FieldRow label="Model Number" required />
-                  <FieldRow label="Description" required />
-                  <SelectRow label="Lab Code" options={LAB_CODES} required />
-
-                  <SectionTitle className="pt-2">Specification</SectionTitle>
-                  <FieldRow label="Accuracy" />
-                  <FieldRow label="Range" />
-                  <FieldRow label="Option" />
-                  <SelectRow label="Accredited Cal" options={ACCRED_CAL} />
-                  <FieldRow label="Img File Name" />
-                  <CheckboxRow label="Product Recall May Apply" />
-                  <CheckboxRow label="ASC Product" />
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 items-start">
+            {/* Left — identification + spec */}
+            <div className="xl:col-span-2 space-y-4">
+              <SectionCard icon={Boxes} title="Product Identification">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  <SelectField label="Group Type" options={GROUP_TYPES} />
+                  <SelectField label="Product Type" options={PRODUCT_TYPES} />
+                  <SelectField label="Manufacturer" options={MANUFACTURERS} required />
+                  <TextField label="Model Number" required />
+                  <TextField label="Description" required className="sm:col-span-2" />
+                  <SelectField label="Lab Code" options={LAB_CODES} required />
+                  <TextField label="Alias" />
+                  <TextField label="Img File Name" />
                 </div>
-
-                {/* Column 2 — Pricing */}
-                <div className="space-y-3">
-                  <SectionTitle>Cost & Pricing</SectionTitle>
-                  <FieldRow label="JMT #" />
-                  <FieldRow label="Cal Proc" />
-                  <FieldRow label="Cal/Cert Cost" placeholder="0.00" />
-                  <FieldRow label="Flat Rate Elig." />
-
-                  <div className="flex items-center gap-2 pl-[9.5rem]">
-                    <RadioGroup
-                      value={pricingMode}
-                      onValueChange={setPricingMode}
-                      className="flex items-center gap-4"
-                    >
-                      <div className="flex items-center gap-1.5">
-                        <RadioGroupItem value="labor-parts" id="labor-parts" className="h-3.5 w-3.5" />
-                        <Label htmlFor="labor-parts" className="text-[11px] font-medium">Labor/Parts</Label>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <RadioGroupItem value="labor-only" id="labor-only" className="h-3.5 w-3.5" />
-                        <Label htmlFor="labor-only" className="text-[11px] font-medium">Labor Only</Label>
-                      </div>
-                    </RadioGroup>
-                  </div>
-
-                  <FieldRow label="Min. Eval Fee" placeholder="0.00" />
-                  <FieldRow label="Factory Cal Price" placeholder="0.00" />
-                  <FieldRow label="Cert Time" placeholder="hrs" />
-                  <FieldRow label="Sage Part #" />
-                  <FieldRow label="List Price" placeholder="0.00" />
-                  <FieldRow label="Cost" placeholder="0.00" />
-
-                  <SectionTitle className="pt-2">Physical Dimensions</SectionTitle>
-                  <FieldRow label="Weight" placeholder="lb" />
-                  <FieldRow label="Height" placeholder="in" />
-                  <FieldRow label="Width" placeholder="in" />
-                  <FieldRow label="Depth" placeholder="in" />
-
-                  <div className="pl-[9.5rem]">
-                    <Button variant="link" size="sm" className="h-auto p-0 text-xs text-slate-900 underline">
-                      Misc Labor Parts and Pricing
-                    </Button>
-                  </div>
+                <div className="flex flex-wrap gap-2 pt-3">
+                  <TogglePill label="To Factory" />
+                  <TogglePill label="Product Recall May Apply" />
+                  <TogglePill label="ASC Product" />
                 </div>
+              </SectionCard>
 
-                {/* Column 3 — Locations & Categories */}
-                <div className="space-y-3">
-                  <SectionTitle>Capable Location(s)</SectionTitle>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-3 gap-y-1.5">
-                    {CAPABLE_LOCATIONS.map((loc) => (
-                      <label key={loc} className="flex items-center gap-1.5 cursor-pointer">
-                        <Checkbox
-                          className="h-3.5 w-3.5"
-                          checked={!!locations[loc]}
-                          onCheckedChange={() =>
-                            setLocations((p) => ({ ...p, [loc]: !p[loc] }))
-                          }
-                        />
-                        <span className="text-[11px]">{loc}</span>
-                      </label>
+              <SectionCard icon={Gauge} title="Specification">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  <TextField label="Accuracy" />
+                  <TextField label="Range" />
+                  <TextField label="Option" />
+                  <SelectField label="Accredited Cal" options={ACCRED_CAL} />
+                </div>
+              </SectionCard>
+
+              <SectionCard
+                icon={DollarSign}
+                title="Cost & Pricing"
+                action={
+                  <div className="inline-flex rounded-md border bg-muted/40 p-0.5">
+                    {[
+                      { v: "labor-parts", l: "Labor/Parts" },
+                      { v: "labor-only", l: "Labor Only" },
+                    ].map((o) => (
+                      <button
+                        key={o.v}
+                        type="button"
+                        onClick={() => setPricingMode(o.v)}
+                        className={cn(
+                          "px-2.5 py-1 text-[11px] rounded-[5px] transition-colors",
+                          pricingMode === o.v
+                            ? "bg-background shadow-sm font-medium text-foreground"
+                            : "text-muted-foreground hover:text-foreground",
+                        )}
+                      >
+                        {o.l}
+                      </button>
                     ))}
                   </div>
-
-                  <div className="pt-1">
-                    <FieldRow label="Alias" />
-                  </div>
-
-                  <div className="rounded-md border bg-muted/30 p-3 space-y-2">
-                    <div className="text-[10px] text-muted-foreground text-right">
-                      This area pertains to Technical/Labs.
-                    </div>
-                    <SelectRow label="Technical/Labs Category" options={TECH_CATEGORIES} labelWidth="w-40" />
-                    <SelectRow label="2nd Category" options={TECH_CATEGORIES} labelWidth="w-40" />
-                    <SelectRow label="3rd Category" options={TECH_CATEGORIES} labelWidth="w-40" />
-                  </div>
-
-                  <div className="rounded-md border bg-muted/30 p-3 space-y-2">
-                    <div className="text-[10px] text-muted-foreground text-right">
-                      This area pertains to Rental/Sales.
-                    </div>
-                    <CheckboxRow label="Rental Only" labelWidth="w-40" />
-                    <SelectRow label="Rental/Sales Category" options={RENTAL_CATEGORIES} labelWidth="w-40" />
-                    <SelectRow label="2nd Category" options={RENTAL_CATEGORIES} labelWidth="w-40" />
-                    <SelectRow label="3rd Category" options={RENTAL_CATEGORIES} labelWidth="w-40" />
-                  </div>
+                }
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  <TextField label="JMT #" />
+                  <TextField label="Cal Proc" />
+                  <TextField label="Cal/Cert Cost" placeholder="0.00" prefix="$" />
+                  <TextField label="Flat Rate Elig." />
+                  <TextField label="Min. Eval Fee" placeholder="0.00" prefix="$" />
+                  <TextField label="Factory Cal Price" placeholder="0.00" prefix="$" />
+                  <TextField label="Cert Time" placeholder="hrs" />
+                  <TextField label="Sage Part #" />
+                  <TextField label="List Price" placeholder="0.00" prefix="$" />
+                  <TextField label="Cost" placeholder="0.00" prefix="$" />
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+                <div className="pt-3">
+                  <Button variant="link" size="sm" className="h-auto p-0 text-xs text-slate-900 underline">
+                    Misc Labor Parts and Pricing
+                  </Button>
+                </div>
+              </SectionCard>
+
+              <SectionCard icon={Ruler} title="Physical Dimensions">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                  <TextField label="Weight" placeholder="lb" />
+                  <TextField label="Height" placeholder="in" />
+                  <TextField label="Width" placeholder="in" />
+                  <TextField label="Depth" placeholder="in" />
+                </div>
+              </SectionCard>
+            </div>
+
+            {/* Right rail */}
+            <div className="space-y-4 xl:sticky xl:top-4">
+              <SectionCard
+                icon={MapPin}
+                title="Capable Location(s)"
+                action={
+                  <span className="text-[10px] text-muted-foreground">
+                    {selectedLocations} selected
+                  </span>
+                }
+              >
+                <div className="flex flex-wrap gap-1.5">
+                  {CAPABLE_LOCATIONS.map((loc) => {
+                    const on = !!locations[loc];
+                    return (
+                      <button
+                        key={loc}
+                        type="button"
+                        onClick={() => setLocations((p) => ({ ...p, [loc]: !p[loc] }))}
+                        className={cn(
+                          "rounded-full border px-2.5 py-1 text-[11px] transition-colors",
+                          on
+                            ? "bg-slate-900 text-slate-50 border-slate-900"
+                            : "bg-background text-muted-foreground hover:bg-muted",
+                        )}
+                      >
+                        {loc}
+                      </button>
+                    );
+                  })}
+                </div>
+              </SectionCard>
+
+              <SectionCard icon={FlaskConical} title="Technical / Labs Categories">
+                <div className="space-y-3">
+                  <SelectField label="Primary Category" options={TECH_CATEGORIES} />
+                  <SelectField label="2nd Category" options={TECH_CATEGORIES} />
+                  <SelectField label="3rd Category" options={TECH_CATEGORIES} />
+                </div>
+              </SectionCard>
+
+              <SectionCard icon={Tags} title="Rental / Sales Categories">
+                <div className="space-y-3">
+                  <TogglePill label="Rental Only" />
+                  <SelectField label="Primary Category" options={RENTAL_CATEGORIES} />
+                  <SelectField label="2nd Category" options={RENTAL_CATEGORIES} />
+                  <SelectField label="3rd Category" options={RENTAL_CATEGORIES} />
+                </div>
+              </SectionCard>
+            </div>
+          </div>
+
 
           {/* Comments */}
           <Card>
