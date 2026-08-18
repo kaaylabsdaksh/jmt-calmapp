@@ -87,6 +87,22 @@ export default function NewProductReview() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("details");
   const [matrix, setMatrix] = useState<Record<string, Record<string, boolean>>>({});
+  const [docType, setDocType] = useState("");
+  const [docDescription, setDocDescription] = useState("");
+  const [docFile, setDocFile] = useState("");
+  const [docs, setDocs] = useState<
+    { id: string; type: string; name: string; description: string; uploadedBy: string; uploadedDate: string }[]
+  >([
+    {
+      id: "d1",
+      type: "Other",
+      name: "Belt Tension Checker Instruction Sheet.pdf",
+      description: "Instruction sheet",
+      uploadedBy: "Kevin R. Young",
+      uploadedDate: "06/30/2021",
+    },
+  ]);
+
 
   const toggleMatrix = (location: string, cap: string) => {
     setMatrix((prev) => ({
