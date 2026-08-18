@@ -146,6 +146,18 @@ const ProductReviews = () => {
     <div className="bg-background min-h-full">
       <ModernTopNav />
       <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-5 space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h1 className="text-xl font-semibold tracking-tight">Product Reviews</h1>
+          <Button
+            size="sm"
+            className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
+            onClick={() => navigate("/manage-products/product-review/new")}
+          >
+            <Plus className="h-3.5 w-3.5 mr-1.5" />
+            Add New
+          </Button>
+        </div>
+
         <Card className="border-border/60">
           <CardContent className="p-2 sm:p-3 space-y-2">
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-x-2 gap-y-1.5">
@@ -217,15 +229,6 @@ const ProductReviews = () => {
               <Button size="sm" className="h-7 text-[11px] px-2" onClick={() => setPage(1)}>
                 <Search className="h-3.5 w-3.5 mr-1.5" />
                 Search
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                className="h-7 text-[11px] px-2"
-                onClick={() => navigate("/manage-products/product-review/new")}
-              >
-                <Plus className="h-3.5 w-3.5 mr-1.5" />
-                Add New
               </Button>
               <Button size="sm" variant="outline" className="h-7 text-[11px] px-2" onClick={() => navigate("/manage-products")}>
                 <Package className="h-3.5 w-3.5 mr-1.5" />
