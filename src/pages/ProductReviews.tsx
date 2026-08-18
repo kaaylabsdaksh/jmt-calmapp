@@ -230,15 +230,6 @@ const ProductReviews = () => {
                 <Search className="h-3.5 w-3.5 mr-1.5" />
                 Search
               </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                className="h-7 text-[11px] px-2"
-                onClick={() => navigate("/manage-products/product-review/new")}
-              >
-                <Plus className="h-3.5 w-3.5 mr-1.5" />
-                Add New
-              </Button>
               <Button size="sm" variant="outline" className="h-7 text-[11px] px-2" onClick={() => navigate("/manage-products")}>
                 <Package className="h-3.5 w-3.5 mr-1.5" />
                 Products
