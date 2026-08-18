@@ -40,6 +40,7 @@ import ManageProducts from "./pages/ManageProducts";
 import ProductDetail from "./pages/ProductDetail";
 import NewProductReview from "./pages/NewProductReview";
 import NewProduct from "./pages/NewProduct";
+import ProductReviews from "./pages/ProductReviews";
 import EditCustomer from "./pages/EditCustomer";
 import RetestNotices from "./pages/RetestNotices";
 import RetestFollowUp from "./pages/RetestFollowUp";
@@ -108,6 +109,7 @@ const App = () => {
             <Route path="/manage-customers" element={<ManageCustomers />} />
             <Route path="/manage-products" element={<ManageProducts />} />
             <Route path="/manage-products/new" element={<NewProduct />} />
+            <Route path="/manage-products/product-reviews" element={<ProductReviews />} />
             <Route path="/manage-products/product-review/new" element={<NewProductReview />} />
             <Route path="/manage-products/:id" element={<ProductDetail />} />
             <Route path="/manage-customers/new" element={<EditCustomer />} />
