@@ -254,7 +254,7 @@ const ManageProductsV1 = () => {
               <Button
                 size="sm"
                 className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
-                onClick={() => navigate("/manage-products/new")}
+                onClick={() => navigate("/manage-products/product-review/new")}
               >
                 <Plus className="h-3.5 w-3.5 mr-1.5" />
                 Add New
