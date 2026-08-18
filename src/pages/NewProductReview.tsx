@@ -363,8 +363,7 @@ export default function NewProductReview() {
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
 }
 
 function FieldRow({
