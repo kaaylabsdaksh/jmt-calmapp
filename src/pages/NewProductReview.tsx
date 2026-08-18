@@ -28,7 +28,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
+
 import {
   Table,
   TableBody,
@@ -107,13 +107,12 @@ export default function NewProductReview() {
               <div className="text-xs text-muted-foreground">
                 Account: 8639.03 - Trescal Inc &nbsp;|&nbsp; Quote: 86355
               </div>
-              <div className="text-[10px] text-muted-foreground mt-1">
-                Item Created by: Felicia N Cooper, 03/20/2026 08:17 AM
-                <span className="mx-2">|</span>
-                Item Modified by: Thomas W. Blouin, 03/20/2026 03:36 PM
-              </div>
             </div>
-            <Badge className="text-[10px] bg-yellow-400 text-black hover:bg-yellow-400">New</Badge>
+            <div className="text-[10px] text-muted-foreground">
+              Item Created by: Felicia N Cooper, 03/20/2026 08:17 AM
+              <span className="mx-2">|</span>
+              Item Modified by: Thomas W. Blouin, 03/20/2026 03:36 PM
+            </div>
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
