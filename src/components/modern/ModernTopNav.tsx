@@ -18,7 +18,7 @@ const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
   "/onsite-projects/new": { title: "Onsite Project # XXX", crumbs: [{ label: "Onsite Projects", to: "/onsite-projects" }, { label: "New Project" }] },
   "/manage-customers": { title: "Manage Customers", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers" }] },
   "/manage-products": { title: "Manage Products", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Products" }] },
-  "/manage-products/new": { title: "Product Review Details", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Products", to: "/manage-products" }, { label: "Add New Product" }] },
+  "/manage-products/product-review/new": { title: "Product Review Details", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Products", to: "/manage-products" }, { label: "Add New Product Review" }] },
   "/manage-products/:id": { title: "Product Details", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Products", to: "/manage-products" }, { label: "Product Details" }] },
   "/manage-customers/retest-notices": { title: "Retest Notice Management", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Retest Notices" }] },
   "/manage-customers/cdr": { title: "Customer Document Reviews", crumbs: [{ label: "Home", to: "/" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Manage CDR" }] },
