@@ -373,73 +373,87 @@ const ManageProductsV1 = () => {
           {/* Table */}
           <Card>
             <CardContent className="p-0">
-              <div className="flex items-center justify-end gap-2 border-b px-3 py-2">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-8 w-8 p-0"
-                      aria-label="Customize columns"
-                      title="Customize columns"
-                    >
-                      <Columns3 className="h-3.5 w-3.5" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent align="end" className="w-64 p-0 bg-popover z-50">
-                    <div className="flex items-center justify-between border-b px-3 py-2">
-                      <span className="text-xs font-semibold">Customize columns</span>
+              <div className="flex items-center justify-between gap-2 border-b px-3 py-2">
+                <div className="text-[11px] text-muted-foreground">
+                  {activeCount > 0 ? (
+                    <span className="inline-flex items-center gap-1.5">
+                      <Badge variant="secondary" className="h-5 text-[10px]">
+                        {activeCount} filter{activeCount > 1 ? "s" : ""} applied
+                      </Badge>
+                      {rows.length} product{rows.length === 1 ? "" : "s"} found
+                    </span>
+                  ) : (
+                    <>Showing all {rows.length} products</>
+                  )}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Popover>
+                    <PopoverTrigger asChild>
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="sm"
-                        className="h-6 px-2 text-[11px]"
-                        onClick={() => {
-                          updateHidden([]);
-                          updateOrder(DEFAULT_ORDER);
-                        }}
+                        className="h-8 w-8 p-0"
+                        aria-label="Customize columns"
+                        title="Customize columns"
                       >
-                        Reset
+                        <Columns3 className="h-3.5 w-3.5" />
                       </Button>
-                    </div>
-                    <div className="px-3 pt-2 text-[10px] text-muted-foreground">
-                      Drag the handle to rearrange columns
-                    </div>
-                    <div className="max-h-72 overflow-y-auto p-2 space-y-0.5">
-                      {orderedColumns.map((c) => {
-                        const locked = c.key === "id";
-                        return (
-                          <div
-                            key={c.key}
-                            draggable
-                            onDragStart={() => setDragKey(c.key)}
-                            onDragOver={(e) => e.preventDefault()}
-                            onDrop={() => {
-                              if (dragKey) moveColumn(dragKey, c.key);
-                              setDragKey(null);
-                            }}
-                            onDragEnd={() => setDragKey(null)}
-                            className={`flex items-center gap-2 rounded px-2 py-1.5 text-xs ${
-                              dragKey === c.key ? "bg-muted" : "hover:bg-muted/60"
-                            }`}
-                          >
-                            <GripVertical className="h-3.5 w-3.5 shrink-0 cursor-grab text-muted-foreground active:cursor-grabbing" />
-                            <Checkbox
-                              checked={locked || !hiddenCols.includes(c.key)}
-                              disabled={locked}
-                              onCheckedChange={() => !locked && toggleCol(c.key)}
-                              className="h-3.5 w-3.5"
-                            />
-                            <span className={locked ? "opacity-60" : ""}>{c.label}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </PopoverContent>
-                </Popover>
-                <Button variant="outline" size="sm" className="h-8 text-xs">
-                  <Download className="h-3.5 w-3.5 mr-1.5" />
-                  Export
-                </Button>
+                    </PopoverTrigger>
+                    <PopoverContent align="end" className="w-64 p-0 bg-popover z-50">
+                      <div className="flex items-center justify-between border-b px-3 py-2">
+                        <span className="text-xs font-semibold">Customize columns</span>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 px-2 text-[11px]"
+                          onClick={() => {
+                            updateHidden([]);
+                            updateOrder(DEFAULT_ORDER);
+                          }}
+                        >
+                          Reset
+                        </Button>
+                      </div>
+                      <div className="px-3 pt-2 text-[10px] text-muted-foreground">
+                        Drag the handle to rearrange columns
+                      </div>
+                      <div className="max-h-72 overflow-y-auto p-2 space-y-0.5">
+                        {orderedColumns.map((c) => {
+                          const locked = c.key === "id";
+                          return (
+                            <div
+                              key={c.key}
+                              draggable
+                              onDragStart={() => setDragKey(c.key)}
+                              onDragOver={(e) => e.preventDefault()}
+                              onDrop={() => {
+                                if (dragKey) moveColumn(dragKey, c.key);
+                                setDragKey(null);
+                              }}
+                              onDragEnd={() => setDragKey(null)}
+                              className={`flex items-center gap-2 rounded px-2 py-1.5 text-xs ${
+                                dragKey === c.key ? "bg-muted" : "hover:bg-muted/60"
+                              }`}
+                            >
+                              <GripVertical className="h-3.5 w-3.5 shrink-0 cursor-grab text-muted-foreground active:cursor-grabbing" />
+                              <Checkbox
+                                checked={locked || !hiddenCols.includes(c.key)}
+                                disabled={locked}
+                                onCheckedChange={() => !locked && toggleCol(c.key)}
+                                className="h-3.5 w-3.5"
+                              />
+                              <span className={locked ? "opacity-60" : ""}>{c.label}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                  <Button variant="outline" size="sm" className="h-8 text-xs">
+                    <Download className="h-3.5 w-3.5 mr-1.5" />
+                    Export
+                  </Button>
+                </div>
               </div>
               <div className="overflow-x-auto">
                 <Table>
