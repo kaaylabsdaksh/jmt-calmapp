@@ -122,7 +122,6 @@ export default function NewProductReview() {
               </TabsTrigger>
               <TabsTrigger value="capable" className="text-xs px-4">
                 Capable Locations
-                <span className="ml-1.5 rounded bg-destructive px-1 text-[9px] text-white">NEW</span>
               </TabsTrigger>
               <TabsTrigger value="documents" className="text-xs px-4">
                 Documents
