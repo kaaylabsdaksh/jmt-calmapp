@@ -487,119 +487,154 @@ export default function NewProductReview() {
 
 
             <TabsContent value="hours" className="mt-4">
-              <Card>
-                <CardContent className="p-4">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {/* Left: input form */}
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-100">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                {/* Add Hours form */}
+                <div className="lg:col-span-4">
+                  <Card className="h-full">
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-2 mb-4">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-md bg-slate-100">
                           <Clock className="h-4 w-4 text-slate-600" />
                         </div>
                         <div>
-                          <h3 className="text-sm font-semibold">Add Hours</h3>
+                          <h3 className="text-sm font-semibold">Log Time</h3>
                           <p className="text-[10px] text-muted-foreground">Record work performed and time spent.</p>
                         </div>
                       </div>
 
-                      <div className="space-y-1.5">
-                        <Label className="text-[11px] font-medium text-muted-foreground">Work Performed</Label>
-                        <Textarea
-                          value={workPerformed}
-                          onChange={(e) => setWorkPerformed(e.target.value)}
-                          className="min-h-[100px] text-xs resize-none"
-                        />
+                      <div className="space-y-3">
+                        <div className="space-y-1.5">
+                          <Label className="text-[11px] font-medium text-muted-foreground">Work Performed</Label>
+                          <Textarea
+                            value={workPerformed}
+                            onChange={(e) => setWorkPerformed(e.target.value)}
+                            placeholder="Describe the work completed..."
+                            className="min-h-[110px] text-xs resize-none"
+                          />
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <Label className="text-[11px] font-medium text-muted-foreground">Hours</Label>
+                          <Input
+                            type="number"
+                            step="0.01"
+                            value={hoursInput}
+                            onChange={(e) => setHoursInput(e.target.value)}
+                            placeholder="0.00"
+                            className="h-8 text-xs"
+                          />
+                        </div>
+
+                        <Button
+                          className="w-full h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
+                          onClick={() => {
+                            const h = parseFloat(hoursInput);
+                            if (!isNaN(h) && h > 0) {
+                              setHoursEntries((prev) => [
+                                ...prev,
+                                {
+                                  id: Math.random().toString(36).slice(2),
+                                  name: "Admin User",
+                                  date: new Date().toLocaleString("en-US", {
+                                    month: "2-digit",
+                                    day: "2-digit",
+                                    year: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    hour12: true,
+                                  }),
+                                  hours: h,
+                                  workPerformed,
+                                },
+                              ]);
+                              setWorkPerformed("");
+                              setHoursInput("");
+                            }
+                          }}
+                        >
+                          Add Hours
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Hours History */}
+                <div className="lg:col-span-8">
+                  <Card className="h-full">
+                    <CardContent className="p-4">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-2">
+                          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-slate-100">
+                            <Clock className="h-4 w-4 text-slate-600" />
+                          </div>
+                          <div>
+                            <h3 className="text-sm font-semibold">Hours History</h3>
+                            <p className="text-[10px] text-muted-foreground">All recorded time entries.</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 px-2.5 py-1 rounded-md bg-slate-100">
+                          <span className="text-[10px] text-muted-foreground">Total</span>
+                          <span className="text-xs font-semibold text-slate-900">
+                            {hoursEntries.reduce((sum, e) => sum + e.hours, 0).toFixed(2)} hrs
+                          </span>
+                        </div>
                       </div>
 
-                      <div className="space-y-1.5">
-                        <Label className="text-[11px] font-medium text-muted-foreground">Hours</Label>
-                        <Input
-                          type="number"
-                          step="0.01"
-                          value={hoursInput}
-                          onChange={(e) => setHoursInput(e.target.value)}
-                          className="h-7 text-xs w-32"
-                        />
-                      </div>
-
-                      <Button
-                        size="sm"
-                        className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
-                        onClick={() => {
-                          const h = parseFloat(hoursInput);
-                          if (!isNaN(h) && h > 0) {
-                            setHoursEntries((prev) => [
-                              ...prev,
-                              {
-                                id: Math.random().toString(36).slice(2),
-                                name: "Admin User",
-                                date: new Date().toLocaleString("en-US", {
-                                  month: "2-digit",
-                                  day: "2-digit",
-                                  year: "numeric",
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                  hour12: true,
-                                }),
-                                hours: h,
-                                workPerformed,
-                              },
-                            ]);
-                            setWorkPerformed("");
-                            setHoursInput("");
-                          }
-                        }}
-                      >
-                        Add Hours
-                      </Button>
-                    </div>
-
-                    {/* Right: entries table */}
-                    <div className="space-y-2">
-                      <div className="text-xs font-semibold">Hours Log</div>
-                      <div className="border rounded-md">
-                        <Table>
-                          <TableHeader>
-                            <TableRow className="hover:bg-transparent">
-                              <TableHead className="text-[10px] h-7">Name</TableHead>
-                              <TableHead className="text-[10px] h-7">Date</TableHead>
-                              <TableHead className="text-[10px] h-7 text-right">Hours</TableHead>
-                              <TableHead className="text-[10px] h-7">Work Performed</TableHead>
-                            </TableRow>
-                          </TableHeader>
-                          <TableBody>
-                            {hoursEntries.length === 0 ? (
-                              <TableRow>
-                                <TableCell colSpan={4} className="text-center text-xs text-muted-foreground h-20">
-                                  No data to display
-                                </TableCell>
+                      {hoursEntries.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center py-10 text-center border rounded-md bg-muted/20">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted mb-2">
+                            <Clock className="h-5 w-5 text-muted-foreground/50" />
+                          </div>
+                          <p className="text-xs font-medium text-muted-foreground">No hours recorded yet</p>
+                          <p className="text-[10px] text-muted-foreground mt-0.5">Use the form to log your first entry.</p>
+                        </div>
+                      ) : (
+                        <div className="border rounded-md overflow-hidden">
+                          <Table>
+                            <TableHeader>
+                              <TableRow className="hover:bg-transparent bg-muted/30">
+                                <TableHead className="text-[10px] h-7 px-3">Name</TableHead>
+                                <TableHead className="text-[10px] h-7 px-3">Date</TableHead>
+                                <TableHead className="text-[10px] h-7 px-3 text-right">Hours</TableHead>
+                                <TableHead className="text-[10px] h-7 px-3">Work Performed</TableHead>
+                                <TableHead className="text-[10px] h-7 px-3 w-10"></TableHead>
                               </TableRow>
-                            ) : (
-                              hoursEntries.map((entry) => (
-                                <TableRow key={entry.id} className="h-7">
-                                  <TableCell className="text-[11px] py-1">{entry.name}</TableCell>
-                                  <TableCell className="text-[11px] py-1">{entry.date}</TableCell>
-                                  <TableCell className="text-[11px] py-1 text-right">{entry.hours.toFixed(2)}</TableCell>
-                                  <TableCell className="text-[11px] py-1 max-w-[180px] truncate" title={entry.workPerformed}>
+                            </TableHeader>
+                            <TableBody>
+                              {hoursEntries.map((entry) => (
+                                <TableRow key={entry.id} className="group">
+                                  <TableCell className="text-[11px] px-3 py-2 font-medium">{entry.name}</TableCell>
+                                  <TableCell className="text-[11px] px-3 py-2 text-muted-foreground">{entry.date}</TableCell>
+                                  <TableCell className="text-[11px] px-3 py-2 text-right font-medium">{entry.hours.toFixed(2)}</TableCell>
+                                  <TableCell className="text-[11px] px-3 py-2 max-w-[220px] truncate" title={entry.workPerformed}>
                                     {entry.workPerformed}
                                   </TableCell>
+                                  <TableCell className="px-3 py-2 text-right">
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity"
+                                      onClick={() => setHoursEntries((prev) => prev.filter((x) => x.id !== entry.id))}
+                                    >
+                                      <X className="h-3.5 w-3.5 text-destructive" />
+                                    </Button>
+                                  </TableCell>
                                 </TableRow>
-                              ))
-                            )}
-                          </TableBody>
-                        </Table>
-                      </div>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </div>
+                      )}
 
-                      <div className="flex items-center justify-between text-xs px-1">
-                        <span className="text-muted-foreground">Entries: {hoursEntries.length}</span>
-                        <span className="font-semibold">
-                          {hoursEntries.reduce((sum, e) => sum + e.hours, 0).toFixed(2)}
-                        </span>
+                      <div className="flex items-center justify-between mt-3 text-[11px] text-muted-foreground px-1">
+                        <span>{hoursEntries.length} {hoursEntries.length === 1 ? "entry" : "entries"} recorded</span>
+                        <span>Page 1 of 1</span>
                       </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
             </TabsContent>
           </Tabs>
         </div>
