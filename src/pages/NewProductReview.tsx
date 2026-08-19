@@ -108,6 +108,12 @@ export default function NewProductReview() {
     },
   ]);
 
+  const [workPerformed, setWorkPerformed] = useState("");
+  const [hoursInput, setHoursInput] = useState("");
+  const [hoursEntries, setHoursEntries] = useState<
+    { id: string; name: string; date: string; hours: number; workPerformed: string }[]
+  >([]);
+
 
   const toggleMatrix = (location: string, cap: string) => {
     setMatrix((prev) => ({
