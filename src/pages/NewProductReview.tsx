@@ -326,8 +326,8 @@ export default function NewProductReview() {
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2 mb-4">
-                    <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10">
-                      <FileText className="h-4 w-4 text-primary" />
+                    <div className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-100">
+                      <FileText className="h-4 w-4 text-slate-600" />
                     </div>
                     <div>
                       <h3 className="text-sm font-semibold">Add Document</h3>
