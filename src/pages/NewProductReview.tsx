@@ -488,9 +488,116 @@ export default function NewProductReview() {
 
             <TabsContent value="hours" className="mt-4">
               <Card>
-                <CardContent className="p-8 text-center">
-                  <Clock className="h-8 w-8 mx-auto mb-2 text-muted-foreground/40" />
-                  <p className="text-xs text-muted-foreground">Hours tab — track labor and time estimates.</p>
+                <CardContent className="p-4">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* Left: input form */}
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-100">
+                          <Clock className="h-4 w-4 text-slate-600" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-semibold">Add Hours</h3>
+                          <p className="text-[10px] text-muted-foreground">Record work performed and time spent.</p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <Label className="text-[11px] font-medium text-muted-foreground">Work Performed</Label>
+                        <Textarea
+                          value={workPerformed}
+                          onChange={(e) => setWorkPerformed(e.target.value)}
+                          className="min-h-[100px] text-xs resize-none"
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <Label className="text-[11px] font-medium text-muted-foreground">Hours</Label>
+                        <Input
+                          type="number"
+                          step="0.01"
+                          value={hoursInput}
+                          onChange={(e) => setHoursInput(e.target.value)}
+                          className="h-7 text-xs w-32"
+                        />
+                      </div>
+
+                      <Button
+                        size="sm"
+                        className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
+                        onClick={() => {
+                          const h = parseFloat(hoursInput);
+                          if (!isNaN(h) && h > 0) {
+                            setHoursEntries((prev) => [
+                              ...prev,
+                              {
+                                id: Math.random().toString(36).slice(2),
+                                name: "Admin User",
+                                date: new Date().toLocaleString("en-US", {
+                                  month: "2-digit",
+                                  day: "2-digit",
+                                  year: "numeric",
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                  hour12: true,
+                                }),
+                                hours: h,
+                                workPerformed,
+                              },
+                            ]);
+                            setWorkPerformed("");
+                            setHoursInput("");
+                          }
+                        }}
+                      >
+                        Add Hours
+                      </Button>
+                    </div>
+
+                    {/* Right: entries table */}
+                    <div className="space-y-2">
+                      <div className="text-xs font-semibold">Hours Log</div>
+                      <div className="border rounded-md">
+                        <Table>
+                          <TableHeader>
+                            <TableRow className="hover:bg-transparent">
+                              <TableHead className="text-[10px] h-7">Name</TableHead>
+                              <TableHead className="text-[10px] h-7">Date</TableHead>
+                              <TableHead className="text-[10px] h-7 text-right">Hours</TableHead>
+                              <TableHead className="text-[10px] h-7">Work Performed</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {hoursEntries.length === 0 ? (
+                              <TableRow>
+                                <TableCell colSpan={4} className="text-center text-xs text-muted-foreground h-20">
+                                  No data to display
+                                </TableCell>
+                              </TableRow>
+                            ) : (
+                              hoursEntries.map((entry) => (
+                                <TableRow key={entry.id} className="h-7">
+                                  <TableCell className="text-[11px] py-1">{entry.name}</TableCell>
+                                  <TableCell className="text-[11px] py-1">{entry.date}</TableCell>
+                                  <TableCell className="text-[11px] py-1 text-right">{entry.hours.toFixed(2)}</TableCell>
+                                  <TableCell className="text-[11px] py-1 max-w-[180px] truncate" title={entry.workPerformed}>
+                                    {entry.workPerformed}
+                                  </TableCell>
+                                </TableRow>
+                              ))
+                            )}
+                          </TableBody>
+                        </Table>
+                      </div>
+
+                      <div className="flex items-center justify-between text-xs px-1">
+                        <span className="text-muted-foreground">Entries: {hoursEntries.length}</span>
+                        <span className="font-semibold">
+                          {hoursEntries.reduce((sum, e) => sum + e.hours, 0).toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
