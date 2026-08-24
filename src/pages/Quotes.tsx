@@ -250,7 +250,7 @@ const Quotes = () => {
                 </div>
               </div>
 
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 md:col-span-2 lg:col-span-1">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Timeline &amp; Location</h3>
                 <div className="space-y-1">
                   <DateRangePicker
