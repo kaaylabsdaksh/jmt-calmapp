@@ -158,7 +158,7 @@ const Quotes = () => {
   };
 
   const inputBaseClass =
-    "h-7 text-[11px] px-2 bg-white border-gray-200 placeholder:text-[10px] focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500";
+    "h-7 text-[11px] px-2 bg-white border-gray-300 placeholder:text-[10px] focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0";
 
   const Text = ({ label, k, className }: { label: string; k: string; className?: string }) => (
     <Input
@@ -171,7 +171,7 @@ const Quotes = () => {
 
   const Pick = ({ label, k, options }: { label: string; k: string; options: string[] }) => (
     <Select value={f[k] || undefined} onValueChange={(v) => set(k, v)}>
-      <SelectTrigger className="h-7 min-h-0 text-[11px] px-2 py-0 bg-white border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 [&>svg]:h-3 [&>svg]:w-3">
+      <SelectTrigger className="h-7 min-h-0 text-[11px] px-2 py-0 bg-white border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0 [&>svg]:h-3 [&>svg]:w-3">
         <SelectValue placeholder={`All ${label}`} />
       </SelectTrigger>
       <SelectContent>
@@ -265,7 +265,7 @@ const Quotes = () => {
                     triggerClassName="h-7"
                   />
                   <Select value={f.location || undefined} onValueChange={(v) => set("location", v)}>
-                    <SelectTrigger className="h-7 min-h-0 text-[11px] px-2 py-0 w-full bg-white border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 [&>svg]:h-3 [&>svg]:w-3">
+                    <SelectTrigger className="h-7 min-h-0 text-[11px] px-2 py-0 w-full bg-white border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0 [&>svg]:h-3 [&>svg]:w-3">
                       <SelectValue placeholder="All Location" />
                     </SelectTrigger>
                     <SelectContent>
@@ -277,7 +277,7 @@ const Quotes = () => {
                     </SelectContent>
                   </Select>
                   <Select value={f.division || undefined} onValueChange={(v) => set("division", v)}>
-                    <SelectTrigger className="h-7 min-h-0 text-[11px] px-2 py-0 w-full bg-white border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 [&>svg]:h-3 [&>svg]:w-3">
+                    <SelectTrigger className="h-7 min-h-0 text-[11px] px-2 py-0 w-full bg-white border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0 [&>svg]:h-3 [&>svg]:w-3">
                       <SelectValue placeholder="All Division" />
                     </SelectTrigger>
                     <SelectContent>
