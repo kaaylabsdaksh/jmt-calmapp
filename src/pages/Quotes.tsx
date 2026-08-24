@@ -4,7 +4,6 @@ import { Search, X, Plus, Download, ChevronLeft, ChevronRight, FileText } from "
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
@@ -158,28 +157,27 @@ const Quotes = () => {
   };
 
   const Text = ({ label, k }: { label: string; k: string }) => (
-    <div>
-      <Label className="text-[9px] uppercase tracking-wide text-muted-foreground leading-none">{label}</Label>
-      <Input value={f[k] || ""} onChange={(e) => set(k, e.target.value)} className="h-6 text-[11px] px-1.5 mt-0.5 bg-background" />
-    </div>
+    <Input
+      value={f[k] || ""}
+      onChange={(e) => set(k, e.target.value)}
+      placeholder={label}
+      className="h-8 text-[11px] px-2 bg-background"
+    />
   );
 
   const Pick = ({ label, k, options }: { label: string; k: string; options: string[] }) => (
-    <div>
-      <Label className="text-[9px] uppercase tracking-wide text-muted-foreground leading-none">{label}</Label>
-      <Select value={f[k] || undefined} onValueChange={(v) => set(k, v)}>
-        <SelectTrigger className="h-6 text-[11px] px-1.5 mt-0.5 bg-background [&>svg]:h-3 [&>svg]:w-3">
-          <SelectValue placeholder="All" />
-        </SelectTrigger>
-        <SelectContent>
-          {options.map((o) => (
-            <SelectItem key={o} value={o} className="text-xs">
-              {o}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
+    <Select value={f[k] || undefined} onValueChange={(v) => set(k, v)}>
+      <SelectTrigger className="h-8 text-[11px] px-2 bg-background [&>svg]:h-3 [&>svg]:w-3">
+        <SelectValue placeholder={`All ${label}`} />
+      </SelectTrigger>
+      <SelectContent>
+        {options.map((o) => (
+          <SelectItem key={o} value={o} className="text-xs">
+            {o}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 
 
