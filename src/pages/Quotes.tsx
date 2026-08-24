@@ -202,96 +202,91 @@ const Quotes = () => {
           </div>
         </div>
 
-        <Card className="border-border/60">
-          <CardContent className="p-2 space-y-1.5">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-1.5">
-              {/* Main filters grouped */}
-              <div className="lg:col-span-9 grid grid-cols-1 md:grid-cols-2 gap-1.5">
-                <div className="bg-muted/30 rounded-md border border-border/60 p-2 space-y-1.5">
-                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold leading-none">Quote Details</h3>
-                  <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
-                    <Pick label="Quote Type" k="quoteType" options={QUOTE_TYPES} />
-                    <Pick label="PO/CO Req?" k="poco" options={POCO_OPTIONS} />
-                    <Text label="Quote #" k="quote" />
-                    <Text label="Project #" k="project" />
-                    <Pick label="Priority" k="priority" options={PRIORITIES} />
-                    <Text label="Cust PO #" k="custPo" />
-                  </div>
-                </div>
-
-                <div className="bg-muted/30 rounded-md border border-border/60 p-2 space-y-1.5">
-                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold leading-none">Customer</h3>
-                  <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
-                    <Text label="Customer Name" k="customer" />
-                    <Text label="Acct #" k="acct" />
-                    <Text label="City" k="city" />
-                    <Text label="State" k="state" />
-                    <Text label="Industry Code" k="industryCode" />
-                  </div>
-                </div>
-
-                <div className="bg-muted/30 rounded-md border border-border/60 p-2 space-y-1.5">
-                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold leading-none">Contact</h3>
-                  <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
-                    <Text label="Contact First" k="contactFirst" />
-                    <Text label="Contact Last" k="contactLast" />
-                    <Text label="Phone #" k="phone" />
-                    <Text label="Cell #" k="cell" />
-                  </div>
-                </div>
-
-                <div className="bg-muted/30 rounded-md border border-border/60 p-2 space-y-1.5">
-                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold leading-none">Status &amp; Sales</h3>
-                  <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
-                    <Pick label="Status" k="status" options={STATUSES} />
-                    <Pick label="Items Quoted" k="itemsQuoted" options={ITEMS_QUOTED} />
-                    <Pick label="Source" k="source" options={SOURCES} />
-                    <Pick label="Salesperson" k="salesperson" options={SALESPEOPLE} />
-                    <Text label="Created By" k="createdBy" />
-                  </div>
+        <Card className="bg-card rounded-xl shadow-sm border">
+          <CardContent className="p-3 space-y-2">
+            {/* Grouped filter sections — 5 semantic columns matching Work Order compact density */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-4 gap-y-3">
+              <div className="space-y-1.5">
+                <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Quote Details</h3>
+                <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
+                  <Pick label="Quote Type" k="quoteType" options={QUOTE_TYPES} />
+                  <Pick label="PO/CO Req?" k="poco" options={POCO_OPTIONS} />
+                  <Text label="Quote #" k="quote" />
+                  <Text label="Project #" k="project" />
+                  <Pick label="Priority" k="priority" options={PRIORITIES} />
+                  <Text label="Cust PO #" k="custPo" />
                 </div>
               </div>
 
-              {/* Timeline & Location */}
-              <div className="lg:col-span-3">
-                <div className="bg-muted/30 rounded-md border border-border/60 p-2 h-full space-y-1.5">
-                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold leading-none">Timeline & Location</h3>
-                  <div className="space-y-1">
-                    <DateRangePicker
-                      dateFrom={dateFrom}
-                      dateTo={dateTo}
-                      onDateFromChange={setDateFrom}
-                      onDateToChange={setDateTo}
-                      dateType={dateType}
-                      onDateTypeChange={setDateType}
-                      dateTypeOptions={DATE_TYPE_OPTIONS}
-                      triggerClassName="w-full"
-                    />
-                    <Select value={f.location || undefined} onValueChange={(v) => set("location", v)}>
-                      <SelectTrigger className="h-7 text-[10px] px-1.5 w-full bg-background">
-                        <SelectValue placeholder="All Location" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {LOCATIONS.map((o) => (
-                          <SelectItem key={o} value={o} className="text-xs">
-                            {o}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <Select value={f.division || undefined} onValueChange={(v) => set("division", v)}>
-                      <SelectTrigger className="h-7 text-[10px] px-1.5 w-full bg-background">
-                        <SelectValue placeholder="All Division" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {DIVISIONS.map((o) => (
-                          <SelectItem key={o} value={o} className="text-xs">
-                            {o}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+              <div className="space-y-1.5">
+                <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Customer</h3>
+                <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
+                  <Text label="Customer Name" k="customer" />
+                  <Text label="Acct #" k="acct" />
+                  <Text label="City" k="city" />
+                  <Text label="State" k="state" />
+                  <Text label="Industry Code" k="industryCode" />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Contact</h3>
+                <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
+                  <Text label="Contact First" k="contactFirst" />
+                  <Text label="Contact Last" k="contactLast" />
+                  <Text label="Phone #" k="phone" />
+                  <Text label="Cell #" k="cell" />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Status &amp; Sales</h3>
+                <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
+                  <Pick label="Status" k="status" options={STATUSES} />
+                  <Pick label="Items Quoted" k="itemsQuoted" options={ITEMS_QUOTED} />
+                  <Pick label="Source" k="source" options={SOURCES} />
+                  <Pick label="Salesperson" k="salesperson" options={SALESPEOPLE} />
+                  <Text label="Created By" k="createdBy" />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Timeline &amp; Location</h3>
+                <div className="space-y-1">
+                  <DateRangePicker
+                    dateFrom={dateFrom}
+                    dateTo={dateTo}
+                    onDateFromChange={setDateFrom}
+                    onDateToChange={setDateTo}
+                    dateType={dateType}
+                    onDateTypeChange={setDateType}
+                    dateTypeOptions={DATE_TYPE_OPTIONS}
+                    triggerClassName="h-6"
+                  />
+                  <Select value={f.location || undefined} onValueChange={(v) => set("location", v)}>
+                    <SelectTrigger className="h-6 min-h-0 text-[11px] px-1.5 py-0 w-full bg-white border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 [&>svg]:h-3 [&>svg]:w-3">
+                      <SelectValue placeholder="All Location" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {LOCATIONS.map((o) => (
+                        <SelectItem key={o} value={o} className="text-xs">
+                          {o}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Select value={f.division || undefined} onValueChange={(v) => set("division", v)}>
+                    <SelectTrigger className="h-6 min-h-0 text-[11px] px-1.5 py-0 w-full bg-white border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 [&>svg]:h-3 [&>svg]:w-3">
+                      <SelectValue placeholder="All Division" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {DIVISIONS.map((o) => (
+                        <SelectItem key={o} value={o} className="text-xs">
+                          {o}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
             </div>
