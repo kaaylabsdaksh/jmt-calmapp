@@ -161,13 +161,13 @@ const Quotes = () => {
       value={f[k] || ""}
       onChange={(e) => set(k, e.target.value)}
       placeholder={label}
-      className="h-8 text-[11px] px-2 bg-background"
+      className="h-7 text-[10px] px-1.5 bg-background"
     />
   );
 
   const Pick = ({ label, k, options }: { label: string; k: string; options: string[] }) => (
     <Select value={f[k] || undefined} onValueChange={(v) => set(k, v)}>
-      <SelectTrigger className="h-8 text-[11px] px-2 bg-background [&>svg]:h-3 [&>svg]:w-3">
+      <SelectTrigger className="h-7 text-[10px] px-1.5 bg-background [&>svg]:h-3 [&>svg]:w-3">
         <SelectValue placeholder={`All ${label}`} />
       </SelectTrigger>
       <SelectContent>
@@ -184,29 +184,29 @@ const Quotes = () => {
   return (
     <div className="bg-background min-h-full">
       <ModernTopNav />
-      <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-5 space-y-3">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h1 className="text-xl font-semibold tracking-tight">Quotes</h1>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" className="h-8 text-xs">
-              <Download className="h-3.5 w-3.5 mr-1.5" />
+      <main className="w-full max-w-none px-2 sm:px-3 lg:px-4 py-2 space-y-2">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h1 className="text-lg font-semibold tracking-tight">Quotes</h1>
+          <div className="flex items-center gap-1.5">
+            <Button variant="outline" size="sm" className="h-7 text-[11px] px-2">
+              <Download className="h-3 w-3 mr-1" />
               Export
             </Button>
-            <Button size="sm" className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white">
-              <Plus className="h-3.5 w-3.5 mr-1.5" />
+            <Button size="sm" className="h-7 text-[11px] px-2 bg-green-600 hover:bg-green-700 text-white">
+              <Plus className="h-3 w-3 mr-1" />
               Add New
             </Button>
           </div>
         </div>
 
         <Card className="border-border/60">
-          <CardContent className="p-2 sm:p-3 space-y-2">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-2">
+          <CardContent className="p-2 space-y-1.5">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-1.5">
               {/* Main filters grouped */}
-              <div className="lg:col-span-9 grid grid-cols-1 md:grid-cols-2 gap-2">
-                <div className="bg-muted/30 rounded-lg border border-border/60 p-2.5 space-y-2">
-                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Quote Details</h3>
-                  <div className="grid grid-cols-2 gap-x-2 gap-y-1.5">
+              <div className="lg:col-span-9 grid grid-cols-1 md:grid-cols-2 gap-1.5">
+                <div className="bg-muted/30 rounded-md border border-border/60 p-2 space-y-1.5">
+                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold leading-none">Quote Details</h3>
+                  <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
                     <Pick label="Quote Type" k="quoteType" options={QUOTE_TYPES} />
                     <Pick label="PO/CO Req?" k="poco" options={POCO_OPTIONS} />
                     <Text label="Quote #" k="quote" />
@@ -216,9 +216,9 @@ const Quotes = () => {
                   </div>
                 </div>
 
-                <div className="bg-muted/30 rounded-lg border border-border/60 p-2.5 space-y-2">
-                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Customer</h3>
-                  <div className="grid grid-cols-2 gap-x-2 gap-y-1.5">
+                <div className="bg-muted/30 rounded-md border border-border/60 p-2 space-y-1.5">
+                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold leading-none">Customer</h3>
+                  <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
                     <Text label="Customer Name" k="customer" />
                     <Text label="Acct #" k="acct" />
                     <Text label="City" k="city" />
@@ -227,9 +227,9 @@ const Quotes = () => {
                   </div>
                 </div>
 
-                <div className="bg-muted/30 rounded-lg border border-border/60 p-2.5 space-y-2">
-                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Contact</h3>
-                  <div className="grid grid-cols-2 gap-x-2 gap-y-1.5">
+                <div className="bg-muted/30 rounded-md border border-border/60 p-2 space-y-1.5">
+                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold leading-none">Contact</h3>
+                  <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
                     <Text label="Contact First" k="contactFirst" />
                     <Text label="Contact Last" k="contactLast" />
                     <Text label="Phone #" k="phone" />
@@ -237,9 +237,9 @@ const Quotes = () => {
                   </div>
                 </div>
 
-                <div className="bg-muted/30 rounded-lg border border-border/60 p-2.5 space-y-2">
-                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Status &amp; Sales</h3>
-                  <div className="grid grid-cols-2 gap-x-2 gap-y-1.5">
+                <div className="bg-muted/30 rounded-md border border-border/60 p-2 space-y-1.5">
+                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold leading-none">Status &amp; Sales</h3>
+                  <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
                     <Pick label="Status" k="status" options={STATUSES} />
                     <Pick label="Items Quoted" k="itemsQuoted" options={ITEMS_QUOTED} />
                     <Pick label="Source" k="source" options={SOURCES} />
@@ -249,12 +249,11 @@ const Quotes = () => {
                 </div>
               </div>
 
-
               {/* Timeline & Location */}
               <div className="lg:col-span-3">
-                <div className="bg-muted/30 rounded-lg border border-border/60 p-2.5 h-full space-y-2">
-                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Timeline & Location</h3>
-                  <div className="space-y-1.5">
+                <div className="bg-muted/30 rounded-md border border-border/60 p-2 h-full space-y-1.5">
+                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold leading-none">Timeline & Location</h3>
+                  <div className="space-y-1">
                     <DateRangePicker
                       dateFrom={dateFrom}
                       dateTo={dateTo}
@@ -266,7 +265,7 @@ const Quotes = () => {
                       triggerClassName="w-full"
                     />
                     <Select value={f.location || undefined} onValueChange={(v) => set("location", v)}>
-                      <SelectTrigger className="h-8 text-[11px] px-2 w-full bg-background">
+                      <SelectTrigger className="h-7 text-[10px] px-1.5 w-full bg-background">
                         <SelectValue placeholder="All Location" />
                       </SelectTrigger>
                       <SelectContent>
@@ -278,7 +277,7 @@ const Quotes = () => {
                       </SelectContent>
                     </Select>
                     <Select value={f.division || undefined} onValueChange={(v) => set("division", v)}>
-                      <SelectTrigger className="h-8 text-[11px] px-2 w-full bg-background">
+                      <SelectTrigger className="h-7 text-[10px] px-1.5 w-full bg-background">
                         <SelectValue placeholder="All Division" />
                       </SelectTrigger>
                       <SelectContent>
@@ -294,18 +293,18 @@ const Quotes = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-1.5 pt-0.5">
-              <label className="flex items-center gap-1.5 text-[11px] text-muted-foreground cursor-pointer">
-                <Checkbox checked={showTotals} onCheckedChange={(v) => setShowTotals(!!v)} className="h-3.5 w-3.5" />
+            <div className="flex flex-wrap items-center justify-between gap-1 pt-0.5">
+              <label className="flex items-center gap-1 text-[10px] text-muted-foreground cursor-pointer">
+                <Checkbox checked={showTotals} onCheckedChange={(v) => setShowTotals(!!v)} className="h-3 w-3" />
                 Show Totals
               </label>
-              <div className="flex items-center gap-1.5">
-                <Button variant="ghost" size="sm" className="h-7 text-[11px] px-2" onClick={clearAll}>
-                  <X className="h-3.5 w-3.5 mr-1.5" />
+              <div className="flex items-center gap-1">
+                <Button variant="ghost" size="sm" className="h-7 text-[10px] px-2" onClick={clearAll}>
+                  <X className="h-3 w-3 mr-1" />
                   Clear
                 </Button>
-                <Button size="sm" className="h-7 text-[11px] px-2" onClick={() => setPage(1)}>
-                  <Search className="h-3.5 w-3.5 mr-1.5" />
+                <Button size="sm" className="h-7 text-[10px] px-2" onClick={() => setPage(1)}>
+                  <Search className="h-3 w-3 mr-1" />
                   Search
                 </Button>
               </div>
@@ -320,7 +319,7 @@ const Quotes = () => {
                 <TableHeader>
                   <TableRow className="bg-muted/40">
                     {["Quote #", "Type", "Project #", "Customer Name", "Contact First", "Contact Last", "Created Date", "Created By", "Priority", "Status", "Source", "Cust PO #", "Cust State", "Follow up Date", "Location", "PO/CO?", "Contract Pricing", "Total"].map((h) => (
-                      <TableHead key={h} className="h-8 px-2 text-[11px] font-semibold whitespace-nowrap">
+                      <TableHead key={h} className="h-7 px-1.5 text-[10px] font-semibold whitespace-nowrap">
                         {h}
                       </TableHead>
                     ))}
@@ -328,44 +327,44 @@ const Quotes = () => {
                 </TableHeader>
                 <TableBody>
                   {paged.map((q) => (
-                    <TableRow key={q.quote} className="text-xs">
-                      <TableCell className="px-2 py-1.5">
+                    <TableRow key={q.quote} className="text-[11px]">
+                      <TableCell className="px-1.5 py-1">
                         <Link to="/quotes" className="font-medium text-slate-900 underline underline-offset-2 hover:text-slate-600">
                           {q.quote}
                         </Link>
                       </TableCell>
-                      <TableCell className="px-2 py-1.5">{q.type}</TableCell>
-                      <TableCell className="px-2 py-1.5">{q.project}</TableCell>
-                      <TableCell className="px-2 py-1.5 max-w-[16rem] truncate" title={q.customer}>{q.customer}</TableCell>
-                      <TableCell className="px-2 py-1.5">{q.contactFirst}</TableCell>
-                      <TableCell className="px-2 py-1.5">{q.contactLast}</TableCell>
-                      <TableCell className="px-2 py-1.5 whitespace-nowrap">{q.createdDate}</TableCell>
-                      <TableCell className="px-2 py-1.5 whitespace-nowrap">{q.createdBy}</TableCell>
-                      <TableCell className={`px-2 py-1.5 font-medium ${PRIORITY_TONE[q.priority] || ""}`}>
+                      <TableCell className="px-1.5 py-1">{q.type}</TableCell>
+                      <TableCell className="px-1.5 py-1">{q.project}</TableCell>
+                      <TableCell className="px-1.5 py-1 max-w-[16rem] truncate" title={q.customer}>{q.customer}</TableCell>
+                      <TableCell className="px-1.5 py-1">{q.contactFirst}</TableCell>
+                      <TableCell className="px-1.5 py-1">{q.contactLast}</TableCell>
+                      <TableCell className="px-1.5 py-1 whitespace-nowrap">{q.createdDate}</TableCell>
+                      <TableCell className="px-1.5 py-1 whitespace-nowrap">{q.createdBy}</TableCell>
+                      <TableCell className={`px-1.5 py-1 font-medium ${PRIORITY_TONE[q.priority] || ""}`}>
                         {q.priority === "Normal" ? "—" : q.priority}
                       </TableCell>
-                      <TableCell className="px-2 py-1.5">
-                        <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${STATUS_TONE[q.status] || "bg-muted text-foreground"}`}>
-                          <span className="h-1.5 w-1.5 rounded-full bg-current opacity-70" />
+                      <TableCell className="px-1.5 py-1">
+                        <span className={`inline-flex items-center gap-1 rounded-full px-1.5 py-0 text-[10px] font-medium ${STATUS_TONE[q.status] || "bg-muted text-foreground"}`}>
+                          <span className="h-1 w-1 rounded-full bg-current opacity-70" />
                           {q.status}
                         </span>
                       </TableCell>
-                      <TableCell className="px-2 py-1.5">{q.source}</TableCell>
-                      <TableCell className="px-2 py-1.5">{q.custPo || "—"}</TableCell>
-                      <TableCell className="px-2 py-1.5">{q.custState}</TableCell>
-                      <TableCell className="px-2 py-1.5 whitespace-nowrap">{q.followUp || "—"}</TableCell>
-                      <TableCell className="px-2 py-1.5">{q.location}</TableCell>
-                      <TableCell className="px-2 py-1.5">{q.poco}</TableCell>
-                      <TableCell className="px-2 py-1.5">{q.contractPricing}</TableCell>
-                      <TableCell className="px-2 py-1.5 text-right tabular-nums">
+                      <TableCell className="px-1.5 py-1">{q.source}</TableCell>
+                      <TableCell className="px-1.5 py-1">{q.custPo || "—"}</TableCell>
+                      <TableCell className="px-1.5 py-1">{q.custState}</TableCell>
+                      <TableCell className="px-1.5 py-1 whitespace-nowrap">{q.followUp || "—"}</TableCell>
+                      <TableCell className="px-1.5 py-1">{q.location}</TableCell>
+                      <TableCell className="px-1.5 py-1">{q.poco}</TableCell>
+                      <TableCell className="px-1.5 py-1">{q.contractPricing}</TableCell>
+                      <TableCell className="px-1.5 py-1 text-right tabular-nums">
                         ${q.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                       </TableCell>
                     </TableRow>
                   ))}
                   {paged.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={18} className="py-10 text-center text-xs text-muted-foreground">
-                        <FileText className="h-5 w-5 mx-auto mb-2 opacity-40" />
+                      <TableCell colSpan={18} className="py-8 text-center text-[11px] text-muted-foreground">
+                        <FileText className="h-4 w-4 mx-auto mb-1.5 opacity-40" />
                         No data to display.
                       </TableCell>
                     </TableRow>
@@ -375,7 +374,7 @@ const Quotes = () => {
             </div>
 
             {showTotals && rows.length > 0 && (
-              <div className="flex items-center justify-end gap-2 border-t bg-muted/30 px-3 py-2 text-xs">
+              <div className="flex items-center justify-end gap-2 border-t bg-muted/30 px-2 py-1.5 text-[11px]">
                 <span className="text-muted-foreground">Grand Total</span>
                 <span className="font-semibold tabular-nums">
                   ${grandTotal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
@@ -383,16 +382,16 @@ const Quotes = () => {
               </div>
             )}
 
-            <div className="flex flex-wrap items-center justify-between gap-2 border-t px-3 py-2 text-xs text-muted-foreground">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-t px-2 py-1.5 text-[11px] text-muted-foreground">
               <span>
                 Page {current} of {totalPages} ({rows.length} records)
               </span>
-              <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm" className="h-7 w-7 p-0" disabled={current === 1} onClick={() => setPage(current - 1)}>
-                  <ChevronLeft className="h-3.5 w-3.5" />
+              <div className="flex items-center gap-1">
+                <Button variant="outline" size="sm" className="h-6 w-6 p-0" disabled={current === 1} onClick={() => setPage(current - 1)}>
+                  <ChevronLeft className="h-3 w-3" />
                 </Button>
-                <Button variant="outline" size="sm" className="h-7 w-7 p-0" disabled={current === totalPages} onClick={() => setPage(current + 1)}>
-                  <ChevronRight className="h-3.5 w-3.5" />
+                <Button variant="outline" size="sm" className="h-6 w-6 p-0" disabled={current === totalPages} onClick={() => setPage(current + 1)}>
+                  <ChevronRight className="h-3 w-3" />
                 </Button>
               </div>
             </div>
