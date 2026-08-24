@@ -90,12 +90,9 @@ const Quotes = () => {
     setF((p) => ({ ...p, [k]: v }));
     setPage(1);
   };
-  const [createdFrom, setCreatedFrom] = useState<Date | undefined>();
-  const [createdTo, setCreatedTo] = useState<Date | undefined>();
-  const [needFrom, setNeedFrom] = useState<Date | undefined>();
-  const [needTo, setNeedTo] = useState<Date | undefined>();
-  const [followFrom, setFollowFrom] = useState<Date | undefined>();
-  const [followTo, setFollowTo] = useState<Date | undefined>();
+  const [dateType, setDateType] = useState<string>("created");
+  const [dateFrom, setDateFrom] = useState<Date | undefined>();
+  const [dateTo, setDateTo] = useState<Date | undefined>();
   const [showTotals, setShowTotals] = useState(false);
   const [page, setPage] = useState(1);
   const pageSize = 10;
