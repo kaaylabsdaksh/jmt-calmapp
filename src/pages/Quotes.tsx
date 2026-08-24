@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Search, X, Plus, Download, ChevronLeft, ChevronRight, FileText } from "lucide-react";
+import { Search, X, Plus, Download, ChevronLeft, ChevronRight, FileText, Check } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
