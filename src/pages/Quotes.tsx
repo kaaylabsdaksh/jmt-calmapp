@@ -161,13 +161,13 @@ const Quotes = () => {
       value={f[k] || ""}
       onChange={(e) => set(k, e.target.value)}
       placeholder={label}
-      className="h-8 text-[11px] px-2 bg-background"
+      className="h-7 text-[10px] px-1.5 bg-background"
     />
   );
 
   const Pick = ({ label, k, options }: { label: string; k: string; options: string[] }) => (
     <Select value={f[k] || undefined} onValueChange={(v) => set(k, v)}>
-      <SelectTrigger className="h-8 text-[11px] px-2 bg-background [&>svg]:h-3 [&>svg]:w-3">
+      <SelectTrigger className="h-7 text-[10px] px-1.5 bg-background [&>svg]:h-3 [&>svg]:w-3">
         <SelectValue placeholder={`All ${label}`} />
       </SelectTrigger>
       <SelectContent>
