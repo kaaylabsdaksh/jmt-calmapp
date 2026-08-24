@@ -127,13 +127,31 @@ const Quotes = () => {
 
   const clearAll = () => {
     setF({});
-    setCreatedFrom(undefined);
-    setCreatedTo(undefined);
-    setNeedFrom(undefined);
-    setNeedTo(undefined);
-    setFollowFrom(undefined);
-    setFollowTo(undefined);
+    setDateType("created");
+    setDateFrom(undefined);
+    setDateTo(undefined);
     setPage(1);
+  };
+
+  const parseDatePart = (value: string) => {
+    if (!value) return undefined;
+    const [part] = value.split(" ");
+    const [m, d, y] = part.split("/").map(Number);
+    if (!m || !d || !y) return undefined;
+    return new Date(y, m - 1, d);
+  };
+
+  const inDateRange = (value: string) => {
+    if (!dateFrom && !dateTo) return true;
+    const d = parseDatePart(value);
+    if (!d) return false;
+    if (dateFrom && d < dateFrom) return false;
+    if (dateTo) {
+      const end = new Date(dateTo);
+      end.setHours(23, 59, 59, 999);
+      if (d > end) return false;
+    }
+    return true;
   };
 
   const Text = ({ label, k }: { label: string; k: string }) => (
