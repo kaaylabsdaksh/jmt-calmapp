@@ -157,7 +157,7 @@ const Quotes = () => {
   };
 
   const inputBaseClass =
-    "h-6 text-[11px] px-1.5 bg-white border-gray-200 placeholder:text-[10px] focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500";
+    "h-7 text-[11px] px-2 bg-white border-gray-200 placeholder:text-[10px] focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500";
 
   const Text = ({ label, k }: { label: string; k: string }) => (
     <Input
@@ -170,7 +170,7 @@ const Quotes = () => {
 
   const Pick = ({ label, k, options }: { label: string; k: string; options: string[] }) => (
     <Select value={f[k] || undefined} onValueChange={(v) => set(k, v)}>
-      <SelectTrigger className="h-6 min-h-0 text-[11px] px-1.5 py-0 bg-white border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 [&>svg]:h-3 [&>svg]:w-3">
+      <SelectTrigger className="h-7 min-h-0 text-[11px] px-2 py-0 bg-white border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 [&>svg]:h-3 [&>svg]:w-3">
         <SelectValue placeholder={`All ${label}`} />
       </SelectTrigger>
       <SelectContent>
@@ -205,10 +205,10 @@ const Quotes = () => {
         <Card className="bg-card rounded-xl shadow-sm border">
           <CardContent className="p-3 space-y-2">
             {/* Grouped filter sections — responsive columns for smaller screens */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-x-4 gap-y-3">
-              <div className="space-y-1.5">
+            <div className="flex flex-wrap gap-x-4 gap-y-3">
+              <div className="space-y-1.5 flex-1 min-w-[270px]">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Quote Details</h3>
-                <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] gap-x-1.5 gap-y-1">
                   <Pick label="Quote Type" k="quoteType" options={QUOTE_TYPES} />
                   <Pick label="PO/CO Req?" k="poco" options={POCO_OPTIONS} />
                   <Text label="Quote #" k="quote" />
@@ -218,9 +218,9 @@ const Quotes = () => {
                 </div>
               </div>
 
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 flex-1 min-w-[270px]">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Customer</h3>
-                <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] gap-x-1.5 gap-y-1">
                   <Text label="Customer Name" k="customer" />
                   <Text label="Acct #" k="acct" />
                   <Text label="City" k="city" />
@@ -229,9 +229,9 @@ const Quotes = () => {
                 </div>
               </div>
 
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 flex-1 min-w-[270px]">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Contact</h3>
-                <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] gap-x-1.5 gap-y-1">
                   <Text label="Contact First" k="contactFirst" />
                   <Text label="Contact Last" k="contactLast" />
                   <Text label="Phone #" k="phone" />
@@ -239,9 +239,9 @@ const Quotes = () => {
                 </div>
               </div>
 
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 flex-1 min-w-[270px]">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Status &amp; Sales</h3>
-                <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] gap-x-1.5 gap-y-1">
                   <Pick label="Status" k="status" options={STATUSES} />
                   <Pick label="Items Quoted" k="itemsQuoted" options={ITEMS_QUOTED} />
                   <Pick label="Source" k="source" options={SOURCES} />
@@ -250,7 +250,7 @@ const Quotes = () => {
                 </div>
               </div>
 
-              <div className="space-y-1.5 md:col-span-2 lg:col-span-1">
+              <div className="space-y-1.5 flex-1 min-w-[300px]">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Timeline &amp; Location</h3>
                 <div className="space-y-1">
                   <DateRangePicker
@@ -261,10 +261,10 @@ const Quotes = () => {
                     dateType={dateType}
                     onDateTypeChange={setDateType}
                     dateTypeOptions={DATE_TYPE_OPTIONS}
-                    triggerClassName="h-6"
+                    triggerClassName="h-7"
                   />
                   <Select value={f.location || undefined} onValueChange={(v) => set("location", v)}>
-                    <SelectTrigger className="h-6 min-h-0 text-[11px] px-1.5 py-0 w-full bg-white border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 [&>svg]:h-3 [&>svg]:w-3">
+                    <SelectTrigger className="h-7 min-h-0 text-[11px] px-2 py-0 w-full bg-white border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 [&>svg]:h-3 [&>svg]:w-3">
                       <SelectValue placeholder="All Location" />
                     </SelectTrigger>
                     <SelectContent>
@@ -276,7 +276,7 @@ const Quotes = () => {
                     </SelectContent>
                   </Select>
                   <Select value={f.division || undefined} onValueChange={(v) => set("division", v)}>
-                    <SelectTrigger className="h-6 min-h-0 text-[11px] px-1.5 py-0 w-full bg-white border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 [&>svg]:h-3 [&>svg]:w-3">
+                    <SelectTrigger className="h-7 min-h-0 text-[11px] px-2 py-0 w-full bg-white border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 [&>svg]:h-3 [&>svg]:w-3">
                       <SelectValue placeholder="All Division" />
                     </SelectTrigger>
                     <SelectContent>
