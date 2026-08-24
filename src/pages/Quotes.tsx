@@ -83,6 +83,65 @@ const DATE_TYPE_OPTIONS = [
   { value: "followUp", label: "Follow Up" },
 ];
 
+const inputBaseClass =
+  "h-7 text-[11px] px-2 bg-white text-black border-gray-300 placeholder:text-[10px] placeholder:text-black focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0";
+const activeInputClass = "border-slate-700 bg-slate-50 font-semibold pr-6";
+const selectBaseClass =
+  "h-7 min-h-0 text-[11px] px-2 py-0 w-full bg-white text-black [&>span]:text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0 [&>svg]:h-3 [&>svg]:w-3";
+const activeSelectClass = "border-slate-700 bg-slate-50 [&>span]:font-semibold";
+
+const FilterText = ({
+  label,
+  value,
+  onChange,
+  className,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  className?: string;
+}) => {
+  const active = !!value;
+  return (
+    <div className={`relative ${className || ""}`}>
+      <Input
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={label}
+        className={`${inputBaseClass} w-full ${active ? activeInputClass : ""}`}
+      />
+      {active && (
+        <Check className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-slate-700" />
+      )}
+    </div>
+  );
+};
+
+const FilterPick = ({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string;
+  value?: string;
+  onChange: (v: string) => void;
+  options: string[];
+}) => (
+  <Select value={value || undefined} onValueChange={onChange}>
+    <SelectTrigger className={`${selectBaseClass} ${value ? activeSelectClass : ""}`}>
+      <SelectValue placeholder={`All ${label}`} />
+    </SelectTrigger>
+    <SelectContent>
+      {options.map((o) => (
+        <SelectItem key={o} value={o} className="text-xs">
+          {o}
+        </SelectItem>
+      ))}
+    </SelectContent>
+  </Select>
+);
+
 const Quotes = () => {
   const [f, setF] = useState<Record<string, string>>({});
   const set = (k: string, v: string) => {
@@ -157,48 +216,6 @@ const Quotes = () => {
     setPage(1);
   };
 
-  const inputBaseClass =
-    "h-7 text-[11px] px-2 bg-white text-black border-gray-300 placeholder:text-[10px] placeholder:text-black focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0";
-
-  const activeInputClass = "border-slate-700 bg-slate-50 font-semibold pr-6";
-
-  const selectBaseClass =
-    "h-7 min-h-0 text-[11px] px-2 py-0 w-full bg-white text-black [&>span]:text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0 [&>svg]:h-3 [&>svg]:w-3";
-
-  const activeSelectClass = "border-slate-700 bg-slate-50 [&>span]:font-semibold";
-
-  const Text = ({ label, k, className }: { label: string; k: string; className?: string }) => {
-    const active = !!f[k];
-    return (
-      <div className={`relative ${className || ""}`}>
-        <Input
-          value={f[k] || ""}
-          onChange={(e) => set(k, e.target.value)}
-          placeholder={label}
-          className={`${inputBaseClass} w-full ${active ? activeInputClass : ""}`}
-        />
-        {active && (
-          <Check className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-slate-700" />
-        )}
-      </div>
-    );
-  };
-
-  const Pick = ({ label, k, options }: { label: string; k: string; options: string[] }) => (
-    <Select value={f[k] || undefined} onValueChange={(v) => set(k, v)}>
-      <SelectTrigger className={`${selectBaseClass} ${f[k] ? activeSelectClass : ""}`}>
-        <SelectValue placeholder={`All ${label}`} />
-      </SelectTrigger>
-      <SelectContent>
-        {options.map((o) => (
-          <SelectItem key={o} value={o} className="text-xs">
-            {o}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  );
-
   return (
     <div className="bg-background min-h-full">
       <ModernTopNav />
@@ -224,44 +241,44 @@ const Quotes = () => {
               <div className="space-y-1.5">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Quote Details</h3>
                 <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
-                  <Pick label="Quote Type" k="quoteType" options={QUOTE_TYPES} />
-                  <Pick label="PO/CO Req?" k="poco" options={POCO_OPTIONS} />
-                  <Text label="Quote #" k="quote" />
-                  <Text label="Project #" k="project" />
-                  <Pick label="Priority" k="priority" options={PRIORITIES} />
-                  <Text label="Cust PO #" k="custPo" />
+                  <FilterPick label="Quote Type" value={f.quoteType} onChange={(v) => set("quoteType", v)} options={QUOTE_TYPES} />
+                  <FilterPick label="PO/CO Req?" value={f.poco} onChange={(v) => set("poco", v)} options={POCO_OPTIONS} />
+                  <FilterText label="Quote #" value={f.quote || ""} onChange={(v) => set("quote", v)} />
+                  <FilterText label="Project #" value={f.project || ""} onChange={(v) => set("project", v)} />
+                  <FilterPick label="Priority" value={f.priority} onChange={(v) => set("priority", v)} options={PRIORITIES} />
+                  <FilterText label="Cust PO #" value={f.custPo || ""} onChange={(v) => set("custPo", v)} />
                 </div>
               </div>
 
               <div className="space-y-1.5">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Customer</h3>
                 <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
-                  <Text label="Customer Name" k="customer" />
-                  <Text label="Acct #" k="acct" />
-                  <Text label="City" k="city" />
-                  <Text label="State" k="state" />
-                  <Text label="Industry Code" k="industryCode" className="col-span-2" />
+                  <FilterText label="Customer Name" value={f.customer || ""} onChange={(v) => set("customer", v)} />
+                  <FilterText label="Acct #" value={f.acct || ""} onChange={(v) => set("acct", v)} />
+                  <FilterText label="City" value={f.city || ""} onChange={(v) => set("city", v)} />
+                  <FilterText label="State" value={f.state || ""} onChange={(v) => set("state", v)} />
+                  <FilterText label="Industry Code" value={f.industryCode || ""} onChange={(v) => set("industryCode", v)} className="col-span-2" />
                 </div>
               </div>
 
               <div className="space-y-1.5">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Contact</h3>
                 <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
-                  <Text label="Contact First" k="contactFirst" />
-                  <Text label="Contact Last" k="contactLast" />
-                  <Text label="Phone #" k="phone" />
-                  <Text label="Cell #" k="cell" />
+                  <FilterText label="Contact First" value={f.contactFirst || ""} onChange={(v) => set("contactFirst", v)} />
+                  <FilterText label="Contact Last" value={f.contactLast || ""} onChange={(v) => set("contactLast", v)} />
+                  <FilterText label="Phone #" value={f.phone || ""} onChange={(v) => set("phone", v)} />
+                  <FilterText label="Cell #" value={f.cell || ""} onChange={(v) => set("cell", v)} />
                 </div>
               </div>
 
               <div className="space-y-1.5">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Status &amp; Sales</h3>
                 <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
-                  <Pick label="Status" k="status" options={STATUSES} />
-                  <Pick label="Items Quoted" k="itemsQuoted" options={ITEMS_QUOTED} />
-                  <Pick label="Source" k="source" options={SOURCES} />
-                  <Pick label="Salesperson" k="salesperson" options={SALESPEOPLE} />
-                  <Text label="Created By" k="createdBy" className="col-span-2" />
+                  <FilterPick label="Status" value={f.status} onChange={(v) => set("status", v)} options={STATUSES} />
+                  <FilterPick label="Items Quoted" value={f.itemsQuoted} onChange={(v) => set("itemsQuoted", v)} options={ITEMS_QUOTED} />
+                  <FilterPick label="Source" value={f.source} onChange={(v) => set("source", v)} options={SOURCES} />
+                  <FilterPick label="Salesperson" value={f.salesperson} onChange={(v) => set("salesperson", v)} options={SALESPEOPLE} />
+                  <FilterText label="Created By" value={f.createdBy || ""} onChange={(v) => set("createdBy", v)} className="col-span-2" />
                 </div>
               </div>
 
