@@ -119,6 +119,7 @@ const Quotes = () => {
 
   const rows = useMemo(() => {
     const m = (v: string | undefined, cell: string) => !v || cell.toLowerCase().includes(v.toLowerCase());
+    const isFiltered = (v: string | undefined) => !!v && !v.startsWith("All ");
     return QUOTES.filter((q) => {
       if (!m(f.quote, q.quote)) return false;
       if (!m(f.project, q.project)) return false;
@@ -129,13 +130,13 @@ const Quotes = () => {
       if (!m(f.createdBy, q.createdBy)) return false;
       if (!m(f.custPo, q.custPo)) return false;
       if (!m(f.state, q.custState)) return false;
-      if (f.quoteType && q.type !== f.quoteType) return false;
-      if (f.poco && q.poco !== f.poco) return false;
-      if (f.priority && q.priority !== f.priority) return false;
-      if (f.status && q.status !== f.status) return false;
-      if (f.location && q.location !== f.location) return false;
-      if (f.source && q.source !== f.source) return false;
-      if (f.salesperson && q.createdBy !== f.salesperson) return false;
+      if (isFiltered(f.quoteType) && q.type !== f.quoteType) return false;
+      if (isFiltered(f.poco) && q.poco !== f.poco) return false;
+      if (isFiltered(f.priority) && q.priority !== f.priority) return false;
+      if (isFiltered(f.status) && q.status !== f.status) return false;
+      if (isFiltered(f.location) && q.location !== f.location) return false;
+      if (isFiltered(f.source) && q.source !== f.source) return false;
+      if (isFiltered(f.salesperson) && q.createdBy !== f.salesperson) return false;
       if (dateType === "created" && !inDateRange(q.createdDate)) return false;
       if (dateType === "followUp" && !inDateRange(q.followUp)) return false;
       if (dateType === "needBy" && !inDateRange(q.createdDate)) return false;
