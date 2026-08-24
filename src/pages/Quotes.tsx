@@ -294,7 +294,7 @@ const Quotes = () => {
 
             <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
               <label className="flex items-center gap-2 text-xs text-foreground cursor-pointer hover:text-foreground/80">
-                <Checkbox checked={showTotals} onCheckedChange={(v) => setShowTotals(!!v)} className="h-4 w-4 rounded border-gray-300 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600" />
+                <Checkbox checked={showTotals} onCheckedChange={(v) => setShowTotals(!!v)} className="h-4 w-4 rounded border-gray-300 data-[state=checked]:bg-yellow-400 data-[state=checked]:border-yellow-400 data-[state=checked]:text-slate-900" />
                 Show Totals
               </label>
               <div className="flex items-center gap-1.5">
