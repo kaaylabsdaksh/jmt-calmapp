@@ -77,6 +77,12 @@ const STATUSES = ["Open", "Pending Approval", "Sent", "Won", "Lost", "Cancelled"
 const LOCATIONS = ["BR", "CL", "GR", "MT", "HOU"];
 const SOURCES = ["Phone", "Email", "Web", "Salesperson", "Walk-in"];
 const SALESPEOPLE = ["Brandi M. Cali", "Trysten Q Howze", "Kevin R. Young", "Jessica M Thompson"];
+const DIVISIONS = ["Division 1", "Division 2", "Division 3"];
+const DATE_TYPE_OPTIONS = [
+  { value: "created", label: "Created" },
+  { value: "needBy", label: "Need By" },
+  { value: "followUp", label: "Follow Up" },
+];
 
 const Quotes = () => {
   const [f, setF] = useState<Record<string, string>>({});
@@ -84,15 +90,33 @@ const Quotes = () => {
     setF((p) => ({ ...p, [k]: v }));
     setPage(1);
   };
-  const [createdFrom, setCreatedFrom] = useState<Date | undefined>();
-  const [createdTo, setCreatedTo] = useState<Date | undefined>();
-  const [needFrom, setNeedFrom] = useState<Date | undefined>();
-  const [needTo, setNeedTo] = useState<Date | undefined>();
-  const [followFrom, setFollowFrom] = useState<Date | undefined>();
-  const [followTo, setFollowTo] = useState<Date | undefined>();
+  const [dateType, setDateType] = useState<string>("created");
+  const [dateFrom, setDateFrom] = useState<Date | undefined>();
+  const [dateTo, setDateTo] = useState<Date | undefined>();
   const [showTotals, setShowTotals] = useState(false);
   const [page, setPage] = useState(1);
   const pageSize = 10;
+
+  const parseDatePart = (value: string) => {
+    if (!value) return undefined;
+    const [part] = value.split(" ");
+    const [m, d, y] = part.split("/").map(Number);
+    if (!m || !d || !y) return undefined;
+    return new Date(y, m - 1, d);
+  };
+
+  const inDateRange = (value: string) => {
+    if (!dateFrom && !dateTo) return true;
+    const d = parseDatePart(value);
+    if (!d) return false;
+    if (dateFrom && d < dateFrom) return false;
+    if (dateTo) {
+      const end = new Date(dateTo);
+      end.setHours(23, 59, 59, 999);
+      if (d > end) return false;
+    }
+    return true;
+  };
 
   const rows = useMemo(() => {
     const m = (v: string | undefined, cell: string) => !v || cell.toLowerCase().includes(v.toLowerCase());
@@ -113,9 +137,12 @@ const Quotes = () => {
       if (f.location && q.location !== f.location) return false;
       if (f.source && q.source !== f.source) return false;
       if (f.salesperson && q.createdBy !== f.salesperson) return false;
+      if (dateType === "created" && !inDateRange(q.createdDate)) return false;
+      if (dateType === "followUp" && !inDateRange(q.followUp)) return false;
+      if (dateType === "needBy" && !inDateRange(q.createdDate)) return false;
       return true;
     });
-  }, [f]);
+  }, [f, dateType, dateFrom, dateTo]);
 
   const totalPages = Math.max(1, Math.ceil(rows.length / pageSize));
   const current = Math.min(page, totalPages);
@@ -124,12 +151,9 @@ const Quotes = () => {
 
   const clearAll = () => {
     setF({});
-    setCreatedFrom(undefined);
-    setCreatedTo(undefined);
-    setNeedFrom(undefined);
-    setNeedTo(undefined);
-    setFollowFrom(undefined);
-    setFollowTo(undefined);
+    setDateType("created");
+    setDateFrom(undefined);
+    setDateTo(undefined);
     setPage(1);
   };
 
@@ -178,39 +202,72 @@ const Quotes = () => {
 
         <Card className="border-border/60">
           <CardContent className="p-2 sm:p-3 space-y-2">
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-x-2 gap-y-1.5">
-              <Pick label="Quote Type" k="quoteType" options={QUOTE_TYPES} />
-              <Pick label="PO/CO Req?" k="poco" options={POCO_OPTIONS} />
-              <Text label="Quote #" k="quote" />
-              <Text label="Project #" k="project" />
-              <Pick label="Priority" k="priority" options={PRIORITIES} />
-              <Text label="Customer Name" k="customer" />
-              <Text label="City" k="city" />
-              <Text label="State" k="state" />
-              <Text label="Industry Code" k="industryCode" />
-              <Text label="Acct #" k="acct" />
-              <Text label="Contact First" k="contactFirst" />
-              <Text label="Contact Last" k="contactLast" />
-              <Text label="Phone #" k="phone" />
-              <Text label="Cell #" k="cell" />
-              <Text label="Created By" k="createdBy" />
-              <Pick label="Items Quoted" k="itemsQuoted" options={ITEMS_QUOTED} />
-              <Text label="Cust PO #" k="custPo" />
-              <Pick label="Status" k="status" options={STATUSES} />
-              <Pick label="Location" k="location" options={LOCATIONS} />
-              <Pick label="Source" k="source" options={SOURCES} />
-              <Pick label="Salesperson" k="salesperson" options={SALESPEOPLE} />
-              <div className="space-y-0.5">
-                <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">Created From / To</Label>
-                <DateRangePicker dateFrom={createdFrom} dateTo={createdTo} onDateFromChange={setCreatedFrom} onDateToChange={setCreatedTo} />
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-2">
+              {/* Main filters */}
+              <div className="lg:col-span-9 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-1.5">
+                <Pick label="Quote Type" k="quoteType" options={QUOTE_TYPES} />
+                <Pick label="PO/CO Req?" k="poco" options={POCO_OPTIONS} />
+                <Text label="Quote #" k="quote" />
+                <Text label="Project #" k="project" />
+                <Pick label="Priority" k="priority" options={PRIORITIES} />
+                <Text label="Customer Name" k="customer" />
+                <Text label="City" k="city" />
+                <Text label="State" k="state" />
+                <Text label="Industry Code" k="industryCode" />
+                <Text label="Acct #" k="acct" />
+                <Text label="Contact First" k="contactFirst" />
+                <Text label="Contact Last" k="contactLast" />
+                <Text label="Phone #" k="phone" />
+                <Text label="Cell #" k="cell" />
+                <Text label="Created By" k="createdBy" />
+                <Pick label="Items Quoted" k="itemsQuoted" options={ITEMS_QUOTED} />
+                <Text label="Cust PO #" k="custPo" />
+                <Pick label="Status" k="status" options={STATUSES} />
+                <Pick label="Source" k="source" options={SOURCES} />
+                <Pick label="Salesperson" k="salesperson" options={SALESPEOPLE} />
               </div>
-              <div className="space-y-0.5">
-                <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">Need By From / To</Label>
-                <DateRangePicker dateFrom={needFrom} dateTo={needTo} onDateFromChange={setNeedFrom} onDateToChange={setNeedTo} />
-              </div>
-              <div className="space-y-0.5">
-                <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">Follow Up From / To</Label>
-                <DateRangePicker dateFrom={followFrom} dateTo={followTo} onDateFromChange={setFollowFrom} onDateToChange={setFollowTo} />
+
+              {/* Timeline & Location */}
+              <div className="lg:col-span-3">
+                <div className="bg-muted/30 rounded-lg border border-border/60 p-2.5 h-full space-y-2">
+                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Timeline & Location</h3>
+                  <div className="space-y-1.5">
+                    <DateRangePicker
+                      dateFrom={dateFrom}
+                      dateTo={dateTo}
+                      onDateFromChange={setDateFrom}
+                      onDateToChange={setDateTo}
+                      dateType={dateType}
+                      onDateTypeChange={setDateType}
+                      dateTypeOptions={DATE_TYPE_OPTIONS}
+                      triggerClassName="w-full"
+                    />
+                    <Select value={f.location || undefined} onValueChange={(v) => set("location", v)}>
+                      <SelectTrigger className="h-8 text-[11px] px-2 w-full bg-background">
+                        <SelectValue placeholder="All Location" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {LOCATIONS.map((o) => (
+                          <SelectItem key={o} value={o} className="text-xs">
+                            {o}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <Select value={f.division || undefined} onValueChange={(v) => set("division", v)}>
+                      <SelectTrigger className="h-8 text-[11px] px-2 w-full bg-background">
+                        <SelectValue placeholder="All Division" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {DIVISIONS.map((o) => (
+                          <SelectItem key={o} value={o} className="text-xs">
+                            {o}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
               </div>
             </div>
 
