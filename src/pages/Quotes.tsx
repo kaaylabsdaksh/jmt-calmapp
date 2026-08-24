@@ -319,7 +319,7 @@ const Quotes = () => {
                 <TableHeader>
                   <TableRow className="bg-muted/40">
                     {["Quote #", "Type", "Project #", "Customer Name", "Contact First", "Contact Last", "Created Date", "Created By", "Priority", "Status", "Source", "Cust PO #", "Cust State", "Follow up Date", "Location", "PO/CO?", "Contract Pricing", "Total"].map((h) => (
-                      <TableHead key={h} className="h-8 px-2 text-[11px] font-semibold whitespace-nowrap">
+                      <TableHead key={h} className="h-7 px-1.5 text-[10px] font-semibold whitespace-nowrap">
                         {h}
                       </TableHead>
                     ))}
@@ -327,44 +327,44 @@ const Quotes = () => {
                 </TableHeader>
                 <TableBody>
                   {paged.map((q) => (
-                    <TableRow key={q.quote} className="text-xs">
-                      <TableCell className="px-2 py-1.5">
+                    <TableRow key={q.quote} className="text-[11px]">
+                      <TableCell className="px-1.5 py-1">
                         <Link to="/quotes" className="font-medium text-slate-900 underline underline-offset-2 hover:text-slate-600">
                           {q.quote}
                         </Link>
                       </TableCell>
-                      <TableCell className="px-2 py-1.5">{q.type}</TableCell>
-                      <TableCell className="px-2 py-1.5">{q.project}</TableCell>
-                      <TableCell className="px-2 py-1.5 max-w-[16rem] truncate" title={q.customer}>{q.customer}</TableCell>
-                      <TableCell className="px-2 py-1.5">{q.contactFirst}</TableCell>
-                      <TableCell className="px-2 py-1.5">{q.contactLast}</TableCell>
-                      <TableCell className="px-2 py-1.5 whitespace-nowrap">{q.createdDate}</TableCell>
-                      <TableCell className="px-2 py-1.5 whitespace-nowrap">{q.createdBy}</TableCell>
-                      <TableCell className={`px-2 py-1.5 font-medium ${PRIORITY_TONE[q.priority] || ""}`}>
+                      <TableCell className="px-1.5 py-1">{q.type}</TableCell>
+                      <TableCell className="px-1.5 py-1">{q.project}</TableCell>
+                      <TableCell className="px-1.5 py-1 max-w-[16rem] truncate" title={q.customer}>{q.customer}</TableCell>
+                      <TableCell className="px-1.5 py-1">{q.contactFirst}</TableCell>
+                      <TableCell className="px-1.5 py-1">{q.contactLast}</TableCell>
+                      <TableCell className="px-1.5 py-1 whitespace-nowrap">{q.createdDate}</TableCell>
+                      <TableCell className="px-1.5 py-1 whitespace-nowrap">{q.createdBy}</TableCell>
+                      <TableCell className={`px-1.5 py-1 font-medium ${PRIORITY_TONE[q.priority] || ""}`}>
                         {q.priority === "Normal" ? "—" : q.priority}
                       </TableCell>
-                      <TableCell className="px-2 py-1.5">
-                        <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${STATUS_TONE[q.status] || "bg-muted text-foreground"}`}>
-                          <span className="h-1.5 w-1.5 rounded-full bg-current opacity-70" />
+                      <TableCell className="px-1.5 py-1">
+                        <span className={`inline-flex items-center gap-1 rounded-full px-1.5 py-0 text-[10px] font-medium ${STATUS_TONE[q.status] || "bg-muted text-foreground"}`}>
+                          <span className="h-1 w-1 rounded-full bg-current opacity-70" />
                           {q.status}
                         </span>
                       </TableCell>
-                      <TableCell className="px-2 py-1.5">{q.source}</TableCell>
-                      <TableCell className="px-2 py-1.5">{q.custPo || "—"}</TableCell>
-                      <TableCell className="px-2 py-1.5">{q.custState}</TableCell>
-                      <TableCell className="px-2 py-1.5 whitespace-nowrap">{q.followUp || "—"}</TableCell>
-                      <TableCell className="px-2 py-1.5">{q.location}</TableCell>
-                      <TableCell className="px-2 py-1.5">{q.poco}</TableCell>
-                      <TableCell className="px-2 py-1.5">{q.contractPricing}</TableCell>
-                      <TableCell className="px-2 py-1.5 text-right tabular-nums">
+                      <TableCell className="px-1.5 py-1">{q.source}</TableCell>
+                      <TableCell className="px-1.5 py-1">{q.custPo || "—"}</TableCell>
+                      <TableCell className="px-1.5 py-1">{q.custState}</TableCell>
+                      <TableCell className="px-1.5 py-1 whitespace-nowrap">{q.followUp || "—"}</TableCell>
+                      <TableCell className="px-1.5 py-1">{q.location}</TableCell>
+                      <TableCell className="px-1.5 py-1">{q.poco}</TableCell>
+                      <TableCell className="px-1.5 py-1">{q.contractPricing}</TableCell>
+                      <TableCell className="px-1.5 py-1 text-right tabular-nums">
                         ${q.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                       </TableCell>
                     </TableRow>
                   ))}
                   {paged.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={18} className="py-10 text-center text-xs text-muted-foreground">
-                        <FileText className="h-5 w-5 mx-auto mb-2 opacity-40" />
+                      <TableCell colSpan={18} className="py-8 text-center text-[11px] text-muted-foreground">
+                        <FileText className="h-4 w-4 mx-auto mb-1.5 opacity-40" />
                         No data to display.
                       </TableCell>
                     </TableRow>
@@ -374,7 +374,7 @@ const Quotes = () => {
             </div>
 
             {showTotals && rows.length > 0 && (
-              <div className="flex items-center justify-end gap-2 border-t bg-muted/30 px-3 py-2 text-xs">
+              <div className="flex items-center justify-end gap-2 border-t bg-muted/30 px-2 py-1.5 text-[11px]">
                 <span className="text-muted-foreground">Grand Total</span>
                 <span className="font-semibold tabular-nums">
                   ${grandTotal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
@@ -382,16 +382,16 @@ const Quotes = () => {
               </div>
             )}
 
-            <div className="flex flex-wrap items-center justify-between gap-2 border-t px-3 py-2 text-xs text-muted-foreground">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-t px-2 py-1.5 text-[11px] text-muted-foreground">
               <span>
                 Page {current} of {totalPages} ({rows.length} records)
               </span>
-              <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm" className="h-7 w-7 p-0" disabled={current === 1} onClick={() => setPage(current - 1)}>
-                  <ChevronLeft className="h-3.5 w-3.5" />
+              <div className="flex items-center gap-1">
+                <Button variant="outline" size="sm" className="h-6 w-6 p-0" disabled={current === 1} onClick={() => setPage(current - 1)}>
+                  <ChevronLeft className="h-3 w-3" />
                 </Button>
-                <Button variant="outline" size="sm" className="h-7 w-7 p-0" disabled={current === totalPages} onClick={() => setPage(current + 1)}>
-                  <ChevronRight className="h-3.5 w-3.5" />
+                <Button variant="outline" size="sm" className="h-6 w-6 p-0" disabled={current === totalPages} onClick={() => setPage(current + 1)}>
+                  <ChevronRight className="h-3 w-3" />
                 </Button>
               </div>
             </div>
