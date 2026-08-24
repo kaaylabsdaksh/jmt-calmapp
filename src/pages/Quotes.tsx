@@ -68,15 +68,15 @@ const PRIORITY_TONE: Record<string, string> = {
   Normal: "text-muted-foreground",
 };
 
-const QUOTE_TYPES = ["Lab", "OnSite", "ESL", "Rental", "Sales"];
-const POCO_OPTIONS = ["Yes", "No"];
-const PRIORITIES = ["Emergency", "Expedite", "Rush", "Normal"];
-const ITEMS_QUOTED = ["[Any]", "Yes", "No"];
-const STATUSES = ["Open", "Pending Approval", "Sent", "Won", "Lost", "Cancelled"];
-const LOCATIONS = ["BR", "CL", "GR", "MT", "HOU"];
-const SOURCES = ["Phone", "Email", "Web", "Salesperson", "Walk-in"];
-const SALESPEOPLE = ["Brandi M. Cali", "Trysten Q Howze", "Kevin R. Young", "Jessica M Thompson"];
-const DIVISIONS = ["Division 1", "Division 2", "Division 3"];
+const QUOTE_TYPES = ["All Quote Type", "Lab", "OnSite", "ESL", "Rental", "Sales"];
+const POCO_OPTIONS = ["All PO/CO Req?", "Yes", "No"];
+const PRIORITIES = ["All Priority", "Emergency", "Expedite", "Rush", "Normal"];
+const ITEMS_QUOTED = ["All Items Quoted", "Yes", "No"];
+const STATUSES = ["All Status", "Open", "Pending Approval", "Sent", "Won", "Lost", "Cancelled"];
+const LOCATIONS = ["All Location", "BR", "CL", "GR", "MT", "HOU"];
+const SOURCES = ["All Source", "Phone", "Email", "Web", "Salesperson", "Walk-in"];
+const SALESPEOPLE = ["All Salesperson", "Brandi M. Cali", "Trysten Q Howze", "Kevin R. Young", "Jessica M Thompson"];
+const DIVISIONS = ["All Division", "Division 1", "Division 2", "Division 3"];
 const DATE_TYPE_OPTIONS = [
   { value: "created", label: "Created" },
   { value: "needBy", label: "Need By" },
@@ -119,6 +119,7 @@ const Quotes = () => {
 
   const rows = useMemo(() => {
     const m = (v: string | undefined, cell: string) => !v || cell.toLowerCase().includes(v.toLowerCase());
+    const isFiltered = (v: string | undefined) => !!v && !v.startsWith("All ");
     return QUOTES.filter((q) => {
       if (!m(f.quote, q.quote)) return false;
       if (!m(f.project, q.project)) return false;
@@ -129,13 +130,13 @@ const Quotes = () => {
       if (!m(f.createdBy, q.createdBy)) return false;
       if (!m(f.custPo, q.custPo)) return false;
       if (!m(f.state, q.custState)) return false;
-      if (f.quoteType && q.type !== f.quoteType) return false;
-      if (f.poco && q.poco !== f.poco) return false;
-      if (f.priority && q.priority !== f.priority) return false;
-      if (f.status && q.status !== f.status) return false;
-      if (f.location && q.location !== f.location) return false;
-      if (f.source && q.source !== f.source) return false;
-      if (f.salesperson && q.createdBy !== f.salesperson) return false;
+      if (isFiltered(f.quoteType) && q.type !== f.quoteType) return false;
+      if (isFiltered(f.poco) && q.poco !== f.poco) return false;
+      if (isFiltered(f.priority) && q.priority !== f.priority) return false;
+      if (isFiltered(f.status) && q.status !== f.status) return false;
+      if (isFiltered(f.location) && q.location !== f.location) return false;
+      if (isFiltered(f.source) && q.source !== f.source) return false;
+      if (isFiltered(f.salesperson) && q.createdBy !== f.salesperson) return false;
       if (dateType === "created" && !inDateRange(q.createdDate)) return false;
       if (dateType === "followUp" && !inDateRange(q.followUp)) return false;
       if (dateType === "needBy" && !inDateRange(q.createdDate)) return false;
