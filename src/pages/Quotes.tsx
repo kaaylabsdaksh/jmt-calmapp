@@ -116,9 +116,12 @@ const Quotes = () => {
       if (f.location && q.location !== f.location) return false;
       if (f.source && q.source !== f.source) return false;
       if (f.salesperson && q.createdBy !== f.salesperson) return false;
+      if (dateType === "created" && !inDateRange(q.createdDate)) return false;
+      if (dateType === "followUp" && !inDateRange(q.followUp)) return false;
+      if (dateType === "needBy" && !inDateRange(q.createdDate)) return false;
       return true;
     });
-  }, [f]);
+  }, [f, dateType, dateFrom, dateTo]);
 
   const totalPages = Math.max(1, Math.ceil(rows.length / pageSize));
   const current = Math.min(page, totalPages);
