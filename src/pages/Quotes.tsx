@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { DateRangePicker } from "@/components/ui/date-range-picker";
 import {
   Table,
   TableBody,
@@ -15,7 +16,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import MinimalQuotesSearch, { QuoteFilters } from "@/components/MinimalQuotesSearch";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type Quote = {
   quote: string;
@@ -62,20 +69,27 @@ const PRIORITY_TONE: Record<string, string> = {
   Normal: "text-muted-foreground",
 };
 
+const QUOTE_TYPES = ["Lab", "OnSite", "ESL", "Rental", "Sales"];
+const POCO_OPTIONS = ["Yes", "No"];
+const PRIORITIES = ["Emergency", "Expedite", "Rush", "Normal"];
+const ITEMS_QUOTED = ["[Any]", "Yes", "No"];
+const STATUSES = ["Open", "Pending Approval", "Sent", "Won", "Lost", "Cancelled"];
+const LOCATIONS = ["BR", "CL", "GR", "MT", "HOU"];
+const SOURCES = ["Phone", "Email", "Web", "Salesperson", "Walk-in"];
+const SALESPEOPLE = ["Brandi M. Cali", "Trysten Q Howze", "Kevin R. Young", "Jessica M Thompson"];
+
 const Quotes = () => {
-  const [filters, setFilters] = useState<QuoteFilters>({
-    globalSearch: '',
-    searchTags: [],
-    quoteType: '',
-    poco: '',
-    priority: '',
-    status: '',
-    location: '',
-    source: '',
-    salesperson: '',
-    itemsQuoted: '',
-    showTotals: false,
-  });
+  const [f, setF] = useState<Record<string, string>>({});
+  const set = (k: string, v: string) => {
+    setF((p) => ({ ...p, [k]: v }));
+    setPage(1);
+  };
+  const [createdFrom, setCreatedFrom] = useState<Date | undefined>();
+  const [createdTo, setCreatedTo] = useState<Date | undefined>();
+  const [needFrom, setNeedFrom] = useState<Date | undefined>();
+  const [needTo, setNeedTo] = useState<Date | undefined>();
+  const [followFrom, setFollowFrom] = useState<Date | undefined>();
+  const [followTo, setFollowTo] = useState<Date | undefined>();
   const [showTotals, setShowTotals] = useState(false);
   const [page, setPage] = useState(1);
   const pageSize = 10;
@@ -83,34 +97,141 @@ const Quotes = () => {
   const rows = useMemo(() => {
     const m = (v: string | undefined, cell: string) => !v || cell.toLowerCase().includes(v.toLowerCase());
     return QUOTES.filter((q) => {
-      if (filters.globalSearch && !Object.values(q).some(v => String(v).toLowerCase().includes(filters.globalSearch.toLowerCase()))) return false;
-      if (filters.quoteType && q.type !== filters.quoteType) return false;
-      if (filters.poco && q.poco !== filters.poco) return false;
-      if (filters.priority && q.priority !== filters.priority) return false;
-      if (filters.status && q.status !== filters.status) return false;
-      if (filters.location && q.location !== filters.location) return false;
-      if (filters.source && q.source !== filters.source) return false;
-      if (filters.salesperson && q.createdBy !== filters.salesperson) return false;
+      if (!m(f.quote, q.quote)) return false;
+      if (!m(f.project, q.project)) return false;
+      if (!m(f.customer, q.customer)) return false;
+      if (!m(f.acct, q.customer)) return false;
+      if (!m(f.contactFirst, q.contactFirst)) return false;
+      if (!m(f.contactLast, q.contactLast)) return false;
+      if (!m(f.createdBy, q.createdBy)) return false;
+      if (!m(f.custPo, q.custPo)) return false;
+      if (!m(f.state, q.custState)) return false;
+      if (f.quoteType && q.type !== f.quoteType) return false;
+      if (f.poco && q.poco !== f.poco) return false;
+      if (f.priority && q.priority !== f.priority) return false;
+      if (f.status && q.status !== f.status) return false;
+      if (f.location && q.location !== f.location) return false;
+      if (f.source && q.source !== f.source) return false;
+      if (f.salesperson && q.createdBy !== f.salesperson) return false;
       return true;
     });
-  }, [filters]);
+  }, [f]);
 
   const totalPages = Math.max(1, Math.ceil(rows.length / pageSize));
   const current = Math.min(page, totalPages);
   const paged = rows.slice((current - 1) * pageSize, current * pageSize);
   const grandTotal = rows.reduce((s, r) => s + r.total, 0);
 
-  const handleSearch = (next: QuoteFilters) => {
-    setFilters(next);
-    setShowTotals(next.showTotals);
+  const clearAll = () => {
+    setF({});
+    setCreatedFrom(undefined);
+    setCreatedTo(undefined);
+    setNeedFrom(undefined);
+    setNeedTo(undefined);
+    setFollowFrom(undefined);
+    setFollowTo(undefined);
     setPage(1);
   };
+
+  const Text = ({ label, k }: { label: string; k: string }) => (
+    <div className="space-y-0.5">
+      <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">{label}</Label>
+      <Input value={f[k] || ""} onChange={(e) => set(k, e.target.value)} className="h-7 text-[11px] px-2" />
+    </div>
+  );
+
+  const Pick = ({ label, k, options }: { label: string; k: string; options: string[] }) => (
+    <div className="space-y-0.5">
+      <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">{label}</Label>
+      <Select value={f[k] || undefined} onValueChange={(v) => set(k, v)}>
+        <SelectTrigger className="h-7 text-[11px] px-2">
+          <SelectValue placeholder="All" />
+        </SelectTrigger>
+        <SelectContent>
+          {options.map((o) => (
+            <SelectItem key={o} value={o} className="text-xs">
+              {o}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
+  );
 
   return (
     <div className="bg-background min-h-full">
       <ModernTopNav />
       <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-5 space-y-3">
-        <MinimalQuotesSearch onSearch={handleSearch} />
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h1 className="text-xl font-semibold tracking-tight">Quotes</h1>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" className="h-8 text-xs">
+              <Download className="h-3.5 w-3.5 mr-1.5" />
+              Export
+            </Button>
+            <Button size="sm" className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white">
+              <Plus className="h-3.5 w-3.5 mr-1.5" />
+              Add New
+            </Button>
+          </div>
+        </div>
+
+        <Card className="border-border/60">
+          <CardContent className="p-2 sm:p-3 space-y-2">
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-x-2 gap-y-1.5">
+              <Pick label="Quote Type" k="quoteType" options={QUOTE_TYPES} />
+              <Pick label="PO/CO Req?" k="poco" options={POCO_OPTIONS} />
+              <Text label="Quote #" k="quote" />
+              <Text label="Project #" k="project" />
+              <Pick label="Priority" k="priority" options={PRIORITIES} />
+              <Text label="Customer Name" k="customer" />
+              <Text label="City" k="city" />
+              <Text label="State" k="state" />
+              <Text label="Industry Code" k="industryCode" />
+              <Text label="Acct #" k="acct" />
+              <Text label="Contact First" k="contactFirst" />
+              <Text label="Contact Last" k="contactLast" />
+              <Text label="Phone #" k="phone" />
+              <Text label="Cell #" k="cell" />
+              <Text label="Created By" k="createdBy" />
+              <Pick label="Items Quoted" k="itemsQuoted" options={ITEMS_QUOTED} />
+              <Text label="Cust PO #" k="custPo" />
+              <Pick label="Status" k="status" options={STATUSES} />
+              <Pick label="Location" k="location" options={LOCATIONS} />
+              <Pick label="Source" k="source" options={SOURCES} />
+              <Pick label="Salesperson" k="salesperson" options={SALESPEOPLE} />
+              <div className="space-y-0.5">
+                <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">Created From / To</Label>
+                <DateRangePicker dateFrom={createdFrom} dateTo={createdTo} onDateFromChange={setCreatedFrom} onDateToChange={setCreatedTo} />
+              </div>
+              <div className="space-y-0.5">
+                <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">Need By From / To</Label>
+                <DateRangePicker dateFrom={needFrom} dateTo={needTo} onDateFromChange={setNeedFrom} onDateToChange={setNeedTo} />
+              </div>
+              <div className="space-y-0.5">
+                <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">Follow Up From / To</Label>
+                <DateRangePicker dateFrom={followFrom} dateTo={followTo} onDateFromChange={setFollowFrom} onDateToChange={setFollowTo} />
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-between gap-1.5 pt-0.5">
+              <label className="flex items-center gap-1.5 text-[11px] text-muted-foreground cursor-pointer">
+                <Checkbox checked={showTotals} onCheckedChange={(v) => setShowTotals(!!v)} className="h-3.5 w-3.5" />
+                Show Totals
+              </label>
+              <div className="flex items-center gap-1.5">
+                <Button variant="ghost" size="sm" className="h-7 text-[11px] px-2" onClick={clearAll}>
+                  <X className="h-3.5 w-3.5 mr-1.5" />
+                  Clear
+                </Button>
+                <Button size="sm" className="h-7 text-[11px] px-2" onClick={() => setPage(1)}>
+                  <Search className="h-3.5 w-3.5 mr-1.5" />
+                  Search
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         <Card className="border-border/60">
           <CardContent className="p-0">
