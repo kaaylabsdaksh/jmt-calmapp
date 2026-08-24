@@ -204,11 +204,11 @@ const Quotes = () => {
 
         <Card className="bg-card rounded-xl shadow-sm border">
           <CardContent className="p-3 space-y-2">
-            {/* Grouped filter sections — responsive columns for smaller screens */}
-            <div className="flex flex-wrap gap-x-4 gap-y-3">
-              <div className="space-y-1.5 flex-1 min-w-[270px]">
+            {/* Grouped filter sections — fixed 3x2 grid */}
+            <div className="grid grid-cols-3 gap-3">
+              <div className="space-y-1.5">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Quote Details</h3>
-                <div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] gap-x-1.5 gap-y-1">
+                <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
                   <Pick label="Quote Type" k="quoteType" options={QUOTE_TYPES} />
                   <Pick label="PO/CO Req?" k="poco" options={POCO_OPTIONS} />
                   <Text label="Quote #" k="quote" />
@@ -218,20 +218,20 @@ const Quotes = () => {
                 </div>
               </div>
 
-              <div className="space-y-1.5 flex-1 min-w-[270px]">
+              <div className="space-y-1.5">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Customer</h3>
-                <div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] gap-x-1.5 gap-y-1">
+                <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
                   <Text label="Customer Name" k="customer" />
                   <Text label="Acct #" k="acct" />
                   <Text label="City" k="city" />
                   <Text label="State" k="state" />
-                  <Text label="Industry Code" k="industryCode" />
+                  <Text label="Industry Code" k="industryCode" className="col-span-2" />
                 </div>
               </div>
 
-              <div className="space-y-1.5 flex-1 min-w-[270px]">
+              <div className="space-y-1.5">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Contact</h3>
-                <div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] gap-x-1.5 gap-y-1">
+                <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
                   <Text label="Contact First" k="contactFirst" />
                   <Text label="Contact Last" k="contactLast" />
                   <Text label="Phone #" k="phone" />
@@ -239,20 +239,20 @@ const Quotes = () => {
                 </div>
               </div>
 
-              <div className="space-y-1.5 flex-1 min-w-[270px]">
+              <div className="space-y-1.5">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Status &amp; Sales</h3>
-                <div className="grid grid-cols-[repeat(auto-fit,minmax(125px,1fr))] gap-x-1.5 gap-y-1">
+                <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
                   <Pick label="Status" k="status" options={STATUSES} />
                   <Pick label="Items Quoted" k="itemsQuoted" options={ITEMS_QUOTED} />
                   <Pick label="Source" k="source" options={SOURCES} />
                   <Pick label="Salesperson" k="salesperson" options={SALESPEOPLE} />
-                  <Text label="Created By" k="createdBy" />
+                  <Text label="Created By" k="createdBy" className="col-span-2" />
                 </div>
               </div>
 
-              <div className="space-y-1.5 flex-1 min-w-[300px]">
+              <div className="space-y-1.5 col-span-2">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Timeline &amp; Location</h3>
-                <div className="space-y-1">
+                <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
                   <DateRangePicker
                     dateFrom={dateFrom}
                     dateTo={dateTo}
