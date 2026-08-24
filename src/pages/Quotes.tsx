@@ -202,29 +202,53 @@ const Quotes = () => {
         <Card className="border-border/60">
           <CardContent className="p-2 sm:p-3 space-y-2">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-2">
-              {/* Main filters */}
-              <div className="lg:col-span-9 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-1">
-                <Pick label="Quote Type" k="quoteType" options={QUOTE_TYPES} />
-                <Pick label="PO/CO Req?" k="poco" options={POCO_OPTIONS} />
-                <Text label="Quote #" k="quote" />
-                <Text label="Project #" k="project" />
-                <Pick label="Priority" k="priority" options={PRIORITIES} />
-                <Text label="Customer Name" k="customer" />
-                <Text label="City" k="city" />
-                <Text label="State" k="state" />
-                <Text label="Industry Code" k="industryCode" />
-                <Text label="Acct #" k="acct" />
-                <Text label="Contact First" k="contactFirst" />
-                <Text label="Contact Last" k="contactLast" />
-                <Text label="Phone #" k="phone" />
-                <Text label="Cell #" k="cell" />
-                <Text label="Created By" k="createdBy" />
-                <Pick label="Items Quoted" k="itemsQuoted" options={ITEMS_QUOTED} />
-                <Text label="Cust PO #" k="custPo" />
-                <Pick label="Status" k="status" options={STATUSES} />
-                <Pick label="Source" k="source" options={SOURCES} />
-                <Pick label="Salesperson" k="salesperson" options={SALESPEOPLE} />
+              {/* Main filters grouped */}
+              <div className="lg:col-span-9 grid grid-cols-1 md:grid-cols-2 gap-2">
+                <div className="bg-muted/30 rounded-lg border border-border/60 p-2.5 space-y-2">
+                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Quote Details</h3>
+                  <div className="grid grid-cols-2 gap-x-2 gap-y-1.5">
+                    <Pick label="Quote Type" k="quoteType" options={QUOTE_TYPES} />
+                    <Pick label="PO/CO Req?" k="poco" options={POCO_OPTIONS} />
+                    <Text label="Quote #" k="quote" />
+                    <Text label="Project #" k="project" />
+                    <Pick label="Priority" k="priority" options={PRIORITIES} />
+                    <Text label="Cust PO #" k="custPo" />
+                  </div>
+                </div>
+
+                <div className="bg-muted/30 rounded-lg border border-border/60 p-2.5 space-y-2">
+                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Customer</h3>
+                  <div className="grid grid-cols-2 gap-x-2 gap-y-1.5">
+                    <Text label="Customer Name" k="customer" />
+                    <Text label="Acct #" k="acct" />
+                    <Text label="City" k="city" />
+                    <Text label="State" k="state" />
+                    <Text label="Industry Code" k="industryCode" />
+                  </div>
+                </div>
+
+                <div className="bg-muted/30 rounded-lg border border-border/60 p-2.5 space-y-2">
+                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Contact</h3>
+                  <div className="grid grid-cols-2 gap-x-2 gap-y-1.5">
+                    <Text label="Contact First" k="contactFirst" />
+                    <Text label="Contact Last" k="contactLast" />
+                    <Text label="Phone #" k="phone" />
+                    <Text label="Cell #" k="cell" />
+                  </div>
+                </div>
+
+                <div className="bg-muted/30 rounded-lg border border-border/60 p-2.5 space-y-2">
+                  <h3 className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Status &amp; Sales</h3>
+                  <div className="grid grid-cols-2 gap-x-2 gap-y-1.5">
+                    <Pick label="Status" k="status" options={STATUSES} />
+                    <Pick label="Items Quoted" k="itemsQuoted" options={ITEMS_QUOTED} />
+                    <Pick label="Source" k="source" options={SOURCES} />
+                    <Pick label="Salesperson" k="salesperson" options={SALESPEOPLE} />
+                    <Text label="Created By" k="createdBy" />
+                  </div>
+                </div>
               </div>
+
 
               {/* Timeline & Location */}
               <div className="lg:col-span-3">
