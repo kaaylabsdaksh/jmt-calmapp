@@ -292,18 +292,18 @@ const Quotes = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-1 pt-1">
-              <label className="flex items-center gap-1 text-[10px] text-muted-foreground cursor-pointer">
-                <Checkbox checked={showTotals} onCheckedChange={(v) => setShowTotals(!!v)} className="h-3 w-3" />
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+              <label className="flex items-center gap-2 text-xs text-foreground cursor-pointer hover:text-foreground/80">
+                <Checkbox checked={showTotals} onCheckedChange={(v) => setShowTotals(!!v)} className="h-4 w-4 rounded border-gray-300 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600" />
                 Show Totals
               </label>
-              <div className="flex items-center gap-1">
-                <Button variant="ghost" size="sm" className="h-6 text-[10px] px-2" onClick={clearAll}>
-                  <X className="h-3 w-3 mr-1" />
+              <div className="flex items-center gap-1.5">
+                <Button variant="ghost" size="sm" className="h-7 text-xs px-2" onClick={clearAll}>
+                  <X className="h-3.5 w-3.5 mr-1" />
                   Clear
                 </Button>
-                <Button size="sm" className="h-6 text-[10px] px-2" onClick={() => setPage(1)}>
-                  <Search className="h-3 w-3 mr-1" />
+                <Button size="sm" className="h-7 text-xs px-2" onClick={() => setPage(1)}>
+                  <Search className="h-3.5 w-3.5 mr-1" />
                   Search
                 </Button>
               </div>
