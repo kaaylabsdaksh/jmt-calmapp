@@ -5,7 +5,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, Plus, RotateCcw, Filter, X, Clock, Hash, User, FileText, Briefcase, MapPin, Phone, Calendar, DollarSign } from "lucide-react";
+import { DateRangePicker } from "@/components/ui/date-range-picker";
+import { Search, Plus, RotateCcw, Filter, X, Clock, Hash, User, FileText, Briefcase, MapPin, Phone, Calendar } from "lucide-react";
 
 interface SearchChip {
   id: string;
