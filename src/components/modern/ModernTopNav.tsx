@@ -112,7 +112,7 @@ const ModernTopNav = () => {
 
         {/* Action Buttons */}
         <div className="flex items-center gap-1 sm:gap-2 w-full sm:w-auto">
-          {location.pathname !== "/onsite-projects/new" && location.pathname !== "/onsite-projects/vehicle-standards" && !customerDetailMatch && (
+          {location.pathname !== "/onsite-projects/new" && location.pathname !== "/onsite-projects/vehicle-standards" && !customerDetailMatch && location.pathname !== "/quotes" && (
             <Button 
               variant="outline"
               className="rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary bg-transparent transform hover:scale-105 text-xs sm:text-sm font-medium px-3 sm:px-4"
@@ -126,7 +126,7 @@ const ModernTopNav = () => {
               <span className="sm:hidden">Add</span>
             </Button>
           )}
-          {location.pathname !== "/manage-products" && (
+          {location.pathname !== "/manage-products" && location.pathname !== "/quotes" && (
             <>
               {location.pathname === "/onsite-projects" ? (
                 <DropdownMenu>
