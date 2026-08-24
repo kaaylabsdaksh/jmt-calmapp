@@ -204,8 +204,8 @@ const Quotes = () => {
 
         <Card className="bg-card rounded-xl shadow-sm border">
           <CardContent className="p-3 space-y-2">
-            {/* Grouped filter sections — 5 semantic columns matching Work Order compact density */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-4 gap-y-3">
+            {/* Grouped filter sections — responsive columns for smaller screens */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-x-4 gap-y-3">
               <div className="space-y-1.5">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Quote Details</h3>
                 <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
