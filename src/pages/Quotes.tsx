@@ -68,15 +68,15 @@ const PRIORITY_TONE: Record<string, string> = {
   Normal: "text-muted-foreground",
 };
 
-const QUOTE_TYPES = ["Lab", "OnSite", "ESL", "Rental", "Sales"];
-const POCO_OPTIONS = ["Yes", "No"];
-const PRIORITIES = ["Emergency", "Expedite", "Rush", "Normal"];
-const ITEMS_QUOTED = ["[Any]", "Yes", "No"];
-const STATUSES = ["Open", "Pending Approval", "Sent", "Won", "Lost", "Cancelled"];
-const LOCATIONS = ["BR", "CL", "GR", "MT", "HOU"];
-const SOURCES = ["Phone", "Email", "Web", "Salesperson", "Walk-in"];
-const SALESPEOPLE = ["Brandi M. Cali", "Trysten Q Howze", "Kevin R. Young", "Jessica M Thompson"];
-const DIVISIONS = ["Division 1", "Division 2", "Division 3"];
+const QUOTE_TYPES = ["All Quote Type", "Lab", "OnSite", "ESL", "Rental", "Sales"];
+const POCO_OPTIONS = ["All PO/CO Req?", "Yes", "No"];
+const PRIORITIES = ["All Priority", "Emergency", "Expedite", "Rush", "Normal"];
+const ITEMS_QUOTED = ["All Items Quoted", "Yes", "No"];
+const STATUSES = ["All Status", "Open", "Pending Approval", "Sent", "Won", "Lost", "Cancelled"];
+const LOCATIONS = ["All Location", "BR", "CL", "GR", "MT", "HOU"];
+const SOURCES = ["All Source", "Phone", "Email", "Web", "Salesperson", "Walk-in"];
+const SALESPEOPLE = ["All Salesperson", "Brandi M. Cali", "Trysten Q Howze", "Kevin R. Young", "Jessica M Thompson"];
+const DIVISIONS = ["All Division", "Division 1", "Division 2", "Division 3"];
 const DATE_TYPE_OPTIONS = [
   { value: "created", label: "Created" },
   { value: "needBy", label: "Need By" },
