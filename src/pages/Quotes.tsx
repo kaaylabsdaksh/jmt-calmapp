@@ -160,7 +160,7 @@ const Quotes = () => {
   const Text = ({ label, k }: { label: string; k: string }) => (
     <div className="space-y-0.5">
       <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">{label}</Label>
-      <Input value={f[k] || ""} onChange={(e) => set(k, e.target.value)} className="h-7 text-[11px] px-2" />
+      <Input value={f[k] || ""} onChange={(e) => set(k, e.target.value)} className="h-8 text-[11px] px-2 bg-background" />
     </div>
   );
 
@@ -168,7 +168,7 @@ const Quotes = () => {
     <div className="space-y-0.5">
       <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">{label}</Label>
       <Select value={f[k] || undefined} onValueChange={(v) => set(k, v)}>
-        <SelectTrigger className="h-7 text-[11px] px-2">
+        <SelectTrigger className="h-8 text-[11px] px-2 bg-background">
           <SelectValue placeholder="All" />
         </SelectTrigger>
         <SelectContent>
