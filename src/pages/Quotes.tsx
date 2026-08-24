@@ -158,17 +158,17 @@ const Quotes = () => {
   };
 
   const Text = ({ label, k }: { label: string; k: string }) => (
-    <div className="space-y-0.5">
-      <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">{label}</Label>
-      <Input value={f[k] || ""} onChange={(e) => set(k, e.target.value)} className="h-8 text-[11px] px-2 bg-background" />
+    <div>
+      <Label className="text-[9px] uppercase tracking-wide text-muted-foreground leading-none">{label}</Label>
+      <Input value={f[k] || ""} onChange={(e) => set(k, e.target.value)} className="h-6 text-[11px] px-1.5 mt-0.5 bg-background" />
     </div>
   );
 
   const Pick = ({ label, k, options }: { label: string; k: string; options: string[] }) => (
-    <div className="space-y-0.5">
-      <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">{label}</Label>
+    <div>
+      <Label className="text-[9px] uppercase tracking-wide text-muted-foreground leading-none">{label}</Label>
       <Select value={f[k] || undefined} onValueChange={(v) => set(k, v)}>
-        <SelectTrigger className="h-8 text-[11px] px-2 bg-background">
+        <SelectTrigger className="h-6 text-[11px] px-1.5 mt-0.5 bg-background [&>svg]:h-3 [&>svg]:w-3">
           <SelectValue placeholder="All" />
         </SelectTrigger>
         <SelectContent>
@@ -181,6 +181,7 @@ const Quotes = () => {
       </Select>
     </div>
   );
+
 
   return (
     <div className="bg-background min-h-full">
@@ -204,7 +205,7 @@ const Quotes = () => {
           <CardContent className="p-2 sm:p-3 space-y-2">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-2">
               {/* Main filters */}
-              <div className="lg:col-span-9 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-1.5">
+              <div className="lg:col-span-9 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-1">
                 <Pick label="Quote Type" k="quoteType" options={QUOTE_TYPES} />
                 <Pick label="PO/CO Req?" k="poco" options={POCO_OPTIONS} />
                 <Text label="Quote #" k="quote" />
