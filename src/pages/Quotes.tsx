@@ -252,7 +252,7 @@ const Quotes = () => {
 
               <div className="space-y-1.5 col-span-2">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">Timeline &amp; Location</h3>
-                <div className="grid grid-cols-2 gap-x-1.5 gap-y-1">
+                <div className="space-y-1">
                   <DateRangePicker
                     dateFrom={dateFrom}
                     dateTo={dateTo}
