@@ -291,17 +291,17 @@ const Quotes = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-1 pt-0.5">
+            <div className="flex flex-wrap items-center justify-between gap-1 pt-1">
               <label className="flex items-center gap-1 text-[10px] text-muted-foreground cursor-pointer">
                 <Checkbox checked={showTotals} onCheckedChange={(v) => setShowTotals(!!v)} className="h-3 w-3" />
                 Show Totals
               </label>
               <div className="flex items-center gap-1">
-                <Button variant="ghost" size="sm" className="h-7 text-[10px] px-2" onClick={clearAll}>
+                <Button variant="ghost" size="sm" className="h-6 text-[10px] px-2" onClick={clearAll}>
                   <X className="h-3 w-3 mr-1" />
                   Clear
                 </Button>
-                <Button size="sm" className="h-7 text-[10px] px-2" onClick={() => setPage(1)}>
+                <Button size="sm" className="h-6 text-[10px] px-2" onClick={() => setPage(1)}>
                   <Search className="h-3 w-3 mr-1" />
                   Search
                 </Button>
@@ -310,7 +310,7 @@ const Quotes = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-border/60">
+        <Card className="bg-card rounded-xl shadow-sm border">
           <CardContent className="p-0">
             <div className="overflow-x-auto">
               <Table>
