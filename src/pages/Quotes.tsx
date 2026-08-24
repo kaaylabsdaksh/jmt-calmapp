@@ -77,6 +77,12 @@ const STATUSES = ["Open", "Pending Approval", "Sent", "Won", "Lost", "Cancelled"
 const LOCATIONS = ["BR", "CL", "GR", "MT", "HOU"];
 const SOURCES = ["Phone", "Email", "Web", "Salesperson", "Walk-in"];
 const SALESPEOPLE = ["Brandi M. Cali", "Trysten Q Howze", "Kevin R. Young", "Jessica M Thompson"];
+const DIVISIONS = ["Division 1", "Division 2", "Division 3"];
+const DATE_TYPE_OPTIONS = [
+  { value: "created", label: "Created" },
+  { value: "needBy", label: "Need By" },
+  { value: "followUp", label: "Follow Up" },
+];
 
 const Quotes = () => {
   const [f, setF] = useState<Record<string, string>>({});
