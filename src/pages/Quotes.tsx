@@ -159,12 +159,12 @@ const Quotes = () => {
   const inputBaseClass =
     "h-7 text-[11px] px-2 bg-white border-gray-200 placeholder:text-[10px] focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500";
 
-  const Text = ({ label, k }: { label: string; k: string }) => (
+  const Text = ({ label, k, className }: { label: string; k: string; className?: string }) => (
     <Input
       value={f[k] || ""}
       onChange={(e) => set(k, e.target.value)}
       placeholder={label}
-      className={inputBaseClass}
+      className={`${inputBaseClass} ${className || ""}`}
     />
   );
 
