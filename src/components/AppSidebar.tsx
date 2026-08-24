@@ -80,7 +80,7 @@ const quickActionCategories = {
     { title: "Standards", icon: CheckCircle, url: "/onsite-projects/vehicle-standards" },
     { title: "Invoicing", icon: CreditCard, url: "/invoicing" },
     { title: "Delivery Tickets", icon: Truck, url: "/delivery-tickets" },
-    { title: "Quotes", icon: FileText },
+    { title: "Quotes", icon: FileText, url: "/quotes" },
     { title: "Reports", icon: BarChart3 },
   ],
   "User Management": [
