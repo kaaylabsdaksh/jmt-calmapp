@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Search, X, Plus, Download, ChevronLeft, ChevronRight, FileText } from "lucide-react";
+import { Search, X, Plus, Download, ChevronLeft, ChevronRight, FileText, Check } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -160,18 +160,33 @@ const Quotes = () => {
   const inputBaseClass =
     "h-7 text-[11px] px-2 bg-white text-black border-gray-300 placeholder:text-[10px] placeholder:text-black focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0";
 
-  const Text = ({ label, k, className }: { label: string; k: string; className?: string }) => (
-    <Input
-      value={f[k] || ""}
-      onChange={(e) => set(k, e.target.value)}
-      placeholder={label}
-      className={`${inputBaseClass} ${className || ""}`}
-    />
-  );
+  const activeInputClass = "border-slate-700 bg-slate-50 font-semibold pr-6";
+
+  const selectBaseClass =
+    "h-7 min-h-0 text-[11px] px-2 py-0 w-full bg-white text-black [&>span]:text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0 [&>svg]:h-3 [&>svg]:w-3";
+
+  const activeSelectClass = "border-slate-700 bg-slate-50 [&>span]:font-semibold";
+
+  const Text = ({ label, k, className }: { label: string; k: string; className?: string }) => {
+    const active = !!f[k];
+    return (
+      <div className={`relative ${className || ""}`}>
+        <Input
+          value={f[k] || ""}
+          onChange={(e) => set(k, e.target.value)}
+          placeholder={label}
+          className={`${inputBaseClass} w-full ${active ? activeInputClass : ""}`}
+        />
+        {active && (
+          <Check className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-slate-700" />
+        )}
+      </div>
+    );
+  };
 
   const Pick = ({ label, k, options }: { label: string; k: string; options: string[] }) => (
     <Select value={f[k] || undefined} onValueChange={(v) => set(k, v)}>
-      <SelectTrigger className="h-7 min-h-0 text-[11px] px-2 py-0 bg-white text-black [&>span]:text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0 [&>svg]:h-3 [&>svg]:w-3">
+      <SelectTrigger className={`${selectBaseClass} ${f[k] ? activeSelectClass : ""}`}>
         <SelectValue placeholder={`All ${label}`} />
       </SelectTrigger>
       <SelectContent>
@@ -183,7 +198,6 @@ const Quotes = () => {
       </SelectContent>
     </Select>
   );
-
 
   return (
     <div className="bg-background min-h-full">
@@ -265,7 +279,7 @@ const Quotes = () => {
                     triggerClassName="h-7"
                   />
                   <Select value={f.location || undefined} onValueChange={(v) => set("location", v)}>
-                    <SelectTrigger className="h-7 min-h-0 text-[11px] px-2 py-0 w-full bg-white text-black [&>span]:text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0 [&>svg]:h-3 [&>svg]:w-3">
+                    <SelectTrigger className={`${selectBaseClass} ${f.location ? activeSelectClass : ""}`}>
                       <SelectValue placeholder="All Location" />
                     </SelectTrigger>
                     <SelectContent>
@@ -277,7 +291,7 @@ const Quotes = () => {
                     </SelectContent>
                   </Select>
                   <Select value={f.division || undefined} onValueChange={(v) => set("division", v)}>
-                    <SelectTrigger className="h-7 min-h-0 text-[11px] px-2 py-0 w-full bg-white text-black [&>span]:text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0 [&>svg]:h-3 [&>svg]:w-3">
+                    <SelectTrigger className={`${selectBaseClass} ${f.division ? activeSelectClass : ""}`}>
                       <SelectValue placeholder="All Division" />
                     </SelectTrigger>
                     <SelectContent>
