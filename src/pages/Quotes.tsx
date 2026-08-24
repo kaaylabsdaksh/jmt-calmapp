@@ -205,7 +205,7 @@ const Quotes = () => {
           <CardContent className="p-2 sm:p-3 space-y-2">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-2">
               {/* Main filters */}
-              <div className="lg:col-span-9 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-1.5">
+              <div className="lg:col-span-9 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-2 gap-y-1">
                 <Pick label="Quote Type" k="quoteType" options={QUOTE_TYPES} />
                 <Pick label="PO/CO Req?" k="poco" options={POCO_OPTIONS} />
                 <Text label="Quote #" k="quote" />
