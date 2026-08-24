@@ -17,7 +17,7 @@ const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
   "/onsite-projects": { title: "Onsite Projects", crumbs: [{ label: "Home", to: "/" }, { label: "Onsite Projects" }] },
   "/onsite-projects/new": { title: "Onsite Project # XXX", crumbs: [{ label: "Onsite Projects", to: "/onsite-projects" }, { label: "New Project" }] },
   "/manage-customers": { title: "Manage Customers", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers" }] },
-  "/quotes": { title: "Quotes", crumbs: [{ label: "Home", to: "/" }, { label: "Core Operations" }, { label: "Quotes" }] },
+  "/quotes": { title: "Quotes", crumbs: [{ label: "Home", to: "/" }, { label: "Quotes" }] },
   "/manage-products": { title: "Manage Products", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Products" }] },
   "/manage-products/new": { title: "Add New Product", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Products", to: "/manage-products" }, { label: "Add New Product" }] },
   "/manage-products/product-reviews": { title: "Product Reviews", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Products", to: "/manage-products" }, { label: "Product Reviews" }] },
