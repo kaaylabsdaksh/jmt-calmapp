@@ -667,7 +667,7 @@ const NewQuote = () => {
                     <ModernDatePicker value={needBy} onChange={setNeedBy} size="xs" inputClassName={inputCls} placeholder="MM/DD/YYYY" />
                   </Field>
                   <Field label="Follow Up Date">
-                    <ModernDatePicker value={followUp} onChange={setFollowUp} size="xs" inputClassName="px-1.5 py-0 placeholder:text-[10px]" placeholder="MM/DD/YYYY" />
+                    <ModernDatePicker value={followUp} onChange={setFollowUp} size="xs" inputClassName={inputCls} placeholder="MM/DD/YYYY" />
                   </Field>
                 </div>
               </Group>
