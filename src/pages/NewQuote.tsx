@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import React, { useMemo, useState, Children, isValidElement, cloneElement } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Save,
@@ -175,15 +175,51 @@ const Field = ({
   required?: boolean;
   children: React.ReactNode;
   className?: string;
-}) => (
-  <div className={cn("space-y-1", className)}>
-    <Label className={labelCls}>
-      {label}
-      {required && <span className="text-red-600 ml-0.5">*</span>}
-    </Label>
-    {children}
-  </div>
-);
+}) => {
+  const labelText = `${label}${required ? " *" : ""}`;
+  const childArray = Children.toArray(children);
+  const child = childArray.length === 1 ? childArray[0] : null;
+  if (isValidElement(child)) {
+    const element = child as React.ReactElement<any>;
+    const typeName =
+      typeof element.type === "string"
+        ? element.type
+        : (element.type as any).displayName || (element.type as any).name;
+    if (typeName === "ModernDatePicker") {
+      return cloneElement(element, {
+        className: cn(element.props.className, className),
+        inputClassName: cn(
+          element.props.inputClassName,
+          "placeholder:font-medium placeholder:text-slate-500"
+        ),
+        placeholder: labelText,
+      });
+    }
+    const isInputLike =
+      typeof element.type === "string"
+        ? ["input", "textarea", "select"].includes(element.type)
+        : ["Input", "Textarea", "SelectField"].includes(typeName);
+    if (isInputLike) {
+      return cloneElement(element, {
+        className: cn(
+          element.props.className,
+          className,
+          "placeholder:font-medium placeholder:text-slate-500"
+        ),
+        placeholder: labelText,
+      });
+    }
+  }
+  return (
+    <div className={cn("space-y-1", className)}>
+      <Label className={labelCls}>
+        {label}
+        {required && <span className="text-red-600 ml-0.5">*</span>}
+      </Label>
+      {children}
+    </div>
+  );
+};
 
 const SectionCard = ({
   icon: Icon,
@@ -267,20 +303,25 @@ const Group = ({
 );
 
 const SelectField = ({
-
   value,
   onChange,
   options,
-  placeholder,
+  placeholder = "Select",
 }: {
   value: string;
   onChange: (v: string) => void;
   options: string[];
-  placeholder: string;
+  placeholder?: string;
 }) => (
   <Select value={value} onValueChange={onChange}>
     <SelectTrigger className={inputCls}>
-      <SelectValue placeholder={placeholder} />
+      <SelectValue
+        placeholder={
+          <span className="text-[10px] font-medium text-slate-500">
+            {placeholder}
+          </span>
+        }
+      />
     </SelectTrigger>
     <SelectContent className="bg-popover z-50">
       {options.map((o) => (
@@ -528,22 +569,25 @@ const NewQuote = () => {
                     <SelectField value={source} onChange={setSource} options={SOURCES} placeholder="Select source" />
                   </Field>
                 </div>
-                <Field label="Account #">
-                  <div className="flex items-center gap-1.5">
-                    <Input value={acctNo} onChange={(e) => setAcctNo(e.target.value)} className={inputCls} />
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-6 text-[11px] px-2 shrink-0"
-                      onClick={() => {
-                        setCustomerName("Chevron Oronite");
-                        toast({ title: "Account found", description: "Customer details populated." });
-                      }}
-                    >
-                      <Search className="h-3 w-3 mr-1" /> Find Account
-                    </Button>
-                  </div>
-                </Field>
+                <div className="flex items-center gap-1.5">
+                  <Input
+                    value={acctNo}
+                    onChange={(e) => setAcctNo(e.target.value)}
+                    className={cn(inputCls, "placeholder:font-medium placeholder:text-slate-500")}
+                    placeholder="Account #"
+                  />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-6 text-[11px] px-2 shrink-0"
+                    onClick={() => {
+                      setCustomerName("Chevron Oronite");
+                      toast({ title: "Account found", description: "Customer details populated." });
+                    }}
+                  >
+                    <Search className="h-3 w-3 mr-1" /> Find Account
+                  </Button>
+                </div>
                 <Field label="Customer Name">
                   <Input value={customerName} onChange={(e) => setCustomerName(e.target.value)} className={inputCls} />
                 </Field>
@@ -568,14 +612,17 @@ const NewQuote = () => {
                   </Field>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
-                  <Field label="Opportunity">
-                    <div className="flex items-center gap-1.5">
-                      <Input value={opportunity} onChange={(e) => setOpportunity(e.target.value)} className={inputCls} />
-                      <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
-                        Find
-                      </Button>
-                    </div>
-                  </Field>
+                  <div className="flex items-center gap-1.5">
+                    <Input
+                      value={opportunity}
+                      onChange={(e) => setOpportunity(e.target.value)}
+                      className={cn(inputCls, "placeholder:font-medium placeholder:text-slate-500")}
+                      placeholder="Opportunity"
+                    />
+                    <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
+                      Find
+                    </Button>
+                  </div>
                   <Field label="Customer PO #">
                     <Input value={custPo} onChange={(e) => setCustPo(e.target.value)} className={inputCls} />
                   </Field>
@@ -672,16 +719,19 @@ const NewQuote = () => {
         <AccSection value="customer" icon={Users} title="Customer & Contact">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="space-y-2.5">
-              <Field label="Select Contact">
-                <div className="flex items-center gap-1.5">
-                  <div className="flex-1">
-                    <SelectField value={selectContact} onChange={setSelectContact} options={CONTACTS} placeholder="Select contact" />
-                  </div>
-                  <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
-                    <Plus className="h-3 w-3 mr-1" /> Add Contact
-                  </Button>
+              <div className="flex items-center gap-1.5">
+                <div className="flex-1">
+                  <SelectField
+                    value={selectContact}
+                    onChange={setSelectContact}
+                    options={CONTACTS}
+                    placeholder="Select Contact"
+                  />
                 </div>
-              </Field>
+                <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
+                  <Plus className="h-3 w-3 mr-1" /> Add Contact
+                </Button>
+              </div>
               <div className="grid grid-cols-2 gap-2">
                 <Field label="Contact First Name">
                   <Input value={contactFirst} onChange={(e) => setContactFirst(e.target.value)} className={inputCls} />
