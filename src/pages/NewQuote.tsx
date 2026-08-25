@@ -161,8 +161,8 @@ const num = (v: string) => {
 };
 
 const labelCls = "text-[11px] font-medium text-muted-foreground";
-const inputCls = "h-6 text-[11px] px-1.5 bg-background placeholder:text-[10px]";
-const textareaCls = "text-[11px] px-1.5 bg-background placeholder:text-[10px]";
+const inputCls = "h-6 text-[11px] px-1.5 py-0 bg-background placeholder:text-[10px]";
+const textareaCls = "text-[11px] px-1.5 py-1.5 bg-background placeholder:text-[10px]";
 
 
 const Field = ({
