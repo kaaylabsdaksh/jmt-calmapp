@@ -433,7 +433,7 @@ const Quotes = () => {
                 <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 border-gray-300" disabled={current === 1} onClick={() => setPage(current - 1)}>
                   Previous
                 </Button>
-                <Button size="sm" className="h-6 w-6 p-0 text-[11px] bg-yellow-400 text-slate-900 hover:bg-yellow-500 border-yellow-400">
+                <Button size="sm" className="h-6 w-6 p-0 text-[11px] !bg-yellow-400 text-slate-900 hover:!bg-yellow-500 border-yellow-400">
                   {current}
                 </Button>
                 <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 border-gray-300" disabled={current === totalPages} onClick={() => setPage(current + 1)}>
