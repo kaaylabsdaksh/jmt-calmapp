@@ -606,7 +606,7 @@ const NewQuote = () => {
                     <Input value={percent} onChange={(e) => setPercent(e.target.value)} disabled={!override} className={cn(inputCls, "text-right")} />
                   </Field>
                   <Field label="Exp. Date">
-                    <ModernDatePicker value={expDate} onChange={setExpDate} size="xs" inputClassName="px-1.5 placeholder:text-[10px]" placeholder="MM/DD/YYYY" />
+                    <ModernDatePicker value={expDate} onChange={setExpDate} size="xs" inputClassName="px-1.5 py-0 placeholder:text-[10px]" placeholder="MM/DD/YYYY" />
                   </Field>
                 </div>
               </Group>
@@ -615,10 +615,10 @@ const NewQuote = () => {
               <Group title="Scheduling" className="md:col-span-2">
                 <div className="grid grid-cols-2 gap-2">
                   <Field label="Need By Date">
-                    <ModernDatePicker value={needBy} onChange={setNeedBy} size="xs" inputClassName="px-1.5 placeholder:text-[10px]" placeholder="MM/DD/YYYY" />
+                    <ModernDatePicker value={needBy} onChange={setNeedBy} size="xs" inputClassName="px-1.5 py-0 placeholder:text-[10px]" placeholder="MM/DD/YYYY" />
                   </Field>
                   <Field label="Follow Up Date">
-                    <ModernDatePicker value={followUp} onChange={setFollowUp} size="xs" inputClassName="px-1.5 placeholder:text-[10px]" placeholder="MM/DD/YYYY" />
+                    <ModernDatePicker value={followUp} onChange={setFollowUp} size="xs" inputClassName="px-1.5 py-0 placeholder:text-[10px]" placeholder="MM/DD/YYYY" />
                   </Field>
                 </div>
               </Group>
