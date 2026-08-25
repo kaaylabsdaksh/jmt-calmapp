@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Search, X, Plus, Download, ChevronLeft, ChevronRight, FileText, Check } from "lucide-react";
+import { Search, X, Plus, Download, FileText, Check } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -153,7 +153,7 @@ const Quotes = () => {
   const [dateTo, setDateTo] = useState<Date | undefined>();
   const [showTotals, setShowTotals] = useState(false);
   const [page, setPage] = useState(1);
-  const pageSize = 10;
+  const [pageSize, setPageSize] = useState(10);
 
   const parseDatePart = (value: string) => {
     if (!value) return undefined;
@@ -412,16 +412,32 @@ const Quotes = () => {
               </div>
             )}
 
-            <div className="flex flex-wrap items-center justify-between gap-2 border-t px-2 py-1.5 text-[11px] text-muted-foreground">
-              <span>
-                Page {current} of {totalPages} ({rows.length} records)
-              </span>
+            <div className="flex flex-wrap items-center justify-between gap-3 border-t px-3 py-2 text-[11px] text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <span>
+                  Showing {paged.length === 0 ? 0 : (current - 1) * pageSize + 1}-{Math.min(current * pageSize, rows.length)} of {rows.length} items
+                </span>
+                <span className="ml-2">Show:</span>
+                <Select value={String(pageSize)} onValueChange={(v) => { setPageSize(Number(v)); setPage(1); }}>
+                  <SelectTrigger className="h-6 w-16 text-[11px] px-1.5 bg-white border-gray-300 focus:ring-yellow-400 focus:border-yellow-400">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {[10, 25, 50, 100].map((s) => (
+                      <SelectItem key={s} value={String(s)} className="text-xs">{s}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
               <div className="flex items-center gap-1">
-                <Button variant="outline" size="sm" className="h-6 w-6 p-0" disabled={current === 1} onClick={() => setPage(current - 1)}>
-                  <ChevronLeft className="h-3 w-3" />
+                <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 border-gray-300" disabled={current === 1} onClick={() => setPage(current - 1)}>
+                  Previous
                 </Button>
-                <Button variant="outline" size="sm" className="h-6 w-6 p-0" disabled={current === totalPages} onClick={() => setPage(current + 1)}>
-                  <ChevronRight className="h-3 w-3" />
+                <Button size="sm" className="h-6 w-6 p-0 text-[11px] bg-yellow-400 text-slate-900 hover:bg-yellow-500 border-yellow-400">
+                  {current}
+                </Button>
+                <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 border-gray-300" disabled={current === totalPages} onClick={() => setPage(current + 1)}>
+                  Next
                 </Button>
               </div>
             </div>
