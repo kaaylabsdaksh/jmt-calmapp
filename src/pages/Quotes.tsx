@@ -111,7 +111,7 @@ const FilterText = ({
         className={`${inputBaseClass} w-full ${active ? activeInputClass : ""}`}
       />
       {active && (
-        <Check className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-slate-700" />
+        <Check className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-black" />
       )}
     </div>
   );
