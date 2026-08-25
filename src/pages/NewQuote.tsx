@@ -551,7 +551,7 @@ const NewQuote = () => {
                   <Textarea
                     value={sourceInfo}
                     onChange={(e) => setSourceInfo(e.target.value)}
-                    className="text-xs min-h-[52px] bg-background"
+                    className={cn(textareaCls, "min-h-[52px]")}
                   />
                 </Field>
               </Group>
@@ -626,7 +626,7 @@ const NewQuote = () => {
               {/* Category: Terms */}
               <Group title="Terms & Conditions" className="md:col-span-2">
                 <Field label="Terms and Conditions">
-                  <Textarea value={terms} onChange={(e) => setTerms(e.target.value)} className="text-xs min-h-[68px] bg-background" />
+                  <Textarea value={terms} onChange={(e) => setTerms(e.target.value)} className={cn(textareaCls, "min-h-[68px]")} />
                 </Field>
               </Group>
             </div>
@@ -820,16 +820,16 @@ const NewQuote = () => {
         </AccSection>
 
         {/* Project details */}
-        <AccSection value="project" icon={FileText} title="Project Details">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <Field label="Proposed Project">
-              <Textarea value={proposedProject} onChange={(e) => setProposedProject(e.target.value)} className="text-xs min-h-[150px] bg-background" />
-            </Field>
-            <Field label="Special Instructions">
-              <Textarea value={specialInstructions} onChange={(e) => setSpecialInstructions(e.target.value)} className="text-xs min-h-[150px] bg-background" />
-            </Field>
-          </div>
-        </AccSection>
+          <AccSection value="project" icon={FileText} title="Project Details">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <Field label="Proposed Project">
+                <Textarea value={proposedProject} onChange={(e) => setProposedProject(e.target.value)} className={cn(textareaCls, "min-h-[150px]")} />
+              </Field>
+              <Field label="Special Instructions">
+                <Textarea value={specialInstructions} onChange={(e) => setSpecialInstructions(e.target.value)} className={cn(textareaCls, "min-h-[150px]")} />
+              </Field>
+            </div>
+          </AccSection>
 
 
         {/* Comments */}
@@ -842,7 +842,7 @@ const NewQuote = () => {
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
                     placeholder="Add a comment..."
-                    className="text-xs min-h-[60px] flex-1 bg-background"
+                    className={cn(textareaCls, "min-h-[60px] flex-1")}
                   />
                   <Button size="sm" className="h-8 text-[11px] px-3" onClick={addComment}>
                     Add
@@ -990,7 +990,7 @@ const NewQuote = () => {
                 </Field>
               </div>
               <Field label="Description">
-                <Textarea value={draft.description} onChange={(e) => setDraft({ ...draft, description: e.target.value })} className="text-xs min-h-[60px] bg-background" />
+                <Textarea value={draft.description} onChange={(e) => setDraft({ ...draft, description: e.target.value })} className={cn(textareaCls, "min-h-[60px]")} />
               </Field>
               <Field label="Qty">
                 <Input value={draft.qty} onChange={(e) => setDraft({ ...draft, qty: e.target.value })} className={cn(inputCls, "w-24")} />
