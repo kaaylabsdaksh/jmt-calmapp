@@ -448,9 +448,9 @@ const NewQuote = () => {
         {/* Quote setup */}
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
           <SectionCard icon={ClipboardList} title="Quote Information" className="xl:col-span-2">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-2 auto-rows-min">
               {/* Category: Quote Setup */}
-              <Group title="Quote Setup">
+              <Group title="Quote Setup" className="md:col-span-2">
                 <div className="grid grid-cols-2 gap-2">
                   <Field label="Quote Type" required>
                     <SelectField value={quoteType} onChange={setQuoteType} options={QUOTE_TYPES} placeholder="Select type" />
@@ -483,7 +483,7 @@ const NewQuote = () => {
               </Group>
 
               {/* Category: Customer & Origin */}
-              <Group title="Customer & Origin">
+              <Group title="Customer & Origin" className="md:col-span-2">
                 <div className="grid grid-cols-2 gap-2">
                   <Field label="Existing Customer">
                     <SelectField value={existingCustomer} onChange={setExistingCustomer} options={YES_NO} placeholder="Yes" />
@@ -524,7 +524,7 @@ const NewQuote = () => {
               </Group>
 
               {/* Category: References & Documents */}
-              <Group title="References & Documents">
+              <Group title="References & Documents" className="md:col-span-3">
                 <div className="grid grid-cols-2 gap-2">
                   <Field label="SR Doc">
                     <Input value={srDoc} onChange={(e) => setSrDoc(e.target.value)} className={inputCls} />
@@ -533,17 +533,19 @@ const NewQuote = () => {
                     <Input value={osrDoc} onChange={(e) => setOsrDoc(e.target.value)} className={inputCls} />
                   </Field>
                 </div>
-                <Field label="Opportunity">
-                  <div className="flex items-center gap-1.5">
-                    <Input value={opportunity} onChange={(e) => setOpportunity(e.target.value)} className={inputCls} />
-                    <Button variant="outline" size="sm" className="h-8 text-[11px] px-2 shrink-0">
-                      Find
-                    </Button>
-                  </div>
-                </Field>
-                <Field label="Customer PO #">
-                  <Input value={custPo} onChange={(e) => setCustPo(e.target.value)} className={inputCls} />
-                </Field>
+                <div className="grid grid-cols-2 gap-2">
+                  <Field label="Opportunity">
+                    <div className="flex items-center gap-1.5">
+                      <Input value={opportunity} onChange={(e) => setOpportunity(e.target.value)} className={inputCls} />
+                      <Button variant="outline" size="sm" className="h-8 text-[11px] px-2 shrink-0">
+                        Find
+                      </Button>
+                    </div>
+                  </Field>
+                  <Field label="Customer PO #">
+                    <Input value={custPo} onChange={(e) => setCustPo(e.target.value)} className={inputCls} />
+                  </Field>
+                </div>
                 <Field label="Associated Product Review">
                   <Input value={productReview} onChange={(e) => setProductReview(e.target.value)} className={inputCls} />
                 </Field>
@@ -552,9 +554,10 @@ const NewQuote = () => {
               {/* Category: Contract Pricing */}
               <Group
                 title="Contract Pricing"
+                className="md:col-span-1"
                 action={
-                  <button type="button" className="text-[11px] underline text-slate-900 hover:text-slate-700">
-                    View Contract Pricing
+                  <button type="button" className="text-[10px] underline text-slate-900 hover:text-slate-700">
+                    View
                   </button>
                 }
               >
@@ -562,7 +565,7 @@ const NewQuote = () => {
                   <Checkbox id="override" checked={override} onCheckedChange={(v) => setOverride(!!v)} />
                   <Label htmlFor="override" className="text-[11px] font-medium">Override</Label>
                 </div>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="space-y-1.5">
                   <Field label="Hourly">
                     <Input value={hourly} onChange={(e) => setHourly(e.target.value)} disabled={!override} className={cn(inputCls, "text-right")} />
                   </Field>
@@ -576,7 +579,7 @@ const NewQuote = () => {
               </Group>
 
               {/* Category: Scheduling */}
-              <Group title="Scheduling">
+              <Group title="Scheduling" className="md:col-span-2">
                 <div className="grid grid-cols-2 gap-2">
                   <Field label="Need By Date">
                     <ModernDatePicker value={needBy} onChange={setNeedBy} size="md" placeholder="MM/DD/YYYY" />
@@ -588,7 +591,7 @@ const NewQuote = () => {
               </Group>
 
               {/* Category: Terms */}
-              <Group title="Terms & Conditions">
+              <Group title="Terms & Conditions" className="md:col-span-2">
                 <Field label="Terms and Conditions">
                   <Textarea value={terms} onChange={(e) => setTerms(e.target.value)} className="text-xs min-h-[68px] bg-background" />
                 </Field>
@@ -630,6 +633,7 @@ const NewQuote = () => {
             </div>
           </SectionCard>
         </div>
+
 
         {/* Customer & Contact */}
         <SectionCard icon={Users} title="Customer & Contact">
