@@ -161,7 +161,9 @@ const num = (v: string) => {
 };
 
 const labelCls = "text-[11px] font-medium text-muted-foreground";
-const inputCls = "h-8 text-xs bg-background";
+const inputCls = "h-6 text-[11px] px-1.5 py-0 bg-background placeholder:text-[10px]";
+const textareaCls = "text-[11px] px-1.5 py-1.5 bg-background placeholder:text-[10px]";
+
 
 const Field = ({
   label,
@@ -549,7 +551,7 @@ const NewQuote = () => {
                   <Textarea
                     value={sourceInfo}
                     onChange={(e) => setSourceInfo(e.target.value)}
-                    className="text-xs min-h-[52px] bg-background"
+                    className={cn(textareaCls, "min-h-[52px]")}
                   />
                 </Field>
               </Group>
@@ -604,7 +606,7 @@ const NewQuote = () => {
                     <Input value={percent} onChange={(e) => setPercent(e.target.value)} disabled={!override} className={cn(inputCls, "text-right")} />
                   </Field>
                   <Field label="Exp. Date">
-                    <ModernDatePicker value={expDate} onChange={setExpDate} size="md" placeholder="MM/DD/YYYY" />
+                    <ModernDatePicker value={expDate} onChange={setExpDate} size="xs" inputClassName="px-1.5 py-0 placeholder:text-[10px]" placeholder="MM/DD/YYYY" />
                   </Field>
                 </div>
               </Group>
@@ -613,10 +615,10 @@ const NewQuote = () => {
               <Group title="Scheduling" className="md:col-span-2">
                 <div className="grid grid-cols-2 gap-2">
                   <Field label="Need By Date">
-                    <ModernDatePicker value={needBy} onChange={setNeedBy} size="md" placeholder="MM/DD/YYYY" />
+                    <ModernDatePicker value={needBy} onChange={setNeedBy} size="xs" inputClassName="px-1.5 py-0 placeholder:text-[10px]" placeholder="MM/DD/YYYY" />
                   </Field>
                   <Field label="Follow Up Date">
-                    <ModernDatePicker value={followUp} onChange={setFollowUp} size="md" placeholder="MM/DD/YYYY" />
+                    <ModernDatePicker value={followUp} onChange={setFollowUp} size="xs" inputClassName="px-1.5 py-0 placeholder:text-[10px]" placeholder="MM/DD/YYYY" />
                   </Field>
                 </div>
               </Group>
@@ -624,7 +626,7 @@ const NewQuote = () => {
               {/* Category: Terms */}
               <Group title="Terms & Conditions" className="md:col-span-2">
                 <Field label="Terms and Conditions">
-                  <Textarea value={terms} onChange={(e) => setTerms(e.target.value)} className="text-xs min-h-[68px] bg-background" />
+                  <Textarea value={terms} onChange={(e) => setTerms(e.target.value)} className={cn(textareaCls, "min-h-[68px]")} />
                 </Field>
               </Group>
             </div>
@@ -818,16 +820,16 @@ const NewQuote = () => {
         </AccSection>
 
         {/* Project details */}
-        <AccSection value="project" icon={FileText} title="Project Details">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <Field label="Proposed Project">
-              <Textarea value={proposedProject} onChange={(e) => setProposedProject(e.target.value)} className="text-xs min-h-[150px] bg-background" />
-            </Field>
-            <Field label="Special Instructions">
-              <Textarea value={specialInstructions} onChange={(e) => setSpecialInstructions(e.target.value)} className="text-xs min-h-[150px] bg-background" />
-            </Field>
-          </div>
-        </AccSection>
+          <AccSection value="project" icon={FileText} title="Project Details">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <Field label="Proposed Project">
+                <Textarea value={proposedProject} onChange={(e) => setProposedProject(e.target.value)} className={cn(textareaCls, "min-h-[150px]")} />
+              </Field>
+              <Field label="Special Instructions">
+                <Textarea value={specialInstructions} onChange={(e) => setSpecialInstructions(e.target.value)} className={cn(textareaCls, "min-h-[150px]")} />
+              </Field>
+            </div>
+          </AccSection>
 
 
         {/* Comments */}
@@ -840,7 +842,7 @@ const NewQuote = () => {
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
                     placeholder="Add a comment..."
-                    className="text-xs min-h-[60px] flex-1 bg-background"
+                    className={cn(textareaCls, "min-h-[60px] flex-1")}
                   />
                   <Button size="sm" className="h-8 text-[11px] px-3" onClick={addComment}>
                     Add
@@ -895,11 +897,11 @@ const NewQuote = () => {
                 {CHARGE_FIELDS.map((c) => (
                   <div key={c.key} className="flex items-center justify-between gap-2">
                     <span className="text-[11px] text-muted-foreground">{c.label}</span>
-                    <Input
-                      value={charges[c.key]}
-                      onChange={(e) => setCharges((p) => ({ ...p, [c.key]: e.target.value }))}
-                      className="h-7 w-24 text-[11px] text-right bg-background"
-                    />
+                  <Input
+                    value={charges[c.key]}
+                    onChange={(e) => setCharges((p) => ({ ...p, [c.key]: e.target.value }))}
+                    className={cn(inputCls, "w-24 text-right")}
+                  />
                   </div>
                 ))}
                 <Separator className="my-2" />
@@ -988,7 +990,7 @@ const NewQuote = () => {
                 </Field>
               </div>
               <Field label="Description">
-                <Textarea value={draft.description} onChange={(e) => setDraft({ ...draft, description: e.target.value })} className="text-xs min-h-[60px] bg-background" />
+                <Textarea value={draft.description} onChange={(e) => setDraft({ ...draft, description: e.target.value })} className={cn(textareaCls, "min-h-[60px]")} />
               </Field>
               <Field label="Qty">
                 <Input value={draft.qty} onChange={(e) => setDraft({ ...draft, qty: e.target.value })} className={cn(inputCls, "w-24")} />
