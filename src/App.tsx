@@ -41,6 +41,7 @@ import ProductDetail from "./pages/ProductDetail";
 import NewProductReview from "./pages/NewProductReview";
 import NewProduct from "./pages/NewProduct";
 import Quotes from "./pages/Quotes";
+import NewQuote from "./pages/NewQuote";
 import ProductReviews from "./pages/ProductReviews";
 import EditCustomer from "./pages/EditCustomer";
 import RetestNotices from "./pages/RetestNotices";
@@ -109,6 +110,7 @@ const App = () => {
             <Route path="/delivery-tickets" element={<DeliveryTickets />} />
             <Route path="/manage-customers" element={<ManageCustomers />} />
             <Route path="/quotes" element={<Quotes />} />
+            <Route path="/quotes/new" element={<NewQuote />} />
             <Route path="/manage-products" element={<ManageProducts />} />
             <Route path="/manage-products/new" element={<NewProduct />} />
             <Route path="/manage-products/product-reviews" element={<ProductReviews />} />
