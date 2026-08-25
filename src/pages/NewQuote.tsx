@@ -205,7 +205,28 @@ const SectionCard = ({
   </Card>
 );
 
+const Group = ({
+  title,
+  action,
+  children,
+  className,
+}: {
+  title: string;
+  action?: React.ReactNode;
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <div className={cn("rounded-lg border bg-muted/20 p-2.5 space-y-2", className)}>
+    <div className="flex items-center justify-between gap-2">
+      <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{title}</p>
+      {action}
+    </div>
+    {children}
+  </div>
+);
+
 const SelectField = ({
+
   value,
   onChange,
   options,
