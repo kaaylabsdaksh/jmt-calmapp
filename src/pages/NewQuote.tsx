@@ -603,12 +603,11 @@ const NewQuote = () => {
                 </Field>
               </Group>
             </div>
-
-          </SectionCard>
+        </AccSection>
 
           {/* Copy existing */}
-          <SectionCard icon={Copy} title="Copy Existing">
-            <div className="space-y-3">
+        <AccSection value="copy" icon={Copy} title="Copy Existing">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="rounded-lg border p-2.5 space-y-2">
                 <p className="text-[11px] font-semibold">Copy from Quote</p>
                 <Field label="Quote #">
@@ -637,8 +636,8 @@ const NewQuote = () => {
                 </Button>
               </div>
             </div>
-          </SectionCard>
-        </div>
+        </AccSection>
+
 
 
         {/* Customer & Contact */}
