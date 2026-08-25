@@ -318,7 +318,7 @@ const SelectField = ({
     <SelectTrigger className={inputCls}>
       <SelectValue
         placeholder={
-          <span className="text-[10px] font-medium text-black">
+          <span className="text-[10px] font-normal text-black">
             {placeholder}
           </span>
         }
