@@ -85,10 +85,10 @@ const DATE_TYPE_OPTIONS = [
 
 const inputBaseClass =
   "h-7 text-[11px] px-2 bg-white text-black border-gray-300 placeholder:text-[10px] placeholder:text-black focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0";
-const activeInputClass = "border-slate-700 bg-slate-50 font-semibold pr-6";
+const activeInputClass = "border-yellow-400 bg-yellow-50 font-semibold pr-6";
 const selectBaseClass =
   "h-7 min-h-0 text-[11px] px-2 py-0 w-full bg-white text-black [&>span]:text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0 [&>svg]:h-3 [&>svg]:w-3";
-const activeSelectClass = "border-slate-700 bg-slate-50 [&>span]:font-semibold";
+const activeSelectClass = "border-yellow-400 bg-yellow-50 [&>span]:font-semibold";
 
 const FilterText = ({
   label,
@@ -111,7 +111,7 @@ const FilterText = ({
         className={`${inputBaseClass} w-full ${active ? activeInputClass : ""}`}
       />
       {active && (
-        <Check className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-slate-700" />
+        <Check className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-black" />
       )}
     </div>
   );
