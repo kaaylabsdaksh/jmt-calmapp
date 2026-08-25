@@ -710,16 +710,19 @@ const NewQuote = () => {
         <AccSection value="customer" icon={Users} title="Customer & Contact">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="space-y-2.5">
-              <Field label="Select Contact">
-                <div className="flex items-center gap-1.5">
-                  <div className="flex-1">
-                    <SelectField value={selectContact} onChange={setSelectContact} options={CONTACTS} placeholder="Select contact" />
-                  </div>
-                  <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
-                    <Plus className="h-3 w-3 mr-1" /> Add Contact
-                  </Button>
+              <div className="flex items-center gap-1.5">
+                <div className="flex-1">
+                  <SelectField
+                    value={selectContact}
+                    onChange={setSelectContact}
+                    options={CONTACTS}
+                    placeholder="Select Contact"
+                  />
                 </div>
-              </Field>
+                <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
+                  <Plus className="h-3 w-3 mr-1" /> Add Contact
+                </Button>
+              </div>
               <div className="grid grid-cols-2 gap-2">
                 <Field label="Contact First Name">
                   <Input value={contactFirst} onChange={(e) => setContactFirst(e.target.value)} className={inputCls} />
