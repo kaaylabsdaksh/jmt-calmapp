@@ -636,7 +636,7 @@ const NewQuote = () => {
 
 
         {/* Customer & Contact */}
-        <SectionCard icon={Users} title="Customer & Contact">
+        <AccSection value="customer" icon={Users} title="Customer & Contact">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="space-y-2.5">
               <Field label="Select Contact">
