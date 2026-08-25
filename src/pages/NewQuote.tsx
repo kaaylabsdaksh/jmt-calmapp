@@ -504,11 +504,11 @@ const NewQuote = () => {
                   </Field>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
-                  <div className="flex items-center gap-2 h-8 px-2.5 rounded-lg border bg-background">
+                  <div className="flex items-center gap-2 h-6 px-2.5 rounded-lg border bg-background">
                     <Checkbox id="poco" checked={pocoReq} onCheckedChange={(v) => setPocoReq(!!v)} />
                     <Label htmlFor="poco" className="text-[11px] font-medium">PO/CO Req?</Label>
                   </div>
-                  <div className="flex items-center justify-between rounded-lg border bg-background px-2.5 h-8">
+                  <div className="flex items-center justify-between rounded-lg border bg-background px-2.5 h-6">
                     <span className="text-[11px] font-medium text-muted-foreground">Item Quantity</span>
                     <span className="text-xs font-semibold">{itemQuantity}</span>
                   </div>
@@ -531,7 +531,7 @@ const NewQuote = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="h-8 text-[11px] px-2 shrink-0"
+                      className="h-6 text-[11px] px-2 shrink-0"
                       onClick={() => {
                         setCustomerName("Chevron Oronite");
                         toast({ title: "Account found", description: "Customer details populated." });
@@ -570,7 +570,7 @@ const NewQuote = () => {
                   <Field label="Opportunity">
                     <div className="flex items-center gap-1.5">
                       <Input value={opportunity} onChange={(e) => setOpportunity(e.target.value)} className={inputCls} />
-                      <Button variant="outline" size="sm" className="h-8 text-[11px] px-2 shrink-0">
+                      <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
                         Find
                       </Button>
                     </div>
@@ -676,7 +676,7 @@ const NewQuote = () => {
                   <div className="flex-1">
                     <SelectField value={selectContact} onChange={setSelectContact} options={CONTACTS} placeholder="Select contact" />
                   </div>
-                  <Button variant="outline" size="sm" className="h-8 text-[11px] px-2 shrink-0">
+                  <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
                     <Plus className="h-3 w-3 mr-1" /> Add Contact
                   </Button>
                 </div>
