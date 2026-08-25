@@ -785,55 +785,18 @@ const NewQuote = () => {
           </div>
         </SectionCard>
 
-        {/* Project details + summary */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
-          <SectionCard icon={FileText} title="Project Details" className="xl:col-span-2">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <Field label="Proposed Project">
-                <Textarea value={proposedProject} onChange={(e) => setProposedProject(e.target.value)} className="text-xs min-h-[150px] bg-background" />
-              </Field>
-              <Field label="Special Instructions">
-                <Textarea value={specialInstructions} onChange={(e) => setSpecialInstructions(e.target.value)} className="text-xs min-h-[150px] bg-background" />
-              </Field>
-            </div>
-          </SectionCard>
+        {/* Project details */}
+        <AccSection value="project" icon={FileText} title="Project Details">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <Field label="Proposed Project">
+              <Textarea value={proposedProject} onChange={(e) => setProposedProject(e.target.value)} className="text-xs min-h-[150px] bg-background" />
+            </Field>
+            <Field label="Special Instructions">
+              <Textarea value={specialInstructions} onChange={(e) => setSpecialInstructions(e.target.value)} className="text-xs min-h-[150px] bg-background" />
+            </Field>
+          </div>
+        </AccSection>
 
-          <SectionCard icon={DollarSign} title="Quote Summary">
-            <div className="space-y-1.5">
-              {CHARGE_FIELDS.map((c) => (
-                <div key={c.key} className="flex items-center justify-between gap-2">
-                  <span className="text-[11px] text-muted-foreground">{c.label}</span>
-                  <Input
-                    value={charges[c.key]}
-                    onChange={(e) => setCharges((p) => ({ ...p, [c.key]: e.target.value }))}
-                    className="h-7 w-24 text-[11px] text-right bg-background"
-                  />
-                </div>
-              ))}
-              <Separator className="my-2" />
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="text-muted-foreground">Certification/Testing Subtotal</span>
-                <span className="font-medium">{money(certSubtotal + baseTotal)}</span>
-              </div>
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="text-muted-foreground">Other Services/Fees</span>
-                <span className="font-medium">{money(otherServicesTotal)}</span>
-              </div>
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="text-muted-foreground">Parts</span>
-                <span className="font-medium">{money(partsTotal)}</span>
-              </div>
-              <div className="flex items-center justify-between rounded-lg bg-muted/50 px-2.5 py-2 mt-1">
-                <span className="text-xs font-semibold">Total</span>
-                <span className="text-sm font-bold">{money(total)}</span>
-              </div>
-              <div className="flex items-center justify-between text-[11px] pt-1">
-                <span className="text-muted-foreground">Historical Billing Amount</span>
-                <span className="font-medium">{money(num(historicalBilling))}</span>
-              </div>
-            </div>
-          </SectionCard>
-        </div>
 
         {/* Comments */}
         <AccSection value="comments" icon={MessageSquare} title="Comments" badge={comments.length}>
