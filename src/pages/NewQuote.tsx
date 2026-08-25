@@ -180,28 +180,29 @@ const Field = ({
   const childArray = Children.toArray(children);
   const child = childArray.length === 1 ? childArray[0] : null;
   if (isValidElement(child)) {
+    const element = child as React.ReactElement<any>;
     const typeName =
-      typeof child.type === "string"
-        ? child.type
-        : (child.type as any).displayName || (child.type as any).name;
+      typeof element.type === "string"
+        ? element.type
+        : (element.type as any).displayName || (element.type as any).name;
     if (typeName === "ModernDatePicker") {
-      return cloneElement(child as React.ReactElement<any>, {
-        className: cn(child.props.className, className),
+      return cloneElement(element, {
+        className: cn(element.props.className, className),
         inputClassName: cn(
-          child.props.inputClassName,
+          element.props.inputClassName,
           "placeholder:font-medium placeholder:text-slate-500"
         ),
         placeholder: labelText,
       });
     }
     const isInputLike =
-      typeof child.type === "string"
-        ? ["input", "textarea", "select"].includes(child.type)
+      typeof element.type === "string"
+        ? ["input", "textarea", "select"].includes(element.type)
         : ["Input", "Textarea", "SelectField"].includes(typeName);
     if (isInputLike) {
-      return cloneElement(child as React.ReactElement<any>, {
+      return cloneElement(element, {
         className: cn(
-          child.props.className,
+          element.props.className,
           className,
           "placeholder:font-medium placeholder:text-slate-500"
         ),
