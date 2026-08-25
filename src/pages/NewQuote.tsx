@@ -71,10 +71,10 @@ import {
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
-const QUOTE_TYPES = ["Lab", "OnSite", "ESL", "Rental", "Sales"];
-const LOCATIONS = ["BR", "CL", "GR", "MT", "HOU"];
+const QUOTE_TYPES = ["All", "Lab", "OnSite", "ESL", "Rental", "Sales"];
+const LOCATIONS = ["All", "BR", "CL", "GR", "MT", "HOU"];
 const SOURCES = ["Phone", "Email", "Web", "Salesperson", "Walk-in"];
-const PRIORITIES = ["Emergency", "Expedite", "Rush", "Normal"];
+const PRIORITIES = ["All", "Emergency", "Expedite", "Rush", "Normal"];
 const YES_NO = ["Yes", "No"];
 const STATES = ["LA", "TX", "MS", "AL", "MT", "OK"];
 const SALESPEOPLE = ["Brandi M. Cali", "Trysten Q Howze", "Kevin R. Young", "Jessica M Thompson"];
