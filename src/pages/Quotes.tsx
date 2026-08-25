@@ -84,10 +84,10 @@ const DATE_TYPE_OPTIONS = [
 ];
 
 const inputBaseClass =
-  "h-7 text-[11px] px-2 bg-white text-black border-gray-300 placeholder:text-[10px] placeholder:text-black focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0";
+  "h-6 text-[11px] px-1.5 bg-white text-black border-gray-300 placeholder:text-[10px] placeholder:text-black focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0";
 const activeInputClass = "border-yellow-400 bg-yellow-50 font-semibold pr-6";
 const selectBaseClass =
-  "h-7 min-h-0 text-[11px] px-2 py-0 w-full bg-white text-black [&>span]:text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0 [&>svg]:h-3 [&>svg]:w-3";
+  "h-6 min-h-0 text-[11px] px-1.5 py-0 w-full bg-white text-black [&>span]:text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:ring-offset-0 [&>svg]:h-3 [&>svg]:w-3";
 const activeSelectClass = "border-yellow-400 bg-yellow-50 [&>span]:font-semibold";
 
 const FilterText = ({
