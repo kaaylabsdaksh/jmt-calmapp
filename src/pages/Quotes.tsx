@@ -227,9 +227,11 @@ const Quotes = () => {
               <Download className="h-3 w-3 mr-1" />
               Export
             </Button>
-            <Button size="sm" className="h-7 text-[11px] px-2 bg-green-600 hover:bg-green-700 text-white">
+            <Button asChild size="sm" className="h-7 text-[11px] px-2 bg-green-600 hover:bg-green-700 text-white">
+              <Link to="/quotes/new">
               <Plus className="h-3 w-3 mr-1" />
               Add New
+              </Link>
             </Button>
           </div>
         </div>
