@@ -205,6 +205,39 @@ const SectionCard = ({
   </Card>
 );
 
+const AccSection = ({
+  value,
+  icon: Icon,
+  title,
+  badge,
+  action,
+  children,
+}: {
+  value: string;
+  icon: React.ElementType;
+  title: string;
+  badge?: number;
+  action?: React.ReactNode;
+  children: React.ReactNode;
+}) => (
+  <AccordionItem value={value} className="rounded-xl border shadow-sm bg-card px-3">
+    <AccordionTrigger className="py-2 hover:no-underline">
+      <div className="flex items-center gap-2">
+        <Icon className="h-4 w-4 text-slate-600" />
+        <span className="text-[13px] font-semibold tracking-tight">{title}</span>
+        {typeof badge === "number" && (
+          <Badge variant="secondary" className="text-[10px] px-1.5 py-0">{badge}</Badge>
+        )}
+      </div>
+    </AccordionTrigger>
+    <AccordionContent className="pb-3 pt-0">
+      {action && <div className="flex justify-end pb-2">{action}</div>}
+      <Separator className="mb-3" />
+      <div className="space-y-3">{children}</div>
+    </AccordionContent>
+  </AccordionItem>
+);
+
 const Group = ({
   title,
   action,
