@@ -26,6 +26,12 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { ModernDatePicker } from "@/components/ui/modern-date-picker";
 import {
   Sheet,
@@ -203,6 +209,39 @@ const SectionCard = ({
       {children}
     </CardContent>
   </Card>
+);
+
+const AccSection = ({
+  value,
+  icon: Icon,
+  title,
+  badge,
+  action,
+  children,
+}: {
+  value: string;
+  icon: React.ElementType;
+  title: string;
+  badge?: number;
+  action?: React.ReactNode;
+  children: React.ReactNode;
+}) => (
+  <AccordionItem value={value} className="rounded-xl border shadow-sm bg-card px-3">
+    <AccordionTrigger className="py-2 hover:no-underline">
+      <div className="flex items-center gap-2">
+        <Icon className="h-4 w-4 text-slate-600" />
+        <span className="text-[13px] font-semibold tracking-tight">{title}</span>
+        {typeof badge === "number" && (
+          <Badge variant="secondary" className="text-[10px] px-1.5 py-0">{badge}</Badge>
+        )}
+      </div>
+    </AccordionTrigger>
+    <AccordionContent className="pb-3 pt-0">
+      {action && <div className="flex justify-end pb-2">{action}</div>}
+      <Separator className="mb-3" />
+      <div className="space-y-3">{children}</div>
+    </AccordionContent>
+  </AccordionItem>
 );
 
 const Group = ({
@@ -445,9 +484,15 @@ const NewQuote = () => {
           </div>
         </div>
 
+        <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px] gap-3 items-start">
+          <div className="min-w-0">
+          <Accordion
+            type="multiple"
+            defaultValue={["quote-info", "copy", "customer", "items", "project", "comments"]}
+            className="space-y-3"
+          >
         {/* Quote setup */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
-          <SectionCard icon={ClipboardList} title="Quote Information" className="xl:col-span-2">
+        <AccSection value="quote-info" icon={ClipboardList} title="Quote Information">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-2 auto-rows-min">
               {/* Category: Quote Setup */}
               <Group title="Quote Setup" className="md:col-span-2">
@@ -597,12 +642,11 @@ const NewQuote = () => {
                 </Field>
               </Group>
             </div>
-
-          </SectionCard>
+        </AccSection>
 
           {/* Copy existing */}
-          <SectionCard icon={Copy} title="Copy Existing">
-            <div className="space-y-3">
+        <AccSection value="copy" icon={Copy} title="Copy Existing">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="rounded-lg border p-2.5 space-y-2">
                 <p className="text-[11px] font-semibold">Copy from Quote</p>
                 <Field label="Quote #">
@@ -631,12 +675,12 @@ const NewQuote = () => {
                 </Button>
               </div>
             </div>
-          </SectionCard>
-        </div>
+        </AccSection>
+
 
 
         {/* Customer & Contact */}
-        <SectionCard icon={Users} title="Customer & Contact">
+        <AccSection value="customer" icon={Users} title="Customer & Contact">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="space-y-2.5">
               <Field label="Select Contact">
@@ -708,12 +752,14 @@ const NewQuote = () => {
               </div>
             </div>
           </div>
-        </SectionCard>
+        </AccSection>
 
         {/* Quote Items */}
-        <SectionCard
+        <AccSection
+          value="items"
           icon={Package}
           title="Quote Items"
+          badge={items.length}
           action={
             <Button size="sm" className="h-7 text-[11px] px-2 bg-green-600 hover:bg-green-700 text-white" onClick={openAdd}>
               <Plus className="h-3 w-3 mr-1" /> Add Quote Item
@@ -783,73 +829,24 @@ const NewQuote = () => {
               </tbody>
             </table>
           </div>
-        </SectionCard>
+        </AccSection>
 
-        {/* Project details + summary */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
-          <SectionCard icon={FileText} title="Project Details" className="xl:col-span-2">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <Field label="Proposed Project">
-                <Textarea value={proposedProject} onChange={(e) => setProposedProject(e.target.value)} className="text-xs min-h-[150px] bg-background" />
-              </Field>
-              <Field label="Special Instructions">
-                <Textarea value={specialInstructions} onChange={(e) => setSpecialInstructions(e.target.value)} className="text-xs min-h-[150px] bg-background" />
-              </Field>
-            </div>
-          </SectionCard>
+        {/* Project details */}
+        <AccSection value="project" icon={FileText} title="Project Details">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <Field label="Proposed Project">
+              <Textarea value={proposedProject} onChange={(e) => setProposedProject(e.target.value)} className="text-xs min-h-[150px] bg-background" />
+            </Field>
+            <Field label="Special Instructions">
+              <Textarea value={specialInstructions} onChange={(e) => setSpecialInstructions(e.target.value)} className="text-xs min-h-[150px] bg-background" />
+            </Field>
+          </div>
+        </AccSection>
 
-          <SectionCard icon={DollarSign} title="Quote Summary">
-            <div className="space-y-1.5">
-              {CHARGE_FIELDS.map((c) => (
-                <div key={c.key} className="flex items-center justify-between gap-2">
-                  <span className="text-[11px] text-muted-foreground">{c.label}</span>
-                  <Input
-                    value={charges[c.key]}
-                    onChange={(e) => setCharges((p) => ({ ...p, [c.key]: e.target.value }))}
-                    className="h-7 w-24 text-[11px] text-right bg-background"
-                  />
-                </div>
-              ))}
-              <Separator className="my-2" />
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="text-muted-foreground">Certification/Testing Subtotal</span>
-                <span className="font-medium">{money(certSubtotal + baseTotal)}</span>
-              </div>
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="text-muted-foreground">Other Services/Fees</span>
-                <span className="font-medium">{money(otherServicesTotal)}</span>
-              </div>
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="text-muted-foreground">Parts</span>
-                <span className="font-medium">{money(partsTotal)}</span>
-              </div>
-              <div className="flex items-center justify-between rounded-lg bg-muted/50 px-2.5 py-2 mt-1">
-                <span className="text-xs font-semibold">Total</span>
-                <span className="text-sm font-bold">{money(total)}</span>
-              </div>
-              <div className="flex items-center justify-between text-[11px] pt-1">
-                <span className="text-muted-foreground">Historical Billing Amount</span>
-                <span className="font-medium">{money(num(historicalBilling))}</span>
-              </div>
-            </div>
-          </SectionCard>
-        </div>
 
         {/* Comments */}
-        <Collapsible open={commentsOpen} onOpenChange={setCommentsOpen}>
-          <Card className="rounded-xl border shadow-sm">
-            <CardContent className="p-3 space-y-3">
-              <CollapsibleTrigger className="flex w-full items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <MessageSquare className="h-4 w-4 text-slate-600" />
-                  <h2 className="text-[13px] font-semibold tracking-tight">Comments</h2>
-                  <Badge variant="secondary" className="text-[10px] px-1.5 py-0">{comments.length}</Badge>
-                </div>
-                <span className="text-[11px] text-muted-foreground">{commentsOpen ? "Hide" : "Show"}</span>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="space-y-3">
-                <Separator />
-                <div className="flex flex-col md:flex-row gap-2 items-start">
+        <AccSection value="comments" icon={MessageSquare} title="Comments" badge={comments.length}>
+              <div className="flex flex-col md:flex-row gap-2 items-start">
                   <div className="w-full md:w-40">
                     <SelectField value={commentType} onChange={setCommentType} options={COMMENT_TYPES} placeholder="Type" />
                   </div>
@@ -901,10 +898,50 @@ const NewQuote = () => {
                     </Button>
                   </div>
                 </div>
-              </CollapsibleContent>
-            </CardContent>
-          </Card>
-        </Collapsible>
+        </AccSection>
+          </Accordion>
+          </div>
+
+          {/* Sticky summary rail */}
+          <aside className="xl:sticky xl:top-2 self-start">
+            <SectionCard icon={DollarSign} title="Quote Summary">
+              <div className="space-y-1.5">
+                {CHARGE_FIELDS.map((c) => (
+                  <div key={c.key} className="flex items-center justify-between gap-2">
+                    <span className="text-[11px] text-muted-foreground">{c.label}</span>
+                    <Input
+                      value={charges[c.key]}
+                      onChange={(e) => setCharges((p) => ({ ...p, [c.key]: e.target.value }))}
+                      className="h-7 w-24 text-[11px] text-right bg-background"
+                    />
+                  </div>
+                ))}
+                <Separator className="my-2" />
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="text-muted-foreground">Certification/Testing Subtotal</span>
+                  <span className="font-medium">{money(certSubtotal + baseTotal)}</span>
+                </div>
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="text-muted-foreground">Other Services/Fees</span>
+                  <span className="font-medium">{money(otherServicesTotal)}</span>
+                </div>
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="text-muted-foreground">Parts</span>
+                  <span className="font-medium">{money(partsTotal)}</span>
+                </div>
+                <div className="flex items-center justify-between rounded-lg bg-muted/50 px-2.5 py-2 mt-1">
+                  <span className="text-xs font-semibold">Total</span>
+                  <span className="text-sm font-bold">{money(total)}</span>
+                </div>
+                <div className="flex items-center justify-between text-[11px] pt-1">
+                  <span className="text-muted-foreground">Historical Billing Amount</span>
+                  <span className="font-medium">{money(num(historicalBilling))}</span>
+                </div>
+              </div>
+            </SectionCard>
+          </aside>
+        </div>
+
       </main>
 
       {/* Sticky action bar */}
