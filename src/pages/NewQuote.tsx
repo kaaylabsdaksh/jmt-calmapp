@@ -161,8 +161,8 @@ const num = (v: string) => {
 };
 
 const labelCls = "text-[11px] font-medium text-muted-foreground";
-const inputCls = "h-6 text-[11px] px-1.5 py-0 bg-white text-black placeholder:text-[10px]";
-const textareaCls = "text-[11px] px-1.5 py-1.5 bg-white text-black placeholder:text-[10px]";
+const inputCls = "h-6 text-[11px] px-1.5 py-0 bg-white text-black placeholder:text-[10px] placeholder:text-black placeholder:opacity-100";
+const textareaCls = "text-[11px] px-1.5 py-1.5 bg-white text-black placeholder:text-[10px] placeholder:text-black placeholder:opacity-100";
 
 
 
@@ -191,7 +191,7 @@ const Field = ({
         className: cn(element.props.className, className),
         inputClassName: cn(
           element.props.inputClassName,
-          "placeholder:font-medium placeholder:text-slate-500"
+          "placeholder:font-medium placeholder:text-black placeholder:opacity-100"
         ),
         placeholder: labelText,
       });
@@ -205,7 +205,7 @@ const Field = ({
         className: cn(
           element.props.className,
           className,
-          "placeholder:font-medium placeholder:text-slate-500"
+          "placeholder:font-medium placeholder:text-black placeholder:opacity-100"
         ),
         placeholder: labelText,
       });
@@ -318,7 +318,7 @@ const SelectField = ({
     <SelectTrigger className={inputCls}>
       <SelectValue
         placeholder={
-          <span className="text-[10px] font-medium text-slate-500">
+          <span className="text-[10px] font-medium text-black">
             {placeholder}
           </span>
         }
@@ -574,7 +574,7 @@ const NewQuote = () => {
                   <Input
                     value={acctNo}
                     onChange={(e) => setAcctNo(e.target.value)}
-                    className={cn(inputCls, "placeholder:font-medium placeholder:text-slate-500")}
+                    className={cn(inputCls, "placeholder:font-medium placeholder:text-black placeholder:opacity-100")}
                     placeholder="Account #"
                   />
                   <Button
@@ -617,7 +617,7 @@ const NewQuote = () => {
                     <Input
                       value={opportunity}
                       onChange={(e) => setOpportunity(e.target.value)}
-                      className={cn(inputCls, "placeholder:font-medium placeholder:text-slate-500")}
+                      className={cn(inputCls, "placeholder:font-medium placeholder:text-black placeholder:opacity-100")}
                       placeholder="Opportunity"
                     />
                     <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
