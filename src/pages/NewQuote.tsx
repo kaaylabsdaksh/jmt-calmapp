@@ -294,20 +294,25 @@ const Group = ({
 );
 
 const SelectField = ({
-
   value,
   onChange,
   options,
-  placeholder,
+  placeholder = "Select",
 }: {
   value: string;
   onChange: (v: string) => void;
   options: string[];
-  placeholder: string;
+  placeholder?: string;
 }) => (
   <Select value={value} onValueChange={onChange}>
     <SelectTrigger className={inputCls}>
-      <SelectValue placeholder={placeholder} />
+      <SelectValue
+        placeholder={
+          <span className="text-[10px] font-medium text-slate-500">
+            {placeholder}
+          </span>
+        }
+      />
     </SelectTrigger>
     <SelectContent className="bg-popover z-50">
       {options.map((o) => (
