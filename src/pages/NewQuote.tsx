@@ -453,9 +453,9 @@ const NewQuote = () => {
   ];
 
   return (
-    <div className="bg-background min-h-full">
+    <div className="bg-background min-h-screen flex flex-col">
       <ModernTopNav />
-      <main className="w-full max-w-none px-2 sm:px-3 lg:px-4 py-2 pb-24 space-y-3">
+      <main className="w-full max-w-none px-2 sm:px-3 lg:px-4 py-2 pb-24 space-y-3 flex-1">
         {/* Header */}
         <div className="flex flex-wrap items-start justify-between gap-2">
           <div>
@@ -467,22 +467,8 @@ const NewQuote = () => {
               </Badge>
             </div>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Button variant="outline" size="sm" className="h-7 text-[11px] px-2" onClick={() => navigate("/quotes")}>
-              <ArrowLeft className="h-3 w-3 mr-1" /> Back
-            </Button>
-            <Button variant="outline" size="sm" className="h-7 text-[11px] px-2" onClick={() => navigate("/quotes")}>
-              <X className="h-3 w-3 mr-1" /> Cancel
-            </Button>
-            <Button
-              size="sm"
-              className="h-7 text-[11px] px-2 bg-green-600 hover:bg-green-700 text-white"
-              onClick={() => toast({ title: "Quote saved" })}
-            >
-              <Save className="h-3 w-3 mr-1" /> Save Quote
-            </Button>
-          </div>
         </div>
+
 
         <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px] gap-3 items-start">
           <div className="min-w-0">
