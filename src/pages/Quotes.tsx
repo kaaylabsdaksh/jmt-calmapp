@@ -153,7 +153,7 @@ const Quotes = () => {
   const [dateTo, setDateTo] = useState<Date | undefined>();
   const [showTotals, setShowTotals] = useState(false);
   const [page, setPage] = useState(1);
-  const pageSize = 10;
+  const [pageSize, setPageSize] = useState(10);
 
   const parseDatePart = (value: string) => {
     if (!value) return undefined;
