@@ -133,9 +133,6 @@ const FilterPick = ({
       <SelectValue placeholder={`All ${label}`} />
     </SelectTrigger>
     <SelectContent>
-      <SelectItem value="" className="text-xs">
-        All {label}
-      </SelectItem>
       {options.map((o) => (
         <SelectItem key={o} value={o} className="text-xs">
           {o}
@@ -305,7 +302,6 @@ const Quotes = () => {
                       <SelectValue placeholder="All Location" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="" className="text-xs">All Location</SelectItem>
                       {LOCATIONS.map((o) => (
                         <SelectItem key={o} value={o} className="text-xs">
                           {o}
