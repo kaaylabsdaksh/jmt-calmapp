@@ -175,15 +175,42 @@ const Field = ({
   required?: boolean;
   children: React.ReactNode;
   className?: string;
-}) => (
-  <div className={cn("space-y-1", className)}>
-    <Label className={labelCls}>
-      {label}
-      {required && <span className="text-red-600 ml-0.5">*</span>}
-    </Label>
-    {children}
-  </div>
-);
+}) => {
+  const labelText = `${label}${required ? " *" : ""}`;
+  const childArray = Children.toArray(children);
+  const child = childArray.length === 1 ? childArray[0] : null;
+  if (isValidElement(child)) {
+    const typeName =
+      typeof child.type === "string"
+        ? child.type
+        : (child.type as any).displayName || (child.type as any).name;
+    const isInputLike =
+      typeof child.type === "string"
+        ? ["input", "textarea", "select"].includes(child.type)
+        : ["Input", "Textarea", "SelectField", "ModernDatePicker"].includes(
+            typeName
+          );
+    if (isInputLike) {
+      return cloneElement(child as React.ReactElement<any>, {
+        className: cn(
+          child.props.className,
+          className,
+          "placeholder:font-medium placeholder:text-slate-500"
+        ),
+        placeholder: labelText,
+      });
+    }
+  }
+  return (
+    <div className={cn("space-y-1", className)}>
+      <Label className={labelCls}>
+        {label}
+        {required && <span className="text-red-600 ml-0.5">*</span>}
+      </Label>
+      {children}
+    </div>
+  );
+};
 
 const SectionCard = ({
   icon: Icon,
