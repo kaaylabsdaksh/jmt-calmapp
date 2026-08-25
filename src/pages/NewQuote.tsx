@@ -510,7 +510,7 @@ const NewQuote = () => {
                   </div>
                   <div className="flex items-center justify-between rounded-lg border bg-background px-2.5 h-6">
                     <span className="text-[11px] font-medium text-muted-foreground">Item Quantity</span>
-                    <span className="text-xs font-semibold">{itemQuantity}</span>
+                    <span className="text-[11px] font-semibold">{itemQuantity}</span>
                   </div>
                 </div>
               </Group>
