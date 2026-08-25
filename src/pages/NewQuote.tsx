@@ -445,9 +445,15 @@ const NewQuote = () => {
           </div>
         </div>
 
+        <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px] gap-3 items-start">
+          <div className="min-w-0">
+          <Accordion
+            type="multiple"
+            defaultValue={["quote-info", "copy", "customer", "items", "project", "comments"]}
+            className="space-y-3"
+          >
         {/* Quote setup */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
-          <SectionCard icon={ClipboardList} title="Quote Information" className="xl:col-span-2">
+        <AccSection value="quote-info" icon={ClipboardList} title="Quote Information">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-2 auto-rows-min">
               {/* Category: Quote Setup */}
               <Group title="Quote Setup" className="md:col-span-2">
