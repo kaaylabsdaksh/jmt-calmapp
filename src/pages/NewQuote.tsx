@@ -785,7 +785,7 @@ const NewQuote = () => {
               </tbody>
             </table>
           </div>
-        </SectionCard>
+        </AccSection>
 
         {/* Project details */}
         <AccSection value="project" icon={FileText} title="Project Details">
