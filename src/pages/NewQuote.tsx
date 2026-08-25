@@ -708,7 +708,7 @@ const NewQuote = () => {
               </div>
             </div>
           </div>
-        </SectionCard>
+        </AccSection>
 
         {/* Quote Items */}
         <AccSection
