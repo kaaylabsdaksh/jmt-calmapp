@@ -603,14 +603,17 @@ const NewQuote = () => {
                   </Field>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
-                  <Field label="Opportunity">
-                    <div className="flex items-center gap-1.5">
-                      <Input value={opportunity} onChange={(e) => setOpportunity(e.target.value)} className={inputCls} />
-                      <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
-                        Find
-                      </Button>
-                    </div>
-                  </Field>
+                  <div className="flex items-center gap-1.5">
+                    <Input
+                      value={opportunity}
+                      onChange={(e) => setOpportunity(e.target.value)}
+                      className={cn(inputCls, "placeholder:font-medium placeholder:text-slate-500")}
+                      placeholder="Opportunity"
+                    />
+                    <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
+                      Find
+                    </Button>
+                  </div>
                   <Field label="Customer PO #">
                     <Input value={custPo} onChange={(e) => setCustPo(e.target.value)} className={inputCls} />
                   </Field>
