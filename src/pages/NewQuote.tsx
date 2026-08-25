@@ -711,9 +711,11 @@ const NewQuote = () => {
         </SectionCard>
 
         {/* Quote Items */}
-        <SectionCard
+        <AccSection
+          value="items"
           icon={Package}
           title="Quote Items"
+          badge={items.length}
           action={
             <Button size="sm" className="h-7 text-[11px] px-2 bg-green-600 hover:bg-green-700 text-white" onClick={openAdd}>
               <Plus className="h-3 w-3 mr-1" /> Add Quote Item
