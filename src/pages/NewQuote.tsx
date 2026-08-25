@@ -1004,9 +1004,6 @@ const NewQuote = () => {
           </DropdownMenu>
           <div className="flex items-center gap-1.5">
             <Button variant="outline" size="sm" className="h-7 text-[11px] px-2" onClick={() => navigate("/quotes")}>
-              Back
-            </Button>
-            <Button variant="outline" size="sm" className="h-7 text-[11px] px-2" onClick={() => navigate("/quotes")}>
               Cancel
             </Button>
             <Button
