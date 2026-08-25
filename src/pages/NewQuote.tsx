@@ -836,20 +836,8 @@ const NewQuote = () => {
         </div>
 
         {/* Comments */}
-        <Collapsible open={commentsOpen} onOpenChange={setCommentsOpen}>
-          <Card className="rounded-xl border shadow-sm">
-            <CardContent className="p-3 space-y-3">
-              <CollapsibleTrigger className="flex w-full items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <MessageSquare className="h-4 w-4 text-slate-600" />
-                  <h2 className="text-[13px] font-semibold tracking-tight">Comments</h2>
-                  <Badge variant="secondary" className="text-[10px] px-1.5 py-0">{comments.length}</Badge>
-                </div>
-                <span className="text-[11px] text-muted-foreground">{commentsOpen ? "Hide" : "Show"}</span>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="space-y-3">
-                <Separator />
-                <div className="flex flex-col md:flex-row gap-2 items-start">
+        <AccSection value="comments" icon={MessageSquare} title="Comments" badge={comments.length}>
+              <div className="flex flex-col md:flex-row gap-2 items-start">
                   <div className="w-full md:w-40">
                     <SelectField value={commentType} onChange={setCommentType} options={COMMENT_TYPES} placeholder="Type" />
                   </div>
@@ -901,10 +889,50 @@ const NewQuote = () => {
                     </Button>
                   </div>
                 </div>
-              </CollapsibleContent>
-            </CardContent>
-          </Card>
-        </Collapsible>
+        </AccSection>
+          </Accordion>
+          </div>
+
+          {/* Sticky summary rail */}
+          <aside className="xl:sticky xl:top-2 self-start">
+            <SectionCard icon={DollarSign} title="Quote Summary">
+              <div className="space-y-1.5">
+                {CHARGE_FIELDS.map((c) => (
+                  <div key={c.key} className="flex items-center justify-between gap-2">
+                    <span className="text-[11px] text-muted-foreground">{c.label}</span>
+                    <Input
+                      value={charges[c.key]}
+                      onChange={(e) => setCharges((p) => ({ ...p, [c.key]: e.target.value }))}
+                      className="h-7 w-24 text-[11px] text-right bg-background"
+                    />
+                  </div>
+                ))}
+                <Separator className="my-2" />
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="text-muted-foreground">Certification/Testing Subtotal</span>
+                  <span className="font-medium">{money(certSubtotal + baseTotal)}</span>
+                </div>
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="text-muted-foreground">Other Services/Fees</span>
+                  <span className="font-medium">{money(otherServicesTotal)}</span>
+                </div>
+                <div className="flex items-center justify-between text-[11px]">
+                  <span className="text-muted-foreground">Parts</span>
+                  <span className="font-medium">{money(partsTotal)}</span>
+                </div>
+                <div className="flex items-center justify-between rounded-lg bg-muted/50 px-2.5 py-2 mt-1">
+                  <span className="text-xs font-semibold">Total</span>
+                  <span className="text-sm font-bold">{money(total)}</span>
+                </div>
+                <div className="flex items-center justify-between text-[11px] pt-1">
+                  <span className="text-muted-foreground">Historical Billing Amount</span>
+                  <span className="font-medium">{money(num(historicalBilling))}</span>
+                </div>
+              </div>
+            </SectionCard>
+          </aside>
+        </div>
+
       </main>
 
       {/* Sticky action bar */}
