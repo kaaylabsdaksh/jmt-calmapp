@@ -184,12 +184,20 @@ const Field = ({
       typeof child.type === "string"
         ? child.type
         : (child.type as any).displayName || (child.type as any).name;
+    if (typeName === "ModernDatePicker") {
+      return cloneElement(child as React.ReactElement<any>, {
+        className: cn(child.props.className, className),
+        inputClassName: cn(
+          child.props.inputClassName,
+          "placeholder:font-medium placeholder:text-slate-500"
+        ),
+        placeholder: labelText,
+      });
+    }
     const isInputLike =
       typeof child.type === "string"
         ? ["input", "textarea", "select"].includes(child.type)
-        : ["Input", "Textarea", "SelectField", "ModernDatePicker"].includes(
-            typeName
-          );
+        : ["Input", "Textarea", "SelectField"].includes(typeName);
     if (isInputLike) {
       return cloneElement(child as React.ReactElement<any>, {
         className: cn(
