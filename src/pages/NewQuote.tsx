@@ -574,7 +574,7 @@ const NewQuote = () => {
                   <Input
                     value={acctNo}
                     onChange={(e) => setAcctNo(e.target.value)}
-                    className={cn(inputCls, "placeholder:font-medium placeholder:text-black placeholder:opacity-100")}
+                    className={cn(inputCls, "placeholder:font-normal placeholder:text-black placeholder:opacity-100")}
                     placeholder="Account #"
                   />
                   <Button
@@ -617,7 +617,7 @@ const NewQuote = () => {
                     <Input
                       value={opportunity}
                       onChange={(e) => setOpportunity(e.target.value)}
-                      className={cn(inputCls, "placeholder:font-medium placeholder:text-black placeholder:opacity-100")}
+                      className={cn(inputCls, "placeholder:font-normal placeholder:text-black placeholder:opacity-100")}
                       placeholder="Opportunity"
                     />
                     <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
