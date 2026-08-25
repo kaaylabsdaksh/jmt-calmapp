@@ -517,12 +517,15 @@ const NewQuote = () => {
 
               {/* Category: Customer & Origin */}
               <Group title="Customer & Origin" className="md:col-span-2">
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-3 gap-2">
                   <Field label="Existing Customer">
                     <SelectField value={existingCustomer} onChange={setExistingCustomer} options={YES_NO} placeholder="Yes" />
                   </Field>
                   <Field label="New Onsite Customer">
                     <SelectField value={newOnsite} onChange={setNewOnsite} options={YES_NO} placeholder="No" />
+                  </Field>
+                  <Field label="Source">
+                    <SelectField value={source} onChange={setSource} options={SOURCES} placeholder="Select source" />
                   </Field>
                 </div>
                 <Field label="Account #">
@@ -544,9 +547,6 @@ const NewQuote = () => {
                 <Field label="Customer Name">
                   <Input value={customerName} onChange={(e) => setCustomerName(e.target.value)} className={inputCls} />
                 </Field>
-                <Field label="Source">
-                  <SelectField value={source} onChange={setSource} options={SOURCES} placeholder="Select source" />
-                </Field>
                 <Field label="Source Info">
                   <Textarea
                     value={sourceInfo}
@@ -554,6 +554,7 @@ const NewQuote = () => {
                     className={cn(textareaCls, "min-h-[52px]")}
                   />
                 </Field>
+
               </Group>
 
               {/* Category: References & Documents */}
