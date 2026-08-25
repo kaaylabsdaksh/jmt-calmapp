@@ -897,11 +897,11 @@ const NewQuote = () => {
                 {CHARGE_FIELDS.map((c) => (
                   <div key={c.key} className="flex items-center justify-between gap-2">
                     <span className="text-[11px] text-muted-foreground">{c.label}</span>
-                    <Input
-                      value={charges[c.key]}
-                      onChange={(e) => setCharges((p) => ({ ...p, [c.key]: e.target.value }))}
-                      className="h-7 w-24 text-[11px] text-right bg-background"
-                    />
+                  <Input
+                    value={charges[c.key]}
+                    onChange={(e) => setCharges((p) => ({ ...p, [c.key]: e.target.value }))}
+                    className={cn(inputCls, "w-24 text-right")}
+                  />
                   </div>
                 ))}
                 <Separator className="my-2" />
