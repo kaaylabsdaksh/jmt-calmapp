@@ -560,22 +560,25 @@ const NewQuote = () => {
                     <SelectField value={source} onChange={setSource} options={SOURCES} placeholder="Select source" />
                   </Field>
                 </div>
-                <Field label="Account #">
-                  <div className="flex items-center gap-1.5">
-                    <Input value={acctNo} onChange={(e) => setAcctNo(e.target.value)} className={inputCls} />
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-6 text-[11px] px-2 shrink-0"
-                      onClick={() => {
-                        setCustomerName("Chevron Oronite");
-                        toast({ title: "Account found", description: "Customer details populated." });
-                      }}
-                    >
-                      <Search className="h-3 w-3 mr-1" /> Find Account
-                    </Button>
-                  </div>
-                </Field>
+                <div className="flex items-center gap-1.5">
+                  <Input
+                    value={acctNo}
+                    onChange={(e) => setAcctNo(e.target.value)}
+                    className={cn(inputCls, "placeholder:font-medium placeholder:text-slate-500")}
+                    placeholder="Account #"
+                  />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-6 text-[11px] px-2 shrink-0"
+                    onClick={() => {
+                      setCustomerName("Chevron Oronite");
+                      toast({ title: "Account found", description: "Customer details populated." });
+                    }}
+                  >
+                    <Search className="h-3 w-3 mr-1" /> Find Account
+                  </Button>
+                </div>
                 <Field label="Customer Name">
                   <Input value={customerName} onChange={(e) => setCustomerName(e.target.value)} className={inputCls} />
                 </Field>
