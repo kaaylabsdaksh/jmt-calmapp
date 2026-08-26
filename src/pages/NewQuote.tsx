@@ -161,8 +161,8 @@ const num = (v: string) => {
 };
 
 const labelCls = "text-[11px] font-normal text-muted-foreground";
-const inputCls = "h-6 text-[11px] px-1.5 py-0 bg-white text-black placeholder:text-[10px] placeholder:text-black placeholder:opacity-100";
-const textareaCls = "text-[11px] px-1.5 py-1.5 bg-white text-black placeholder:text-[10px] placeholder:text-black placeholder:opacity-100";
+const inputCls = "h-6 text-[11px] md:text-[11px] px-1.5 py-0 bg-white text-black placeholder:text-[10px] placeholder:text-black placeholder:opacity-100";
+const textareaCls = "text-[11px] md:text-[11px] px-1.5 py-1.5 bg-white text-black placeholder:text-[10px] placeholder:text-black placeholder:opacity-100";
 
 
 
