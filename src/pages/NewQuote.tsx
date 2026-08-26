@@ -681,38 +681,6 @@ const NewQuote = () => {
             </div>
         </AccSection>
 
-          {/* Copy existing */}
-        <AccSection value="copy" icon={Copy} title="Copy Existing">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div className="rounded-lg border p-2.5 space-y-2">
-                <p className="text-[11px] font-semibold">Copy from Quote</p>
-                <Field label="Quote #">
-                  <Input value={copyQuoteNo} onChange={(e) => setCopyQuoteNo(e.target.value)} className={inputCls} />
-                </Field>
-                <div className="flex items-center gap-2">
-                  <Checkbox id="incl" checked={includeServices} onCheckedChange={(v) => setIncludeServices(!!v)} />
-                  <Label htmlFor="incl" className="text-[11px] font-medium">Include Services</Label>
-                </div>
-                <Button variant="outline" size="sm" className="h-7 text-[11px] w-full" onClick={() => toast({ title: "Copied from quote" })}>
-                  Copy from Quote
-                </Button>
-              </div>
-              <div className="rounded-lg border p-2.5 space-y-2">
-                <p className="text-[11px] font-semibold">Copy from Work Order</p>
-                <div className="grid grid-cols-2 gap-2">
-                  <Field label="W.O. #">
-                    <Input value={copyWo} onChange={(e) => setCopyWo(e.target.value)} className={inputCls} />
-                  </Field>
-                  <Field label="Item #">
-                    <Input value={copyItem} onChange={(e) => setCopyItem(e.target.value)} className={inputCls} />
-                  </Field>
-                </div>
-                <Button variant="outline" size="sm" className="h-7 text-[11px] w-full" onClick={() => toast({ title: "Copied from work order" })}>
-                  Copy from W.O.
-                </Button>
-              </div>
-            </div>
-        </AccSection>
 
 
 
