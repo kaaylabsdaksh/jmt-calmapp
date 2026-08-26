@@ -315,7 +315,7 @@ const SelectField = ({
   placeholder?: string;
 }) => (
   <Select value={value} onValueChange={onChange}>
-    <SelectTrigger className={inputCls}>
+    <SelectTrigger className={cn(inputCls, "md:text-[11px]")}>
       <SelectValue
         placeholder={
           <span className="text-[10px] font-normal text-black">
