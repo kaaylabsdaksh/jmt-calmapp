@@ -951,31 +951,62 @@ const NewQuote = () => {
 
             <SectionCard icon={Copy} title="Copy from Existing" className="mt-3">
               <div className="space-y-2">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-[11px] font-medium">Copy from Quote</span>
-                  <Checkbox id="copy-q" checked={copyFromQuote} onCheckedChange={(v) => setCopyFromQuote(!!v)} />
+                {/* Segmented source toggle */}
+                <div className="flex p-1 bg-muted rounded-md">
+                  <button
+                    type="button"
+                    onClick={() => setCopySource(copySource === "quote" ? null : "quote")}
+                    className={cn(
+                      "flex-1 flex items-center justify-center gap-1.5 py-1.5 text-[11px] font-medium rounded transition-all",
+                      copySource === "quote"
+                        ? "bg-white text-black shadow-sm border border-border/50"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    <FileText className="h-3.5 w-3.5" />
+                    Quote
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCopySource(copySource === "wo" ? null : "wo")}
+                    className={cn(
+                      "flex-1 flex items-center justify-center gap-1.5 py-1.5 text-[11px] font-medium rounded transition-all",
+                      copySource === "wo"
+                        ? "bg-white text-black shadow-sm border border-border/50"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    <ClipboardList className="h-3.5 w-3.5" />
+                    Work Order
+                  </button>
                 </div>
-                {copyFromQuote && (
-                  <div className="space-y-2 rounded-lg border p-2">
-                    <Field label="Quote #">
-                      <Input value={copyQuoteNo} onChange={(e) => setCopyQuoteNo(e.target.value)} className={inputCls} />
-                    </Field>
+
+                {copySource === "quote" && (
+                  <div className="space-y-2">
+                    <div className="relative flex items-center">
+                      <Input
+                        value={copyQuoteNo}
+                        onChange={(e) => setCopyQuoteNo(e.target.value)}
+                        placeholder="Quote #"
+                        className={cn(inputCls, "pr-16 w-full")}
+                      />
+                      <Button
+                        size="sm"
+                        className="absolute right-1 top-1/2 -translate-y-1/2 h-5 text-[10px] px-2 bg-green-600 hover:bg-green-700 text-white"
+                        onClick={() => toast({ title: "Copied from quote" })}
+                      >
+                        Copy
+                      </Button>
+                    </div>
                     <div className="flex items-center gap-2">
                       <Checkbox id="incl" checked={includeServices} onCheckedChange={(v) => setIncludeServices(!!v)} />
-                      <Label htmlFor="incl" className="text-[11px] font-medium">Include Services</Label>
+                      <Label htmlFor="incl" className="text-[11px] font-normal">Include Services</Label>
                     </div>
-                    <Button variant="outline" size="sm" className="h-7 text-[11px] w-full" onClick={() => toast({ title: "Copied from quote" })}>
-                      Copy from Quote
-                    </Button>
                   </div>
                 )}
-                <Separator />
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-[11px] font-medium">Copy from Work Order</span>
-                  <Checkbox id="copy-wo" checked={copyFromWo} onCheckedChange={(v) => setCopyFromWo(!!v)} />
-                </div>
-                {copyFromWo && (
-                  <div className="space-y-2 rounded-lg border p-2">
+
+                {copySource === "wo" && (
+                  <div className="space-y-2">
                     <div className="grid grid-cols-2 gap-2">
                       <Field label="W.O. #">
                         <Input value={copyWo} onChange={(e) => setCopyWo(e.target.value)} className={inputCls} />
@@ -984,10 +1015,21 @@ const NewQuote = () => {
                         <Input value={copyItem} onChange={(e) => setCopyItem(e.target.value)} className={inputCls} />
                       </Field>
                     </div>
-                    <Button variant="outline" size="sm" className="h-7 text-[11px] w-full" onClick={() => toast({ title: "Copied from work order" })}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-7 text-[11px] w-full"
+                      onClick={() => toast({ title: "Copied from work order" })}
+                    >
                       Copy from W.O.
                     </Button>
                   </div>
+                )}
+
+                {!copySource && (
+                  <p className="text-[10px] text-muted-foreground px-1">
+                    Select a source to populate items and pricing from an existing record.
+                  </p>
                 )}
               </div>
             </SectionCard>
