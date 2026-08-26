@@ -512,87 +512,90 @@ const NewQuote = () => {
           >
         {/* Quote setup */}
         <AccSection value="quote-info" icon={ClipboardList} title="Quote Information">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-2 auto-rows-min">
-              {/* Category: Quote Setup */}
-              <Group title="Quote Setup" className="md:col-span-2">
-                <div className="grid grid-cols-2 gap-2">
-                  <Field label="Quote Type" required>
-                    <SelectField value={quoteType} onChange={setQuoteType} options={QUOTE_TYPES} placeholder="Select type" />
-                  </Field>
-                  <Field label="Location" required>
-                    <SelectField value={location} onChange={setLocation} options={LOCATIONS} placeholder="Select location" />
-                  </Field>
-                </div>
-                {!quoteType && (
-                  <p className="text-[10px] text-red-600 -mt-1">Quote type is required to save.</p>
-                )}
-                <div className="grid grid-cols-2 gap-2">
-                  <Field label="Project #">
-                    <Input value={projectNo} onChange={(e) => setProjectNo(e.target.value)} className={inputCls} />
-                  </Field>
-                  <Field label="Priority" required>
-                    <SelectField value={priority} onChange={setPriority} options={PRIORITIES} placeholder="Select priority" />
-                  </Field>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="flex items-center gap-2 h-6 px-2.5 rounded-lg border bg-background">
-                    <Checkbox id="poco" checked={pocoReq} onCheckedChange={(v) => setPocoReq(!!v)} />
-                    <Label htmlFor="poco" className="text-[11px] font-medium">PO/CO Req?</Label>
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-3">
+            {/* Primary configuration column */}
+            <div className="xl:col-span-8 space-y-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {/* Quote Setup */}
+                <Group title="Quote Setup">
+                  <div className="grid grid-cols-2 gap-2">
+                    <Field label="Quote Type" required>
+                      <SelectField value={quoteType} onChange={setQuoteType} options={QUOTE_TYPES} placeholder="Select type" />
+                    </Field>
+                    <Field label="Location" required>
+                      <SelectField value={location} onChange={setLocation} options={LOCATIONS} placeholder="Select location" />
+                    </Field>
                   </div>
-                  <div className="flex items-center justify-between rounded-lg border bg-background px-2.5 h-6">
-                    <span className="text-[11px] font-medium text-muted-foreground">Item Quantity</span>
-                    <span className="text-[11px] font-semibold">{itemQuantity}</span>
+                  {!quoteType && (
+                    <p className="text-[10px] text-red-600 -mt-1">Quote type is required to save.</p>
+                  )}
+                  <div className="grid grid-cols-2 gap-2">
+                    <Field label="Project #">
+                      <Input value={projectNo} onChange={(e) => setProjectNo(e.target.value)} className={inputCls} />
+                    </Field>
+                    <Field label="Priority" required>
+                      <SelectField value={priority} onChange={setPriority} options={PRIORITIES} placeholder="Select priority" />
+                    </Field>
                   </div>
-                </div>
-              </Group>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="flex items-center gap-2 h-6 px-2.5 rounded-lg border bg-background">
+                      <Checkbox id="poco" checked={pocoReq} onCheckedChange={(v) => setPocoReq(!!v)} />
+                      <Label htmlFor="poco" className="text-[11px] font-medium">PO/CO Req?</Label>
+                    </div>
+                    <div className="flex items-center justify-between rounded-lg border bg-background px-2.5 h-6">
+                      <span className="text-[11px] font-medium text-muted-foreground">Item Quantity</span>
+                      <span className="text-[11px] font-semibold">{itemQuantity}</span>
+                    </div>
+                  </div>
+                </Group>
 
-              {/* Category: Customer & Origin */}
-              <Group title="Customer & Origin" className="md:col-span-2">
-                <div className="grid grid-cols-3 gap-2">
-                  <Field label="Existing Customer">
-                    <SelectField value={existingCustomer} onChange={setExistingCustomer} options={YES_NO} placeholder="Yes" />
+                {/* Customer & Origin */}
+                <Group title="Customer & Origin">
+                  <div className="grid grid-cols-3 gap-2">
+                    <Field label="Existing Customer">
+                      <SelectField value={existingCustomer} onChange={setExistingCustomer} options={YES_NO} placeholder="Yes" />
+                    </Field>
+                    <Field label="New Onsite">
+                      <SelectField value={newOnsite} onChange={setNewOnsite} options={YES_NO} placeholder="No" />
+                    </Field>
+                    <Field label="Source">
+                      <SelectField value={source} onChange={setSource} options={SOURCES} placeholder="Select source" />
+                    </Field>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Input
+                      value={acctNo}
+                      onChange={(e) => setAcctNo(e.target.value)}
+                      className={cn(inputCls, "placeholder:font-normal placeholder:text-black placeholder:opacity-100")}
+                      placeholder="Account #"
+                    />
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-6 text-[11px] px-2 shrink-0"
+                      onClick={() => {
+                        setCustomerName("Chevron Oronite");
+                        toast({ title: "Account found", description: "Customer details populated." });
+                      }}
+                    >
+                      <Search className="h-3 w-3 mr-1" /> Find
+                    </Button>
+                  </div>
+                  <Field label="Customer Name">
+                    <Input value={customerName} onChange={(e) => setCustomerName(e.target.value)} className={inputCls} />
                   </Field>
-                  <Field label="New Onsite Customer">
-                    <SelectField value={newOnsite} onChange={setNewOnsite} options={YES_NO} placeholder="No" />
+                  <Field label="Source Info">
+                    <Textarea
+                      value={sourceInfo}
+                      onChange={(e) => setSourceInfo(e.target.value)}
+                      className={cn(textareaCls, "min-h-[52px]")}
+                    />
                   </Field>
-                  <Field label="Source">
-                    <SelectField value={source} onChange={setSource} options={SOURCES} placeholder="Select source" />
-                  </Field>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Input
-                    value={acctNo}
-                    onChange={(e) => setAcctNo(e.target.value)}
-                    className={cn(inputCls, "placeholder:font-normal placeholder:text-black placeholder:opacity-100")}
-                    placeholder="Account #"
-                  />
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-6 text-[11px] px-2 shrink-0"
-                    onClick={() => {
-                      setCustomerName("Chevron Oronite");
-                      toast({ title: "Account found", description: "Customer details populated." });
-                    }}
-                  >
-                    <Search className="h-3 w-3 mr-1" /> Find Account
-                  </Button>
-                </div>
-                <Field label="Customer Name">
-                  <Input value={customerName} onChange={(e) => setCustomerName(e.target.value)} className={inputCls} />
-                </Field>
-                <Field label="Source Info">
-                  <Textarea
-                    value={sourceInfo}
-                    onChange={(e) => setSourceInfo(e.target.value)}
-                    className={cn(textareaCls, "min-h-[52px]")}
-                  />
-                </Field>
+                </Group>
+              </div>
 
-              </Group>
-
-              {/* Category: References & Documents */}
-              <Group title="References & Documents" className="md:col-span-3">
+              {/* References & Documents */}
+              <Group title="References & Documents">
                 <div className="grid grid-cols-2 gap-2">
                   <Field label="SR Doc">
                     <Input value={srDoc} onChange={(e) => setSrDoc(e.target.value)} className={inputCls} />
@@ -621,11 +624,13 @@ const NewQuote = () => {
                   <Input value={productReview} onChange={(e) => setProductReview(e.target.value)} className={inputCls} />
                 </Field>
               </Group>
+            </div>
 
-              {/* Category: Contract Pricing */}
+            {/* Secondary details column */}
+            <div className="xl:col-span-4 space-y-3">
+              {/* Contract Pricing + Scheduling */}
               <Group
                 title="Contract Pricing"
-                className="md:col-span-1"
                 action={
                   <button type="button" className="text-[10px] underline text-slate-900 hover:text-slate-700">
                     View
@@ -647,10 +652,10 @@ const NewQuote = () => {
                     <ModernDatePicker value={expDate} onChange={setExpDate} size="xs" inputClassName={inputCls} placeholder="MM/DD/YYYY" />
                   </Field>
                 </div>
-              </Group>
 
-              {/* Category: Scheduling */}
-              <Group title="Scheduling" className="md:col-span-2">
+                <Separator className="my-2" />
+
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Scheduling</p>
                 <div className="grid grid-cols-2 gap-2">
                   <Field label="Need By Date">
                     <ModernDatePicker value={needBy} onChange={setNeedBy} size="xs" inputClassName={inputCls} placeholder="MM/DD/YYYY" />
@@ -661,13 +666,14 @@ const NewQuote = () => {
                 </div>
               </Group>
 
-              {/* Category: Terms */}
-              <Group title="Terms & Conditions" className="md:col-span-2">
+              {/* Terms & Conditions */}
+              <Group title="Terms & Conditions">
                 <Field label="Terms and Conditions">
                   <Textarea value={terms} onChange={(e) => setTerms(e.target.value)} className={cn(textareaCls, "min-h-[68px]")} />
                 </Field>
               </Group>
             </div>
+          </div>
         </AccSection>
 
 
