@@ -501,18 +501,6 @@ const NewQuote = () => {
     <div className="bg-background min-h-screen flex flex-col">
       <ModernTopNav />
       <main className="w-full max-w-none px-2 sm:px-3 lg:px-4 py-2 pb-24 space-y-3 flex-1">
-        {/* Header */}
-        <div className="sticky top-0 z-20 -mx-2 px-2 sm:-mx-3 sm:px-3 lg:-mx-4 lg:px-4 py-2 bg-background/95 backdrop-blur border-b flex flex-wrap items-start justify-between gap-2">
-          <div>
-            <h1 className="text-lg font-semibold tracking-tight">Add New Quote</h1>
-            <div className="flex items-center gap-2 mt-0.5">
-              <span className="text-[11px] text-muted-foreground">Quote Status</span>
-              <Badge className="bg-blue-50 text-blue-700 hover:bg-blue-50 text-[10px] px-2 py-0 rounded-full">
-                Creating
-              </Badge>
-            </div>
-          </div>
-        </div>
 
 
         <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px] gap-3 items-start">
