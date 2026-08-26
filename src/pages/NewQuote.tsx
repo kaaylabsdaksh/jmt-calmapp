@@ -518,7 +518,7 @@ const NewQuote = () => {
           <div className="min-w-0">
           <Accordion
             type="multiple"
-            defaultValue={["quote-info", "copy", "customer", "items", "project", "comments"]}
+            defaultValue={["quote-info", "customer", "items", "project", "comments"]}
             className="space-y-3"
           >
         {/* Quote setup */}
