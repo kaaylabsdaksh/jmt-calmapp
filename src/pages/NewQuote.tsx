@@ -394,6 +394,8 @@ const NewQuote = () => {
   const [includeServices, setIncludeServices] = useState(false);
   const [copyWo, setCopyWo] = useState("");
   const [copyItem, setCopyItem] = useState("");
+  const [copyFromQuote, setCopyFromQuote] = useState(false);
+  const [copyFromWo, setCopyFromWo] = useState(false);
 
   // Items
   const [items, setItems] = useState<QuoteItem[]>([]);
