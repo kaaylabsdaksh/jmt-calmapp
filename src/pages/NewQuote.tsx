@@ -515,7 +515,7 @@ const NewQuote = () => {
           <div className="grid grid-cols-1 xl:grid-cols-12 gap-3">
             {/* Primary configuration column */}
             <div className="xl:col-span-8 space-y-3">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3">
                 {/* Quote Setup */}
                 <Group title="Quote Setup">
                   <div className="grid grid-cols-2 gap-2">
