@@ -563,10 +563,26 @@ const NewQuote = () => {
                 <Group title="Customer & Origin">
                   <div className="grid grid-cols-3 gap-2">
                     <Field label="Existing Customer">
-                      <SelectField value={existingCustomer} onChange={setExistingCustomer} options={YES_NO} placeholder="Yes" />
+                      <SelectField
+                        value={existingCustomer}
+                        onChange={setExistingCustomer}
+                        options={[
+                          { value: "Yes", label: "Yes - Existing Customer" },
+                          { value: "No", label: "No - New Customer" },
+                        ]}
+                        placeholder="Yes"
+                      />
                     </Field>
                     <Field label="New Onsite">
-                      <SelectField value={newOnsite} onChange={setNewOnsite} options={YES_NO} placeholder="No" />
+                      <SelectField
+                        value={newOnsite}
+                        onChange={setNewOnsite}
+                        options={[
+                          { value: "Yes", label: "Yes - New Onsite" },
+                          { value: "No", label: "No - Existing Onsite" },
+                        ]}
+                        placeholder="No"
+                      />
                     </Field>
                     <Field label="Source">
                       <SelectField value={source} onChange={setSource} options={SOURCES} placeholder="Select source" />
