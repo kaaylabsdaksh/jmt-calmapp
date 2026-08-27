@@ -1,4 +1,5 @@
 import React, { useMemo, useState, Children, isValidElement, cloneElement } from "react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useNavigate } from "react-router-dom";
 import {
   Save,
@@ -563,26 +564,36 @@ const NewQuote = () => {
                 <Group title="Customer & Origin">
                   <div className="grid grid-cols-3 gap-2">
                     <Field label="Existing Customer">
-                      <SelectField
+                      <RadioGroup
                         value={existingCustomer}
-                        onChange={setExistingCustomer}
-                        options={[
-                          { value: "Yes", label: "Yes - Existing Customer" },
-                          { value: "No", label: "No - New Customer" },
-                        ]}
-                        placeholder="Yes"
-                      />
+                        onValueChange={setExistingCustomer}
+                        className="flex items-center gap-3 h-6 px-2 rounded-lg border bg-white"
+                      >
+                        <div className="flex items-center gap-1.5">
+                          <RadioGroupItem value="Yes" id="existing-yes" className="h-3 w-3 border-slate-400 text-slate-900" />
+                          <Label htmlFor="existing-yes" className="text-[11px] font-normal cursor-pointer">Yes - Existing</Label>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <RadioGroupItem value="No" id="existing-no" className="h-3 w-3 border-slate-400 text-slate-900" />
+                          <Label htmlFor="existing-no" className="text-[11px] font-normal cursor-pointer">No - New</Label>
+                        </div>
+                      </RadioGroup>
                     </Field>
                     <Field label="New Onsite">
-                      <SelectField
+                      <RadioGroup
                         value={newOnsite}
-                        onChange={setNewOnsite}
-                        options={[
-                          { value: "Yes", label: "Yes - New Onsite" },
-                          { value: "No", label: "No - Existing Onsite" },
-                        ]}
-                        placeholder="No"
-                      />
+                        onValueChange={setNewOnsite}
+                        className="flex items-center gap-3 h-6 px-2 rounded-lg border bg-white"
+                      >
+                        <div className="flex items-center gap-1.5">
+                          <RadioGroupItem value="Yes" id="onsite-yes" className="h-3 w-3 border-slate-400 text-slate-900" />
+                          <Label htmlFor="onsite-yes" className="text-[11px] font-normal cursor-pointer">Yes - New</Label>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <RadioGroupItem value="No" id="onsite-no" className="h-3 w-3 border-slate-400 text-slate-900" />
+                          <Label htmlFor="onsite-no" className="text-[11px] font-normal cursor-pointer">No - Existing</Label>
+                        </div>
+                      </RadioGroup>
                     </Field>
                     <Field label="Source">
                       <SelectField value={source} onChange={setSource} options={SOURCES} placeholder="Select source" />
