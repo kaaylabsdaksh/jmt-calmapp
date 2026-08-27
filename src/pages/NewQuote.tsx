@@ -311,28 +311,38 @@ const SelectField = ({
 }: {
   value: string;
   onChange: (v: string) => void;
-  options: string[];
+  options: string[] | { label: string; value: string }[];
   placeholder?: string;
-}) => (
-  <Select value={value} onValueChange={onChange}>
-    <SelectTrigger className={cn(inputCls, "md:text-[11px]")}>
-      <SelectValue
-        placeholder={
-          <span className="text-[10px] font-normal text-black">
-            {placeholder}
-          </span>
-        }
-      />
-    </SelectTrigger>
-    <SelectContent className="bg-popover z-50">
-      {options.map((o) => (
-        <SelectItem key={o} value={o} className="text-xs">
-          {o}
-        </SelectItem>
-      ))}
-    </SelectContent>
-  </Select>
-);
+}) => {
+  const normalized = options.map((o) =>
+    typeof o === "string" ? { label: o, value: o } : o
+  );
+  const selected = normalized.find((o) => o.value === value);
+  return (
+    <Select value={value} onValueChange={onChange}>
+      <SelectTrigger className={cn(inputCls, "md:text-[11px]")}>
+        <SelectValue
+          placeholder={
+            <span className="text-[10px] font-normal text-black">
+              {placeholder}
+            </span>
+          }
+        >
+          {selected ? (
+            <span className="text-[11px]">{selected.label}</span>
+          ) : null}
+        </SelectValue>
+      </SelectTrigger>
+      <SelectContent className="bg-popover z-50">
+        {normalized.map((o) => (
+          <SelectItem key={o.value} value={o.value} className="text-xs">
+            {o.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+};
 
 const ITEM_COLUMNS = [
   "Cancel", "Rev", "Services", "Parts", "Qty", "Manufacturer", "Model", "Description",
@@ -553,10 +563,26 @@ const NewQuote = () => {
                 <Group title="Customer & Origin">
                   <div className="grid grid-cols-3 gap-2">
                     <Field label="Existing Customer">
-                      <SelectField value={existingCustomer} onChange={setExistingCustomer} options={YES_NO} placeholder="Yes" />
+                      <SelectField
+                        value={existingCustomer}
+                        onChange={setExistingCustomer}
+                        options={[
+                          { value: "Yes", label: "Yes - Existing Customer" },
+                          { value: "No", label: "No - New Customer" },
+                        ]}
+                        placeholder="Yes"
+                      />
                     </Field>
                     <Field label="New Onsite">
-                      <SelectField value={newOnsite} onChange={setNewOnsite} options={YES_NO} placeholder="No" />
+                      <SelectField
+                        value={newOnsite}
+                        onChange={setNewOnsite}
+                        options={[
+                          { value: "Yes", label: "Yes - New Onsite" },
+                          { value: "No", label: "No - Existing Onsite" },
+                        ]}
+                        placeholder="No"
+                      />
                     </Field>
                     <Field label="Source">
                       <SelectField value={source} onChange={setSource} options={SOURCES} placeholder="Select source" />
