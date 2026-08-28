@@ -913,7 +913,7 @@ const NewQuote = () => {
                   { label: "Uncancel Items", fn: () => setItems((p) => p.map((i) => (i.status === "Cancelled" ? { ...i, status: "" } : i))) },
                   { label: "Receive Items", fn: () => setItems((p) => p.map((i) => ({ ...i, rev: true }))) },
                   { label: "Unreceive Items", fn: () => setItems((p) => p.map((i) => ({ ...i, rev: false }))) },
-                  { label: "Search/Add Item", fn: handleAddItemClick },
+                  { label: "Search/Add Item", fn: handleSearchAddClick },
                   { label: "Add Testing Items", fn: handleAddItemClick },
                 ].map((a) => (
                   <Button
