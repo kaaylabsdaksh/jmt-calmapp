@@ -857,15 +857,6 @@ const NewQuote = () => {
           icon={Package}
           title="Quote Items"
           badge={items.length}
-          action={
-            <Button
-              size="sm"
-              className="h-7 text-[11px] px-2 bg-green-600 hover:bg-green-700 text-white"
-              onClick={handleAddItemClick}
-            >
-              <Plus className="h-3 w-3 mr-1" /> Add Quote Item
-            </Button>
-          }
         >
           {allMandatoryFilled ? (
             <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border bg-muted/30 px-2 py-1.5">
