@@ -146,6 +146,7 @@ const App = () => {
         <WhatsNewDrawer />
         <GuidedTour />
         <Toaster />
+        <SonnerToaster position="top-right" richColors closeButton />
       </TourProvider>
     </BrowserRouter>
   );
