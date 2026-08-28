@@ -355,6 +355,7 @@ const ITEM_COLUMNS = [
 ];
 
 const NewQuote = () => {
+  const { toast } = useToast();
   const navigate = useNavigate();
 
   // Quote info
