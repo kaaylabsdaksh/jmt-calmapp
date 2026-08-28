@@ -574,10 +574,10 @@ const NewQuote = () => {
                 <Group title="Quote Setup">
                   <div className="grid grid-cols-2 gap-2">
                     <Field label="Quote Type" required>
-                      <SelectField value={quoteType} onChange={setQuoteType} options={QUOTE_TYPES} placeholder="Select type" />
+                      <SelectField value={quoteType} onChange={setQuoteType} options={QUOTE_TYPES} placeholder="Select type" className={cn(invalid("Quote Type") && errorCls)} />
                     </Field>
                     <Field label="Location" required>
-                      <SelectField value={location} onChange={setLocation} options={LOCATIONS} placeholder="Select location" />
+                      <SelectField value={location} onChange={setLocation} options={LOCATIONS} placeholder="Select location" className={cn(invalid("Location") && errorCls)} />
                     </Field>
                   </div>
                   {!quoteType && (
@@ -588,7 +588,7 @@ const NewQuote = () => {
                       <Input value={projectNo} onChange={(e) => setProjectNo(e.target.value)} className={inputCls} />
                     </Field>
                     <Field label="Priority" required>
-                      <SelectField value={priority} onChange={setPriority} options={PRIORITIES} placeholder="Select priority" />
+                      <SelectField value={priority} onChange={setPriority} options={PRIORITIES} placeholder="Select priority" className={cn(invalid("Priority") && errorCls)} />
                     </Field>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
@@ -648,7 +648,7 @@ const NewQuote = () => {
                         <Input
                           value={acctNo}
                           onChange={(e) => setAcctNo(e.target.value)}
-                          className={cn(inputCls, "placeholder:font-normal placeholder:text-black placeholder:opacity-100")}
+                          className={cn(inputCls, "placeholder:font-normal placeholder:text-black placeholder:opacity-100", invalid("Account #") && errorCls)}
                           placeholder="Account #"
                         />
                       </Field>
@@ -742,7 +742,7 @@ const NewQuote = () => {
                     <ModernDatePicker value={needBy} onChange={setNeedBy} size="xs" inputClassName={inputCls} placeholder="MM/DD/YYYY" />
                   </Field>
                   <Field label="Follow Up Date" required>
-                    <ModernDatePicker value={followUp} onChange={setFollowUp} size="xs" inputClassName={inputCls} placeholder="MM/DD/YYYY" />
+                    <ModernDatePicker value={followUp} onChange={setFollowUp} size="xs" inputClassName={cn(inputCls, invalid("Follow Up Date") && errorCls)} placeholder="MM/DD/YYYY" />
                   </Field>
                 </div>
               </Group>
@@ -772,6 +772,7 @@ const NewQuote = () => {
                       onChange={setSelectContact}
                       options={CONTACTS}
                       placeholder="Select Contact"
+                      className={cn(invalid("Select Contact") && errorCls)}
                     />
                   </Field>
                 </div>
