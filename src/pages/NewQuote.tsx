@@ -309,11 +309,13 @@ const SelectField = ({
   onChange,
   options,
   placeholder = "Select",
+  className,
 }: {
   value: string;
   onChange: (v: string) => void;
   options: string[] | { label: string; value: string }[];
   placeholder?: string;
+  className?: string;
 }) => {
   const normalized = options.map((o) =>
     typeof o === "string" ? { label: o, value: o } : o
@@ -321,7 +323,7 @@ const SelectField = ({
   const selected = normalized.find((o) => o.value === value);
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className={cn(inputCls, "md:text-[11px]")}>
+      <SelectTrigger className={cn(inputCls, "md:text-[11px]", className)}>
         <SelectValue
           placeholder={
             <span className="text-[10px] font-normal text-black">
