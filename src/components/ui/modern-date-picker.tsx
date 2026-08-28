@@ -67,6 +67,14 @@ export const ModernDatePicker = React.forwardRef<HTMLInputElement, ModernDatePic
 
     const s = sizeMap[size];
 
+    /** Auto-inserts slashes so typing 12252026 becomes 12/25/2026 */
+    const maskInput = (raw: string) => {
+      const digits = raw.replace(/\D/g, "").slice(0, 8);
+      if (digits.length <= 2) return digits;
+      if (digits.length <= 4) return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+      return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`;
+    };
+
     const commitText = (raw: string) => {
       if (!raw.trim()) {
         onChange?.(undefined);
@@ -75,6 +83,7 @@ export const ModernDatePicker = React.forwardRef<HTMLInputElement, ModernDatePic
       const parsed = parse(raw, "MM/dd/yyyy", new Date());
       if (isValid(parsed)) {
         onChange?.(parsed);
+        setText(format(parsed, "MM/dd/yyyy"));
       } else {
         // revert
         setText(dateValue ? format(dateValue, "MM/dd/yyyy") : "");
@@ -91,7 +100,14 @@ export const ModernDatePicker = React.forwardRef<HTMLInputElement, ModernDatePic
             disabled={disabled}
             value={text}
             placeholder={placeholder}
-            onChange={(e) => setText(e.target.value)}
+            onChange={(e) => {
+              const masked = maskInput(e.target.value);
+              setText(masked);
+              if (masked.length === 10) {
+                const parsed = parse(masked, "MM/dd/yyyy", new Date());
+                if (isValid(parsed)) onChange?.(parsed);
+              }
+            }}
             onBlur={(e) => commitText(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
@@ -103,6 +119,7 @@ export const ModernDatePicker = React.forwardRef<HTMLInputElement, ModernDatePic
             inputMode="numeric"
             autoComplete="off"
           />
+
           <PopoverTrigger asChild>
             <Button
               type="button"
