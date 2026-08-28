@@ -417,6 +417,8 @@ const NewQuote = () => {
   const [draft, setDraft] = useState<QuoteItem>(emptyItem());
   const [editingId, setEditingId] = useState<string | null>(null);
   const [pendingDelete, setPendingDelete] = useState<string | null>(null);
+  const [searchAddOpen, setSearchAddOpen] = useState(false);
+
 
   // Project
   const [proposedProject, setProposedProject] = useState("");
