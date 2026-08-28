@@ -19,6 +19,8 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
+import SearchAddItemDialog, { type SearchAddItemResult } from "@/components/quotes/SearchAddItemDialog";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
