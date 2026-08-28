@@ -69,7 +69,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { toast } from "sonner";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
 const QUOTE_TYPES = ["All", "Lab", "OnSite", "ESL", "Rental", "Sales"];
@@ -512,14 +512,14 @@ const NewQuote = () => {
 
   const saveItem = () => {
     if (!draft.manufacturer && !draft.model && !draft.description) {
-      toast.error("Add product details", { description: "Manufacturer, model or description is required." });
+      toast({ title: "Add product details", description: "Manufacturer, model or description is required.", variant: "destructive" });
       return;
     }
     setItems((prev) =>
       editingId ? prev.map((i) => (i.id === editingId ? draft : i)) : [...prev, draft],
     );
     setDrawerOpen(false);
-    toast.success(editingId ? "Item updated" : "Item added");
+    toast({ title: editingId ? "Item updated" : "Item added" });
   };
 
   const addComment = () => {
@@ -657,7 +657,7 @@ const NewQuote = () => {
                         className="h-6 text-[11px] px-2 shrink-0"
                         onClick={() => {
                           setCustomerName("Chevron Oronite");
-                          toast.success("Account found", { description: "Customer details populated." });
+                          toast({ title: "Account found", description: "Customer details populated." });
                         }}
                       >
                         <Search className="h-3 w-3 mr-1" /> Find
@@ -1073,7 +1073,7 @@ const NewQuote = () => {
                       <Button
                         size="sm"
                         className="absolute right-1 top-1/2 -translate-y-1/2 h-5 text-[10px] px-2 bg-green-600 hover:bg-green-700 text-white"
-                        onClick={() => toast.success("Copied from quote")}
+                        onClick={() => toast({ title: "Copied from quote" })}
                       >
                         Copy
                       </Button>
@@ -1099,7 +1099,7 @@ const NewQuote = () => {
                       variant="outline"
                       size="sm"
                       className="h-7 text-[11px] w-full"
-                      onClick={() => toast.success("Copied from work order")}
+                      onClick={() => toast({ title: "Copied from work order" })}
                     >
                       Copy from W.O.
                     </Button>
