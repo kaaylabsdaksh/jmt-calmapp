@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { Search, X, RotateCcw, Plus } from "lucide-react";
+import { useMemo, useState, useEffect } from "react";
+import { Search, X, RotateCcw, Plus, Check } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { PRODUCTS, type Product } from "@/lib/products";
+import { cn } from "@/lib/utils";
 
 export type SearchAddItemResult = {
   products: Product[];
@@ -34,6 +35,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
   const [searched, setSearched] = useState(false);
   const [selected, setSelected] = useState<Record<string, boolean>>({});
   const [groupAsOne, setGroupAsOne] = useState(false);
+  const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
 
   const results = useMemo(() => {
     if (!searched) return [] as Product[];
@@ -48,8 +50,10 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
     );
   }, [searched, manufacturer, model, description]);
 
-  const selectedProducts = results.filter((p) => selected[p.id]);
-  const allChecked = results.length > 0 && selectedProducts.length === results.length;
+  const notAddedResults = results.filter((p) => !addedIds.has(p.id));
+  const selectedProducts = notAddedResults.filter((p) => selected[p.id]);
+  const allChecked =
+    notAddedResults.length > 0 && notAddedResults.every((p) => selected[p.id]);
 
   const reset = () => {
     setManufacturer("");
@@ -58,6 +62,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
     setSearched(false);
     setSelected({});
     setGroupAsOne(false);
+    setAddedIds(new Set());
   };
 
   const close = () => {
@@ -65,10 +70,19 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
     onOpenChange(false);
   };
 
+  useEffect(() => {
+    if (open) {
+      setAddedIds(new Set());
+      setSelected({});
+      setGroupAsOne(false);
+    }
+  }, [open]);
+
   const handleAdd = () => {
     if (selectedProducts.length === 0) return;
     onAdd({ products: selectedProducts, groupAsOneLineItem: groupAsOne });
-    // Keep the dialog open so the user can add more items; reset the selection for the next pick.
+    // Mark the just-added products as added inside this dialog and keep it open.
+    setAddedIds((prev) => new Set([...prev, ...selectedProducts.map((p) => p.id)]));
     setSelected({});
     setGroupAsOne(false);
   };
@@ -126,9 +140,16 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
               Clear
             </Button>
             {searched && (
-              <Badge variant="secondary" className="ml-auto text-[10px] font-medium">
-                {results.length} result{results.length === 1 ? "" : "s"}
-              </Badge>
+              <div className="ml-auto flex items-center gap-1.5">
+                {addedIds.size > 0 && (
+                  <Badge className="bg-green-600/10 text-green-700 hover:bg-green-600/10 text-[10px] font-medium">
+                    {addedIds.size} added
+                  </Badge>
+                )}
+                <Badge variant="secondary" className="text-[10px] font-medium">
+                  {results.length} result{results.length === 1 ? "" : "s"}
+                </Badge>
+              </div>
             )}
           </div>
         </div>
@@ -143,11 +164,14 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                     checked={allChecked}
                     onCheckedChange={(v) =>
                       setSelected(
-                        v ? Object.fromEntries(results.map((p) => [p.id, true])) : {},
+                        v
+                          ? Object.fromEntries(notAddedResults.map((p) => [p.id, true]))
+                          : {},
                       )
                     }
                     aria-label="Select all"
                     className="h-3.5 w-3.5"
+                    disabled={notAddedResults.length === 0}
                   />
                 </th>
                 {["Manufacturer", "Model", "Item Description", "Cal/Cert", "T/F", "17025", "Only Capable Location", "Status"].map(
@@ -170,36 +194,56 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                   </td>
                 </tr>
               ) : (
-                results.map((p) => (
-                  <tr
-                    key={p.id}
-                    className="border-t hover:bg-muted/40 cursor-pointer"
-                    onClick={() => setSelected((s) => ({ ...s, [p.id]: !s[p.id] }))}
-                  >
-                    <td className="px-2 py-1.5" onClick={(e) => e.stopPropagation()}>
-                      <Checkbox
-                        checked={!!selected[p.id]}
-                        onCheckedChange={(v) => setSelected((s) => ({ ...s, [p.id]: !!v }))}
-                        className="h-3.5 w-3.5"
-                      />
-                    </td>
-                    <td className="px-2 py-1.5 whitespace-nowrap font-medium">{p.manufacturer}</td>
-                    <td className="px-2 py-1.5 whitespace-nowrap">{p.model}</td>
-                    <td className="px-2 py-1.5">{p.description}</td>
-                    <td className="px-2 py-1.5 whitespace-nowrap">${p.calCost}</td>
-                    <td className="px-2 py-1.5">{p.tf}</td>
-                    <td className="px-2 py-1.5">{p.accredCal || "No"}</td>
-                    <td className="px-2 py-1.5 max-w-[220px] truncate" title={p.locations}>
-                      {p.locations || "—"}
-                    </td>
-                    <td className="px-2 py-1.5">
-                      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700">
-                        <span className="h-1 w-1 rounded-full bg-emerald-600" />
-                        {p.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))
+                results.map((p) => {
+                  const isAdded = addedIds.has(p.id);
+                  return (
+                    <tr
+                      key={p.id}
+                      className={cn(
+                        "border-t",
+                        isAdded
+                          ? "bg-green-50/40 opacity-60 cursor-default"
+                          : "hover:bg-muted/40 cursor-pointer",
+                      )}
+                      onClick={() =>
+                        !isAdded && setSelected((s) => ({ ...s, [p.id]: !s[p.id] }))
+                      }
+                    >
+                      <td className="px-2 py-1.5" onClick={(e) => e.stopPropagation()}>
+                        <Checkbox
+                          checked={isAdded || !!selected[p.id]}
+                          onCheckedChange={(v) =>
+                            !isAdded && setSelected((s) => ({ ...s, [p.id]: !!v }))
+                          }
+                          disabled={isAdded}
+                          className="h-3.5 w-3.5"
+                        />
+                      </td>
+                      <td className="px-2 py-1.5 whitespace-nowrap font-medium">{p.manufacturer}</td>
+                      <td className="px-2 py-1.5 whitespace-nowrap">{p.model}</td>
+                      <td className="px-2 py-1.5">{p.description}</td>
+                      <td className="px-2 py-1.5 whitespace-nowrap">${p.calCost}</td>
+                      <td className="px-2 py-1.5">{p.tf}</td>
+                      <td className="px-2 py-1.5">{p.accredCal || "No"}</td>
+                      <td className="px-2 py-1.5 max-w-[220px] truncate" title={p.locations}>
+                        {p.locations || "—"}
+                      </td>
+                      <td className="px-2 py-1.5">
+                        {isAdded ? (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-green-600/10 px-1.5 py-0.5 text-[10px] font-medium text-green-700">
+                            <Check className="h-2.5 w-2.5" />
+                            Added
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700">
+                            <span className="h-1 w-1 rounded-full bg-emerald-600" />
+                            {p.status}
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })
               )}
             </tbody>
           </table>
