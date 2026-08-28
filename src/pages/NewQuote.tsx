@@ -1,4 +1,5 @@
 import React, { useMemo, useState, Children, isValidElement, cloneElement } from "react";
+import { toast } from "sonner";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useNavigate } from "react-router-dom";
 import {
@@ -468,7 +469,11 @@ const NewQuote = () => {
     );
   }, [quoteType, location, acctNo, priority, followUp, selectContact]);
 
-  const openAdd = () => {
+  const handleAddItemClick = () => {
+    if (!allMandatoryFilled) {
+      toast.error("Please fill in all mandatory quote details before adding items.");
+      return;
+    }
     setDraft(emptyItem());
     setEditingId(null);
     setDrawerOpen(true);
@@ -818,10 +823,8 @@ const NewQuote = () => {
           action={
             <Button
               size="sm"
-              className="h-7 text-[11px] px-2 bg-green-600 hover:bg-green-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-              onClick={openAdd}
-              disabled={!allMandatoryFilled}
-              title={allMandatoryFilled ? "" : "Fill all mandatory quote details before adding items"}
+              className="h-7 text-[11px] px-2 bg-green-600 hover:bg-green-700 text-white"
+              onClick={handleAddItemClick}
             >
               <Plus className="h-3 w-3 mr-1" /> Add Quote Item
             </Button>
