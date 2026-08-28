@@ -456,6 +456,18 @@ const NewQuote = () => {
   const pagedComments = comments.slice((page - 1) * pageSize, page * pageSize);
   const totalPages = Math.max(1, Math.ceil(comments.length / pageSize));
 
+  const allMandatoryFilled = useMemo(() => {
+    const filled = (v: string) => !!v && v !== "All";
+    return (
+      filled(quoteType) &&
+      filled(location) &&
+      acctNo.trim() !== "" &&
+      filled(priority) &&
+      !!followUp &&
+      selectContact.trim() !== ""
+    );
+  }, [quoteType, location, acctNo, priority, followUp, selectContact]);
+
   const openAdd = () => {
     setDraft(emptyItem());
     setEditingId(null);
