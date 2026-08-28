@@ -156,11 +156,14 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                     checked={allChecked}
                     onCheckedChange={(v) =>
                       setSelected(
-                        v ? Object.fromEntries(results.map((p) => [p.id, true])) : {},
+                        v
+                          ? Object.fromEntries(notAddedResults.map((p) => [p.id, true]))
+                          : {},
                       )
                     }
                     aria-label="Select all"
                     className="h-3.5 w-3.5"
+                    disabled={notAddedResults.length === 0}
                   />
                 </th>
                 {["Manufacturer", "Model", "Item Description", "Cal/Cert", "T/F", "17025", "Only Capable Location", "Status"].map(
