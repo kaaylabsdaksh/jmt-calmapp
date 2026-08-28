@@ -459,21 +459,34 @@ const NewQuote = () => {
   const pagedComments = comments.slice((page - 1) * pageSize, page * pageSize);
   const totalPages = Math.max(1, Math.ceil(comments.length / pageSize));
 
-  const allMandatoryFilled = useMemo(() => {
+  const missingFields = useMemo(() => {
     const filled = (v: string) => !!v && v !== "All";
-    return (
-      filled(quoteType) &&
-      filled(location) &&
-      acctNo.trim() !== "" &&
-      filled(priority) &&
-      !!followUp &&
-      selectContact.trim() !== ""
-    );
+    const missing: string[] = [];
+    if (!filled(quoteType)) missing.push("Quote Type");
+    if (!filled(location)) missing.push("Location");
+    if (acctNo.trim() === "") missing.push("Account #");
+    if (!filled(priority)) missing.push("Priority");
+    if (!followUp) missing.push("Follow Up Date");
+    if (selectContact.trim() === "") missing.push("Select Contact");
+    return missing;
   }, [quoteType, location, acctNo, priority, followUp, selectContact]);
+
+  const allMandatoryFilled = missingFields.length === 0;
+  const [showErrors, setShowErrors] = useState(false);
+  const invalid = (name: string) => showErrors && missingFields.includes(name);
+
+  const warnMissing = () => {
+    setShowErrors(true);
+    toast({
+      title: "Missing required fields",
+      description: `${missingFields.join(", ")} ${missingFields.length === 1 ? "is" : "are"} required.`,
+      variant: "destructive",
+    });
+  };
 
   const handleAddItemClick = () => {
     if (!allMandatoryFilled) {
-      toast.error("Please fill in all mandatory quote details before adding items.");
+      warnMissing();
       return;
     }
     setDraft(emptyItem());
@@ -483,11 +496,13 @@ const NewQuote = () => {
 
   const handleSave = () => {
     if (!allMandatoryFilled) {
-      toast.error("Please fill in all mandatory quote details before saving.");
+      warnMissing();
       return;
     }
-    toast.success("Quote saved");
+    setShowErrors(false);
+    toast({ title: "Quote saved", description: "Your quote has been saved." });
   };
+
 
   const openEdit = (item: QuoteItem) => {
     setDraft({ ...item });
