@@ -804,7 +804,13 @@ const NewQuote = () => {
           title="Quote Items"
           badge={items.length}
           action={
-            <Button size="sm" className="h-7 text-[11px] px-2 bg-green-600 hover:bg-green-700 text-white" onClick={openAdd}>
+            <Button
+              size="sm"
+              className="h-7 text-[11px] px-2 bg-green-600 hover:bg-green-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={openAdd}
+              disabled={!allMandatoryFilled}
+              title={allMandatoryFilled ? "" : "Fill all mandatory quote details before adding items"}
+            >
               <Plus className="h-3 w-3 mr-1" /> Add Quote Item
             </Button>
           }
