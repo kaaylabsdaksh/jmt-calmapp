@@ -53,6 +53,8 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
   const selectedProducts = notAddedResults.filter((p) => selected[p.id]);
   const allChecked =
     notAddedResults.length > 0 && notAddedResults.every((p) => selected[p.id]);
+
+  const reset = () => {
     setManufacturer("");
     setModel("");
     setDescription("");
