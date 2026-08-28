@@ -456,6 +456,18 @@ const NewQuote = () => {
   const pagedComments = comments.slice((page - 1) * pageSize, page * pageSize);
   const totalPages = Math.max(1, Math.ceil(comments.length / pageSize));
 
+  const allMandatoryFilled = useMemo(() => {
+    const filled = (v: string) => !!v && v !== "All";
+    return (
+      filled(quoteType) &&
+      filled(location) &&
+      acctNo.trim() !== "" &&
+      filled(priority) &&
+      !!followUp &&
+      selectContact.trim() !== ""
+    );
+  }, [quoteType, location, acctNo, priority, followUp, selectContact]);
+
   const openAdd = () => {
     setDraft(emptyItem());
     setEditingId(null);
@@ -804,7 +816,13 @@ const NewQuote = () => {
           title="Quote Items"
           badge={items.length}
           action={
-            <Button size="sm" className="h-7 text-[11px] px-2 bg-green-600 hover:bg-green-700 text-white" onClick={openAdd}>
+            <Button
+              size="sm"
+              className="h-7 text-[11px] px-2 bg-green-600 hover:bg-green-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={openAdd}
+              disabled={!allMandatoryFilled}
+              title={allMandatoryFilled ? "" : "Fill all mandatory quote details before adding items"}
+            >
               <Plus className="h-3 w-3 mr-1" /> Add Quote Item
             </Button>
           }
