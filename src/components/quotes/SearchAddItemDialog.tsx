@@ -34,6 +34,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
   const [searched, setSearched] = useState(false);
   const [selected, setSelected] = useState<Record<string, boolean>>({});
   const [groupAsOne, setGroupAsOne] = useState(false);
+  const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
 
   const results = useMemo(() => {
     if (!searched) return [] as Product[];
