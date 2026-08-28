@@ -59,12 +59,21 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
     setSearched(false);
     setSelected({});
     setGroupAsOne(false);
+    setAddedIds(new Set());
   };
 
   const close = () => {
     reset();
     onOpenChange(false);
   };
+
+  useEffect(() => {
+    if (open) {
+      setAddedIds(new Set());
+      setSelected({});
+      setGroupAsOne(false);
+    }
+  }, [open]);
 
   const handleAdd = () => {
     if (selectedProducts.length === 0) return;
