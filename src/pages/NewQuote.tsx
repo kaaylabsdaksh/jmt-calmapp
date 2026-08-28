@@ -1225,6 +1225,13 @@ const NewQuote = () => {
 
       </main>
 
+      <SearchAddItemDialog
+        open={searchAddOpen}
+        onOpenChange={setSearchAddOpen}
+        onAdd={handleSearchAdd}
+      />
+
+
       {/* Sticky action bar */}
       <div className="sticky bottom-0 z-30 border-t bg-background/95 backdrop-blur px-2 sm:px-3 lg:px-4 py-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
