@@ -507,6 +507,51 @@ const NewQuote = () => {
     setDrawerOpen(true);
   };
 
+  const handleSearchAddClick = () => {
+    if (!allMandatoryFilled) {
+      warnMissing();
+      return;
+    }
+    setSearchAddOpen(true);
+  };
+
+  const handleSearchAdd = ({ products, groupAsOneLineItem }: SearchAddItemResult) => {
+    if (groupAsOneLineItem) {
+      const total = products.reduce((s, p) => s + parseFloat(p.calCost || "0"), 0);
+      setItems((prev) => [
+        ...prev,
+        {
+          ...emptyItem(),
+          manufacturer: products[0].manufacturer,
+          model: products.map((p) => p.model).join(", "),
+          description: products.map((p) => p.description).join(" / "),
+          qty: String(products.length),
+          baseAmt: total.toFixed(2),
+          calCert: total.toFixed(2),
+          is17025: products.some((p) => p.accredCal === "Yes"),
+        },
+      ]);
+    } else {
+      setItems((prev) => [
+        ...prev,
+        ...products.map((p) => ({
+          ...emptyItem(),
+          manufacturer: p.manufacturer,
+          model: p.model,
+          description: p.description,
+          baseAmt: p.calCost,
+          calCert: p.calCost,
+          is17025: p.accredCal === "Yes",
+        })),
+      ]);
+    }
+    toast({
+      title: "Items added",
+      description: `${groupAsOneLineItem ? 1 : products.length} line item(s) added to the quote.`,
+    });
+  };
+
+
   const handleSave = () => {
     if (!allMandatoryFilled) {
       warnMissing();
