@@ -560,8 +560,8 @@ const NewQuote = () => {
                   </div>
                 </Group>
 
-                {/* Customer & Origin */}
-                <Group title="Customer & Origin">
+                {/* Customer, Origin & References */}
+                <Group title="Customer, Origin & References">
                   <div className="grid grid-cols-3 gap-2">
                     <Field label="Existing Customer">
                       <RadioGroup
@@ -630,39 +630,36 @@ const NewQuote = () => {
                       className={cn(textareaCls, "min-h-[52px]")}
                     />
                   </Field>
+                  <Separator />
+                  <div className="grid grid-cols-2 gap-2">
+                    <Field label="SR Doc">
+                      <Input value={srDoc} onChange={(e) => setSrDoc(e.target.value)} className={inputCls} />
+                    </Field>
+                    <Field label="OSR Doc">
+                      <Input value={osrDoc} onChange={(e) => setOsrDoc(e.target.value)} className={inputCls} />
+                    </Field>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="flex items-center gap-1.5">
+                      <Input
+                        value={opportunity}
+                        onChange={(e) => setOpportunity(e.target.value)}
+                        className={cn(inputCls, "placeholder:font-normal placeholder:text-black placeholder:opacity-100")}
+                        placeholder="Opportunity"
+                      />
+                      <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
+                        Find
+                      </Button>
+                    </div>
+                    <Field label="Customer PO #">
+                      <Input value={custPo} onChange={(e) => setCustPo(e.target.value)} className={inputCls} />
+                    </Field>
+                  </div>
+                  <Field label="Associated Product Review">
+                    <Input value={productReview} onChange={(e) => setProductReview(e.target.value)} className={inputCls} />
+                  </Field>
                 </Group>
               </div>
-
-              {/* References & Documents */}
-              <Group title="References & Documents">
-                <div className="grid grid-cols-2 gap-2">
-                  <Field label="SR Doc">
-                    <Input value={srDoc} onChange={(e) => setSrDoc(e.target.value)} className={inputCls} />
-                  </Field>
-                  <Field label="OSR Doc">
-                    <Input value={osrDoc} onChange={(e) => setOsrDoc(e.target.value)} className={inputCls} />
-                  </Field>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="flex items-center gap-1.5">
-                    <Input
-                      value={opportunity}
-                      onChange={(e) => setOpportunity(e.target.value)}
-                      className={cn(inputCls, "placeholder:font-normal placeholder:text-black placeholder:opacity-100")}
-                      placeholder="Opportunity"
-                    />
-                    <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
-                      Find
-                    </Button>
-                  </div>
-                  <Field label="Customer PO #">
-                    <Input value={custPo} onChange={(e) => setCustPo(e.target.value)} className={inputCls} />
-                  </Field>
-                </div>
-                <Field label="Associated Product Review">
-                  <Input value={productReview} onChange={(e) => setProductReview(e.target.value)} className={inputCls} />
-                </Field>
-              </Group>
             </div>
 
             {/* Secondary details column */}
