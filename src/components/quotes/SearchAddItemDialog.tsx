@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { PRODUCTS, type Product } from "@/lib/products";
+import { cn } from "@/lib/utils";
 
 export type SearchAddItemResult = {
   products: Product[];
