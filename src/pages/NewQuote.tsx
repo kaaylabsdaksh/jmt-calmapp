@@ -69,7 +69,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 const QUOTE_TYPES = ["All", "Lab", "OnSite", "ESL", "Rental", "Sales"];
@@ -468,7 +468,11 @@ const NewQuote = () => {
     );
   }, [quoteType, location, acctNo, priority, followUp, selectContact]);
 
-  const openAdd = () => {
+  const handleAddItemClick = () => {
+    if (!allMandatoryFilled) {
+      toast.error("Please fill in all mandatory quote details before adding items.");
+      return;
+    }
     setDraft(emptyItem());
     setEditingId(null);
     setDrawerOpen(true);
@@ -482,14 +486,14 @@ const NewQuote = () => {
 
   const saveItem = () => {
     if (!draft.manufacturer && !draft.model && !draft.description) {
-      toast({ title: "Add product details", description: "Manufacturer, model or description is required." });
+      toast.error("Add product details", { description: "Manufacturer, model or description is required." });
       return;
     }
     setItems((prev) =>
       editingId ? prev.map((i) => (i.id === editingId ? draft : i)) : [...prev, draft],
     );
     setDrawerOpen(false);
-    toast({ title: editingId ? "Item updated" : "Item added" });
+    toast.success(editingId ? "Item updated" : "Item added");
   };
 
   const addComment = () => {
@@ -627,7 +631,7 @@ const NewQuote = () => {
                         className="h-6 text-[11px] px-2 shrink-0"
                         onClick={() => {
                           setCustomerName("Chevron Oronite");
-                          toast({ title: "Account found", description: "Customer details populated." });
+                          toast.success("Account found", { description: "Customer details populated." });
                         }}
                       >
                         <Search className="h-3 w-3 mr-1" /> Find
@@ -818,10 +822,8 @@ const NewQuote = () => {
           action={
             <Button
               size="sm"
-              className="h-7 text-[11px] px-2 bg-green-600 hover:bg-green-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-              onClick={openAdd}
-              disabled={!allMandatoryFilled}
-              title={allMandatoryFilled ? "" : "Fill all mandatory quote details before adding items"}
+              className="h-7 text-[11px] px-2 bg-green-600 hover:bg-green-700 text-white"
+              onClick={handleAddItemClick}
             >
               <Plus className="h-3 w-3 mr-1" /> Add Quote Item
             </Button>
@@ -1045,7 +1047,7 @@ const NewQuote = () => {
                       <Button
                         size="sm"
                         className="absolute right-1 top-1/2 -translate-y-1/2 h-5 text-[10px] px-2 bg-green-600 hover:bg-green-700 text-white"
-                        onClick={() => toast({ title: "Copied from quote" })}
+                        onClick={() => toast.success("Copied from quote")}
                       >
                         Copy
                       </Button>
@@ -1071,7 +1073,7 @@ const NewQuote = () => {
                       variant="outline"
                       size="sm"
                       className="h-7 text-[11px] w-full"
-                      onClick={() => toast({ title: "Copied from work order" })}
+                      onClick={() => toast.success("Copied from work order")}
                     >
                       Copy from W.O.
                     </Button>
@@ -1115,7 +1117,7 @@ const NewQuote = () => {
             <Button
               size="sm"
               className="h-7 text-[11px] px-3 bg-green-600 hover:bg-green-700 text-white"
-              onClick={() => toast({ title: "Quote saved" })}
+              onClick={() => toast.success("Quote saved")}
             >
               <Save className="h-3 w-3 mr-1" /> Save Quote
             </Button>
