@@ -193,36 +193,56 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                   </td>
                 </tr>
               ) : (
-                results.map((p) => (
-                  <tr
-                    key={p.id}
-                    className="border-t hover:bg-muted/40 cursor-pointer"
-                    onClick={() => setSelected((s) => ({ ...s, [p.id]: !s[p.id] }))}
-                  >
-                    <td className="px-2 py-1.5" onClick={(e) => e.stopPropagation()}>
-                      <Checkbox
-                        checked={!!selected[p.id]}
-                        onCheckedChange={(v) => setSelected((s) => ({ ...s, [p.id]: !!v }))}
-                        className="h-3.5 w-3.5"
-                      />
-                    </td>
-                    <td className="px-2 py-1.5 whitespace-nowrap font-medium">{p.manufacturer}</td>
-                    <td className="px-2 py-1.5 whitespace-nowrap">{p.model}</td>
-                    <td className="px-2 py-1.5">{p.description}</td>
-                    <td className="px-2 py-1.5 whitespace-nowrap">${p.calCost}</td>
-                    <td className="px-2 py-1.5">{p.tf}</td>
-                    <td className="px-2 py-1.5">{p.accredCal || "No"}</td>
-                    <td className="px-2 py-1.5 max-w-[220px] truncate" title={p.locations}>
-                      {p.locations || "—"}
-                    </td>
-                    <td className="px-2 py-1.5">
-                      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700">
-                        <span className="h-1 w-1 rounded-full bg-emerald-600" />
-                        {p.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))
+                results.map((p) => {
+                  const isAdded = addedIds.has(p.id);
+                  return (
+                    <tr
+                      key={p.id}
+                      className={cn(
+                        "border-t",
+                        isAdded
+                          ? "bg-green-50/40 opacity-60 cursor-default"
+                          : "hover:bg-muted/40 cursor-pointer",
+                      )}
+                      onClick={() =>
+                        !isAdded && setSelected((s) => ({ ...s, [p.id]: !s[p.id] }))
+                      }
+                    >
+                      <td className="px-2 py-1.5" onClick={(e) => e.stopPropagation()}>
+                        <Checkbox
+                          checked={isAdded || !!selected[p.id]}
+                          onCheckedChange={(v) =>
+                            !isAdded && setSelected((s) => ({ ...s, [p.id]: !!v }))
+                          }
+                          disabled={isAdded}
+                          className="h-3.5 w-3.5"
+                        />
+                      </td>
+                      <td className="px-2 py-1.5 whitespace-nowrap font-medium">{p.manufacturer}</td>
+                      <td className="px-2 py-1.5 whitespace-nowrap">{p.model}</td>
+                      <td className="px-2 py-1.5">{p.description}</td>
+                      <td className="px-2 py-1.5 whitespace-nowrap">${p.calCost}</td>
+                      <td className="px-2 py-1.5">{p.tf}</td>
+                      <td className="px-2 py-1.5">{p.accredCal || "No"}</td>
+                      <td className="px-2 py-1.5 max-w-[220px] truncate" title={p.locations}>
+                        {p.locations || "—"}
+                      </td>
+                      <td className="px-2 py-1.5">
+                        {isAdded ? (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-green-600/10 px-1.5 py-0.5 text-[10px] font-medium text-green-700">
+                            <Check className="h-2.5 w-2.5" />
+                            Added
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700">
+                            <span className="h-1 w-1 rounded-full bg-emerald-600" />
+                            {p.status}
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })
               )}
             </tbody>
           </table>
