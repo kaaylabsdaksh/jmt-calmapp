@@ -19,6 +19,8 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
+import SearchAddItemDialog, { type SearchAddItemResult } from "@/components/quotes/SearchAddItemDialog";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -417,6 +419,8 @@ const NewQuote = () => {
   const [draft, setDraft] = useState<QuoteItem>(emptyItem());
   const [editingId, setEditingId] = useState<string | null>(null);
   const [pendingDelete, setPendingDelete] = useState<string | null>(null);
+  const [searchAddOpen, setSearchAddOpen] = useState(false);
+
 
   // Project
   const [proposedProject, setProposedProject] = useState("");
@@ -504,6 +508,51 @@ const NewQuote = () => {
     setEditingId(null);
     setDrawerOpen(true);
   };
+
+  const handleSearchAddClick = () => {
+    if (!allMandatoryFilled) {
+      warnMissing();
+      return;
+    }
+    setSearchAddOpen(true);
+  };
+
+  const handleSearchAdd = ({ products, groupAsOneLineItem }: SearchAddItemResult) => {
+    if (groupAsOneLineItem) {
+      const total = products.reduce((s, p) => s + parseFloat(p.calCost || "0"), 0);
+      setItems((prev) => [
+        ...prev,
+        {
+          ...emptyItem(),
+          manufacturer: products[0].manufacturer,
+          model: products.map((p) => p.model).join(", "),
+          description: products.map((p) => p.description).join(" / "),
+          qty: String(products.length),
+          baseAmt: total.toFixed(2),
+          calCert: total.toFixed(2),
+          is17025: products.some((p) => p.accredCal === "Yes"),
+        },
+      ]);
+    } else {
+      setItems((prev) => [
+        ...prev,
+        ...products.map((p) => ({
+          ...emptyItem(),
+          manufacturer: p.manufacturer,
+          model: p.model,
+          description: p.description,
+          baseAmt: p.calCost,
+          calCert: p.calCost,
+          is17025: p.accredCal === "Yes",
+        })),
+      ]);
+    }
+    toast({
+      title: "Items added",
+      description: `${groupAsOneLineItem ? 1 : products.length} line item(s) added to the quote.`,
+    });
+  };
+
 
   const handleSave = () => {
     if (!allMandatoryFilled) {
@@ -866,7 +915,7 @@ const NewQuote = () => {
                   { label: "Uncancel Items", fn: () => setItems((p) => p.map((i) => (i.status === "Cancelled" ? { ...i, status: "" } : i))) },
                   { label: "Receive Items", fn: () => setItems((p) => p.map((i) => ({ ...i, rev: true }))) },
                   { label: "Unreceive Items", fn: () => setItems((p) => p.map((i) => ({ ...i, rev: false }))) },
-                  { label: "Search/Add Item", fn: handleAddItemClick },
+                  { label: "Search/Add Item", fn: handleSearchAddClick },
                   { label: "Add Testing Items", fn: handleAddItemClick },
                 ].map((a) => (
                   <Button
@@ -1177,6 +1226,13 @@ const NewQuote = () => {
         </div>
 
       </main>
+
+      <SearchAddItemDialog
+        open={searchAddOpen}
+        onOpenChange={setSearchAddOpen}
+        onAdd={handleSearchAdd}
+      />
+
 
       {/* Sticky action bar */}
       <div className="sticky bottom-0 z-30 border-t bg-background/95 backdrop-blur px-2 sm:px-3 lg:px-4 py-2">
