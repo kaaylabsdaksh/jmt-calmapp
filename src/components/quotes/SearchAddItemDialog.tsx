@@ -68,7 +68,9 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
   const handleAdd = () => {
     if (selectedProducts.length === 0) return;
     onAdd({ products: selectedProducts, groupAsOneLineItem: groupAsOne });
-    close();
+    // Keep the dialog open so the user can add more items; reset the selection for the next pick.
+    setSelected({});
+    setGroupAsOne(false);
   };
 
   return (
