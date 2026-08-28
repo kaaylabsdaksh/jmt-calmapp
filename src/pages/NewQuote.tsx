@@ -478,6 +478,14 @@ const NewQuote = () => {
     setDrawerOpen(true);
   };
 
+  const handleSave = () => {
+    if (!allMandatoryFilled) {
+      toast.error("Please fill in all mandatory quote details before saving.");
+      return;
+    }
+    toast.success("Quote saved");
+  };
+
   const openEdit = (item: QuoteItem) => {
     setDraft({ ...item });
     setEditingId(item.id);
@@ -1117,7 +1125,7 @@ const NewQuote = () => {
             <Button
               size="sm"
               className="h-7 text-[11px] px-3 bg-green-600 hover:bg-green-700 text-white"
-              onClick={() => toast.success("Quote saved")}
+              onClick={handleSave}
             >
               <Save className="h-3 w-3 mr-1" /> Save Quote
             </Button>
