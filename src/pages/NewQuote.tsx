@@ -476,6 +476,16 @@ const NewQuote = () => {
   const [showErrors, setShowErrors] = useState(false);
   const invalid = (name: string) => showErrors && missingFields.includes(name);
 
+  // Quote # + Status are generated once all mandatory details are filled
+  const [quoteNo, setQuoteNo] = useState<string>("");
+  useEffect(() => {
+    if (allMandatoryFilled && !quoteNo) {
+      setQuoteNo(String(48000 + Math.floor(Math.random() * 999)));
+    }
+  }, [allMandatoryFilled, quoteNo]);
+  const quoteStatus = allMandatoryFilled ? "Quoted" : "Creating";
+
+
   const warnMissing = () => {
     setShowErrors(true);
     toast({
