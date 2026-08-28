@@ -139,9 +139,16 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
               Clear
             </Button>
             {searched && (
-              <Badge variant="secondary" className="ml-auto text-[10px] font-medium">
-                {results.length} result{results.length === 1 ? "" : "s"}
-              </Badge>
+              <div className="ml-auto flex items-center gap-1.5">
+                {addedIds.size > 0 && (
+                  <Badge className="bg-green-600/10 text-green-700 hover:bg-green-600/10 text-[10px] font-medium">
+                    {addedIds.size} added
+                  </Badge>
+                )}
+                <Badge variant="secondary" className="text-[10px] font-medium">
+                  {results.length} result{results.length === 1 ? "" : "s"}
+                </Badge>
+              </div>
             )}
           </div>
         </div>
