@@ -599,28 +599,30 @@ const NewQuote = () => {
                       <SelectField value={source} onChange={setSource} options={SOURCES} placeholder="Select source" />
                     </Field>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <Input
-                      value={acctNo}
-                      onChange={(e) => setAcctNo(e.target.value)}
-                      className={cn(inputCls, "placeholder:font-normal placeholder:text-black placeholder:opacity-100")}
-                      placeholder="Account #"
-                    />
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-6 text-[11px] px-2 shrink-0"
-                      onClick={() => {
-                        setCustomerName("Chevron Oronite");
-                        toast({ title: "Account found", description: "Customer details populated." });
-                      }}
-                    >
-                      <Search className="h-3 w-3 mr-1" /> Find
-                    </Button>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="flex items-center gap-1.5">
+                      <Input
+                        value={acctNo}
+                        onChange={(e) => setAcctNo(e.target.value)}
+                        className={cn(inputCls, "placeholder:font-normal placeholder:text-black placeholder:opacity-100")}
+                        placeholder="Account #"
+                      />
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="h-6 text-[11px] px-2 shrink-0"
+                        onClick={() => {
+                          setCustomerName("Chevron Oronite");
+                          toast({ title: "Account found", description: "Customer details populated." });
+                        }}
+                      >
+                        <Search className="h-3 w-3 mr-1" /> Find
+                      </Button>
+                    </div>
+                    <Field label="Customer Name">
+                      <Input value={customerName} onChange={(e) => setCustomerName(e.target.value)} className={inputCls} />
+                    </Field>
                   </div>
-                  <Field label="Customer Name">
-                    <Input value={customerName} onChange={(e) => setCustomerName(e.target.value)} className={inputCls} />
-                  </Field>
                   <Field label="Source Info">
                     <Textarea
                       value={sourceInfo}
