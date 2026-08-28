@@ -659,6 +659,7 @@ const NewQuote = () => {
                     <Input value={productReview} onChange={(e) => setProductReview(e.target.value)} className={inputCls} />
                   </Field>
                 </Group>
+              </div>
             </div>
 
             {/* Secondary details column */}
