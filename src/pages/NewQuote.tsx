@@ -601,12 +601,14 @@ const NewQuote = () => {
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div className="flex items-center gap-1.5">
-                      <Input
-                        value={acctNo}
-                        onChange={(e) => setAcctNo(e.target.value)}
-                        className={cn(inputCls, "placeholder:font-normal placeholder:text-black placeholder:opacity-100")}
-                        placeholder="Account #"
-                      />
+                      <Field label="Account #" required className="flex-1">
+                        <Input
+                          value={acctNo}
+                          onChange={(e) => setAcctNo(e.target.value)}
+                          className={cn(inputCls, "placeholder:font-normal placeholder:text-black placeholder:opacity-100")}
+                          placeholder="Account #"
+                        />
+                      </Field>
                       <Button
                         variant="outline"
                         size="sm"
@@ -696,7 +698,7 @@ const NewQuote = () => {
                   <Field label="Need By Date">
                     <ModernDatePicker value={needBy} onChange={setNeedBy} size="xs" inputClassName={inputCls} placeholder="MM/DD/YYYY" />
                   </Field>
-                  <Field label="Follow Up Date">
+                  <Field label="Follow Up Date" required>
                     <ModernDatePicker value={followUp} onChange={setFollowUp} size="xs" inputClassName={inputCls} placeholder="MM/DD/YYYY" />
                   </Field>
                 </div>
@@ -721,12 +723,14 @@ const NewQuote = () => {
             <div className="space-y-2.5">
               <div className="flex items-center gap-1.5">
                 <div className="flex-1">
-                  <SelectField
-                    value={selectContact}
-                    onChange={setSelectContact}
-                    options={CONTACTS}
-                    placeholder="Select Contact"
-                  />
+                  <Field label="Select Contact" required>
+                    <SelectField
+                      value={selectContact}
+                      onChange={setSelectContact}
+                      options={CONTACTS}
+                      placeholder="Select Contact"
+                    />
+                  </Field>
                 </div>
                 <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
                   <Plus className="h-3 w-3 mr-1" /> Add Contact
