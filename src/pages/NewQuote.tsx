@@ -1,4 +1,4 @@
-import React, { useMemo, useState, Children, isValidElement, cloneElement } from "react";
+import React, { useMemo, useState, useEffect, Children, isValidElement, cloneElement } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useNavigate } from "react-router-dom";
 import {
@@ -475,6 +475,16 @@ const NewQuote = () => {
   const allMandatoryFilled = missingFields.length === 0;
   const [showErrors, setShowErrors] = useState(false);
   const invalid = (name: string) => showErrors && missingFields.includes(name);
+
+  // Quote # + Status are generated once all mandatory details are filled
+  const [quoteNo, setQuoteNo] = useState<string>("");
+  useEffect(() => {
+    if (allMandatoryFilled && !quoteNo) {
+      setQuoteNo(String(48000 + Math.floor(Math.random() * 999)));
+    }
+  }, [allMandatoryFilled, quoteNo]);
+  const quoteStatus = allMandatoryFilled ? "Quoted" : "Creating";
+
 
   const warnMissing = () => {
     setShowErrors(true);
@@ -994,8 +1004,24 @@ const NewQuote = () => {
           </div>
 
           {/* Sticky summary rail */}
-          <aside className="xl:sticky xl:top-2 self-start">
+          <aside className="xl:sticky xl:top-2 self-start space-y-2">
+            {allMandatoryFilled && (
+              <div className="flex items-center justify-between gap-2 rounded-lg border bg-muted/40 px-2.5 py-1.5">
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-[11px] text-muted-foreground">Quote #</span>
+                  <span className="text-xs font-semibold tabular-nums">{quoteNo}</span>
+                </div>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-[11px] text-muted-foreground">Status</span>
+                  <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-[11px] font-medium text-green-700">
+                    <span className="h-1.5 w-1.5 rounded-full bg-green-600" />
+                    {quoteStatus}
+                  </span>
+                </div>
+              </div>
+            )}
             <SectionCard icon={DollarSign} title="Quote Summary">
+
               <div className="space-y-1.5">
                 {CHARGE_FIELDS.map((c) => (
                   <div key={c.key} className="flex items-center justify-between gap-2">
