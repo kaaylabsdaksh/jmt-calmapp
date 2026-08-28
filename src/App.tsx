@@ -59,6 +59,7 @@ import NewContractReview from "./pages/NewContractReview";
 import WhatsNew from "./pages/WhatsNew";
 import { Layout } from "./components/Layout";
 import { Toaster } from "@/components/ui/toaster";
+import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { TourProvider } from "@/context/TourContext";
 import { WelcomeModal } from "@/components/tour/WelcomeModal";
 import { GuidedTour } from "@/components/tour/GuidedTour";
