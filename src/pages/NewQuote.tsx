@@ -867,9 +867,50 @@ const NewQuote = () => {
             </Button>
           }
         >
+          {allMandatoryFilled ? (
+            <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border bg-muted/30 px-2 py-1.5">
+              <div className="flex flex-wrap items-center gap-1">
+                {[
+                  { label: "Cancel Items", fn: () => setItems((p) => p.map((i) => ({ ...i, status: "Cancelled" }))) },
+                  { label: "Uncancel Items", fn: () => setItems((p) => p.map((i) => (i.status === "Cancelled" ? { ...i, status: "" } : i))) },
+                  { label: "Receive Items", fn: () => setItems((p) => p.map((i) => ({ ...i, rev: true }))) },
+                  { label: "Unreceive Items", fn: () => setItems((p) => p.map((i) => ({ ...i, rev: false }))) },
+                  { label: "Search/Add Item", fn: handleAddItemClick },
+                  { label: "Add Testing Items", fn: handleAddItemClick },
+                ].map((a) => (
+                  <Button
+                    key={a.label}
+                    variant="ghost"
+                    size="sm"
+                    className="h-6 px-2 text-[11px] text-foreground hover:bg-muted"
+                    onClick={a.fn}
+                  >
+                    {a.label}
+                  </Button>
+                ))}
+              </div>
+              <div className="flex items-center gap-3">
+                {[
+                  { label: "Repair", set: () => setItems((p) => p.map((i) => ({ ...i, rep: "Yes" }))), clear: () => setItems((p) => p.map((i) => ({ ...i, rep: "" }))) },
+                  { label: "17025", set: () => setItems((p) => p.map((i) => ({ ...i, is17025: true }))), clear: () => setItems((p) => p.map((i) => ({ ...i, is17025: false }))) },
+                ].map((g) => (
+                  <div key={g.label} className="flex items-center gap-1">
+                    <span className="text-[11px] font-medium text-muted-foreground">{g.label}</span>
+                    <Button variant="ghost" size="sm" className="h-6 px-1.5 text-[11px]" onClick={g.set}>Set</Button>
+                    <Button variant="ghost" size="sm" className="h-6 px-1.5 text-[11px]" onClick={g.clear}>Clear</Button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <p className="text-[11px] text-muted-foreground rounded-lg border border-dashed px-2 py-1.5">
+              Fill the mandatory quote details to unlock item actions.
+            </p>
+          )}
           <p className="text-[10px] text-muted-foreground">
             * denotes the product is pending a project review and charges will be updated
           </p>
+
           <div className="rounded-lg border overflow-auto max-h-[420px]">
             <table className="w-full text-[11px]">
               <thead className="sticky top-0 z-10 bg-muted/60 backdrop-blur">
