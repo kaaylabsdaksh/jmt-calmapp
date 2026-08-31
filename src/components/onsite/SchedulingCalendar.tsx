@@ -101,7 +101,30 @@ export const SchedulingCalendar = () => {
         </Button>
       </div>
 
+      {/* Status / event-type legend */}
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md border bg-muted/30 px-2 py-1.5 text-[10px]">
+        <span className="font-semibold uppercase tracking-wide text-muted-foreground">Legend</span>
+        {(Object.keys(JOB_STATUS_STYLES) as (keyof typeof JOB_STATUS_STYLES)[]).map((s) => (
+          <span key={s} className="inline-flex items-center gap-1">
+            <span className={cn("h-2.5 w-4 rounded-sm border", JOB_STATUS_STYLES[s])} />
+            {s}
+          </span>
+        ))}
+        <span className="mx-1 h-3 w-px bg-border" />
+        {(Object.keys(NON_SERVICE_STYLES) as (keyof typeof NON_SERVICE_STYLES)[]).map((t) => (
+          <span key={t} className="inline-flex items-center gap-1">
+            <span className={cn("h-2.5 w-4 rounded-sm border", NON_SERVICE_STYLES[t])} />
+            {t}
+          </span>
+        ))}
+        <span className="mx-1 h-3 w-px bg-border" />
+        <span className="inline-flex items-center gap-1">
+          <AlertTriangle className="h-3 w-3 text-amber-600" /> Technician double-booked
+        </span>
+      </div>
+
       <div className="grid grid-cols-7 gap-px rounded-md border bg-border overflow-hidden">
+
         {WEEKDAYS.map((d) => (
           <div key={d} className="bg-muted px-1.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
             {d}

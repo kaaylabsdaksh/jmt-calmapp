@@ -41,16 +41,25 @@ export const UnscheduledWorkQueue = () => {
   const [division, setDivision] = useState("Calibration");
   const [technicianIds, setTechnicianIds] = useState<string[]>([]);
 
+  const [sortAsc, setSortAsc] = useState(true);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return unscheduled;
-    return unscheduled.filter(
-      (u) =>
-        u.customer.toLowerCase().includes(q) ||
-        u.accountNumber.toLowerCase().includes(q) ||
-        u.salesRepCode.toLowerCase().includes(q),
+    const rows = !q
+      ? [...unscheduled]
+      : unscheduled.filter(
+          (u) =>
+            u.customer.toLowerCase().includes(q) ||
+            u.accountNumber.toLowerCase().includes(q) ||
+            u.salesRepCode.toLowerCase().includes(q),
+        );
+    return rows.sort((a, b) =>
+      sortAsc
+        ? a.targetWindowStart.localeCompare(b.targetWindowStart)
+        : b.targetWindowStart.localeCompare(a.targetWindowStart),
     );
-  }, [unscheduled, query]);
+  }, [unscheduled, query, sortAsc]);
+
 
   const openSchedule = (item: UnscheduledWorkItem) => {
     setTarget(item);
@@ -121,7 +130,16 @@ export const UnscheduledWorkQueue = () => {
             <tr className="text-left">
               <th className="px-2 py-1.5 font-semibold">Customer</th>
               <th className="px-2 py-1.5 font-semibold">Acct #</th>
-              <th className="px-2 py-1.5 font-semibold">Target window</th>
+              <th className="px-2 py-1.5 font-semibold">
+                <button
+                  type="button"
+                  onClick={() => setSortAsc((s) => !s)}
+                  className="inline-flex items-center gap-1 hover:underline"
+                >
+                  Target window {sortAsc ? "↑" : "↓"}
+                </button>
+              </th>
+
               <th className="px-2 py-1.5 font-semibold">Rep</th>
               <th className="px-2 py-1.5 font-semibold">Notes</th>
               <th className="px-2 py-1.5 font-semibold text-right">Action</th>
