@@ -14,10 +14,30 @@ import { Badge } from "@/components/ui/badge";
 import { PRODUCTS, type Product } from "@/lib/products";
 import { cn } from "@/lib/utils";
 
+export type AddedItemDetail = {
+  qty: string;
+  add17025: boolean;
+  repair: boolean;
+  mfrSerial: string;
+  custId: string;
+  custSerial: string;
+};
+
+export const emptyItemDetail = (): AddedItemDetail => ({
+  qty: "1",
+  add17025: false,
+  repair: false,
+  mfrSerial: "",
+  custId: "",
+  custSerial: "",
+});
+
 export type SearchAddItemResult = {
   products: Product[];
   groupAsOneLineItem: boolean;
+  details: Record<string, AddedItemDetail>;
 };
+
 
 interface SearchAddItemDialogProps {
   open: boolean;
