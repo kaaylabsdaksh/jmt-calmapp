@@ -25,8 +25,22 @@ interface SearchAddItemDialogProps {
   onAdd: (result: SearchAddItemResult) => void;
 }
 
+type ExtraRow = { name: string; qty: string; cost: string };
+
+const SERVICE_TYPES = [
+  "Calibration",
+  "Repair",
+  "Expedite",
+  "Onsite Service",
+  "Data Report",
+  "Cleaning",
+];
+
+const PART_TYPES = ["Battery", "Cable", "Fuse", "Sensor", "Filter", "Connector"];
+
 const inputCls =
   "h-7 text-[11px] px-2 rounded-md bg-background border-border focus-visible:ring-1";
+
 
 const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogProps) => {
   const [manufacturer, setManufacturer] = useState("");
@@ -36,6 +50,28 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
   const [selected, setSelected] = useState<Record<string, boolean>>({});
   const [groupAsOne, setGroupAsOne] = useState(false);
   const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
+  const [serviceDraft, setServiceDraft] = useState({ name: "", qty: "1", cost: "0.00" });
+  const [partDraft, setPartDraft] = useState({ name: "", qty: "1", cost: "0.00" });
+  const [serviceRows, setServiceRows] = useState<ExtraRow[]>([]);
+  const [partRows, setPartRows] = useState<ExtraRow[]>([]);
+
+  const addExtra = (kind: "service" | "part") => {
+    const draft = kind === "service" ? serviceDraft : partDraft;
+    if (!draft.name) return;
+    if (kind === "service") {
+      setServiceRows((r) => [...r, draft]);
+      setServiceDraft({ name: "", qty: "1", cost: "0.00" });
+    } else {
+      setPartRows((r) => [...r, draft]);
+      setPartDraft({ name: "", qty: "1", cost: "0.00" });
+    }
+  };
+
+  const removeExtra = (kind: "service" | "part", idx: number) => {
+    const setter = kind === "service" ? setServiceRows : setPartRows;
+    setter((r) => r.filter((_, i) => i !== idx));
+  };
+
 
   const results = useMemo(() => {
     if (!searched) return [] as Product[];
@@ -69,6 +105,11 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
     clearSearch();
     setGroupAsOne(false);
     setAddedIds(new Set());
+    setServiceRows([]);
+    setPartRows([]);
+    setServiceDraft({ name: "", qty: "1", cost: "0.00" });
+    setPartDraft({ name: "", qty: "1", cost: "0.00" });
+
   };
 
   const close = () => {
@@ -376,7 +417,100 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
           </div>
         </div>
 
+        {/* Services & Parts */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 px-4 py-3 border-t bg-slate-50/60">
+          {(["service", "part"] as const).map((kind) => {
+            const isService = kind === "service";
+            const opts = isService ? SERVICE_TYPES : PART_TYPES;
+            const draft = isService ? serviceDraft : partDraft;
+            const setDraft = isService ? setServiceDraft : setPartDraft;
+            const rows = isService ? serviceRows : partRows;
+            return (
+              <div key={kind} className="rounded-md border-2 border-slate-300 bg-white p-2">
+                <div className="text-[11px] font-semibold text-slate-700 mb-1.5">
+                  {isService ? "Service Type" : "Part"}{" "}
+                  <span className="font-normal text-muted-foreground">(to be added to each qty)</span>
+                </div>
+                <div className="flex items-end gap-1.5">
+                  <select
+                    className={cn(inputCls, "flex-1 min-w-0 border")}
+                    value={draft.name}
+                    onChange={(e) => setDraft({ ...draft, name: e.target.value })}
+                  >
+                    <option value="">Select…</option>
+                    {opts.map((o) => (
+                      <option key={o} value={o}>{o}</option>
+                    ))}
+                  </select>
+                  <div>
+                    <div className="text-[9px] uppercase text-muted-foreground">Qty</div>
+                    <Input
+                      className={cn(inputCls, "w-14")}
+                      value={draft.qty}
+                      onChange={(e) => setDraft({ ...draft, qty: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <div className="text-[9px] uppercase text-muted-foreground">Base Cost</div>
+                    <Input
+                      className={cn(inputCls, "w-20")}
+                      value={draft.cost}
+                      onChange={(e) => setDraft({ ...draft, cost: e.target.value })}
+                    />
+                  </div>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="h-7 px-2 text-[11px]"
+                    disabled={!draft.name}
+                    onClick={() => addExtra(kind)}
+                  >
+                    <Plus className="h-3 w-3 mr-1" />
+                    Add
+                  </Button>
+                </div>
+                <div className="mt-2 max-h-[110px] overflow-auto rounded-md border">
+                  <table className="w-full text-[11px]">
+                    <tbody>
+                      {rows.length === 0 ? (
+                        <tr>
+                          <td className="py-5 text-center text-muted-foreground">No data to display</td>
+                        </tr>
+                      ) : (
+                        rows.map((r, i) => (
+                          <tr key={`${r.name}-${i}`} className="border-t">
+                            <td className="px-2 py-1">{r.name}</td>
+                            <td className="px-2 py-1 w-12 text-right">{r.qty}</td>
+                            <td className="px-2 py-1 w-16 text-right">${r.cost}</td>
+                            <td className="px-2 py-1 w-8 text-right">
+                              <Button
+                                size="icon"
+                                variant="ghost"
+                                className="h-5 w-5 text-muted-foreground hover:text-destructive"
+                                onClick={() => removeExtra(kind, i)}
+                                aria-label="Remove"
+                              >
+                                <Trash2 className="h-3 w-3" />
+                              </Button>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            );
+          })}
+          <div className="md:col-span-2 text-center">
+            <span className="inline-block border border-destructive/40 bg-destructive/5 px-2 py-1 text-[11px] font-semibold text-destructive">
+              Only items with a Qty of 1 will add the services and parts below. Grouped items no longer allow services and parts.
+            </span>
+          </div>
+        </div>
+
         {/* Footer */}
+
         <div className="flex items-center justify-between gap-2 border-t bg-muted/20 px-4 py-2.5">
           <label className="flex items-center gap-1.5 text-[11px] text-muted-foreground cursor-pointer">
             <Checkbox
