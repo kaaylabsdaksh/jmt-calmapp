@@ -105,6 +105,11 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
     clearSearch();
     setGroupAsOne(false);
     setAddedIds(new Set());
+    setServiceRows([]);
+    setPartRows([]);
+    setServiceDraft({ name: "", qty: "1", cost: "0.00" });
+    setPartDraft({ name: "", qty: "1", cost: "0.00" });
+
   };
 
   const close = () => {
