@@ -369,56 +369,116 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                 {addedIds.size}
               </Badge>
             </div>
-            <div className="max-h-[280px] overflow-auto rounded-md border bg-white divide-y">
-              {addedProducts.map((p) => {
-                const d = detailOf(p.id);
-                return (
-                  <div
-                    key={p.id}
-                    className="px-3 py-2.5 text-[11px] hover:bg-slate-50/60 transition-colors"
-                  >
-                    <div className="grid grid-cols-[1fr_auto] gap-3 items-start">
-                      {/* Left: product identity + read-only details */}
-                      <div className="min-w-0">
-                        <div className="font-medium text-slate-900 truncate" title={p.description}>
-                          {p.description}
-                        </div>
-                        <div className="text-[10px] text-muted-foreground truncate">
-                          {p.manufacturer} · {p.model}
-                        </div>
-                        <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-0.5 text-[10px] text-muted-foreground">
-                          <span className="whitespace-nowrap">
-                            Cal/Cert: <span className="font-medium text-slate-700">${p.calCost}</span>
-                          </span>
-                          <span className="whitespace-nowrap">
-                            T/F: <span className="font-medium text-slate-700">{p.tf}</span>
-                          </span>
-                          <span className="whitespace-nowrap">
-                            17025: <span className="font-medium text-slate-700">{p.accredCal || "No"}</span>
-                          </span>
-                          <span
-                            className="truncate max-w-[200px]"
-                            title={p.locations}
-                          >
-                            Loc: <span className="font-medium text-slate-700">{p.locations || "—"}</span>
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Right: controls */}
-                      <div className="flex flex-col items-end gap-2 shrink-0">
-                        <div className="flex items-center gap-2">
+            <div className="max-h-[280px] overflow-auto rounded-md border bg-white">
+              <table className="w-full text-[11px] table-fixed">
+                <thead className="sticky top-0 z-10 bg-muted/60 backdrop-blur">
+                  <tr>
+                    <th className="px-2 py-1.5 text-left font-semibold text-muted-foreground w-[200px]">
+                      Product
+                    </th>
+                    <th className="px-1 py-1.5 text-center font-semibold text-muted-foreground w-[50px]">
+                      Qty
+                    </th>
+                    <th className="px-1 py-1.5 text-right font-semibold text-muted-foreground w-[60px]">
+                      Cal/Cert
+                    </th>
+                    <th className="px-1 py-1.5 text-center font-semibold text-muted-foreground w-[40px]">
+                      T/F
+                    </th>
+                    <th className="px-1 py-1.5 text-center font-semibold text-muted-foreground w-[50px]">
+                      17025
+                    </th>
+                    <th className="px-1 py-1.5 text-center font-semibold text-muted-foreground w-[50px]">
+                      Add
+                    </th>
+                    <th className="px-1 py-1.5 text-center font-semibold text-muted-foreground w-[50px]">
+                      Repair
+                    </th>
+                    <th className="px-2 py-1.5 text-left font-semibold text-muted-foreground w-[120px]">
+                      Location
+                    </th>
+                    <th className="px-2 py-1.5 text-left font-semibold text-muted-foreground w-[110px]">
+                      Mfr Serial
+                    </th>
+                    <th className="px-2 py-1.5 text-left font-semibold text-muted-foreground w-[90px]">
+                      Cust ID
+                    </th>
+                    <th className="px-2 py-1.5 text-left font-semibold text-muted-foreground w-[110px]">
+                      Cust Serial
+                    </th>
+                    <th className="px-1 py-1.5 text-center font-semibold text-muted-foreground w-[40px]"></th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y">
+                  {addedProducts.map((p) => {
+                    const d = detailOf(p.id);
+                    return (
+                      <tr key={p.id} className="hover:bg-muted/20">
+                        <td className="px-2 py-1.5 align-top">
+                          <div className="font-medium truncate" title={p.description}>
+                            {p.description}
+                          </div>
+                          <div className="text-[10px] text-muted-foreground truncate">
+                            {p.manufacturer} · {p.model}
+                          </div>
+                        </td>
+                        <td className="px-1 py-1.5 align-top">
                           <Input
                             type="number"
                             min={1}
                             value={d.qty}
                             onChange={(e) => setDetail(p.id, { qty: e.target.value })}
-                            className={cn(inputCls, "h-6 w-14 text-center px-1")}
+                            className={cn(inputCls, "h-6 w-full text-center px-1")}
                           />
-                          <span className="inline-flex items-center gap-1 rounded-full bg-green-600/10 px-1.5 py-0.5 text-[10px] font-medium text-green-700">
-                            <Check className="h-2.5 w-2.5" />
-                            Staged
-                          </span>
+                        </td>
+                        <td className="px-1 py-1.5 align-top text-right">${p.calCost}</td>
+                        <td className="px-1 py-1.5 align-top text-center">{p.tf}</td>
+                        <td className="px-1 py-1.5 align-top text-center">{p.accredCal || "No"}</td>
+                        <td className="px-1 py-1.5 align-top text-center">
+                          <Checkbox
+                            checked={d.add17025}
+                            onCheckedChange={(v) => setDetail(p.id, { add17025: !!v })}
+                            className="h-3.5 w-3.5"
+                          />
+                        </td>
+                        <td className="px-1 py-1.5 align-top text-center">
+                          <Checkbox
+                            checked={d.repair}
+                            onCheckedChange={(v) => setDetail(p.id, { repair: !!v })}
+                            className="h-3.5 w-3.5"
+                          />
+                        </td>
+                        <td
+                          className="px-2 py-1.5 align-top truncate"
+                          title={p.locations}
+                        >
+                          {p.locations || "—"}
+                        </td>
+                        <td className="px-2 py-1.5 align-top">
+                          <Input
+                            placeholder="Mfr Serial"
+                            value={d.mfrSerial}
+                            onChange={(e) => setDetail(p.id, { mfrSerial: e.target.value })}
+                            className={cn(inputCls, "h-6 w-full text-[10px] px-1.5")}
+                          />
+                        </td>
+                        <td className="px-2 py-1.5 align-top">
+                          <Input
+                            placeholder="Cust ID"
+                            value={d.custId}
+                            onChange={(e) => setDetail(p.id, { custId: e.target.value })}
+                            className={cn(inputCls, "h-6 w-full text-[10px] px-1.5")}
+                          />
+                        </td>
+                        <td className="px-2 py-1.5 align-top">
+                          <Input
+                            placeholder="Cust Serial"
+                            value={d.custSerial}
+                            onChange={(e) => setDetail(p.id, { custSerial: e.target.value })}
+                            className={cn(inputCls, "h-6 w-full text-[10px] px-1.5")}
+                          />
+                        </td>
+                        <td className="px-1 py-1.5 align-top text-center">
                           <Button
                             size="icon"
                             variant="ghost"
@@ -428,52 +488,12 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                           >
                             <Trash2 className="h-3 w-3" />
                           </Button>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <label className="flex items-center gap-1.5 cursor-pointer">
-                            <Checkbox
-                              checked={d.add17025}
-                              onCheckedChange={(v) => setDetail(p.id, { add17025: !!v })}
-                              className="h-3.5 w-3.5"
-                            />
-                            <span className="text-[10px]">Add 17025</span>
-                          </label>
-                          <label className="flex items-center gap-1.5 cursor-pointer">
-                            <Checkbox
-                              checked={d.repair}
-                              onCheckedChange={(v) => setDetail(p.id, { repair: !!v })}
-                              className="h-3.5 w-3.5"
-                            />
-                            <span className="text-[10px]">Repair</span>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Serial fields */}
-                    <div className="mt-2.5 grid grid-cols-3 gap-2">
-                      <Input
-                        placeholder="Mfr Serial"
-                        value={d.mfrSerial}
-                        onChange={(e) => setDetail(p.id, { mfrSerial: e.target.value })}
-                        className={cn(inputCls, "h-6 w-full text-[10px]")}
-                      />
-                      <Input
-                        placeholder="Cust ID"
-                        value={d.custId}
-                        onChange={(e) => setDetail(p.id, { custId: e.target.value })}
-                        className={cn(inputCls, "h-6 w-full text-[10px]")}
-                      />
-                      <Input
-                        placeholder="Cust Serial"
-                        value={d.custSerial}
-                        onChange={(e) => setDetail(p.id, { custSerial: e.target.value })}
-                        className={cn(inputCls, "h-6 w-full text-[10px]")}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           </div>
         )}
