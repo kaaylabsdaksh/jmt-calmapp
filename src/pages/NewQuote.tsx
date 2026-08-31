@@ -817,7 +817,7 @@ const NewQuote = () => {
                 {!quoteType && (
                   <p className="text-[10px] text-red-600 -mt-1">Quote type is required to save.</p>
                 )}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 gap-2">
                   <div className="flex items-center gap-2 h-6 px-2.5 rounded-lg border bg-background">
                     <Checkbox id="poco" checked={pocoReq} onCheckedChange={(v) => setPocoReq(!!v)} />
                     <Label htmlFor="poco" className="text-[11px] font-medium">PO/CO Req?</Label>
