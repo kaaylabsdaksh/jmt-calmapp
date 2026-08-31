@@ -342,46 +342,37 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
           </div>
         </div>
 
-        {/* Added items */}
-        <div className="px-4 py-3 bg-green-50/40">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-1.5">
-              <Check className="h-3.5 w-3.5 text-green-600" />
-              <span className="text-[11px] font-semibold text-green-800 uppercase tracking-wide">
-                Added items
-              </span>
+        {/* Added items - only visible once something is staged */}
+        {addedIds.size > 0 && (
+          <div className="px-4 py-3 bg-green-50/40">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-1.5">
+                <Check className="h-3.5 w-3.5 text-green-600" />
+                <span className="text-[11px] font-semibold text-green-800 uppercase tracking-wide">
+                  Added items
+                </span>
+              </div>
+              <Badge
+                variant="default"
+                className="text-[10px] font-medium bg-green-600 hover:bg-green-600 text-white"
+              >
+                {addedIds.size}
+              </Badge>
             </div>
-            <Badge
-              variant={addedIds.size > 0 ? "default" : "secondary"}
-              className={cn(
-                "text-[10px] font-medium",
-                addedIds.size > 0 && "bg-green-600 hover:bg-green-600 text-white",
-              )}
-            >
-              {addedIds.size}
-            </Badge>
-          </div>
-          <div className="max-h-[160px] overflow-auto rounded-md border bg-white">
-            <table className="w-full text-[11px]">
-              <thead className="sticky top-0 z-10 bg-muted/60 backdrop-blur">
-                <tr>
-                  {["Manufacturer", "Model", "Item Description", "Cal/Cert", "T/F", "17025", "Only Capable Location", "Status"].map((c) => (
-                    <th key={c} className="px-2 py-1.5 text-left font-semibold whitespace-nowrap text-muted-foreground">
-                      {c}
-                    </th>
-                  ))}
-                  <th className="px-2 py-1.5 w-10" />
-                </tr>
-              </thead>
-              <tbody>
-                {addedProducts.length === 0 ? (
+            <div className="max-h-[160px] overflow-auto rounded-md border bg-white">
+              <table className="w-full text-[11px]">
+                <thead className="sticky top-0 z-10 bg-muted/60 backdrop-blur">
                   <tr>
-                    <td colSpan={9} className="py-6 text-center text-muted-foreground text-[11px]">
-                      No data to display
-                    </td>
+                    {["Manufacturer", "Model", "Item Description", "Cal/Cert", "T/F", "17025", "Only Capable Location", "Status"].map((c) => (
+                      <th key={c} className="px-2 py-1.5 text-left font-semibold whitespace-nowrap text-muted-foreground">
+                        {c}
+                      </th>
+                    ))}
+                    <th className="px-2 py-1.5 w-10" />
                   </tr>
-                ) : (
-                  addedProducts.map((p) => (
+                </thead>
+                <tbody>
+                  {addedProducts.map((p) => (
                     <tr key={p.id} className="border-t bg-green-50/40">
                       <td className="px-2 py-1 whitespace-nowrap font-medium">{p.manufacturer}</td>
                       <td className="px-2 py-1 whitespace-nowrap">{p.model}</td>
@@ -410,104 +401,106 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                         </Button>
                       </td>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Services & Parts */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 px-4 py-3 border-t bg-slate-50/60">
-          {(["service", "part"] as const).map((kind) => {
-            const isService = kind === "service";
-            const opts = isService ? SERVICE_TYPES : PART_TYPES;
-            const draft = isService ? serviceDraft : partDraft;
-            const setDraft = isService ? setServiceDraft : setPartDraft;
-            const rows = isService ? serviceRows : partRows;
-            return (
-              <div key={kind} className="rounded-md border-2 border-slate-300 bg-white p-2">
-                <div className="text-[11px] font-semibold text-slate-700 mb-1.5">
-                  {isService ? "Service Type" : "Part"}{" "}
-                  <span className="font-normal text-muted-foreground">(to be added to each qty)</span>
-                </div>
-                <div className="flex items-end gap-1.5">
-                  <select
-                    className={cn(inputCls, "flex-1 min-w-0 border")}
-                    value={draft.name}
-                    onChange={(e) => setDraft({ ...draft, name: e.target.value })}
-                  >
-                    <option value="">Select…</option>
-                    {opts.map((o) => (
-                      <option key={o} value={o}>{o}</option>
-                    ))}
-                  </select>
-                  <div>
-                    <div className="text-[9px] uppercase text-muted-foreground">Qty</div>
-                    <Input
-                      className={cn(inputCls, "w-14")}
-                      value={draft.qty}
-                      onChange={(e) => setDraft({ ...draft, qty: e.target.value })}
-                    />
+        {/* Services & Parts - only visible once something is staged */}
+        {addedIds.size > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 px-4 py-3 border-t bg-slate-50/60">
+            {(["service", "part"] as const).map((kind) => {
+              const isService = kind === "service";
+              const opts = isService ? SERVICE_TYPES : PART_TYPES;
+              const draft = isService ? serviceDraft : partDraft;
+              const setDraft = isService ? setServiceDraft : setPartDraft;
+              const rows = isService ? serviceRows : partRows;
+              return (
+                <div key={kind} className="rounded-md border-2 border-slate-300 bg-white p-2">
+                  <div className="text-[11px] font-semibold text-slate-700 mb-1.5">
+                    {isService ? "Service Type" : "Part"}{" "}
+                    <span className="font-normal text-muted-foreground">(to be added to each qty)</span>
                   </div>
-                  <div>
-                    <div className="text-[9px] uppercase text-muted-foreground">Base Cost</div>
-                    <Input
-                      className={cn(inputCls, "w-20")}
-                      value={draft.cost}
-                      onChange={(e) => setDraft({ ...draft, cost: e.target.value })}
-                    />
+                  <div className="flex items-end gap-1.5">
+                    <select
+                      className={cn(inputCls, "flex-1 min-w-0 border")}
+                      value={draft.name}
+                      onChange={(e) => setDraft({ ...draft, name: e.target.value })}
+                    >
+                      <option value="">Select…</option>
+                      {opts.map((o) => (
+                        <option key={o} value={o}>{o}</option>
+                      ))}
+                    </select>
+                    <div>
+                      <div className="text-[9px] uppercase text-muted-foreground">Qty</div>
+                      <Input
+                        className={cn(inputCls, "w-14")}
+                        value={draft.qty}
+                        onChange={(e) => setDraft({ ...draft, qty: e.target.value })}
+                      />
+                    </div>
+                    <div>
+                      <div className="text-[9px] uppercase text-muted-foreground">Base Cost</div>
+                      <Input
+                        className={cn(inputCls, "w-20")}
+                        value={draft.cost}
+                        onChange={(e) => setDraft({ ...draft, cost: e.target.value })}
+                      />
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="h-7 px-2 text-[11px]"
+                      disabled={!draft.name}
+                      onClick={() => addExtra(kind)}
+                    >
+                      <Plus className="h-3 w-3 mr-1" />
+                      Add
+                    </Button>
                   </div>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="h-7 px-2 text-[11px]"
-                    disabled={!draft.name}
-                    onClick={() => addExtra(kind)}
-                  >
-                    <Plus className="h-3 w-3 mr-1" />
-                    Add
-                  </Button>
-                </div>
-                <div className="mt-2 max-h-[110px] overflow-auto rounded-md border">
-                  <table className="w-full text-[11px]">
-                    <tbody>
-                      {rows.length === 0 ? (
-                        <tr>
-                          <td className="py-5 text-center text-muted-foreground">No data to display</td>
-                        </tr>
-                      ) : (
-                        rows.map((r, i) => (
-                          <tr key={`${r.name}-${i}`} className="border-t">
-                            <td className="px-2 py-1">{r.name}</td>
-                            <td className="px-2 py-1 w-12 text-right">{r.qty}</td>
-                            <td className="px-2 py-1 w-16 text-right">${r.cost}</td>
-                            <td className="px-2 py-1 w-8 text-right">
-                              <Button
-                                size="icon"
-                                variant="ghost"
-                                className="h-5 w-5 text-muted-foreground hover:text-destructive"
-                                onClick={() => removeExtra(kind, i)}
-                                aria-label="Remove"
-                              >
-                                <Trash2 className="h-3 w-3" />
-                              </Button>
-                            </td>
+                  <div className="mt-2 max-h-[110px] overflow-auto rounded-md border">
+                    <table className="w-full text-[11px]">
+                      <tbody>
+                        {rows.length === 0 ? (
+                          <tr>
+                            <td className="py-5 text-center text-muted-foreground">No data to display</td>
                           </tr>
-                        ))
-                      )}
-                    </tbody>
-                  </table>
+                        ) : (
+                          rows.map((r, i) => (
+                            <tr key={`${r.name}-${i}`} className="border-t">
+                              <td className="px-2 py-1">{r.name}</td>
+                              <td className="px-2 py-1 w-12 text-right">{r.qty}</td>
+                              <td className="px-2 py-1 w-16 text-right">${r.cost}</td>
+                              <td className="px-2 py-1 w-8 text-right">
+                                <Button
+                                  size="icon"
+                                  variant="ghost"
+                                  className="h-5 w-5 text-muted-foreground hover:text-destructive"
+                                  onClick={() => removeExtra(kind, i)}
+                                  aria-label="Remove"
+                                >
+                                  <Trash2 className="h-3 w-3" />
+                                </Button>
+                              </td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-          <div className="md:col-span-2 text-center">
-            <span className="inline-block border border-destructive/40 bg-destructive/5 px-2 py-1 text-[11px] font-semibold text-destructive">
-              Only items with a Qty of 1 will add the services and parts below. Grouped items no longer allow services and parts.
-            </span>
+              );
+            })}
+            <div className="md:col-span-2 text-center">
+              <span className="inline-block border border-destructive/40 bg-destructive/5 px-2 py-1 text-[11px] font-semibold text-destructive">
+                Only items with a Qty of 1 will add the services and parts below. Grouped items no longer allow services and parts.
+              </span>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Footer */}
 
