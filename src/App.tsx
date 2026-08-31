@@ -147,6 +147,7 @@ const App = () => {
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
+        <PointerEventsGuard />
         <WelcomeModal />
         <WhatsNewDrawer />
         <GuidedTour />
