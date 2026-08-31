@@ -332,10 +332,10 @@ const TransitLog = () => {
 
   return (
     <TooltipProvider delayDuration={200}>
-      <div className="bg-background min-h-full">
+      <div className="bg-background min-h-full flex flex-col">
         <ModernTopNav />
 
-        <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-5 space-y-4">
+        <main className="flex-1 w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-5 space-y-4">
           {/* Header */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
@@ -714,25 +714,30 @@ const TransitLog = () => {
         </Dialog>
 
         {/* Sticky Footer */}
-        <div className="sticky bottom-0 z-20 bg-background border-t border-border px-4 py-2 flex justify-end gap-2">
-          <Button
-            size="sm"
-            variant="outline"
-            className="h-8 text-xs"
-            onClick={() => toast.success("Transit Log report generated")}
-          >
-            <FileText className="h-3.5 w-3.5 mr-1.5" />
-            Report
-          </Button>
-          <Button
-            size="sm"
-            className="h-8 text-xs"
-            onClick={() => setProcessOpen(true)}
-            disabled={selectedRecords.length === 0}
-          >
-            <PlayCircle className="h-3.5 w-3.5 mr-1.5" />
-            Process
-          </Button>
+        <div className="sticky bottom-0 z-30 w-full border-t bg-white shadow-[0_-1px_3px_rgba(0,0,0,0.06)] px-2 sm:px-4 lg:px-6 py-2">
+          <div className="flex items-center justify-between gap-2">
+            <div />
+            <div className="flex items-center gap-2">
+              <Button
+                size="sm"
+                variant="outline"
+                className="h-8 text-xs"
+                onClick={() => toast.success("Transit Log report generated")}
+              >
+                <FileText className="h-3.5 w-3.5 mr-1.5" />
+                Report
+              </Button>
+              <Button
+                size="sm"
+                className="h-8 text-xs"
+                onClick={() => setProcessOpen(true)}
+                disabled={selectedRecords.length === 0}
+              >
+                <PlayCircle className="h-3.5 w-3.5 mr-1.5" />
+                Process
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </TooltipProvider>
