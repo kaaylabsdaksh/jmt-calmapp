@@ -29,7 +29,7 @@ const SchedulingShell = () => {
       <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-6">
         <div className="w-full space-y-3">
           <div>
-            <h1 className="text-base font-semibold">Onsite Scheduling</h1>
+            <h1 className="text-base font-semibold">Onsite Scheduling V2</h1>
             <p className="text-[11px] text-muted-foreground">
               Plan onsite jobs, technician availability and non-service time.
             </p>
