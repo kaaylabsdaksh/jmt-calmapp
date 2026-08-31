@@ -30,6 +30,7 @@ import ShippingView from "./pages/ShippingView";
 import AccountAdminView from "./pages/AccountAdminView";
 import OnsiteProjects from "./pages/OnsiteProjects";
 import OnsiteScheduling from "./pages/OnsiteScheduling";
+import OnsiteSchedulingV2 from "./pages/OnsiteSchedulingV2";
 import OnsiteProjectDetail from "./pages/OnsiteProjectDetail";
 import VehicleStandards from "./pages/VehicleStandards";
 import NotFound from "./pages/NotFound";
@@ -113,6 +114,9 @@ const App = () => {
             <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
             <Route path="/onsite-projects" element={<OnsiteProjects />} />
             <Route path="/onsite-scheduling" element={<OnsiteScheduling />} />
+            {/* the demo prototype's own route name, kept as an alias */}
+            <Route path="/onsite-scheduling-prototype" element={<OnsiteScheduling />} />
+            <Route path="/onsite-scheduling-v2" element={<OnsiteSchedulingV2 />} />
 
             <Route path="/onsite-projects/new" element={<OnsiteProjectDetail />} />
             <Route path="/onsite-projects/vehicle-standards" element={<VehicleStandards />} />
