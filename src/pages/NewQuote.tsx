@@ -458,8 +458,35 @@ const NewQuote = () => {
   const [pendingDelete, setPendingDelete] = useState<string | null>(null);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [copyQty, setCopyQty] = useState<Record<string, string>>({});
+  type SubLine = { id: string; name: string; qty: string; baseCost: string; cost: string };
+  const [itemServices, setItemServices] = useState<Record<string, SubLine[]>>({});
+  const [itemParts, setItemParts] = useState<Record<string, SubLine[]>>({});
+  const addSubLine = (
+    setter: React.Dispatch<React.SetStateAction<Record<string, SubLine[]>>>,
+    itemId: string,
+  ) =>
+    setter((p) => ({
+      ...p,
+      [itemId]: [...(p[itemId] ?? []), { id: crypto.randomUUID(), name: "", qty: "1", baseCost: "0.00", cost: "0.00" }],
+    }));
+  const updateSubLine = (
+    setter: React.Dispatch<React.SetStateAction<Record<string, SubLine[]>>>,
+    itemId: string,
+    lineId: string,
+    patch: Partial<SubLine>,
+  ) =>
+    setter((p) => ({
+      ...p,
+      [itemId]: (p[itemId] ?? []).map((l) => (l.id === lineId ? { ...l, ...patch } : l)),
+    }));
+  const removeSubLine = (
+    setter: React.Dispatch<React.SetStateAction<Record<string, SubLine[]>>>,
+    itemId: string,
+    lineId: string,
+  ) => setter((p) => ({ ...p, [itemId]: (p[itemId] ?? []).filter((l) => l.id !== lineId) }));
   const toggleExpanded = (id: string) =>
     setExpandedItems((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
+
   const duplicateItem = (item: QuoteItem) => {
     const n = Math.max(1, parseInt(copyQty[item.id] || "1", 10) || 1);
     setItems((prev) => [
@@ -1051,8 +1078,9 @@ const NewQuote = () => {
                           className="h-3.5 w-3.5 rounded-[3px] data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
                         />
                       </td>
-                      <td className="px-2 py-1 text-center">{i.services ? 1 : 0}</td>
-                      <td className="px-2 py-1 text-center">{i.parts ? 1 : 0}</td>
+                      <td className="px-2 py-1 text-center">{(itemServices[i.id] ?? []).length}</td>
+                      <td className="px-2 py-1 text-center">{(itemParts[i.id] ?? []).length}</td>
+
                       <td className="px-2 py-1">{i.qty}</td>
                       <td className="px-2 py-1 whitespace-nowrap">{i.manufacturer}</td>
                       <td className="px-2 py-1 whitespace-nowrap">{i.model}</td>
@@ -1091,30 +1119,92 @@ const NewQuote = () => {
                     {expandedItems.includes(i.id) && (
                       <tr className="border-t bg-muted/20">
                         <td colSpan={ITEM_COLUMNS.length} className="px-3 py-2">
-                          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-[11px]">
-                            {[
-                              ["Manufacturer", i.manufacturer],
-                              ["Model", i.model],
-                              ["Description", i.description],
-                              ["Serial #", i.serial],
-                              ["Cust ID", i.custId],
-                              ["Cust Serial", i.custSerial],
-                              ["Priority", i.priority],
-                              ["WO #", i.wo],
-                              ["Repair", i.rep],
-                              ["17025", i.is17025 ? "Yes" : "No"],
-                              ["C.P.?", i.cp ? "Yes" : "No"],
-                              ["Base Amt", money(num(i.baseAmt))],
-                            ].map(([label, val]: [string, string]) => (
-                              <div key={String(label)} className="min-w-0">
-                                <p className="text-[10px] uppercase tracking-wide text-muted-foreground">{label}</p>
-                                <p className="truncate">{String(val || "—")}</p>
+                          <div className="max-w-[860px] space-y-2">
+                            {([
+                              { label: "Service", rows: itemServices[i.id] ?? [], setter: setItemServices },
+                              { label: "Part", rows: itemParts[i.id] ?? [], setter: setItemParts },
+                            ] as const).map((sec) => (
+                              <div key={sec.label} className="rounded-md border border-border bg-background overflow-hidden">
+                                <table className="w-full text-[11px]">
+                                  <thead className="bg-muted/50">
+                                    <tr className="border-b">
+                                      <th className="w-12 px-2 py-1 text-left">
+                                        <button
+                                          type="button"
+                                          className="text-[11px] text-blue-600 hover:underline"
+                                          onClick={() => addSubLine(sec.setter, i.id)}
+                                        >
+                                          New
+                                        </button>
+                                      </th>
+                                      <th className="px-2 py-1 text-left font-semibold italic text-muted-foreground">{sec.label}</th>
+                                      <th className="w-16 px-2 py-1 text-left font-semibold italic text-muted-foreground">Qty</th>
+                                      <th className="w-28 px-2 py-1 text-right font-semibold italic text-muted-foreground">Base Cost</th>
+                                      <th className="w-24 px-2 py-1 text-right font-semibold italic text-muted-foreground">Cost</th>
+                                      <th className="w-10 px-2 py-1" />
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {sec.rows.length === 0 ? (
+                                      <tr>
+                                        <td colSpan={6} className="py-6 text-center text-[11px] text-muted-foreground">
+                                          No data to display
+                                        </td>
+                                      </tr>
+                                    ) : (
+                                      sec.rows.map((r) => (
+                                        <tr key={r.id} className="border-t">
+                                          <td className="px-2 py-1" />
+                                          <td className="px-2 py-1">
+                                            <Input
+                                              value={r.name}
+                                              placeholder={sec.label}
+                                              onChange={(e) => updateSubLine(sec.setter, i.id, r.id, { name: e.target.value })}
+                                              className="h-6 text-[11px]"
+                                            />
+                                          </td>
+                                          <td className="px-2 py-1">
+                                            <Input
+                                              value={r.qty}
+                                              onChange={(e) => updateSubLine(sec.setter, i.id, r.id, { qty: e.target.value.replace(/\D/g, "") })}
+                                              className="h-6 text-[11px] text-center px-1"
+                                            />
+                                          </td>
+                                          <td className="px-2 py-1">
+                                            <Input
+                                              value={r.baseCost}
+                                              onChange={(e) => updateSubLine(sec.setter, i.id, r.id, { baseCost: e.target.value })}
+                                              className="h-6 text-[11px] text-right px-1"
+                                            />
+                                          </td>
+                                          <td className="px-2 py-1">
+                                            <Input
+                                              value={r.cost}
+                                              onChange={(e) => updateSubLine(sec.setter, i.id, r.id, { cost: e.target.value })}
+                                              className="h-6 text-[11px] text-right px-1"
+                                            />
+                                          </td>
+                                          <td className="px-2 py-1 text-right">
+                                            <button
+                                              type="button"
+                                              className="text-[11px] text-blue-600 hover:underline"
+                                              onClick={() => removeSubLine(sec.setter, i.id, r.id)}
+                                            >
+                                              Del
+                                            </button>
+                                          </td>
+                                        </tr>
+                                      ))
+                                    )}
+                                  </tbody>
+                                </table>
                               </div>
                             ))}
                           </div>
                         </td>
                       </tr>
                     )}
+
                     </React.Fragment>
                   ))
 
