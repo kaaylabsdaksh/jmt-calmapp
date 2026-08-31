@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { AlertTriangle, ShieldAlert, ShieldCheck } from "lucide-react";
 import {
-  Sheet,
-  SheetContent,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
@@ -57,18 +57,18 @@ export const JobQuickView = ({ job, open, onOpenChange }: Props) => {
   );
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-[420px] sm:max-w-[420px] flex flex-col">
-        <SheetHeader>
-          <SheetTitle className="text-sm flex items-center gap-2">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-lg">
+        <DialogHeader>
+          <DialogTitle className="text-sm flex items-center gap-2">
             {job.projectNumber}
             <Badge variant="outline" className={`text-[10px] ${JOB_STATUS_STYLES[job.status]}`}>
               {job.status}
             </Badge>
-          </SheetTitle>
-        </SheetHeader>
+          </DialogTitle>
+        </DialogHeader>
 
-        <div className="flex-1 overflow-auto space-y-3 py-2">
+        <div className="max-h-[65vh] overflow-auto space-y-3 py-1">
           <div className={`flex items-center gap-1.5 rounded-md border px-2 py-1.5 text-[11px] ${osr.cls}`}>
             <osr.Icon className="h-3.5 w-3.5" />
             {osr.label}
@@ -164,7 +164,7 @@ export const JobQuickView = ({ job, open, onOpenChange }: Props) => {
           )}
         </div>
 
-        <SheetFooter className="flex-row justify-end gap-2">
+        <DialogFooter className="flex-row justify-end gap-2">
           {reassigning ? (
             <>
               <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => setReassigning(false)}>
@@ -187,9 +187,9 @@ export const JobQuickView = ({ job, open, onOpenChange }: Props) => {
               Reassign technicians
             </Button>
           )}
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 
