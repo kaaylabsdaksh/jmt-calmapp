@@ -13,6 +13,7 @@ import {
   Package,
   MessageSquare,
   Trash2,
+  Pencil,
   ClipboardList,
   Users,
   DollarSign,
@@ -1100,10 +1101,24 @@ const NewQuote = () => {
                       <td className="px-2 py-1">{i.is17025 ? "Yes" : ""}</td>
                       <td className="px-2 py-1">{i.cp ? "Yes" : ""}</td>
                       <td className="px-2 py-1">
-                        <button type="button" className="text-[11px] text-blue-600 hover:underline" onClick={() => openEdit(i)}>Edit</button>
-                      </td>
-                      <td className="px-2 py-1">
-                        <button type="button" className="text-[11px] text-blue-600 hover:underline" onClick={() => setPendingDelete(i.id)}>Del</button>
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            type="button"
+                            className="inline-flex items-center justify-center rounded p-1 text-slate-600 hover:bg-slate-100 hover:text-blue-600"
+                            onClick={() => openEdit(i)}
+                            title="Edit"
+                          >
+                            <Pencil className="h-3.5 w-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            className="inline-flex items-center justify-center rounded p-1 text-slate-600 hover:bg-red-50 hover:text-red-600"
+                            onClick={() => setPendingDelete(i.id)}
+                            title="Delete"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
                       </td>
                       <td className="px-2 py-1">
                         <div className="flex items-center gap-1">
@@ -1187,10 +1202,11 @@ const NewQuote = () => {
                                           <td className="px-2 py-1 text-right">
                                             <button
                                               type="button"
-                                              className="text-[11px] text-blue-600 hover:underline"
+                                              className="inline-flex items-center justify-center rounded p-1 text-slate-600 hover:bg-red-50 hover:text-red-600"
                                               onClick={() => removeSubLine(sec.setter, i.id, r.id)}
+                                              title="Delete"
                                             >
-                                              Del
+                                              <Trash2 className="h-3.5 w-3.5" />
                                             </button>
                                           </td>
                                         </tr>
