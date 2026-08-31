@@ -529,44 +529,11 @@ const TransitLog = () => {
                             <td className={cell}>
                               <Checkbox checked={selected.includes(r.id)} onCheckedChange={() => toggleRow(r.id)} className="h-3.5 w-3.5" />
                             </td>
-                            <td className={cn(cell, "whitespace-nowrap")}>{r.dateAdded}</td>
-                            <td className={cn(cell, "whitespace-nowrap")}>{r.addedBy}</td>
-                            <td className={cellNum}>{r.woQty}</td>
-                            <td className={cellNum}>{r.rcvd}</td>
-                            <td className={cellNum}>{r.huQty}</td>
-                            <td className={cell}>{r.type}</td>
-                            <td className={cellNum}>{r.pcs}</td>
-                            <td className={cell}>
-                              <button
-                                className="font-medium text-foreground underline-offset-2 hover:underline"
-                                onClick={() => navigate(`/manage-customers/${r.acct}`)}
-                              >
-                                {r.acct}
-                              </button>
-                            </td>
-                            <td className={cn(cell, "max-w-[160px]")}><Truncate value={r.customer} /></td>
-                            <td className={cell}>
-                              <button
-                                className="font-medium text-foreground underline-offset-2 hover:underline"
-                                onClick={() => navigate("/edit-order")}
-                              >
-                                {r.batchItem}
-                              </button>
-                            </td>
-                            <td className={cell}>{r.rentalId || <span className="text-muted-foreground">—</span>}</td>
-                            <td className={cn(cell, "max-w-[130px]")}><Truncate value={r.manModel} /></td>
-                            <td className={cn(cell, "max-w-[200px]")}><Truncate value={r.description} /></td>
-                            <td className={cell}>{r.destination}</td>
-                            <td className={cell}>{r.deliverTo}</td>
-                            <td className={cell}><PriorityBadge priority={r.priority} /></td>
-                            <td className={cell}>{r.division}</td>
-                            <td className={cn(cell, "whitespace-nowrap")}>
-                              <div className="flex items-center gap-1.5">
-                                <ReceivingBadge received={received} />
-                                <span className="text-muted-foreground">{r.rcvdOn || ""}</span>
-                              </div>
-                            </td>
-                            <td className={cell}>{r.rcvdBy || <span className="text-muted-foreground">—</span>}</td>
+                            {orderedColumns.map((c) => (
+                              <td key={c.key} className={cn(c.numeric ? cellNum : cell, c.tdClass)}>
+                                {c.render(r, { navigate })}
+                              </td>
+                            ))}
                           </tr>
 
                           {showNotes && r.notes && (
