@@ -453,12 +453,6 @@ const TransitLog = () => {
                 Track, review, and process equipment currently in transit.
               </p>
             </div>
-            <div className="flex items-center gap-2">
-              <Button size="sm" className="h-8 text-xs" onClick={handleProcess}>
-                <PlayCircle className="h-3.5 w-3.5 mr-1.5" />
-                Process
-              </Button>
-            </div>
           </div>
 
           {/* Filters */}
@@ -559,12 +553,8 @@ const TransitLog = () => {
                 <div className="flex items-center gap-2">
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button size="sm" variant="outline" className="h-7 text-[11px]">
-                        <Settings2 className="h-3.5 w-3.5 mr-1.5" />
-                        Columns
-                        <span className="ml-1.5 text-muted-foreground">
-                          {orderedColumns.length}/{COLUMNS.length}
-                        </span>
+                      <Button size="sm" variant="outline" className="h-7 w-7 p-0">
+                        <Settings2 className="h-3.5 w-3.5" />
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent align="end" className="w-64 p-0 bg-popover">
