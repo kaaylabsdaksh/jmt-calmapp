@@ -467,6 +467,8 @@ const NewQuote = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [pendingDelete, setPendingDelete] = useState<string | null>(null);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [selectedItemIds, setSelectedItemIds] = useState<string[]>([]);
+  const [cancelConfirmOpen, setCancelConfirmOpen] = useState(false);
   const [copyQty, setCopyQty] = useState<Record<string, string>>({});
   type SubLine = { id: string; name: string; qty: string; baseCost: string; cost: string };
   const [itemServices, setItemServices] = useState<Record<string, SubLine[]>>({});
@@ -1050,10 +1052,29 @@ const NewQuote = () => {
             <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border bg-muted/30 px-2 py-1.5">
               <div className="flex flex-wrap items-center gap-1">
                 {[
-                  { label: "Cancel Items", fn: () => setItems((p) => p.map((i) => ({ ...i, status: "Cancelled" }))) },
-                  { label: "Uncancel Items", fn: () => setItems((p) => p.map((i) => (i.status === "Cancelled" ? { ...i, status: "" } : i))) },
-                  { label: "Receive Items", fn: () => setItems((p) => p.map((i) => ({ ...i, rev: true }))) },
-                  { label: "Unreceive Items", fn: () => setItems((p) => p.map((i) => ({ ...i, rev: false }))) },
+                  {
+                    label: "Cancel Items",
+                    fn: () => {
+                      if (selectedItemIds.length === 0) {
+                        toast({ title: "No items selected", description: "Select one or more items using the Cancel column checkbox first.", variant: "destructive" });
+                        return;
+                      }
+                      setCancelConfirmOpen(true);
+                    },
+                  },
+                  {
+                    label: "Uncancel Items",
+                    fn: () => {
+                      if (selectedItemIds.length === 0) {
+                        toast({ title: "No items selected", description: "Select one or more cancelled items first.", variant: "destructive" });
+                        return;
+                      }
+                      setItems((p) => p.map((i) => (selectedItemIds.includes(i.id) && i.status === "Cancelled" ? { ...i, status: "" } : i)));
+                      setSelectedItemIds([]);
+                    },
+                  },
+                  { label: "Receive Items", fn: () => setItems((p) => p.map((i) => (selectedItemIds.length === 0 || selectedItemIds.includes(i.id) ? { ...i, rev: true } : i))) },
+                  { label: "Unreceive Items", fn: () => setItems((p) => p.map((i) => (selectedItemIds.length === 0 || selectedItemIds.includes(i.id) ? { ...i, rev: false } : i))) },
                   { label: "Search/Add Item", fn: handleSearchAddClick },
                   { label: "Add Testing Items", fn: handleAddItemClick },
                 ].map((a) => (
@@ -1131,8 +1152,9 @@ const NewQuote = () => {
                       </td>
                       <td className="px-2 py-1 text-center">
                         <Checkbox
-                          checked={i.status === "Cancelled"}
-                          onCheckedChange={(v) => setItems((p) => p.map((it) => it.id === i.id ? { ...it, status: v ? "Cancelled" : "" } : it))}
+                          checked={selectedItemIds.includes(i.id)}
+                          onCheckedChange={(v) => setSelectedItemIds((p) => (v ? [...p, i.id] : p.filter((id) => id !== i.id)))}
+                          aria-label="Select item"
                           className="h-4 w-4 rounded-md border-slate-400 transition-all data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 data-[state=checked]:text-white"
                         />
                       </td>
@@ -1813,6 +1835,32 @@ const NewQuote = () => {
               }}
             >
               Remove
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={cancelConfirmOpen} onOpenChange={setCancelConfirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Cancel {selectedItemIds.length} selected item{selectedItemIds.length === 1 ? "" : "s"}?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Cancelled items stay on the quote as read-only rows moved to the bottom of the list, and are excluded from editing.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Keep items</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                setItems((prev) => prev.map((i) => (selectedItemIds.includes(i.id) ? { ...i, status: "Cancelled" } : i)));
+                setExpandedItems((prev) => prev.filter((id) => !selectedItemIds.includes(id)));
+                setSelectedItemIds([]);
+                setCancelConfirmOpen(false);
+              }}
+            >
+              Cancel items
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
