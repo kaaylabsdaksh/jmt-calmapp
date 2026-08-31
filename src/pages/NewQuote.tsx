@@ -295,8 +295,11 @@ const AccSection = ({
   action?: React.ReactNode;
   children: React.ReactNode;
 }) => (
-  <AccordionItem value={value} className="rounded-xl border shadow-sm bg-white px-3">
-    <AccordionTrigger className="py-2 hover:no-underline">
+  <AccordionItem
+    value={value}
+    className="rounded-xl border-2 border-slate-300 shadow-sm bg-white px-3 data-[state=open]:border-slate-400 data-[state=open]:shadow-md"
+  >
+    <AccordionTrigger className="py-2 hover:no-underline data-[state=open]:border-b-2 data-[state=open]:border-slate-200">
       <div className="flex items-center gap-2">
         <Icon className="h-4 w-4 text-slate-600" />
         <span className="text-[13px] font-semibold tracking-tight">{title}</span>
@@ -305,11 +308,11 @@ const AccSection = ({
         )}
       </div>
     </AccordionTrigger>
-    <AccordionContent className="pb-3 pt-0">
+    <AccordionContent className="pb-3 pt-3">
       {action && <div className="flex justify-end pb-2">{action}</div>}
-      <Separator className="mb-3" />
       <div className="space-y-3">{children}</div>
     </AccordionContent>
+  </AccordionItem>
   </AccordionItem>
 );
 
