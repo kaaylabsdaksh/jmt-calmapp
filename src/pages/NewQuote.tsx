@@ -360,6 +360,22 @@ const Group = ({
   </div>
 );
 
+const SectionHeader = ({
+  number,
+  title,
+}: {
+  number: string;
+  title: string;
+}) => (
+  <div className="flex items-center gap-3">
+    <span className="flex h-6 w-6 items-center justify-center rounded-md bg-slate-100 text-[11px] font-bold text-slate-900 ring-1 ring-slate-200">
+      {number}
+    </span>
+    <h3 className="text-[11px] font-bold uppercase tracking-wider text-slate-900">{title}</h3>
+    <div className="flex-1 h-px bg-slate-200" />
+  </div>
+);
+
 const SelectField = ({
   value,
   onChange,
@@ -778,179 +794,164 @@ const NewQuote = () => {
           >
         {/* Quote setup */}
         <AccSection value="quote-info" icon={ClipboardList} title="Quote Information">
-          <div className="grid grid-cols-1 xl:grid-cols-12 gap-3">
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-5">
             {/* Primary configuration column */}
-            <div className="xl:col-span-8 space-y-3">
-              <div className="grid grid-cols-1 gap-3">
-                {/* Quote Setup */}
-                <Group title="Quote Setup" variant="white">
-                  <div className="grid grid-cols-2 gap-2">
-                    <Field label="Quote Type" required>
-                      <SelectField value={quoteType} onChange={setQuoteType} options={QUOTE_TYPES} placeholder="Select type" className={cn(invalid("Quote Type") && errorCls)} />
-                    </Field>
-                    <Field label="Location" required>
-                      <SelectField value={location} onChange={setLocation} options={LOCATIONS} placeholder="Select location" className={cn(invalid("Location") && errorCls)} />
-                    </Field>
-                  </div>
-                  {!quoteType && (
-                    <p className="text-[10px] text-red-600 -mt-1">Quote type is required to save.</p>
-                  )}
-                  <div className="grid grid-cols-2 gap-2">
-                    <Field label="Project #">
-                      <Input value={projectNo} onChange={(e) => setProjectNo(e.target.value)} className={inputCls} />
-                    </Field>
-                    <Field label="Priority" required>
-                      <SelectField value={priority} onChange={setPriority} options={PRIORITIES} placeholder="Select priority" className={cn(invalid("Priority") && errorCls)} />
-                    </Field>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="flex items-center gap-2 h-6 px-2.5 rounded-lg border bg-background">
-                      <Checkbox id="poco" checked={pocoReq} onCheckedChange={(v) => setPocoReq(!!v)} />
-                      <Label htmlFor="poco" className="text-[11px] font-medium">PO/CO Req?</Label>
-                    </div>
-                    <div className="flex items-center justify-between rounded-lg border bg-background px-2.5 h-6">
-                      <span className="text-[11px] font-medium text-muted-foreground">Item Quantity</span>
-                      <span className="text-[11px] font-semibold">{itemQuantity}</span>
-                    </div>
-                  </div>
-                </Group>
-
-                {/* Customer, Origin & References */}
-                <Group title="Customer, Origin & References" variant="white">
-                  <div className="grid grid-cols-3 gap-2 items-end">
-
-                    <Field label="Existing Customer">
-                      <RadioGroup
-                        value={existingCustomer}
-                        onValueChange={setExistingCustomer}
-                        className="flex items-center gap-3 h-6 px-2 rounded-lg border bg-white"
-                      >
-                        <div className="flex items-center gap-1.5">
-                          <RadioGroupItem value="Yes" id="existing-yes" className="h-3 w-3 border-slate-400 text-slate-900" />
-                          <Label htmlFor="existing-yes" className="text-[11px] font-normal cursor-pointer">Yes - Existing</Label>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <RadioGroupItem value="No" id="existing-no" className="h-3 w-3 border-slate-400 text-slate-900" />
-                          <Label htmlFor="existing-no" className="text-[11px] font-normal cursor-pointer">No - New</Label>
-                        </div>
-                      </RadioGroup>
-                    </Field>
-                    <Field label="New Onsite">
-                      <RadioGroup
-                        value={newOnsite}
-                        onValueChange={setNewOnsite}
-                        className="flex items-center gap-3 h-6 px-2 rounded-lg border bg-white"
-                      >
-                        <div className="flex items-center gap-1.5">
-                          <RadioGroupItem value="Yes" id="onsite-yes" className="h-3 w-3 border-slate-400 text-slate-900" />
-                          <Label htmlFor="onsite-yes" className="text-[11px] font-normal cursor-pointer">Yes - New</Label>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <RadioGroupItem value="No" id="onsite-no" className="h-3 w-3 border-slate-400 text-slate-900" />
-                          <Label htmlFor="onsite-no" className="text-[11px] font-normal cursor-pointer">No - Existing</Label>
-                        </div>
-                      </RadioGroup>
-                    </Field>
-                    <Field label="Source">
-                      <SelectField value={source} onChange={setSource} options={SOURCES} placeholder="Select source" />
-                    </Field>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="flex items-center gap-1.5">
-                      <Field label="Account #" required className="flex-1">
-                        <Input
-                          value={acctNo}
-                          onChange={(e) => setAcctNo(e.target.value)}
-                          className={cn(inputCls, "placeholder:font-normal placeholder:text-black placeholder:opacity-100", invalid("Account #") && errorCls)}
-                          placeholder="Account #"
-                        />
-                      </Field>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="h-6 text-[11px] px-2 shrink-0"
-                        onClick={() => {
-                          setCustomerName("Chevron Oronite");
-                          toast({ title: "Account found", description: "Customer details populated." });
-                        }}
-                      >
-                        <Search className="h-3 w-3 mr-1" /> Find
-                      </Button>
-                    </div>
-                    <Field label="Customer Name">
-                      <Input value={customerName} onChange={(e) => setCustomerName(e.target.value)} className={inputCls} />
-                    </Field>
-                  </div>
-                  <Field label="Source Info">
-                    <AutoTextarea
-                      value={sourceInfo}
-                      onChange={(e) => setSourceInfo(e.target.value)}
-                      
-                    />
+            <div className="xl:col-span-8 space-y-5">
+              {/* 01 Quote Setup */}
+              <div className="space-y-3">
+                <SectionHeader number="01" title="Quote Setup" />
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  <Field label="Quote Type" required>
+                    <SelectField value={quoteType} onChange={setQuoteType} options={QUOTE_TYPES} placeholder="Select type" className={cn(invalid("Quote Type") && errorCls)} />
                   </Field>
-                  <Separator />
-                  <div className="grid grid-cols-2 gap-2">
-                    <Field label="SR Doc">
-                      <Input value={srDoc} onChange={(e) => setSrDoc(e.target.value)} className={inputCls} />
-                    </Field>
-                    <Field label="OSR Doc">
-                      <Input value={osrDoc} onChange={(e) => setOsrDoc(e.target.value)} className={inputCls} />
-                    </Field>
+                  <Field label="Location" required>
+                    <SelectField value={location} onChange={setLocation} options={LOCATIONS} placeholder="Select location" className={cn(invalid("Location") && errorCls)} />
+                  </Field>
+                  <Field label="Project #">
+                    <Input value={projectNo} onChange={(e) => setProjectNo(e.target.value)} className={inputCls} />
+                  </Field>
+                  <Field label="Priority" required>
+                    <SelectField value={priority} onChange={setPriority} options={PRIORITIES} placeholder="Select priority" className={cn(invalid("Priority") && errorCls)} />
+                  </Field>
+                </div>
+                {!quoteType && (
+                  <p className="text-[10px] text-red-600 -mt-1">Quote type is required to save.</p>
+                )}
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="flex items-center gap-2 h-6 px-2.5 rounded-lg border bg-background">
+                    <Checkbox id="poco" checked={pocoReq} onCheckedChange={(v) => setPocoReq(!!v)} />
+                    <Label htmlFor="poco" className="text-[11px] font-medium">PO/CO Req?</Label>
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="flex items-center gap-1.5">
+                  <div className="flex items-center justify-between rounded-lg border bg-background px-2.5 h-6">
+                    <span className="text-[11px] font-medium text-muted-foreground">Item Quantity</span>
+                    <span className="text-[11px] font-semibold">{itemQuantity}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 02 Customer, Origin & References */}
+              <div className="space-y-3">
+                <SectionHeader number="02" title="Customer, Origin & References" />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end">
+                  <Field label="Existing Customer">
+                    <RadioGroup
+                      value={existingCustomer}
+                      onValueChange={setExistingCustomer}
+                      className="flex items-center gap-3 h-6 px-2 rounded-lg border bg-white"
+                    >
+                      <div className="flex items-center gap-1.5">
+                        <RadioGroupItem value="Yes" id="existing-yes" className="h-3 w-3 border-slate-400 text-slate-900" />
+                        <Label htmlFor="existing-yes" className="text-[11px] font-normal cursor-pointer">Yes - Existing</Label>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <RadioGroupItem value="No" id="existing-no" className="h-3 w-3 border-slate-400 text-slate-900" />
+                        <Label htmlFor="existing-no" className="text-[11px] font-normal cursor-pointer">No - New</Label>
+                      </div>
+                    </RadioGroup>
+                  </Field>
+                  <Field label="New Onsite">
+                    <RadioGroup
+                      value={newOnsite}
+                      onValueChange={setNewOnsite}
+                      className="flex items-center gap-3 h-6 px-2 rounded-lg border bg-white"
+                    >
+                      <div className="flex items-center gap-1.5">
+                        <RadioGroupItem value="Yes" id="onsite-yes" className="h-3 w-3 border-slate-400 text-slate-900" />
+                        <Label htmlFor="onsite-yes" className="text-[11px] font-normal cursor-pointer">Yes - New</Label>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <RadioGroupItem value="No" id="onsite-no" className="h-3 w-3 border-slate-400 text-slate-900" />
+                        <Label htmlFor="onsite-no" className="text-[11px] font-normal cursor-pointer">No - Existing</Label>
+                      </div>
+                    </RadioGroup>
+                  </Field>
+                  <Field label="Source">
+                    <SelectField value={source} onChange={setSource} options={SOURCES} placeholder="Select source" />
+                  </Field>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  <div className="flex items-center gap-1.5">
+                    <Field label="Account #" required className="flex-1">
                       <Input
-                        value={opportunity}
-                        onChange={(e) => setOpportunity(e.target.value)}
-                        className={cn(inputCls, "placeholder:font-normal placeholder:text-black placeholder:opacity-100")}
-                        placeholder="Opportunity"
+                        value={acctNo}
+                        onChange={(e) => setAcctNo(e.target.value)}
+                        className={cn(inputCls, "placeholder:font-normal placeholder:text-black placeholder:opacity-100", invalid("Account #") && errorCls)}
+                        placeholder="Account #"
                       />
-                      <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
-                        Find
-                      </Button>
-                    </div>
-                    <Field label="Customer PO #">
-                      <Input value={custPo} onChange={(e) => setCustPo(e.target.value)} className={inputCls} />
                     </Field>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-6 text-[11px] px-2 shrink-0"
+                      onClick={() => {
+                        setCustomerName("Chevron Oronite");
+                        toast({ title: "Account found", description: "Customer details populated." });
+                      }}
+                    >
+                      <Search className="h-3 w-3 mr-1" /> Find
+                    </Button>
                   </div>
-                  <Field label="Associated Product Review">
-                    <Input value={productReview} onChange={(e) => setProductReview(e.target.value)} className={inputCls} />
+                  <Field label="Customer Name">
+                    <Input value={customerName} onChange={(e) => setCustomerName(e.target.value)} className={inputCls} />
                   </Field>
-                </Group>
+                </div>
+                <Field label="Source Info">
+                  <AutoTextarea
+                    value={sourceInfo}
+                    onChange={(e) => setSourceInfo(e.target.value)}
+                  />
+                </Field>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  <Field label="SR Doc">
+                    <Input value={srDoc} onChange={(e) => setSrDoc(e.target.value)} className={inputCls} />
+                  </Field>
+                  <Field label="OSR Doc">
+                    <Input value={osrDoc} onChange={(e) => setOsrDoc(e.target.value)} className={inputCls} />
+                  </Field>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  <div className="flex items-center gap-1.5">
+                    <Input
+                      value={opportunity}
+                      onChange={(e) => setOpportunity(e.target.value)}
+                      className={cn(inputCls, "placeholder:font-normal placeholder:text-black placeholder:opacity-100")}
+                      placeholder="Opportunity"
+                    />
+                    <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
+                      Find
+                    </Button>
+                  </div>
+                  <Field label="Customer PO #">
+                    <Input value={custPo} onChange={(e) => setCustPo(e.target.value)} className={inputCls} />
+                  </Field>
+                </div>
+                <Field label="Associated Product Review">
+                  <Input value={productReview} onChange={(e) => setProductReview(e.target.value)} className={inputCls} />
+                </Field>
               </div>
             </div>
 
             {/* Secondary details column */}
-            <div className="xl:col-span-4 space-y-3">
-              {/* Contract Pricing + Scheduling */}
-              <Group
-                title="Contract Pricing"
-                variant="white"
-                action={
-                  <button type="button" className="text-[10px] underline text-slate-900 hover:text-slate-700">
-                    View
-                  </button>
-                }
-              >
+            <div className="xl:col-span-4 space-y-5">
+              {/* 03 Contract Pricing & Scheduling */}
+              <div className="space-y-3">
+                <SectionHeader number="03" title="Contract Pricing & Scheduling" />
                 <div className="flex items-center gap-2">
                   <Checkbox id="override" checked={override} onCheckedChange={(v) => setOverride(!!v)} />
                   <Label htmlFor="override" className="text-[11px] font-medium">Override</Label>
                 </div>
-                <div className="space-y-1.5">
+                <div className="grid grid-cols-2 gap-2">
                   <Field label="Hourly">
                     <Input value={hourly} onChange={(e) => setHourly(e.target.value)} disabled={!override} className={cn(inputCls, "text-right")} />
                   </Field>
                   <Field label="Percent">
                     <Input value={percent} onChange={(e) => setPercent(e.target.value)} disabled={!override} className={cn(inputCls, "text-right")} />
                   </Field>
-                  <Field label="Exp. Date">
-                    <ModernDatePicker value={expDate} onChange={setExpDate} size="xs" inputClassName={inputCls} placeholder="MM/DD/YYYY" />
-                  </Field>
                 </div>
-
-                <Separator className="my-2" />
-
-                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Scheduling</p>
+                <Field label="Exp. Date">
+                  <ModernDatePicker value={expDate} onChange={setExpDate} size="xs" inputClassName={inputCls} placeholder="MM/DD/YYYY" />
+                </Field>
+                <div className="h-px bg-slate-200" />
                 <div className="grid grid-cols-2 gap-2">
                   <Field label="Need By Date">
                     <ModernDatePicker value={needBy} onChange={setNeedBy} size="xs" inputClassName={inputCls} placeholder="MM/DD/YYYY" />
@@ -959,14 +960,15 @@ const NewQuote = () => {
                     <ModernDatePicker value={followUp} onChange={setFollowUp} size="xs" inputClassName={cn(inputCls, invalid("Follow Up Date") && errorCls)} placeholder="MM/DD/YYYY" />
                   </Field>
                 </div>
-              </Group>
+              </div>
 
-              {/* Terms & Conditions */}
-              <Group title="Terms & Conditions" variant="white">
+              {/* 04 Terms & Conditions */}
+              <div className="space-y-3">
+                <SectionHeader number="04" title="Terms & Conditions" />
                 <Field label="Terms and Conditions">
-                  <AutoTextarea value={terms} onChange={(e) => setTerms(e.target.value)}  />
+                  <AutoTextarea value={terms} onChange={(e) => setTerms(e.target.value)} />
                 </Field>
-              </Group>
+              </div>
             </div>
           </div>
         </AccSection>
