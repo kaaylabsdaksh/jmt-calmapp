@@ -108,9 +108,9 @@ export const READINESS_BORDER_L: Record<'Red' | 'Green' | 'Partial', string> = {
 };
 
 export const READINESS_FILL: Record<'Red' | 'Green' | 'Partial', string> = {
-  Green: 'bg-emerald-500 text-white border-emerald-600',
-  Red: 'bg-red-500 text-white border-red-600',
-  Partial: 'bg-orange-400 text-white border-orange-500',
+  Green: 'bg-emerald-100 text-emerald-900 border-emerald-300',
+  Red: 'bg-red-100 text-red-900 border-red-300',
+  Partial: 'bg-amber-100 text-amber-900 border-amber-300',
 };
 
 /** Status (lifecycle-only) badge colors — see resolveLifecycleStatus (D28).
