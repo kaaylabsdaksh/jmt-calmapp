@@ -763,7 +763,7 @@ const NewQuote = () => {
             <div className="xl:col-span-8 space-y-3">
               <div className="grid grid-cols-1 gap-3">
                 {/* Quote Setup */}
-                <Group title="Quote Setup">
+                <Group title="Quote Setup" variant="white">
                   <div className="grid grid-cols-2 gap-2">
                     <Field label="Quote Type" required>
                       <SelectField value={quoteType} onChange={setQuoteType} options={QUOTE_TYPES} placeholder="Select type" className={cn(invalid("Quote Type") && errorCls)} />
@@ -796,7 +796,7 @@ const NewQuote = () => {
                 </Group>
 
                 {/* Customer, Origin & References */}
-                <Group title="Customer, Origin & References">
+                <Group title="Customer, Origin & References" variant="white">
                   <div className="grid grid-cols-3 gap-2 items-end">
 
                     <Field label="Existing Customer">
@@ -905,6 +905,7 @@ const NewQuote = () => {
               {/* Contract Pricing + Scheduling */}
               <Group
                 title="Contract Pricing"
+                variant="white"
                 action={
                   <button type="button" className="text-[10px] underline text-slate-900 hover:text-slate-700">
                     View
@@ -941,7 +942,7 @@ const NewQuote = () => {
               </Group>
 
               {/* Terms & Conditions */}
-              <Group title="Terms & Conditions">
+              <Group title="Terms & Conditions" variant="white">
                 <Field label="Terms and Conditions">
                   <AutoTextarea value={terms} onChange={(e) => setTerms(e.target.value)}  />
                 </Field>
