@@ -28,6 +28,7 @@ import CustomerPickupView from "./pages/CustomerPickupView";
 import ShippingView from "./pages/ShippingView";
 import AccountAdminView from "./pages/AccountAdminView";
 import OnsiteProjects from "./pages/OnsiteProjects";
+import OnsiteScheduling from "./pages/OnsiteScheduling";
 import OnsiteProjectDetail from "./pages/OnsiteProjectDetail";
 import VehicleStandards from "./pages/VehicleStandards";
 import NotFound from "./pages/NotFound";
@@ -105,6 +106,8 @@ const App = () => {
 
             <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
             <Route path="/onsite-projects" element={<OnsiteProjects />} />
+            <Route path="/onsite-scheduling" element={<OnsiteScheduling />} />
+
             <Route path="/onsite-projects/new" element={<OnsiteProjectDetail />} />
             <Route path="/onsite-projects/vehicle-standards" element={<VehicleStandards />} />
             <Route path="/invoicing" element={<Invoicing />} />
