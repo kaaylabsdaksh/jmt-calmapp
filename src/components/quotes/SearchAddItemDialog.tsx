@@ -25,8 +25,22 @@ interface SearchAddItemDialogProps {
   onAdd: (result: SearchAddItemResult) => void;
 }
 
+type ExtraRow = { name: string; qty: string; cost: string };
+
+const SERVICE_TYPES = [
+  "Calibration",
+  "Repair",
+  "Expedite",
+  "Onsite Service",
+  "Data Report",
+  "Cleaning",
+];
+
+const PART_TYPES = ["Battery", "Cable", "Fuse", "Sensor", "Filter", "Connector"];
+
 const inputCls =
   "h-7 text-[11px] px-2 rounded-md bg-background border-border focus-visible:ring-1";
+
 
 const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogProps) => {
   const [manufacturer, setManufacturer] = useState("");
