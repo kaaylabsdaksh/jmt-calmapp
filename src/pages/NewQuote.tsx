@@ -511,6 +511,8 @@ const NewQuote = () => {
   // Project
   const [proposedProject, setProposedProject] = useState("");
   const [specialInstructions, setSpecialInstructions] = useState("");
+  const [shipMethod, setShipMethod] = useState("");
+  const [serviceType, setServiceType] = useState("");
 
   // Charges
   const [charges, setCharges] = useState<Record<ChargeKey, string>>({
