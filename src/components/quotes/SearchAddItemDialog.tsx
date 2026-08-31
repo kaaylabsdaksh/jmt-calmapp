@@ -87,6 +87,14 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
     setGroupAsOne(false);
   };
 
+  /** Add a single row directly from its own Add button. */
+  const handleAddRow = (p: Product) => {
+    if (addedIds.has(p.id)) return;
+    onAdd({ products: [p], groupAsOneLineItem: false });
+    setAddedIds((prev) => new Set([...prev, p.id]));
+    setSelected((s) => ({ ...s, [p.id]: false }));
+  };
+
   return (
     <Dialog open={open} onOpenChange={(o) => (o ? onOpenChange(true) : close())}>
       <DialogContent className="max-w-5xl p-0 gap-0 overflow-hidden">
@@ -184,12 +192,13 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                     </th>
                   ),
                 )}
+                <th className="px-2 py-1.5 text-right font-semibold text-muted-foreground w-20">Action</th>
               </tr>
             </thead>
             <tbody>
               {results.length === 0 ? (
                 <tr>
-                  <td colSpan={9} className="py-10 text-center text-muted-foreground text-[11px]">
+                  <td colSpan={10} className="py-10 text-center text-muted-foreground text-[11px]">
                     {searched ? "No matching products found" : "No data to display"}
                   </td>
                 </tr>
@@ -240,6 +249,27 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                             {p.status}
                           </span>
                         )}
+                      </td>
+                      <td className="px-2 py-1.5 text-right" onClick={(e) => e.stopPropagation()}>
+                        <Button
+                          size="sm"
+                          variant={isAdded ? "ghost" : "outline"}
+                          className="h-6 px-2 text-[10px]"
+                          disabled={isAdded}
+                          onClick={() => handleAddRow(p)}
+                        >
+                          {isAdded ? (
+                            <>
+                              <Check className="h-3 w-3 mr-1" />
+                              Added
+                            </>
+                          ) : (
+                            <>
+                              <Plus className="h-3 w-3 mr-1" />
+                              Add
+                            </>
+                          )}
+                        </Button>
                       </td>
                     </tr>
                   );
