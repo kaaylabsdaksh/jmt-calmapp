@@ -184,7 +184,7 @@ const AutoTextarea = ({
     el.style.overflowY = el.scrollHeight > maxHeight ? "auto" : "hidden";
   }, [value, maxHeight]);
   return (
-    <AutoTextarea
+    <Textarea
       ref={ref}
       rows={1}
       value={value}
