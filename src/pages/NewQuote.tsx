@@ -1412,6 +1412,14 @@ const NewQuote = () => {
                 <AutoTextarea value={specialInstructions} onChange={(e) => setSpecialInstructions(e.target.value)}  />
               </Field>
             </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+              <Field label="Ship Method">
+                <SelectField value={shipMethod} onChange={setShipMethod} options={SHIP_METHODS} placeholder="Select ship method" />
+              </Field>
+              <Field label="Service Type">
+                <SelectField value={serviceType} onChange={setServiceType} options={SERVICE_TYPES} placeholder="Select service type" />
+              </Field>
+            </div>
           </AccSection>
 
 
