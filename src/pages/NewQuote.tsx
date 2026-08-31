@@ -389,18 +389,18 @@ const NewQuote = () => {
   const navigate = useNavigate();
 
   // Quote info
-  const [quoteType, setQuoteType] = useState("");
-  const [location, setLocation] = useState("");
+  const [quoteType, setQuoteType] = useState("Lab"); // demo prefill
+  const [location, setLocation] = useState("BR"); // demo prefill
   const [projectNo, setProjectNo] = useState("");
   const [existingCustomer, setExistingCustomer] = useState("Yes");
   const [source, setSource] = useState("");
   const [sourceInfo, setSourceInfo] = useState("");
   const [newOnsite, setNewOnsite] = useState("No");
-  const [acctNo, setAcctNo] = useState("");
+  const [acctNo, setAcctNo] = useState("10245"); // demo prefill
   const [srDoc, setSrDoc] = useState("");
   const [osrDoc, setOsrDoc] = useState("");
   const [opportunity, setOpportunity] = useState("");
-  const [customerName, setCustomerName] = useState("");
+  const [customerName, setCustomerName] = useState("Gulf Coast Industrial Services"); // demo prefill
   const [pocoReq, setPocoReq] = useState(false);
 
   // Pricing / scheduling
@@ -409,14 +409,18 @@ const NewQuote = () => {
   const [percent, setPercent] = useState("0.000");
   const [expDate, setExpDate] = useState<Date | undefined>();
   const [custPo, setCustPo] = useState("");
-  const [priority, setPriority] = useState("");
+  const [priority, setPriority] = useState("Normal"); // demo prefill
   const [needBy, setNeedBy] = useState<Date | undefined>();
-  const [followUp, setFollowUp] = useState<Date | undefined>();
+  const [followUp, setFollowUp] = useState<Date | undefined>(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 7);
+    return d;
+  }); // demo prefill
   const [terms, setTerms] = useState("");
   const [productReview, setProductReview] = useState("");
 
   // Contact
-  const [selectContact, setSelectContact] = useState("");
+  const [selectContact, setSelectContact] = useState("Dana Whitfield"); // demo prefill
   const [contactFirst, setContactFirst] = useState("");
   const [contactLast, setContactLast] = useState("");
   const [title, setTitle] = useState("");
