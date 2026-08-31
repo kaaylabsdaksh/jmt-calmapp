@@ -108,9 +108,9 @@ export const READINESS_BORDER_L: Record<'Red' | 'Green' | 'Partial', string> = {
 };
 
 export const READINESS_FILL: Record<'Red' | 'Green' | 'Partial', string> = {
-  Green: 'bg-emerald-500 text-white border-emerald-600',
-  Red: 'bg-red-500 text-white border-red-600',
-  Partial: 'bg-orange-400 text-white border-orange-500',
+  Green: 'bg-emerald-100 text-emerald-900 border-emerald-300',
+  Red: 'bg-red-100 text-red-900 border-red-300',
+  Partial: 'bg-amber-100 text-amber-900 border-amber-300',
 };
 
 /** Status (lifecycle-only) badge colors — see resolveLifecycleStatus (D28).
@@ -119,9 +119,9 @@ export const READINESS_FILL: Record<'Red' | 'Green' | 'Partial', string> = {
  * (On Hold/Completed/Cancelled) should. */
 export const LIFECYCLE_BADGE_STYLES: Record<LifecycleStatus, string> = {
   Active: 'bg-muted text-muted-foreground',
-  'On Hold': 'bg-slate-400 text-white',
-  Completed: 'bg-gray-200 text-gray-600',
-  Cancelled: 'bg-gray-100 text-gray-400 line-through',
+  'On Hold': 'bg-slate-100 text-slate-700 border-slate-300',
+  Completed: 'bg-slate-100 text-slate-500 border-slate-300 line-through',
+  Cancelled: 'bg-slate-100 text-slate-400 border-slate-200 line-through opacity-70',
 };
 
 /** Aggregate state of one boolean flag (poReceived/confirmed) across ALL of
