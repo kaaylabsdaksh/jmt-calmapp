@@ -1202,7 +1202,7 @@ const NewQuote = () => {
                     </tr>
                     )}
                   )
-                    {expandedItems.includes(i.id) && (
+                    {!isCancelled && expandedItems.includes(i.id) && (
                       <tr className="border-t bg-muted/20">
                         <td colSpan={ITEM_COLUMNS.length} className="px-3 py-2">
                           <div className="max-w-[860px] space-y-2">
