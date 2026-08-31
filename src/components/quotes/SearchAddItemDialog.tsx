@@ -438,14 +438,26 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                           <Checkbox
                             checked={d.add17025}
                             onCheckedChange={(v) => setDetail(p.id, { add17025: !!v })}
-                            className="h-3.5 w-3.5"
+                            className={cn(
+                              "h-4 w-4 rounded-md border-2 border-slate-300 bg-white",
+                              "transition-colors duration-150 ease-in-out",
+                              "hover:border-slate-400",
+                              "data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 data-[state=checked]:text-white",
+                              "focus-visible:ring-2 focus-visible:ring-green-500/40 focus-visible:ring-offset-0"
+                            )}
                           />
                         </td>
                         <td className="px-1 py-1.5 align-top text-center">
                           <Checkbox
                             checked={d.repair}
                             onCheckedChange={(v) => setDetail(p.id, { repair: !!v })}
-                            className="h-3.5 w-3.5"
+                            className={cn(
+                              "h-4 w-4 rounded-md border-2 border-slate-300 bg-white",
+                              "transition-colors duration-150 ease-in-out",
+                              "hover:border-slate-400",
+                              "data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 data-[state=checked]:text-white",
+                              "focus-visible:ring-2 focus-visible:ring-green-500/40 focus-visible:ring-offset-0"
+                            )}
                           />
                         </td>
                         <td
@@ -599,7 +611,13 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
             <Checkbox
               checked={groupAsOne}
               onCheckedChange={(v) => setGroupAsOne(!!v)}
-              className="h-3.5 w-3.5"
+              className={cn(
+                "h-4 w-4 rounded-md border-2 border-slate-300 bg-white",
+                "transition-colors duration-150 ease-in-out",
+                "hover:border-slate-400",
+                "data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 data-[state=checked]:text-white",
+                "focus-visible:ring-2 focus-visible:ring-green-500/40 focus-visible:ring-offset-0"
+              )}
             />
             Group as one line item
           </label>
