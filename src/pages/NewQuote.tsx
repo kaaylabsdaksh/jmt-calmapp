@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import SearchAddItemDialog, { type SearchAddItemResult } from "@/components/quotes/SearchAddItemDialog";
+import AddTestingItemsDialog, { type AddTestingItemsResult } from "@/components/quotes/AddTestingItemsDialog";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
