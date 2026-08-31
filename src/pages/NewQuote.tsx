@@ -1473,6 +1473,13 @@ const NewQuote = () => {
         onAdd={handleSearchAdd}
       />
 
+      <AddTestingItemsDialog
+        open={testingItemsOpen}
+        onOpenChange={setTestingItemsOpen}
+        onAdd={handleAddTestingItems}
+      />
+
+
 
       {/* Sticky action bar */}
       <div className="sticky bottom-0 z-30 border-t bg-background/95 backdrop-blur px-2 sm:px-3 lg:px-4 py-2">
