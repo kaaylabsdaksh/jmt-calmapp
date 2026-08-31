@@ -354,7 +354,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
 
         {/* Added items - only visible once something is staged */}
         {addedIds.size > 0 && (
-          <div className="px-4 py-3 bg-green-50/40">
+          <div className="px-4 py-3 bg-green-50/30 border-y">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-1.5">
                 <Check className="h-3.5 w-3.5 text-green-600" />
@@ -369,116 +369,107 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                 {addedIds.size}
               </Badge>
             </div>
-            <div className="max-h-[260px] overflow-auto rounded-md border bg-white divide-y">
+            <div className="max-h-[280px] overflow-auto rounded-md border bg-white divide-y">
               {addedProducts.map((p) => {
                 const d = detailOf(p.id);
                 return (
-                  <div key={p.id} className="px-3 py-2 text-[11px]">
-                    {/* Row 1: identity + qty + status + remove */}
-                    <div className="flex items-start gap-3">
-                      <div className="flex-1 min-w-0 grid grid-cols-4 gap-2">
-                        <div>
-                          <div className="text-[9px] uppercase text-muted-foreground">Manufacturer</div>
-                          <div className="font-medium truncate">{p.manufacturer}</div>
+                  <div
+                    key={p.id}
+                    className="px-3 py-2.5 text-[11px] hover:bg-slate-50/60 transition-colors"
+                  >
+                    <div className="grid grid-cols-[1fr_auto] gap-3 items-start">
+                      {/* Left: product identity + read-only details */}
+                      <div className="min-w-0">
+                        <div className="font-medium text-slate-900 truncate" title={p.description}>
+                          {p.description}
                         </div>
-                        <div>
-                          <div className="text-[9px] uppercase text-muted-foreground">Model</div>
-                          <div className="truncate">{p.model}</div>
+                        <div className="text-[10px] text-muted-foreground truncate">
+                          {p.manufacturer} · {p.model}
                         </div>
-                        <div className="col-span-2">
-                          <div className="text-[9px] uppercase text-muted-foreground">Item Description</div>
-                          <div className="truncate" title={p.description}>{p.description}</div>
+                        <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-0.5 text-[10px] text-muted-foreground">
+                          <span className="whitespace-nowrap">
+                            Cal/Cert: <span className="font-medium text-slate-700">${p.calCost}</span>
+                          </span>
+                          <span className="whitespace-nowrap">
+                            T/F: <span className="font-medium text-slate-700">{p.tf}</span>
+                          </span>
+                          <span className="whitespace-nowrap">
+                            17025: <span className="font-medium text-slate-700">{p.accredCal || "No"}</span>
+                          </span>
+                          <span
+                            className="truncate max-w-[200px]"
+                            title={p.locations}
+                          >
+                            Loc: <span className="font-medium text-slate-700">{p.locations || "—"}</span>
+                          </span>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2 shrink-0">
-                        <div>
-                          <div className="text-[9px] uppercase text-muted-foreground text-right">Qty</div>
+
+                      {/* Right: controls */}
+                      <div className="flex flex-col items-end gap-2 shrink-0">
+                        <div className="flex items-center gap-2">
                           <Input
                             type="number"
                             min={1}
                             value={d.qty}
                             onChange={(e) => setDetail(p.id, { qty: e.target.value })}
-                            className={cn(inputCls, "h-6 w-14")}
+                            className={cn(inputCls, "h-6 w-14 text-center px-1")}
                           />
+                          <span className="inline-flex items-center gap-1 rounded-full bg-green-600/10 px-1.5 py-0.5 text-[10px] font-medium text-green-700">
+                            <Check className="h-2.5 w-2.5" />
+                            Staged
+                          </span>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-5 w-5 text-muted-foreground hover:text-destructive"
+                            onClick={() => handleRemoveRow(p.id)}
+                            aria-label="Remove"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
                         </div>
-                        <span className="inline-flex items-center gap-1 rounded-full bg-green-600/10 px-1.5 py-0.5 text-[10px] font-medium text-green-700">
-                          <Check className="h-2.5 w-2.5" />
-                          Staged
-                        </span>
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="h-5 w-5 text-muted-foreground hover:text-destructive"
-                          onClick={() => handleRemoveRow(p.id)}
-                          aria-label="Remove"
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
+                        <div className="flex items-center gap-3">
+                          <label className="flex items-center gap-1.5 cursor-pointer">
+                            <Checkbox
+                              checked={d.add17025}
+                              onCheckedChange={(v) => setDetail(p.id, { add17025: !!v })}
+                              className="h-3.5 w-3.5"
+                            />
+                            <span className="text-[10px]">Add 17025</span>
+                          </label>
+                          <label className="flex items-center gap-1.5 cursor-pointer">
+                            <Checkbox
+                              checked={d.repair}
+                              onCheckedChange={(v) => setDetail(p.id, { repair: !!v })}
+                              className="h-3.5 w-3.5"
+                            />
+                            <span className="text-[10px]">Repair</span>
+                          </label>
+                        </div>
                       </div>
                     </div>
 
-                    {/* Row 2: pricing / flags / location */}
-                    <div className="mt-2 grid grid-cols-6 gap-2 items-end">
-                      <div>
-                        <div className="text-[9px] uppercase text-muted-foreground">Cal/Cert</div>
-                        <div>${p.calCost}</div>
-                      </div>
-                      <div>
-                        <div className="text-[9px] uppercase text-muted-foreground">T/F</div>
-                        <div>{p.tf}</div>
-                      </div>
-                      <div>
-                        <div className="text-[9px] uppercase text-muted-foreground">17025</div>
-                        <div>{p.accredCal || "No"}</div>
-                      </div>
-                      <label className="flex items-center gap-1.5 cursor-pointer">
-                        <Checkbox
-                          checked={d.add17025}
-                          onCheckedChange={(v) => setDetail(p.id, { add17025: !!v })}
-                          className="h-3.5 w-3.5"
-                        />
-                        <span className="text-[11px]">Add 17025</span>
-                      </label>
-                      <label className="flex items-center gap-1.5 cursor-pointer">
-                        <Checkbox
-                          checked={d.repair}
-                          onCheckedChange={(v) => setDetail(p.id, { repair: !!v })}
-                          className="h-3.5 w-3.5"
-                        />
-                        <span className="text-[11px]">Repair</span>
-                      </label>
-                      <div>
-                        <div className="text-[9px] uppercase text-muted-foreground">Only Capable Location</div>
-                        <div className="truncate" title={p.locations}>{p.locations || "—"}</div>
-                      </div>
-                    </div>
-
-                    {/* Row 3: serial fields */}
-                    <div className="mt-2 grid grid-cols-3 gap-2">
-                      <div>
-                        <div className="text-[9px] uppercase text-muted-foreground">Mfr Serial</div>
-                        <Input
-                          value={d.mfrSerial}
-                          onChange={(e) => setDetail(p.id, { mfrSerial: e.target.value })}
-                          className={cn(inputCls, "h-6 w-full")}
-                        />
-                      </div>
-                      <div>
-                        <div className="text-[9px] uppercase text-muted-foreground">Cust ID</div>
-                        <Input
-                          value={d.custId}
-                          onChange={(e) => setDetail(p.id, { custId: e.target.value })}
-                          className={cn(inputCls, "h-6 w-full")}
-                        />
-                      </div>
-                      <div>
-                        <div className="text-[9px] uppercase text-muted-foreground">Cust Serial</div>
-                        <Input
-                          value={d.custSerial}
-                          onChange={(e) => setDetail(p.id, { custSerial: e.target.value })}
-                          className={cn(inputCls, "h-6 w-full")}
-                        />
-                      </div>
+                    {/* Serial fields */}
+                    <div className="mt-2.5 grid grid-cols-3 gap-2">
+                      <Input
+                        placeholder="Mfr Serial"
+                        value={d.mfrSerial}
+                        onChange={(e) => setDetail(p.id, { mfrSerial: e.target.value })}
+                        className={cn(inputCls, "h-6 w-full text-[10px]")}
+                      />
+                      <Input
+                        placeholder="Cust ID"
+                        value={d.custId}
+                        onChange={(e) => setDetail(p.id, { custId: e.target.value })}
+                        className={cn(inputCls, "h-6 w-full text-[10px]")}
+                      />
+                      <Input
+                        placeholder="Cust Serial"
+                        value={d.custSerial}
+                        onChange={(e) => setDetail(p.id, { custSerial: e.target.value })}
+                        className={cn(inputCls, "h-6 w-full text-[10px]")}
+                      />
                     </div>
                   </div>
                 );
