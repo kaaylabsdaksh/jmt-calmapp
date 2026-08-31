@@ -56,12 +56,17 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
     notAddedResults.length > 0 && notAddedResults.every((p) => selected[p.id]);
   const addedProducts = PRODUCTS.filter((p) => addedIds.has(p.id));
 
-  const reset = () => {
+  /** Clears only the search filters/results, keeping staged items intact. */
+  const clearSearch = () => {
     setManufacturer("");
     setModel("");
     setDescription("");
     setSearched(false);
     setSelected({});
+  };
+
+  const reset = () => {
+    clearSearch();
     setGroupAsOne(false);
     setAddedIds(new Set());
   };
@@ -156,7 +161,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
               variant="ghost"
               size="sm"
               className="h-7 px-2.5 text-[11px]"
-              onClick={reset}
+              onClick={clearSearch}
             >
               <RotateCcw className="h-3 w-3 mr-1" />
               Clear
