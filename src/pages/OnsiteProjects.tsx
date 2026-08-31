@@ -72,8 +72,14 @@ const searchFieldOptions = [
   { value: "city", label: "City" },
 ];
 
-const OnsiteProjects = () => {
+interface OnsiteProjectsProps {
+  /** When true the page renders without its own top nav / page padding (used inside the scheduling shell). */
+  embedded?: boolean;
+}
+
+const OnsiteProjects = ({ embedded = false }: OnsiteProjectsProps) => {
   const navigate = useNavigate();
+
   const [searchField, setSearchField] = useState("projectNumber");
   const [searchValue, setSearchValue] = useState("");
   const [searchChips, setSearchChips] = useState<SearchChip[]>([]);
