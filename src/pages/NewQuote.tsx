@@ -379,10 +379,12 @@ const SelectField = ({
 };
 
 const ITEM_COLUMNS = [
-  "Cancel", "Rev", "Services", "Parts", "Qty", "Manufacturer", "Model", "Description",
+  "", "Cancel", "Rcv", "Srvs", "Parts", "Qty", "Manufacturer", "Model", "Description",
   "Serial #", "Cust ID", "Cust Serial", "Priority", "WO #", "Status", "Base Amt",
   "Cal Cert", "Calc 17025", "Other Services", "Other Parts", "Rep.", "17025", "C.P.?",
+  "", "", "",
 ];
+
 
 const NewQuote = () => {
   const { toast } = useToast();
