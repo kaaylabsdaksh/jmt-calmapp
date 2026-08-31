@@ -327,7 +327,7 @@ const Group = ({
   children: React.ReactNode;
   className?: string;
 }) => (
-  <div className={cn("rounded-lg border bg-white p-2.5 space-y-2", className)}>
+  <div className={cn("rounded-lg border border-slate-200 bg-slate-50/60 p-2.5 space-y-2", className)}>
     <div className="flex items-center justify-between gap-2">
       <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{title}</p>
       {action}
