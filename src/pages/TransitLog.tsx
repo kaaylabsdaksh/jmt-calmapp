@@ -582,7 +582,7 @@ const TransitLog = () => {
                           {isOpen && (
                             <tr key={`${r.id}-items`} className="border-b border-border bg-muted/10">
                               <td></td>
-                              <td colSpan={20} className="px-2 py-2">
+                              <td colSpan={orderedColumns.length + 1} className="px-2 py-2">
                                 <div className="overflow-hidden rounded-md border border-border bg-background">
                                   <table className="w-full text-[11px]">
                                     <thead className="bg-muted/60 text-[10px] uppercase tracking-wide text-muted-foreground">
