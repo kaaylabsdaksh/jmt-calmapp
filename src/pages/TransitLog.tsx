@@ -240,6 +240,10 @@ const TransitLog = () => {
   const [applied, setApplied] = useState(defaultFilters);
   const [expanded, setExpanded] = useState<string[]>([]);
   const [selected, setSelected] = useState<string[]>([]);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const toggleItem = (id: string) =>
+    setSelectedItems((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
+
   const [showNotes, setShowNotes] = useState(false);
   const [rentalOnly, setRentalOnly] = useState(false);
   const [page, setPage] = useState(1);
