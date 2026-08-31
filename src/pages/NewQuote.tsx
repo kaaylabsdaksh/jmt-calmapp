@@ -579,6 +579,29 @@ const NewQuote = () => {
 
   const [testingItemsOpen, setTestingItemsOpen] = useState(false);
 
+  type TestingRow = {
+    id: string;
+    cancel: boolean;
+    rcv: boolean;
+    qty: string;
+    groupable: string;
+    type: string;
+    sectionLength: string;
+    priority: string;
+    woNo: string;
+    status: string;
+    feeAmt: string;
+    rep: string;
+  };
+  const [testingItems, setTestingItems] = useState<TestingRow[]>([]);
+
+  const updateTestingRow = (id: string, patch: Partial<TestingRow>) =>
+    setTestingItems((prev) => prev.map((r) => (r.id === id ? { ...r, ...patch } : r)));
+  const removeTestingRow = (id: string) =>
+    setTestingItems((prev) => prev.filter((r) => r.id !== id));
+  const testingRowTotal = (r: TestingRow) =>
+    ((parseInt(r.qty || "0", 10) || 0) * (parseFloat(r.feeAmt || "0") || 0)).toFixed(2);
+
   const handleAddItemClick = () => {
     if (!allMandatoryFilled) {
       warnMissing();
@@ -588,25 +611,29 @@ const NewQuote = () => {
   };
 
   const handleAddTestingItems = ({ lines }: AddTestingItemsResult) => {
-    setItems((prev) => [
+    setTestingItems((prev) => [
       ...prev,
-      ...lines.map((l) => ({
-        ...emptyItem(),
-        manufacturer: "ESL",
-        model: l.type ? `${l.groupable} - ${l.type}` : l.groupable,
-        description: l.sectionsFeet
-          ? `${l.groupable} (Sections/Feet: ${l.sectionsFeet})`
-          : l.groupable,
+      ...lines.map((l, idx) => ({
+        id: `${Date.now()}-${idx}`,
+        cancel: false,
+        rcv: false,
         qty: String(l.qty),
-        baseAmt: (l.qty * parseFloat(l.fee || "0")).toFixed(2),
-        calCert: (l.qty * parseFloat(l.fee || "0")).toFixed(2),
+        groupable: l.groupable,
+        type: l.type ?? "",
+        sectionLength: l.sectionsFeet ?? "",
+        priority: priority || "Normal",
+        woNo: "",
+        status: "",
+        feeAmt: l.fee,
+        rep: "",
       })),
     ]);
     toast({
       title: "Testing items added",
-      description: `${lines.length} line item(s) added to the quote.`,
+      description: `${lines.length} testing line item(s) added.`,
     });
   };
+
 
 
   const handleSearchAddClick = () => {
