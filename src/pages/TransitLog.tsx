@@ -585,41 +585,66 @@ const TransitLog = () => {
                             </tr>
                           )}
 
-                          {isOpen &&
-                            r.items.map((it) => (
-                              <tr key={it.id} className="border-b border-border bg-muted/10 hover:bg-muted/30 transition-colors">
-                                <td className={cell}></td>
-                                <td className={cell}></td>
-                                <td className={cell} colSpan={5}>
-                                  <span className="pl-4 text-[10px] uppercase tracking-wide text-muted-foreground">Transit Item</span>
-                                </td>
-                                <td className={cellNum}>{it.pcs}</td>
-                                <td className={cell}>{it.acct}</td>
-                                <td className={cn(cell, "max-w-[160px]")}><Truncate value={it.customer} /></td>
-                                <td className={cell}>
-                                  <button
-                                    className="text-foreground underline-offset-2 hover:underline"
-                                    onClick={() => navigate("/edit-order")}
-                                  >
-                                    {it.batchItem}
-                                  </button>
-                                </td>
-                                <td className={cell}>{it.rentalId || <span className="text-muted-foreground">—</span>}</td>
-                                <td className={cn(cell, "max-w-[130px]")}><Truncate value={it.manModel} /></td>
-                                <td className={cn(cell, "max-w-[200px]")}><Truncate value={it.description} /></td>
-                                <td className={cell}></td>
-                                <td className={cell}></td>
-                                <td className={cell}><PriorityBadge priority={it.priority} /></td>
-                                <td className={cell}>{it.division}</td>
-                                <td className={cn(cell, "whitespace-nowrap")}>
-                                  <div className="flex items-center gap-1.5">
-                                    <ReceivingBadge received={!!it.rcvdOn} />
-                                    <span className="text-muted-foreground">{it.rcvdOn}</span>
-                                  </div>
-                                </td>
-                                <td className={cell}>{it.rcvdBy || <span className="text-muted-foreground">—</span>}</td>
-                              </tr>
-                            ))}
+                          {isOpen && (
+                            <tr key={`${r.id}-items`} className="border-b border-border bg-muted/10">
+                              <td></td>
+                              <td colSpan={20} className="px-2 py-2">
+                                <div className="overflow-hidden rounded-md border border-border bg-background">
+                                  <table className="w-full text-[11px]">
+                                    <thead className="bg-muted/60 text-[10px] uppercase tracking-wide text-muted-foreground">
+                                      <tr className="border-b border-border text-left">
+                                        <th className="w-8 px-2 py-1.5"></th>
+                                        <th className="w-12 px-2 py-1.5">Pcs</th>
+                                        <th className="w-20 px-2 py-1.5">Acct #</th>
+                                        <th className="px-2 py-1.5">Customer Name</th>
+                                        <th className="px-2 py-1.5">Batch/Item</th>
+                                        <th className="px-2 py-1.5">Rental ID</th>
+                                        <th className="px-2 py-1.5">Man/Model</th>
+                                        <th className="px-2 py-1.5">Description</th>
+                                        <th className="px-2 py-1.5">Priority</th>
+                                        <th className="px-2 py-1.5">Division</th>
+                                        <th className="px-2 py-1.5">Rcvd On</th>
+                                        <th className="px-2 py-1.5">Rcvd By</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {r.items.map((it) => (
+                                        <tr key={it.id} className="border-b border-border last:border-0 hover:bg-muted/30 transition-colors">
+                                          <td className={cell}>
+                                            <Checkbox
+                                              checked={selectedItems.includes(it.id)}
+                                              onCheckedChange={() => toggleItem(it.id)}
+                                              className="h-3.5 w-3.5"
+                                              disabled={!!it.rcvdOn}
+                                            />
+                                          </td>
+                                          <td className={cellNum}>{it.pcs}</td>
+                                          <td className={cn(cell, "whitespace-nowrap")}>{it.acct}</td>
+                                          <td className={cn(cell, "max-w-[180px]")}><Truncate value={it.customer} /></td>
+                                          <td className={cell}>
+                                            <button
+                                              className="font-medium text-foreground underline-offset-2 hover:underline"
+                                              onClick={() => navigate("/edit-order")}
+                                            >
+                                              {it.batchItem}
+                                            </button>
+                                          </td>
+                                          <td className={cell}>{it.rentalId || <span className="text-muted-foreground">—</span>}</td>
+                                          <td className={cn(cell, "max-w-[140px]")}><Truncate value={it.manModel} /></td>
+                                          <td className={cn(cell, "max-w-[240px]")}><Truncate value={it.description} /></td>
+                                          <td className={cell}><PriorityBadge priority={it.priority} /></td>
+                                          <td className={cell}>{it.division}</td>
+                                          <td className={cn(cell, "whitespace-nowrap")}>{it.rcvdOn || <span className="text-muted-foreground">—</span>}</td>
+                                          <td className={cell}>{it.rcvdBy || <span className="text-muted-foreground">—</span>}</td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </td>
+                            </tr>
+                          )}
+
                         </Fragment>
                       );
                     })}
