@@ -87,6 +87,14 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
     setGroupAsOne(false);
   };
 
+  /** Add a single row directly from its own Add button. */
+  const handleAddRow = (p: Product) => {
+    if (addedIds.has(p.id)) return;
+    onAdd({ products: [p], groupAsOneLineItem: false });
+    setAddedIds((prev) => new Set([...prev, p.id]));
+    setSelected((s) => ({ ...s, [p.id]: false }));
+  };
+
   return (
     <Dialog open={open} onOpenChange={(o) => (o ? onOpenChange(true) : close())}>
       <DialogContent className="max-w-5xl p-0 gap-0 overflow-hidden">
