@@ -1,0 +1,193 @@
+/**
+ * PROTOTYPE ONLY — create/edit dialog for the four non-service calendar
+ * entry types (PTO, Travel, Out of Service, Tentative). FRD §6.4 US-2.
+ */
+import React, { useState } from 'react';
+import { format } from 'date-fns';
+import { Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  NON_SERVICE_ENTRY_TYPES,
+  type NonServiceEntry,
+  type NonServiceEntryType,
+} from '@/lib/onsite-scheduling/types';
+import { useSchedulingData } from '@/context/SchedulingDataContext';
+import TechnicianRosterPicker from './TechnicianRosterPicker';
+
+interface NonServiceEntryDialogProps {
+  entry: NonServiceEntry | null;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  /** Pre-fills start/end when creating a new entry from a Calendar day
+   * click (D10, built 2026-08-15) — ignored when editing an existing
+   * entry, since that already has real dates. */
+  defaultDate?: string;
+}
+
+const NonServiceEntryDialog: React.FC<NonServiceEntryDialogProps> = ({
+  entry,
+  open,
+  onOpenChange,
+  defaultDate,
+}) => {
+  const { addNonServiceEntry, updateNonServiceEntry, deleteNonServiceEntry } =
+    useSchedulingData();
+  const [type, setType] = useState<NonServiceEntryType>(entry?.type ?? 'PTO');
+  const [technicianIds, setTechnicianIds] = useState<string[]>(
+    entry?.technicianIds ?? []
+  );
+  const [startDate, setStartDate] = useState(
+    entry?.startDate ?? defaultDate ?? '2026-08-11'
+  );
+  const [endDate, setEndDate] = useState(entry?.endDate ?? defaultDate ?? '2026-08-11');
+  const [notes, setNotes] = useState(entry?.notes ?? '');
+  const [showValidation, setShowValidation] = useState(false);
+
+  const isValid =
+    technicianIds.length > 0 && startDate && endDate && startDate <= endDate;
+
+  const handleSave = () => {
+    if (!isValid) {
+      setShowValidation(true);
+      return;
+    }
+    const payload: NonServiceEntry = {
+      id: entry?.id ?? `ns-${Date.now()}`,
+      type,
+      technicianIds,
+      startDate,
+      endDate,
+      notes: notes || undefined,
+    };
+    if (entry) updateNonServiceEntry(payload);
+    else addNonServiceEntry(payload);
+    onOpenChange(false);
+  };
+
+  const handleDelete = () => {
+    if (entry) deleteNonServiceEntry(entry.id);
+    onOpenChange(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-lg">
+        <DialogHeader>
+          <DialogTitle>
+            {entry ? 'Edit non-service entry' : 'New non-service entry'}
+          </DialogTitle>
+          {/* Date header (direct user feedback, 2026-08-16) — same
+              treatment as NewJobDialog, reflecting the live Start date
+              value so it stays accurate as the field is edited. */}
+          <p className="text-xs text-muted-foreground">
+            {format(new Date(`${startDate}T00:00:00`), 'EEEE, MMMM d, yyyy')}
+          </p>
+        </DialogHeader>
+        <div className="space-y-3">
+          <div className="space-y-1">
+            <Label className="text-xs">Type</Label>
+            <Select value={type} onValueChange={(v) => setType(v as NonServiceEntryType)}>
+              <SelectTrigger className="h-8 text-xs">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {NON_SERVICE_ENTRY_TYPES.map((t) => (
+                  <SelectItem key={t} value={t}>
+                    {t}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-1">
+              <Label className="text-xs">Start date</Label>
+              <Input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="h-8 text-xs"
+              />
+            </div>
+            <div className="space-y-1">
+              <Label className="text-xs">End date</Label>
+              <Input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className="h-8 text-xs"
+              />
+              {showValidation && startDate > endDate && (
+                <p className="text-[11px] text-destructive">
+                  End date cannot be before start date
+                </p>
+              )}
+            </div>
+          </div>
+
+          <TechnicianRosterPicker
+            selectedIds={technicianIds}
+            onChange={setTechnicianIds}
+            dateRange={{ startDate, endDate }}
+            excludeEntryId={entry?.id}
+          />
+          {showValidation && technicianIds.length === 0 && (
+            <p className="text-[11px] text-destructive">Select at least one technician</p>
+          )}
+
+          <div className="space-y-1">
+            <Label className="text-xs">Notes</Label>
+            <Textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="Notes (optional)"
+              className="min-h-[60px] text-xs"
+            />
+          </div>
+        </div>
+        <DialogFooter className="flex items-center justify-between sm:justify-between">
+          {entry ? (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-destructive"
+              onClick={handleDelete}
+            >
+              <Trash2 className="mr-1.5 h-3.5 w-3.5" /> Delete
+            </Button>
+          ) : (
+            <span />
+          )}
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm" onClick={() => onOpenChange(false)}>
+              Cancel
+            </Button>
+            <Button size="sm" onClick={handleSave}>
+              {entry ? 'Save changes' : 'Create entry'}
+            </Button>
+          </div>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default NonServiceEntryDialog;

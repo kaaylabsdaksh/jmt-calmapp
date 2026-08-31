@@ -67,6 +67,9 @@ import { TourProvider } from "@/context/TourContext";
 import { WelcomeModal } from "@/components/tour/WelcomeModal";
 import { GuidedTour } from "@/components/tour/GuidedTour";
 import { WhatsNewDrawer } from "@/components/tour/WhatsNewDrawer";
+import GlobalOpenDecisionsFab, {
+  OpenDecisionsProvider,
+} from "@/components/onsite-scheduling/GlobalOpenDecisions";
 
 const App = () => {
   console.log("App component rendering");
@@ -74,6 +77,8 @@ const App = () => {
   return (
     <BrowserRouter>
       <TourProvider>
+        <OpenDecisionsProvider>
+        <GlobalOpenDecisionsFab />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route element={<Layout><Outlet /></Layout>}>
@@ -148,6 +153,7 @@ const App = () => {
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
+        </OpenDecisionsProvider>
         <PointerEventsGuard />
         <WelcomeModal />
         <WhatsNewDrawer />
