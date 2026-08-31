@@ -130,7 +130,16 @@ export const UnscheduledWorkQueue = () => {
             <tr className="text-left">
               <th className="px-2 py-1.5 font-semibold">Customer</th>
               <th className="px-2 py-1.5 font-semibold">Acct #</th>
-              <th className="px-2 py-1.5 font-semibold">Target window</th>
+              <th className="px-2 py-1.5 font-semibold">
+                <button
+                  type="button"
+                  onClick={() => setSortAsc((s) => !s)}
+                  className="inline-flex items-center gap-1 hover:underline"
+                >
+                  Target window {sortAsc ? "↑" : "↓"}
+                </button>
+              </th>
+
               <th className="px-2 py-1.5 font-semibold">Rep</th>
               <th className="px-2 py-1.5 font-semibold">Notes</th>
               <th className="px-2 py-1.5 font-semibold text-right">Action</th>
