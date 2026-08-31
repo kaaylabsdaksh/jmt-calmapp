@@ -36,6 +36,28 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
   const [selected, setSelected] = useState<Record<string, boolean>>({});
   const [groupAsOne, setGroupAsOne] = useState(false);
   const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
+  const [serviceDraft, setServiceDraft] = useState({ name: "", qty: "1", cost: "0.00" });
+  const [partDraft, setPartDraft] = useState({ name: "", qty: "1", cost: "0.00" });
+  const [serviceRows, setServiceRows] = useState<ExtraRow[]>([]);
+  const [partRows, setPartRows] = useState<ExtraRow[]>([]);
+
+  const addExtra = (kind: "service" | "part") => {
+    const draft = kind === "service" ? serviceDraft : partDraft;
+    if (!draft.name) return;
+    if (kind === "service") {
+      setServiceRows((r) => [...r, draft]);
+      setServiceDraft({ name: "", qty: "1", cost: "0.00" });
+    } else {
+      setPartRows((r) => [...r, draft]);
+      setPartDraft({ name: "", qty: "1", cost: "0.00" });
+    }
+  };
+
+  const removeExtra = (kind: "service" | "part", idx: number) => {
+    const setter = kind === "service" ? setServiceRows : setPartRows;
+    setter((r) => r.filter((_, i) => i !== idx));
+  };
+
 
   const results = useMemo(() => {
     if (!searched) return [] as Product[];
