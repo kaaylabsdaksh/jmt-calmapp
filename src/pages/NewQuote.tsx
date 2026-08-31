@@ -1105,7 +1105,7 @@ const NewQuote = () => {
                               ["17025", i.is17025 ? "Yes" : "No"],
                               ["C.P.?", i.cp ? "Yes" : "No"],
                               ["Base Amt", money(num(i.baseAmt))],
-                            ].map(([label, val]) => (
+                            ].map(([label, val]: [string, string]) => (
                               <div key={String(label)} className="min-w-0">
                                 <p className="text-[10px] uppercase tracking-wide text-muted-foreground">{label}</p>
                                 <p className="truncate">{String(val || "—")}</p>
