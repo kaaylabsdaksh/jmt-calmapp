@@ -195,8 +195,8 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
 
   return (
     <Dialog open={open} onOpenChange={(o) => (o ? onOpenChange(true) : close())}>
-      <DialogContent className="max-w-7xl p-0 gap-0 overflow-hidden">
-        <DialogHeader className="px-4 py-3 border-b bg-muted/30 space-y-0.5">
+      <DialogContent className="max-w-7xl p-0 gap-0 overflow-hidden flex flex-col max-h-[90vh]">
+        <DialogHeader className="px-4 py-3 border-b bg-muted/30 space-y-0.5 shrink-0">
           <DialogTitle className="text-sm font-semibold flex items-center gap-2">
             <Search className="h-3.5 w-3.5 text-muted-foreground" />
             Search / Add Item
@@ -206,6 +206,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
           </DialogDescription>
         </DialogHeader>
 
+        <div className="flex-1 overflow-y-auto min-h-0">
         {/* Filters */}
         <div className="px-4 py-3 border-b">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -619,10 +620,11 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
             </div>
           </div>
         )}
+        </div>
 
         {/* Footer */}
 
-        <div className="flex items-center justify-end gap-2 border-t bg-muted/20 px-4 py-2.5">
+        <div className="flex items-center justify-end gap-2 border-t bg-muted/20 px-4 py-2.5 shrink-0">
           <div className="flex items-center gap-1.5">
             <Button variant="outline" size="sm" className="h-7 px-3 text-[11px]" onClick={close}>
               <X className="h-3 w-3 mr-1" />
