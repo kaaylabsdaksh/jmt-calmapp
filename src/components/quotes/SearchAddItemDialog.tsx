@@ -458,7 +458,9 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                         </Button>
                       </td>
                     </tr>
-                  ))}
+                    );
+                  })}
+
                 </tbody>
               </table>
             </div>
