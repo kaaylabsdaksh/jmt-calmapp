@@ -1216,10 +1216,41 @@ const NewQuote = () => {
                         <Checkbox
                           checked={i.rev}
                           disabled={isCancelled}
-                          onCheckedChange={(v) => setItems((p) => p.map((it) => it.id === i.id ? { ...it, rev: !!v } : it))}
+                          onCheckedChange={(v) => {
+                            const receiving = !!v;
+                            setItems((p) => p.map((it) => {
+                              if (it.id !== i.id) return it;
+                              if (receiving) {
+                                return {
+                                  ...it,
+                                  rev: true,
+                                  baseAmtOriginal: it.baseAmt,
+                                  calCertOriginal: it.calCert,
+                                  calc17025Original: it.calc17025,
+                                  otherServicesOriginal: it.otherServices,
+                                  otherPartsOriginal: it.otherParts,
+                                  baseAmt: "0.00",
+                                  calCert: "0.00",
+                                  calc17025: "0.00",
+                                  otherServices: "0.00",
+                                  otherParts: "0.00",
+                                };
+                              }
+                              return {
+                                ...it,
+                                rev: false,
+                                baseAmt: it.baseAmtOriginal ?? it.baseAmt,
+                                calCert: it.calCertOriginal ?? it.calCert,
+                                calc17025: it.calc17025Original ?? it.calc17025,
+                                otherServices: it.otherServicesOriginal ?? it.otherServices,
+                                otherParts: it.otherPartsOriginal ?? it.otherParts,
+                              };
+                            }));
+                          }}
                           className="h-4 w-4 rounded-md border-slate-400 transition-all data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 data-[state=checked]:text-white disabled:opacity-40"
                         />
                       </td>
+
                       <td className="px-2 py-1 text-center">{(itemServices[i.id] ?? []).length}</td>
                       <td className="px-2 py-1 text-center">{(itemParts[i.id] ?? []).length}</td>
 
