@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import SearchAddItemDialog, { type SearchAddItemResult } from "@/components/quotes/SearchAddItemDialog";
+import AddTestingItemsDialog, { type AddTestingItemsResult } from "@/components/quotes/AddTestingItemsDialog";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -576,15 +577,37 @@ const NewQuote = () => {
     });
   };
 
+  const [testingItemsOpen, setTestingItemsOpen] = useState(false);
+
   const handleAddItemClick = () => {
     if (!allMandatoryFilled) {
       warnMissing();
       return;
     }
-    setDraft(emptyItem());
-    setEditingId(null);
-    setDrawerOpen(true);
+    setTestingItemsOpen(true);
   };
+
+  const handleAddTestingItems = ({ lines }: AddTestingItemsResult) => {
+    setItems((prev) => [
+      ...prev,
+      ...lines.map((l) => ({
+        ...emptyItem(),
+        manufacturer: "ESL",
+        model: l.type ? `${l.groupable} - ${l.type}` : l.groupable,
+        description: l.sectionsFeet
+          ? `${l.groupable} (Sections/Feet: ${l.sectionsFeet})`
+          : l.groupable,
+        qty: String(l.qty),
+        baseAmt: (l.qty * parseFloat(l.fee || "0")).toFixed(2),
+        calCert: (l.qty * parseFloat(l.fee || "0")).toFixed(2),
+      })),
+    ]);
+    toast({
+      title: "Testing items added",
+      description: `${lines.length} line item(s) added to the quote.`,
+    });
+  };
+
 
   const handleSearchAddClick = () => {
     if (!allMandatoryFilled) {
@@ -1449,6 +1472,13 @@ const NewQuote = () => {
         onOpenChange={setSearchAddOpen}
         onAdd={handleSearchAdd}
       />
+
+      <AddTestingItemsDialog
+        open={testingItemsOpen}
+        onOpenChange={setTestingItemsOpen}
+        onAdd={handleAddTestingItems}
+      />
+
 
 
       {/* Sticky action bar */}
