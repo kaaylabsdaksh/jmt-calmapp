@@ -313,7 +313,6 @@ const AccSection = ({
       <div className="space-y-3">{children}</div>
     </AccordionContent>
   </AccordionItem>
-  </AccordionItem>
 );
 
 const Group = ({
