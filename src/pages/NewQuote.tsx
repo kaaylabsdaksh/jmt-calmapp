@@ -90,6 +90,8 @@ const CONTACTS = ["Dana Whitfield", "Marcus Reed", "Alicia Moreno", "Ben Ottinge
 const SHIP_TO = ["Main Plant — 1200 Industrial Dr", "Warehouse B — 44 Levee Rd", "Corporate — 900 Poydras St"];
 const COMMENT_TYPES = ["Other", "Internal", "Customer", "Pricing", "Follow Up"];
 const ITEM_STATUSES = ["Quoted", "Pending", "Approved", "Cancelled"];
+const SHIP_METHODS = ["Pickup", "Delivery", "FedEx", "UPS", "LTL Freight", "Will Call"];
+const SERVICE_TYPES = ["Calibration", "Repair", "Certification", "Inspection", "Consulting"];
 
 type QuoteItem = {
   id: string;
