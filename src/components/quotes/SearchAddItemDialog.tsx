@@ -622,21 +622,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
 
         {/* Footer */}
 
-        <div className="flex items-center justify-between gap-2 border-t bg-muted/20 px-4 py-2.5">
-          <label className="flex items-center gap-1.5 text-[11px] text-muted-foreground cursor-pointer">
-            <Checkbox
-              checked={groupAsOne}
-              onCheckedChange={(v) => setGroupAsOne(!!v)}
-              className={cn(
-                "h-4 w-4 rounded-md border-2 border-slate-300 bg-white",
-                "transition-colors duration-150 ease-in-out",
-                "hover:border-slate-400",
-                "data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 data-[state=checked]:text-white",
-                "focus-visible:ring-2 focus-visible:ring-green-500/40 focus-visible:ring-offset-0"
-              )}
-            />
-            Group as one line item
-          </label>
+        <div className="flex items-center justify-end gap-2 border-t bg-muted/20 px-4 py-2.5">
           <div className="flex items-center gap-1.5">
             <Button variant="outline" size="sm" className="h-7 px-3 text-[11px]" onClick={close}>
               <X className="h-3 w-3 mr-1" />
