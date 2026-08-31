@@ -572,7 +572,7 @@ const TransitLog = () => {
                           {showNotes && r.notes && (
                             <tr key={`${r.id}-notes`} className="border-b border-border bg-muted/20">
                               <td></td>
-                              <td colSpan={20} className="px-2 py-1.5">
+                              <td colSpan={orderedColumns.length + 1} className="px-2 py-1.5">
                                 <span className="text-[10px] uppercase tracking-wide text-muted-foreground mr-2">Notes</span>
                                 <span className="text-[11px] text-muted-foreground">{r.notes}</span>
                               </td>
