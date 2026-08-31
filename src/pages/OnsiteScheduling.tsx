@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { CalendarDays, List, Inbox } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,9 +8,20 @@ import SchedulingCalendar from "@/components/onsite/SchedulingCalendar";
 import UnscheduledWorkQueue from "@/components/onsite/UnscheduledWorkQueue";
 import OnsiteProjects from "./OnsiteProjects";
 
+const VALID_TABS = ["list", "calendar", "unscheduled"];
+
 const SchedulingShell = () => {
   const { unscheduled } = useSchedulingData();
-  const [tab, setTab] = useState("calendar");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const param = searchParams.get("tab") ?? "";
+  const tab = VALID_TABS.includes(param) ? param : "calendar";
+  const setTab = (next: string) =>
+    setSearchParams((prev) => {
+      const p = new URLSearchParams(prev);
+      p.set("tab", next);
+      return p;
+    }, { replace: true });
+
 
   return (
     <div className="bg-background min-h-full">
