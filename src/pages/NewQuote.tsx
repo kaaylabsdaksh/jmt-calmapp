@@ -1867,7 +1867,33 @@ const NewQuote = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <AlertDialog open={uncancelConfirmOpen} onOpenChange={setUncancelConfirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Uncancel {selectedItemIds.length} selected item{selectedItemIds.length === 1 ? "" : "s"}?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Uncancelled items will become editable again and return to their normal position in the quote list.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Keep cancelled</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                setItems((prev) => prev.map((i) => (selectedItemIds.includes(i.id) && i.status === "Cancelled" ? { ...i, status: "" } : i)));
+                setSelectedItemIds([]);
+                setUncancelConfirmOpen(false);
+              }}
+            >
+              Uncancel items
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
+
   );
 };
 
