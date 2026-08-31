@@ -1200,8 +1200,6 @@ const NewQuote = () => {
                         )}
                       </td>
                     </tr>
-                    )}
-                  )
                     {!isCancelled && expandedItems.includes(i.id) && (
                       <tr className="border-t bg-muted/20">
                         <td colSpan={ITEM_COLUMNS.length} className="px-3 py-2">
