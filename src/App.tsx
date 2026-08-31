@@ -107,7 +107,7 @@ const App = () => {
 
             <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
             <Route path="/onsite-projects" element={<OnsiteProjects />} />
-            <Route path="/onsite-scheduling" element={<OnsiteScheduling />} />
+            <Route path="/onsite-scheduling-v2" element={<OnsiteScheduling />} />
             <Route path="/onsite-scheduling-prototype" element={<OnsiteScheduling />} />
 
             <Route path="/onsite-projects/new" element={<OnsiteProjectDetail />} />
