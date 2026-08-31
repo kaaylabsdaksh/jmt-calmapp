@@ -347,16 +347,28 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
               <X className="h-3 w-3 mr-1" />
               Cancel
             </Button>
-            <Button
-              size="sm"
-              className="h-7 px-3 text-[11px] bg-green-600 hover:bg-green-700 text-white"
-              disabled={selectedProducts.length === 0}
-              onClick={handleAdd}
-            >
-              <Plus className="h-3 w-3 mr-1" />
-              Add {selectedProducts.length > 0 ? `(${selectedProducts.length})` : ""}
-            </Button>
+            {selectedProducts.length > 0 ? (
+              <Button
+                size="sm"
+                className="h-7 px-3 text-[11px] bg-green-600 hover:bg-green-700 text-white"
+                onClick={handleAdd}
+              >
+                <Plus className="h-3 w-3 mr-1" />
+                Add ({selectedProducts.length})
+              </Button>
+            ) : (
+              <Button
+                size="sm"
+                className="h-7 px-3 text-[11px] bg-green-600 hover:bg-green-700 text-white"
+                disabled={addedIds.size === 0}
+                onClick={close}
+              >
+                <Check className="h-3 w-3 mr-1" />
+                Done{addedIds.size > 0 ? ` (${addedIds.size})` : ""}
+              </Button>
+            )}
           </div>
+
         </div>
       </DialogContent>
     </Dialog>
