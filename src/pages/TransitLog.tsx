@@ -555,6 +555,66 @@ const TransitLog = () => {
                 </div>
 
                 <div className="flex items-center gap-2">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button size="sm" variant="outline" className="h-7 text-[11px]">
+                        <Settings2 className="h-3.5 w-3.5 mr-1.5" />
+                        Columns
+                        <span className="ml-1.5 text-muted-foreground">
+                          {orderedColumns.length}/{COLUMNS.length}
+                        </span>
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent align="end" className="w-64 p-0 bg-popover">
+                      <div className="flex items-center justify-between border-b border-border px-3 py-2">
+                        <div>
+                          <div className="text-xs font-semibold">Columns</div>
+                          <div className="text-[10px] text-muted-foreground">Drag to reorder</div>
+                        </div>
+                        <Button variant="ghost" size="sm" className="h-6 text-[11px]" onClick={resetColumns}>
+                          Reset
+                        </Button>
+                      </div>
+                      <div className="max-h-80 overflow-auto py-1">
+                        {columnOrder.map((key) => {
+                          const def = COLUMNS.find((c) => c.key === key);
+                          if (!def) return null;
+                          const visible = visibleCols.has(key);
+                          return (
+                            <div
+                              key={key}
+                              draggable
+                              onDragStart={(e) => { setDraggedCol(key); e.dataTransfer.effectAllowed = "move"; }}
+                              onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = "move"; }}
+                              onDrop={(e) => { e.preventDefault(); if (draggedCol) reorderColumn(draggedCol, key); setDraggedCol(null); }}
+                              onDragEnd={() => setDraggedCol(null)}
+                              className={cn(
+                                "flex items-center gap-2 px-2 py-1.5 hover:bg-muted/40",
+                                draggedCol === key && "opacity-50"
+                              )}
+                            >
+                              <GripVertical className="h-3.5 w-3.5 cursor-grab text-muted-foreground/60 active:cursor-grabbing" />
+                              <Checkbox
+                                checked={visible}
+                                onCheckedChange={(v) => {
+                                  setVisibleCols((prev) => {
+                                    const next = new Set(prev);
+                                    if (v) next.add(key); else next.delete(key);
+                                    return next.size === 0 ? prev : next;
+                                  });
+                                }}
+                                className="h-3.5 w-3.5"
+                              />
+                              <span className={cn("flex-1 text-[11px]", !visible && "text-muted-foreground line-through")}>
+                                {def.label}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+
                   <Button size="sm" className="h-7 text-[11px]" onClick={() => { setApplied(filters); setPage(1); }}>
                     <Search className="h-3.5 w-3.5 mr-1.5" />
                     Apply Filters
