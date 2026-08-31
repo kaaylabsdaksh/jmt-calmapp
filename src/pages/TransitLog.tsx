@@ -29,14 +29,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
-  
   ChevronDown,
   ChevronRight,
   FileText,
+  GripVertical,
   PlayCircle,
   RotateCcw,
   Search,
+  Settings2,
   Truck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -234,6 +236,77 @@ const ReceivingBadge = ({ received }: { received: boolean }) => (
   </Badge>
 );
 
+/* ------------------------------ table columns ------------------------------ */
+
+type ColKey =
+  | "dateAdded" | "addedBy" | "woQty" | "rcvd" | "huQty" | "type" | "pcs"
+  | "acct" | "customer" | "batchItem" | "rentalId" | "manModel" | "description"
+  | "destination" | "deliverTo" | "priority" | "division" | "rcvdOn" | "rcvdBy";
+
+interface ColumnDef {
+  key: ColKey;
+  label: string;
+  numeric?: boolean;
+  thClass?: string;
+  tdClass?: string;
+  render: (r: TransitRecord, ctx: { navigate: (to: string) => void }) => React.ReactNode;
+}
+
+const COLUMNS: ColumnDef[] = [
+  { key: "dateAdded", label: "Date Added", tdClass: "whitespace-nowrap", render: (r) => r.dateAdded },
+  { key: "addedBy", label: "Added By", tdClass: "whitespace-nowrap", render: (r) => r.addedBy },
+  { key: "woQty", label: "WO Qty", numeric: true, render: (r) => r.woQty },
+  { key: "rcvd", label: "Rcvd", numeric: true, render: (r) => r.rcvd },
+  { key: "huQty", label: "HU Qty", numeric: true, render: (r) => r.huQty },
+  { key: "type", label: "Type", render: (r) => r.type },
+  { key: "pcs", label: "Pcs", numeric: true, render: (r) => r.pcs },
+  {
+    key: "acct",
+    label: "Acct #",
+    render: (r, { navigate }) => (
+      <button
+        className="font-medium text-foreground underline-offset-2 hover:underline"
+        onClick={() => navigate(`/manage-customers/${r.acct}`)}
+      >
+        {r.acct}
+      </button>
+    ),
+  },
+  { key: "customer", label: "Customer Name", thClass: "min-w-[160px]", tdClass: "max-w-[160px]", render: (r) => <Truncate value={r.customer} /> },
+  {
+    key: "batchItem",
+    label: "Batch/Item",
+    render: (r, { navigate }) => (
+      <button
+        className="font-medium text-foreground underline-offset-2 hover:underline"
+        onClick={() => navigate("/edit-order")}
+      >
+        {r.batchItem}
+      </button>
+    ),
+  },
+  { key: "rentalId", label: "Rental ID", render: (r) => r.rentalId || <span className="text-muted-foreground">—</span> },
+  { key: "manModel", label: "Man/Model", thClass: "min-w-[130px]", tdClass: "max-w-[130px]", render: (r) => <Truncate value={r.manModel} /> },
+  { key: "description", label: "Description", thClass: "min-w-[180px]", tdClass: "max-w-[200px]", render: (r) => <Truncate value={r.description} /> },
+  { key: "destination", label: "Destination", render: (r) => r.destination },
+  { key: "deliverTo", label: "Deliver To", render: (r) => r.deliverTo },
+  { key: "priority", label: "Priority", render: (r) => <PriorityBadge priority={r.priority} /> },
+  { key: "division", label: "Division", render: (r) => r.division },
+  {
+    key: "rcvdOn",
+    label: "Rcvd On",
+    tdClass: "whitespace-nowrap",
+    render: (r) => (
+      <div className="flex items-center gap-1.5">
+        <ReceivingBadge received={r.rcvd >= r.woQty && r.woQty > 0} />
+        <span className="text-muted-foreground">{r.rcvdOn || ""}</span>
+      </div>
+    ),
+  },
+  { key: "rcvdBy", label: "Rcvd By", render: (r) => r.rcvdBy || <span className="text-muted-foreground">—</span> },
+];
+
+
 const TransitLog = () => {
   const navigate = useNavigate();
   const [filters, setFilters] = useState(defaultFilters);
@@ -249,6 +322,39 @@ const TransitLog = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
   const [processOpen, setProcessOpen] = useState(false);
+
+  // Column customisation
+  const [columnOrder, setColumnOrder] = useState<ColKey[]>(COLUMNS.map((c) => c.key));
+  const [visibleCols, setVisibleCols] = useState<Set<ColKey>>(new Set(COLUMNS.map((c) => c.key)));
+  const [draggedCol, setDraggedCol] = useState<ColKey | null>(null);
+
+  const orderedColumns = useMemo(
+    () =>
+      columnOrder
+        .map((k) => COLUMNS.find((c) => c.key === k)!)
+        .filter((c) => c && visibleCols.has(c.key)),
+    [columnOrder, visibleCols]
+  );
+
+  const reorderColumn = (from: ColKey, to: ColKey) => {
+    if (from === to) return;
+    setColumnOrder((prev) => {
+      const next = [...prev];
+      const fromIdx = next.indexOf(from);
+      const toIdx = next.indexOf(to);
+      if (fromIdx < 0 || toIdx < 0) return prev;
+      const [moved] = next.splice(fromIdx, 1);
+      next.splice(toIdx, 0, moved);
+      return next;
+    });
+  };
+
+  const resetColumns = () => {
+    setColumnOrder(COLUMNS.map((c) => c.key));
+    setVisibleCols(new Set(COLUMNS.map((c) => c.key)));
+  };
+
+
 
   const update = <K extends keyof typeof filters>(k: K, v: (typeof filters)[K]) =>
     setFilters((p) => ({ ...p, [k]: v }));
@@ -451,6 +557,66 @@ const TransitLog = () => {
                 </div>
 
                 <div className="flex items-center gap-2">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button size="sm" variant="outline" className="h-7 text-[11px]">
+                        <Settings2 className="h-3.5 w-3.5 mr-1.5" />
+                        Columns
+                        <span className="ml-1.5 text-muted-foreground">
+                          {orderedColumns.length}/{COLUMNS.length}
+                        </span>
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent align="end" className="w-64 p-0 bg-popover">
+                      <div className="flex items-center justify-between border-b border-border px-3 py-2">
+                        <div>
+                          <div className="text-xs font-semibold">Columns</div>
+                          <div className="text-[10px] text-muted-foreground">Drag to reorder</div>
+                        </div>
+                        <Button variant="ghost" size="sm" className="h-6 text-[11px]" onClick={resetColumns}>
+                          Reset
+                        </Button>
+                      </div>
+                      <div className="max-h-80 overflow-auto py-1">
+                        {columnOrder.map((key) => {
+                          const def = COLUMNS.find((c) => c.key === key);
+                          if (!def) return null;
+                          const visible = visibleCols.has(key);
+                          return (
+                            <div
+                              key={key}
+                              draggable
+                              onDragStart={(e) => { setDraggedCol(key); e.dataTransfer.effectAllowed = "move"; }}
+                              onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = "move"; }}
+                              onDrop={(e) => { e.preventDefault(); if (draggedCol) reorderColumn(draggedCol, key); setDraggedCol(null); }}
+                              onDragEnd={() => setDraggedCol(null)}
+                              className={cn(
+                                "flex items-center gap-2 px-2 py-1.5 hover:bg-muted/40",
+                                draggedCol === key && "opacity-50"
+                              )}
+                            >
+                              <GripVertical className="h-3.5 w-3.5 cursor-grab text-muted-foreground/60 active:cursor-grabbing" />
+                              <Checkbox
+                                checked={visible}
+                                onCheckedChange={(v) => {
+                                  setVisibleCols((prev) => {
+                                    const next = new Set(prev);
+                                    if (v) next.add(key); else next.delete(key);
+                                    return next.size === 0 ? prev : next;
+                                  });
+                                }}
+                                className="h-3.5 w-3.5"
+                              />
+                              <span className={cn("flex-1 text-[11px]", !visible && "text-muted-foreground line-through")}>
+                                {def.label}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+
                   <Button size="sm" className="h-7 text-[11px]" onClick={() => { setApplied(filters); setPage(1); }}>
                     <Search className="h-3.5 w-3.5 mr-1.5" />
                     Apply Filters
@@ -483,25 +649,14 @@ const TransitLog = () => {
                       <th className="px-2 py-2 w-8">
                         <Checkbox checked={allVisibleSelected} onCheckedChange={toggleAllVisible} className="h-3.5 w-3.5" />
                       </th>
-                      <th className="px-2 py-2 whitespace-nowrap">Date Added</th>
-                      <th className="px-2 py-2 whitespace-nowrap">Added By</th>
-                      <th className="px-2 py-2 text-right">WO Qty</th>
-                      <th className="px-2 py-2 text-right">Rcvd</th>
-                      <th className="px-2 py-2 text-right">HU Qty</th>
-                      <th className="px-2 py-2">Type</th>
-                      <th className="px-2 py-2 text-right">Pcs</th>
-                      <th className="px-2 py-2">Acct #</th>
-                      <th className="px-2 py-2 min-w-[160px]">Customer Name</th>
-                      <th className="px-2 py-2">Batch/Item</th>
-                      <th className="px-2 py-2">Rental ID</th>
-                      <th className="px-2 py-2 min-w-[130px]">Man/Model</th>
-                      <th className="px-2 py-2 min-w-[180px]">Description</th>
-                      <th className="px-2 py-2">Destination</th>
-                      <th className="px-2 py-2">Deliver To</th>
-                      <th className="px-2 py-2">Priority</th>
-                      <th className="px-2 py-2">Division</th>
-                      <th className="px-2 py-2">Rcvd On</th>
-                      <th className="px-2 py-2">Rcvd By</th>
+                      {orderedColumns.map((c) => (
+                        <th
+                          key={c.key}
+                          className={cn("px-2 py-2 whitespace-nowrap", c.numeric && "text-right", c.thClass)}
+                        >
+                          {c.label}
+                        </th>
+                      ))}
                     </tr>
                   </thead>
                   <tbody>
@@ -529,50 +684,17 @@ const TransitLog = () => {
                             <td className={cell}>
                               <Checkbox checked={selected.includes(r.id)} onCheckedChange={() => toggleRow(r.id)} className="h-3.5 w-3.5" />
                             </td>
-                            <td className={cn(cell, "whitespace-nowrap")}>{r.dateAdded}</td>
-                            <td className={cn(cell, "whitespace-nowrap")}>{r.addedBy}</td>
-                            <td className={cellNum}>{r.woQty}</td>
-                            <td className={cellNum}>{r.rcvd}</td>
-                            <td className={cellNum}>{r.huQty}</td>
-                            <td className={cell}>{r.type}</td>
-                            <td className={cellNum}>{r.pcs}</td>
-                            <td className={cell}>
-                              <button
-                                className="font-medium text-foreground underline-offset-2 hover:underline"
-                                onClick={() => navigate(`/manage-customers/${r.acct}`)}
-                              >
-                                {r.acct}
-                              </button>
-                            </td>
-                            <td className={cn(cell, "max-w-[160px]")}><Truncate value={r.customer} /></td>
-                            <td className={cell}>
-                              <button
-                                className="font-medium text-foreground underline-offset-2 hover:underline"
-                                onClick={() => navigate("/edit-order")}
-                              >
-                                {r.batchItem}
-                              </button>
-                            </td>
-                            <td className={cell}>{r.rentalId || <span className="text-muted-foreground">—</span>}</td>
-                            <td className={cn(cell, "max-w-[130px]")}><Truncate value={r.manModel} /></td>
-                            <td className={cn(cell, "max-w-[200px]")}><Truncate value={r.description} /></td>
-                            <td className={cell}>{r.destination}</td>
-                            <td className={cell}>{r.deliverTo}</td>
-                            <td className={cell}><PriorityBadge priority={r.priority} /></td>
-                            <td className={cell}>{r.division}</td>
-                            <td className={cn(cell, "whitespace-nowrap")}>
-                              <div className="flex items-center gap-1.5">
-                                <ReceivingBadge received={received} />
-                                <span className="text-muted-foreground">{r.rcvdOn || ""}</span>
-                              </div>
-                            </td>
-                            <td className={cell}>{r.rcvdBy || <span className="text-muted-foreground">—</span>}</td>
+                            {orderedColumns.map((c) => (
+                              <td key={c.key} className={cn(c.numeric ? cellNum : cell, c.tdClass)}>
+                                {c.render(r, { navigate })}
+                              </td>
+                            ))}
                           </tr>
 
                           {showNotes && r.notes && (
                             <tr key={`${r.id}-notes`} className="border-b border-border bg-muted/20">
                               <td></td>
-                              <td colSpan={20} className="px-2 py-1.5">
+                              <td colSpan={orderedColumns.length + 1} className="px-2 py-1.5">
                                 <span className="text-[10px] uppercase tracking-wide text-muted-foreground mr-2">Notes</span>
                                 <span className="text-[11px] text-muted-foreground">{r.notes}</span>
                               </td>
@@ -582,7 +704,7 @@ const TransitLog = () => {
                           {isOpen && (
                             <tr key={`${r.id}-items`} className="border-b border-border bg-muted/10">
                               <td></td>
-                              <td colSpan={20} className="px-2 py-2">
+                              <td colSpan={orderedColumns.length + 1} className="px-2 py-2">
                                 <div className="overflow-hidden rounded-md border border-border bg-background">
                                   <table className="w-full text-[11px]">
                                     <thead className="bg-muted/60 text-[10px] uppercase tracking-wide text-muted-foreground">

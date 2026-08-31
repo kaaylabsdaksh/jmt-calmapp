@@ -165,8 +165,34 @@ const num = (v: string) => {
 
 const labelCls = "text-[11px] font-normal text-muted-foreground";
 const inputCls = "h-6 text-[11px] md:text-[11px] px-1.5 py-0 bg-white text-black placeholder:text-[10px] placeholder:text-black placeholder:opacity-100";
-const textareaCls = "text-[11px] md:text-[11px] px-1.5 py-1.5 bg-white text-black placeholder:text-[10px] placeholder:text-black placeholder:opacity-100";
+const textareaCls = "text-[11px] md:text-[11px] px-1.5 py-1 bg-white text-black placeholder:text-[10px] placeholder:text-black placeholder:opacity-100";
 const errorCls = "border-red-500 ring-1 ring-red-500 focus-visible:ring-red-500";
+
+/** Compact textarea that starts as a single line and grows as the user types. */
+const AutoTextarea = ({
+  className,
+  value,
+  maxHeight = 220,
+  ...props
+}: React.ComponentProps<typeof Textarea> & { maxHeight?: number }) => {
+  const ref = React.useRef<HTMLTextAreaElement>(null);
+  React.useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${Math.min(el.scrollHeight, maxHeight)}px`;
+    el.style.overflowY = el.scrollHeight > maxHeight ? "auto" : "hidden";
+  }, [value, maxHeight]);
+  return (
+    <AutoTextarea
+      ref={ref}
+      rows={1}
+      value={value}
+      className={cn(textareaCls, "min-h-0 h-7 resize-none overflow-hidden leading-tight", className)}
+      {...props}
+    />
+  );
+};
 
 
 
@@ -269,8 +295,11 @@ const AccSection = ({
   action?: React.ReactNode;
   children: React.ReactNode;
 }) => (
-  <AccordionItem value={value} className="rounded-xl border shadow-sm bg-white px-3">
-    <AccordionTrigger className="py-2 hover:no-underline">
+  <AccordionItem
+    value={value}
+    className="rounded-xl border-2 border-slate-300 shadow-sm bg-white px-3 data-[state=open]:border-slate-400 data-[state=open]:shadow-md"
+  >
+    <AccordionTrigger className="py-2 hover:no-underline data-[state=open]:border-b-2 data-[state=open]:border-slate-200">
       <div className="flex items-center gap-2">
         <Icon className="h-4 w-4 text-slate-600" />
         <span className="text-[13px] font-semibold tracking-tight">{title}</span>
@@ -279,9 +308,8 @@ const AccSection = ({
         )}
       </div>
     </AccordionTrigger>
-    <AccordionContent className="pb-3 pt-0">
+    <AccordionContent className="pb-3 pt-3">
       {action && <div className="flex justify-end pb-2">{action}</div>}
-      <Separator className="mb-3" />
       <div className="space-y-3">{children}</div>
     </AccordionContent>
   </AccordionItem>
@@ -298,7 +326,7 @@ const Group = ({
   children: React.ReactNode;
   className?: string;
 }) => (
-  <div className={cn("rounded-lg border bg-white p-2.5 space-y-2", className)}>
+  <div className={cn("rounded-lg border border-slate-200 bg-slate-50/60 p-2.5 space-y-2", className)}>
     <div className="flex items-center justify-between gap-2">
       <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{title}</p>
       {action}
@@ -728,10 +756,10 @@ const NewQuote = () => {
                     </Field>
                   </div>
                   <Field label="Source Info">
-                    <Textarea
+                    <AutoTextarea
                       value={sourceInfo}
                       onChange={(e) => setSourceInfo(e.target.value)}
-                      className={cn(textareaCls, "min-h-[52px]")}
+                      
                     />
                   </Field>
                   <Separator />
@@ -809,7 +837,7 @@ const NewQuote = () => {
               {/* Terms & Conditions */}
               <Group title="Terms & Conditions">
                 <Field label="Terms and Conditions">
-                  <Textarea value={terms} onChange={(e) => setTerms(e.target.value)} className={cn(textareaCls, "min-h-[68px]")} />
+                  <AutoTextarea value={terms} onChange={(e) => setTerms(e.target.value)}  />
                 </Field>
               </Group>
             </div>
@@ -1017,10 +1045,10 @@ const NewQuote = () => {
           <AccSection value="project" icon={FileText} title="Project Details">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <Field label="Proposed Project">
-                <Textarea value={proposedProject} onChange={(e) => setProposedProject(e.target.value)} className={cn(textareaCls, "min-h-[150px]")} />
+                <AutoTextarea value={proposedProject} onChange={(e) => setProposedProject(e.target.value)}  />
               </Field>
               <Field label="Special Instructions">
-                <Textarea value={specialInstructions} onChange={(e) => setSpecialInstructions(e.target.value)} className={cn(textareaCls, "min-h-[150px]")} />
+                <AutoTextarea value={specialInstructions} onChange={(e) => setSpecialInstructions(e.target.value)}  />
               </Field>
             </div>
           </AccSection>
@@ -1032,11 +1060,11 @@ const NewQuote = () => {
                   <div className="w-full md:w-40">
                     <SelectField value={commentType} onChange={setCommentType} options={COMMENT_TYPES} placeholder="Type" />
                   </div>
-                  <Textarea
+                  <AutoTextarea
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
                     placeholder="Add a comment..."
-                    className={cn(textareaCls, "min-h-[60px] flex-1")}
+                    className={"flex-1"}
                   />
                   <Button size="sm" className="h-8 text-[11px] px-3" onClick={addComment}>
                     Add
@@ -1289,7 +1317,7 @@ const NewQuote = () => {
                 </Field>
               </div>
               <Field label="Description">
-                <Textarea value={draft.description} onChange={(e) => setDraft({ ...draft, description: e.target.value })} className={cn(textareaCls, "min-h-[60px]")} />
+                <AutoTextarea value={draft.description} onChange={(e) => setDraft({ ...draft, description: e.target.value })}  />
               </Field>
               <Field label="Qty">
                 <Input value={draft.qty} onChange={(e) => setDraft({ ...draft, qty: e.target.value })} className={cn(inputCls, "w-24")} />
