@@ -460,7 +460,7 @@ const NewQuote = () => {
   const [copyQty, setCopyQty] = useState<Record<string, string>>({});
   const toggleExpanded = (id: string) =>
     setExpandedItems((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
-  const copyItem = (item: QuoteItem) => {
+  const duplicateItem = (item: QuoteItem) => {
     const n = Math.max(1, parseInt(copyQty[item.id] || "1", 10) || 1);
     setItems((prev) => [
       ...prev,
@@ -1079,7 +1079,7 @@ const NewQuote = () => {
                       </td>
                       <td className="px-2 py-1">
                         <div className="flex items-center gap-1">
-                          <button type="button" className="text-[11px] text-blue-600 hover:underline" onClick={() => copyItem(i)}>Copy</button>
+                          <button type="button" className="text-[11px] text-blue-600 hover:underline" onClick={() => duplicateItem(i)}>Copy</button>
                           <Input
                             value={copyQty[i.id] ?? "1"}
                             onChange={(e) => setCopyQty((p) => ({ ...p, [i.id]: e.target.value.replace(/\D/g, "") }))}
