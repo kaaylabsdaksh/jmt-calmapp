@@ -469,6 +469,8 @@ const NewQuote = () => {
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [selectedItemIds, setSelectedItemIds] = useState<string[]>([]);
   const [cancelConfirmOpen, setCancelConfirmOpen] = useState(false);
+  const [uncancelConfirmOpen, setUncancelConfirmOpen] = useState(false);
+
   const [copyQty, setCopyQty] = useState<Record<string, string>>({});
   type SubLine = { id: string; name: string; qty: string; baseCost: string; cost: string };
   const [itemServices, setItemServices] = useState<Record<string, SubLine[]>>({});
@@ -1069,10 +1071,10 @@ const NewQuote = () => {
                         toast({ title: "No items selected", description: "Select one or more cancelled items first.", variant: "destructive" });
                         return;
                       }
-                      setItems((p) => p.map((i) => (selectedItemIds.includes(i.id) && i.status === "Cancelled" ? { ...i, status: "" } : i)));
-                      setSelectedItemIds([]);
+                      setUncancelConfirmOpen(true);
                     },
                   },
+
                   { label: "Receive Items", fn: () => setItems((p) => p.map((i) => (selectedItemIds.length === 0 || selectedItemIds.includes(i.id) ? { ...i, rev: true } : i))) },
                   { label: "Unreceive Items", fn: () => setItems((p) => p.map((i) => (selectedItemIds.length === 0 || selectedItemIds.includes(i.id) ? { ...i, rev: false } : i))) },
                   { label: "Search/Add Item", fn: handleSearchAddClick },
@@ -1865,7 +1867,33 @@ const NewQuote = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <AlertDialog open={uncancelConfirmOpen} onOpenChange={setUncancelConfirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Uncancel {selectedItemIds.length} selected item{selectedItemIds.length === 1 ? "" : "s"}?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Uncancelled items will become editable again and return to their normal position in the quote list.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Keep cancelled</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                setItems((prev) => prev.map((i) => (selectedItemIds.includes(i.id) && i.status === "Cancelled" ? { ...i, status: "" } : i)));
+                setSelectedItemIds([]);
+                setUncancelConfirmOpen(false);
+              }}
+            >
+              Uncancel items
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
+
   );
 };
 
