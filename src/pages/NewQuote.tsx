@@ -297,7 +297,7 @@ const AccSection = ({
 }) => (
   <AccordionItem
     value={value}
-    className="rounded-xl border-2 border-slate-300 shadow-sm bg-white px-3 data-[state=open]:border-slate-400 data-[state=open]:shadow-md"
+    className="rounded-xl border border-slate-200 shadow-sm bg-white px-3 data-[state=open]:shadow-md"
   >
     <AccordionTrigger className="py-2 hover:no-underline data-[state=open]:border-b-2 data-[state=open]:border-slate-200">
       <div className="flex items-center gap-2">
