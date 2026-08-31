@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { 
   Settings, 
   FileText, 
@@ -56,7 +56,7 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 
 const workOrderQuickActions = [
   { title: "Hot List", icon: Flame },
-  { title: "Transit Log", icon: TruckIcon },
+  { title: "Transit Log", icon: TruckIcon, url: "/transit-log" },
   { title: "Update RFID's", icon: Wifi },
   { title: "Rental Batch Certs", icon: FileCheck },
   { title: "PO/Change Orders", icon: FileText },
@@ -109,6 +109,7 @@ const quickActionCategories = {
 export function AppSidebar() {
   const { open } = useSidebar();
   const location = useLocation();
+  const navigate = useNavigate();
   const { startTour, openDrawer } = useTour();
   const [expandedGroups, setExpandedGroups] = useState<string[]>(["Core Operations"]);
   const [expandedWorkOrders, setExpandedWorkOrders] = useState(false);
@@ -222,6 +223,10 @@ export function AppSidebar() {
                                         variant="ghost"
                                         size="sm"
                                         className="w-full justify-start h-9 px-2 text-sidebar-foreground/80 hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all"
+                                        onClick={() => {
+                                          const url = (subAction as { url?: string }).url;
+                                          if (url) navigate(url);
+                                        }}
                                       >
                                         {React.createElement(subAction.icon, { className: "h-3.5 w-3.5 shrink-0 mr-2" })}
                                         <span className="text-xs">{subAction.title}</span>
