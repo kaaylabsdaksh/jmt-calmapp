@@ -724,7 +724,7 @@ const TransitLog = () => {
         </Dialog>
 
         {/* Sticky Footer */}
-        <div className="sticky bottom-0 z-20 bg-background border-t border-border px-4 py-2 flex justify-end">
+        <div className="sticky bottom-0 z-20 bg-background border-t border-border px-4 py-2 flex justify-end gap-2">
           <Button
             size="sm"
             variant="outline"
@@ -733,6 +733,15 @@ const TransitLog = () => {
           >
             <FileText className="h-3.5 w-3.5 mr-1.5" />
             Report
+          </Button>
+          <Button
+            size="sm"
+            className="h-8 text-xs"
+            onClick={() => setProcessOpen(true)}
+            disabled={selectedRecords.length === 0}
+          >
+            <PlayCircle className="h-3.5 w-3.5 mr-1.5" />
+            Process
           </Button>
         </div>
       </div>
