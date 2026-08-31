@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import PointerEventsGuard from "./components/PointerEventsGuard";
 import WorkOrderDetail from "./pages/WorkOrderDetail";
 import WorkOrderSearchV2 from "./pages/WorkOrderSearchV2";
 import ModernWorkOrderManagement from "./pages/ModernWorkOrderManagement";
