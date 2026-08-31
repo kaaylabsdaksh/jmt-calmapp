@@ -759,7 +759,7 @@ const OpenDecisionsFab: React.FC = () => {
           setPanelOpen(true);
         }}
         style={style}
-        className="fixed z-50 h-12 cursor-grab touch-none gap-2 rounded-full bg-amber-500 px-4 text-white shadow-lg hover:bg-amber-600 active:cursor-grabbing"
+        className="fixed z-50 hidden h-12 cursor-grab touch-none gap-2 rounded-full bg-amber-500 px-4 text-white shadow-lg hover:bg-amber-600 active:cursor-grabbing"
       >
         <ScrollText className="h-4 w-4" />
         Open Decisions
