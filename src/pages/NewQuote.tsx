@@ -116,7 +116,13 @@ type QuoteItem = {
   services: boolean;
   parts: boolean;
   rev: boolean;
+  baseAmtOriginal?: string;
+  calCertOriginal?: string;
+  calc17025Original?: string;
+  otherServicesOriginal?: string;
+  otherPartsOriginal?: string;
 };
+
 
 const emptyItem = (): QuoteItem => ({
   id: crypto.randomUUID(),
