@@ -234,6 +234,77 @@ const ReceivingBadge = ({ received }: { received: boolean }) => (
   </Badge>
 );
 
+/* ------------------------------ table columns ------------------------------ */
+
+type ColKey =
+  | "dateAdded" | "addedBy" | "woQty" | "rcvd" | "huQty" | "type" | "pcs"
+  | "acct" | "customer" | "batchItem" | "rentalId" | "manModel" | "description"
+  | "destination" | "deliverTo" | "priority" | "division" | "rcvdOn" | "rcvdBy";
+
+interface ColumnDef {
+  key: ColKey;
+  label: string;
+  numeric?: boolean;
+  thClass?: string;
+  tdClass?: string;
+  render: (r: TransitRecord, ctx: { navigate: (to: string) => void }) => React.ReactNode;
+}
+
+const COLUMNS: ColumnDef[] = [
+  { key: "dateAdded", label: "Date Added", tdClass: "whitespace-nowrap", render: (r) => r.dateAdded },
+  { key: "addedBy", label: "Added By", tdClass: "whitespace-nowrap", render: (r) => r.addedBy },
+  { key: "woQty", label: "WO Qty", numeric: true, render: (r) => r.woQty },
+  { key: "rcvd", label: "Rcvd", numeric: true, render: (r) => r.rcvd },
+  { key: "huQty", label: "HU Qty", numeric: true, render: (r) => r.huQty },
+  { key: "type", label: "Type", render: (r) => r.type },
+  { key: "pcs", label: "Pcs", numeric: true, render: (r) => r.pcs },
+  {
+    key: "acct",
+    label: "Acct #",
+    render: (r, { navigate }) => (
+      <button
+        className="font-medium text-foreground underline-offset-2 hover:underline"
+        onClick={() => navigate(`/manage-customers/${r.acct}`)}
+      >
+        {r.acct}
+      </button>
+    ),
+  },
+  { key: "customer", label: "Customer Name", thClass: "min-w-[160px]", tdClass: "max-w-[160px]", render: (r) => <Truncate value={r.customer} /> },
+  {
+    key: "batchItem",
+    label: "Batch/Item",
+    render: (r, { navigate }) => (
+      <button
+        className="font-medium text-foreground underline-offset-2 hover:underline"
+        onClick={() => navigate("/edit-order")}
+      >
+        {r.batchItem}
+      </button>
+    ),
+  },
+  { key: "rentalId", label: "Rental ID", render: (r) => r.rentalId || <span className="text-muted-foreground">—</span> },
+  { key: "manModel", label: "Man/Model", thClass: "min-w-[130px]", tdClass: "max-w-[130px]", render: (r) => <Truncate value={r.manModel} /> },
+  { key: "description", label: "Description", thClass: "min-w-[180px]", tdClass: "max-w-[200px]", render: (r) => <Truncate value={r.description} /> },
+  { key: "destination", label: "Destination", render: (r) => r.destination },
+  { key: "deliverTo", label: "Deliver To", render: (r) => r.deliverTo },
+  { key: "priority", label: "Priority", render: (r) => <PriorityBadge priority={r.priority} /> },
+  { key: "division", label: "Division", render: (r) => r.division },
+  {
+    key: "rcvdOn",
+    label: "Rcvd On",
+    tdClass: "whitespace-nowrap",
+    render: (r) => (
+      <div className="flex items-center gap-1.5">
+        <ReceivingBadge received={r.rcvd >= r.woQty && r.woQty > 0} />
+        <span className="text-muted-foreground">{r.rcvdOn || ""}</span>
+      </div>
+    ),
+  },
+  { key: "rcvdBy", label: "Rcvd By", render: (r) => r.rcvdBy || <span className="text-muted-foreground">—</span> },
+];
+
+
 const TransitLog = () => {
   const navigate = useNavigate();
   const [filters, setFilters] = useState(defaultFilters);
