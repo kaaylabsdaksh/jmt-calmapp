@@ -30,7 +30,9 @@ import {
   Package,
   UserCheck,
   Sparkles,
-  HelpCircle
+  HelpCircle,
+  CalendarDays
+
 } from "lucide-react";
 import { useTour } from "@/context/TourContext";
 import { NewBadge } from "@/components/tour/NewBadge";
