@@ -116,7 +116,13 @@ type QuoteItem = {
   services: boolean;
   parts: boolean;
   rev: boolean;
+  baseAmtOriginal?: string;
+  calCertOriginal?: string;
+  calc17025Original?: string;
+  otherServicesOriginal?: string;
+  otherPartsOriginal?: string;
 };
+
 
 const emptyItem = (): QuoteItem => ({
   id: crypto.randomUUID(),
@@ -141,7 +147,13 @@ const emptyItem = (): QuoteItem => ({
   services: false,
   parts: false,
   rev: false,
+  baseAmtOriginal: undefined,
+  calCertOriginal: undefined,
+  calc17025Original: undefined,
+  otherServicesOriginal: undefined,
+  otherPartsOriginal: undefined,
 });
+
 
 const CHARGE_FIELDS = [
   { key: "mobilization", label: "Mobilization/Demobilization" },
@@ -1075,8 +1087,48 @@ const NewQuote = () => {
                     },
                   },
 
-                  { label: "Receive Items", fn: () => setItems((p) => p.map((i) => (selectedItemIds.length === 0 || selectedItemIds.includes(i.id) ? { ...i, rev: true } : i))) },
-                  { label: "Unreceive Items", fn: () => setItems((p) => p.map((i) => (selectedItemIds.length === 0 || selectedItemIds.includes(i.id) ? { ...i, rev: false } : i))) },
+                  {
+                    label: "Receive Items",
+                    fn: () => {
+                      const targetIds = selectedItemIds.length === 0 ? items.map((i) => i.id) : selectedItemIds;
+                      setItems((p) => p.map((i) => {
+                        if (!targetIds.includes(i.id) || i.rev) return i;
+                        return {
+                          ...i,
+                          rev: true,
+                          baseAmtOriginal: i.baseAmt,
+                          calCertOriginal: i.calCert,
+                          calc17025Original: i.calc17025,
+                          otherServicesOriginal: i.otherServices,
+                          otherPartsOriginal: i.otherParts,
+                          baseAmt: "0.00",
+                          calCert: "0.00",
+                          calc17025: "0.00",
+                          otherServices: "0.00",
+                          otherParts: "0.00",
+                        };
+                      }));
+                    },
+                  },
+                  {
+                    label: "Unreceive Items",
+                    fn: () => {
+                      const targetIds = selectedItemIds.length === 0 ? items.map((i) => i.id) : selectedItemIds;
+                      setItems((p) => p.map((i) => {
+                        if (!targetIds.includes(i.id) || !i.rev) return i;
+                        return {
+                          ...i,
+                          rev: false,
+                          baseAmt: i.baseAmtOriginal ?? i.baseAmt,
+                          calCert: i.calCertOriginal ?? i.calCert,
+                          calc17025: i.calc17025Original ?? i.calc17025,
+                          otherServices: i.otherServicesOriginal ?? i.otherServices,
+                          otherParts: i.otherPartsOriginal ?? i.otherParts,
+                        };
+                      }));
+                    },
+                  },
+
                   { label: "Search/Add Item", fn: handleSearchAddClick },
                   { label: "Add Testing Items", fn: handleAddItemClick },
                 ].map((a) => (
@@ -1138,7 +1190,7 @@ const NewQuote = () => {
                     const isCancelled = i.status === "Cancelled";
                     return (
                     <React.Fragment key={i.id}>
-                    <tr className={cn("border-t hover:bg-muted/40", isCancelled && "opacity-60 bg-slate-50/50")}>
+                    <tr className={cn("border-t hover:bg-muted/40", isCancelled && "opacity-60 bg-slate-50/50", i.rev && "bg-cyan-50 hover:bg-cyan-100/60")}>
                       <td className="px-1 py-1">
                         <button
                           type="button"
@@ -1164,10 +1216,41 @@ const NewQuote = () => {
                         <Checkbox
                           checked={i.rev}
                           disabled={isCancelled}
-                          onCheckedChange={(v) => setItems((p) => p.map((it) => it.id === i.id ? { ...it, rev: !!v } : it))}
+                          onCheckedChange={(v) => {
+                            const receiving = !!v;
+                            setItems((p) => p.map((it) => {
+                              if (it.id !== i.id) return it;
+                              if (receiving) {
+                                return {
+                                  ...it,
+                                  rev: true,
+                                  baseAmtOriginal: it.baseAmt,
+                                  calCertOriginal: it.calCert,
+                                  calc17025Original: it.calc17025,
+                                  otherServicesOriginal: it.otherServices,
+                                  otherPartsOriginal: it.otherParts,
+                                  baseAmt: "0.00",
+                                  calCert: "0.00",
+                                  calc17025: "0.00",
+                                  otherServices: "0.00",
+                                  otherParts: "0.00",
+                                };
+                              }
+                              return {
+                                ...it,
+                                rev: false,
+                                baseAmt: it.baseAmtOriginal ?? it.baseAmt,
+                                calCert: it.calCertOriginal ?? it.calCert,
+                                calc17025: it.calc17025Original ?? it.calc17025,
+                                otherServices: it.otherServicesOriginal ?? it.otherServices,
+                                otherParts: it.otherPartsOriginal ?? it.otherParts,
+                              };
+                            }));
+                          }}
                           className="h-4 w-4 rounded-md border-slate-400 transition-all data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 data-[state=checked]:text-white disabled:opacity-40"
                         />
                       </td>
+
                       <td className="px-2 py-1 text-center">{(itemServices[i.id] ?? []).length}</td>
                       <td className="px-2 py-1 text-center">{(itemParts[i.id] ?? []).length}</td>
 
