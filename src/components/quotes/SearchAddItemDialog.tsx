@@ -250,6 +250,27 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                           </span>
                         )}
                       </td>
+                      <td className="px-2 py-1.5 text-right" onClick={(e) => e.stopPropagation()}>
+                        <Button
+                          size="sm"
+                          variant={isAdded ? "ghost" : "outline"}
+                          className="h-6 px-2 text-[10px]"
+                          disabled={isAdded}
+                          onClick={() => handleAddRow(p)}
+                        >
+                          {isAdded ? (
+                            <>
+                              <Check className="h-3 w-3 mr-1" />
+                              Added
+                            </>
+                          ) : (
+                            <>
+                              <Plus className="h-3 w-3 mr-1" />
+                              Add
+                            </>
+                          )}
+                        </Button>
+                      </td>
                     </tr>
                   );
                 })
