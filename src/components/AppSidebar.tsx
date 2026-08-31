@@ -101,6 +101,7 @@ const quickActionCategories = {
   ],
   "Project Management": [
     { title: "Onsite Projects", icon: MapPin, url: "/onsite-projects" },
+    { title: "Onsite Scheduling", icon: CalendarDays, url: "/onsite-scheduling" },
     { title: "Outsource Vendors", icon: Truck },
     { title: "Onsite Work Orders", icon: ClipboardList },
   ]
