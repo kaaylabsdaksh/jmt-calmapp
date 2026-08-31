@@ -184,7 +184,7 @@ const AutoTextarea = ({
     el.style.overflowY = el.scrollHeight > maxHeight ? "auto" : "hidden";
   }, [value, maxHeight]);
   return (
-    <Textarea
+    <AutoTextarea
       ref={ref}
       rows={1}
       value={value}
@@ -754,7 +754,7 @@ const NewQuote = () => {
                     </Field>
                   </div>
                   <Field label="Source Info">
-                    <Textarea
+                    <AutoTextarea
                       value={sourceInfo}
                       onChange={(e) => setSourceInfo(e.target.value)}
                       
@@ -1058,7 +1058,7 @@ const NewQuote = () => {
                   <div className="w-full md:w-40">
                     <SelectField value={commentType} onChange={setCommentType} options={COMMENT_TYPES} placeholder="Type" />
                   </div>
-                  <Textarea
+                  <AutoTextarea
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
                     placeholder="Add a comment..."
