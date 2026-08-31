@@ -453,6 +453,18 @@ const NewQuote = () => {
   const [draft, setDraft] = useState<QuoteItem>(emptyItem());
   const [editingId, setEditingId] = useState<string | null>(null);
   const [pendingDelete, setPendingDelete] = useState<string | null>(null);
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [copyQty, setCopyQty] = useState<Record<string, string>>({});
+  const toggleExpanded = (id: string) =>
+    setExpandedItems((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
+  const copyItem = (item: QuoteItem) => {
+    const n = Math.max(1, parseInt(copyQty[item.id] || "1", 10) || 1);
+    setItems((prev) => [
+      ...prev,
+      ...Array.from({ length: n }, () => ({ ...item, id: crypto.randomUUID() })),
+    ]);
+  };
+
   const [searchAddOpen, setSearchAddOpen] = useState(false);
 
 
