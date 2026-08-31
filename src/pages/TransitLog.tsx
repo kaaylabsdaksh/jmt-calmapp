@@ -464,16 +464,6 @@ const TransitLog = () => {
             </CardContent>
           </Card>
 
-          {/* Selection bar */}
-          {selected.length > 0 && (
-            <div className="flex items-center justify-between rounded-md border border-border bg-muted/50 px-3 py-2">
-              <span className="text-xs font-medium">{selected.length} item{selected.length > 1 ? "s" : ""} selected</span>
-              <div className="flex items-center gap-2">
-                <Button size="sm" variant="ghost" className="h-7 text-[11px]" onClick={() => setSelected([])}>Clear selection</Button>
-                <Button size="sm" className="h-7 text-[11px]" onClick={() => setProcessOpen(true)}>Process Selected</Button>
-              </div>
-            </div>
-          )}
 
           {/* Table */}
           <Card className="border-border overflow-hidden">
