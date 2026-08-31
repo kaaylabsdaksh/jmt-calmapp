@@ -1111,17 +1111,20 @@ const NewQuote = () => {
                     </td>
                   </tr>
                 ) : (
-                  items.map((i) => (
+                  [...items].sort((a, b) => (a.status === "Cancelled" ? 1 : 0) - (b.status === "Cancelled" ? 1 : 0)).map((i) => {
+                    const isCancelled = i.status === "Cancelled";
+                    return (
                     <React.Fragment key={i.id}>
-                    <tr className="border-t hover:bg-muted/40">
+                    <tr className={cn("border-t hover:bg-muted/40", isCancelled && "opacity-60 bg-slate-50/50")}>
                       <td className="px-1 py-1">
                         <button
                           type="button"
-                          className="h-5 w-5 grid place-items-center text-muted-foreground hover:text-foreground"
+                          disabled={isCancelled}
+                          className="h-5 w-5 grid place-items-center text-muted-foreground hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed"
                           onClick={() => toggleExpanded(i.id)}
                           aria-label="Toggle details"
                         >
-                          {expandedItems.includes(i.id)
+                          {expandedItems.includes(i.id) && !isCancelled
                             ? <ChevronDown className="h-3.5 w-3.5" />
                             : <ChevronRight className="h-3.5 w-3.5" />}
                         </button>
@@ -1136,8 +1139,9 @@ const NewQuote = () => {
                       <td className="px-2 py-1 text-center">
                         <Checkbox
                           checked={i.rev}
+                          disabled={isCancelled}
                           onCheckedChange={(v) => setItems((p) => p.map((it) => it.id === i.id ? { ...it, rev: !!v } : it))}
-                          className="h-4 w-4 rounded-md border-slate-400 transition-all data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 data-[state=checked]:text-white"
+                          className="h-4 w-4 rounded-md border-slate-400 transition-all data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 data-[state=checked]:text-white disabled:opacity-40"
                         />
                       </td>
                       <td className="px-2 py-1 text-center">{(itemServices[i.id] ?? []).length}</td>
@@ -1162,36 +1166,42 @@ const NewQuote = () => {
                       <td className="px-2 py-1">{i.is17025 ? "Yes" : ""}</td>
                       <td className="px-2 py-1">{i.cp ? "Yes" : ""}</td>
                       <td className="px-2 py-1">
-                        <div className="flex items-center gap-1.5">
-                          <button
-                            type="button"
-                            className="inline-flex items-center justify-center rounded p-1 text-slate-600 hover:bg-slate-100 hover:text-blue-600"
-                            onClick={() => openEdit(i)}
-                            title="Edit"
-                          >
-                            <Pencil className="h-3.5 w-3.5" />
-                          </button>
-                          <button
-                            type="button"
-                            className="inline-flex items-center justify-center rounded p-1 text-slate-600 hover:bg-red-50 hover:text-red-600"
-                            onClick={() => setPendingDelete(i.id)}
-                            title="Delete"
-                          >
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </button>
-                        </div>
+                        {!isCancelled && (
+                          <div className="flex items-center gap-1.5">
+                            <button
+                              type="button"
+                              className="inline-flex items-center justify-center rounded p-1 text-slate-600 hover:bg-slate-100 hover:text-blue-600"
+                              onClick={() => openEdit(i)}
+                              title="Edit"
+                            >
+                              <Pencil className="h-3.5 w-3.5" />
+                            </button>
+                            <button
+                              type="button"
+                              className="inline-flex items-center justify-center rounded p-1 text-slate-600 hover:bg-red-50 hover:text-red-600"
+                              onClick={() => setPendingDelete(i.id)}
+                              title="Delete"
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </button>
+                          </div>
+                        )}
                       </td>
                       <td className="px-2 py-1">
-                        <div className="flex items-center gap-1">
-                          <button type="button" className="text-[11px] text-blue-600 hover:underline" onClick={() => duplicateItem(i)}>Copy</button>
-                          <Input
-                            value={copyQty[i.id] ?? "1"}
-                            onChange={(e) => setCopyQty((p) => ({ ...p, [i.id]: e.target.value.replace(/\D/g, "") }))}
-                            className="h-6 w-10 px-1 text-[11px] text-center"
-                          />
-                        </div>
+                        {!isCancelled && (
+                          <div className="flex items-center gap-1">
+                            <button type="button" className="text-[11px] text-blue-600 hover:underline" onClick={() => duplicateItem(i)}>Copy</button>
+                            <Input
+                              value={copyQty[i.id] ?? "1"}
+                              onChange={(e) => setCopyQty((p) => ({ ...p, [i.id]: e.target.value.replace(/\D/g, "") }))}
+                              className="h-6 w-10 px-1 text-[11px] text-center"
+                            />
+                          </div>
+                        )}
                       </td>
                     </tr>
+                    )}
+                  )
                     {expandedItems.includes(i.id) && (
                       <tr className="border-t bg-muted/20">
                         <td colSpan={ITEM_COLUMNS.length} className="px-3 py-2">
