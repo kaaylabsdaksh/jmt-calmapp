@@ -195,12 +195,13 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                     </th>
                   ),
                 )}
+                <th className="px-2 py-1.5 text-right font-semibold text-muted-foreground w-20">Action</th>
               </tr>
             </thead>
             <tbody>
               {results.length === 0 ? (
                 <tr>
-                  <td colSpan={9} className="py-10 text-center text-muted-foreground text-[11px]">
+                  <td colSpan={10} className="py-10 text-center text-muted-foreground text-[11px]">
                     {searched ? "No matching products found" : "No data to display"}
                   </td>
                 </tr>
