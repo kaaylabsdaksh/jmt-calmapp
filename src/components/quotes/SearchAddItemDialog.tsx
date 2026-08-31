@@ -620,10 +620,11 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
             </div>
           </div>
         )}
+        </div>
 
         {/* Footer */}
 
-        <div className="flex items-center justify-end gap-2 border-t bg-muted/20 px-4 py-2.5">
+        <div className="flex items-center justify-end gap-2 border-t bg-muted/20 px-4 py-2.5 shrink-0">
           <div className="flex items-center gap-1.5">
             <Button variant="outline" size="sm" className="h-7 px-3 text-[11px]" onClick={close}>
               <X className="h-3 w-3 mr-1" />
