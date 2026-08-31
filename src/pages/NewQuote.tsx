@@ -577,15 +577,37 @@ const NewQuote = () => {
     });
   };
 
+  const [testingItemsOpen, setTestingItemsOpen] = useState(false);
+
   const handleAddItemClick = () => {
     if (!allMandatoryFilled) {
       warnMissing();
       return;
     }
-    setDraft(emptyItem());
-    setEditingId(null);
-    setDrawerOpen(true);
+    setTestingItemsOpen(true);
   };
+
+  const handleAddTestingItems = ({ lines }: AddTestingItemsResult) => {
+    setItems((prev) => [
+      ...prev,
+      ...lines.map((l) => ({
+        ...emptyItem(),
+        manufacturer: "ESL",
+        model: l.type ? `${l.groupable} - ${l.type}` : l.groupable,
+        description: l.sectionsFeet
+          ? `${l.groupable} (Sections/Feet: ${l.sectionsFeet})`
+          : l.groupable,
+        qty: String(l.qty),
+        baseAmt: (l.qty * parseFloat(l.fee || "0")).toFixed(2),
+        calCert: (l.qty * parseFloat(l.fee || "0")).toFixed(2),
+      })),
+    ]);
+    toast({
+      title: "Testing items added",
+      description: `${lines.length} line item(s) added to the quote.`,
+    });
+  };
+
 
   const handleSearchAddClick = () => {
     if (!allMandatoryFilled) {
