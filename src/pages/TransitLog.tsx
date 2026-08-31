@@ -332,7 +332,7 @@ const TransitLog = () => {
 
   return (
     <TooltipProvider delayDuration={200}>
-      <div className="bg-background min-h-full">
+      <div className="bg-background min-h-full flex flex-col">
         <ModernTopNav />
 
         <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-5 space-y-4">
