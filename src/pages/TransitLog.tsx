@@ -714,25 +714,30 @@ const TransitLog = () => {
         </Dialog>
 
         {/* Sticky Footer */}
-        <div className="sticky bottom-0 z-20 bg-background border-t border-border px-4 py-2 flex justify-end gap-2">
-          <Button
-            size="sm"
-            variant="outline"
-            className="h-8 text-xs"
-            onClick={() => toast.success("Transit Log report generated")}
-          >
-            <FileText className="h-3.5 w-3.5 mr-1.5" />
-            Report
-          </Button>
-          <Button
-            size="sm"
-            className="h-8 text-xs"
-            onClick={() => setProcessOpen(true)}
-            disabled={selectedRecords.length === 0}
-          >
-            <PlayCircle className="h-3.5 w-3.5 mr-1.5" />
-            Process
-          </Button>
+        <div className="sticky bottom-0 z-30 w-full border-t bg-white shadow-[0_-1px_3px_rgba(0,0,0,0.06)] px-2 sm:px-4 lg:px-6 py-2">
+          <div className="flex items-center justify-between gap-2">
+            <div />
+            <div className="flex items-center gap-2">
+              <Button
+                size="sm"
+                variant="outline"
+                className="h-8 text-xs"
+                onClick={() => toast.success("Transit Log report generated")}
+              >
+                <FileText className="h-3.5 w-3.5 mr-1.5" />
+                Report
+              </Button>
+              <Button
+                size="sm"
+                className="h-8 text-xs"
+                onClick={() => setProcessOpen(true)}
+                disabled={selectedRecords.length === 0}
+              >
+                <PlayCircle className="h-3.5 w-3.5 mr-1.5" />
+                Process
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </TooltipProvider>
