@@ -579,6 +579,29 @@ const NewQuote = () => {
 
   const [testingItemsOpen, setTestingItemsOpen] = useState(false);
 
+  type TestingRow = {
+    id: string;
+    cancel: boolean;
+    rcv: boolean;
+    qty: string;
+    groupable: string;
+    type: string;
+    sectionLength: string;
+    priority: string;
+    woNo: string;
+    status: string;
+    feeAmt: string;
+    rep: string;
+  };
+  const [testingItems, setTestingItems] = useState<TestingRow[]>([]);
+
+  const updateTestingRow = (id: string, patch: Partial<TestingRow>) =>
+    setTestingItems((prev) => prev.map((r) => (r.id === id ? { ...r, ...patch } : r)));
+  const removeTestingRow = (id: string) =>
+    setTestingItems((prev) => prev.filter((r) => r.id !== id));
+  const testingRowTotal = (r: TestingRow) =>
+    ((parseInt(r.qty || "0", 10) || 0) * (parseFloat(r.feeAmt || "0") || 0)).toFixed(2);
+
   const handleAddItemClick = () => {
     if (!allMandatoryFilled) {
       warnMissing();
@@ -588,25 +611,29 @@ const NewQuote = () => {
   };
 
   const handleAddTestingItems = ({ lines }: AddTestingItemsResult) => {
-    setItems((prev) => [
+    setTestingItems((prev) => [
       ...prev,
-      ...lines.map((l) => ({
-        ...emptyItem(),
-        manufacturer: "ESL",
-        model: l.type ? `${l.groupable} - ${l.type}` : l.groupable,
-        description: l.sectionsFeet
-          ? `${l.groupable} (Sections/Feet: ${l.sectionsFeet})`
-          : l.groupable,
+      ...lines.map((l, idx) => ({
+        id: `${Date.now()}-${idx}`,
+        cancel: false,
+        rcv: false,
         qty: String(l.qty),
-        baseAmt: (l.qty * parseFloat(l.fee || "0")).toFixed(2),
-        calCert: (l.qty * parseFloat(l.fee || "0")).toFixed(2),
+        groupable: l.groupable,
+        type: l.type ?? "",
+        sectionLength: l.sectionsFeet ?? "",
+        priority: priority || "Normal",
+        woNo: "",
+        status: "",
+        feeAmt: l.fee,
+        rep: "",
       })),
     ]);
     toast({
       title: "Testing items added",
-      description: `${lines.length} line item(s) added to the quote.`,
+      description: `${lines.length} testing line item(s) added.`,
     });
   };
+
 
 
   const handleSearchAddClick = () => {
@@ -1251,6 +1278,117 @@ const NewQuote = () => {
               </tbody>
             </table>
           </div>
+
+          {/* Testing Items */}
+          <div className="mt-3 space-y-1.5">
+            <div className="flex items-center justify-between">
+              <h4 className="text-[11px] font-semibold text-foreground">Testing Items</h4>
+              <Badge variant="secondary" className="text-[10px]">{testingItems.length}</Badge>
+            </div>
+            <div className="rounded-lg border overflow-x-auto">
+              <table className="w-full text-[11px]">
+                <thead className="bg-muted/60">
+                  <tr className="[&>th]:px-2 [&>th]:py-1.5 [&>th]:font-medium [&>th]:text-muted-foreground [&>th]:whitespace-nowrap">
+                    <th className="text-center w-14">Cancel</th>
+                    <th className="text-center w-12">Rcv</th>
+                    <th className="text-center w-14">Qty</th>
+                    <th className="text-left">Groupable</th>
+                    <th className="text-left">Type</th>
+                    <th className="text-left">Section/Length</th>
+                    <th className="text-left">Priority</th>
+                    <th className="text-left">WO #</th>
+                    <th className="text-left">Status</th>
+                    <th className="text-right w-20">Fee Amt</th>
+                    <th className="text-right w-20">Total</th>
+                    <th className="text-left w-14">Rep.</th>
+                    <th className="w-16"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {testingItems.length === 0 ? (
+                    <tr>
+                      <td colSpan={13} className="px-2 py-6 text-center text-muted-foreground">
+                        No data to display
+                      </td>
+                    </tr>
+                  ) : (
+                    testingItems.map((r) => (
+                      <tr key={r.id} className={cn("border-t", r.cancel && "opacity-50 line-through")}>
+                        <td className="px-2 py-1 text-center">
+                          <Checkbox
+                            checked={r.cancel}
+                            onCheckedChange={(v) => updateTestingRow(r.id, { cancel: !!v })}
+                            className="h-3.5 w-3.5 rounded data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+                          />
+                        </td>
+                        <td className="px-2 py-1 text-center">
+                          <Checkbox
+                            checked={r.rcv}
+                            onCheckedChange={(v) => updateTestingRow(r.id, { rcv: !!v })}
+                            className="h-3.5 w-3.5 rounded data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+                          />
+                        </td>
+                        <td className="px-2 py-1">
+                          <Input
+                            value={r.qty}
+                            onChange={(e) => updateTestingRow(r.id, { qty: e.target.value })}
+                            className="h-6 w-12 px-1 text-[11px] text-center"
+                          />
+                        </td>
+                        <td className="px-2 py-1 font-medium">{r.groupable}</td>
+                        <td className="px-2 py-1 text-muted-foreground">{r.type || "—"}</td>
+                        <td className="px-2 py-1">
+                          <Input
+                            value={r.sectionLength}
+                            onChange={(e) => updateTestingRow(r.id, { sectionLength: e.target.value })}
+                            className="h-6 px-1 text-[11px]"
+                          />
+                        </td>
+                        <td className="px-2 py-1">{r.priority}</td>
+                        <td className="px-2 py-1">
+                          <Input
+                            value={r.woNo}
+                            onChange={(e) => updateTestingRow(r.id, { woNo: e.target.value })}
+                            className="h-6 px-1 text-[11px]"
+                          />
+                        </td>
+                        <td className="px-2 py-1 text-muted-foreground">{r.status || "—"}</td>
+                        <td className="px-2 py-1">
+                          <Input
+                            value={r.feeAmt}
+                            onChange={(e) => updateTestingRow(r.id, { feeAmt: e.target.value })}
+                            className="h-6 px-1 text-[11px] text-right"
+                          />
+                        </td>
+                        <td className="px-2 py-1 text-right font-medium">{testingRowTotal(r)}</td>
+                        <td className="px-2 py-1 text-muted-foreground">{r.rep || "—"}</td>
+                        <td className="px-2 py-1">
+                          <div className="flex items-center justify-end gap-1">
+                            <button
+                              type="button"
+                              className="inline-flex items-center justify-center rounded p-1 text-slate-600 hover:bg-muted"
+                              title="Edit"
+                            >
+                              <Pencil className="h-3.5 w-3.5" />
+                            </button>
+                            <button
+                              type="button"
+                              className="inline-flex items-center justify-center rounded p-1 text-slate-600 hover:bg-red-50 hover:text-red-600"
+                              onClick={() => removeTestingRow(r.id)}
+                              title="Delete"
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
         </AccSection>
 
         {/* Project details */}
