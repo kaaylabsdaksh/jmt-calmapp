@@ -1018,8 +1018,22 @@ const NewQuote = () => {
                         </Button>
                       </td>
                       <td className="px-2 py-1">{i.rev ? "Yes" : ""}</td>
-                      <td className="px-2 py-1">{i.services ? "Yes" : ""}</td>
-                      <td className="px-2 py-1">{i.parts ? "Yes" : ""}</td>
+                      <td className="px-2 py-1 text-center">
+                        <Checkbox
+                          checked={i.services}
+                          onCheckedChange={(v) => setItems((p) => p.map((it) => it.id === i.id ? { ...it, services: !!v } : it))}
+                          onClick={(e) => e.stopPropagation()}
+                          className="h-3.5 w-3.5"
+                        />
+                      </td>
+                      <td className="px-2 py-1 text-center">
+                        <Checkbox
+                          checked={i.parts}
+                          onCheckedChange={(v) => setItems((p) => p.map((it) => it.id === i.id ? { ...it, parts: !!v } : it))}
+                          onClick={(e) => e.stopPropagation()}
+                          className="h-3.5 w-3.5"
+                        />
+                      </td>
                       <td className="px-2 py-1">{i.qty}</td>
                       <td className="px-2 py-1 whitespace-nowrap">{i.manufacturer}</td>
                       <td className="px-2 py-1 whitespace-nowrap">{i.model}</td>
