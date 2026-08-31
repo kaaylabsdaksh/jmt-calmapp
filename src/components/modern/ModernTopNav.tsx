@@ -14,6 +14,7 @@ import { HelpMenu } from "@/components/tour/HelpMenu";
 type Crumb = { label: string; to?: string };
 const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
   "/": { title: "Work Order Management", crumbs: [{ label: "Home", to: "/" }, { label: "Work Orders" }] },
+  "/transit-log": { title: "Transit Log", crumbs: [{ label: "Home", to: "/" }, { label: "Work Orders", to: "/" }, { label: "Transit Log" }] },
   "/onsite-projects": { title: "Onsite Projects", crumbs: [{ label: "Home", to: "/" }, { label: "Onsite Projects" }] },
   "/onsite-projects/new": { title: "Onsite Project # XXX", crumbs: [{ label: "Onsite Projects", to: "/onsite-projects" }, { label: "New Project" }] },
   "/manage-customers": { title: "Manage Customers", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers" }] },
