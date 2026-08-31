@@ -696,7 +696,8 @@ const NewQuote = () => {
 
                 {/* Customer, Origin & References */}
                 <Group title="Customer, Origin & References">
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-3 gap-2 items-end">
+
                     <Field label="Existing Customer">
                       <RadioGroup
                         value={existingCustomer}
