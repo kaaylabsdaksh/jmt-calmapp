@@ -321,6 +321,39 @@ const TransitLog = () => {
   const [pageSize, setPageSize] = useState(25);
   const [processOpen, setProcessOpen] = useState(false);
 
+  // Column customisation
+  const [columnOrder, setColumnOrder] = useState<ColKey[]>(COLUMNS.map((c) => c.key));
+  const [visibleCols, setVisibleCols] = useState<Set<ColKey>>(new Set(COLUMNS.map((c) => c.key)));
+  const [draggedCol, setDraggedCol] = useState<ColKey | null>(null);
+
+  const orderedColumns = useMemo(
+    () =>
+      columnOrder
+        .map((k) => COLUMNS.find((c) => c.key === k)!)
+        .filter((c) => c && visibleCols.has(c.key)),
+    [columnOrder, visibleCols]
+  );
+
+  const reorderColumn = (from: ColKey, to: ColKey) => {
+    if (from === to) return;
+    setColumnOrder((prev) => {
+      const next = [...prev];
+      const fromIdx = next.indexOf(from);
+      const toIdx = next.indexOf(to);
+      if (fromIdx < 0 || toIdx < 0) return prev;
+      const [moved] = next.splice(fromIdx, 1);
+      next.splice(toIdx, 0, moved);
+      return next;
+    });
+  };
+
+  const resetColumns = () => {
+    setColumnOrder(COLUMNS.map((c) => c.key));
+    setVisibleCols(new Set(COLUMNS.map((c) => c.key)));
+  };
+
+
+
   const update = <K extends keyof typeof filters>(k: K, v: (typeof filters)[K]) =>
     setFilters((p) => ({ ...p, [k]: v }));
 
