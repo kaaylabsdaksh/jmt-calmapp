@@ -1052,10 +1052,29 @@ const NewQuote = () => {
             <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border bg-muted/30 px-2 py-1.5">
               <div className="flex flex-wrap items-center gap-1">
                 {[
-                  { label: "Cancel Items", fn: () => setItems((p) => p.map((i) => ({ ...i, status: "Cancelled" }))) },
-                  { label: "Uncancel Items", fn: () => setItems((p) => p.map((i) => (i.status === "Cancelled" ? { ...i, status: "" } : i))) },
-                  { label: "Receive Items", fn: () => setItems((p) => p.map((i) => ({ ...i, rev: true }))) },
-                  { label: "Unreceive Items", fn: () => setItems((p) => p.map((i) => ({ ...i, rev: false }))) },
+                  {
+                    label: "Cancel Items",
+                    fn: () => {
+                      if (selectedItemIds.length === 0) {
+                        toast({ title: "No items selected", description: "Select one or more items using the Cancel column checkbox first.", variant: "destructive" });
+                        return;
+                      }
+                      setCancelConfirmOpen(true);
+                    },
+                  },
+                  {
+                    label: "Uncancel Items",
+                    fn: () => {
+                      if (selectedItemIds.length === 0) {
+                        toast({ title: "No items selected", description: "Select one or more cancelled items first.", variant: "destructive" });
+                        return;
+                      }
+                      setItems((p) => p.map((i) => (selectedItemIds.includes(i.id) && i.status === "Cancelled" ? { ...i, status: "" } : i)));
+                      setSelectedItemIds([]);
+                    },
+                  },
+                  { label: "Receive Items", fn: () => setItems((p) => p.map((i) => (selectedItemIds.length === 0 || selectedItemIds.includes(i.id) ? { ...i, rev: true } : i))) },
+                  { label: "Unreceive Items", fn: () => setItems((p) => p.map((i) => (selectedItemIds.length === 0 || selectedItemIds.includes(i.id) ? { ...i, rev: false } : i))) },
                   { label: "Search/Add Item", fn: handleSearchAddClick },
                   { label: "Add Testing Items", fn: handleAddItemClick },
                 ].map((a) => (
