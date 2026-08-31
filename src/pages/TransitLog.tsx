@@ -357,10 +357,6 @@ const TransitLog = () => {
                 <FileText className="h-3.5 w-3.5 mr-1.5" />
                 Report
               </Button>
-              <Button size="sm" variant="ghost" className="h-8 text-xs" onClick={() => navigate(-1)}>
-                <ArrowLeft className="h-3.5 w-3.5 mr-1.5" />
-                Back
-              </Button>
             </div>
           </div>
 
