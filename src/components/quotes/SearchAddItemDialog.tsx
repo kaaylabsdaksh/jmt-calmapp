@@ -369,11 +369,11 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                 {addedIds.size}
               </Badge>
             </div>
-            <div className="max-h-[160px] overflow-auto rounded-md border bg-white">
+            <div className="max-h-[200px] overflow-auto rounded-md border bg-white">
               <table className="w-full text-[11px]">
                 <thead className="sticky top-0 z-10 bg-muted/60 backdrop-blur">
                   <tr>
-                    {["Manufacturer", "Model", "Item Description", "Cal/Cert", "T/F", "17025", "Only Capable Location", "Status"].map((c) => (
+                    {["Manufacturer", "Model", "Item Description", "Qty", "Status", "Cal/Cert", "T/F", "17025", "Add 17025", "Repair", "Only Capable Location", "Mfr Serial", "Cust ID", "Cust Serial"].map((c) => (
                       <th key={c} className="px-2 py-1.5 text-left font-semibold whitespace-nowrap text-muted-foreground">
                         {c}
                       </th>
@@ -382,16 +382,21 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                   </tr>
                 </thead>
                 <tbody>
-                  {addedProducts.map((p) => (
+                  {addedProducts.map((p) => {
+                    const d = detailOf(p.id);
+                    return (
                     <tr key={p.id} className="border-t bg-green-50/40">
                       <td className="px-2 py-1 whitespace-nowrap font-medium">{p.manufacturer}</td>
                       <td className="px-2 py-1 whitespace-nowrap">{p.model}</td>
                       <td className="px-2 py-1">{p.description}</td>
-                      <td className="px-2 py-1 whitespace-nowrap">${p.calCost}</td>
-                      <td className="px-2 py-1">{p.tf}</td>
-                      <td className="px-2 py-1">{p.accredCal || "No"}</td>
-                      <td className="px-2 py-1 max-w-[220px] truncate" title={p.locations}>
-                        {p.locations || "—"}
+                      <td className="px-2 py-1">
+                        <Input
+                          type="number"
+                          min={1}
+                          value={d.qty}
+                          onChange={(e) => setDetail(p.id, { qty: e.target.value })}
+                          className={cn(inputCls, "h-6 w-14")}
+                        />
                       </td>
                       <td className="px-2 py-1">
                         <span className="inline-flex items-center gap-1 rounded-full bg-green-600/10 px-1.5 py-0.5 text-[10px] font-medium text-green-700">
@@ -399,6 +404,48 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                           Staged
                         </span>
                       </td>
+                      <td className="px-2 py-1 whitespace-nowrap">${p.calCost}</td>
+                      <td className="px-2 py-1">{p.tf}</td>
+                      <td className="px-2 py-1">{p.accredCal || "No"}</td>
+                      <td className="px-2 py-1">
+                        <Checkbox
+                          checked={d.add17025}
+                          onCheckedChange={(v) => setDetail(p.id, { add17025: !!v })}
+                          className="h-3.5 w-3.5"
+                        />
+                      </td>
+                      <td className="px-2 py-1">
+                        <Checkbox
+                          checked={d.repair}
+                          onCheckedChange={(v) => setDetail(p.id, { repair: !!v })}
+                          className="h-3.5 w-3.5"
+                        />
+                      </td>
+                      <td className="px-2 py-1 max-w-[180px] truncate" title={p.locations}>
+                        {p.locations || "—"}
+                      </td>
+                      <td className="px-2 py-1">
+                        <Input
+                          value={d.mfrSerial}
+                          onChange={(e) => setDetail(p.id, { mfrSerial: e.target.value })}
+                          className={cn(inputCls, "h-6 w-24")}
+                        />
+                      </td>
+                      <td className="px-2 py-1">
+                        <Input
+                          value={d.custId}
+                          onChange={(e) => setDetail(p.id, { custId: e.target.value })}
+                          className={cn(inputCls, "h-6 w-24")}
+                        />
+                      </td>
+                      <td className="px-2 py-1">
+                        <Input
+                          value={d.custSerial}
+                          onChange={(e) => setDetail(p.id, { custSerial: e.target.value })}
+                          className={cn(inputCls, "h-6 w-24")}
+                        />
+                      </td>
+
                       <td className="px-2 py-1 text-right">
                         <Button
                           size="icon"
