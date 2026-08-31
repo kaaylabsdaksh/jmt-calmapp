@@ -15,7 +15,7 @@ import {
 import { ModernDatePicker } from "@/components/ui/modern-date-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { useSchedulingData } from "@/context/SchedulingDataContext";
+import { useSchedulingData } from "@/context/SchedulingDataContextV2";
 import {
   ANCHOR_DATE,
   UnscheduledWorkItem,

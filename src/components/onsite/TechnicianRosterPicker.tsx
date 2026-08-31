@@ -1,7 +1,7 @@
 import { AlertTriangle } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { useSchedulingData } from "@/context/SchedulingDataContext";
+import { useSchedulingData } from "@/context/SchedulingDataContextV2";
 import { getTechnicianConflicts } from "@/lib/onsite/schedulingData";
 
 interface Props {

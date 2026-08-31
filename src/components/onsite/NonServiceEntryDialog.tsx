@@ -24,7 +24,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ModernDatePicker } from "@/components/ui/modern-date-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { useSchedulingData } from "@/context/SchedulingDataContext";
+import { useSchedulingData } from "@/context/SchedulingDataContextV2";
 import { NON_SERVICE_TYPES, NonServiceEntry, NonServiceType } from "@/lib/onsite/schedulingData";
 import TechnicianRosterPicker from "./TechnicianRosterPicker";
 

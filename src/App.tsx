@@ -30,6 +30,7 @@ import ShippingView from "./pages/ShippingView";
 import AccountAdminView from "./pages/AccountAdminView";
 import OnsiteProjects from "./pages/OnsiteProjects";
 import OnsiteScheduling from "./pages/OnsiteScheduling";
+import OnsiteSchedulingV2 from "./pages/OnsiteSchedulingV2";
 import OnsiteProjectDetail from "./pages/OnsiteProjectDetail";
 import VehicleStandards from "./pages/VehicleStandards";
 import NotFound from "./pages/NotFound";
@@ -67,6 +68,9 @@ import { TourProvider } from "@/context/TourContext";
 import { WelcomeModal } from "@/components/tour/WelcomeModal";
 import { GuidedTour } from "@/components/tour/GuidedTour";
 import { WhatsNewDrawer } from "@/components/tour/WhatsNewDrawer";
+import GlobalOpenDecisionsFab, {
+  OpenDecisionsProvider,
+} from "@/components/onsite-scheduling/GlobalOpenDecisions";
 
 const App = () => {
   console.log("App component rendering");
@@ -74,6 +78,8 @@ const App = () => {
   return (
     <BrowserRouter>
       <TourProvider>
+        <OpenDecisionsProvider>
+        <GlobalOpenDecisionsFab />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route element={<Layout><Outlet /></Layout>}>
@@ -107,8 +113,10 @@ const App = () => {
 
             <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
             <Route path="/onsite-projects" element={<OnsiteProjects />} />
-            <Route path="/onsite-scheduling-v2" element={<OnsiteScheduling />} />
+            <Route path="/onsite-scheduling" element={<OnsiteScheduling />} />
+            {/* the demo prototype's own route name, kept as an alias */}
             <Route path="/onsite-scheduling-prototype" element={<OnsiteScheduling />} />
+            <Route path="/onsite-scheduling-v2" element={<OnsiteSchedulingV2 />} />
 
             <Route path="/onsite-projects/new" element={<OnsiteProjectDetail />} />
             <Route path="/onsite-projects/vehicle-standards" element={<VehicleStandards />} />
@@ -149,6 +157,7 @@ const App = () => {
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
+        </OpenDecisionsProvider>
         <PointerEventsGuard />
         <WelcomeModal />
         <WhatsNewDrawer />

@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { useSchedulingData } from "@/context/SchedulingDataContext";
+import { useSchedulingData } from "@/context/SchedulingDataContextV2";
 import {
   JOB_STATUS_STYLES,
   ScheduledJob,

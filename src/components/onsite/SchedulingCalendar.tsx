@@ -5,7 +5,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { useSchedulingData } from "@/context/SchedulingDataContext";
+import { useSchedulingData } from "@/context/SchedulingDataContextV2";
 import {
   ANCHOR_DATE,
   JOB_STATUS_STYLES,
