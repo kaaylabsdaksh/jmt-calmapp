@@ -483,25 +483,14 @@ const TransitLog = () => {
                       <th className="px-2 py-2 w-8">
                         <Checkbox checked={allVisibleSelected} onCheckedChange={toggleAllVisible} className="h-3.5 w-3.5" />
                       </th>
-                      <th className="px-2 py-2 whitespace-nowrap">Date Added</th>
-                      <th className="px-2 py-2 whitespace-nowrap">Added By</th>
-                      <th className="px-2 py-2 text-right">WO Qty</th>
-                      <th className="px-2 py-2 text-right">Rcvd</th>
-                      <th className="px-2 py-2 text-right">HU Qty</th>
-                      <th className="px-2 py-2">Type</th>
-                      <th className="px-2 py-2 text-right">Pcs</th>
-                      <th className="px-2 py-2">Acct #</th>
-                      <th className="px-2 py-2 min-w-[160px]">Customer Name</th>
-                      <th className="px-2 py-2">Batch/Item</th>
-                      <th className="px-2 py-2">Rental ID</th>
-                      <th className="px-2 py-2 min-w-[130px]">Man/Model</th>
-                      <th className="px-2 py-2 min-w-[180px]">Description</th>
-                      <th className="px-2 py-2">Destination</th>
-                      <th className="px-2 py-2">Deliver To</th>
-                      <th className="px-2 py-2">Priority</th>
-                      <th className="px-2 py-2">Division</th>
-                      <th className="px-2 py-2">Rcvd On</th>
-                      <th className="px-2 py-2">Rcvd By</th>
+                      {orderedColumns.map((c) => (
+                        <th
+                          key={c.key}
+                          className={cn("px-2 py-2 whitespace-nowrap", c.numeric && "text-right", c.thClass)}
+                        >
+                          {c.label}
+                        </th>
+                      ))}
                     </tr>
                   </thead>
                   <tbody>
