@@ -1291,7 +1291,8 @@ const NewQuote = () => {
                     )}
 
                     </React.Fragment>
-                  ))
+                  );
+                })
 
                 )}
               </tbody>
