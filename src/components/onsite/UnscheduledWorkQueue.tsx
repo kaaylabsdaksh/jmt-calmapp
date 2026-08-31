@@ -41,16 +41,25 @@ export const UnscheduledWorkQueue = () => {
   const [division, setDivision] = useState("Calibration");
   const [technicianIds, setTechnicianIds] = useState<string[]>([]);
 
+  const [sortAsc, setSortAsc] = useState(true);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return unscheduled;
-    return unscheduled.filter(
-      (u) =>
-        u.customer.toLowerCase().includes(q) ||
-        u.accountNumber.toLowerCase().includes(q) ||
-        u.salesRepCode.toLowerCase().includes(q),
+    const rows = !q
+      ? [...unscheduled]
+      : unscheduled.filter(
+          (u) =>
+            u.customer.toLowerCase().includes(q) ||
+            u.accountNumber.toLowerCase().includes(q) ||
+            u.salesRepCode.toLowerCase().includes(q),
+        );
+    return rows.sort((a, b) =>
+      sortAsc
+        ? a.targetWindowStart.localeCompare(b.targetWindowStart)
+        : b.targetWindowStart.localeCompare(a.targetWindowStart),
     );
-  }, [unscheduled, query]);
+  }, [unscheduled, query, sortAsc]);
+
 
   const openSchedule = (item: UnscheduledWorkItem) => {
     setTarget(item);
