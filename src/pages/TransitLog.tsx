@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import ModernTopNav from "@/components/modern/ModernTopNav";
@@ -528,9 +528,8 @@ const TransitLog = () => {
                       const isOpen = expanded.includes(r.id);
                       const received = r.rcvd >= r.woQty && r.woQty > 0;
                       return (
-                        <>
+                        <Fragment key={r.id}>
                           <tr
-                            key={r.id}
                             className={cn(
                               "border-b border-border hover:bg-muted/40 transition-colors",
                               ROW_ACCENT[r.priority],
@@ -634,7 +633,7 @@ const TransitLog = () => {
                                 <td className={cell}>{it.rcvdBy || <span className="text-muted-foreground">—</span>}</td>
                               </tr>
                             ))}
-                        </>
+                        </Fragment>
                       );
                     })}
                   </tbody>
