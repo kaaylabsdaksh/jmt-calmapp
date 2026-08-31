@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
-import { Search, X, RotateCcw, Plus, Check } from "lucide-react";
+import { Search, X, RotateCcw, Plus, Check, Trash2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -79,21 +79,34 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
     }
   }, [open]);
 
+  /** Stage the currently selected rows. Nothing is sent to the quote yet. */
   const handleAdd = () => {
     if (selectedProducts.length === 0) return;
-    onAdd({ products: selectedProducts, groupAsOneLineItem: groupAsOne });
-    // Mark the just-added products as added inside this dialog and keep it open.
     setAddedIds((prev) => new Set([...prev, ...selectedProducts.map((p) => p.id)]));
     setSelected({});
-    setGroupAsOne(false);
   };
 
-  /** Add a single row directly from its own Add button. */
+  /** Stage a single row directly from its own Add button. */
   const handleAddRow = (p: Product) => {
     if (addedIds.has(p.id)) return;
-    onAdd({ products: [p], groupAsOneLineItem: false });
     setAddedIds((prev) => new Set([...prev, p.id]));
     setSelected((s) => ({ ...s, [p.id]: false }));
+  };
+
+  /** Remove a staged row before committing. */
+  const handleRemoveRow = (id: string) => {
+    setAddedIds((prev) => {
+      const next = new Set(prev);
+      next.delete(id);
+      return next;
+    });
+  };
+
+  /** Commit every staged row to the quote and close. */
+  const handleDone = () => {
+    if (addedProducts.length === 0) return;
+    onAdd({ products: addedProducts, groupAsOneLineItem: groupAsOne });
+    close();
   };
 
   return (
@@ -152,7 +165,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
               <div className="ml-auto flex items-center gap-1.5">
                 {addedIds.size > 0 && (
                   <Badge className="bg-green-600/10 text-green-700 hover:bg-green-600/10 text-[10px] font-medium">
-                    {addedIds.size} added
+                    {addedIds.size} staged
                   </Badge>
                 )}
                 <Badge variant="secondary" className="text-[10px] font-medium">
@@ -242,7 +255,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                         {isAdded ? (
                           <span className="inline-flex items-center gap-1 rounded-full bg-green-600/10 px-1.5 py-0.5 text-[10px] font-medium text-green-700">
                             <Check className="h-2.5 w-2.5" />
-                            Added
+                            Staged
                           </span>
                         ) : (
                           <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700">
@@ -262,7 +275,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                           {isAdded ? (
                             <>
                               <Check className="h-3 w-3 mr-1" />
-                              Added
+                              Staged
                             </>
                           ) : (
                             <>
@@ -297,12 +310,13 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                       {c}
                     </th>
                   ))}
+                  <th className="px-2 py-1.5 w-10" />
                 </tr>
               </thead>
               <tbody>
                 {addedProducts.length === 0 ? (
                   <tr>
-                    <td colSpan={8} className="py-6 text-center text-muted-foreground text-[11px]">
+                    <td colSpan={9} className="py-6 text-center text-muted-foreground text-[11px]">
                       No data to display
                     </td>
                   </tr>
@@ -321,8 +335,19 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                       <td className="px-2 py-1">
                         <span className="inline-flex items-center gap-1 rounded-full bg-green-600/10 px-1.5 py-0.5 text-[10px] font-medium text-green-700">
                           <Check className="h-2.5 w-2.5" />
-                          Added
+                          Staged
                         </span>
+                      </td>
+                      <td className="px-2 py-1 text-right">
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-5 w-5 text-muted-foreground hover:text-destructive"
+                          onClick={() => handleRemoveRow(p.id)}
+                          aria-label="Remove"
+                        >
+                          <Trash2 className="h-3 w-3" />
+                        </Button>
                       </td>
                     </tr>
                   ))
@@ -347,26 +372,26 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
               <X className="h-3 w-3 mr-1" />
               Cancel
             </Button>
-            {selectedProducts.length > 0 ? (
+            {selectedProducts.length > 0 && (
               <Button
                 size="sm"
-                className="h-7 px-3 text-[11px] bg-green-600 hover:bg-green-700 text-white"
+                variant="outline"
+                className="h-7 px-3 text-[11px]"
                 onClick={handleAdd}
               >
                 <Plus className="h-3 w-3 mr-1" />
                 Add ({selectedProducts.length})
               </Button>
-            ) : (
-              <Button
-                size="sm"
-                className="h-7 px-3 text-[11px] bg-green-600 hover:bg-green-700 text-white"
-                disabled={addedIds.size === 0}
-                onClick={close}
-              >
-                <Check className="h-3 w-3 mr-1" />
-                Done{addedIds.size > 0 ? ` (${addedIds.size})` : ""}
-              </Button>
             )}
+            <Button
+              size="sm"
+              className="h-7 px-3 text-[11px] bg-green-600 hover:bg-green-700 text-white"
+              disabled={addedIds.size === 0}
+              onClick={handleDone}
+            >
+              <Check className="h-3 w-3 mr-1" />
+              Done{addedIds.size > 0 ? ` (${addedIds.size})` : ""}
+            </Button>
           </div>
 
         </div>
