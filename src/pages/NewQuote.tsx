@@ -1152,8 +1152,9 @@ const NewQuote = () => {
                       </td>
                       <td className="px-2 py-1 text-center">
                         <Checkbox
-                          checked={i.status === "Cancelled"}
-                          onCheckedChange={(v) => setItems((p) => p.map((it) => it.id === i.id ? { ...it, status: v ? "Cancelled" : "" } : it))}
+                          checked={selectedItemIds.includes(i.id)}
+                          onCheckedChange={(v) => setSelectedItemIds((p) => (v ? [...p, i.id] : p.filter((id) => id !== i.id)))}
+                          aria-label="Select item"
                           className="h-4 w-4 rounded-md border-slate-400 transition-all data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 data-[state=checked]:text-white"
                         />
                       </td>
