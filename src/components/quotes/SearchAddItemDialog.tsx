@@ -229,21 +229,6 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
             <table className="w-full text-[11px]">
               <thead className="sticky top-0 z-10 bg-muted/60 backdrop-blur">
                 <tr>
-                  <th className="w-8 px-2 py-1.5">
-                    <Checkbox
-                      checked={allChecked}
-                      onCheckedChange={(v) =>
-                        setSelected(
-                          v
-                            ? Object.fromEntries(notAddedResults.map((p) => [p.id, true]))
-                            : {},
-                        )
-                      }
-                      aria-label="Select all"
-                      className="h-3.5 w-3.5"
-                      disabled={notAddedResults.length === 0}
-                    />
-                  </th>
                   {["Manufacturer", "Model", "Item Description", "Cal/Cert", "T/F", "17025", "Only Capable Location", "Status"].map(
                     (c) => (
                       <th
@@ -260,7 +245,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
               <tbody>
                 {results.length === 0 ? (
                   <tr>
-                    <td colSpan={10} className="py-10 text-center text-muted-foreground text-[11px]">
+                    <td colSpan={9} className="py-10 text-center text-muted-foreground text-[11px]">
                       {searched ? "No matching products found" : "No data to display"}
                     </td>
                   </tr>
@@ -274,22 +259,9 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                           "border-t",
                           isAdded
                             ? "bg-green-50/40 opacity-60 cursor-default"
-                            : "hover:bg-muted/40 cursor-pointer",
+                            : "hover:bg-muted/40",
                         )}
-                        onClick={() =>
-                          !isAdded && setSelected((s) => ({ ...s, [p.id]: !s[p.id] }))
-                        }
                       >
-                        <td className="px-2 py-1.5" onClick={(e) => e.stopPropagation()}>
-                          <Checkbox
-                            checked={isAdded || !!selected[p.id]}
-                            onCheckedChange={(v) =>
-                              !isAdded && setSelected((s) => ({ ...s, [p.id]: !!v }))
-                            }
-                            disabled={isAdded}
-                            className="h-3.5 w-3.5"
-                          />
-                        </td>
                         <td className="px-2 py-1.5 whitespace-nowrap font-medium">{p.manufacturer}</td>
                         <td className="px-2 py-1.5 whitespace-nowrap">{p.model}</td>
                         <td className="px-2 py-1.5">{p.description}</td>
@@ -312,7 +284,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                             </span>
                           )}
                         </td>
-                        <td className="px-2 py-1.5 text-right" onClick={(e) => e.stopPropagation()}>
+                        <td className="px-2 py-1.5 text-right">
                           <Button
                             size="sm"
                             variant={isAdded ? "ghost" : "outline"}
