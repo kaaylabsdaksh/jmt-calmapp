@@ -458,8 +458,35 @@ const NewQuote = () => {
   const [pendingDelete, setPendingDelete] = useState<string | null>(null);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [copyQty, setCopyQty] = useState<Record<string, string>>({});
+  type SubLine = { id: string; name: string; qty: string; baseCost: string; cost: string };
+  const [itemServices, setItemServices] = useState<Record<string, SubLine[]>>({});
+  const [itemParts, setItemParts] = useState<Record<string, SubLine[]>>({});
+  const addSubLine = (
+    setter: React.Dispatch<React.SetStateAction<Record<string, SubLine[]>>>,
+    itemId: string,
+  ) =>
+    setter((p) => ({
+      ...p,
+      [itemId]: [...(p[itemId] ?? []), { id: crypto.randomUUID(), name: "", qty: "1", baseCost: "0.00", cost: "0.00" }],
+    }));
+  const updateSubLine = (
+    setter: React.Dispatch<React.SetStateAction<Record<string, SubLine[]>>>,
+    itemId: string,
+    lineId: string,
+    patch: Partial<SubLine>,
+  ) =>
+    setter((p) => ({
+      ...p,
+      [itemId]: (p[itemId] ?? []).map((l) => (l.id === lineId ? { ...l, ...patch } : l)),
+    }));
+  const removeSubLine = (
+    setter: React.Dispatch<React.SetStateAction<Record<string, SubLine[]>>>,
+    itemId: string,
+    lineId: string,
+  ) => setter((p) => ({ ...p, [itemId]: (p[itemId] ?? []).filter((l) => l.id !== lineId) }));
   const toggleExpanded = (id: string) =>
     setExpandedItems((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
+
   const duplicateItem = (item: QuoteItem) => {
     const n = Math.max(1, parseInt(copyQty[item.id] || "1", 10) || 1);
     setItems((prev) => [
