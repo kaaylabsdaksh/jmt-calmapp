@@ -114,8 +114,10 @@ export const SchedulingCalendar = () => {
           const isToday = iso === ANCHOR_DATE;
           const dayJobs = jobsOn(iso);
           const dayEntries = entriesOn(iso);
-          const shown = dayJobs.slice(0, 2);
-          const overflow = dayJobs.length + dayEntries.length - shown.length;
+          const shownJobs = dayJobs.slice(0, 2);
+          const shownEntries = dayEntries.slice(0, Math.max(0, 3 - shownJobs.length));
+          const overflow =
+            dayJobs.length + dayEntries.length - shownJobs.length - shownEntries.length;
 
           return (
             <div
@@ -137,7 +139,7 @@ export const SchedulingCalendar = () => {
                 {d.getDate()}
               </button>
 
-              {shown.map((j) => (
+              {shownJobs.map((j) => (
                 <button
                   key={j.id}
                   type="button"
@@ -155,7 +157,7 @@ export const SchedulingCalendar = () => {
                 </button>
               ))}
 
-              {dayEntries.slice(0, overflow > 0 ? 0 : 2).map((e) => (
+              {shownEntries.map((e) => (
                 <button
                   key={e.id}
                   type="button"
