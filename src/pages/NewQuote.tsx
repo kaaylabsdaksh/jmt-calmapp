@@ -1190,7 +1190,7 @@ const NewQuote = () => {
                     const isCancelled = i.status === "Cancelled";
                     return (
                     <React.Fragment key={i.id}>
-                    <tr className={cn("border-t hover:bg-muted/40", isCancelled && "opacity-60 bg-slate-50/50")}>
+                    <tr className={cn("border-t hover:bg-muted/40", isCancelled && "opacity-60 bg-slate-50/50", i.rev && "bg-cyan-50 hover:bg-cyan-100/60")}>
                       <td className="px-1 py-1">
                         <button
                           type="button"
