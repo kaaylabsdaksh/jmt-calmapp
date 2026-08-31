@@ -193,15 +193,15 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
               className={inputCls}
             />
           </div>
-          <div className="flex items-center gap-1.5 mt-2">
-            <Button size="sm" className="h-7 px-3 text-[11px]" onClick={() => setSearched(true)}>
+          <div className="flex items-center gap-1.5 mt-2 flex-nowrap">
+            <Button size="sm" className="h-7 px-3 text-[11px] shrink-0" onClick={() => setSearched(true)}>
               <Search className="h-3 w-3 mr-1" />
               Find
             </Button>
             <Button
               variant="ghost"
               size="sm"
-              className="h-7 px-2.5 text-[11px]"
+              className="h-7 px-2.5 text-[11px] shrink-0"
               onClick={clearSearch}
             >
               <RotateCcw className="h-3 w-3 mr-1" />
