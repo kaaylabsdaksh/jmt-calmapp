@@ -30,7 +30,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import {
-  ArrowLeft,
+  
   ChevronDown,
   ChevronRight,
   FileText,
@@ -347,15 +347,6 @@ const TransitLog = () => {
               <Button size="sm" className="h-8 text-xs" onClick={handleProcess}>
                 <PlayCircle className="h-3.5 w-3.5 mr-1.5" />
                 Process
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                className="h-8 text-xs"
-                onClick={() => toast.success("Transit Log report generated")}
-              >
-                <FileText className="h-3.5 w-3.5 mr-1.5" />
-                Report
               </Button>
             </div>
           </div>
@@ -702,6 +693,19 @@ const TransitLog = () => {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+
+        {/* Sticky Footer */}
+        <div className="sticky bottom-0 z-20 bg-background border-t border-border px-4 py-2 flex justify-end">
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-8 text-xs"
+            onClick={() => toast.success("Transit Log report generated")}
+          >
+            <FileText className="h-3.5 w-3.5 mr-1.5" />
+            Report
+          </Button>
+        </div>
       </div>
     </TooltipProvider>
   );
