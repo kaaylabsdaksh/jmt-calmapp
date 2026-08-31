@@ -29,14 +29,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
-  
   ChevronDown,
   ChevronRight,
   FileText,
+  GripVertical,
   PlayCircle,
   RotateCcw,
   Search,
+  Settings2,
   Truck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
