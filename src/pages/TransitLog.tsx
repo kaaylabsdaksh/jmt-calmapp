@@ -453,12 +453,6 @@ const TransitLog = () => {
                 Track, review, and process equipment currently in transit.
               </p>
             </div>
-            <div className="flex items-center gap-2">
-              <Button size="sm" className="h-8 text-xs" onClick={handleProcess}>
-                <PlayCircle className="h-3.5 w-3.5 mr-1.5" />
-                Process
-              </Button>
-            </div>
           </div>
 
           {/* Filters */}
