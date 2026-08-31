@@ -147,7 +147,13 @@ const emptyItem = (): QuoteItem => ({
   services: false,
   parts: false,
   rev: false,
+  baseAmtOriginal: undefined,
+  calCertOriginal: undefined,
+  calc17025Original: undefined,
+  otherServicesOriginal: undefined,
+  otherPartsOriginal: undefined,
 });
+
 
 const CHARGE_FIELDS = [
   { key: "mobilization", label: "Mobilization/Demobilization" },
