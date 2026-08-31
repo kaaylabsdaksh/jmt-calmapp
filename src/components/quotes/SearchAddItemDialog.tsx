@@ -253,6 +253,27 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                           </span>
                         )}
                       </td>
+                      <td className="px-2 py-1 text-right" onClick={(e) => e.stopPropagation()}>
+                        <Button
+                          size="sm"
+                          variant={isAdded ? "ghost" : "outline"}
+                          className="h-6 px-2 text-[10px]"
+                          disabled={isAdded}
+                          onClick={() => handleAddRow(p)}
+                        >
+                          {isAdded ? (
+                            <>
+                              <Check className="h-3 w-3 mr-1" />
+                              Added
+                            </>
+                          ) : (
+                            <>
+                              <Plus className="h-3 w-3 mr-1" />
+                              Add
+                            </>
+                          )}
+                        </Button>
+                      </td>
                     </tr>
                   );
                 })
@@ -260,6 +281,59 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
             </tbody>
           </table>
         </div>
+
+        {/* Added items */}
+        <div className="border-t">
+          <div className="flex items-center justify-between px-4 py-1.5 bg-muted/30">
+            <span className="text-[11px] font-semibold">Added items</span>
+            <Badge variant="secondary" className="text-[10px] font-medium">
+              {addedProducts.length}
+            </Badge>
+          </div>
+          <div className="max-h-[160px] overflow-auto">
+            <table className="w-full text-[11px]">
+              <thead className="sticky top-0 z-10 bg-muted/60 backdrop-blur">
+                <tr>
+                  {["Manufacturer", "Model", "Item Description", "Cal/Cert", "T/F", "17025", "Only Capable Location", "Status"].map((c) => (
+                    <th key={c} className="px-2 py-1.5 text-left font-semibold whitespace-nowrap text-muted-foreground">
+                      {c}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {addedProducts.length === 0 ? (
+                  <tr>
+                    <td colSpan={8} className="py-6 text-center text-muted-foreground text-[11px]">
+                      No data to display
+                    </td>
+                  </tr>
+                ) : (
+                  addedProducts.map((p) => (
+                    <tr key={p.id} className="border-t bg-green-50/40">
+                      <td className="px-2 py-1 whitespace-nowrap font-medium">{p.manufacturer}</td>
+                      <td className="px-2 py-1 whitespace-nowrap">{p.model}</td>
+                      <td className="px-2 py-1">{p.description}</td>
+                      <td className="px-2 py-1 whitespace-nowrap">${p.calCost}</td>
+                      <td className="px-2 py-1">{p.tf}</td>
+                      <td className="px-2 py-1">{p.accredCal || "No"}</td>
+                      <td className="px-2 py-1 max-w-[220px] truncate" title={p.locations}>
+                        {p.locations || "—"}
+                      </td>
+                      <td className="px-2 py-1">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-green-600/10 px-1.5 py-0.5 text-[10px] font-medium text-green-700">
+                          <Check className="h-2.5 w-2.5" />
+                          Added
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
 
         {/* Footer */}
         <div className="flex items-center justify-between gap-2 border-t bg-muted/20 px-4 py-2.5">
