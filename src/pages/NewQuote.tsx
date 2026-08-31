@@ -1020,34 +1020,36 @@ const NewQuote = () => {
                   </tr>
                 ) : (
                   items.map((i) => (
-                    <tr key={i.id} className="border-t hover:bg-muted/40 cursor-pointer" onClick={() => openEdit(i)}>
-                      <td className="px-2 py-1">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-6 w-6 p-0"
-                          onClick={(e) => { e.stopPropagation(); setPendingDelete(i.id); }}
+                    <React.Fragment key={i.id}>
+                    <tr className="border-t hover:bg-muted/40">
+                      <td className="px-1 py-1">
+                        <button
+                          type="button"
+                          className="h-5 w-5 grid place-items-center text-muted-foreground hover:text-foreground"
+                          onClick={() => toggleExpanded(i.id)}
+                          aria-label="Toggle details"
                         >
-                          <Trash2 className="h-3 w-3 text-muted-foreground" />
-                        </Button>
+                          {expandedItems.includes(i.id)
+                            ? <ChevronDown className="h-3.5 w-3.5" />
+                            : <ChevronRight className="h-3.5 w-3.5" />}
+                        </button>
                       </td>
-                      <td className="px-2 py-1">{i.rev ? "Yes" : ""}</td>
                       <td className="px-2 py-1 text-center">
                         <Checkbox
-                          checked={i.services}
-                          onCheckedChange={(v) => setItems((p) => p.map((it) => it.id === i.id ? { ...it, services: !!v } : it))}
-                          onClick={(e) => e.stopPropagation()}
-                          className="h-3.5 w-3.5"
+                          checked={i.status === "Cancelled"}
+                          onCheckedChange={(v) => setItems((p) => p.map((it) => it.id === i.id ? { ...it, status: v ? "Cancelled" : "" } : it))}
+                          className="h-3.5 w-3.5 rounded-[3px] data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
                         />
                       </td>
                       <td className="px-2 py-1 text-center">
                         <Checkbox
-                          checked={i.parts}
-                          onCheckedChange={(v) => setItems((p) => p.map((it) => it.id === i.id ? { ...it, parts: !!v } : it))}
-                          onClick={(e) => e.stopPropagation()}
-                          className="h-3.5 w-3.5"
+                          checked={i.rev}
+                          onCheckedChange={(v) => setItems((p) => p.map((it) => it.id === i.id ? { ...it, rev: !!v } : it))}
+                          className="h-3.5 w-3.5 rounded-[3px] data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
                         />
                       </td>
+                      <td className="px-2 py-1 text-center">{i.services ? 1 : 0}</td>
+                      <td className="px-2 py-1 text-center">{i.parts ? 1 : 0}</td>
                       <td className="px-2 py-1">{i.qty}</td>
                       <td className="px-2 py-1 whitespace-nowrap">{i.manufacturer}</td>
                       <td className="px-2 py-1 whitespace-nowrap">{i.model}</td>
@@ -1058,7 +1060,7 @@ const NewQuote = () => {
                       <td className="px-2 py-1">{i.priority}</td>
                       <td className="px-2 py-1">{i.wo}</td>
                       <td className="px-2 py-1">{i.status}</td>
-                      <td className="px-2 py-1 text-right">{money(num(i.baseAmt))}</td>
+                      <td className="px-2 py-1 text-right text-muted-foreground">{money(num(i.baseAmt))}</td>
                       <td className="px-2 py-1 text-right">{money(num(i.calCert))}</td>
                       <td className="px-2 py-1 text-right">{money(num(i.calc17025))}</td>
                       <td className="px-2 py-1 text-right">{money(num(i.otherServices))}</td>
@@ -1066,8 +1068,53 @@ const NewQuote = () => {
                       <td className="px-2 py-1">{i.rep}</td>
                       <td className="px-2 py-1">{i.is17025 ? "Yes" : ""}</td>
                       <td className="px-2 py-1">{i.cp ? "Yes" : ""}</td>
+                      <td className="px-2 py-1">
+                        <button type="button" className="text-[11px] text-blue-600 hover:underline" onClick={() => openEdit(i)}>Edit</button>
+                      </td>
+                      <td className="px-2 py-1">
+                        <button type="button" className="text-[11px] text-blue-600 hover:underline" onClick={() => setPendingDelete(i.id)}>Del</button>
+                      </td>
+                      <td className="px-2 py-1">
+                        <div className="flex items-center gap-1">
+                          <button type="button" className="text-[11px] text-blue-600 hover:underline" onClick={() => copyItem(i)}>Copy</button>
+                          <Input
+                            value={copyQty[i.id] ?? "1"}
+                            onChange={(e) => setCopyQty((p) => ({ ...p, [i.id]: e.target.value.replace(/\D/g, "") }))}
+                            className="h-6 w-10 px-1 text-[11px] text-center"
+                          />
+                        </div>
+                      </td>
                     </tr>
+                    {expandedItems.includes(i.id) && (
+                      <tr className="border-t bg-muted/20">
+                        <td colSpan={ITEM_COLUMNS.length} className="px-3 py-2">
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-[11px]">
+                            {[
+                              ["Manufacturer", i.manufacturer],
+                              ["Model", i.model],
+                              ["Description", i.description],
+                              ["Serial #", i.serial],
+                              ["Cust ID", i.custId],
+                              ["Cust Serial", i.custSerial],
+                              ["Priority", i.priority],
+                              ["WO #", i.wo],
+                              ["Repair", i.rep],
+                              ["17025", i.is17025 ? "Yes" : "No"],
+                              ["C.P.?", i.cp ? "Yes" : "No"],
+                              ["Base Amt", money(num(i.baseAmt))],
+                            ].map(([label, val]) => (
+                              <div key={String(label)} className="min-w-0">
+                                <p className="text-[10px] uppercase tracking-wide text-muted-foreground">{label}</p>
+                                <p className="truncate">{String(val || "—")}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                    </React.Fragment>
                   ))
+
                 )}
               </tbody>
             </table>
