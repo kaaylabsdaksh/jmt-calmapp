@@ -362,12 +362,28 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                   Added items
                 </span>
               </div>
-              <Badge
-                variant="default"
-                className="text-[10px] font-medium bg-green-600 hover:bg-green-600 text-white"
-              >
-                {addedIds.size}
-              </Badge>
+              <div className="flex items-center gap-2">
+                <label className="flex items-center gap-1.5 text-[11px] text-muted-foreground cursor-pointer">
+                  <Checkbox
+                    checked={groupAsOne}
+                    onCheckedChange={(v) => setGroupAsOne(!!v)}
+                    className={cn(
+                      "h-4 w-4 rounded-md border-2 border-slate-300 bg-white",
+                      "transition-colors duration-150 ease-in-out",
+                      "hover:border-slate-400",
+                      "data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 data-[state=checked]:text-white",
+                      "focus-visible:ring-2 focus-visible:ring-green-500/40 focus-visible:ring-offset-0"
+                    )}
+                  />
+                  Group as one line item
+                </label>
+                <Badge
+                  variant="default"
+                  className="text-[10px] font-medium bg-green-600 hover:bg-green-600 text-white"
+                >
+                  {addedIds.size}
+                </Badge>
+              </div>
             </div>
             <div className="max-h-[280px] overflow-auto rounded-md border bg-white">
               <table className="w-full text-[11px] table-fixed">
