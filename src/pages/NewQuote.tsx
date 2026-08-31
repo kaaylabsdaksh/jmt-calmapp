@@ -1839,6 +1839,32 @@ const NewQuote = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <AlertDialog open={cancelConfirmOpen} onOpenChange={setCancelConfirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Cancel {selectedItemIds.length} selected item{selectedItemIds.length === 1 ? "" : "s"}?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Cancelled items stay on the quote as read-only rows moved to the bottom of the list, and are excluded from editing.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Keep items</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                setItems((prev) => prev.map((i) => (selectedItemIds.includes(i.id) ? { ...i, status: "Cancelled" } : i)));
+                setExpandedItems((prev) => prev.filter((id) => !selectedItemIds.includes(id)));
+                setSelectedItemIds([]);
+                setCancelConfirmOpen(false);
+              }}
+            >
+              Cancel items
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
