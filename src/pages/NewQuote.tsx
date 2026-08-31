@@ -467,6 +467,8 @@ const NewQuote = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [pendingDelete, setPendingDelete] = useState<string | null>(null);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [selectedItemIds, setSelectedItemIds] = useState<string[]>([]);
+  const [cancelConfirmOpen, setCancelConfirmOpen] = useState(false);
   const [copyQty, setCopyQty] = useState<Record<string, string>>({});
   type SubLine = { id: string; name: string; qty: string; baseCost: string; cost: string };
   const [itemServices, setItemServices] = useState<Record<string, SubLine[]>>({});
