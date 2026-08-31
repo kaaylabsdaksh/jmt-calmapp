@@ -70,6 +70,11 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
   const [selected, setSelected] = useState<Record<string, boolean>>({});
   const [groupAsOne, setGroupAsOne] = useState(false);
   const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
+  const [rowDetails, setRowDetails] = useState<Record<string, AddedItemDetail>>({});
+
+  const detailOf = (id: string) => rowDetails[id] ?? emptyItemDetail();
+  const setDetail = (id: string, patch: Partial<AddedItemDetail>) =>
+    setRowDetails((prev) => ({ ...prev, [id]: { ...(prev[id] ?? emptyItemDetail()), ...patch } }));
   const [serviceDraft, setServiceDraft] = useState({ name: "", qty: "1", cost: "0.00" });
   const [partDraft, setPartDraft] = useState({ name: "", qty: "1", cost: "0.00" });
   const [serviceRows, setServiceRows] = useState<ExtraRow[]>([]);
@@ -149,6 +154,13 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
   const handleAdd = () => {
     if (selectedProducts.length === 0) return;
     setAddedIds((prev) => new Set([...prev, ...selectedProducts.map((p) => p.id)]));
+    setRowDetails((prev) => {
+      const next = { ...prev };
+      selectedProducts.forEach((p) => {
+        if (!next[p.id]) next[p.id] = emptyItemDetail();
+      });
+      return next;
+    });
     setSelected({});
   };
 
@@ -156,6 +168,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
   const handleAddRow = (p: Product) => {
     if (addedIds.has(p.id)) return;
     setAddedIds((prev) => new Set([...prev, p.id]));
+    setRowDetails((prev) => (prev[p.id] ? prev : { ...prev, [p.id]: emptyItemDetail() }));
     setSelected((s) => ({ ...s, [p.id]: false }));
   };
 
@@ -166,12 +179,17 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
       next.delete(id);
       return next;
     });
+    setRowDetails((prev) => {
+      const next = { ...prev };
+      delete next[id];
+      return next;
+    });
   };
 
   /** Commit every staged row to the quote and close. */
   const handleDone = () => {
     if (addedProducts.length === 0) return;
-    onAdd({ products: addedProducts, groupAsOneLineItem: groupAsOne });
+    onAdd({ products: addedProducts, groupAsOneLineItem: groupAsOne, details: rowDetails });
     close();
   };
 
