@@ -90,6 +90,8 @@ const CONTACTS = ["Dana Whitfield", "Marcus Reed", "Alicia Moreno", "Ben Ottinge
 const SHIP_TO = ["Main Plant — 1200 Industrial Dr", "Warehouse B — 44 Levee Rd", "Corporate — 900 Poydras St"];
 const COMMENT_TYPES = ["Other", "Internal", "Customer", "Pricing", "Follow Up"];
 const ITEM_STATUSES = ["Quoted", "Pending", "Approved", "Cancelled"];
+const SHIP_METHODS = ["Pickup", "Delivery", "FedEx", "UPS", "LTL Freight", "Will Call"];
+const SERVICE_TYPES = ["Calibration", "Repair", "Certification", "Inspection", "Consulting"];
 
 type QuoteItem = {
   id: string;
@@ -325,13 +327,19 @@ const Group = ({
   action,
   children,
   className,
+  variant = "slate",
 }: {
   title: string;
   action?: React.ReactNode;
   children: React.ReactNode;
   className?: string;
+  variant?: "slate" | "white";
 }) => (
-  <div className={cn("rounded-lg border-2 border-slate-400 bg-slate-50/60 p-2.5 space-y-2", className)}>
+  <div className={cn(
+    "rounded-lg border-2 border-slate-400 p-2.5 space-y-2",
+    variant === "white" ? "bg-white" : "bg-slate-50/60",
+    className
+  )}>
     <div className="flex items-center justify-between gap-2">
       <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{title}</p>
       {action}
@@ -503,6 +511,8 @@ const NewQuote = () => {
   // Project
   const [proposedProject, setProposedProject] = useState("");
   const [specialInstructions, setSpecialInstructions] = useState("");
+  const [shipMethod, setShipMethod] = useState("");
+  const [serviceType, setServiceType] = useState("");
 
   // Charges
   const [charges, setCharges] = useState<Record<ChargeKey, string>>({
@@ -757,7 +767,7 @@ const NewQuote = () => {
             <div className="xl:col-span-8 space-y-3">
               <div className="grid grid-cols-1 gap-3">
                 {/* Quote Setup */}
-                <Group title="Quote Setup">
+                <Group title="Quote Setup" variant="white">
                   <div className="grid grid-cols-2 gap-2">
                     <Field label="Quote Type" required>
                       <SelectField value={quoteType} onChange={setQuoteType} options={QUOTE_TYPES} placeholder="Select type" className={cn(invalid("Quote Type") && errorCls)} />
@@ -790,7 +800,7 @@ const NewQuote = () => {
                 </Group>
 
                 {/* Customer, Origin & References */}
-                <Group title="Customer, Origin & References">
+                <Group title="Customer, Origin & References" variant="white">
                   <div className="grid grid-cols-3 gap-2 items-end">
 
                     <Field label="Existing Customer">
@@ -899,6 +909,7 @@ const NewQuote = () => {
               {/* Contract Pricing + Scheduling */}
               <Group
                 title="Contract Pricing"
+                variant="white"
                 action={
                   <button type="button" className="text-[10px] underline text-slate-900 hover:text-slate-700">
                     View
@@ -935,7 +946,7 @@ const NewQuote = () => {
               </Group>
 
               {/* Terms & Conditions */}
-              <Group title="Terms & Conditions">
+              <Group title="Terms & Conditions" variant="white">
                 <Field label="Terms and Conditions">
                   <AutoTextarea value={terms} onChange={(e) => setTerms(e.target.value)}  />
                 </Field>
@@ -1100,17 +1111,20 @@ const NewQuote = () => {
                     </td>
                   </tr>
                 ) : (
-                  items.map((i) => (
+                  [...items].sort((a, b) => (a.status === "Cancelled" ? 1 : 0) - (b.status === "Cancelled" ? 1 : 0)).map((i) => {
+                    const isCancelled = i.status === "Cancelled";
+                    return (
                     <React.Fragment key={i.id}>
-                    <tr className="border-t hover:bg-muted/40">
+                    <tr className={cn("border-t hover:bg-muted/40", isCancelled && "opacity-60 bg-slate-50/50")}>
                       <td className="px-1 py-1">
                         <button
                           type="button"
-                          className="h-5 w-5 grid place-items-center text-muted-foreground hover:text-foreground"
+                          disabled={isCancelled}
+                          className="h-5 w-5 grid place-items-center text-muted-foreground hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed"
                           onClick={() => toggleExpanded(i.id)}
                           aria-label="Toggle details"
                         >
-                          {expandedItems.includes(i.id)
+                          {expandedItems.includes(i.id) && !isCancelled
                             ? <ChevronDown className="h-3.5 w-3.5" />
                             : <ChevronRight className="h-3.5 w-3.5" />}
                         </button>
@@ -1119,14 +1133,15 @@ const NewQuote = () => {
                         <Checkbox
                           checked={i.status === "Cancelled"}
                           onCheckedChange={(v) => setItems((p) => p.map((it) => it.id === i.id ? { ...it, status: v ? "Cancelled" : "" } : it))}
-                          className="h-3.5 w-3.5 rounded-[3px] data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+                          className="h-4 w-4 rounded-md border-slate-400 transition-all data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 data-[state=checked]:text-white"
                         />
                       </td>
                       <td className="px-2 py-1 text-center">
                         <Checkbox
                           checked={i.rev}
+                          disabled={isCancelled}
                           onCheckedChange={(v) => setItems((p) => p.map((it) => it.id === i.id ? { ...it, rev: !!v } : it))}
-                          className="h-3.5 w-3.5 rounded-[3px] data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+                          className="h-4 w-4 rounded-md border-slate-400 transition-all data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 data-[state=checked]:text-white disabled:opacity-40"
                         />
                       </td>
                       <td className="px-2 py-1 text-center">{(itemServices[i.id] ?? []).length}</td>
@@ -1151,37 +1166,41 @@ const NewQuote = () => {
                       <td className="px-2 py-1">{i.is17025 ? "Yes" : ""}</td>
                       <td className="px-2 py-1">{i.cp ? "Yes" : ""}</td>
                       <td className="px-2 py-1">
-                        <div className="flex items-center gap-1.5">
-                          <button
-                            type="button"
-                            className="inline-flex items-center justify-center rounded p-1 text-slate-600 hover:bg-slate-100 hover:text-blue-600"
-                            onClick={() => openEdit(i)}
-                            title="Edit"
-                          >
-                            <Pencil className="h-3.5 w-3.5" />
-                          </button>
-                          <button
-                            type="button"
-                            className="inline-flex items-center justify-center rounded p-1 text-slate-600 hover:bg-red-50 hover:text-red-600"
-                            onClick={() => setPendingDelete(i.id)}
-                            title="Delete"
-                          >
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </button>
-                        </div>
+                        {!isCancelled && (
+                          <div className="flex items-center gap-1.5">
+                            <button
+                              type="button"
+                              className="inline-flex items-center justify-center rounded p-1 text-slate-600 hover:bg-slate-100 hover:text-blue-600"
+                              onClick={() => openEdit(i)}
+                              title="Edit"
+                            >
+                              <Pencil className="h-3.5 w-3.5" />
+                            </button>
+                            <button
+                              type="button"
+                              className="inline-flex items-center justify-center rounded p-1 text-slate-600 hover:bg-red-50 hover:text-red-600"
+                              onClick={() => setPendingDelete(i.id)}
+                              title="Delete"
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </button>
+                          </div>
+                        )}
                       </td>
                       <td className="px-2 py-1">
-                        <div className="flex items-center gap-1">
-                          <button type="button" className="text-[11px] text-blue-600 hover:underline" onClick={() => duplicateItem(i)}>Copy</button>
-                          <Input
-                            value={copyQty[i.id] ?? "1"}
-                            onChange={(e) => setCopyQty((p) => ({ ...p, [i.id]: e.target.value.replace(/\D/g, "") }))}
-                            className="h-6 w-10 px-1 text-[11px] text-center"
-                          />
-                        </div>
+                        {!isCancelled && (
+                          <div className="flex items-center gap-1">
+                            <button type="button" className="text-[11px] text-blue-600 hover:underline" onClick={() => duplicateItem(i)}>Copy</button>
+                            <Input
+                              value={copyQty[i.id] ?? "1"}
+                              onChange={(e) => setCopyQty((p) => ({ ...p, [i.id]: e.target.value.replace(/\D/g, "") }))}
+                              className="h-6 w-10 px-1 text-[11px] text-center"
+                            />
+                          </div>
+                        )}
                       </td>
                     </tr>
-                    {expandedItems.includes(i.id) && (
+                    {!isCancelled && expandedItems.includes(i.id) && (
                       <tr className="border-t bg-muted/20">
                         <td colSpan={ITEM_COLUMNS.length} className="px-3 py-2">
                           <div className="max-w-[860px] space-y-2">
@@ -1272,7 +1291,8 @@ const NewQuote = () => {
                     )}
 
                     </React.Fragment>
-                  ))
+                  );
+                })
 
                 )}
               </tbody>
@@ -1399,6 +1419,14 @@ const NewQuote = () => {
               </Field>
               <Field label="Special Instructions">
                 <AutoTextarea value={specialInstructions} onChange={(e) => setSpecialInstructions(e.target.value)}  />
+              </Field>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+              <Field label="Ship Method">
+                <SelectField value={shipMethod} onChange={setShipMethod} options={SHIP_METHODS} placeholder="Select ship method" />
+              </Field>
+              <Field label="Service Type">
+                <SelectField value={serviceType} onChange={setServiceType} options={SERVICE_TYPES} placeholder="Select service type" />
               </Field>
             </div>
           </AccSection>
