@@ -1078,8 +1078,9 @@ const NewQuote = () => {
                           className="h-3.5 w-3.5 rounded-[3px] data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
                         />
                       </td>
-                      <td className="px-2 py-1 text-center">{i.services ? 1 : 0}</td>
-                      <td className="px-2 py-1 text-center">{i.parts ? 1 : 0}</td>
+                      <td className="px-2 py-1 text-center">{(itemServices[i.id] ?? []).length}</td>
+                      <td className="px-2 py-1 text-center">{(itemParts[i.id] ?? []).length}</td>
+
                       <td className="px-2 py-1">{i.qty}</td>
                       <td className="px-2 py-1 whitespace-nowrap">{i.manufacturer}</td>
                       <td className="px-2 py-1 whitespace-nowrap">{i.model}</td>
