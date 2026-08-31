@@ -1130,14 +1130,14 @@ const NewQuote = () => {
                         <Checkbox
                           checked={i.status === "Cancelled"}
                           onCheckedChange={(v) => setItems((p) => p.map((it) => it.id === i.id ? { ...it, status: v ? "Cancelled" : "" } : it))}
-                          className="h-3.5 w-3.5 rounded-[3px] data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+                          className="h-4 w-4 rounded-md border-slate-400 transition-all data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 data-[state=checked]:text-white"
                         />
                       </td>
                       <td className="px-2 py-1 text-center">
                         <Checkbox
                           checked={i.rev}
                           onCheckedChange={(v) => setItems((p) => p.map((it) => it.id === i.id ? { ...it, rev: !!v } : it))}
-                          className="h-3.5 w-3.5 rounded-[3px] data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+                          className="h-4 w-4 rounded-md border-slate-400 transition-all data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 data-[state=checked]:text-white"
                         />
                       </td>
                       <td className="px-2 py-1 text-center">{(itemServices[i.id] ?? []).length}</td>
