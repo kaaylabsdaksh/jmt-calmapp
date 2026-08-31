@@ -1087,8 +1087,48 @@ const NewQuote = () => {
                     },
                   },
 
-                  { label: "Receive Items", fn: () => setItems((p) => p.map((i) => (selectedItemIds.length === 0 || selectedItemIds.includes(i.id) ? { ...i, rev: true } : i))) },
-                  { label: "Unreceive Items", fn: () => setItems((p) => p.map((i) => (selectedItemIds.length === 0 || selectedItemIds.includes(i.id) ? { ...i, rev: false } : i))) },
+                  {
+                    label: "Receive Items",
+                    fn: () => {
+                      const targetIds = selectedItemIds.length === 0 ? items.map((i) => i.id) : selectedItemIds;
+                      setItems((p) => p.map((i) => {
+                        if (!targetIds.includes(i.id) || i.rev) return i;
+                        return {
+                          ...i,
+                          rev: true,
+                          baseAmtOriginal: i.baseAmt,
+                          calCertOriginal: i.calCert,
+                          calc17025Original: i.calc17025,
+                          otherServicesOriginal: i.otherServices,
+                          otherPartsOriginal: i.otherParts,
+                          baseAmt: "0.00",
+                          calCert: "0.00",
+                          calc17025: "0.00",
+                          otherServices: "0.00",
+                          otherParts: "0.00",
+                        };
+                      }));
+                    },
+                  },
+                  {
+                    label: "Unreceive Items",
+                    fn: () => {
+                      const targetIds = selectedItemIds.length === 0 ? items.map((i) => i.id) : selectedItemIds;
+                      setItems((p) => p.map((i) => {
+                        if (!targetIds.includes(i.id) || !i.rev) return i;
+                        return {
+                          ...i,
+                          rev: false,
+                          baseAmt: i.baseAmtOriginal ?? i.baseAmt,
+                          calCert: i.calCertOriginal ?? i.calCert,
+                          calc17025: i.calc17025Original ?? i.calc17025,
+                          otherServices: i.otherServicesOriginal ?? i.otherServices,
+                          otherParts: i.otherPartsOriginal ?? i.otherParts,
+                        };
+                      }));
+                    },
+                  },
+
                   { label: "Search/Add Item", fn: handleSearchAddClick },
                   { label: "Add Testing Items", fn: handleAddItemClick },
                 ].map((a) => (
