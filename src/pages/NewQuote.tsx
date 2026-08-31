@@ -165,8 +165,34 @@ const num = (v: string) => {
 
 const labelCls = "text-[11px] font-normal text-muted-foreground";
 const inputCls = "h-6 text-[11px] md:text-[11px] px-1.5 py-0 bg-white text-black placeholder:text-[10px] placeholder:text-black placeholder:opacity-100";
-const textareaCls = "text-[11px] md:text-[11px] px-1.5 py-1.5 bg-white text-black placeholder:text-[10px] placeholder:text-black placeholder:opacity-100";
+const textareaCls = "text-[11px] md:text-[11px] px-1.5 py-1 bg-white text-black placeholder:text-[10px] placeholder:text-black placeholder:opacity-100";
 const errorCls = "border-red-500 ring-1 ring-red-500 focus-visible:ring-red-500";
+
+/** Compact textarea that starts as a single line and grows as the user types. */
+const AutoTextarea = ({
+  className,
+  value,
+  maxHeight = 220,
+  ...props
+}: React.ComponentProps<typeof Textarea> & { maxHeight?: number }) => {
+  const ref = React.useRef<HTMLTextAreaElement>(null);
+  React.useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${Math.min(el.scrollHeight, maxHeight)}px`;
+    el.style.overflowY = el.scrollHeight > maxHeight ? "auto" : "hidden";
+  }, [value, maxHeight]);
+  return (
+    <Textarea
+      ref={ref}
+      rows={1}
+      value={value}
+      className={cn(textareaCls, "min-h-0 h-7 resize-none overflow-hidden leading-tight", className)}
+      {...props}
+    />
+  );
+};
 
 
 
