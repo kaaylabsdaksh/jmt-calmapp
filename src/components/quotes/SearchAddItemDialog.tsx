@@ -195,7 +195,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
 
   return (
     <Dialog open={open} onOpenChange={(o) => (o ? onOpenChange(true) : close())}>
-      <DialogContent className="max-w-5xl p-0 gap-0 overflow-hidden">
+      <DialogContent className="max-w-7xl p-0 gap-0 overflow-hidden">
         <DialogHeader className="px-4 py-3 border-b bg-muted/30 space-y-0.5">
           <DialogTitle className="text-sm font-semibold flex items-center gap-2">
             <Search className="h-3.5 w-3.5 text-muted-foreground" />
