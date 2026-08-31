@@ -360,6 +360,22 @@ const Group = ({
   </div>
 );
 
+const SectionHeader = ({
+  number,
+  title,
+}: {
+  number: string;
+  title: string;
+}) => (
+  <div className="flex items-center gap-3">
+    <span className="flex h-6 w-6 items-center justify-center rounded-md bg-slate-100 text-[11px] font-bold text-slate-900 ring-1 ring-slate-200">
+      {number}
+    </span>
+    <h3 className="text-[11px] font-bold uppercase tracking-wider text-slate-900">{title}</h3>
+    <div className="flex-1 h-px bg-slate-200" />
+  </div>
+);
+
 const SelectField = ({
   value,
   onChange,
