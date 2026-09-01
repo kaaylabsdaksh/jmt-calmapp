@@ -28,6 +28,7 @@ import LogisticsView from "./pages/LogisticsView";
 import CustomerPickupView from "./pages/CustomerPickupView";
 import ShippingView from "./pages/ShippingView";
 import AccountAdminView from "./pages/AccountAdminView";
+import LabTriage from "./pages/LabTriage";
 import OnsiteProjects from "./pages/OnsiteProjects";
 import OnsiteScheduling from "./pages/OnsiteScheduling";
 import OnsiteSchedulingV2 from "./pages/OnsiteSchedulingV2";
@@ -110,6 +111,8 @@ const App = () => {
             <Route path="/customer-pickup" element={<CustomerPickupView />} />
             <Route path="/shipping-view" element={<ShippingView />} />
             <Route path="/account-admin" element={<AccountAdminView />} />
+            <Route path="/lab-triage" element={<LabTriage />} />
+
 
             <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
             <Route path="/onsite-projects" element={<OnsiteProjects />} />
