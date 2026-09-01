@@ -32,9 +32,27 @@ import {
 import { useSchedulingData } from '@/context/SchedulingDataContext';
 import TechnicianRosterPicker from './TechnicianRosterPicker';
 
-interface NonServiceEntryDialogProps {
+const CardSection = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) => (
+  <div className="overflow-hidden rounded-lg border bg-card shadow-sm">
+    <div className="flex items-center gap-2 border-b bg-muted/30 px-4 py-3">
+      <div className="h-4 w-1 rounded-full bg-primary" />
+      <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground">
+        {title}
+      </h3>
+    </div>
+    <div className="space-y-3 p-4">{children}</div>
+  </div>
+);
 
+interface NonServiceEntryDialogProps {
   entry: NonServiceEntry | null;
+
   open: boolean;
   onOpenChange: (open: boolean) => void;
   /** Pre-fills start/end when creating a new entry from a Calendar day
