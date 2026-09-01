@@ -170,6 +170,7 @@ const CalendarView: React.FC = () => {
   const { jobs, nonServiceEntries, technicians, openJobDetail } = useSchedulingData();
   const { highlightedAnchorId } = useOpenDecisions();
   const [month, setMonth] = useState(() => startOfMonth(new Date('2026-08-11')));
+  const [viewMode, setViewMode] = useState<'month' | 'week' | 'year'>('month');
   // D30/D31 (built 2026-08-19) — Calendar had no filters at all before this
   // while List had six, so "show me just Canada" meant leaving the board.
   const savedViews = useSavedViews();
