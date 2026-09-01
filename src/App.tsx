@@ -28,6 +28,7 @@ import LogisticsView from "./pages/LogisticsView";
 import CustomerPickupView from "./pages/CustomerPickupView";
 import ShippingView from "./pages/ShippingView";
 import AccountAdminView from "./pages/AccountAdminView";
+import LabTriage from "./pages/LabTriage";
 import OnsiteProjects from "./pages/OnsiteProjects";
 import OnsiteScheduling from "./pages/OnsiteScheduling";
 import OnsiteSchedulingV2 from "./pages/OnsiteSchedulingV2";
