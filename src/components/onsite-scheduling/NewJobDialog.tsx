@@ -18,6 +18,7 @@
  */
 import React, { useState } from 'react';
 import { format } from 'date-fns';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -27,7 +28,9 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { ModernDatePicker } from '@/components/ui/modern-date-picker';
 import { Label } from '@/components/ui/label';
+
 import {
   Select,
   SelectContent,
