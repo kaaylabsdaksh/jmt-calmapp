@@ -149,7 +149,7 @@ const NonServiceEntryDialog: React.FC<NonServiceEntryDialogProps> = ({
                 <Label className="text-xs">Start date</Label>
                 <ModernDatePicker
                   size="sm"
-                  value={startDate}
+                  value={startDate ? `${startDate}T00:00:00` : undefined}
                   onChange={(d) => setStartDate(d ? format(d, 'yyyy-MM-dd') : '')}
                 />
               </div>
@@ -157,7 +157,7 @@ const NonServiceEntryDialog: React.FC<NonServiceEntryDialogProps> = ({
                 <Label className="text-xs">End date</Label>
                 <ModernDatePicker
                   size="sm"
-                  value={endDate}
+                  value={endDate ? `${endDate}T00:00:00` : undefined}
                   onChange={(d) => setEndDate(d ? format(d, 'yyyy-MM-dd') : '')}
                 />
                 {showValidation && startDate > endDate && (
