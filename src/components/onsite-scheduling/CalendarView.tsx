@@ -439,16 +439,15 @@ const CalendarView: React.FC = () => {
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-6 text-[11px] font-medium text-muted-foreground hover:text-foreground"
+              onClick={() => setMonth(startOfMonth(new Date()))}
+            >
+              Today
+            </Button>
           </div>
-
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-6 text-[11px] font-medium text-muted-foreground hover:text-foreground"
-            onClick={() => setMonth(startOfMonth(new Date()))}
-          >
-            Today
-          </Button>
         </div>
         <div className="grid grid-cols-7 border-b bg-muted/40 text-[11px] font-semibold uppercase text-muted-foreground">
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
