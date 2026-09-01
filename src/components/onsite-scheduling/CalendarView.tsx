@@ -445,7 +445,7 @@ const CalendarView: React.FC = () => {
             variant="ghost"
             size="sm"
             className="h-6 text-[11px] font-medium text-muted-foreground hover:text-foreground"
-            onClick={() => setMonth(startOfMonth(new Date('2026-08-11')))}
+            onClick={() => setMonth(startOfMonth(new Date()))}
           >
             Today
           </Button>
