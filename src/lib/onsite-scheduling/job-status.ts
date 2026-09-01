@@ -119,9 +119,9 @@ export const READINESS_FILL: Record<'Red' | 'Green' | 'Partial', string> = {
  * (On Hold/Completed/Cancelled) should. */
 export const LIFECYCLE_BADGE_STYLES: Record<LifecycleStatus, string> = {
   Active: 'bg-muted text-muted-foreground',
-  'On Hold': 'bg-amber-100 text-amber-800 border-amber-300',
-  Completed: 'bg-emerald-100 text-emerald-800 border-emerald-300',
-  Cancelled: 'bg-rose-100 text-rose-800 border-rose-300 line-through opacity-80',
+  'On Hold': 'bg-slate-300 text-slate-900 border-slate-400',
+  Completed: 'bg-slate-200 text-slate-600 border-slate-300',
+  Cancelled: 'bg-slate-100 text-slate-400 border-slate-200 line-through opacity-70',
 };
 
 /** Aggregate state of one boolean flag (poReceived/confirmed) across ALL of
