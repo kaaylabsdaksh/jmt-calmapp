@@ -335,15 +335,8 @@ const CalendarView: React.FC = () => {
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-8 text-xs"
-            onClick={() => setMonth(startOfMonth(new Date('2026-08-11')))}
-          >
-            Today
-          </Button>
         </div>
+
         <div className="flex items-center gap-2">
           {/* Hide completed/cancelled moved into CalendarFilterBar with the
               rest of the filters (D30) — it was always a filter sitting in
