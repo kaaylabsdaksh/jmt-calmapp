@@ -48,6 +48,26 @@ import {
 import { buildDraftJob, isDraftJobValid } from '@/lib/onsite-scheduling/job-draft';
 import TechnicianRosterPicker from './TechnicianRosterPicker';
 
+/** Shared card shell — same treatment as JobDetailDialog /
+ *  NonServiceEntryDialog so all three onsite dialogs read identically. */
+const CardSection = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) => (
+  <div className="overflow-hidden rounded-lg border bg-card shadow-sm">
+    <div className="flex items-center gap-2 border-b bg-muted/30 px-4 py-3">
+      <div className="h-4 w-1 rounded-full bg-primary" />
+      <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground">
+        {title}
+      </h3>
+    </div>
+    <div className="space-y-3 p-4">{children}</div>
+  </div>
+);
+
 interface NewJobDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
