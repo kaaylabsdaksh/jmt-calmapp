@@ -335,15 +335,8 @@ const CalendarView: React.FC = () => {
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-8 text-xs"
-            onClick={() => setMonth(startOfMonth(new Date('2026-08-11')))}
-          >
-            Today
-          </Button>
         </div>
+
         <div className="flex items-center gap-2">
           {/* Hide completed/cancelled moved into CalendarFilterBar with the
               rest of the filters (D30) — it was always a filter sitting in
@@ -447,6 +440,16 @@ const CalendarView: React.FC = () => {
 
       {/* Month grid */}
       <div className="overflow-x-auto rounded-md border bg-white shadow-sm dark:bg-background">
+        <div className="flex items-center justify-end border-b bg-muted/40 px-2 py-1">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-6 text-[11px] font-medium text-muted-foreground hover:text-foreground"
+            onClick={() => setMonth(startOfMonth(new Date('2026-08-11')))}
+          >
+            Today
+          </Button>
+        </div>
         <div className="grid grid-cols-7 border-b bg-muted/40 text-[11px] font-semibold uppercase text-muted-foreground">
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
             <div key={d} className="px-2 py-1.5">
