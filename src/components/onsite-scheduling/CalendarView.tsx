@@ -613,7 +613,7 @@ const CalendarView: React.FC = () => {
               >
                 {week.map((day, dayIdx) => {
                   const iso = toIso(day);
-                  const inMonth = isSameMonth(day, month);
+                  const inMonth = viewMode === 'week' || isSameMonth(day, month);
                   return (
                     <button
                       key={iso}
