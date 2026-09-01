@@ -445,7 +445,7 @@ const CalendarView: React.FC = () => {
             variant="ghost"
             size="sm"
             className="h-6 text-[11px] font-medium text-muted-foreground hover:text-foreground"
-            onClick={() => setMonth(startOfMonth(new Date('2026-08-11')))}
+            onClick={() => setMonth(startOfMonth(new Date()))}
           >
             Today
           </Button>
@@ -501,7 +501,8 @@ const CalendarView: React.FC = () => {
                       className={cn(
                         'flex cursor-pointer items-start justify-end rounded-sm px-1.5 pt-0.5 text-[11px] hover:bg-muted/40',
                         !inMonth && 'text-muted-foreground/40',
-                        isToday(day) && 'font-bold text-blue-600'
+                        isToday(day) &&
+                          'bg-blue-50 font-bold text-blue-700 ring-1 ring-inset ring-blue-200 hover:bg-blue-100 dark:bg-blue-950/30 dark:text-blue-300 dark:ring-blue-800'
                       )}
                     >
                       {format(day, 'd')}
