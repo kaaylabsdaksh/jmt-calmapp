@@ -226,8 +226,18 @@ const CalendarView: React.FC = () => {
     return ids;
   }, [jobs, nonServiceEntries]);
 
-  const gridStart = startOfWeek(startOfMonth(month));
-  const gridEnd = endOfWeek(endOfMonth(month));
+  const gridStart =
+    viewMode === 'week'
+      ? startOfWeek(month)
+      : viewMode === 'year'
+        ? startOfWeek(startOfYear(month))
+        : startOfWeek(startOfMonth(month));
+  const gridEnd =
+    viewMode === 'week'
+      ? endOfWeek(month)
+      : viewMode === 'year'
+        ? endOfWeek(endOfYear(month))
+        : endOfWeek(endOfMonth(month));
   const allDays = eachDayOfInterval({ start: gridStart, end: gridEnd });
   const weeks: Date[][] = [];
   for (let i = 0; i < allDays.length; i += 7) weeks.push(allDays.slice(i, i + 7));
