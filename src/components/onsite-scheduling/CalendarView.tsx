@@ -78,18 +78,8 @@ type BarItem =
       entry: NonServiceEntry;
     };
 
-const NON_SERVICE_STYLES: Record<NonServiceEntry['type'], string> = {
-  PTO: 'border-dashed border-violet-400 bg-violet-50 text-violet-800',
-  Travel: 'border-dashed border-sky-400 bg-sky-50 text-sky-800',
-  'Out of Service': 'border-dashed border-rose-400 bg-rose-50 text-rose-800',
-  Tentative: 'border-dashed border-slate-400 bg-slate-50 text-slate-700',
-  // 'Other' (D29, 2026-08-16) — a fixed catch-all, not a stand-in for a
-  // configurable type list (see types.ts's NonServiceEntryType comment).
-  // Deliberately its own hue, not reused from the four real types above,
-  // so it's visually distinct at a glance rather than looking like a
-  // mis-tagged entry.
-  Other: 'border-dashed border-stone-400 bg-stone-50 text-stone-700',
-};
+import SchedulingLegend, { NON_SERVICE_STYLES } from './SchedulingLegend';
+
 
 /** D28 — a job bar's fill is Readiness (Red/Green/Partial), always; On
  * Hold/Completed/Cancelled are a separate axis (Status) layered on TOP as
