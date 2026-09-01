@@ -88,82 +88,94 @@ const NonServiceEntryDialog: React.FC<NonServiceEntryDialogProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg">
-        <DialogHeader>
-          <DialogTitle>
-            {entry ? 'Edit non-service entry' : 'New non-service entry'}
+      <DialogContent className="flex max-h-[85vh] max-w-lg flex-col overflow-hidden p-0">
+        <DialogHeader className="border-b px-6 py-4">
+          <DialogTitle className="flex items-center justify-between text-base font-semibold">
+            <span>{entry ? 'Edit non-service entry' : 'New non-service entry'}</span>
+            <Badge className="text-[10px]" variant="secondary">
+              {type}
+            </Badge>
           </DialogTitle>
           {/* Date header (direct user feedback, 2026-08-16) — same
               treatment as NewJobDialog, reflecting the live Start date
               value so it stays accurate as the field is edited. */}
-          <p className="text-xs text-muted-foreground">
+          <p className="mt-1 text-xs text-muted-foreground">
+            <span className="font-medium text-foreground">Dates:</span> {startDate} –{' '}
+            {endDate} &nbsp;·&nbsp;{' '}
             {format(new Date(`${startDate}T00:00:00`), 'EEEE, MMMM d, yyyy')}
           </p>
         </DialogHeader>
-        <div className="space-y-3">
-          <div className="space-y-1">
-            <Label className="text-xs">Type</Label>
-            <Select value={type} onValueChange={(v) => setType(v as NonServiceEntryType)}>
-              <SelectTrigger className="h-8 text-xs">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {NON_SERVICE_ENTRY_TYPES.map((t) => (
-                  <SelectItem key={t} value={t}>
-                    {t}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
 
-          <div className="grid grid-cols-2 gap-3">
+        <div className="flex-1 space-y-4 overflow-y-auto bg-muted/30 p-6 text-sm">
+          <CardSection title="Entry Details">
             <div className="space-y-1">
-              <Label className="text-xs">Start date</Label>
-              <Input
-                type="date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                className="h-8 text-xs"
-              />
+              <Label className="text-xs">Type</Label>
+              <Select value={type} onValueChange={(v) => setType(v as NonServiceEntryType)}>
+                <SelectTrigger className="h-8 text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {NON_SERVICE_ENTRY_TYPES.map((t) => (
+                    <SelectItem key={t} value={t}>
+                      {t}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-            <div className="space-y-1">
-              <Label className="text-xs">End date</Label>
-              <Input
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                className="h-8 text-xs"
-              />
-              {showValidation && startDate > endDate && (
-                <p className="text-[11px] text-destructive">
-                  End date cannot be before start date
-                </p>
-              )}
+
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <Label className="text-xs">Start date</Label>
+                <Input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  className="h-8 text-xs"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label className="text-xs">End date</Label>
+                <Input
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  className="h-8 text-xs"
+                />
+                {showValidation && startDate > endDate && (
+                  <p className="text-[11px] text-destructive">
+                    End date cannot be before start date
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
+          </CardSection>
 
-          <TechnicianRosterPicker
-            selectedIds={technicianIds}
-            onChange={setTechnicianIds}
-            dateRange={{ startDate, endDate }}
-            excludeEntryId={entry?.id}
-          />
-          {showValidation && technicianIds.length === 0 && (
-            <p className="text-[11px] text-destructive">Select at least one technician</p>
-          )}
+          <CardSection title="Technicians">
+            <TechnicianRosterPicker
+              selectedIds={technicianIds}
+              onChange={setTechnicianIds}
+              dateRange={{ startDate, endDate }}
+              excludeEntryId={entry?.id}
+            />
+            {showValidation && technicianIds.length === 0 && (
+              <p className="text-[11px] text-destructive">
+                Select at least one technician
+              </p>
+            )}
+          </CardSection>
 
-          <div className="space-y-1">
-            <Label className="text-xs">Notes</Label>
+          <CardSection title="Notes">
             <Textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Notes (optional)"
               className="min-h-[60px] text-xs"
             />
-          </div>
+          </CardSection>
         </div>
-        <DialogFooter className="flex items-center justify-between sm:justify-between">
+
+        <DialogFooter className="flex items-center justify-between border-t bg-white px-6 py-4 sm:justify-between">
           {entry ? (
             <Button
               variant="ghost"
@@ -189,5 +201,6 @@ const NonServiceEntryDialog: React.FC<NonServiceEntryDialogProps> = ({
     </Dialog>
   );
 };
+
 
 export default NonServiceEntryDialog;
