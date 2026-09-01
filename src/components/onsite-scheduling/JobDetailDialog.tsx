@@ -729,6 +729,153 @@ const JobDetailDialog: React.FC = () => {
               />
             </section>
 
+            {/* Logistics & details */}
+            <section>
+              <h3 className="mb-3 text-sm font-bold uppercase tracking-tight text-foreground">
+                Logistics &amp; details
+              </h3>
+              <div className="grid gap-4 rounded-lg border bg-background p-4 shadow-sm sm:grid-cols-2 lg:grid-cols-3">
+                {/* Vehicle */}
+                <div className="space-y-2 lg:col-span-2">
+                  <label className="block text-[11px] font-bold uppercase text-muted-foreground">
+                    Vehicle
+                  </label>
+                  <Select
+                    value={draftVehicleId ?? '__none__'}
+                    onValueChange={(v) => setDraftVehicleId(v === '__none__' ? undefined : v)}
+                  >
+                    <SelectTrigger className="h-8 text-xs">
+                      <SelectValue placeholder="Unassigned" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="__none__">Unassigned</SelectItem>
+                      {JOB_VEHICLES.map((v) => (
+                        <SelectItem key={v.id} value={v.id}>
+                          {v.name} · {v.homeLocation}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <VanSuggestionPanel
+                    job={{
+                      id: job.id,
+                      accounts: draftAccounts,
+                      location: job.location,
+                      startDate: job.startDate,
+                      endDate: job.endDate,
+                    }}
+                    selectedVehicleId={draftVehicleId}
+                    onPick={setDraftVehicleId}
+                  />
+                </div>
+
+                {/* Managing Lab */}
+                <div className="space-y-2">
+                  <label className="block text-[11px] font-bold uppercase text-muted-foreground">
+                    Managing Lab
+                  </label>
+                  <Select
+                    value={draftManagingLab || '__none__'}
+                    onValueChange={(v) => setDraftManagingLab(v === '__none__' ? '' : v)}
+                  >
+                    <SelectTrigger className="h-8 text-xs">
+                      <SelectValue placeholder="Select Lab" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="__none__">Select Lab</SelectItem>
+                      {MANAGING_LABS.map((lab) => (
+                        <SelectItem key={lab} value={lab}>
+                          {lab}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Canada-only fields */}
+                {job.location === 'Canada' && (
+                  <>
+                    <div className="space-y-2">
+                      <label className="block text-[11px] font-bold uppercase text-muted-foreground">
+                        Outside Sales
+                      </label>
+                      <Input
+                        className="h-8 text-xs"
+                        placeholder="—"
+                        value={draftOutsideSales}
+                        onChange={(e) => setDraftOutsideSales(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="block text-[11px] font-bold uppercase text-muted-foreground">
+                        Managed By
+                      </label>
+                      <Input
+                        className="h-8 text-xs"
+                        value={draftManagedBy}
+                        onChange={(e) => setDraftManagedBy(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="block text-[11px] font-bold uppercase text-muted-foreground">
+                        Posted Invoice
+                      </label>
+                      <Input
+                        className="h-8 text-xs"
+                        value={draftPostedInvoice}
+                        onChange={(e) => setDraftPostedInvoice(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="space-y-2 sm:col-span-2">
+                      <label className="block text-[11px] font-bold uppercase text-muted-foreground">
+                        Service Checklists
+                      </label>
+                      <div className="grid gap-2 sm:grid-cols-2">
+                        <label className="flex flex-col gap-0.5">
+                          <span className="text-[10px] text-muted-foreground">Pre-Service</span>
+                          <Textarea
+                            className="min-h-[50px] text-xs"
+                            value={draftPreServiceChecklist}
+                            onChange={(e) => setDraftPreServiceChecklist(e.target.value)}
+                          />
+                        </label>
+                        <label className="flex flex-col gap-0.5">
+                          <span className="text-[10px] text-muted-foreground">Post-Service</span>
+                          <Textarea
+                            className="min-h-[50px] text-xs"
+                            value={draftPostServiceChecklist}
+                            onChange={(e) => setDraftPostServiceChecklist(e.target.value)}
+                          />
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="block text-[11px] font-bold uppercase text-muted-foreground">
+                        Documents
+                      </label>
+                      <div className="flex items-center justify-between rounded-lg border bg-muted/30 p-2">
+                        <span className="text-xs text-muted-foreground">No files found</span>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="h-7 gap-1 text-[11px]"
+                          disabled
+                          title="Not wired up in this prototype — UI shell only"
+                        >
+                          <Paperclip className="h-3 w-3" />
+                          Upload
+                        </Button>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </section>
+
             {/* Comments */}
             <section>
               <h3 className="mb-3 text-sm font-bold uppercase tracking-tight text-foreground">
@@ -739,198 +886,9 @@ const JobDetailDialog: React.FC = () => {
                 onAdd={(text) => addJobComment(job.id, text)}
               />
             </section>
-          </main>
-
-          {/* Sidebar */}
-          <aside className="w-80 shrink-0 space-y-6 overflow-y-auto border-l bg-background p-6">
-            {/* Readiness */}
-            <div className="space-y-2">
-              <label className="block text-[11px] font-bold uppercase text-muted-foreground">
-                Readiness
-              </label>
-              <div className="flex items-center justify-between rounded-lg border bg-muted/30 p-2">
-                <span className="text-xs text-muted-foreground">PO + Confirmed</span>
-                <Badge className={cn('text-[11px]', READINESS_BADGE_STYLES[previewReadiness])}>
-                  {previewReadiness}
-                </Badge>
-              </div>
-              <p className="text-[10px] text-muted-foreground">
-                Derived from PO Received + Confirmed on every account — shown regardless of
-                Status. <DecisionTag decisionId="D28" />
-              </p>
-            </div>
-
-            {/* Status */}
-            <div className="space-y-2">
-              <label className="block text-[11px] font-bold uppercase text-muted-foreground">
-                Status
-              </label>
-              <div className="flex items-center justify-between rounded-lg border bg-muted/30 p-2">
-                <span className="text-xs text-muted-foreground">Lifecycle</span>
-                <Badge
-                  className={cn('text-[11px]', LIFECYCLE_BADGE_STYLES[previewLifecycleStatus])}
-                >
-                  {previewLifecycleStatus}
-                </Badge>
-              </div>
-              <p className="text-[10px] text-muted-foreground">
-                {isLockedStatus
-                  ? `${job.status} is a manual override made in the real Detail page, not editable here.`
-                  : 'Active unless placed On Hold — Completed/Cancelled are set from the real Detail page, not here.'}
-              </p>
-              {!isLockedStatus && (
-                <label className="flex items-center gap-2 pt-1 text-xs">
-                  <Switch checked={draftOnHold} onCheckedChange={setDraftOnHold} />
-                  On Hold
-                </label>
-              )}
-              {isLockedStatus && (
-                <p className="text-[10px] text-muted-foreground">
-                  <DecisionTag decisionId="D5" />
-                </p>
-              )}
-            </div>
-
-            <hr className="border-border" />
-
-            {/* Vehicle */}
-            <div className="space-y-2">
-              <label className="block text-[11px] font-bold uppercase text-muted-foreground">
-                Vehicle
-              </label>
-              <Select
-                value={draftVehicleId ?? '__none__'}
-                onValueChange={(v) => setDraftVehicleId(v === '__none__' ? undefined : v)}
-              >
-                <SelectTrigger className="h-8 text-xs">
-                  <SelectValue placeholder="Unassigned" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="__none__">Unassigned</SelectItem>
-                  {JOB_VEHICLES.map((v) => (
-                    <SelectItem key={v.id} value={v.id}>
-                      {v.name} · {v.homeLocation}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <VanSuggestionPanel
-                job={{
-                  id: job.id,
-                  accounts: draftAccounts,
-                  location: job.location,
-                  startDate: job.startDate,
-                  endDate: job.endDate,
-                }}
-                selectedVehicleId={draftVehicleId}
-                onPick={setDraftVehicleId}
-              />
-            </div>
-
-            {/* Canada-only fields */}
-            {job.location === 'Canada' && (
-              <>
-                <div className="space-y-2">
-                  <label className="block text-[11px] font-bold uppercase text-muted-foreground">
-                    Outside Sales
-                  </label>
-                  <Input
-                    className="h-8 text-xs"
-                    placeholder="—"
-                    value={draftOutsideSales}
-                    onChange={(e) => setDraftOutsideSales(e.target.value)}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="block text-[11px] font-bold uppercase text-muted-foreground">
-                    Service Checklists
-                  </label>
-                  <label className="flex flex-col gap-0.5">
-                    <span className="text-[10px] text-muted-foreground">Pre-Service</span>
-                    <Textarea
-                      className="min-h-[50px] text-xs"
-                      value={draftPreServiceChecklist}
-                      onChange={(e) => setDraftPreServiceChecklist(e.target.value)}
-                    />
-                  </label>
-                  <label className="flex flex-col gap-0.5">
-                    <span className="text-[10px] text-muted-foreground">Post-Service</span>
-                    <Textarea
-                      className="min-h-[50px] text-xs"
-                      value={draftPostServiceChecklist}
-                      onChange={(e) => setDraftPostServiceChecklist(e.target.value)}
-                    />
-                  </label>
-                  <label className="flex flex-col gap-0.5">
-                    <span className="text-[10px] text-muted-foreground">Posted Invoice</span>
-                    <Input
-                      className="h-8 text-xs"
-                      value={draftPostedInvoice}
-                      onChange={(e) => setDraftPostedInvoice(e.target.value)}
-                    />
-                  </label>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="block text-[11px] font-bold uppercase text-muted-foreground">
-                    Managed By
-                  </label>
-                  <Input
-                    className="h-8 text-xs"
-                    value={draftManagedBy}
-                    onChange={(e) => setDraftManagedBy(e.target.value)}
-                  />
-                </div>
-              </>
-            )}
-
-            {/* Managing Lab */}
-            <div className="space-y-2">
-              <label className="block text-[11px] font-bold uppercase text-muted-foreground">
-                Managing Lab
-              </label>
-              <Select
-                value={draftManagingLab || '__none__'}
-                onValueChange={(v) => setDraftManagingLab(v === '__none__' ? '' : v)}
-              >
-                <SelectTrigger className="h-8 text-xs">
-                  <SelectValue placeholder="Select Lab" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="__none__">Select Lab</SelectItem>
-                  {MANAGING_LABS.map((lab) => (
-                    <SelectItem key={lab} value={lab}>
-                      {lab}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Documents */}
-            {job.location === 'Canada' && (
-              <div className="space-y-2">
-                <label className="block text-[11px] font-bold uppercase text-muted-foreground">
-                  Documents
-                </label>
-                <div className="flex items-center justify-between rounded-lg border bg-muted/30 p-2">
-                  <span className="text-xs text-muted-foreground">No files found</span>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-7 gap-1 text-[11px]"
-                    disabled
-                    title="Not wired up in this prototype — UI shell only"
-                  >
-                    <Paperclip className="h-3 w-3" />
-                    Upload
-                  </Button>
-                </div>
-              </div>
-            )}
-          </aside>
+          </div>
         </div>
+
 
         {/* Footer */}
         <DialogFooter className="shrink-0 border-t px-6 py-4">
