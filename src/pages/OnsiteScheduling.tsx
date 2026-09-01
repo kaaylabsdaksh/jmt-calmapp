@@ -71,17 +71,9 @@ const OnsiteSchedulingInner: React.FC = () => {
     <div className="flex h-full flex-col">
       <ModernTopNav />
 
-      {/* Page header — same shape as the onsite detail header */}
-      <header className="flex items-center justify-between border-b border-border bg-white px-2 py-3 sm:px-4 lg:px-6">
-        <div>
-          <h1 className="text-base font-semibold leading-tight text-foreground sm:text-lg">
-            Onsite Scheduling
-          </h1>
-          <p className="text-[11px] text-muted-foreground">
-            Plan onsite jobs, technician availability and non-service time.
-          </p>
-        </div>
-      </header>
+      {/* Page header hidden per request — breadcrumbs in ModernTopNav
+          already identify the page. */}
+
 
       <Tabs
         value={tab}
