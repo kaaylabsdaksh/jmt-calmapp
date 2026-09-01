@@ -458,7 +458,6 @@ const CalendarView: React.FC = () => {
           ))}
         </div>
 
-
         {weeks.map((week, weekIdx) => {
           const activeThisWeek = items
             .filter(
