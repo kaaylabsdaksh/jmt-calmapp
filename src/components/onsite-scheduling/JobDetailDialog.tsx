@@ -316,15 +316,16 @@ const JobDetailDialog: React.FC = () => {
               </Badge>
             </div>
           </DialogTitle>
-        </DialogHeader>
-
-        <div className="flex-1 space-y-4 overflow-y-auto bg-muted/30 p-6 text-sm">
-          <p className="text-xs text-muted-foreground">
+          <p className="mt-1 text-xs text-muted-foreground">
             <span className="font-medium text-foreground">Dates:</span> {job.startDate} –{' '}
             {job.endDate} &nbsp;·&nbsp;{' '}
             <span className="font-medium text-foreground">Location/Division:</span>{' '}
             {job.location} / {job.division}
           </p>
+        </DialogHeader>
+
+        <div className="flex-1 space-y-4 overflow-y-auto bg-muted/30 p-6 text-sm">
+
 
           {job.osrStatus !== 'ok' && (
             <div className="flex items-start gap-1.5 rounded-md border border-amber-300 bg-amber-50 p-2 text-xs text-amber-800 dark:bg-amber-950/30">
