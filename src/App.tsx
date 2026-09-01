@@ -111,6 +111,8 @@ const App = () => {
             <Route path="/customer-pickup" element={<CustomerPickupView />} />
             <Route path="/shipping-view" element={<ShippingView />} />
             <Route path="/account-admin" element={<AccountAdminView />} />
+            <Route path="/lab-triage" element={<LabTriage />} />
+
 
             <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
             <Route path="/onsite-projects" element={<OnsiteProjects />} />
