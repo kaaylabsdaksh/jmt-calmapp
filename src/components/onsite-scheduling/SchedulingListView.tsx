@@ -73,6 +73,7 @@ import {
 } from '@/lib/onsite-scheduling/job-status';
 import { JOB_VEHICLES } from '@/lib/onsite-scheduling/mock-data';
 import type { ScheduledJob } from '@/lib/onsite-scheduling/types';
+import SchedulingLegend from './SchedulingLegend';
 import DecisionTag from './DecisionTag';
 import NewEntryChooser from './NewEntryChooser';
 import NewJobDialog from './NewJobDialog';
