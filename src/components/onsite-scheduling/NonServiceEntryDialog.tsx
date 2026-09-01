@@ -33,6 +33,7 @@ import { useSchedulingData } from '@/context/SchedulingDataContext';
 import TechnicianRosterPicker from './TechnicianRosterPicker';
 
 interface NonServiceEntryDialogProps {
+
   entry: NonServiceEntry | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
