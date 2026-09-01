@@ -133,7 +133,10 @@ const NewJobDialog: React.FC<NewJobDialogProps> = ({
           <p className="mt-1 text-xs text-muted-foreground">
             <span className="font-medium text-foreground">Dates:</span> {startDate} –{' '}
             {endDate} &nbsp;·&nbsp;{' '}
-            {format(new Date(`${startDate}T00:00:00`), 'EEEE, MMMM d, yyyy')}
+            {startDate
+              ? format(new Date(`${startDate}T00:00:00`), 'EEEE, MMMM d, yyyy')
+              : '—'}
+
           </p>
         </DialogHeader>
 
