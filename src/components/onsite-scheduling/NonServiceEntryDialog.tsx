@@ -5,6 +5,7 @@
 import React, { useState } from 'react';
 import { format } from 'date-fns';
 import { Trash2 } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
