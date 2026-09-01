@@ -384,17 +384,14 @@ const CalendarView: React.FC = () => {
           permanent surface of their own (roster picker only renders inside
           a dialog, so its decision tags need a jump target that's always
           in the DOM). */}
-      <SchedulingLegend
-        anchorId="decision-D9"
-        highlightedAnchorId={highlightedAnchorId}
-      />
-      <div
-        className={cn(
-          'flex flex-col gap-1 rounded-md border bg-muted/30 px-2 py-1.5 text-[10px] transition-shadow'
-        )}
-      >
+      <div className="flex flex-col rounded-md border bg-muted/30 text-[10px]">
+        <SchedulingLegend
+          anchorId="decision-D9"
+          highlightedAnchorId={highlightedAnchorId}
+          className="rounded-none border-0 bg-transparent"
+        />
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t px-2 py-1.5 text-muted-foreground">
 
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t pt-2 text-muted-foreground">
           <span
             id="decision-D3"
             className={cn(
