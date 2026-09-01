@@ -19,15 +19,22 @@
 import React, { useMemo, useState } from 'react';
 import {
   addMonths,
+  addWeeks,
+  addYears,
   eachDayOfInterval,
+  eachMonthOfInterval,
   endOfMonth,
   endOfWeek,
+  endOfYear,
   format,
   isSameMonth,
   isToday,
   startOfMonth,
   startOfWeek,
+  startOfYear,
   subMonths,
+  subWeeks,
+  subYears,
 } from 'date-fns';
 import {
   AlertTriangle,
@@ -163,6 +170,7 @@ const CalendarView: React.FC = () => {
   const { jobs, nonServiceEntries, technicians, openJobDetail } = useSchedulingData();
   const { highlightedAnchorId } = useOpenDecisions();
   const [month, setMonth] = useState(() => startOfMonth(new Date('2026-08-11')));
+  const [viewMode, setViewMode] = useState<'month' | 'week' | 'year'>('month');
   // D30/D31 (built 2026-08-19) — Calendar had no filters at all before this
   // while List had six, so "show me just Canada" meant leaving the board.
   const savedViews = useSavedViews();
@@ -218,8 +226,18 @@ const CalendarView: React.FC = () => {
     return ids;
   }, [jobs, nonServiceEntries]);
 
-  const gridStart = startOfWeek(startOfMonth(month));
-  const gridEnd = endOfWeek(endOfMonth(month));
+  const gridStart =
+    viewMode === 'week'
+      ? startOfWeek(month)
+      : viewMode === 'year'
+        ? startOfWeek(startOfYear(month))
+        : startOfWeek(startOfMonth(month));
+  const gridEnd =
+    viewMode === 'week'
+      ? endOfWeek(month)
+      : viewMode === 'year'
+        ? endOfWeek(endOfYear(month))
+        : endOfWeek(endOfMonth(month));
   const allDays = eachDayOfInterval({ start: gridStart, end: gridEnd });
   const weeks: Date[][] = [];
   for (let i = 0; i < allDays.length; i += 7) weeks.push(allDays.slice(i, i + 7));
@@ -418,24 +436,44 @@ const CalendarView: React.FC = () => {
 
       {/* Month grid */}
       <div className="overflow-x-auto rounded-md border bg-white shadow-sm dark:bg-background">
-        <div className="flex items-center justify-between border-b bg-muted/40 px-2 py-1">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b bg-muted/40 px-2 py-1">
           <div className="flex items-center gap-2">
             <Button
               variant="outline"
               size="icon"
               className="h-7 w-7"
-              onClick={() => setMonth((m) => subMonths(m, 1))}
+              onClick={() =>
+                setMonth((m) =>
+                  viewMode === 'week'
+                    ? subWeeks(m, 1)
+                    : viewMode === 'year'
+                      ? subYears(m, 1)
+                      : subMonths(m, 1)
+                )
+              }
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
             <h2 className="min-w-[8rem] text-center text-sm font-semibold text-foreground">
-              {format(month, 'MMMM yyyy')}
+              {viewMode === 'year'
+                ? format(month, 'yyyy')
+                : viewMode === 'week'
+                  ? `${format(startOfWeek(month), 'MMM d')} – ${format(endOfWeek(month), 'MMM d, yyyy')}`
+                  : format(month, 'MMMM yyyy')}
             </h2>
             <Button
               variant="outline"
               size="icon"
               className="h-7 w-7"
-              onClick={() => setMonth((m) => addMonths(m, 1))}
+              onClick={() =>
+                setMonth((m) =>
+                  viewMode === 'week'
+                    ? addWeeks(m, 1)
+                    : viewMode === 'year'
+                      ? addYears(m, 1)
+                      : addMonths(m, 1)
+                )
+              }
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
@@ -443,21 +481,106 @@ const CalendarView: React.FC = () => {
               variant="ghost"
               size="sm"
               className="h-6 text-[11px] font-medium text-muted-foreground hover:text-foreground"
-              onClick={() => setMonth(startOfMonth(new Date()))}
+              onClick={() => setMonth(viewMode === 'week' ? new Date() : startOfMonth(new Date()))}
             >
               Today
             </Button>
           </div>
+          <div className="flex items-center rounded-md border bg-background p-0.5">
+            {(['month', 'week', 'year'] as const).map((mode) => (
+              <button
+                key={mode}
+                type="button"
+                onClick={() => setViewMode(mode)}
+                className={cn(
+                  'h-6 rounded px-2.5 text-[11px] font-medium capitalize transition-colors',
+                  viewMode === mode
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:text-foreground'
+                )}
+              >
+                {mode}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="grid grid-cols-7 border-b bg-muted/40 text-[11px] font-semibold uppercase text-muted-foreground">
-          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
-            <div key={d} className="px-2 py-1.5">
-              {d}
-            </div>
-          ))}
-        </div>
+        {viewMode !== 'year' && (
+          <div className="grid grid-cols-7 border-b bg-muted/40 text-[11px] font-semibold uppercase text-muted-foreground">
+            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
+              <div key={d} className="px-2 py-1.5">
+                {d}
+              </div>
+            ))}
+          </div>
+        )}
 
-        {weeks.map((week, weekIdx) => {
+        {viewMode === 'year' && (
+          <div className="grid gap-3 p-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {eachMonthOfInterval({
+              start: startOfYear(month),
+              end: endOfYear(month),
+            }).map((m) => {
+              const mStart = toIso(startOfMonth(m));
+              const mEnd = toIso(endOfMonth(m));
+              const count = items.filter(
+                (it) => it.startDate <= mEnd && it.endDate >= mStart
+              ).length;
+              const monthDays = eachDayOfInterval({
+                start: startOfWeek(startOfMonth(m)),
+                end: endOfWeek(endOfMonth(m)),
+              });
+              return (
+                <button
+                  key={mStart}
+                  type="button"
+                  onClick={() => {
+                    setMonth(startOfMonth(m));
+                    setViewMode('month');
+                  }}
+                  className="rounded-md border bg-white p-2 text-left transition-colors hover:border-primary hover:bg-muted/40 dark:bg-background"
+                >
+                  <div className="mb-1 flex items-center justify-between">
+                    <span className="text-xs font-semibold">{format(m, 'MMMM')}</span>
+                    {count > 0 && (
+                      <span className="rounded-full bg-primary/15 px-1.5 py-0.5 text-[10px] font-medium text-foreground">
+                        {count}
+                      </span>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-7 gap-px text-center text-[9px] text-muted-foreground">
+                    {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => (
+                      <div key={i} className="font-semibold">
+                        {d}
+                      </div>
+                    ))}
+                    {monthDays.map((day) => {
+                      const iso = toIso(day);
+                      const has = items.some(
+                        (it) => it.startDate <= iso && it.endDate >= iso
+                      );
+                      return (
+                        <div
+                          key={iso}
+                          className={cn(
+                            'rounded-sm py-0.5',
+                            !isSameMonth(day, m) && 'text-muted-foreground/30',
+                            has && isSameMonth(day, m) && 'bg-primary/25 text-foreground',
+                            isToday(day) && 'font-bold text-blue-700 ring-1 ring-blue-300'
+                          )}
+                        >
+                          {format(day, 'd')}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {viewMode !== 'year' &&
+          weeks.map((week, weekIdx) => {
           const activeThisWeek = items
             .filter(
               (it) => it.startDate <= toIso(week[6]) && it.endDate >= toIso(week[0])
@@ -490,7 +613,7 @@ const CalendarView: React.FC = () => {
               >
                 {week.map((day, dayIdx) => {
                   const iso = toIso(day);
-                  const inMonth = isSameMonth(day, month);
+                  const inMonth = viewMode === 'week' || isSameMonth(day, month);
                   return (
                     <button
                       key={iso}
