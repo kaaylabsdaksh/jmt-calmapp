@@ -19,15 +19,22 @@
 import React, { useMemo, useState } from 'react';
 import {
   addMonths,
+  addWeeks,
+  addYears,
   eachDayOfInterval,
+  eachMonthOfInterval,
   endOfMonth,
   endOfWeek,
+  endOfYear,
   format,
   isSameMonth,
   isToday,
   startOfMonth,
   startOfWeek,
+  startOfYear,
   subMonths,
+  subWeeks,
+  subYears,
 } from 'date-fns';
 import {
   AlertTriangle,
