@@ -147,20 +147,18 @@ const NonServiceEntryDialog: React.FC<NonServiceEntryDialogProps> = ({
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1">
                 <Label className="text-xs">Start date</Label>
-                <Input
-                  type="date"
+                <ModernDatePicker
+                  size="sm"
                   value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="h-8 text-xs"
+                  onChange={(d) => setStartDate(d ? format(d, 'yyyy-MM-dd') : '')}
                 />
               </div>
               <div className="space-y-1">
                 <Label className="text-xs">End date</Label>
-                <Input
-                  type="date"
+                <ModernDatePicker
+                  size="sm"
                   value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  className="h-8 text-xs"
+                  onChange={(d) => setEndDate(d ? format(d, 'yyyy-MM-dd') : '')}
                 />
                 {showValidation && startDate > endDate && (
                   <p className="text-[11px] text-destructive">
@@ -169,6 +167,7 @@ const NonServiceEntryDialog: React.FC<NonServiceEntryDialogProps> = ({
                 )}
               </div>
             </div>
+
           </CardSection>
 
           <CardSection title="Technicians">
