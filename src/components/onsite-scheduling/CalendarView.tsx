@@ -314,29 +314,7 @@ const CalendarView: React.FC = () => {
   return (
     <div className="flex flex-col gap-3 p-4">
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-md border bg-white p-3 shadow-sm dark:bg-background">
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-8 w-8"
-            onClick={() => setMonth((m) => subMonths(m, 1))}
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <h2 className="min-w-[10rem] text-center text-sm font-semibold text-foreground">
-            {format(month, 'MMMM yyyy')}
-          </h2>
-          <Button
-            variant="outline"
-            size="icon"
-            className="h-8 w-8"
-            onClick={() => setMonth((m) => addMonths(m, 1))}
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
-
+      <div className="flex flex-wrap items-center justify-end gap-2 rounded-md border bg-white p-3 shadow-sm dark:bg-background">
         <div className="flex items-center gap-2">
           {/* Hide completed/cancelled moved into CalendarFilterBar with the
               rest of the filters (D30) — it was always a filter sitting in
@@ -440,7 +418,29 @@ const CalendarView: React.FC = () => {
 
       {/* Month grid */}
       <div className="overflow-x-auto rounded-md border bg-white shadow-sm dark:bg-background">
-        <div className="flex items-center justify-end border-b bg-muted/40 px-2 py-1">
+        <div className="flex items-center justify-between border-b bg-muted/40 px-2 py-1">
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-7 w-7"
+              onClick={() => setMonth((m) => subMonths(m, 1))}
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <h2 className="min-w-[8rem] text-center text-sm font-semibold text-foreground">
+              {format(month, 'MMMM yyyy')}
+            </h2>
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-7 w-7"
+              onClick={() => setMonth((m) => addMonths(m, 1))}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+
           <Button
             variant="ghost"
             size="sm"
