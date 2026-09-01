@@ -394,48 +394,16 @@ const CalendarView: React.FC = () => {
           permanent surface of their own (roster picker only renders inside
           a dialog, so its decision tags need a jump target that's always
           in the DOM). */}
+      <SchedulingLegend
+        anchorId="decision-D9"
+        highlightedAnchorId={highlightedAnchorId}
+      />
       <div
-        id="decision-D9"
         className={cn(
-          'flex flex-col gap-1 rounded-md border bg-muted/30 px-2 py-1.5 text-[10px] transition-shadow',
-          highlightedAnchorId === 'decision-D9' && 'ring-2 ring-amber-400'
+          'flex flex-col gap-1 rounded-md border bg-muted/30 px-2 py-1.5 text-[10px] transition-shadow'
         )}
       >
-        {/* D28 — Readiness (Red/Green/Partial, a job bar's fill color) and
-            Status (On Hold/Completed/Cancelled, an overlay on top of that
-            fill) are two separate legend groups now — Red/Green/Partial is
-            never labeled "Status" here. */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-          <span className="font-semibold uppercase tracking-wide text-muted-foreground">
-            Legend
-          </span>
-          <span className="text-muted-foreground">Readiness:</span>
-          {(['Green', 'Partial', 'Red'] as const).map((s) => (
-            <span key={s} className="inline-flex items-center gap-1">
-              <span className={cn('h-2.5 w-4 rounded-sm border', READINESS_FILL[s])} />
-              {s}
-            </span>
-          ))}
-          <span className="mx-1 h-3 w-px bg-border" />
-          <span className="text-muted-foreground">Status:</span>
-          {(['On Hold', 'Completed', 'Cancelled'] as const).map((s) => (
-            <span key={s} className="inline-flex items-center gap-1">
-              <span
-                className={cn('h-2.5 w-4 rounded-sm border', LIFECYCLE_BADGE_STYLES[s])}
-              />
-              {s}
-            </span>
-          ))}
-          <span className="mx-1 h-3 w-px bg-border" />
-          {NON_SERVICE_ENTRY_TYPES.map((t) => (
-            <span key={t} className="inline-flex items-center gap-1">
-              <span className={cn('h-2.5 w-4 rounded-sm border', NON_SERVICE_STYLES[t])} />
-              {t}
-            </span>
-          ))}
-          <DecisionTag decisionId="D9" />
-          <DecisionTag decisionId="D28" />
-        </div>
+
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t pt-2 text-muted-foreground">
           <span
             id="decision-D3"
