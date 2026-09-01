@@ -73,6 +73,7 @@ import {
 } from '@/lib/onsite-scheduling/job-status';
 import { JOB_VEHICLES } from '@/lib/onsite-scheduling/mock-data';
 import type { ScheduledJob } from '@/lib/onsite-scheduling/types';
+import SchedulingLegend from './SchedulingLegend';
 import DecisionTag from './DecisionTag';
 import NewEntryChooser from './NewEntryChooser';
 import NewJobDialog from './NewJobDialog';
@@ -422,40 +423,20 @@ const SchedulingListView: React.FC = () => {
       {/* Legend — Readiness (derived, color-only) and Status (the honest
           lifecycle value) are shown as two separate groups (D28): Red/
           Green/Partial is never labeled "Status" here. */}
-      <div
-        id="decision-D28"
-        className={cn(
-          'flex flex-wrap items-center gap-4 rounded-md border bg-white p-2.5 text-[11px] shadow-sm transition-shadow dark:bg-background',
-          highlightedAnchorId === 'decision-D28' && 'ring-2 ring-amber-400'
-        )}
-      >
-        <span className="font-medium text-muted-foreground">Readiness</span>
-        {readinessValues.map((s) => (
-          <span key={s} className="flex items-center gap-1.5">
-            <span className={cn('h-2.5 w-2.5 rounded-full', READINESS_DOT[s])} />
-            {s}
-          </span>
-        ))}
-        <DecisionTag decisionId="D28" />
+      <SchedulingLegend anchorId="decision-D28" highlightedAnchorId={highlightedAnchorId}>
         <span className="mx-1 h-3 w-px bg-border" />
-        <span className="font-medium text-muted-foreground">Status</span>
-        {lifecycleValues.map((s) => (
-          <span key={s} className="flex items-center gap-1.5">
-            <Badge className={cn('text-[10px]', LIFECYCLE_BADGE_STYLES[s])}>{s}</Badge>
-          </span>
-        ))}
-        <span className="mx-1 h-3 w-px bg-border" />
-        <span className="font-medium text-muted-foreground">PO / Confirmed / Safety</span>
-        <span className="flex items-center gap-1">
+        <span className="text-muted-foreground">PO / Confirmed / Safety:</span>
+        <span className="inline-flex items-center gap-1">
           <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" /> Yes
         </span>
-        <span className="flex items-center gap-1">
+        <span className="inline-flex items-center gap-1">
           <span className="h-2.5 w-2.5 rounded-full bg-amber-400" /> Partial/Warning
         </span>
-        <span className="flex items-center gap-1">
+        <span className="inline-flex items-center gap-1">
           <span className="h-2.5 w-2.5 rounded-full bg-red-500" /> No/Missing
         </span>
-      </div>
+      </SchedulingLegend>
+
 
       {/* Table */}
       <div className="overflow-x-auto rounded-md border bg-white shadow-sm dark:bg-background">
