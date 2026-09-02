@@ -425,7 +425,15 @@ const UpdateRfid = () => {
               <table className="w-full min-w-[1100px] border-collapse text-xs">
                 <thead className="sticky top-0 z-10 bg-muted/60">
                   <tr className="text-left text-[11px] uppercase tracking-wide text-muted-foreground">
-                    <th className="w-10 px-3 py-2" />
+                    <th className="w-10 px-3 py-2">
+                      <input
+                        type="checkbox"
+                        checked={allSelected}
+                        onChange={toggleSelectAll}
+                        aria-label="Select all equipment records"
+                        className="h-3.5 w-3.5 accent-green-600"
+                      />
+                    </th>
                     <SortableTh label="Report #" active={sort.key === "reportNo"} onClick={() => toggleSort("reportNo")} />
                     <SortableTh label="RFID" active={sort.key === "rfid"} onClick={() => toggleSort("rfid")} />
                     <SortableTh label="Created Date" active={sort.key === "createdDate"} onClick={() => toggleSort("createdDate")} />
@@ -439,26 +447,21 @@ const UpdateRfid = () => {
                 </thead>
                 <tbody>
                   {sorted.map((r) => {
-                    const isSelected = r.id === selectedId;
+                    const isSelected = isRowSelected(r.id);
                     return (
                       <tr
                         key={r.id}
-                        onClick={() => {
-                          setSelectedId(r.id);
-                          setSuccess(null);
-                          setRfidError("");
-                        }}
+                        onClick={() => selectOnly(r.id)}
                         className={cn(
                           "cursor-pointer border-b border-border/70 transition-colors hover:bg-muted/40",
                           isSelected && "bg-primary/10 hover:bg-primary/10"
                         )}
                       >
-                        <td className="px-3 py-2">
+                        <td className="px-3 py-2" onClick={(e) => e.stopPropagation()}>
                           <input
-                            type="radio"
-                            name="equipment"
+                            type="checkbox"
                             checked={isSelected}
-                            onChange={() => setSelectedId(r.id)}
+                            onChange={() => toggleRow(r.id)}
                             aria-label={`Select ${r.reportNo}`}
                             className="h-3.5 w-3.5 accent-green-600"
                           />
