@@ -205,7 +205,7 @@ const UpdateRfid = () => {
     }
     setFormError("");
     setSearching(true);
-    setSelectedId(null);
+    setSelectedIds([]);
     setSuccess(null);
     setNewRfid("");
     setRfidError("");
