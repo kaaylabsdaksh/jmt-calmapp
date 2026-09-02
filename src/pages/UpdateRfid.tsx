@@ -550,43 +550,32 @@ const UpdateRfid = () => {
               <div className="space-y-3 p-4">
                 {/* Assignment */}
                 <div className="space-y-3">
-                  <div className="space-y-1.5">
-                    <Label htmlFor="new-rfid" className="text-xs font-medium text-foreground">
-                      New RFID <span className="text-destructive">*</span>
-                    </Label>
-                    <Input
-                      id="new-rfid"
-                      value={newRfid}
-                      autoFocus
-                      onChange={(e) => {
-                        setNewRfid(e.target.value);
-                        if (rfidError) setRfidError("");
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" && canUpdate) handleUpdate();
-                      }}
-                      placeholder="Enter new RFID"
-                      className={cn("h-9 text-sm", rfidError && "border-destructive")}
-                    />
-                    {rfidError ? (
-                      <p className="flex items-center gap-1.5 text-xs text-destructive">
-                        <AlertCircle className="h-3.5 w-3.5" />
-                        {rfidError}
-                      </p>
-                    ) : (
-                      <p className="text-[11px] text-muted-foreground">
-                        Enter the RFID that should be assigned to this equipment.
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="flex justify-end gap-2 border-t border-border pt-3">
-                    <Button variant="outline" className="h-8" onClick={clearSelection} disabled={updating}>
+                  <div className="flex items-end gap-2">
+                    <div className="min-w-0 flex-1 space-y-1.5">
+                      <Label htmlFor="new-rfid" className="text-xs font-medium text-foreground">
+                        New RFID <span className="text-destructive">*</span>
+                      </Label>
+                      <Input
+                        id="new-rfid"
+                        value={newRfid}
+                        autoFocus
+                        onChange={(e) => {
+                          setNewRfid(e.target.value);
+                          if (rfidError) setRfidError("");
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && canUpdate) handleUpdate();
+                        }}
+                        placeholder="Enter new RFID"
+                        className={cn("h-9 text-sm", rfidError && "border-destructive")}
+                      />
+                    </div>
+                    <Button variant="outline" className="h-9" onClick={clearSelection} disabled={updating}>
                       <X className="mr-1.5 h-3.5 w-3.5" />
                       Clear Selection
                     </Button>
                     <Button
-                      className="h-8 bg-green-600 text-white hover:bg-green-700"
+                      className="h-9 bg-green-600 text-white hover:bg-green-700"
                       disabled={!canUpdate}
                       onClick={handleUpdate}
                     >
@@ -594,6 +583,16 @@ const UpdateRfid = () => {
                       {updating ? "Updating RFID…" : "Update RFID"}
                     </Button>
                   </div>
+                  {rfidError ? (
+                    <p className="flex items-center gap-1.5 text-xs text-destructive">
+                      <AlertCircle className="h-3.5 w-3.5" />
+                      {rfidError}
+                    </p>
+                  ) : (
+                    <p className="text-[11px] text-muted-foreground">
+                      Enter the RFID that should be assigned to this equipment.
+                    </p>
+                  )}
                 </div>
               </div>
             )}
