@@ -182,7 +182,6 @@ const UpdateRfid = () => {
   const modelOptions = manufacturer ? MODELS_BY_MFG[manufacturer] ?? [] : ALL_MODELS;
   const selected = records.find((r) => r.id === selectedIds[0]) ?? null;
   const isRowSelected = (id: string) => selectedIds.includes(id);
-  const allSelected = sorted.length > 0 && sorted.every((r) => selectedIds.includes(r.id));
 
   const sorted = useMemo(() => {
     const copy = [...records];
@@ -193,6 +192,9 @@ const UpdateRfid = () => {
     });
     return copy;
   }, [records, sort]);
+
+  const allSelected = sorted.length > 0 && sorted.every((r) => selectedIds.includes(r.id));
+
 
   const toggleSort = (key: SortKey) =>
     setSort((s) => ({ key, dir: s.key === key && s.dir === "asc" ? "desc" : "asc" }));
