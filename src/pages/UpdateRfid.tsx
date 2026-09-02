@@ -551,15 +551,6 @@ const UpdateRfid = () => {
                 {/* Assignment */}
                 <div className="space-y-3">
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-medium text-foreground">Current RFID</Label>
-                    <Input
-                      value={selected.rfid || "Not Assigned"}
-                      readOnly
-                      disabled
-                      className="h-9 bg-muted/50 text-sm"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
                     <Label htmlFor="new-rfid" className="text-xs font-medium text-foreground">
                       New RFID <span className="text-destructive">*</span>
                     </Label>
