@@ -73,6 +73,18 @@ const MOCK_RECORDS: EquipmentRecord[] = [
   { id: "6", reportNo: "00000.00-803370-001", rfid: "", createdDate: "08/19/2026", itemStatus: "Lab Management", manufacturer: "FLUKE", model: "789", mfgSerial: "test", customerSerial: "4584", customerId: "1252" },
   { id: "7", reportNo: "0101.00-803611-004", rfid: "RFID-001180", createdDate: "08/24/2026", itemStatus: "Q/A Inspection", manufacturer: "FLUKE", model: "789", mfgSerial: "test", customerSerial: "test", customerId: "1252" },
   { id: "8", reportNo: "0101.00-803622-001", rfid: "", createdDate: "08/28/2026", itemStatus: "Waiting on Customer", manufacturer: "FLUKE", model: "789", mfgSerial: "test", customerSerial: "2345", customerId: "test" },
+  { id: "9", reportNo: "0202.00-803701-001", rfid: "RFID-001245", createdDate: "09/01/2026", itemStatus: "In Lab", manufacturer: "DRUCK", model: "DPI 620", mfgSerial: "D620-4412", customerSerial: "4412", customerId: "2244" },
+  { id: "10", reportNo: "0202.00-803702-002", rfid: "", createdDate: "09/02/2026", itemStatus: "Estimate", manufacturer: "DRUCK", model: "DPI 705", mfgSerial: "D705-9981", customerSerial: "9981", customerId: "2244" },
+  { id: "11", reportNo: "0303.00-803801-001", rfid: "RFID-001312", createdDate: "09/03/2026", itemStatus: "Q/A Fail Log", manufacturer: "HART", model: "375", mfgSerial: "H375-2219", customerSerial: "2219", customerId: "3311" },
+  { id: "12", reportNo: "0303.00-803802-002", rfid: "", createdDate: "09/04/2026", itemStatus: "Ready for Departure", manufacturer: "HART", model: "475", mfgSerial: "H475-6677", customerSerial: "6677", customerId: "3311" },
+  { id: "13", reportNo: "0404.00-803901-001", rfid: "RFID-001489", createdDate: "09/05/2026", itemStatus: "Lab Management", manufacturer: "AMETEK", model: "JOFRA ATC-140", mfgSerial: "JATC-5521", customerSerial: "5521", customerId: "4400" },
+  { id: "14", reportNo: "0404.00-803902-002", rfid: "", createdDate: "09/06/2026", itemStatus: "Q/A Inspection", manufacturer: "AMETEK", model: "JOFRA RTC-157", mfgSerial: "JRTC-1102", customerSerial: "1102", customerId: "4400" },
+  { id: "15", reportNo: "0505.00-804001-001", rfid: "RFID-001556", createdDate: "09/07/2026", itemStatus: "Cancelled", manufacturer: "MITUTOYO", model: "293-340-30", mfgSerial: "M293-7743", customerSerial: "7743", customerId: "5505" },
+  { id: "16", reportNo: "0505.00-804002-002", rfid: "", createdDate: "09/08/2026", itemStatus: "Waiting on Customer", manufacturer: "MITUTOYO", model: "500-196-30", mfgSerial: "M500-3321", customerSerial: "3321", customerId: "5505" },
+  { id: "17", reportNo: "0101.00-804101-001", rfid: "RFID-001623", createdDate: "09/09/2026", itemStatus: "In Lab", manufacturer: "FLUKE", model: "287", mfgSerial: "F287-9090", customerSerial: "9090", customerId: "1234" },
+  { id: "18", reportNo: "0202.00-804201-001", rfid: "", createdDate: "09/10/2026", itemStatus: "Estimate", manufacturer: "DRUCK", model: "DPI 620", mfgSerial: "D620-1144", customerSerial: "1144", customerId: "2244" },
+  { id: "19", reportNo: "0303.00-804301-001", rfid: "RFID-001701", createdDate: "09/11/2026", itemStatus: "Ready for Departure", manufacturer: "HART", model: "475", mfgSerial: "H475-5566", customerSerial: "5566", customerId: "3311" },
+  { id: "20", reportNo: "0404.00-804401-001", rfid: "", createdDate: "09/12/2026", itemStatus: "Q/A Fail Log", manufacturer: "AMETEK", model: "JOFRA RTC-157", mfgSerial: "JRTC-8877", customerSerial: "8877", customerId: "4400" },
 ];
 
 /* RFID already assigned elsewhere in the system (duplicate check) */
