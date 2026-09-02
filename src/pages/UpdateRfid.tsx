@@ -93,8 +93,6 @@ const STATUS_TONE: Record<string, string> = {
   "Waiting on Customer": "bg-orange-50 text-orange-700",
 };
 
-const PAGE_SIZE = 5;
-
 /* ------------------------------------------------------------------ combobox */
 
 const Combobox = ({
