@@ -556,22 +556,7 @@ const UpdateRfid = () => {
                 </div>
               </div>
             ) : (
-              <div className="grid grid-cols-1 gap-4 p-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-                {/* Selected summary */}
-                <div className="rounded-md border border-border bg-muted/30 p-3">
-                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                    Selected Equipment
-                  </p>
-                  <dl className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-xs">
-                    <SummaryItem label="Report #" value={selected.reportNo} />
-                    <SummaryItem label="Manufacturer" value={selected.manufacturer} />
-                    <SummaryItem label="Model" value={selected.model} />
-                    <SummaryItem label="Mfg Serial" value={selected.mfgSerial} />
-                    <SummaryItem label="Current RFID" value={selected.rfid || "Not Assigned"} />
-                    <SummaryItem label="Item Status" value={selected.itemStatus} />
-                  </dl>
-                </div>
-
+              <div className="space-y-3 p-4">
                 {/* Assignment */}
                 <div className="space-y-3">
                   <div className="space-y-1.5">
