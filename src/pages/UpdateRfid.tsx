@@ -8,8 +8,6 @@ import {
   Radio,
   CheckCircle2,
   AlertCircle,
-  ChevronLeft,
-  ChevronRight,
   ArrowUpDown,
   X,
 } from "lucide-react";
@@ -175,7 +173,6 @@ const UpdateRfid = () => {
   const [searching, setSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [records, setRecords] = useState<EquipmentRecord[]>([]);
-  const [page, setPage] = useState(1);
   const [sort, setSort] = useState<{ key: SortKey; dir: "asc" | "desc" }>({ key: "createdDate", dir: "desc" });
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -197,9 +194,6 @@ const UpdateRfid = () => {
     return copy;
   }, [records, sort]);
 
-  const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
-  const pageRows = sorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-
   const toggleSort = (key: SortKey) =>
     setSort((s) => ({ key, dir: s.key === key && s.dir === "asc" ? "desc" : "asc" }));
 
@@ -215,7 +209,6 @@ const UpdateRfid = () => {
     setSuccess(null);
     setNewRfid("");
     setRfidError("");
-    setPage(1);
 
     window.setTimeout(() => {
       const results = MOCK_RECORDS.filter(
@@ -427,7 +420,7 @@ const UpdateRfid = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {pageRows.map((r) => {
+                  {sorted.map((r) => {
                     const isSelected = r.id === selectedId;
                     return (
                       <tr
@@ -488,31 +481,6 @@ const UpdateRfid = () => {
               </table>
             </div>
 
-            <div className="flex items-center justify-between border-t border-border px-4 py-2">
-              <span className="text-[11px] text-muted-foreground">
-                Page {page} of {totalPages}
-              </span>
-              <div className="flex items-center gap-1">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-7 px-2"
-                  disabled={page === 1}
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                >
-                  <ChevronLeft className="h-3.5 w-3.5" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-7 px-2"
-                  disabled={page === totalPages}
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                >
-                  <ChevronRight className="h-3.5 w-3.5" />
-                </Button>
-              </div>
-            </div>
           </section>
         )}
 
