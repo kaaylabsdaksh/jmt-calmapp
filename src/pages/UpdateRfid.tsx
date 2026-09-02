@@ -224,10 +224,28 @@ const UpdateRfid = () => {
   };
 
   const clearSelection = () => {
-    setSelectedId(null);
+    setSelectedIds([]);
     setNewRfid("");
     setRfidError("");
     setSuccess(null);
+  };
+
+  const toggleRow = (id: string) => {
+    setSelectedIds((ids) => (ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id]));
+    setSuccess(null);
+    setRfidError("");
+  };
+
+  const selectOnly = (id: string) => {
+    setSelectedIds([id]);
+    setSuccess(null);
+    setRfidError("");
+  };
+
+  const toggleSelectAll = () => {
+    setSelectedIds(allSelected ? [] : sorted.map((r) => r.id));
+    setSuccess(null);
+    setRfidError("");
   };
 
   const handleUpdate = () => {
