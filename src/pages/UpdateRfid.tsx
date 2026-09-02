@@ -173,14 +173,16 @@ const UpdateRfid = () => {
   const [records, setRecords] = useState<EquipmentRecord[]>([]);
   const [sort, setSort] = useState<{ key: SortKey; dir: "asc" | "desc" }>({ key: "createdDate", dir: "desc" });
 
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [newRfid, setNewRfid] = useState("");
   const [rfidError, setRfidError] = useState("");
   const [updating, setUpdating] = useState(false);
   const [success, setSuccess] = useState<{ reportNo: string; previous: string; next: string } | null>(null);
 
   const modelOptions = manufacturer ? MODELS_BY_MFG[manufacturer] ?? [] : ALL_MODELS;
-  const selected = records.find((r) => r.id === selectedId) ?? null;
+  const selected = records.find((r) => r.id === selectedIds[0]) ?? null;
+  const isRowSelected = (id: string) => selectedIds.includes(id);
+  const allSelected = sorted.length > 0 && sorted.every((r) => selectedIds.includes(r.id));
 
   const sorted = useMemo(() => {
     const copy = [...records];
