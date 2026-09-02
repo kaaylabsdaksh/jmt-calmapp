@@ -29,6 +29,7 @@ import CustomerPickupView from "./pages/CustomerPickupView";
 import ShippingView from "./pages/ShippingView";
 import AccountAdminView from "./pages/AccountAdminView";
 import LabTriage from "./pages/LabTriage";
+import UpdateRfid from "./pages/UpdateRfid";
 import OnsiteProjects from "./pages/OnsiteProjects";
 import OnsiteScheduling from "./pages/OnsiteScheduling";
 import OnsiteSchedulingV2 from "./pages/OnsiteSchedulingV2";
@@ -112,6 +113,7 @@ const App = () => {
             <Route path="/shipping-view" element={<ShippingView />} />
             <Route path="/account-admin" element={<AccountAdminView />} />
             <Route path="/lab-triage" element={<LabTriage />} />
+            <Route path="/update-rfid" element={<UpdateRfid />} />
 
 
             <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
