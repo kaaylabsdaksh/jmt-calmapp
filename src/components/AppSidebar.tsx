@@ -59,7 +59,7 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 const workOrderQuickActions = [
   { title: "Hot List", icon: Flame },
   { title: "Transit Log", icon: TruckIcon, url: "/transit-log" },
-  { title: "Update RFID's", icon: Wifi },
+  { title: "Update RFID's", icon: Wifi, url: "/update-rfid" },
   { title: "Rental Batch Certs", icon: FileCheck },
   { title: "PO/Change Orders", icon: FileText },
   { title: "Assign Techs", icon: Users },
