@@ -8,8 +8,6 @@ import {
   Radio,
   CheckCircle2,
   AlertCircle,
-  ChevronLeft,
-  ChevronRight,
   ArrowUpDown,
   X,
 } from "lucide-react";
@@ -95,8 +93,6 @@ const STATUS_TONE: Record<string, string> = {
   "Waiting on Customer": "bg-orange-50 text-orange-700",
 };
 
-const PAGE_SIZE = 5;
-
 /* ------------------------------------------------------------------ combobox */
 
 const Combobox = ({
@@ -175,17 +171,18 @@ const UpdateRfid = () => {
   const [searching, setSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [records, setRecords] = useState<EquipmentRecord[]>([]);
-  const [page, setPage] = useState(1);
   const [sort, setSort] = useState<{ key: SortKey; dir: "asc" | "desc" }>({ key: "createdDate", dir: "desc" });
 
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [newRfid, setNewRfid] = useState("");
   const [rfidError, setRfidError] = useState("");
   const [updating, setUpdating] = useState(false);
   const [success, setSuccess] = useState<{ reportNo: string; previous: string; next: string } | null>(null);
 
   const modelOptions = manufacturer ? MODELS_BY_MFG[manufacturer] ?? [] : ALL_MODELS;
-  const selected = records.find((r) => r.id === selectedId) ?? null;
+  const selected = records.find((r) => r.id === selectedIds[0]) ?? null;
+  const isRowSelected = (id: string) => selectedIds.includes(id);
+  const allSelected = sorted.length > 0 && sorted.every((r) => selectedIds.includes(r.id));
 
   const sorted = useMemo(() => {
     const copy = [...records];
@@ -196,9 +193,6 @@ const UpdateRfid = () => {
     });
     return copy;
   }, [records, sort]);
-
-  const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
-  const pageRows = sorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   const toggleSort = (key: SortKey) =>
     setSort((s) => ({ key, dir: s.key === key && s.dir === "asc" ? "desc" : "asc" }));
@@ -211,11 +205,10 @@ const UpdateRfid = () => {
     }
     setFormError("");
     setSearching(true);
-    setSelectedId(null);
+    setSelectedIds([]);
     setSuccess(null);
     setNewRfid("");
     setRfidError("");
-    setPage(1);
 
     window.setTimeout(() => {
       const results = MOCK_RECORDS.filter(
@@ -231,10 +224,28 @@ const UpdateRfid = () => {
   };
 
   const clearSelection = () => {
-    setSelectedId(null);
+    setSelectedIds([]);
     setNewRfid("");
     setRfidError("");
     setSuccess(null);
+  };
+
+  const toggleRow = (id: string) => {
+    setSelectedIds((ids) => (ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id]));
+    setSuccess(null);
+    setRfidError("");
+  };
+
+  const selectOnly = (id: string) => {
+    setSelectedIds([id]);
+    setSuccess(null);
+    setRfidError("");
+  };
+
+  const toggleSelectAll = () => {
+    setSelectedIds(allSelected ? [] : sorted.map((r) => r.id));
+    setSuccess(null);
+    setRfidError("");
   };
 
   const handleUpdate = () => {
@@ -414,7 +425,15 @@ const UpdateRfid = () => {
               <table className="w-full min-w-[1100px] border-collapse text-xs">
                 <thead className="sticky top-0 z-10 bg-muted/60">
                   <tr className="text-left text-[11px] uppercase tracking-wide text-muted-foreground">
-                    <th className="w-10 px-3 py-2" />
+                    <th className="w-10 px-3 py-2">
+                      <input
+                        type="checkbox"
+                        checked={allSelected}
+                        onChange={toggleSelectAll}
+                        aria-label="Select all equipment records"
+                        className="h-3.5 w-3.5 accent-green-600"
+                      />
+                    </th>
                     <SortableTh label="Report #" active={sort.key === "reportNo"} onClick={() => toggleSort("reportNo")} />
                     <SortableTh label="RFID" active={sort.key === "rfid"} onClick={() => toggleSort("rfid")} />
                     <SortableTh label="Created Date" active={sort.key === "createdDate"} onClick={() => toggleSort("createdDate")} />
@@ -427,27 +446,22 @@ const UpdateRfid = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {pageRows.map((r) => {
-                    const isSelected = r.id === selectedId;
+                  {sorted.map((r) => {
+                    const isSelected = isRowSelected(r.id);
                     return (
                       <tr
                         key={r.id}
-                        onClick={() => {
-                          setSelectedId(r.id);
-                          setSuccess(null);
-                          setRfidError("");
-                        }}
+                        onClick={() => selectOnly(r.id)}
                         className={cn(
                           "cursor-pointer border-b border-border/70 transition-colors hover:bg-muted/40",
                           isSelected && "bg-primary/10 hover:bg-primary/10"
                         )}
                       >
-                        <td className="px-3 py-2">
+                        <td className="px-3 py-2" onClick={(e) => e.stopPropagation()}>
                           <input
-                            type="radio"
-                            name="equipment"
+                            type="checkbox"
                             checked={isSelected}
-                            onChange={() => setSelectedId(r.id)}
+                            onChange={() => toggleRow(r.id)}
                             aria-label={`Select ${r.reportNo}`}
                             className="h-3.5 w-3.5 accent-green-600"
                           />
@@ -488,31 +502,6 @@ const UpdateRfid = () => {
               </table>
             </div>
 
-            <div className="flex items-center justify-between border-t border-border px-4 py-2">
-              <span className="text-[11px] text-muted-foreground">
-                Page {page} of {totalPages}
-              </span>
-              <div className="flex items-center gap-1">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-7 px-2"
-                  disabled={page === 1}
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                >
-                  <ChevronLeft className="h-3.5 w-3.5" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-7 px-2"
-                  disabled={page === totalPages}
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                >
-                  <ChevronRight className="h-3.5 w-3.5" />
-                </Button>
-              </div>
-            </div>
           </section>
         )}
 
