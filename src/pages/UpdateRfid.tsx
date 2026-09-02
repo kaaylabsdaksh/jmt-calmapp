@@ -511,7 +511,7 @@ const UpdateRfid = () => {
         {records.length > 0 && (
           <section
             className={cn(
-              "rounded-lg border bg-card shadow-sm transition-opacity",
+              "sticky top-4 rounded-lg border bg-card shadow-sm transition-opacity",
               selected ? "border-border opacity-100" : "border-dashed border-border opacity-60"
             )}
           >
