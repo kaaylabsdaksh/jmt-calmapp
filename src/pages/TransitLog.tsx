@@ -442,19 +442,6 @@ const TransitLog = () => {
         <ModernTopNav />
 
         <main className="flex-1 w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-5 space-y-4">
-          {/* Header */}
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-            <div>
-              <h1 className="text-xl font-semibold text-foreground flex items-center gap-2">
-                <Truck className="h-5 w-5" />
-                Transit Log
-              </h1>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Track, review, and process equipment currently in transit.
-              </p>
-            </div>
-          </div>
-
           {/* Filters */}
           <Card className="border-border">
             <CardContent className="p-3 space-y-3">
