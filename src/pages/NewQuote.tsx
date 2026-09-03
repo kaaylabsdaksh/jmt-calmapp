@@ -431,7 +431,7 @@ const SelectField = ({
           "absolute left-2 z-10 pointer-events-none transition-all duration-150",
           hasValue
             ? "top-0 -translate-y-1/2 text-[9px] uppercase tracking-wide text-muted-foreground bg-white px-1 leading-none"
-            : "top-1/2 -translate-y-1/2 text-[11px] text-black"
+            : "top-1/2 -translate-y-1/2 text-[11px] leading-none text-black"
         )}
       >
         {floatingLabel}
@@ -441,17 +441,17 @@ const SelectField = ({
         <SelectTrigger
           className={cn(
             inputCls,
-            "md:text-[11px]",
-            hasValue && "pt-3 pb-0.5",
+            "md:text-[11px] items-center py-0",
             className
           )}
         >
           <SelectValue placeholder={null}>
             {selected ? (
-              <span className="truncate text-[11px]">{selected.label}</span>
+              <span className="block truncate text-[11px] leading-none">{selected.label}</span>
             ) : null}
           </SelectValue>
         </SelectTrigger>
+
         <SelectContent className="bg-popover z-50">
           {normalized.map((o) => (
             <SelectItem key={o.value} value={o.value} className="text-xs">
