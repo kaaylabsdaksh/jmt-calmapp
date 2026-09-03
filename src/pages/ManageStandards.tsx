@@ -378,6 +378,7 @@ const ManageStandards = () => {
                       id="f-from"
                       size="xs"
                       value={draft.dueFrom}
+                      inputClassName={dateInputActive(draft.dueFrom)}
                       onChange={(d) => setDraft({ ...draft, dueFrom: d ? format(d, "MM/dd/yyyy") : "" })}
                     />
                   </div>
@@ -387,8 +388,10 @@ const ManageStandards = () => {
                       id="f-to"
                       size="xs"
                       value={draft.dueTo}
+                      inputClassName={dateInputActive(draft.dueTo)}
                       onChange={(d) => setDraft({ ...draft, dueTo: d ? format(d, "MM/dd/yyyy") : "" })}
                     />
+
                   </div>
 
                   <div className="mt-auto flex items-center justify-end gap-2 pt-4">
