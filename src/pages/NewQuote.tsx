@@ -406,48 +406,61 @@ const SelectField = ({
   onChange,
   options,
   placeholder = "Select",
+  label,
+  required,
   className,
 }: {
   value: string;
   onChange: (v: string) => void;
   options: string[] | { label: string; value: string }[];
   placeholder?: string;
+  label?: string;
+  required?: boolean;
   className?: string;
 }) => {
   const normalized = options.map((o) =>
     typeof o === "string" ? { label: o, value: o } : o
   );
   const selected = normalized.find((o) => o.value === value);
-  const labelOnly = placeholder.replace(/\s*\*$/, "");
+  const floatingLabel = label || placeholder.replace(/\s*\*$/, "");
+  const hasValue = Boolean(selected);
   return (
-    <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className={cn(inputCls, "md:text-[11px]", className)}>
-        <SelectValue
-          placeholder={
-            <span className="text-[10px] font-normal text-black">
-              {placeholder}
-            </span>
-          }
+    <div className="relative">
+      <label
+        className={cn(
+          "absolute left-2 z-10 pointer-events-none transition-all duration-150",
+          hasValue
+            ? "top-0 -translate-y-1/2 text-[9px] uppercase tracking-wide text-muted-foreground bg-white px-1 leading-none"
+            : "top-1/2 -translate-y-1/2 text-[11px] text-black"
+        )}
+      >
+        {floatingLabel}
+        {required && <span className="text-red-600">*</span>}
+      </label>
+      <Select value={value} onValueChange={onChange}>
+        <SelectTrigger
+          className={cn(
+            inputCls,
+            "md:text-[11px]",
+            hasValue && "pt-3 pb-0.5",
+            className
+          )}
         >
-          {selected ? (
-            <span className="flex min-w-0 items-baseline gap-1">
-              <span className="shrink-0 text-[9px] uppercase tracking-wide text-muted-foreground">
-                {labelOnly}
-              </span>
+          <SelectValue placeholder={null}>
+            {selected ? (
               <span className="truncate text-[11px]">{selected.label}</span>
-            </span>
-          ) : null}
-        </SelectValue>
-      </SelectTrigger>
-
-      <SelectContent className="bg-popover z-50">
-        {normalized.map((o) => (
-          <SelectItem key={o.value} value={o.value} className="text-xs">
-            {o.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+            ) : null}
+          </SelectValue>
+        </SelectTrigger>
+        <SelectContent className="bg-popover z-50">
+          {normalized.map((o) => (
+            <SelectItem key={o.value} value={o.value} className="text-xs">
+              {o.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 };
 
