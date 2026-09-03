@@ -88,6 +88,17 @@ const STATES = ["LA", "TX", "MS", "AL", "MT", "OK"];
 const SALESPEOPLE = ["Brandi M. Cali", "Trysten Q Howze", "Kevin R. Young", "Jessica M Thompson"];
 const CONTACTS = ["Dana Whitfield", "Marcus Reed", "Alicia Moreno", "Ben Ottinger"];
 const SHIP_TO = ["Main Plant — 1200 Industrial Dr", "Warehouse B — 44 Levee Rd", "Corporate — 900 Poydras St"];
+
+const ONSITE_PROPOSED_PROJECT =
+  "The following is for calibration services to cover the instruments from your list provided. The date of service and schedule to be decided upon your approval of the following quote. Scheduling of services and/or submission of payment arrangements by your company confirms agreement and acceptance of JM Test Systems, LLC Terms & Conditions included with our quotation.";
+
+const ONSITE_SPECIAL_INSTRUCTIONS = [
+  "Calibration: Requires a climate-controlled environment (temperature and humidity). Warehouse style environments are insufficient, calibrations require air condition and/or heat with humidity control.",
+  "    1. Customer shall provide an office, training room, conference center etc. in addition to (2 or 3) tables or work benches and several 110 outlets to power our standards.",
+  "    2. For an additional cost JM Test can provide a mobile calibration trailer which requires 220v and 50/100amp services, provided by the customer.",
+  "    3. Customer is responsible for gathering, staging and returning all equipment to be calibrated to the designated work area.",
+  "    4. Any equipment found to require repair will be quoted separately prior to work being performed.",
+].join("\n");
 const COMMENT_TYPES = ["Other", "Internal", "Customer", "Pricing", "Follow Up"];
 const ITEM_STATUSES = ["Quoted", "Pending", "Approved", "Cancelled"];
 const SHIP_METHODS = ["Pickup", "Delivery", "FedEx", "UPS", "LTL Freight", "Will Call"];
