@@ -528,8 +528,8 @@ const UpdateRfid = () => {
               </div>
             </section>
 
-            {/* RFID Assignment — docked bottom bar */}
-            <div className="fixed bottom-0 left-0 right-0 z-30 border-t border-border bg-card/95 shadow-[0_-2px_10px_rgba(0,0,0,0.06)] backdrop-blur">
+            {/* RFID Assignment — sticky footer */}
+            <div className="fixed bottom-0 left-0 right-0 z-30 border-t border-border bg-card/95 shadow-[0_-2px_10px_rgba(0,0,0,0.06)] backdrop-blur md:left-[var(--sidebar-width,16rem)]">
               <div className="mx-auto flex max-w-[1600px] flex-col gap-2 px-4 py-3 sm:px-6 lg:flex-row lg:items-end lg:gap-4">
                 <div className="flex min-w-0 items-center gap-2 lg:w-72">
                   <Radio className="h-4 w-4 shrink-0 text-muted-foreground" />
