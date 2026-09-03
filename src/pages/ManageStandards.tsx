@@ -2,7 +2,6 @@ import { Fragment, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Search,
-  SlidersHorizontal,
   Plus,
   Download,
   FileSpreadsheet,
@@ -17,6 +16,7 @@ import {
   Wrench,
   X,
 } from "lucide-react";
+import { format } from "date-fns";
 import { toast } from "sonner";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
@@ -30,9 +30,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ModernDatePicker } from "@/components/ui/modern-date-picker";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Table,
@@ -124,6 +124,7 @@ const ManageStandards = () => {
   const [pageSize, setPageSize] = useState(20);
 
   const runSearch = () => {
+    setAdvanced(draft);
     setLoading(true);
     setPage(1);
     window.setTimeout(() => setLoading(false), 450);
@@ -168,6 +169,11 @@ const ManageStandards = () => {
       if (advanced.labCode !== "all" && s.labCode !== advanced.labCode) return false;
       if (advanced.owningAccount && !s.owningAccount.includes(advanced.owningAccount)) return false;
       if (advanced.workOrderNo && !s.history.some((h) => h.workOrderNo.includes(advanced.workOrderNo))) return false;
+      if (advanced.dueFrom || advanced.dueTo) {
+        const due = new Date(s.nextCalibrationDue).getTime();
+        if (advanced.dueFrom && due < new Date(advanced.dueFrom).getTime()) return false;
+        if (advanced.dueTo && due > new Date(advanced.dueTo).getTime()) return false;
+      }
       return true;
     });
 
@@ -704,122 +710,6 @@ const ManageStandards = () => {
           </div>
         </main>
 
-        {/* Advanced filters */}
-        <Sheet open={filtersOpen} onOpenChange={setFiltersOpen}>
-          <SheetContent className="w-full overflow-y-auto sm:max-w-lg">
-            <SheetHeader>
-              <SheetTitle>Search Standards</SheetTitle>
-              <SheetDescription>All legacy search fields, grouped for faster filtering.</SheetDescription>
-            </SheetHeader>
-
-            <div className="mt-4 space-y-4">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1">
-                  <Label htmlFor="f-standard" className="text-xs">Standard #</Label>
-                  <Input id="f-standard" className="h-9 text-sm" value={draft.standardNo} onChange={(e) => setDraft({ ...draft, standardNo: e.target.value })} />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="f-serial" className="text-xs">Serial Number</Label>
-                  <Input id="f-serial" className="h-9 text-sm" value={draft.serial} onChange={(e) => setDraft({ ...draft, serial: e.target.value })} />
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-xs">Manufacturer</Label>
-                  <Select value={draft.manufacturer} onValueChange={(v) => setDraft({ ...draft, manufacturer: v })}>
-                    <SelectTrigger className="h-9 text-sm"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All</SelectItem>
-                      {MANUFACTURERS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-xs">Model</Label>
-                  <Select value={draft.model} onValueChange={(v) => setDraft({ ...draft, model: v })}>
-                    <SelectTrigger className="h-9 text-sm"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All</SelectItem>
-                      {MODELS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="col-span-2 space-y-1">
-                  <Label htmlFor="f-desc" className="text-xs">Description</Label>
-                  <Input id="f-desc" className="h-9 text-sm" value={draft.description} onChange={(e) => setDraft({ ...draft, description: e.target.value })} />
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-xs">Designated Location</Label>
-                  <Select value={draft.designatedLocation} onValueChange={(v) => setDraft({ ...draft, designatedLocation: v })}>
-                    <SelectTrigger className="h-9 text-sm"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All</SelectItem>
-                      {LOCATIONS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-xs">State</Label>
-                  <Select value={draft.state} onValueChange={(v) => setDraft({ ...draft, state: v })}>
-                    <SelectTrigger className="h-9 text-sm"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All</SelectItem>
-                      <SelectItem value="Active">Active</SelectItem>
-                      <SelectItem value="Inactive">Inactive</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="f-wo" className="text-xs">Work Order #</Label>
-                  <Input id="f-wo" className="h-9 text-sm" value={draft.workOrderNo} onChange={(e) => setDraft({ ...draft, workOrderNo: e.target.value })} />
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-xs">Calibration Provider Location</Label>
-                  <Select value={draft.providerLocation} onValueChange={(v) => setDraft({ ...draft, providerLocation: v })}>
-                    <SelectTrigger className="h-9 text-sm"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All</SelectItem>
-                      {LOCATIONS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-xs">Lab Code</Label>
-                  <Select value={draft.labCode} onValueChange={(v) => setDraft({ ...draft, labCode: v })}>
-                    <SelectTrigger className="h-9 text-sm"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All</SelectItem>
-                      {LAB_CODES.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="f-acct" className="text-xs">Owning Account #</Label>
-                  <Input id="f-acct" className="h-9 text-sm" value={draft.owningAccount} onChange={(e) => setDraft({ ...draft, owningAccount: e.target.value })} />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="f-from" className="text-xs">Calibration Due From</Label>
-                  <Input id="f-from" placeholder="MM/DD/YYYY" className="h-9 text-sm" value={draft.dueFrom} onChange={(e) => setDraft({ ...draft, dueFrom: e.target.value })} />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="f-to" className="text-xs">Calibration Due To</Label>
-                  <Input id="f-to" placeholder="MM/DD/YYYY" className="h-9 text-sm" value={draft.dueTo} onChange={(e) => setDraft({ ...draft, dueTo: e.target.value })} />
-                </div>
-              </div>
-            </div>
-
-            <SheetFooter className="mt-6 gap-2">
-              <Button variant="outline" onClick={() => setDraft(emptyAdvanced)}>Clear</Button>
-              <Button
-                onClick={() => {
-                  setAdvanced(draft);
-                  setFiltersOpen(false);
-                  runSearch();
-                }}
-              >
-                Apply filters
-              </Button>
-            </SheetFooter>
-          </SheetContent>
-        </Sheet>
       </div>
     </TooltipProvider>
   );
