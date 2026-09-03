@@ -530,76 +530,107 @@ const UpdateRfid = () => {
               </div>
             </section>
 
-            {/* RFID Assignment — sticky footer */}
-            <div className="fixed bottom-0 left-0 right-0 z-30 border-t border-border bg-card/95 shadow-[0_-2px_10px_rgba(0,0,0,0.06)] backdrop-blur md:left-[var(--sidebar-width,16rem)]">
-              <div className="mx-auto flex max-w-[1600px] flex-col gap-2 px-4 py-2 sm:px-6 lg:flex-row lg:items-end lg:gap-4">
-                <div className="flex min-w-0 items-center gap-2 lg:w-72">
-                  <Radio className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+            {/* RFID Assignment — floating utility footer */}
+            <div className="fixed bottom-4 left-4 right-4 z-30 rounded-2xl border border-border bg-card/95 shadow-xl backdrop-blur md:left-[calc(var(--sidebar-width,16rem)+1rem)]">
+              <div className="mx-auto flex max-w-[1600px] flex-col items-stretch gap-4 px-5 py-4 sm:px-6 lg:flex-row lg:items-center">
+                {/* Left: status */}
+                <div className="flex min-w-0 items-center gap-4 border-border lg:border-r lg:pr-6">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <Radio className="h-5 w-5" />
+                  </div>
                   <div className="min-w-0">
-                    <p className="text-[11px] font-semibold uppercase tracking-wide text-foreground">RFID Assignment</p>
-                    <p className="truncate text-[10px] text-muted-foreground">
-                      {selected
-                        ? `${selectedIds.length} selected · ${selected.reportNo} · ${selected.rfid || "Not Assigned"}`
-                        : "Select an equipment record to assign or update its RFID."}
-                    </p>
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">RFID Assignment</p>
+                    {selected ? (
+                      <div className="mt-0.5 flex items-center gap-2">
+                        <span className="text-sm font-semibold text-foreground">{selectedIds.length} selected</span>
+                        <span className="h-1 w-1 rounded-full bg-muted-foreground/40" />
+                        <span className="truncate text-xs text-muted-foreground">{selected.reportNo}</span>
+                        <Badge
+                          variant="secondary"
+                          className={cn(
+                            "rounded-full border-0 px-2 py-0.5 text-[10px] font-medium hover:bg-inherit",
+                            selected.rfid ? "bg-emerald-100 text-emerald-700" : "bg-amber-50 text-amber-700"
+                          )}
+                        >
+                          {selected.rfid ? "Assigned" : "Pending"}
+                        </Badge>
+                      </div>
+                    ) : (
+                      <p className="truncate text-xs text-muted-foreground">Select an equipment record to assign or update its RFID.</p>
+                    )}
                   </div>
                 </div>
 
                 {success ? (
-                  <div className="flex flex-1 flex-wrap items-center gap-3 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-1.5">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
-                    <p className="text-[11px] font-semibold text-emerald-800">RFID Updated Successfully</p>
-                    <dl className="flex flex-wrap items-center gap-x-8 gap-y-1 text-[11px]">
+                  <div className="flex flex-1 flex-wrap items-center gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                    <p className="text-xs font-semibold text-emerald-800">RFID Updated Successfully</p>
+                    <dl className="flex flex-wrap items-center gap-x-6 gap-y-1 text-xs">
                       <SummaryItem label="Report #" value={success.reportNo} />
                       <SummaryItem label="Previous RFID" value={success.previous || "—"} />
                       <SummaryItem label="New RFID" value={success.next} />
                     </dl>
-                    <Button className="ml-auto h-8 bg-green-600 text-white hover:bg-green-700" onClick={clearSelection}>
+                    <Button className="ml-auto h-9 bg-green-600 text-white hover:bg-green-700" onClick={clearSelection}>
                       Done
                     </Button>
                   </div>
                 ) : (
-                  <div className="flex flex-1 flex-col gap-2 sm:flex-row sm:items-end">
-                    <div className="min-w-0 flex-1 space-y-1">
-                      <Label htmlFor="new-rfid" className="text-[11px] font-medium text-foreground">
+                  <>
+                    {/* Middle: input */}
+                    <div className="min-w-0 flex-1">
+                      <Label htmlFor="new-rfid" className="text-[11px] font-medium text-muted-foreground">
                         New RFID <span className="text-destructive">*</span>
                       </Label>
-                      <Input
-                        id="new-rfid"
-                        value={newRfid}
-                        disabled={!selected}
-                        onChange={(e) => {
-                          setNewRfid(e.target.value);
-                          if (rfidError) setRfidError("");
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" && canUpdate) handleUpdate();
-                        }}
-                        placeholder="Enter new RFID"
-                        className={cn("h-8 text-xs", rfidError && "border-destructive")}
-                      />
+                      <div className="relative mt-1.5 flex items-center group">
+                        <ScanLine className="absolute left-3 h-4 w-4 text-muted-foreground group-focus-within:text-primary" />
+                        <Input
+                          id="new-rfid"
+                          value={newRfid}
+                          disabled={!selected}
+                          onChange={(e) => {
+                            setNewRfid(e.target.value);
+                            if (rfidError) setRfidError("");
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" && canUpdate) handleUpdate();
+                          }}
+                          placeholder="Scan or enter new RFID tag..."
+                          className={cn(
+                            "h-10 w-full rounded-xl border-border bg-muted/40 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:bg-background",
+                            rfidError && "border-destructive"
+                          )}
+                        />
+                      </div>
                       {rfidError && (
-                        <p className="flex items-center gap-1.5 text-[10px] text-destructive">
-                          <AlertCircle className="h-3 w-3" />
+                        <p className="mt-1 flex items-center gap-1.5 text-[11px] text-destructive">
+                          <AlertCircle className="h-3.5 w-3.5" />
                           {rfidError}
                         </p>
                       )}
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Button variant="outline" className="h-8 text-xs" onClick={clearSelection} disabled={updating || !selected}>
-                        <X className="mr-1.5 h-3 w-3" />
-                        Clear Selection
+
+                    {/* Right: actions */}
+                    <div className="flex items-center gap-3 border-border lg:border-l lg:pl-6">
+                      <Button
+                        variant="outline"
+                        className="h-10 rounded-xl text-sm"
+                        onClick={clearSelection}
+                        disabled={updating || !selected}
+                      >
+                        <X className="mr-1.5 h-4 w-4" />
+                        Clear
                       </Button>
                       <Button
-                        className="h-8 bg-green-600 text-xs text-white hover:bg-green-700"
+                        className="h-10 rounded-xl bg-green-600 text-sm text-white hover:bg-green-700"
                         disabled={!canUpdate}
                         onClick={handleUpdate}
                       >
-                        {updating && <Loader2 className="mr-2 h-3 w-3 animate-spin" />}
+                        {updating && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                         {updating ? "Updating RFID…" : "Update RFID"}
+                        {!updating && <ArrowRight className="ml-1.5 h-4 w-4" />}
                       </Button>
                     </div>
-                  </div>
+                  </>
                 )}
               </div>
             </div>
