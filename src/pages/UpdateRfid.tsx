@@ -225,12 +225,18 @@ const UpdateRfid = () => {
     setRfidError("");
 
     window.setTimeout(() => {
-      const results = MOCK_RECORDS.filter(
+      const q = serial.trim().toLowerCase();
+      const base = MOCK_RECORDS.filter(
         (r) =>
           (!manufacturer || r.manufacturer === manufacturer) &&
-          r.model.toLowerCase() === model.trim().toLowerCase() &&
-          r.mfgSerial.toLowerCase() === serial.trim().toLowerCase()
+          r.model.toLowerCase() === model.trim().toLowerCase()
       );
+      const exact = base.filter(
+        (r) => r.mfgSerial.toLowerCase().includes(q) || (r.rfid || "").toLowerCase().includes(q)
+      );
+      // Demo behaviour: if the serial doesn't match anything, show all units for that model
+      const results = exact.length > 0 ? exact : base;
+
       setRecords(results);
       setSearching(false);
       setHasSearched(true);
