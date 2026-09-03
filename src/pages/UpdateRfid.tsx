@@ -543,8 +543,6 @@ const UpdateRfid = () => {
                     {selected ? (
                       <div className="mt-0.5 flex items-center gap-2">
                         <span className="text-xs font-semibold text-foreground">{selectedIds.length} selected</span>
-                        <span className="h-1 w-1 rounded-full bg-muted-foreground/40" />
-                        <span className="truncate text-[11px] text-muted-foreground">{selected.reportNo}</span>
                         <Badge
                           variant="secondary"
                           className={cn(
