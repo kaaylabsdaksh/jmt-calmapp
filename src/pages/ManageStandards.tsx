@@ -15,6 +15,7 @@ import {
   ClipboardList,
   Wrench,
   X,
+  BarChart3,
 } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
@@ -236,7 +237,8 @@ const ManageStandards = () => {
         <header className="sticky top-0 z-20 border-b border-border bg-white px-4 py-3 lg:px-6">
           <div className="flex items-center gap-3">
             <SidebarTrigger className="text-foreground hover:bg-muted" />
-            <div>
+            <div className="flex-1">
+
               <h1 className="text-lg font-semibold leading-tight text-foreground">Manage Standards</h1>
               <Breadcrumb className="mt-1">
                 <BreadcrumbList>
@@ -256,7 +258,14 @@ const ManageStandards = () => {
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
+            <Button asChild variant="outline" size="sm" className="h-8 gap-1.5 text-xs">
+              <Link to="/standards/dashboard">
+                <BarChart3 className="h-3.5 w-3.5" />
+                Dashboard
+              </Link>
+            </Button>
           </div>
+
         </header>
 
         <main className="space-y-4 p-4 lg:p-6">
