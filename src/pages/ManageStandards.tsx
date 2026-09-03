@@ -163,7 +163,7 @@ const ManageStandards = () => {
       if (advanced.description && !s.description.toLowerCase().includes(advanced.description.toLowerCase())) return false;
       if (advanced.serial && !s.serial.includes(advanced.serial)) return false;
       if (advanced.designatedLocation !== "all" && s.lab !== advanced.designatedLocation) return false;
-      if (advanced.state !== "all" && s.state !== advanced.state) return false;
+      
       if (advanced.providerLocation !== "all" && s.calibrationLocation !== advanced.providerLocation) return false;
       if (advanced.labCode !== "all" && s.labCode !== advanced.labCode) return false;
       if (advanced.owningAccount && !s.owningAccount.includes(advanced.owningAccount)) return false;
