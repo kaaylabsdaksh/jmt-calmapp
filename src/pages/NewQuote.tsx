@@ -88,6 +88,17 @@ const STATES = ["LA", "TX", "MS", "AL", "MT", "OK"];
 const SALESPEOPLE = ["Brandi M. Cali", "Trysten Q Howze", "Kevin R. Young", "Jessica M Thompson"];
 const CONTACTS = ["Dana Whitfield", "Marcus Reed", "Alicia Moreno", "Ben Ottinger"];
 const SHIP_TO = ["Main Plant — 1200 Industrial Dr", "Warehouse B — 44 Levee Rd", "Corporate — 900 Poydras St"];
+
+const ONSITE_PROPOSED_PROJECT =
+  "The following is for calibration services to cover the instruments from your list provided. The date of service and schedule to be decided upon your approval of the following quote. Scheduling of services and/or submission of payment arrangements by your company confirms agreement and acceptance of JM Test Systems, LLC Terms & Conditions included with our quotation.";
+
+const ONSITE_SPECIAL_INSTRUCTIONS = [
+  "Calibration: Requires a climate-controlled environment (temperature and humidity). Warehouse style environments are insufficient, calibrations require air condition and/or heat with humidity control.",
+  "    1. Customer shall provide an office, training room, conference center etc. in addition to (2 or 3) tables or work benches and several 110 outlets to power our standards.",
+  "    2. For an additional cost JM Test can provide a mobile calibration trailer which requires 220v and 50/100amp services, provided by the customer.",
+  "    3. Customer is responsible for gathering, staging and returning all equipment to be calibrated to the designated work area.",
+  "    4. Any equipment found to require repair will be quoted separately prior to work being performed.",
+].join("\n");
 const COMMENT_TYPES = ["Other", "Internal", "Customer", "Pricing", "Follow Up"];
 const ITEM_STATUSES = ["Quoted", "Pending", "Approved", "Cancelled"];
 const SHIP_METHODS = ["Pickup", "Delivery", "FedEx", "UPS", "LTL Freight", "Will Call"];
@@ -156,6 +167,7 @@ const emptyItem = (): QuoteItem => ({
 
 
 const CHARGE_FIELDS = [
+  { key: "delivery", label: "Estimated Delivery Charge" },
   { key: "mobilization", label: "Mobilization/Demobilization" },
   { key: "perDiem", label: "Per Diem" },
   { key: "techTravel", label: "Technician Travel Charge" },
@@ -163,6 +175,11 @@ const CHARGE_FIELDS = [
   { key: "generator", label: "Generator (Power) Charge" },
   { key: "water", label: "Water Supply Fee" },
 ] as const;
+
+const ONSITE_CHARGE_KEYS = [
+  "mobilization", "perDiem", "techTravel", "trailer", "generator", "water",
+] as const;
+const STANDARD_CHARGE_KEYS = ["delivery"] as const;
 
 type ChargeKey = (typeof CHARGE_FIELDS)[number]["key"];
 
@@ -548,6 +565,7 @@ const NewQuote = () => {
 
   // Charges
   const [charges, setCharges] = useState<Record<ChargeKey, string>>({
+    delivery: "0.00",
     mobilization: "0.00",
     perDiem: "0.00",
     techTravel: "0.00",
@@ -565,6 +583,22 @@ const NewQuote = () => {
   const [page, setPage] = useState(1);
   const pageSize = 5;
 
+  const isOnsiteQuote = quoteType === "OnSite" || quoteType === "ESL";
+  const activeChargeFields = useMemo(
+    () =>
+      CHARGE_FIELDS.filter((c) =>
+        (isOnsiteQuote ? ONSITE_CHARGE_KEYS : STANDARD_CHARGE_KEYS).includes(c.key as never),
+      ),
+    [isOnsiteQuote],
+  );
+  const subtotalLabel = quoteType === "ESL" ? "Certification/Testing Subtotal" : "Calibration/Certification Subtotal";
+
+  useEffect(() => {
+    if (quoteType !== "OnSite" && quoteType !== "ESL") return;
+    setProposedProject((p) => (p.trim() ? p : ONSITE_PROPOSED_PROJECT));
+    setSpecialInstructions((p) => (p.trim() ? p : ONSITE_SPECIAL_INSTRUCTIONS));
+  }, [quoteType]);
+
   const certSubtotal = useMemo(
     () => items.reduce((s, i) => s + num(i.calCert) + num(i.calc17025), 0),
     [items],
@@ -572,8 +606,8 @@ const NewQuote = () => {
   const otherServicesTotal = useMemo(
     () =>
       items.reduce((s, i) => s + num(i.otherServices), 0) +
-      CHARGE_FIELDS.reduce((s, c) => s + num(charges[c.key]), 0),
-    [items, charges],
+      activeChargeFields.reduce((s, c) => s + num(charges[c.key]), 0),
+    [items, charges, activeChargeFields],
   );
   const partsTotal = useMemo(() => items.reduce((s, i) => s + num(i.otherParts), 0), [items]);
   const baseTotal = useMemo(() => items.reduce((s, i) => s + num(i.baseAmt), 0), [items]);
@@ -1626,7 +1660,7 @@ const NewQuote = () => {
             <SectionCard icon={DollarSign} title="Quote Summary">
 
               <div className="space-y-1.5">
-                {CHARGE_FIELDS.map((c) => (
+                {activeChargeFields.map((c) => (
                   <div key={c.key} className="flex items-center justify-between gap-2">
                     <span className="text-[11px] text-muted-foreground">{c.label}</span>
                   <Input
@@ -1638,7 +1672,7 @@ const NewQuote = () => {
                 ))}
                 <Separator className="my-2" />
                 <div className="flex items-center justify-between text-[11px]">
-                  <span className="text-muted-foreground">Certification/Testing Subtotal</span>
+                  <span className="text-muted-foreground">{subtotalLabel}</span>
                   <span className="font-medium">{money(certSubtotal + baseTotal)}</span>
                 </div>
                 <div className="flex items-center justify-between text-[11px]">
@@ -1653,7 +1687,7 @@ const NewQuote = () => {
                   <span className="text-xs font-semibold">Total</span>
                   <span className="text-sm font-bold">{money(total)}</span>
                 </div>
-                <div className="flex items-center justify-between text-[11px] pt-1">
+                <div className={cn("flex items-center justify-between text-[11px] pt-1", !isOnsiteQuote && "hidden")}>
                   <span className="text-muted-foreground">Historical Billing Amount</span>
                   <span className="font-medium">{money(num(historicalBilling))}</span>
                 </div>
