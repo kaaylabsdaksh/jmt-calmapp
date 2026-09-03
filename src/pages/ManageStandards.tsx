@@ -276,16 +276,16 @@ const ManageStandards = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                   <div className="space-y-0.5">
                     <Label htmlFor="f-standard" className="text-[11px] font-medium text-foreground/80">Standard #</Label>
-                    <Input id="f-standard" className="h-6 min-h-0 rounded-md border-gray-200 bg-white px-1.5 py-0 text-[11px] placeholder:text-[10px]" placeholder="Search standards..." value={draft.standardNo} onChange={(e) => setDraft({ ...draft, standardNo: e.target.value })} onKeyDown={(e) => e.key === "Enter" && runSearch()} />
+                    <Input id="f-standard" className={fieldClass(draft.standardNo, "placeholder:text-[10px]")} placeholder="Search standards..." value={draft.standardNo} onChange={(e) => setDraft({ ...draft, standardNo: e.target.value })} onKeyDown={(e) => e.key === "Enter" && runSearch()} />
                   </div>
                   <div className="space-y-0.5">
                     <Label htmlFor="f-desc" className="text-[11px] font-medium text-foreground/80">Description</Label>
-                    <Input id="f-desc" className="h-6 min-h-0 rounded-md border-gray-200 bg-white px-1.5 py-0 text-[11px] placeholder:text-[10px]" placeholder="Description" value={draft.description} onChange={(e) => setDraft({ ...draft, description: e.target.value })} onKeyDown={(e) => e.key === "Enter" && runSearch()} />
+                    <Input id="f-desc" className={fieldClass(draft.description, "placeholder:text-[10px]")} placeholder="Description" value={draft.description} onChange={(e) => setDraft({ ...draft, description: e.target.value })} onKeyDown={(e) => e.key === "Enter" && runSearch()} />
                   </div>
                   <div className="space-y-0.5">
                     <Label className="text-[11px] font-medium text-foreground/80">Manufacturer</Label>
                     <Select value={draft.manufacturer} onValueChange={(v) => setDraft({ ...draft, manufacturer: v })}>
-                      <SelectTrigger className="h-6 min-h-0 rounded-md border-gray-200 bg-white px-1.5 py-0 text-[11px] [&>svg]:h-3 [&>svg]:w-3"><SelectValue placeholder="All Manufacturers" /></SelectTrigger>
+                      <SelectTrigger className={fieldClass(draft.manufacturer, "[&>svg]:h-3 [&>svg]:w-3")}><SelectValue placeholder="All Manufacturers" /></SelectTrigger>
                       <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-md z-[9999] text-[11px]">
                         <SelectItem value="all">All Manufacturers</SelectItem>
                         {MANUFACTURERS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
@@ -295,7 +295,7 @@ const ManageStandards = () => {
                   <div className="space-y-0.5">
                     <Label className="text-[11px] font-medium text-foreground/80">Designated Location</Label>
                     <Select value={draft.designatedLocation} onValueChange={(v) => setDraft({ ...draft, designatedLocation: v })}>
-                      <SelectTrigger className="h-6 min-h-0 rounded-md border-gray-200 bg-white px-1.5 py-0 text-[11px] [&>svg]:h-3 [&>svg]:w-3"><SelectValue placeholder="All Locations" /></SelectTrigger>
+                      <SelectTrigger className={fieldClass(draft.designatedLocation, "[&>svg]:h-3 [&>svg]:w-3")}><SelectValue placeholder="All Locations" /></SelectTrigger>
                       <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-md z-[9999] text-[11px]">
                         <SelectItem value="all">All Locations</SelectItem>
                         {LOCATIONS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
@@ -305,7 +305,7 @@ const ManageStandards = () => {
                   <div className="space-y-0.5">
                     <Label htmlFor="f-model" className="text-[11px] font-medium text-foreground/80">Model</Label>
                     <Select value={draft.model} onValueChange={(v) => setDraft({ ...draft, model: v })}>
-                      <SelectTrigger className="h-6 min-h-0 rounded-md border-gray-200 bg-white px-1.5 py-0 text-[11px] [&>svg]:h-3 [&>svg]:w-3"><SelectValue placeholder="All Models" /></SelectTrigger>
+                      <SelectTrigger className={fieldClass(draft.model, "[&>svg]:h-3 [&>svg]:w-3")}><SelectValue placeholder="All Models" /></SelectTrigger>
                       <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-md z-[9999] text-[11px]">
                         <SelectItem value="all">All Models</SelectItem>
                         {MODELS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
@@ -315,7 +315,7 @@ const ManageStandards = () => {
                   <div className="space-y-0.5">
                     <Label className="text-[11px] font-medium text-foreground/80">State</Label>
                     <Select value={quick} onValueChange={(v) => { setQuick(v as QuickFilter); setPage(1); }}>
-                      <SelectTrigger className="h-6 min-h-0 rounded-md border-gray-200 bg-white px-1.5 py-0 text-[11px] [&>svg]:h-3 [&>svg]:w-3"><SelectValue placeholder="Active" /></SelectTrigger>
+                      <SelectTrigger className={fieldClass(quick, "[&>svg]:h-3 [&>svg]:w-3")}><SelectValue placeholder="Active" /></SelectTrigger>
                       <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-md z-[9999] text-[11px]">
                         {quickChips.map((c) => (
                           <SelectItem key={c.key} value={c.key}>{c.label}</SelectItem>
@@ -325,7 +325,7 @@ const ManageStandards = () => {
                   </div>
                   <div className="space-y-0.5">
                     <Label htmlFor="f-serial" className="text-[11px] font-medium text-foreground/80">Serial Number</Label>
-                    <Input id="f-serial" className="h-6 min-h-0 rounded-md border-gray-200 bg-white px-1.5 py-0 text-[11px] placeholder:text-[10px]" placeholder="Serial Number" value={draft.serial} onChange={(e) => setDraft({ ...draft, serial: e.target.value })} onKeyDown={(e) => e.key === "Enter" && runSearch()} />
+                    <Input id="f-serial" className={fieldClass(draft.serial, "placeholder:text-[10px]")} placeholder="Serial Number" value={draft.serial} onChange={(e) => setDraft({ ...draft, serial: e.target.value })} onKeyDown={(e) => e.key === "Enter" && runSearch()} />
                   </div>
                 </div>
               </div>
@@ -336,16 +336,16 @@ const ManageStandards = () => {
                 <div className="flex flex-col gap-y-2">
                   <div className="space-y-0.5">
                     <Label htmlFor="f-wo" className="text-[11px] font-medium text-foreground/80">WO #</Label>
-                    <Input id="f-wo" className="h-6 min-h-0 rounded-md border-gray-200 bg-white px-1.5 py-0 text-[11px] placeholder:text-[10px]" placeholder="WO #" value={draft.workOrderNo} onChange={(e) => setDraft({ ...draft, workOrderNo: e.target.value })} onKeyDown={(e) => e.key === "Enter" && runSearch()} />
+                    <Input id="f-wo" className={fieldClass(draft.workOrderNo, "placeholder:text-[10px]")} placeholder="WO #" value={draft.workOrderNo} onChange={(e) => setDraft({ ...draft, workOrderNo: e.target.value })} onKeyDown={(e) => e.key === "Enter" && runSearch()} />
                   </div>
                   <div className="space-y-0.5">
                     <Label htmlFor="f-acct" className="text-[11px] font-medium text-foreground/80">Owning Account #</Label>
-                    <Input id="f-acct" className="h-6 min-h-0 rounded-md border-gray-200 bg-white px-1.5 py-0 text-[11px] placeholder:text-[10px]" placeholder="Owning Account #" value={draft.owningAccount} onChange={(e) => setDraft({ ...draft, owningAccount: e.target.value })} onKeyDown={(e) => e.key === "Enter" && runSearch()} />
+                    <Input id="f-acct" className={fieldClass(draft.owningAccount, "placeholder:text-[10px]")} placeholder="Owning Account #" value={draft.owningAccount} onChange={(e) => setDraft({ ...draft, owningAccount: e.target.value })} onKeyDown={(e) => e.key === "Enter" && runSearch()} />
                   </div>
                   <div className="space-y-0.5">
                     <Label className="text-[11px] font-medium text-foreground/80">Calibration Provider Location</Label>
                     <Select value={draft.providerLocation} onValueChange={(v) => setDraft({ ...draft, providerLocation: v })}>
-                      <SelectTrigger className="h-6 min-h-0 rounded-md border-gray-200 bg-white px-1.5 py-0 text-[11px] [&>svg]:h-3 [&>svg]:w-3"><SelectValue placeholder="All Provider Locations" /></SelectTrigger>
+                      <SelectTrigger className={fieldClass(draft.providerLocation, "[&>svg]:h-3 [&>svg]:w-3")}><SelectValue placeholder="All Provider Locations" /></SelectTrigger>
                       <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-md z-[9999] text-[11px]">
                         <SelectItem value="all">All Provider Locations</SelectItem>
                         {LOCATIONS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
@@ -355,7 +355,7 @@ const ManageStandards = () => {
                   <div className="space-y-0.5">
                     <Label className="text-[11px] font-medium text-foreground/80">Lab Code</Label>
                     <Select value={draft.labCode} onValueChange={(v) => setDraft({ ...draft, labCode: v })}>
-                      <SelectTrigger className="h-6 min-h-0 rounded-md border-gray-200 bg-white px-1.5 py-0 text-[11px] [&>svg]:h-3 [&>svg]:w-3"><SelectValue placeholder="All Lab Codes" /></SelectTrigger>
+                      <SelectTrigger className={fieldClass(draft.labCode, "[&>svg]:h-3 [&>svg]:w-3")}><SelectValue placeholder="All Lab Codes" /></SelectTrigger>
                       <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-md z-[9999] text-[11px]">
                         <SelectItem value="all">All Lab Codes</SelectItem>
                         {LAB_CODES.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
