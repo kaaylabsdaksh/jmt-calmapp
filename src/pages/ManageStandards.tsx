@@ -406,7 +406,6 @@ const ManageStandards = () => {
             <div className="text-sm font-medium text-foreground">
               {quickChips.find((c) => c.key === quick)?.label} · {total} Standards
             </div>
-            </div>
           </div>
 
           {/* Action bar */}
