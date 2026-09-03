@@ -251,11 +251,9 @@ const ManageStandards = () => {
         </header>
 
         <main className="space-y-4 p-4 lg:p-6">
-          <p className="text-sm text-muted-foreground">
-            Search and manage calibration standards and their associated history.
-          </p>
 
           {/* Search Criteria */}
+
           <section className="bg-card rounded-xl shadow-sm border p-4">
             <div className="mb-3 flex items-center gap-2">
               <Search className="h-3.5 w-3.5 text-muted-foreground" />
