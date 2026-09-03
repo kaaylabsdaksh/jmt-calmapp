@@ -250,47 +250,147 @@ const ManageStandards = () => {
             Search and manage calibration standards and their associated history.
           </p>
 
-          {/* Search row */}
-          <div className="rounded-lg border border-border bg-white p-3 shadow-sm">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-              <div className="relative flex-1">
-                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && runSearch()}
-                  placeholder="Search standards by number, serial, model, description…"
-                  className="h-9 pl-9 text-sm"
-                  aria-label="Search standards"
-                />
+          {/* Search Criteria */}
+          <section className="rounded-lg border border-border bg-white p-4 shadow-sm">
+            <div className="mb-3 flex items-center gap-2">
+              <Search className="h-4 w-4 text-muted-foreground" />
+              <h2 className="text-sm font-semibold text-foreground">Search Criteria</h2>
+              {activeAdvancedCount > 0 && (
+                <Badge className="h-5 rounded-full px-1.5 text-[10px]">{activeAdvancedCount}</Badge>
+              )}
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Equipment</p>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  <div className="space-y-1">
+                    <Label htmlFor="f-standard" className="text-xs">Standard #</Label>
+                    <Input id="f-standard" className="h-9 rounded-md text-sm" placeholder="e.g. 1832" value={draft.standardNo} onChange={(e) => setDraft({ ...draft, standardNo: e.target.value })} onKeyDown={(e) => e.key === "Enter" && runSearch()} />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs">Manufacturer</Label>
+                    <Select value={draft.manufacturer} onValueChange={(v) => setDraft({ ...draft, manufacturer: v })}>
+                      <SelectTrigger className="h-9 rounded-md text-sm"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
+                        {MANUFACTURERS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs">Model</Label>
+                    <Select value={draft.model} onValueChange={(v) => setDraft({ ...draft, model: v })}>
+                      <SelectTrigger className="h-9 rounded-md text-sm"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
+                        {MODELS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="f-serial" className="text-xs">Serial Number</Label>
+                    <Input id="f-serial" className="h-9 rounded-md text-sm" placeholder="Serial number" value={draft.serial} onChange={(e) => setDraft({ ...draft, serial: e.target.value })} onKeyDown={(e) => e.key === "Enter" && runSearch()} />
+                  </div>
+                  <div className="space-y-1 sm:col-span-2">
+                    <Label htmlFor="f-desc" className="text-xs">Description</Label>
+                    <Input id="f-desc" className="h-9 rounded-md text-sm" placeholder="Description contains…" value={draft.description} onChange={(e) => setDraft({ ...draft, description: e.target.value })} onKeyDown={(e) => e.key === "Enter" && runSearch()} />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs">Designated Location</Label>
+                    <Select value={draft.designatedLocation} onValueChange={(v) => setDraft({ ...draft, designatedLocation: v })}>
+                      <SelectTrigger className="h-9 rounded-md text-sm"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
+                        {LOCATIONS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs">State</Label>
+                    <Select value={draft.state} onValueChange={(v) => setDraft({ ...draft, state: v })}>
+                      <SelectTrigger className="h-9 rounded-md text-sm"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
+                        <SelectItem value="Active">Active</SelectItem>
+                        <SelectItem value="Inactive">Inactive</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  className="h-9 gap-2 text-sm"
-                  onClick={() => {
-                    setDraft(advanced);
-                    setFiltersOpen(true);
-                  }}
-                >
-                  <SlidersHorizontal className="h-4 w-4" />
-                  Filters
-                  {activeAdvancedCount > 0 && (
-                    <Badge className="ml-1 h-5 rounded-full px-1.5 text-[10px]">{activeAdvancedCount}</Badge>
-                  )}
-                </Button>
-                <Button className="h-9 text-sm" onClick={runSearch}>
-                  Search
-                </Button>
-                {(query || activeAdvancedCount > 0 || quick !== "all") && (
-                  <Button variant="ghost" className="h-9 gap-1 text-sm" onClick={clearAll}>
-                    <X className="h-4 w-4" />
-                    Clear
-                  </Button>
-                )}
+
+              <div>
+                <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Work Order &amp; Ownership</p>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  <div className="space-y-1">
+                    <Label htmlFor="f-wo" className="text-xs">WO #</Label>
+                    <Input id="f-wo" className="h-9 rounded-md text-sm" placeholder="Work order #" value={draft.workOrderNo} onChange={(e) => setDraft({ ...draft, workOrderNo: e.target.value })} onKeyDown={(e) => e.key === "Enter" && runSearch()} />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="f-acct" className="text-xs">Owning Account #</Label>
+                    <Input id="f-acct" className="h-9 rounded-md text-sm" placeholder="Account #" value={draft.owningAccount} onChange={(e) => setDraft({ ...draft, owningAccount: e.target.value })} onKeyDown={(e) => e.key === "Enter" && runSearch()} />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs">Calibration Provider Location</Label>
+                    <Select value={draft.providerLocation} onValueChange={(v) => setDraft({ ...draft, providerLocation: v })}>
+                      <SelectTrigger className="h-9 rounded-md text-sm"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
+                        {LOCATIONS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs">Lab Code</Label>
+                    <Select value={draft.labCode} onValueChange={(v) => setDraft({ ...draft, labCode: v })}>
+                      <SelectTrigger className="h-9 rounded-md text-sm"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All</SelectItem>
+                        {LAB_CODES.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Calibration</p>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  <div className="space-y-1">
+                    <Label htmlFor="f-from" className="text-xs">Calibration Due From</Label>
+                    <ModernDatePicker
+                      id="f-from"
+                      size="lg"
+                      value={draft.dueFrom}
+                      onChange={(d) => setDraft({ ...draft, dueFrom: d ? format(d, "MM/dd/yyyy") : "" })}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="f-to" className="text-xs">Calibration Due To</Label>
+                    <ModernDatePicker
+                      id="f-to"
+                      size="lg"
+                      value={draft.dueTo}
+                      onChange={(d) => setDraft({ ...draft, dueTo: d ? format(d, "MM/dd/yyyy") : "" })}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+
+            <div className="mt-4 flex items-center justify-end gap-2 border-t border-border pt-3">
+              <Button variant="outline" className="h-9 gap-1 text-sm" onClick={clearAll}>
+                <X className="h-4 w-4" />
+                Clear
+              </Button>
+              <Button className="h-9 gap-2 text-sm" onClick={runSearch}>
+                <Search className="h-4 w-4" />
+                Search
+              </Button>
+            </div>
+          </section>
+
 
           {/* Count + quick filters */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
