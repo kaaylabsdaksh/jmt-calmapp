@@ -114,6 +114,9 @@ const FIELD_BASE =
 const FIELD_ACTIVE = "border-slate-700 bg-slate-100 text-slate-900 font-semibold";
 const fieldClass = (value: string, extra = "") =>
   cn(FIELD_BASE, extra, value && value !== "all" && FIELD_ACTIVE);
+const dateInputActive = (value: string) =>
+  value ? "border-slate-700 bg-slate-100 text-slate-900 font-semibold" : "";
+
 
 const ManageStandards = () => {
   const navigate = useNavigate();
@@ -375,6 +378,7 @@ const ManageStandards = () => {
                       id="f-from"
                       size="xs"
                       value={draft.dueFrom}
+                      inputClassName={dateInputActive(draft.dueFrom)}
                       onChange={(d) => setDraft({ ...draft, dueFrom: d ? format(d, "MM/dd/yyyy") : "" })}
                     />
                   </div>
@@ -384,8 +388,10 @@ const ManageStandards = () => {
                       id="f-to"
                       size="xs"
                       value={draft.dueTo}
+                      inputClassName={dateInputActive(draft.dueTo)}
                       onChange={(d) => setDraft({ ...draft, dueTo: d ? format(d, "MM/dd/yyyy") : "" })}
                     />
+
                   </div>
 
                   <div className="mt-auto flex items-center justify-end gap-2 pt-4">
