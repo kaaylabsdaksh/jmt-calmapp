@@ -437,7 +437,7 @@ const UpdateRfid = () => {
         )}
 
         {!searching && records.length > 0 && (
-          <div className="flex flex-col gap-4 pb-6">
+          <div className="flex flex-col gap-4 pb-28">
             {/* Matching Equipment */}
             <section className="min-w-0 rounded-lg border border-border bg-card shadow-sm">
 
