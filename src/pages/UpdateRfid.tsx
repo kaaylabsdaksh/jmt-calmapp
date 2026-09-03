@@ -437,9 +437,10 @@ const UpdateRfid = () => {
         )}
 
         {!searching && records.length > 0 && (
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
+          <div className="flex flex-col gap-4 pb-28">
             {/* Matching Equipment */}
-            <section className="flex-1 min-w-0 rounded-lg border border-border bg-card shadow-sm">
+            <section className="min-w-0 rounded-lg border border-border bg-card shadow-sm">
+
               <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
                 <h2 className="text-xs font-semibold uppercase tracking-wide text-foreground">Matching Equipment</h2>
                 <span className="text-xs text-muted-foreground">{records.length} records</span>
