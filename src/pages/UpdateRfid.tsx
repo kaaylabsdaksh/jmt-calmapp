@@ -327,10 +327,6 @@ const UpdateRfid = () => {
       </header>
 
       <div className="mx-auto w-full max-w-[1600px] space-y-4 px-4 py-5 sm:px-6">
-        <p className="text-sm text-muted-foreground">
-          Search for equipment by manufacturer, model, and serial number, then assign or update its RFID.
-        </p>
-
         {/* 1. Find equipment */}
         <section className="rounded-lg border border-border bg-card shadow-sm">
           <div className="flex items-center gap-2 border-b border-border px-4 py-2.5">
