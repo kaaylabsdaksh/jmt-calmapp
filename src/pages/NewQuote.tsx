@@ -79,7 +79,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
-const QUOTE_TYPES = ["All", "Lab", "OnSite", "ESL", "Rental", "Sales"];
+const QUOTE_TYPES = ["All", "Regular", "OnSite", "ESL", "Rental", "Sales"];
 const LOCATIONS = ["All", "BR", "CL", "GR", "MT", "HOU"];
 const SOURCES = ["Phone", "Email", "Web", "Salesperson", "Walk-in"];
 const PRIORITIES = ["All", "Emergency", "Expedite", "Rush", "Normal"];
@@ -449,7 +449,7 @@ const NewQuote = () => {
   const navigate = useNavigate();
 
   // Quote info
-  const [quoteType, setQuoteType] = useState("Lab"); // demo prefill
+  const [quoteType, setQuoteType] = useState("Regular"); // demo prefill
   const [location, setLocation] = useState("BR"); // demo prefill
   const [projectNo, setProjectNo] = useState("");
   const [existingCustomer, setExistingCustomer] = useState("Yes");
