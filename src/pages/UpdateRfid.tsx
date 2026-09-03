@@ -439,9 +439,9 @@ const UpdateRfid = () => {
                 <span className="text-xs text-muted-foreground">{records.length} records</span>
               </div>
 
-              <div className="max-h-[430px] overflow-auto">
-                <table className="w-full min-w-[1100px] border-collapse text-xs">
-                  <thead className="sticky top-0 z-10 bg-muted/60">
+              <div>
+                <table className="w-full border-collapse text-xs">
+                  <thead className="bg-muted/60">
                     <tr className="text-left text-[11px] uppercase tracking-wide text-muted-foreground">
                       <th className="w-10 px-3 py-2">
                         <input
