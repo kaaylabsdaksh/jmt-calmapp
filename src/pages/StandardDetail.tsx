@@ -444,7 +444,7 @@ const StandardDetail = () => {
               </SectionCard>
 
               <SectionCard title="Calibration">
-                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="mb-3 grid gap-2 sm:grid-cols-3">
                   <ToggleRow
                     id="toFactory"
                     label="To Factory"
@@ -459,12 +459,14 @@ const StandardDetail = () => {
                     checked={form.allowAccreditedCert}
                     onChange={(v) => set("allowAccreditedCert", v)}
                   />
-                  {form.accredited17025 && (
-                    <div className="sm:col-span-2 lg:col-span-3 rounded-md border border-border bg-muted/30 p-2 text-[11px] text-muted-foreground">
-                      Accredited scope applies. Certificates issued for this standard will include the A2LA accreditation
-                      statement and the assigned trace code.
-                    </div>
-                  )}
+                </div>
+                {form.accredited17025 && (
+                  <div className="mb-3 rounded-md border border-border bg-muted/30 p-2 text-[11px] text-muted-foreground">
+                    Accredited scope applies. Certificates issued for this standard will include the A2LA accreditation
+                    statement and the assigned trace code.
+                  </div>
+                )}
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                   <Field label="Calibration Interval Unit">
                     <Select value={form.unit} onValueChange={(v) => set("unit", v)}>
                       <SelectTrigger className="h-9 text-sm"><SelectValue placeholder="Select" /></SelectTrigger>
