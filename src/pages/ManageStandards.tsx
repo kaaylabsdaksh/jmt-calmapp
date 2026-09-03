@@ -236,7 +236,8 @@ const ManageStandards = () => {
         <header className="sticky top-0 z-20 border-b border-border bg-white px-4 py-3 lg:px-6">
           <div className="flex items-center gap-3">
             <SidebarTrigger className="text-foreground hover:bg-muted" />
-            <div>
+            <div className="flex-1">
+
               <h1 className="text-lg font-semibold leading-tight text-foreground">Manage Standards</h1>
               <Breadcrumb className="mt-1">
                 <BreadcrumbList>
