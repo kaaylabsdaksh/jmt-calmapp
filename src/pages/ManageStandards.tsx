@@ -114,7 +114,6 @@ const ManageStandards = () => {
   const [query, setQuery] = useState("");
   const [advanced, setAdvanced] = useState(emptyAdvanced);
   const [draft, setDraft] = useState(emptyAdvanced);
-  const [filtersOpen, setFiltersOpen] = useState(false);
   const [quick, setQuick] = useState<QuickFilter>("active");
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
