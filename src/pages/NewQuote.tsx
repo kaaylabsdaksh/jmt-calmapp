@@ -410,6 +410,7 @@ const SelectField = ({
     typeof o === "string" ? { label: o, value: o } : o
   );
   const selected = normalized.find((o) => o.value === value);
+  const labelOnly = placeholder.replace(/\s*\*$/, "");
   return (
     <Select value={value} onValueChange={onChange}>
       <SelectTrigger className={cn(inputCls, "md:text-[11px]", className)}>
@@ -421,10 +422,16 @@ const SelectField = ({
           }
         >
           {selected ? (
-            <span className="text-[11px]">{selected.label}</span>
+            <span className="flex min-w-0 items-baseline gap-1">
+              <span className="shrink-0 text-[9px] uppercase tracking-wide text-muted-foreground">
+                {labelOnly}
+              </span>
+              <span className="truncate text-[11px]">{selected.label}</span>
+            </span>
           ) : null}
         </SelectValue>
       </SelectTrigger>
+
       <SelectContent className="bg-popover z-50">
         {normalized.map((o) => (
           <SelectItem key={o.value} value={o.value} className="text-xs">
