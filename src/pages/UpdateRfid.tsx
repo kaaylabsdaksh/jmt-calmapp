@@ -313,12 +313,18 @@ const UpdateRfid = () => {
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild className="text-xs text-muted-foreground">
-                    <Link to="/">Equipment</Link>
+                    <Link to="/">Home</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage className="text-xs font-medium text-foreground">Update RFID</BreadcrumbPage>
+                  <BreadcrumbLink asChild className="text-xs text-muted-foreground">
+                    <Link to="/">Work Order</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage className="text-xs font-medium text-foreground">Update RFID's</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
