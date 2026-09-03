@@ -440,10 +440,10 @@ const UpdateRfid = () => {
               </div>
 
               <div>
-                <table className="w-full border-collapse text-xs">
+                <table className="w-full table-fixed border-collapse text-xs">
                   <thead className="bg-muted/60">
                     <tr className="text-left text-[11px] uppercase tracking-wide text-muted-foreground">
-                      <th className="w-10 px-2 py-1.5">
+                      <th className="w-[3%] px-2 py-1.5">
                         <input
                           type="checkbox"
                           checked={allSelected}
@@ -452,15 +452,15 @@ const UpdateRfid = () => {
                           className="h-3.5 w-3.5 accent-green-600"
                         />
                       </th>
-                      <SortableTh label="Report #" active={sort.key === "reportNo"} onClick={() => toggleSort("reportNo")} />
-                      <SortableTh label="RFID" active={sort.key === "rfid"} onClick={() => toggleSort("rfid")} />
-                      <SortableTh label="Created Date" active={sort.key === "createdDate"} onClick={() => toggleSort("createdDate")} />
-                      <SortableTh label="Item Status" active={sort.key === "itemStatus"} onClick={() => toggleSort("itemStatus")} />
-                      <th className="whitespace-nowrap px-2 py-1.5 font-medium">Manufacturer</th>
-                      <th className="whitespace-nowrap px-2 py-1.5 font-medium">Model</th>
-                      <th className="whitespace-nowrap px-2 py-1.5 font-medium">Mfg Serial</th>
-                      <th className="whitespace-nowrap px-2 py-1.5 font-medium">Customer Serial</th>
-                      <th className="whitespace-nowrap px-2 py-1.5 font-medium">Customer ID</th>
+                      <SortableTh className="w-[14%]" label="Report #" active={sort.key === "reportNo"} onClick={() => toggleSort("reportNo")} />
+                      <SortableTh className="w-[12%]" label="RFID" active={sort.key === "rfid"} onClick={() => toggleSort("rfid")} />
+                      <SortableTh className="w-[11%]" label="Created Date" active={sort.key === "createdDate"} onClick={() => toggleSort("createdDate")} />
+                      <SortableTh className="w-[13%]" label="Item Status" active={sort.key === "itemStatus"} onClick={() => toggleSort("itemStatus")} />
+                      <th className="w-[11%] px-2 py-1.5 font-medium">Manufacturer</th>
+                      <th className="w-[7%] px-2 py-1.5 font-medium">Model</th>
+                      <th className="w-[11%] px-2 py-1.5 font-medium">Mfg Serial</th>
+                      <th className="w-[10%] px-2 py-1.5 font-medium">Customer Serial</th>
+                      <th className="w-[8%] px-2 py-1.5 font-medium">Customer ID</th>
                     </tr>
                   </thead>
                   <tbody>
