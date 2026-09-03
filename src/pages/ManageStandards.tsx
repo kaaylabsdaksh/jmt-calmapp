@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Search,
@@ -415,8 +415,8 @@ const ManageStandards = () => {
                       const hRows = s.history.slice(hStart, hStart + HISTORY_PAGE_SIZE);
                       const hPages = Math.max(1, Math.ceil(s.history.length / HISTORY_PAGE_SIZE));
                       return (
-                        <>
-                          <TableRow key={s.id} className="text-xs">
+                        <Fragment key={s.id}>
+                          <TableRow className="text-xs">
                             <TableCell className="py-1.5">
                               <Button
                                 variant="ghost"
@@ -550,7 +550,7 @@ const ManageStandards = () => {
                               </TableCell>
                             </TableRow>
                           )}
-                        </>
+                        </Fragment>
                       );
                     })}
                 </TableBody>
