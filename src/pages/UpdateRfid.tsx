@@ -431,186 +431,188 @@ const UpdateRfid = () => {
         )}
 
         {!searching && records.length > 0 && (
-          <section className="rounded-lg border border-border bg-card shadow-sm">
-            <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
-              <h2 className="text-xs font-semibold uppercase tracking-wide text-foreground">Matching Equipment</h2>
-              <span className="text-xs text-muted-foreground">{records.length} records</span>
-            </div>
-
-            <div className="max-h-[430px] overflow-auto">
-              <table className="w-full min-w-[1100px] border-collapse text-xs">
-                <thead className="sticky top-0 z-10 bg-muted/60">
-                  <tr className="text-left text-[11px] uppercase tracking-wide text-muted-foreground">
-                    <th className="w-10 px-3 py-2">
-                      <input
-                        type="checkbox"
-                        checked={allSelected}
-                        onChange={toggleSelectAll}
-                        aria-label="Select all equipment records"
-                        className="h-3.5 w-3.5 accent-green-600"
-                      />
-                    </th>
-                    <SortableTh label="Report #" active={sort.key === "reportNo"} onClick={() => toggleSort("reportNo")} />
-                    <SortableTh label="RFID" active={sort.key === "rfid"} onClick={() => toggleSort("rfid")} />
-                    <SortableTh label="Created Date" active={sort.key === "createdDate"} onClick={() => toggleSort("createdDate")} />
-                    <SortableTh label="Item Status" active={sort.key === "itemStatus"} onClick={() => toggleSort("itemStatus")} />
-                    <th className="whitespace-nowrap px-3 py-2 font-medium">Manufacturer</th>
-                    <th className="whitespace-nowrap px-3 py-2 font-medium">Model</th>
-                    <th className="whitespace-nowrap px-3 py-2 font-medium">Mfg Serial</th>
-                    <th className="whitespace-nowrap px-3 py-2 font-medium">Customer Serial</th>
-                    <th className="whitespace-nowrap px-3 py-2 font-medium">Customer ID</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {sorted.map((r) => {
-                    const isSelected = isRowSelected(r.id);
-                    return (
-                      <tr
-                        key={r.id}
-                        onClick={() => selectOnly(r.id)}
-                        className={cn(
-                          "cursor-pointer border-b border-border/70 transition-colors hover:bg-muted/40",
-                          isSelected && "bg-primary/10 hover:bg-primary/10"
-                        )}
-                      >
-                        <td className="px-3 py-2" onClick={(e) => e.stopPropagation()}>
-                          <input
-                            type="checkbox"
-                            checked={isSelected}
-                            onChange={() => toggleRow(r.id)}
-                            aria-label={`Select ${r.reportNo}`}
-                            className="h-3.5 w-3.5 accent-green-600"
-                          />
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-2">
-                          <Link
-                            to={`/edit-order`}
-                            onClick={(e) => e.stopPropagation()}
-                            className="font-medium text-foreground underline-offset-2 hover:underline"
-                          >
-                            {r.reportNo}
-                          </Link>
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-2 font-mono text-[11px]">
-                          {r.rfid || <span className="text-muted-foreground">Not Assigned</span>}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-2 text-muted-foreground">{r.createdDate}</td>
-                        <td className="whitespace-nowrap px-3 py-2">
-                          <Badge
-                            variant="secondary"
-                            className={cn(
-                              "rounded-full border-0 px-2 py-0.5 text-[10px] font-medium hover:bg-inherit",
-                              STATUS_TONE[r.itemStatus] ?? "bg-slate-100 text-slate-600"
-                            )}
-                          >
-                            {r.itemStatus}
-                          </Badge>
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-2">{r.manufacturer}</td>
-                        <td className="whitespace-nowrap px-3 py-2">{r.model}</td>
-                        <td className="whitespace-nowrap px-3 py-2">{r.mfgSerial}</td>
-                        <td className="whitespace-nowrap px-3 py-2">{r.customerSerial}</td>
-                        <td className="whitespace-nowrap px-3 py-2">{r.customerId}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-
-          </section>
-        )}
-
-        {/* 3 + 4. Selection summary and RFID assignment */}
-        {records.length > 0 && (
-          <section
-            className={cn(
-              "fixed bottom-4 right-4 z-50 w-full max-w-[420px] rounded-lg border bg-card shadow-lg transition-all",
-              selected ? "border-border opacity-100 translate-y-0" : "border-dashed border-border opacity-70 translate-y-0"
-            )}
-          >
-            <div className="flex items-center gap-2 border-b border-border px-4 py-2.5">
-              <Radio className="h-3.5 w-3.5 text-muted-foreground" />
-              <h2 className="text-xs font-semibold uppercase tracking-wide text-foreground">RFID Assignment</h2>
-            </div>
-
-            {!selected ? (
-              <p className="px-4 py-8 text-center text-xs text-muted-foreground">
-                Select an equipment record above to assign or update its RFID.
-              </p>
-            ) : success ? (
-              <div className="p-4">
-                <div className="rounded-md border border-emerald-200 bg-emerald-50 p-4">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                    <p className="text-sm font-semibold text-emerald-800">RFID Updated Successfully</p>
-                  </div>
-                  <dl className="mt-3 grid grid-cols-1 gap-x-8 gap-y-1.5 text-xs sm:grid-cols-3">
-                    <SummaryItem label="Report #" value={success.reportNo} />
-                    <SummaryItem label="Previous RFID" value={success.previous || "—"} />
-                    <SummaryItem label="New RFID" value={success.next} />
-                  </dl>
-                  <p className="mt-3 text-[11px] text-emerald-700">
-                    Change recorded in the item audit history — {new Date().toLocaleString()} · D. Panchal
-                  </p>
-                </div>
-                <div className="mt-3 flex justify-end">
-                  <Button className="h-8 bg-green-600 text-white hover:bg-green-700" onClick={clearSelection}>
-                    Done
-                  </Button>
-                </div>
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
+            {/* Matching Equipment */}
+            <section className="flex-1 rounded-lg border border-border bg-card shadow-sm">
+              <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
+                <h2 className="text-xs font-semibold uppercase tracking-wide text-foreground">Matching Equipment</h2>
+                <span className="text-xs text-muted-foreground">{records.length} records</span>
               </div>
-            ) : (
-              <div className="space-y-3 p-4">
-                {/* Assignment */}
-                <div className="space-y-3">
-                  <div className="flex items-end gap-2">
-                    <div className="min-w-0 flex-1 space-y-1.5">
-                      <Label htmlFor="new-rfid" className="text-xs font-medium text-foreground">
-                        New RFID <span className="text-destructive">*</span>
-                      </Label>
-                      <Input
-                        id="new-rfid"
-                        value={newRfid}
-                        autoFocus
-                        onChange={(e) => {
-                          setNewRfid(e.target.value);
-                          if (rfidError) setRfidError("");
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" && canUpdate) handleUpdate();
-                        }}
-                        placeholder="Enter new RFID"
-                        className={cn("h-9 text-sm", rfidError && "border-destructive")}
-                      />
+
+              <div className="max-h-[430px] overflow-auto">
+                <table className="w-full min-w-[1100px] border-collapse text-xs">
+                  <thead className="sticky top-0 z-10 bg-muted/60">
+                    <tr className="text-left text-[11px] uppercase tracking-wide text-muted-foreground">
+                      <th className="w-10 px-3 py-2">
+                        <input
+                          type="checkbox"
+                          checked={allSelected}
+                          onChange={toggleSelectAll}
+                          aria-label="Select all equipment records"
+                          className="h-3.5 w-3.5 accent-green-600"
+                        />
+                      </th>
+                      <SortableTh label="Report #" active={sort.key === "reportNo"} onClick={() => toggleSort("reportNo")} />
+                      <SortableTh label="RFID" active={sort.key === "rfid"} onClick={() => toggleSort("rfid")} />
+                      <SortableTh label="Created Date" active={sort.key === "createdDate"} onClick={() => toggleSort("createdDate")} />
+                      <SortableTh label="Item Status" active={sort.key === "itemStatus"} onClick={() => toggleSort("itemStatus")} />
+                      <th className="whitespace-nowrap px-3 py-2 font-medium">Manufacturer</th>
+                      <th className="whitespace-nowrap px-3 py-2 font-medium">Model</th>
+                      <th className="whitespace-nowrap px-3 py-2 font-medium">Mfg Serial</th>
+                      <th className="whitespace-nowrap px-3 py-2 font-medium">Customer Serial</th>
+                      <th className="whitespace-nowrap px-3 py-2 font-medium">Customer ID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sorted.map((r) => {
+                      const isSelected = isRowSelected(r.id);
+                      return (
+                        <tr
+                          key={r.id}
+                          onClick={() => selectOnly(r.id)}
+                          className={cn(
+                            "cursor-pointer border-b border-border/70 transition-colors hover:bg-muted/40",
+                            isSelected && "bg-primary/10 hover:bg-primary/10"
+                          )}
+                        >
+                          <td className="px-3 py-2" onClick={(e) => e.stopPropagation()}>
+                            <input
+                              type="checkbox"
+                              checked={isSelected}
+                              onChange={() => toggleRow(r.id)}
+                              aria-label={`Select ${r.reportNo}`}
+                              className="h-3.5 w-3.5 accent-green-600"
+                            />
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-2">
+                            <Link
+                              to={`/edit-order`}
+                              onClick={(e) => e.stopPropagation()}
+                              className="font-medium text-foreground underline-offset-2 hover:underline"
+                            >
+                              {r.reportNo}
+                            </Link>
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-2 font-mono text-[11px]">
+                            {r.rfid || <span className="text-muted-foreground">Not Assigned</span>}
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-2 text-muted-foreground">{r.createdDate}</td>
+                          <td className="whitespace-nowrap px-3 py-2">
+                            <Badge
+                              variant="secondary"
+                              className={cn(
+                                "rounded-full border-0 px-2 py-0.5 text-[10px] font-medium hover:bg-inherit",
+                                STATUS_TONE[r.itemStatus] ?? "bg-slate-100 text-slate-600"
+                              )}
+                            >
+                              {r.itemStatus}
+                            </Badge>
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-2">{r.manufacturer}</td>
+                          <td className="whitespace-nowrap px-3 py-2">{r.model}</td>
+                          <td className="whitespace-nowrap px-3 py-2">{r.mfgSerial}</td>
+                          <td className="whitespace-nowrap px-3 py-2">{r.customerSerial}</td>
+                          <td className="whitespace-nowrap px-3 py-2">{r.customerId}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            {/* RFID Assignment Side Panel */}
+            <section
+              className={cn(
+                "w-full shrink-0 rounded-lg border bg-card shadow-md transition-all lg:sticky lg:top-20 lg:w-80",
+                selected ? "border-border opacity-100" : "border-dashed border-border opacity-70"
+              )}
+            >
+              <div className="flex items-center gap-2 border-b border-border px-4 py-2.5">
+                <Radio className="h-3.5 w-3.5 text-muted-foreground" />
+                <h2 className="text-xs font-semibold uppercase tracking-wide text-foreground">RFID Assignment</h2>
+              </div>
+
+              {!selected ? (
+                <p className="px-4 py-8 text-center text-xs text-muted-foreground">
+                  Select an equipment record above to assign or update its RFID.
+                </p>
+              ) : success ? (
+                <div className="p-4">
+                  <div className="rounded-md border border-emerald-200 bg-emerald-50 p-4">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                      <p className="text-sm font-semibold text-emerald-800">RFID Updated Successfully</p>
                     </div>
-                    <Button variant="outline" className="h-9" onClick={clearSelection} disabled={updating}>
-                      <X className="mr-1.5 h-3.5 w-3.5" />
-                      Clear Selection
-                    </Button>
-                    <Button
-                      className="h-9 bg-green-600 text-white hover:bg-green-700"
-                      disabled={!canUpdate}
-                      onClick={handleUpdate}
-                    >
-                      {updating && <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />}
-                      {updating ? "Updating RFID…" : "Update RFID"}
+                    <dl className="mt-3 grid grid-cols-1 gap-x-8 gap-y-1.5 text-xs sm:grid-cols-3">
+                      <SummaryItem label="Report #" value={success.reportNo} />
+                      <SummaryItem label="Previous RFID" value={success.previous || "—"} />
+                      <SummaryItem label="New RFID" value={success.next} />
+                    </dl>
+                    <p className="mt-3 text-[11px] text-emerald-700">
+                      Change recorded in the item audit history — {new Date().toLocaleString()} · D. Panchal
+                    </p>
+                  </div>
+                  <div className="mt-3 flex justify-end">
+                    <Button className="h-8 bg-green-600 text-white hover:bg-green-700" onClick={clearSelection}>
+                      Done
                     </Button>
                   </div>
-                  {rfidError ? (
-                    <p className="flex items-center gap-1.5 text-xs text-destructive">
-                      <AlertCircle className="h-3.5 w-3.5" />
-                      {rfidError}
-                    </p>
-                  ) : (
-                    <p className="text-[11px] text-muted-foreground">
-                      Enter the RFID that should be assigned to this equipment.
-                    </p>
-                  )}
                 </div>
-              </div>
-            )}
-          </section>
+              ) : (
+                <div className="space-y-3 p-4">
+                  {/* Assignment */}
+                  <div className="space-y-3">
+                    <div className="flex flex-col gap-2">
+                      <div className="min-w-0 flex-1 space-y-1.5">
+                        <Label htmlFor="new-rfid" className="text-xs font-medium text-foreground">
+                          New RFID <span className="text-destructive">*</span>
+                        </Label>
+                        <Input
+                          id="new-rfid"
+                          value={newRfid}
+                          autoFocus
+                          onChange={(e) => {
+                            setNewRfid(e.target.value);
+                            if (rfidError) setRfidError("");
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" && canUpdate) handleUpdate();
+                          }}
+                          placeholder="Enter new RFID"
+                          className={cn("h-9 text-sm", rfidError && "border-destructive")}
+                        />
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button variant="outline" className="h-9 flex-1" onClick={clearSelection} disabled={updating}>
+                          <X className="mr-1.5 h-3.5 w-3.5" />
+                          Clear Selection
+                        </Button>
+                        <Button
+                          className="h-9 flex-1 bg-green-600 text-white hover:bg-green-700"
+                          disabled={!canUpdate}
+                          onClick={handleUpdate}
+                        >
+                          {updating && <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />}
+                          {updating ? "Updating RFID…" : "Update RFID"}
+                        </Button>
+                      </div>
+                    </div>
+                    {rfidError ? (
+                      <p className="flex items-center gap-1.5 text-xs text-destructive">
+                        <AlertCircle className="h-3.5 w-3.5" />
+                        {rfidError}
+                      </p>
+                    ) : (
+                      <p className="text-[11px] text-muted-foreground">
+                        Enter the RFID that should be assigned to the selected equipment.
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
+            </section>
+          </div>
         )}
       </div>
     </div>
