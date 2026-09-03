@@ -619,8 +619,18 @@ const UpdateRfid = () => {
   );
 };
 
-const SortableTh = ({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) => (
-  <th className="whitespace-nowrap px-3 py-2 font-medium">
+const SortableTh = ({
+  label,
+  active,
+  onClick,
+  className,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+  className?: string;
+}) => (
+  <th className={cn("px-2 py-1.5 font-medium", className)}>
     <button
       type="button"
       onClick={onClick}
