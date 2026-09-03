@@ -438,6 +438,11 @@ const ManageStandards = () => {
 
           {/* Table */}
           <div className="overflow-hidden rounded-lg border border-border bg-white shadow-sm">
+            <div className="flex items-center justify-between border-b border-border px-3 py-2">
+              <div className="text-xs font-semibold text-foreground">
+                {quickChips.find((c) => c.key === quick)?.label} · {total} Standards
+              </div>
+            </div>
             <div className="max-h-[60vh] overflow-auto">
               <Table>
                 <TableHeader className="sticky top-0 z-10 bg-muted/60 backdrop-blur">
