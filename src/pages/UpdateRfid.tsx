@@ -443,7 +443,7 @@ const UpdateRfid = () => {
                 <table className="w-full border-collapse text-xs">
                   <thead className="bg-muted/60">
                     <tr className="text-left text-[11px] uppercase tracking-wide text-muted-foreground">
-                      <th className="w-10 px-3 py-2">
+                      <th className="w-10 px-2 py-1.5">
                         <input
                           type="checkbox"
                           checked={allSelected}
@@ -456,11 +456,11 @@ const UpdateRfid = () => {
                       <SortableTh label="RFID" active={sort.key === "rfid"} onClick={() => toggleSort("rfid")} />
                       <SortableTh label="Created Date" active={sort.key === "createdDate"} onClick={() => toggleSort("createdDate")} />
                       <SortableTh label="Item Status" active={sort.key === "itemStatus"} onClick={() => toggleSort("itemStatus")} />
-                      <th className="whitespace-nowrap px-3 py-2 font-medium">Manufacturer</th>
-                      <th className="whitespace-nowrap px-3 py-2 font-medium">Model</th>
-                      <th className="whitespace-nowrap px-3 py-2 font-medium">Mfg Serial</th>
-                      <th className="whitespace-nowrap px-3 py-2 font-medium">Customer Serial</th>
-                      <th className="whitespace-nowrap px-3 py-2 font-medium">Customer ID</th>
+                      <th className="whitespace-nowrap px-2 py-1.5 font-medium">Manufacturer</th>
+                      <th className="whitespace-nowrap px-2 py-1.5 font-medium">Model</th>
+                      <th className="whitespace-nowrap px-2 py-1.5 font-medium">Mfg Serial</th>
+                      <th className="whitespace-nowrap px-2 py-1.5 font-medium">Customer Serial</th>
+                      <th className="whitespace-nowrap px-2 py-1.5 font-medium">Customer ID</th>
                     </tr>
                   </thead>
                   <tbody>
