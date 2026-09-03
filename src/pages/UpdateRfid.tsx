@@ -10,6 +10,8 @@ import {
   AlertCircle,
   ArrowUpDown,
   X,
+  ScanLine,
+  ArrowRight,
 } from "lucide-react";
 import { toast } from "sonner";
 import { SidebarTrigger } from "@/components/ui/sidebar";
