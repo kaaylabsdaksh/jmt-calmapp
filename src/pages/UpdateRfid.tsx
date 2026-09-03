@@ -525,8 +525,8 @@ const UpdateRfid = () => {
         {records.length > 0 && (
           <section
             className={cn(
-              "sticky top-4 rounded-lg border bg-card shadow-sm transition-opacity",
-              selected ? "border-border opacity-100" : "border-dashed border-border opacity-60"
+              "fixed bottom-4 right-4 z-50 w-full max-w-[420px] rounded-lg border bg-card shadow-lg transition-all",
+              selected ? "border-border opacity-100 translate-y-0" : "border-dashed border-border opacity-70 translate-y-0"
             )}
           >
             <div className="flex items-center gap-2 border-b border-border px-4 py-2.5">
