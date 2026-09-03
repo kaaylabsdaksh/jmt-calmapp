@@ -32,6 +32,7 @@ import LabTriage from "./pages/LabTriage";
 import UpdateRfid from "./pages/UpdateRfid";
 import OnsiteProjects from "./pages/OnsiteProjects";
 import ManageStandards from "./pages/ManageStandards";
+import StandardsDashboard from "./pages/StandardsDashboard";
 import StandardDetail from "./pages/StandardDetail";
 import OnsiteScheduling from "./pages/OnsiteScheduling";
 import OnsiteSchedulingV2 from "./pages/OnsiteSchedulingV2";
@@ -120,6 +121,7 @@ const App = () => {
 
             <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
             <Route path="/standards" element={<ManageStandards />} />
+            <Route path="/standards/dashboard" element={<StandardsDashboard />} />
             <Route path="/standards/new" element={<StandardDetail />} />
             <Route path="/standards/:id" element={<StandardDetail />} />
             <Route path="/onsite-projects" element={<OnsiteProjects />} />
