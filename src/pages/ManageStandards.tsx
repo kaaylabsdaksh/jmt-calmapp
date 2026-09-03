@@ -401,31 +401,11 @@ const ManageStandards = () => {
 
 
 
-          {/* Count + quick filters */}
+          {/* Count */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="text-sm font-medium text-foreground">
               {quickChips.find((c) => c.key === quick)?.label} · {total} Standards
             </div>
-            <div className="flex flex-wrap gap-1.5">
-              {quickChips.map((c) => (
-                <button
-                  key={c.key}
-                  type="button"
-                  onClick={() => {
-                    setQuick(c.key);
-                    setPage(1);
-                  }}
-                  className={cn(
-                    "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
-                    quick === c.key
-                      ? "border-foreground bg-foreground text-background"
-                      : "border-border bg-white text-muted-foreground hover:text-foreground"
-                  )}
-                  aria-pressed={quick === c.key}
-                >
-                  {c.label}
-                </button>
-              ))}
             </div>
           </div>
 
