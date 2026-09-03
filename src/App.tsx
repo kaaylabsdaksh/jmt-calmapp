@@ -31,6 +31,8 @@ import AccountAdminView from "./pages/AccountAdminView";
 import LabTriage from "./pages/LabTriage";
 import UpdateRfid from "./pages/UpdateRfid";
 import OnsiteProjects from "./pages/OnsiteProjects";
+import ManageStandards from "./pages/ManageStandards";
+import StandardDetail from "./pages/StandardDetail";
 import OnsiteScheduling from "./pages/OnsiteScheduling";
 import OnsiteSchedulingV2 from "./pages/OnsiteSchedulingV2";
 import OnsiteProjectDetail from "./pages/OnsiteProjectDetail";
@@ -117,6 +119,9 @@ const App = () => {
 
 
             <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
+            <Route path="/standards" element={<ManageStandards />} />
+            <Route path="/standards/new" element={<StandardDetail />} />
+            <Route path="/standards/:id" element={<StandardDetail />} />
             <Route path="/onsite-projects" element={<OnsiteProjects />} />
             <Route path="/onsite-scheduling" element={<OnsiteScheduling />} />
             {/* the demo prototype's own route name, kept as an alias */}

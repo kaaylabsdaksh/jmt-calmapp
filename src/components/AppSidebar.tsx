@@ -80,7 +80,7 @@ const quickActionCategories = {
   "Core Operations": [
     { title: "Work Orders", icon: ClipboardList, hasSubItems: true },
     { title: "Views", icon: Eye, hasSubItems: true },
-    { title: "Standards", icon: CheckCircle, url: "/onsite-projects/vehicle-standards" },
+    { title: "Standards", icon: CheckCircle, url: "/standards" },
     { title: "Invoicing", icon: CreditCard, url: "/invoicing" },
     { title: "Delivery Tickets", icon: Truck, url: "/delivery-tickets" },
     { title: "Quotes", icon: FileText, url: "/quotes" },
