@@ -211,7 +211,7 @@ const StandardsDashboard = () => {
                     cursor={{ fill: "hsl(var(--muted))" }}
                     contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid hsl(var(--border))" }}
                   />
-                  <Bar dataKey="count" name="Standards" radius={[4, 4, 0, 0]} maxBarSize={56}>
+                  <Bar dataKey="count" name="Standards" radius={[4, 4, 0, 0]} maxBarSize={56} isAnimationActive={false}>
                     {chartData.map((d) => (
                       <Cell key={d.key} fill={d.color} />
                     ))}
