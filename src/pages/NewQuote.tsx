@@ -262,10 +262,18 @@ const Field = ({
         placeholder: labelText,
       });
     }
+    const isSelect = typeName === "SelectField";
+    if (isSelect) {
+      return cloneElement(element, {
+        className: cn(element.props.className, className),
+        label,
+        required,
+      });
+    }
     const isInputLike =
       typeof element.type === "string"
         ? ["input", "textarea", "select"].includes(element.type)
-        : ["Input", "Textarea", "SelectField"].includes(typeName);
+        : ["Input", "Textarea"].includes(typeName);
     if (isInputLike) {
       return cloneElement(element, {
         className: cn(
