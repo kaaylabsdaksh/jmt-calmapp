@@ -308,12 +308,12 @@ const ManageStandards = () => {
                   </div>
                   <div className="space-y-0.5">
                     <Label className="text-[11px] font-medium text-foreground/80">State</Label>
-                    <Select value={draft.state} onValueChange={(v) => setDraft({ ...draft, state: v })}>
+                    <Select value={quick} onValueChange={(v) => { setQuick(v as QuickFilter); setPage(1); }}>
                       <SelectTrigger className="h-6 min-h-0 rounded-md border-gray-200 bg-white px-1.5 py-0 text-[11px] [&>svg]:h-3 [&>svg]:w-3"><SelectValue placeholder="Active" /></SelectTrigger>
                       <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-md z-[9999] text-[11px]">
-                        <SelectItem value="all">All States</SelectItem>
-                        <SelectItem value="Active">Active</SelectItem>
-                        <SelectItem value="Inactive">Inactive</SelectItem>
+                        {quickChips.map((c) => (
+                          <SelectItem key={c.key} value={c.key}>{c.label}</SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
