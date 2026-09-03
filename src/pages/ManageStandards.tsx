@@ -163,7 +163,7 @@ const ManageStandards = () => {
       if (advanced.description && !s.description.toLowerCase().includes(advanced.description.toLowerCase())) return false;
       if (advanced.serial && !s.serial.includes(advanced.serial)) return false;
       if (advanced.designatedLocation !== "all" && s.lab !== advanced.designatedLocation) return false;
-      if (advanced.state !== "all" && s.state !== advanced.state) return false;
+      
       if (advanced.providerLocation !== "all" && s.calibrationLocation !== advanced.providerLocation) return false;
       if (advanced.labCode !== "all" && s.labCode !== advanced.labCode) return false;
       if (advanced.owningAccount && !s.owningAccount.includes(advanced.owningAccount)) return false;
@@ -308,12 +308,12 @@ const ManageStandards = () => {
                   </div>
                   <div className="space-y-0.5">
                     <Label className="text-[11px] font-medium text-foreground/80">State</Label>
-                    <Select value={draft.state} onValueChange={(v) => setDraft({ ...draft, state: v })}>
+                    <Select value={quick} onValueChange={(v) => { setQuick(v as QuickFilter); setPage(1); }}>
                       <SelectTrigger className="h-6 min-h-0 rounded-md border-gray-200 bg-white px-1.5 py-0 text-[11px] [&>svg]:h-3 [&>svg]:w-3"><SelectValue placeholder="Active" /></SelectTrigger>
                       <SelectContent className="bg-white border border-gray-200 shadow-xl rounded-md z-[9999] text-[11px]">
-                        <SelectItem value="all">All States</SelectItem>
-                        <SelectItem value="Active">Active</SelectItem>
-                        <SelectItem value="Inactive">Inactive</SelectItem>
+                        {quickChips.map((c) => (
+                          <SelectItem key={c.key} value={c.key}>{c.label}</SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
@@ -401,31 +401,10 @@ const ManageStandards = () => {
 
 
 
-          {/* Count + quick filters */}
+          {/* Count */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="text-sm font-medium text-foreground">
               {quickChips.find((c) => c.key === quick)?.label} · {total} Standards
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              {quickChips.map((c) => (
-                <button
-                  key={c.key}
-                  type="button"
-                  onClick={() => {
-                    setQuick(c.key);
-                    setPage(1);
-                  }}
-                  className={cn(
-                    "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
-                    quick === c.key
-                      ? "border-foreground bg-foreground text-background"
-                      : "border-border bg-white text-muted-foreground hover:text-foreground"
-                  )}
-                  aria-pressed={quick === c.key}
-                >
-                  {c.label}
-                </button>
-              ))}
             </div>
           </div>
 
