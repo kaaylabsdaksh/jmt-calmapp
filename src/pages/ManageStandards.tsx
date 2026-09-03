@@ -15,6 +15,7 @@ import {
   ClipboardList,
   Wrench,
   X,
+  BarChart3,
 } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
