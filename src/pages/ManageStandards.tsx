@@ -109,6 +109,12 @@ const StateBadge = ({ state }: { state: string }) => (
   </Badge>
 );
 
+const FIELD_BASE =
+  "h-6 min-h-0 rounded-md border-gray-200 bg-white px-1.5 py-0 text-[11px]";
+const FIELD_ACTIVE = "border-slate-700 bg-slate-100 text-slate-900 font-semibold";
+const fieldClass = (value: string, extra = "") =>
+  cn(FIELD_BASE, extra, value && value !== "all" && FIELD_ACTIVE);
+
 const ManageStandards = () => {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
