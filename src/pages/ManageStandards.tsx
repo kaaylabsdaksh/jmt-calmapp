@@ -257,7 +257,14 @@ const ManageStandards = () => {
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
+            <Button asChild variant="outline" size="sm" className="h-8 gap-1.5 text-xs">
+              <Link to="/standards/dashboard">
+                <BarChart3 className="h-3.5 w-3.5" />
+                Dashboard
+              </Link>
+            </Button>
           </div>
+
         </header>
 
         <main className="space-y-4 p-4 lg:p-6">
