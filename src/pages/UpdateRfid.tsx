@@ -439,11 +439,11 @@ const UpdateRfid = () => {
                 <span className="text-xs text-muted-foreground">{records.length} records</span>
               </div>
 
-              <div className="max-h-[430px] overflow-auto">
-                <table className="w-full min-w-[1100px] border-collapse text-xs">
-                  <thead className="sticky top-0 z-10 bg-muted/60">
+              <div>
+                <table className="w-full table-fixed border-collapse text-xs">
+                  <thead className="bg-muted/60">
                     <tr className="text-left text-[11px] uppercase tracking-wide text-muted-foreground">
-                      <th className="w-10 px-3 py-2">
+                      <th className="w-[3%] px-2 py-1.5">
                         <input
                           type="checkbox"
                           checked={allSelected}
@@ -452,15 +452,15 @@ const UpdateRfid = () => {
                           className="h-3.5 w-3.5 accent-green-600"
                         />
                       </th>
-                      <SortableTh label="Report #" active={sort.key === "reportNo"} onClick={() => toggleSort("reportNo")} />
-                      <SortableTh label="RFID" active={sort.key === "rfid"} onClick={() => toggleSort("rfid")} />
-                      <SortableTh label="Created Date" active={sort.key === "createdDate"} onClick={() => toggleSort("createdDate")} />
-                      <SortableTh label="Item Status" active={sort.key === "itemStatus"} onClick={() => toggleSort("itemStatus")} />
-                      <th className="whitespace-nowrap px-3 py-2 font-medium">Manufacturer</th>
-                      <th className="whitespace-nowrap px-3 py-2 font-medium">Model</th>
-                      <th className="whitespace-nowrap px-3 py-2 font-medium">Mfg Serial</th>
-                      <th className="whitespace-nowrap px-3 py-2 font-medium">Customer Serial</th>
-                      <th className="whitespace-nowrap px-3 py-2 font-medium">Customer ID</th>
+                      <SortableTh className="w-[14%]" label="Report #" active={sort.key === "reportNo"} onClick={() => toggleSort("reportNo")} />
+                      <SortableTh className="w-[12%]" label="RFID" active={sort.key === "rfid"} onClick={() => toggleSort("rfid")} />
+                      <SortableTh className="w-[11%]" label="Created Date" active={sort.key === "createdDate"} onClick={() => toggleSort("createdDate")} />
+                      <SortableTh className="w-[13%]" label="Item Status" active={sort.key === "itemStatus"} onClick={() => toggleSort("itemStatus")} />
+                      <th className="w-[11%] px-2 py-1.5 font-medium">Manufacturer</th>
+                      <th className="w-[7%] px-2 py-1.5 font-medium">Model</th>
+                      <th className="w-[11%] px-2 py-1.5 font-medium">Mfg Serial</th>
+                      <th className="w-[10%] px-2 py-1.5 font-medium">Customer Serial</th>
+                      <th className="w-[8%] px-2 py-1.5 font-medium">Customer ID</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -475,7 +475,7 @@ const UpdateRfid = () => {
                             isSelected && "bg-primary/10 hover:bg-primary/10"
                           )}
                         >
-                          <td className="px-3 py-2" onClick={(e) => e.stopPropagation()}>
+                          <td className="px-2 py-1.5" onClick={(e) => e.stopPropagation()}>
                             <input
                               type="checkbox"
                               checked={isSelected}
@@ -484,7 +484,7 @@ const UpdateRfid = () => {
                               className="h-3.5 w-3.5 accent-green-600"
                             />
                           </td>
-                          <td className="whitespace-nowrap px-3 py-2">
+                          <td className="truncate px-2 py-1.5">
                             <Link
                               to={`/edit-order`}
                               onClick={(e) => e.stopPropagation()}
@@ -493,11 +493,11 @@ const UpdateRfid = () => {
                               {r.reportNo}
                             </Link>
                           </td>
-                          <td className="whitespace-nowrap px-3 py-2 font-mono text-[11px]">
+                          <td className="truncate px-2 py-1.5 font-mono text-[11px]">
                             {r.rfid || <span className="text-muted-foreground">Not Assigned</span>}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-2 text-muted-foreground">{r.createdDate}</td>
-                          <td className="whitespace-nowrap px-3 py-2">
+                          <td className="truncate px-2 py-1.5 text-muted-foreground">{r.createdDate}</td>
+                          <td className="truncate px-2 py-1.5">
                             <Badge
                               variant="secondary"
                               className={cn(
@@ -508,11 +508,11 @@ const UpdateRfid = () => {
                               {r.itemStatus}
                             </Badge>
                           </td>
-                          <td className="whitespace-nowrap px-3 py-2">{r.manufacturer}</td>
-                          <td className="whitespace-nowrap px-3 py-2">{r.model}</td>
-                          <td className="whitespace-nowrap px-3 py-2">{r.mfgSerial}</td>
-                          <td className="whitespace-nowrap px-3 py-2">{r.customerSerial}</td>
-                          <td className="whitespace-nowrap px-3 py-2">{r.customerId}</td>
+                          <td className="truncate px-2 py-1.5">{r.manufacturer}</td>
+                          <td className="truncate px-2 py-1.5">{r.model}</td>
+                          <td className="truncate px-2 py-1.5">{r.mfgSerial}</td>
+                          <td className="truncate px-2 py-1.5">{r.customerSerial}</td>
+                          <td className="truncate px-2 py-1.5">{r.customerId}</td>
                         </tr>
                       );
                     })}
@@ -619,8 +619,18 @@ const UpdateRfid = () => {
   );
 };
 
-const SortableTh = ({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) => (
-  <th className="whitespace-nowrap px-3 py-2 font-medium">
+const SortableTh = ({
+  label,
+  active,
+  onClick,
+  className,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+  className?: string;
+}) => (
+  <th className={cn("px-2 py-1.5 font-medium", className)}>
     <button
       type="button"
       onClick={onClick}
