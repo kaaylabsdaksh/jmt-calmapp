@@ -475,7 +475,7 @@ const UpdateRfid = () => {
                             isSelected && "bg-primary/10 hover:bg-primary/10"
                           )}
                         >
-                          <td className="px-3 py-2" onClick={(e) => e.stopPropagation()}>
+                          <td className="px-2 py-1.5" onClick={(e) => e.stopPropagation()}>
                             <input
                               type="checkbox"
                               checked={isSelected}
@@ -484,7 +484,7 @@ const UpdateRfid = () => {
                               className="h-3.5 w-3.5 accent-green-600"
                             />
                           </td>
-                          <td className="whitespace-nowrap px-3 py-2">
+                          <td className="whitespace-nowrap px-2 py-1.5">
                             <Link
                               to={`/edit-order`}
                               onClick={(e) => e.stopPropagation()}
@@ -493,11 +493,11 @@ const UpdateRfid = () => {
                               {r.reportNo}
                             </Link>
                           </td>
-                          <td className="whitespace-nowrap px-3 py-2 font-mono text-[11px]">
+                          <td className="whitespace-nowrap px-2 py-1.5 font-mono text-[11px]">
                             {r.rfid || <span className="text-muted-foreground">Not Assigned</span>}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-2 text-muted-foreground">{r.createdDate}</td>
-                          <td className="whitespace-nowrap px-3 py-2">
+                          <td className="whitespace-nowrap px-2 py-1.5 text-muted-foreground">{r.createdDate}</td>
+                          <td className="whitespace-nowrap px-2 py-1.5">
                             <Badge
                               variant="secondary"
                               className={cn(
@@ -508,11 +508,11 @@ const UpdateRfid = () => {
                               {r.itemStatus}
                             </Badge>
                           </td>
-                          <td className="whitespace-nowrap px-3 py-2">{r.manufacturer}</td>
-                          <td className="whitespace-nowrap px-3 py-2">{r.model}</td>
-                          <td className="whitespace-nowrap px-3 py-2">{r.mfgSerial}</td>
-                          <td className="whitespace-nowrap px-3 py-2">{r.customerSerial}</td>
-                          <td className="whitespace-nowrap px-3 py-2">{r.customerId}</td>
+                          <td className="whitespace-nowrap px-2 py-1.5">{r.manufacturer}</td>
+                          <td className="whitespace-nowrap px-2 py-1.5">{r.model}</td>
+                          <td className="whitespace-nowrap px-2 py-1.5">{r.mfgSerial}</td>
+                          <td className="whitespace-nowrap px-2 py-1.5">{r.customerSerial}</td>
+                          <td className="whitespace-nowrap px-2 py-1.5">{r.customerId}</td>
                         </tr>
                       );
                     })}
