@@ -114,6 +114,9 @@ const FIELD_BASE =
 const FIELD_ACTIVE = "border-slate-700 bg-slate-100 text-slate-900 font-semibold";
 const fieldClass = (value: string, extra = "") =>
   cn(FIELD_BASE, extra, value && value !== "all" && FIELD_ACTIVE);
+const dateInputActive = (value: string) =>
+  value ? "border-slate-700 bg-slate-100 text-slate-900 font-semibold" : "";
+
 
 const ManageStandards = () => {
   const navigate = useNavigate();
