@@ -38,6 +38,7 @@ import OnsiteScheduling from "./pages/OnsiteScheduling";
 import OnsiteSchedulingV2 from "./pages/OnsiteSchedulingV2";
 import OnsiteProjectDetail from "./pages/OnsiteProjectDetail";
 import VehicleStandards from "./pages/VehicleStandards";
+import DesignSystemGallery from "./pages/DesignSystemGallery";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Invoicing from "./pages/Invoicing";
@@ -124,6 +125,7 @@ const App = () => {
             <Route path="/standards/dashboard" element={<StandardsDashboard />} />
             <Route path="/standards/new" element={<StandardDetail />} />
             <Route path="/standards/:id" element={<StandardDetail />} />
+            <Route path="/design-system" element={<DesignSystemGallery />} />
             <Route path="/onsite-projects" element={<OnsiteProjects />} />
             <Route path="/onsite-scheduling" element={<OnsiteScheduling />} />
             {/* the demo prototype's own route name, kept as an alias */}
