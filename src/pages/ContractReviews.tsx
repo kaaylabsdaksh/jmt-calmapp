@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { useNavigate } from "react-router-dom";
 import {
   Search,
@@ -122,6 +123,22 @@ const CUSTOMERS = [
 const CDR_STATUSES = ["Created", "Under Review", "Completed", "Pending Approval"];
 
 const pad = (n: number, l = 2) => String(n).padStart(l, "0");
+
+const parseDate = (value: string): Date | undefined => {
+  if (!value) return undefined;
+  const [m, d, y] = value.split("/");
+  if (!m || !d || !y) return undefined;
+  const date = new Date(Number(y), Number(m) - 1, Number(d));
+  return date.getFullYear() === Number(y) && date.getMonth() === Number(m) - 1 && date.getDate() === Number(d) ? date : undefined;
+};
+
+const formatDate = (value: Date | undefined): string => {
+  if (!value) return "";
+  const m = String(value.getMonth() + 1).padStart(2, "0");
+  const d = String(value.getDate()).padStart(2, "0");
+  const y = value.getFullYear();
+  return `${m}/${d}/${y}`;
+};
 
 const MOCK_CRS: CrRecord[] = Array.from({ length: 30 }, (_, i) => ({
   id: `cr-${i + 1}`,
@@ -426,28 +443,31 @@ const ContractReviews = () => {
                     <Input value={filters.customer} onChange={(e) => setF("customer", e.target.value)} placeholder="Customer" className="h-7 text-xs" />
                   </div>
                   <div className="space-y-1">
-                    <label className={labelCls}>Created From</label>
-                    <Input type="date" value={filters.createdFrom} onChange={(e) => setF("createdFrom", e.target.value)} className="h-7 text-xs" />
+                    <label className={labelCls}>Created From / To</label>
+                    <DateRangePicker
+                      dateFrom={parseDate(filters.createdFrom)}
+                      dateTo={parseDate(filters.createdTo)}
+                      onDateFromChange={(d) => setF("createdFrom", formatDate(d))}
+                      onDateToChange={(d) => setF("createdTo", formatDate(d))}
+                    />
                   </div>
                   <div className="space-y-1">
-                    <label className={labelCls}>Created To</label>
-                    <Input type="date" value={filters.createdTo} onChange={(e) => setF("createdTo", e.target.value)} className="h-7 text-xs" />
+                    <label className={labelCls}>Modified From / To</label>
+                    <DateRangePicker
+                      dateFrom={parseDate(filters.modifiedFrom)}
+                      dateTo={parseDate(filters.modifiedTo)}
+                      onDateFromChange={(d) => setF("modifiedFrom", formatDate(d))}
+                      onDateToChange={(d) => setF("modifiedTo", formatDate(d))}
+                    />
                   </div>
                   <div className="space-y-1">
-                    <label className={labelCls}>Modified From</label>
-                    <Input type="date" value={filters.modifiedFrom} onChange={(e) => setF("modifiedFrom", e.target.value)} className="h-7 text-xs" />
-                  </div>
-                  <div className="space-y-1">
-                    <label className={labelCls}>Modified To</label>
-                    <Input type="date" value={filters.modifiedTo} onChange={(e) => setF("modifiedTo", e.target.value)} className="h-7 text-xs" />
-                  </div>
-                  <div className="space-y-1">
-                    <label className={labelCls}>Received From</label>
-                    <Input type="date" value={filters.receivedFrom} onChange={(e) => setF("receivedFrom", e.target.value)} className="h-7 text-xs" />
-                  </div>
-                  <div className="space-y-1">
-                    <label className={labelCls}>Received To</label>
-                    <Input type="date" value={filters.receivedTo} onChange={(e) => setF("receivedTo", e.target.value)} className="h-7 text-xs" />
+                    <label className={labelCls}>Received From / To</label>
+                    <DateRangePicker
+                      dateFrom={parseDate(filters.receivedFrom)}
+                      dateTo={parseDate(filters.receivedTo)}
+                      onDateFromChange={(d) => setF("receivedFrom", formatDate(d))}
+                      onDateToChange={(d) => setF("receivedTo", formatDate(d))}
+                    />
                   </div>
                 </div>
                 <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
