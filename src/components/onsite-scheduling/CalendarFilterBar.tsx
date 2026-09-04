@@ -78,6 +78,7 @@ const CalendarFilterBar: React.FC<Props> = ({
   shownCount,
   totalCount,
   highlightedAnchorId,
+  actions,
 }) => {
   const count = activeFilterCount(filters);
   const hidden = totalCount - shownCount;
