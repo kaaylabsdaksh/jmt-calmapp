@@ -272,8 +272,8 @@ const ManageStandards = () => {
 
           {/* Search Criteria */}
 
-          <section className="bg-card rounded-xl shadow-sm border p-4">
-            <div className="mb-3 flex items-center gap-2">
+          <section className="bg-card rounded-xl shadow-sm border p-3">
+            <div className="mb-2 flex items-center gap-2">
               <Search className="h-3.5 w-3.5 text-muted-foreground" />
               <h2 className="text-xs font-semibold text-foreground">Search Criteria</h2>
               {activeAdvancedCount > 0 && (
@@ -281,11 +281,11 @@ const ManageStandards = () => {
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-3">
               {/* Equipment — spans 2 columns */}
               <div className="col-span-1 md:col-span-2">
-                <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-2">Equipment</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
+                <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Equipment</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-2">
                   <div className="space-y-0.5">
                     <Label htmlFor="f-standard" className="text-[11px] font-medium text-foreground/80">Standard #</Label>
                     <Input id="f-standard" className={fieldClass(draft.standardNo, "placeholder:text-[10px]")} placeholder="Search standards..." value={draft.standardNo} onChange={(e) => setDraft({ ...draft, standardNo: e.target.value })} onKeyDown={(e) => e.key === "Enter" && runSearch()} />
@@ -344,8 +344,8 @@ const ManageStandards = () => {
 
               {/* Work Order & Ownership */}
               <div className="col-span-1">
-                <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-2">Work Order &amp; Ownership</h3>
-                <div className="flex flex-col gap-y-2">
+                <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Work Order &amp; Ownership</h3>
+                <div className="flex flex-col gap-y-1.5">
                   <div className="space-y-0.5">
                     <Label htmlFor="f-wo" className="text-[11px] font-medium text-foreground/80">WO #</Label>
                     <Input id="f-wo" className={fieldClass(draft.workOrderNo, "placeholder:text-[10px]")} placeholder="WO #" value={draft.workOrderNo} onChange={(e) => setDraft({ ...draft, workOrderNo: e.target.value })} onKeyDown={(e) => e.key === "Enter" && runSearch()} />
@@ -379,8 +379,8 @@ const ManageStandards = () => {
 
               {/* Calibration + Actions */}
               <div className="col-span-1 flex flex-col">
-                <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-2">Calibration</h3>
-                <div className="flex flex-col gap-y-2 flex-grow">
+                <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1.5">Calibration</h3>
+                <div className="flex flex-col gap-y-1.5 flex-grow">
                   <div className="space-y-0.5">
                     <Label htmlFor="f-from" className="text-[11px] font-medium text-foreground/80">Calibration Due From</Label>
                     <ModernDatePicker
@@ -403,7 +403,7 @@ const ManageStandards = () => {
 
                   </div>
 
-                  <div className="mt-auto flex items-center justify-end gap-2 pt-4">
+                  <div className="mt-auto flex items-center justify-end gap-2 pt-2">
                     <Button variant="outline" onClick={clearAll} className="rounded-lg h-7 px-3 text-[11px] font-medium border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive">
                       <X className="h-3 w-3 mr-1" />
                       Clear
