@@ -62,6 +62,8 @@ interface Props {
   /** Actions (Views / Clear / New) merged into this same section instead of
    * a separate toolbar card above it (direct request, 2026-09-04). */
   actions?: React.ReactNode;
+  /** Saved filters / views / reset controls, shown in the state row. */
+  bottomActions?: React.ReactNode;
 }
 
 const NO_VIEW = '__none__';
@@ -79,6 +81,7 @@ const CalendarFilterBar: React.FC<Props> = ({
   totalCount,
   highlightedAnchorId,
   actions,
+  bottomActions,
 }) => {
   const count = activeFilterCount(filters);
   const hidden = totalCount - shownCount;
@@ -100,6 +103,15 @@ const CalendarFilterBar: React.FC<Props> = ({
     >
       <div className="flex flex-wrap items-end gap-2">
         {actions && <div className="order-last ml-auto flex items-center gap-2">{actions}</div>}
+        <div className="flex flex-col gap-1">
+          <label className="text-[11px] font-medium text-muted-foreground">Search</label>
+          <Input
+            value={filters.search}
+            onChange={(e) => set('search', e.target.value)}
+            placeholder="Project # or account"
+            className="h-8 w-52 text-xs"
+          />
+        </div>
         {/* Saved view picker */}
         <div className="flex flex-col gap-1">
           <label className="flex items-center gap-1 text-[11px] font-medium text-muted-foreground">
@@ -212,15 +224,6 @@ const CalendarFilterBar: React.FC<Props> = ({
           </Select>
         </div>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-[11px] font-medium text-muted-foreground">Search</label>
-          <Input
-            value={filters.search}
-            onChange={(e) => set('search', e.target.value)}
-            placeholder="Project # or account"
-            className="h-8 w-52 text-xs"
-          />
-        </div>
       </div>
 
       {/* Always-on state line. A filtered board that looks unfiltered is
@@ -266,6 +269,9 @@ const CalendarFilterBar: React.FC<Props> = ({
           <label htmlFor="cal-hide-completed">Hide completed/cancelled</label>
           <DecisionTag decisionId="D6" />
         </span>
+        {bottomActions && (
+          <span className="ml-auto flex flex-wrap items-center gap-2">{bottomActions}</span>
+        )}
       </div>
     </div>
   );
