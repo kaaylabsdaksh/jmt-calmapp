@@ -33,6 +33,7 @@ interface Props {
   savedViews: SavedViewsApi;
   activeViewId: string | null;
   onSelectView: (view: SavedView | null) => void;
+  showViews?: boolean;
 }
 
 const CalendarViewsMenu: React.FC<Props> = ({
@@ -41,6 +42,7 @@ const CalendarViewsMenu: React.FC<Props> = ({
   savedViews,
   activeViewId,
   onSelectView,
+  showViews = true,
 }) => {
   const [newViewName, setNewViewName] = useState('');
   const [saveError, setSaveError] = useState<string | null>(null);
