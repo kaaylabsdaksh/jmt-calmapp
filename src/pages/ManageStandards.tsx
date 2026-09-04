@@ -441,20 +441,6 @@ const ManageStandards = () => {
               <FileSpreadsheet className="h-4 w-4" />
               Export with History
             </Button>
-            <div className="ml-auto flex flex-wrap items-center gap-1">
-              <Button variant="ghost" className="h-9 gap-2 text-xs text-muted-foreground hover:text-foreground" onClick={() => toast("On-Site Batch Loans")}>
-                <Truck className="h-4 w-4" />
-                On-Site Batch Loans
-              </Button>
-              <Button variant="ghost" className="h-9 gap-2 text-xs text-muted-foreground hover:text-foreground" onClick={() => toast("Create Lab Standard WOs")}>
-                <ClipboardList className="h-4 w-4" />
-                Create Lab Standard WOs
-              </Button>
-              <Button variant="ghost" className="h-9 gap-2 text-xs text-muted-foreground hover:text-foreground" onClick={() => toast("Manage PM / Interim Checks")}>
-                <Wrench className="h-4 w-4" />
-                Manage PM / Interim Checks
-              </Button>
-            </div>
           </div>
 
           {/* Table */}
