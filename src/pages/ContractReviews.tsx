@@ -124,6 +124,22 @@ const CDR_STATUSES = ["Created", "Under Review", "Completed", "Pending Approval"
 
 const pad = (n: number, l = 2) => String(n).padStart(l, "0");
 
+const parseDate = (value: string): Date | undefined => {
+  if (!value) return undefined;
+  const [m, d, y] = value.split("/");
+  if (!m || !d || !y) return undefined;
+  const date = new Date(Number(y), Number(m) - 1, Number(d));
+  return date.getFullYear() === Number(y) && date.getMonth() === Number(m) - 1 && date.getDate() === Number(d) ? date : undefined;
+};
+
+const formatDate = (value: Date | undefined): string => {
+  if (!value) return "";
+  const m = String(value.getMonth() + 1).padStart(2, "0");
+  const d = String(value.getDate()).padStart(2, "0");
+  const y = value.getFullYear();
+  return `${m}/${d}/${y}`;
+};
+
 const MOCK_CRS: CrRecord[] = Array.from({ length: 30 }, (_, i) => ({
   id: `cr-${i + 1}`,
   cr: `CR-2026-${pad(2001 + i, 4)}`,
