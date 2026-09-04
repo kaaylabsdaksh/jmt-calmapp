@@ -72,14 +72,18 @@ const SchedulingLegend: React.FC<Props> = ({
         {s}
       </span>
     ))}
-    <span className="mx-1 h-3 w-px bg-border" />
-    {NON_SERVICE_ENTRY_TYPES.map((t) => (
-      <span key={t} className="inline-flex items-center gap-1">
-        <span className={cn('h-2.5 w-4 rounded-sm border', NON_SERVICE_STYLES[t])} />
-        {t}
-      </span>
-    ))}
-    <DecisionTag decisionId="D9" />
+    {showNonService && (
+      <>
+        <span className="mx-1 h-3 w-px bg-border" />
+        {NON_SERVICE_ENTRY_TYPES.map((t) => (
+          <span key={t} className="inline-flex items-center gap-1">
+            <span className={cn('h-2.5 w-4 rounded-sm border', NON_SERVICE_STYLES[t])} />
+            {t}
+          </span>
+        ))}
+        <DecisionTag decisionId="D9" />
+      </>
+    )}
     <DecisionTag decisionId="D28" />
     {children}
   </div>
