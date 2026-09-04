@@ -406,15 +406,6 @@ const SchedulingListView: React.FC = () => {
             </Select>
           </div>
 
-          <ListSavedFilters current={currentFilterState} onApply={applyFilterState} />
-          <Button
-            variant="outline"
-            size="sm"
-            className="h-8 text-xs"
-            onClick={resetFilters}
-          >
-            Reset
-          </Button>
           <Button
             size="sm"
             className="h-8 gap-1 text-xs"
