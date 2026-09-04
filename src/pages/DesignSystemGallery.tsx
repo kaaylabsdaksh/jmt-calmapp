@@ -32,6 +32,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ModernDatePicker } from "@/components/ui/modern-date-picker";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 const microLabel =
