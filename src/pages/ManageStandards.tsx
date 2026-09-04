@@ -698,7 +698,7 @@ const ManageStandards = () => {
           </div>
 
           {/* Footer actions */}
-          <footer className="sticky bottom-0 z-20 flex flex-wrap items-center justify-end gap-2 border-t bg-white px-4 py-2.5">
+          <footer className="sticky bottom-0 z-20 -mx-4 lg:-mx-6 flex flex-wrap items-center justify-end gap-2 border-t bg-white px-4 lg:px-6 py-2.5">
             <Button variant="outline" className="h-8 gap-2 text-xs" onClick={() => toast("On-Site Batch Loans")}>
               <Truck className="h-3.5 w-3.5" />
               On-Site Batch Loans
