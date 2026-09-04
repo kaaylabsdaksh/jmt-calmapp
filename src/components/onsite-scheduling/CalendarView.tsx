@@ -70,6 +70,7 @@ import {
 } from '@/lib/onsite-scheduling/saved-views';
 import CalendarFilterBar from './CalendarFilterBar';
 import CalendarViewsMenu from './CalendarViewsMenu';
+import ListSavedFilters from './ListSavedFilters';
 import DecisionTag from './DecisionTag';
 import NonServiceEntryDialog from './NonServiceEntryDialog';
 import NewEntryChooser from './NewEntryChooser';
@@ -345,7 +346,35 @@ const CalendarView: React.FC = () => {
         totalCount={jobsInMonth.length}
         highlightedAnchorId={highlightedAnchorId}
         actions={
+          <Button size="sm" className="h-8 gap-1 text-xs" onClick={() => openChooser()}>
+            <Plus className="h-3.5 w-3.5" />
+            New
+          </Button>
+        }
+        bottomActions={
           <>
+            <ListSavedFilters
+              storeKey="onsite-calendar"
+              current={{
+                search: filters.search,
+                location: filters.location,
+                division: filters.division,
+                technicianId: filters.technicianId,
+                readiness: filters.readiness,
+                hideCompleted: filters.hideCompleted,
+              }}
+              onApply={(s) =>
+                setFilters({
+                  ...filters,
+                  search: s.search ?? '',
+                  location: s.location ?? ALL_FILTER,
+                  division: s.division ?? ALL_FILTER,
+                  technicianId: s.technicianId ?? ALL_FILTER,
+                  readiness: (s.readiness as CalendarFilters['readiness']) ?? ALL_FILTER,
+                  hideCompleted: !!s.hideCompleted,
+                })
+              }
+            />
             <CalendarViewsMenu
               filters={filters}
               onChange={setFilters}
@@ -353,10 +382,6 @@ const CalendarView: React.FC = () => {
               activeViewId={activeViewId}
               onSelectView={handleSelectView}
             />
-            <Button size="sm" className="h-8 gap-1 text-xs" onClick={() => openChooser()}>
-              <Plus className="h-3.5 w-3.5" />
-              New
-            </Button>
           </>
         }
       />
