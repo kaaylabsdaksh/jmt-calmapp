@@ -99,6 +99,7 @@ const CalendarFilterBar: React.FC<Props> = ({
       )}
     >
       <div className="flex flex-wrap items-end gap-2">
+        {actions && <div className="order-last ml-auto flex items-center gap-2">{actions}</div>}
         {/* Saved view picker */}
         <div className="flex flex-col gap-1">
           <label className="flex items-center gap-1 text-[11px] font-medium text-muted-foreground">
