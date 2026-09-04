@@ -422,8 +422,13 @@ const SchedulingListView: React.FC = () => {
 
       {/* Legend — Readiness (derived, color-only) and Status (the honest
           lifecycle value) are shown as two separate groups (D28): Red/
-          Green/Partial is never labeled "Status" here. */}
-      <SchedulingLegend anchorId="decision-D28" highlightedAnchorId={highlightedAnchorId}>
+          Green/Partial is never labeled "Status" here. Non-service swatches
+          (PTO/Travel/etc.) are calendar-only and hidden on List. */}
+      <SchedulingLegend
+        anchorId="decision-D28"
+        highlightedAnchorId={highlightedAnchorId}
+        showNonService={false}
+      >
         <span className="mx-1 h-3 w-px bg-border" />
         <span className="text-muted-foreground">PO / Confirmed / Safety:</span>
         <span className="inline-flex items-center gap-1">
