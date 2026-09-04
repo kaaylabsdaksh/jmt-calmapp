@@ -78,6 +78,7 @@ import DecisionTag from './DecisionTag';
 import NewEntryChooser from './NewEntryChooser';
 import NewJobDialog from './NewJobDialog';
 import NonServiceEntryDialog from './NonServiceEntryDialog';
+import ListSavedFilters, { type ListFilterState } from './ListSavedFilters';
 
 const ALL = '__all__';
 
@@ -190,6 +191,28 @@ const SchedulingListView: React.FC = () => {
     setStatusFilter(ALL);
     setSearch('');
     setHideCompleted(false);
+  };
+
+  const currentFilterState: ListFilterState = {
+    search,
+    location: locationFilter,
+    division: divisionFilter,
+    salesCode: salesCodeFilter,
+    technician: technicianFilter,
+    readiness: readinessFilter,
+    status: statusFilter,
+    hideCompleted,
+  };
+
+  const applyFilterState = (s: ListFilterState) => {
+    setSearch(s.search ?? '');
+    setLocationFilter(s.location ?? ALL);
+    setDivisionFilter(s.division ?? ALL);
+    setSalesCodeFilter(s.salesCode ?? ALL);
+    setTechnicianFilter(s.technician ?? ALL);
+    setReadinessFilter(s.readiness ?? ALL);
+    setStatusFilter(s.status ?? ALL);
+    setHideCompleted(!!s.hideCompleted);
   };
 
   const filtered = useMemo(() => {
@@ -383,6 +406,7 @@ const SchedulingListView: React.FC = () => {
             </Select>
           </div>
 
+          <ListSavedFilters current={currentFilterState} onApply={applyFilterState} />
           <Button
             variant="outline"
             size="sm"
