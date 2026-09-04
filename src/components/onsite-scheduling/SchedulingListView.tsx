@@ -257,6 +257,18 @@ const SchedulingListView: React.FC = () => {
       {/* Filter toolbar */}
       <div className="flex flex-col gap-2 rounded-md border bg-white p-3 shadow-sm dark:bg-background">
         <div className="flex flex-wrap items-end gap-2">
+          <div className="flex flex-1 flex-col gap-1">
+            <label className="text-[11px] font-medium text-muted-foreground">
+              Search
+            </label>
+            <Input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Project # or customer…"
+              className="h-8 min-w-[16rem] text-xs"
+            />
+          </div>
+
           <div className="flex flex-col gap-1">
             <label className="text-[11px] font-medium text-muted-foreground">
               Location
@@ -369,18 +381,6 @@ const SchedulingListView: React.FC = () => {
                 ))}
               </SelectContent>
             </Select>
-          </div>
-
-          <div className="flex flex-1 flex-col gap-1">
-            <label className="text-[11px] font-medium text-muted-foreground">
-              Search
-            </label>
-            <Input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Project # or customer…"
-              className="h-8 min-w-[10rem] text-xs"
-            />
           </div>
 
           <Button
