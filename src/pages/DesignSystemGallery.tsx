@@ -32,6 +32,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ModernDatePicker } from "@/components/ui/modern-date-picker";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 const microLabel =
@@ -355,7 +361,205 @@ const FilterPattern = () => {
   );
 };
 
+/* ---------------- Text patterns ---------------- */
+
+const Row = ({ label, children }: { label: string; children: React.ReactNode }) => (
+  <div className="flex items-start gap-4 border-b py-2 last:border-b-0">
+    <code className="w-56 shrink-0 pt-0.5 text-[10px] text-muted-foreground">{label}</code>
+    <div className="min-w-0 flex-1">{children}</div>
+  </div>
+);
+
+const TypographyPattern = () => (
+  <div>
+    <Row label="text-lg font-semibold">
+      <h1 className="text-lg font-semibold leading-tight text-foreground">Page title</h1>
+    </Row>
+    <Row label="text-sm font-semibold">
+      <h2 className="text-sm font-semibold text-foreground">Section heading</h2>
+    </Row>
+    <Row label="text-xs font-medium">
+      <h3 className="text-xs font-medium text-foreground">Sub-heading / card title</h3>
+    </Row>
+    <Row label="text-xs text-foreground">
+      <p className="text-xs text-foreground">
+        Body copy. Default reading size across dense screens.
+      </p>
+    </Row>
+    <Row label="text-[11px] text-muted-foreground">
+      <p className="text-[11px] leading-snug text-muted-foreground">
+        Caption / helper copy sits one step below body and always muted.
+      </p>
+    </Row>
+    <Row label={microLabel}>
+      <span className={microLabel}>Micro label</span>
+    </Row>
+    <Row label="tabular-nums">
+      <span className="text-xs tabular-nums text-foreground">1,248.50 · 09/12/2026</span>
+    </Row>
+  </div>
+);
+
+const FormTextPattern = () => (
+  <div className="grid gap-4 sm:grid-cols-2">
+    <div className="space-y-1">
+      <Label className={microLabel}>
+        Work order # <span className="text-destructive">*</span>
+      </Label>
+      <Input defaultValue="5432" className="h-7 text-xs" />
+      <p className="text-[11px] leading-snug text-muted-foreground">
+        Four digits, numeric only.
+      </p>
+    </div>
+    <div className="space-y-1">
+      <Label className={microLabel}>
+        Account <span className="text-destructive">*</span>
+      </Label>
+      <Input
+        defaultValue="ACME-"
+        className="h-7 border-destructive text-xs focus-visible:ring-destructive"
+      />
+      <p className="text-[11px] leading-snug text-destructive">
+        Enter a valid account number.
+      </p>
+    </div>
+    <div className="space-y-1 sm:col-span-2">
+      <Label className={microLabel}>Notes</Label>
+      <Textarea
+        placeholder="Optional — visible to the technician only"
+        className="min-h-[56px] text-xs"
+      />
+      <p className="text-[11px] text-muted-foreground">Mandatory marker (*) always follows the label text.</p>
+    </div>
+  </div>
+);
+
+const EmptyStatePattern = () => (
+  <div className="grid gap-3 sm:grid-cols-2">
+    <div className="flex flex-col items-center justify-center rounded-lg border border-dashed px-4 py-8 text-center">
+      <Search className="mb-2 h-5 w-5 text-muted-foreground" />
+      <p className="text-xs font-medium text-foreground">No results found</p>
+      <p className="mt-0.5 text-[11px] text-muted-foreground">
+        Try widening the date range or clearing a filter.
+      </p>
+      <Button variant="outline" size="sm" className="mt-3 h-7 text-xs">
+        Clear filters
+      </Button>
+    </div>
+    <div className="flex flex-col items-center justify-center rounded-lg border border-dashed px-4 py-8 text-center">
+      <Plus className="mb-2 h-5 w-5 text-muted-foreground" />
+      <p className="text-xs font-medium text-foreground">Nothing here yet</p>
+      <p className="mt-0.5 text-[11px] text-muted-foreground">
+        Add your first record to get started.
+      </p>
+      <Button size="sm" className="mt-3 h-7 text-xs">
+        Add new
+      </Button>
+    </div>
+  </div>
+);
+
+const TruncationPattern = () => (
+  <TooltipProvider delayDuration={200}>
+    <div className="max-w-xs space-y-2">
+      <div className={microLabel}>Equipment description</div>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <p className="truncate text-xs text-foreground">
+            Fluke 8846A 6.5 Digit Precision Multimeter with extended calibration
+            accessories kit
+          </p>
+        </TooltipTrigger>
+        <TooltipContent side="bottom" className="max-w-xs text-[11px]">
+          Fluke 8846A 6.5 Digit Precision Multimeter with extended calibration
+          accessories kit
+        </TooltipContent>
+      </Tooltip>
+      <p className="text-[11px] text-muted-foreground">
+        Any truncated value carries a tooltip with the full text.
+      </p>
+    </div>
+  </TooltipProvider>
+);
+
+const statusPills = [
+  { label: "Active", dot: "bg-emerald-500", cls: "bg-emerald-50 text-emerald-700" },
+  { label: "On Hold", dot: "bg-amber-500", cls: "bg-amber-50 text-amber-700" },
+  { label: "Completed", dot: "bg-slate-400", cls: "bg-slate-100 text-slate-600" },
+  { label: "Cancelled", dot: "bg-red-500", cls: "bg-red-50 text-red-700" },
+];
+
+const StatusTextPattern = () => (
+  <div className="space-y-3">
+    <div className="flex flex-wrap gap-2">
+      {statusPills.map((s) => (
+        <span
+          key={s.label}
+          className={cn(
+            "inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-medium",
+            s.cls,
+          )}
+        >
+          <span className={cn("h-1.5 w-1.5 rounded-full", s.dot)} />
+          {s.label}
+        </span>
+      ))}
+    </div>
+    <div className="flex flex-wrap items-center gap-2 text-[11px]">
+      <span className="rounded bg-red-50 px-1.5 py-0.5 font-medium text-red-700">Emergency</span>
+      <span className="rounded bg-orange-50 px-1.5 py-0.5 font-medium text-orange-700">Expedite</span>
+      <span className="rounded bg-yellow-50 px-1.5 py-0.5 font-medium text-yellow-700">Rush</span>
+      <span className="text-muted-foreground">Normal — no badge</span>
+    </div>
+    <p className="text-[11px] text-muted-foreground">
+      Soft pill background, colored text, small dot. No hover background.
+    </p>
+  </div>
+);
+
+const LinkTextPattern = () => (
+  <div className="space-y-3">
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink asChild className="text-xs text-muted-foreground hover:text-foreground">
+            <Link to="/">Home</Link>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink asChild className="text-xs text-muted-foreground hover:text-foreground">
+            <Link to="/design-system">Design System</Link>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage className="text-xs font-medium text-foreground">Text patterns</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+    <div className="flex flex-wrap items-center gap-4">
+      <a className="text-xs font-medium text-foreground underline-offset-4 hover:underline" href="#">
+        Inline link
+      </a>
+      <Link
+        to="/design-system"
+        className="text-xs font-medium text-slate-700 underline-offset-4 hover:underline"
+      >
+        Table cell link (e.g. work order #)
+      </Link>
+      <Button variant="link" size="sm" className="h-auto p-0 text-xs">
+        Button-as-link
+      </Button>
+    </div>
+    <p className="text-[11px] text-muted-foreground">
+      Links stay neutral (slate/foreground) — never brand yellow.
+    </p>
+  </div>
+);
+
 const DesignSystemGallery = () => (
+
   <div className="min-h-screen bg-background">
     <header className="sticky top-0 z-20 border-b border-border bg-white px-4 py-3 lg:px-6">
       <div className="flex items-center gap-3">
@@ -414,7 +618,56 @@ const DesignSystemGallery = () => (
       >
         <FilterPattern />
       </Section>
+
+      <Section
+        title="Typography scale"
+        description="Headings, body, captions and micro-labels used across dense screens."
+        usage="Work Sans · text-lg / text-sm / text-xs / text-[11px] / text-[10px] uppercase"
+      >
+        <TypographyPattern />
+      </Section>
+
+      <Section
+        title="Labels, helper & error text"
+        description="Micro-label above the field, helper below, error in destructive tone."
+        usage="Label className={microLabel} · helper text-[11px] text-muted-foreground · error text-destructive"
+      >
+        <FormTextPattern />
+      </Section>
+
+      <Section
+        title="Empty states"
+        description="Dashed container, icon, one-line title, one-line guidance, single action."
+        usage="rounded-lg border border-dashed px-4 py-8 text-center"
+      >
+        <EmptyStatePattern />
+      </Section>
+
+      <Section
+        title="Truncation + tooltip"
+        description="Truncated text always exposes the full value on hover."
+        usage="truncate + Tooltip / TooltipTrigger asChild"
+      >
+        <TruncationPattern />
+      </Section>
+
+      <Section
+        title="Status & priority text"
+        description="Soft pill background, colored text, small status dot, no hover background."
+        usage="rounded-full px-2 py-0.5 text-[11px] font-medium + 1.5px dot"
+      >
+        <StatusTextPattern />
+      </Section>
+
+      <Section
+        title="Links & breadcrumbs"
+        description="Neutral link tones with underline on hover; breadcrumb trail at text-xs."
+        usage="@/components/ui/breadcrumb · text-xs · underline-offset-4 hover:underline"
+      >
+        <LinkTextPattern />
+      </Section>
     </main>
+
   </div>
 );
 
