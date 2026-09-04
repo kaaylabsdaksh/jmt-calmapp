@@ -59,6 +59,9 @@ interface Props {
   shownCount: number;
   totalCount: number;
   highlightedAnchorId: string | null;
+  /** Actions (Views / Clear / New) merged into this same section instead of
+   * a separate toolbar card above it (direct request, 2026-09-04). */
+  actions?: React.ReactNode;
 }
 
 const NO_VIEW = '__none__';
@@ -75,6 +78,7 @@ const CalendarFilterBar: React.FC<Props> = ({
   shownCount,
   totalCount,
   highlightedAnchorId,
+  actions,
 }) => {
   const count = activeFilterCount(filters);
   const hidden = totalCount - shownCount;
@@ -95,6 +99,7 @@ const CalendarFilterBar: React.FC<Props> = ({
       )}
     >
       <div className="flex flex-wrap items-end gap-2">
+        {actions && <div className="order-last ml-auto flex items-center gap-2">{actions}</div>}
         {/* Saved view picker */}
         <div className="flex flex-col gap-1">
           <label className="flex items-center gap-1 text-[11px] font-medium text-muted-foreground">
