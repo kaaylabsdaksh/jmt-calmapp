@@ -331,30 +331,7 @@ const CalendarView: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-3 p-4">
-      {/* Toolbar */}
-      <div className="flex flex-wrap items-center justify-end gap-2 rounded-md border bg-white p-3 shadow-sm dark:bg-background">
-        <div className="flex items-center gap-2">
-          {/* Hide completed/cancelled moved into CalendarFilterBar with the
-              rest of the filters (D30) — it was always a filter sitting in
-              the month-navigation toolbar. D6's jump anchor moved with it.
-              Views/Clear came the other way (2026-08-19, direct request):
-              they're actions, so they sit with "+ New" here rather than at
-              the end of the filter row. */}
-          <CalendarViewsMenu
-            filters={filters}
-            onChange={setFilters}
-            savedViews={savedViews}
-            activeViewId={activeViewId}
-            onSelectView={handleSelectView}
-          />
-          <Button size="sm" className="h-8 gap-1 text-xs" onClick={() => openChooser()}>
-            <Plus className="h-3.5 w-3.5" />
-            New
-          </Button>
-        </div>
-      </div>
-
-      {/* D30/D31 — filters + saved views */}
+      {/* D30/D31 — filters + saved views + actions, one merged section */}
       <CalendarFilterBar
         filters={filters}
         onChange={setFilters}
@@ -367,6 +344,21 @@ const CalendarView: React.FC = () => {
         shownCount={shownJobsInMonth.length}
         totalCount={jobsInMonth.length}
         highlightedAnchorId={highlightedAnchorId}
+        actions={
+          <>
+            <CalendarViewsMenu
+              filters={filters}
+              onChange={setFilters}
+              savedViews={savedViews}
+              activeViewId={activeViewId}
+              onSelectView={handleSelectView}
+            />
+            <Button size="sm" className="h-8 gap-1 text-xs" onClick={() => openChooser()}>
+              <Plus className="h-3.5 w-3.5" />
+              New
+            </Button>
+          </>
+        }
       />
 
       {/* Legend + inline decision notes for defaults that don't have a
