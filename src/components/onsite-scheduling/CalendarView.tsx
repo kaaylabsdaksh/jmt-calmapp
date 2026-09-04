@@ -381,6 +381,7 @@ const CalendarView: React.FC = () => {
               savedViews={savedViews}
               activeViewId={activeViewId}
               onSelectView={handleSelectView}
+              showViews={false}
             />
           </>
         }

@@ -33,6 +33,7 @@ interface Props {
   savedViews: SavedViewsApi;
   activeViewId: string | null;
   onSelectView: (view: SavedView | null) => void;
+  showViews?: boolean;
 }
 
 const CalendarViewsMenu: React.FC<Props> = ({
@@ -41,6 +42,7 @@ const CalendarViewsMenu: React.FC<Props> = ({
   savedViews,
   activeViewId,
   onSelectView,
+  showViews = true,
 }) => {
   const [newViewName, setNewViewName] = useState('');
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -68,115 +70,117 @@ const CalendarViewsMenu: React.FC<Props> = ({
 
   return (
     <>
-      <Popover open={saveOpen} onOpenChange={setSaveOpen}>
-        <PopoverTrigger asChild>
-          <Button variant="outline" size="sm" className="h-8 gap-1 text-xs">
-            <BookmarkPlus className="h-3.5 w-3.5" />
-            Views
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-80" align="end">
-          <div className="flex flex-col gap-3 text-xs">
-            <div className="flex flex-col gap-1.5">
-              <span className="flex items-center gap-1 font-medium">
-                Save current filters as a view
-                <DecisionTag decisionId="D31" />
-              </span>
-              <div className="flex gap-1.5">
-                <Input
-                  value={newViewName}
-                  onChange={(e) => {
-                    setNewViewName(e.target.value);
-                    setSaveError(null);
-                  }}
-                  placeholder="e.g. My week, Wichita mechanical"
-                  className="h-8 text-xs"
-                />
-                <Button
-                  size="sm"
-                  className="h-8 text-xs"
-                  onClick={handleSave}
-                  disabled={savedViews.atCap}
+      {showViews && (
+        <Popover open={saveOpen} onOpenChange={setSaveOpen}>
+          <PopoverTrigger asChild>
+            <Button variant="outline" size="sm" className="h-8 gap-1 text-xs">
+              <BookmarkPlus className="h-3.5 w-3.5" />
+              Views
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-80" align="end">
+            <div className="flex flex-col gap-3 text-xs">
+              <div className="flex flex-col gap-1.5">
+                <span className="flex items-center gap-1 font-medium">
+                  Save current filters as a view
+                  <DecisionTag decisionId="D31" />
+                </span>
+                <div className="flex gap-1.5">
+                  <Input
+                    value={newViewName}
+                    onChange={(e) => {
+                      setNewViewName(e.target.value);
+                      setSaveError(null);
+                    }}
+                    placeholder="e.g. My week, Wichita mechanical"
+                    className="h-8 text-xs"
+                  />
+                  <Button
+                    size="sm"
+                    className="h-8 text-xs"
+                    onClick={handleSave}
+                    disabled={savedViews.atCap}
+                  >
+                    Save
+                  </Button>
+                </div>
+                <span
+                  className={cn(
+                    'text-[11px]',
+                    savedViews.atCap ? 'text-red-600' : 'text-muted-foreground'
+                  )}
                 >
-                  Save
-                </Button>
+                  {savedViews.remainingSlots} of {SAVED_VIEW_CAP} personal view slots left.
+                  Built-in views don't count.
+                </span>
+                {saveError && <span className="text-[11px] text-red-600">{saveError}</span>}
               </div>
-              <span
-                className={cn(
-                  'text-[11px]',
-                  savedViews.atCap ? 'text-red-600' : 'text-muted-foreground'
-                )}
-              >
-                {savedViews.remainingSlots} of {SAVED_VIEW_CAP} personal view slots left.
-                Built-in views don't count.
-              </span>
-              {saveError && <span className="text-[11px] text-red-600">{saveError}</span>}
-            </div>
 
-            {savedViews.personalViews.length > 0 && (
-              <div className="flex flex-col gap-1.5 border-t pt-2">
-                <span className="font-medium">Your views</span>
-                {savedViews.personalViews.map((v) => (
-                  <div key={v.id} className="flex items-center gap-1.5">
-                    <button
-                      type="button"
-                      className="flex-1 truncate text-left hover:underline"
-                      onClick={() => {
-                        onSelectView(v);
-                        setSaveOpen(false);
-                      }}
-                    >
-                      {v.name}
-                    </button>
-                    <button
-                      type="button"
-                      title={
-                        savedViews.defaultViewId === v.id
-                          ? 'Default view — click to clear'
-                          : 'Make this the view that loads on open'
-                      }
-                      onClick={() =>
-                        savedViews.setDefaultView(
-                          savedViews.defaultViewId === v.id ? null : v.id
-                        )
-                      }
-                      className="p-0.5 text-muted-foreground hover:text-amber-500"
-                    >
-                      <Star
-                        className={cn(
-                          'h-3.5 w-3.5',
-                          savedViews.defaultViewId === v.id &&
-                            'fill-amber-400 text-amber-500'
-                        )}
-                      />
-                    </button>
-                    <button
-                      type="button"
-                      title="Delete this view"
-                      onClick={() => savedViews.deleteView(v.id)}
-                      className="p-0.5 text-muted-foreground hover:text-red-600"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                ))}
+              {savedViews.personalViews.length > 0 && (
+                <div className="flex flex-col gap-1.5 border-t pt-2">
+                  <span className="font-medium">Your views</span>
+                  {savedViews.personalViews.map((v) => (
+                    <div key={v.id} className="flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        className="flex-1 truncate text-left hover:underline"
+                        onClick={() => {
+                          onSelectView(v);
+                          setSaveOpen(false);
+                        }}
+                      >
+                        {v.name}
+                      </button>
+                      <button
+                        type="button"
+                        title={
+                          savedViews.defaultViewId === v.id
+                            ? 'Default view — click to clear'
+                            : 'Make this the view that loads on open'
+                        }
+                        onClick={() =>
+                          savedViews.setDefaultView(
+                            savedViews.defaultViewId === v.id ? null : v.id
+                          )
+                        }
+                        className="p-0.5 text-muted-foreground hover:text-amber-500"
+                      >
+                        <Star
+                          className={cn(
+                            'h-3.5 w-3.5',
+                            savedViews.defaultViewId === v.id &&
+                              'fill-amber-400 text-amber-500'
+                          )}
+                        />
+                      </button>
+                      <button
+                        type="button"
+                        title="Delete this view"
+                        onClick={() => savedViews.deleteView(v.id)}
+                        className="p-0.5 text-muted-foreground hover:text-red-600"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <div className="flex flex-col gap-1 border-t pt-2 text-[11px] text-muted-foreground">
+                <span>
+                  Built-in views can't be deleted and don't use a slot. Star any of your own
+                  to make it load on open.
+                </span>
+                <span>
+                  One calendar, filtered — not a separate calendar per location. Whether a
+                  scheduler should be <em>able</em> to see other locations at all is a
+                  permissions question, still open (N19).
+                </span>
               </div>
-            )}
-
-            <div className="flex flex-col gap-1 border-t pt-2 text-[11px] text-muted-foreground">
-              <span>
-                Built-in views can't be deleted and don't use a slot. Star any of your own
-                to make it load on open.
-              </span>
-              <span>
-                One calendar, filtered — not a separate calendar per location. Whether a
-                scheduler should be <em>able</em> to see other locations at all is a
-                permissions question, still open (N19).
-              </span>
             </div>
-          </div>
-        </PopoverContent>
-      </Popover>
+          </PopoverContent>
+        </Popover>
+      )}
 
       <Button
         variant="ghost"
