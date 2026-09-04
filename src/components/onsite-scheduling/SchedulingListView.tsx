@@ -428,9 +428,20 @@ const SchedulingListView: React.FC = () => {
             Hide completed/cancelled jobs
             <DecisionTag decisionId="D6" />
           </label>
-          <span className="flex items-center gap-1">
-            {filtered.length} of {jobs.length} jobs
-            <DecisionTag decisionId="D24" />
+          <span className="flex flex-wrap items-center gap-2">
+            <ListSavedFilters current={currentFilterState} onApply={applyFilterState} />
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 text-xs"
+              onClick={resetFilters}
+            >
+              Reset
+            </Button>
+            <span className="flex items-center gap-1">
+              {filtered.length} of {jobs.length} jobs
+              <DecisionTag decisionId="D24" />
+            </span>
           </span>
         </div>
       </div>
