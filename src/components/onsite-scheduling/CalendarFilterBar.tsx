@@ -59,6 +59,9 @@ interface Props {
   shownCount: number;
   totalCount: number;
   highlightedAnchorId: string | null;
+  /** Actions (Views / Clear / New) merged into this same section instead of
+   * a separate toolbar card above it (direct request, 2026-09-04). */
+  actions?: React.ReactNode;
 }
 
 const NO_VIEW = '__none__';
