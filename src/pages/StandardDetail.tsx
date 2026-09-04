@@ -815,7 +815,7 @@ const StandardDetail = () => {
                                 size="sm"
                                 className="h-7 text-xs"
                                 onClick={() => {
-                                  set("maintenance", form.maintenance.map((x) => (x.id === m.id ? { ...x, status: "Completed", lastCompleted: new Date().toLocaleDateString("en-US") } : x)));
+                                  set("maintenance", form.maintenance.map((x) => (x.id === m.id ? { ...x, status: "Completed" as const, lastCompleted: new Date().toLocaleDateString("en-US") } : x)));
                                   toast.success("Check marked completed.");
                                 }}
                               >
