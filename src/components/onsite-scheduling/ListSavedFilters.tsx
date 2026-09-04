@@ -15,14 +15,15 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { toast } from '@/hooks/use-toast';
 
 export interface ListFilterState {
-  search: string;
-  location: string;
-  division: string;
-  salesCode: string;
-  technician: string;
-  readiness: string;
-  status: string;
-  hideCompleted: boolean;
+  search?: string;
+  location?: string;
+  division?: string;
+  salesCode?: string;
+  technician?: string;
+  technicianId?: string;
+  readiness?: string;
+  status?: string;
+  hideCompleted?: boolean;
 }
 
 interface SavedListFilter {
@@ -32,26 +33,16 @@ interface SavedListFilter {
   state: ListFilterState;
 }
 
-const STORE_KEY = 'onsite-list-saved-filters';
-const DEFAULT_KEY = 'onsite-list-default-filter';
-
-function load(): SavedListFilter[] {
+function load(storeKey: string): SavedListFilter[] {
   try {
-    return JSON.parse(localStorage.getItem(STORE_KEY) || '[]');
+    return JSON.parse(localStorage.getItem(storeKey) || '[]');
   } catch {
     return [];
   }
 }
-function persist(list: SavedListFilter[]) {
+function loadDefaultId(defaultKey: string): string | null {
   try {
-    localStorage.setItem(STORE_KEY, JSON.stringify(list));
-  } catch {
-    /* ignore */
-  }
-}
-function loadDefaultId(): string | null {
-  try {
-    return localStorage.getItem(DEFAULT_KEY);
+    return localStorage.getItem(defaultKey);
   } catch {
     return null;
   }
@@ -60,11 +51,28 @@ function loadDefaultId(): string | null {
 interface Props {
   current: ListFilterState;
   onApply: (state: ListFilterState) => void;
+  /** Namespace so the Calendar tab keeps its own saved filters. */
+  storeKey?: string;
 }
 
-const ListSavedFilters: React.FC<Props> = ({ current, onApply }) => {
-  const [filters, setFilters] = useState<SavedListFilter[]>(load);
-  const [defaultId, setDefaultId] = useState<string | null>(loadDefaultId);
+const ListSavedFilters: React.FC<Props> = ({
+  current,
+  onApply,
+  storeKey = 'onsite-list',
+}) => {
+  const STORE_KEY = `${storeKey}-saved-filters`;
+  const DEFAULT_KEY = `${storeKey}-default-filter`;
+  const persist = (list: SavedListFilter[]) => {
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify(list));
+    } catch {
+      /* ignore */
+    }
+  };
+  const [filters, setFilters] = useState<SavedListFilter[]>(() => load(STORE_KEY));
+  const [defaultId, setDefaultId] = useState<string | null>(() =>
+    loadDefaultId(DEFAULT_KEY)
+  );
   const [activeId, setActiveId] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const [saveOpen, setSaveOpen] = useState(false);
