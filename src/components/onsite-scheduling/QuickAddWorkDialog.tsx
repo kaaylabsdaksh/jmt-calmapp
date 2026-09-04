@@ -25,7 +25,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
+import { ModernDatePicker } from '@/components/ui/modern-date-picker';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -45,6 +45,9 @@ interface QuickAddWorkDialogProps {
 }
 
 const FALLBACK_DATE = '2026-08-11';
+
+const toISO = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
 const QuickAddWorkDialog: React.FC<QuickAddWorkDialogProps> = ({
   open,
@@ -91,88 +94,103 @@ const QuickAddWorkDialog: React.FC<QuickAddWorkDialogProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-1.5">
+      <DialogContent className="sm:max-w-md gap-0 p-0 overflow-hidden">
+        <DialogHeader className="border-b bg-muted/40 px-4 py-3 space-y-1">
+          <DialogTitle className="flex items-center gap-1.5 text-sm font-semibold">
             Quick add to Unscheduled Work
             <DecisionTag decisionId="D11" />
           </DialogTitle>
-        </DialogHeader>
-        <div className="space-y-3">
-          <p className="text-xs text-muted-foreground">
+          <p className="text-[11px] leading-snug text-muted-foreground">
             Minimum fields only — account #, sales rep code, and real dates get filled in
             later when this is actually Scheduled.
           </p>
-          <div className="space-y-1">
-            <Label className="text-xs">Customer</Label>
-            <Select value={customerName} onValueChange={setCustomerName}>
-              <SelectTrigger className="h-8 text-xs">
-                <SelectValue placeholder="Select customer" />
-              </SelectTrigger>
-              <SelectContent>
-                {KNOWN_CUSTOMERS.map((c) => (
-                  <SelectItem key={c} value={c}>
-                    {c}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-1">
-            <Label className="text-xs">Site</Label>
-            <Select value={location} onValueChange={setLocation}>
-              <SelectTrigger className="h-8 text-xs">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {JOB_LOCATIONS.map((l) => (
-                  <SelectItem key={l} value={l}>
-                    {l}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+        </DialogHeader>
+
+        <div className="space-y-3 px-4 py-3">
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <Label className="text-xs">Rough window start</Label>
-              <Input
-                type="date"
+              <Label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                Customer
+              </Label>
+              <Select value={customerName} onValueChange={setCustomerName}>
+                <SelectTrigger className="h-7 rounded-md bg-background text-xs">
+                  <SelectValue placeholder="Select customer" />
+                </SelectTrigger>
+                <SelectContent>
+                  {KNOWN_CUSTOMERS.map((c) => (
+                    <SelectItem key={c} value={c} className="text-xs">
+                      {c}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                Site
+              </Label>
+              <Select value={location} onValueChange={setLocation}>
+                <SelectTrigger className="h-7 rounded-md bg-background text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {JOB_LOCATIONS.map((l) => (
+                    <SelectItem key={l} value={l} className="text-xs">
+                      {l}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-1">
+              <Label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                Rough window start
+              </Label>
+              <ModernDatePicker
+                size="sm"
                 value={targetWindowStart}
-                onChange={(e) => setTargetWindowStart(e.target.value)}
-                className="h-8 text-xs"
+                onChange={(d) => setTargetWindowStart(d ? toISO(d) : '')}
               />
             </div>
             <div className="space-y-1">
-              <Label className="text-xs">Rough window end</Label>
-              <Input
-                type="date"
+              <Label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                Rough window end
+              </Label>
+              <ModernDatePicker
+                size="sm"
                 value={targetWindowEnd}
-                onChange={(e) => setTargetWindowEnd(e.target.value)}
-                className="h-8 text-xs"
+                onChange={(d) => setTargetWindowEnd(d ? toISO(d) : '')}
               />
             </div>
           </div>
+
           <div className="space-y-1">
-            <Label className="text-xs">Notes</Label>
+            <Label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+              Notes
+            </Label>
             <Textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Optional"
-              className="min-h-16 text-xs"
+              className="min-h-14 resize-none rounded-md text-xs"
             />
           </div>
+
           {showValidation && !isValid && (
             <p className="text-[11px] text-destructive">
               Pick a customer and a valid rough window.
             </p>
           )}
         </div>
-        <DialogFooter>
-          <Button variant="outline" size="sm" onClick={() => onOpenChange(false)}>
+
+        <DialogFooter className="border-t bg-muted/30 px-4 py-2.5">
+          <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button size="sm" onClick={handleAdd}>
+          <Button size="sm" className="h-8 text-xs" onClick={handleAdd}>
             Add to queue
           </Button>
         </DialogFooter>
