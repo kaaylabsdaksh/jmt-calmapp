@@ -618,7 +618,56 @@ const DesignSystemGallery = () => (
       >
         <FilterPattern />
       </Section>
+
+      <Section
+        title="Typography scale"
+        description="Headings, body, captions and micro-labels used across dense screens."
+        usage="Work Sans · text-lg / text-sm / text-xs / text-[11px] / text-[10px] uppercase"
+      >
+        <TypographyPattern />
+      </Section>
+
+      <Section
+        title="Labels, helper & error text"
+        description="Micro-label above the field, helper below, error in destructive tone."
+        usage="Label className={microLabel} · helper text-[11px] text-muted-foreground · error text-destructive"
+      >
+        <FormTextPattern />
+      </Section>
+
+      <Section
+        title="Empty states"
+        description="Dashed container, icon, one-line title, one-line guidance, single action."
+        usage="rounded-lg border border-dashed px-4 py-8 text-center"
+      >
+        <EmptyStatePattern />
+      </Section>
+
+      <Section
+        title="Truncation + tooltip"
+        description="Truncated text always exposes the full value on hover."
+        usage="truncate + Tooltip / TooltipTrigger asChild"
+      >
+        <TruncationPattern />
+      </Section>
+
+      <Section
+        title="Status & priority text"
+        description="Soft pill background, colored text, small status dot, no hover background."
+        usage="rounded-full px-2 py-0.5 text-[11px] font-medium + 1.5px dot"
+      >
+        <StatusTextPattern />
+      </Section>
+
+      <Section
+        title="Links & breadcrumbs"
+        description="Neutral link tones with underline on hover; breadcrumb trail at text-xs."
+        usage="@/components/ui/breadcrumb · text-xs · underline-offset-4 hover:underline"
+      >
+        <LinkTextPattern />
+      </Section>
     </main>
+
   </div>
 );
 
