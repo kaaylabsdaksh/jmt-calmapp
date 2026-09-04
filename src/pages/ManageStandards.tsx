@@ -272,8 +272,8 @@ const ManageStandards = () => {
 
           {/* Search Criteria */}
 
-          <section className="bg-card rounded-xl shadow-sm border p-4">
-            <div className="mb-3 flex items-center gap-2">
+          <section className="bg-card rounded-xl shadow-sm border p-3">
+            <div className="mb-2 flex items-center gap-2">
               <Search className="h-3.5 w-3.5 text-muted-foreground" />
               <h2 className="text-xs font-semibold text-foreground">Search Criteria</h2>
               {activeAdvancedCount > 0 && (
@@ -281,7 +281,7 @@ const ManageStandards = () => {
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-3">
               {/* Equipment — spans 2 columns */}
               <div className="col-span-1 md:col-span-2">
                 <h3 className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-2">Equipment</h3>
