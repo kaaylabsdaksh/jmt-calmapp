@@ -443,28 +443,31 @@ const ContractReviews = () => {
                     <Input value={filters.customer} onChange={(e) => setF("customer", e.target.value)} placeholder="Customer" className="h-7 text-xs" />
                   </div>
                   <div className="space-y-1">
-                    <label className={labelCls}>Created From</label>
-                    <Input type="date" value={filters.createdFrom} onChange={(e) => setF("createdFrom", e.target.value)} className="h-7 text-xs" />
+                    <label className={labelCls}>Created From / To</label>
+                    <DateRangePicker
+                      dateFrom={parseDate(filters.createdFrom)}
+                      dateTo={parseDate(filters.createdTo)}
+                      onDateFromChange={(d) => setF("createdFrom", formatDate(d))}
+                      onDateToChange={(d) => setF("createdTo", formatDate(d))}
+                    />
                   </div>
                   <div className="space-y-1">
-                    <label className={labelCls}>Created To</label>
-                    <Input type="date" value={filters.createdTo} onChange={(e) => setF("createdTo", e.target.value)} className="h-7 text-xs" />
+                    <label className={labelCls}>Modified From / To</label>
+                    <DateRangePicker
+                      dateFrom={parseDate(filters.modifiedFrom)}
+                      dateTo={parseDate(filters.modifiedTo)}
+                      onDateFromChange={(d) => setF("modifiedFrom", formatDate(d))}
+                      onDateToChange={(d) => setF("modifiedTo", formatDate(d))}
+                    />
                   </div>
                   <div className="space-y-1">
-                    <label className={labelCls}>Modified From</label>
-                    <Input type="date" value={filters.modifiedFrom} onChange={(e) => setF("modifiedFrom", e.target.value)} className="h-7 text-xs" />
-                  </div>
-                  <div className="space-y-1">
-                    <label className={labelCls}>Modified To</label>
-                    <Input type="date" value={filters.modifiedTo} onChange={(e) => setF("modifiedTo", e.target.value)} className="h-7 text-xs" />
-                  </div>
-                  <div className="space-y-1">
-                    <label className={labelCls}>Received From</label>
-                    <Input type="date" value={filters.receivedFrom} onChange={(e) => setF("receivedFrom", e.target.value)} className="h-7 text-xs" />
-                  </div>
-                  <div className="space-y-1">
-                    <label className={labelCls}>Received To</label>
-                    <Input type="date" value={filters.receivedTo} onChange={(e) => setF("receivedTo", e.target.value)} className="h-7 text-xs" />
+                    <label className={labelCls}>Received From / To</label>
+                    <DateRangePicker
+                      dateFrom={parseDate(filters.receivedFrom)}
+                      dateTo={parseDate(filters.receivedTo)}
+                      onDateFromChange={(d) => setF("receivedFrom", formatDate(d))}
+                      onDateToChange={(d) => setF("receivedTo", formatDate(d))}
+                    />
                   </div>
                 </div>
                 <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
