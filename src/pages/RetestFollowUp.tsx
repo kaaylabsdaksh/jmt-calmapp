@@ -655,11 +655,28 @@ const RetestFollowUp = () => {
                   </TableHeader>
                   <TableBody>
                     {rows.map((r) => (
+                      <Fragment key={r.id}>
                       <TableRow
-                        key={r.id}
                         className="cursor-pointer [&>td]:py-1 [&>td]:text-[11px] [&>td]:whitespace-nowrap"
                         onClick={() => setDrawerRecord(r)}
                       >
+                        <TableCell onClick={(e) => e.stopPropagation()}>
+                          <button
+                            className="flex h-5 w-5 items-center justify-center rounded hover:bg-muted"
+                            onClick={() =>
+                              setExpanded((prev) =>
+                                prev.includes(r.id) ? prev.filter((id) => id !== r.id) : [...prev, r.id]
+                              )
+                            }
+                            aria-label={expanded.includes(r.id) ? "Collapse" : "Expand"}
+                          >
+                            {expanded.includes(r.id) ? (
+                              <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+                            ) : (
+                              <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
+                            )}
+                          </button>
+                        </TableCell>
                         <TableCell onClick={(e) => e.stopPropagation()}>
                           <Checkbox
                             checked={selected.includes(r.id)}
