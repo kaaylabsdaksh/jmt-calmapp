@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Search,
@@ -19,6 +19,8 @@ import {
   Send,
   Clock,
   ListChecks,
+  ChevronRight,
+  ChevronDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -62,6 +64,31 @@ import ModernTopNav from "@/components/modern/ModernTopNav";
 type EmailStatus = "sent" | "pending" | "failed" | "completed" | "not-required";
 type CallStatus = "completed" | "pending" | "not-required";
 
+type NoticeDetail = {
+  id: string;
+  loc: string;
+  division: string;
+  arrivalType: string;
+  contactName: string;
+  retestDue: string;
+  manufacturer: string;
+  model: string;
+  description: string;
+  serial: string;
+  custId: string;
+  po: string;
+  ic: string;
+  rnType: string;
+  report: string;
+  ec: number;
+  et: string;
+  certDate: string;
+  freq: number;
+  rf1: number;
+  rf2: number;
+  rf3: number;
+};
+
 type FollowUpRecord = {
   id: string;
   account: string;
@@ -83,6 +110,7 @@ type FollowUpRecord = {
   rf3: number;
   remaining: number;
   equipment: { item: string; due: string }[];
+  notices: NoticeDetail[];
   notes: string;
 };
 
@@ -118,6 +146,48 @@ const CONTACTS = [
 const EMAIL_CYCLE: EmailStatus[] = ["sent", "pending", "failed", "completed", "not-required"];
 const CALL_CYCLE: CallStatus[] = ["completed", "pending", "not-required"];
 
+const ARRIVAL_TYPES = ["Customer Dropoff", "Pickup", "Freight", "Onsite"];
+const DIVISIONS = ["Lab", "Onsite", "ESL", "Field"];
+const MANUFACTURERS = ["AMERICAN INNOVATIONS", "SALISBURY", "HASTINGS", "CHANCE", "GREENLEE"];
+const DESCRIPTIONS = ["DVM CARD", "RUBBER GLOVE", "LINE HOSE", "GROUND SET", "HOT STICK"];
+const RN_TYPES = ["ET", "RT", "CT"];
+
+const buildNotices = (
+  seed: number,
+  customer: string,
+  contact: string,
+  loc: string,
+  ic: string
+): NoticeDetail[] =>
+  Array.from({ length: (seed % 4) + 2 }, (_, j) => {
+    const k = seed + j;
+    return {
+      id: `nd-${seed}-${j}`,
+      loc,
+      division: DIVISIONS[k % DIVISIONS.length],
+      arrivalType: ARRIVAL_TYPES[k % ARRIVAL_TYPES.length],
+      contactName: contact,
+      retestDue: `${String((k % 12) + 1).padStart(2, "0")}/${String((k % 27) + 1).padStart(2, "0")}/2026`,
+      manufacturer: MANUFACTURERS[k % MANUFACTURERS.length],
+      model: `${626582 + k * 13}-000`,
+      description: DESCRIPTIONS[k % DESCRIPTIONS.length],
+      serial: `2019${10 + (k % 80)}QU`,
+      custId: customer.toUpperCase().slice(0, 16),
+      po: `CC ${contact}`,
+      ic: `${ic}${String((k % 9) + 1).padStart(2, "0")}`,
+      rnType: RN_TYPES[k % RN_TYPES.length],
+      report: `${507357 + k * 7}-00${(j % 9) + 1}`,
+      ec: k % 3,
+      et: `${755092 + k * 11}`,
+      certDate: `${String((k % 12) + 1).padStart(2, "0")}/11/2024`,
+      freq: [12, 24, 36][k % 3],
+      rf1: k % 2,
+      rf2: (k + 1) % 2,
+      rf3: k % 3 === 0 ? 1 : 0,
+    };
+  });
+
+
 const MOCK_RECORDS: FollowUpRecord[] = Array.from({ length: 24 }, (_, i) => {
   const totalNotices = 4 + ((i * 7) % 24);
   const rf1 = Math.max(0, totalNotices - ((i * 3) % 9));
@@ -151,6 +221,7 @@ const MOCK_RECORDS: FollowUpRecord[] = Array.from({ length: 24 }, (_, i) => {
       { item: "Line Hose Set", due: "04/02/2026" },
       { item: "Insulating Blanket", due: "04/22/2026" },
     ].slice(0, (i % 3) + 1),
+    notices: buildNotices(i, customer, CONTACTS[i % CONTACTS.length], STATES[i % STATES.length], ICS[i % ICS.length]),
     notes:
       i % 2 === 0
         ? "Customer requested follow-up after quarterly outage window."
@@ -211,6 +282,162 @@ const remainingChip = (n: number) => {
   );
 };
 
+const NOTICE_COLUMNS: { key: keyof NoticeDetail | string; label: string; filter: boolean; className?: string }[] = [
+  { key: "loc", label: "Loc", filter: true },
+  { key: "division", label: "Division", filter: true },
+  { key: "arrivalType", label: "Arrival Type", filter: true },
+  { key: "contactName", label: "Contact Name", filter: true },
+  { key: "retestDue", label: "Retest Due", filter: true },
+  { key: "manufacturer", label: "Manufacturer", filter: true },
+  { key: "model", label: "Model", filter: true },
+  { key: "description", label: "Description", filter: true },
+  { key: "serial", label: "Serial #", filter: true },
+  { key: "custId", label: "Cust ID", filter: true },
+  { key: "po", label: "PO #", filter: true },
+  { key: "ic", label: "IC", filter: true },
+  { key: "rnType", label: "RN Type", filter: true },
+  { key: "report", label: "Report #", filter: true },
+  { key: "ec", label: "EC", filter: false },
+  { key: "et", label: "ET", filter: false },
+  { key: "certDate", label: "Cert Date", filter: true },
+  { key: "freq", label: "Freq", filter: false },
+  { key: "rf1", label: "RF1", filter: false },
+  { key: "rf2", label: "RF2", filter: false },
+  { key: "rf3", label: "RF3", filter: false },
+  { key: "rfs", label: "RFS", filter: false },
+  { key: "mr", label: "MR", filter: false },
+];
+
+const NestedNoticeTable = ({
+  record,
+  onAction,
+}: {
+  record: FollowUpRecord;
+  onAction: (title: string, description?: string) => void;
+}) => {
+  const [filters, setFilters] = useState<Record<string, string>>({});
+
+  const filtered = record.notices.filter((n) =>
+    Object.entries(filters).every(([k, v]) =>
+      !v ? true : String((n as any)[k] ?? "").toLowerCase().includes(v.toLowerCase())
+    )
+  );
+
+  const activeCount = Object.values(filters).filter(Boolean).length;
+
+  return (
+    <div className="border-l-2 border-primary/60 bg-muted/30 px-3 py-2.5">
+      <div className="flex items-center justify-between gap-2 mb-2">
+        <div className="flex items-center gap-2">
+          <span className="text-[11px] font-semibold text-foreground">Retest Notice Items</span>
+          <Badge variant="secondary" className="text-[10px]">
+            {filtered.length} of {record.notices.length}
+          </Badge>
+        </div>
+        <div className="flex items-center gap-1.5">
+          {activeCount > 0 && (
+            <Button variant="ghost" size="sm" className="h-6 text-[11px]" onClick={() => setFilters({})}>
+              <X className="h-3 w-3 mr-1" />Clear Filters
+            </Button>
+          )}
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-6 text-[11px]"
+            onClick={() => onAction("Export Complete", `${record.customer} notice items exported.`)}
+          >
+            <FileDown className="h-3 w-3 mr-1" />Export Items
+          </Button>
+        </div>
+      </div>
+
+      <div className="overflow-x-auto rounded-md border border-border bg-card">
+        <table className="w-full text-[11px]">
+          <thead>
+            <tr className="bg-muted/60">
+              {NOTICE_COLUMNS.map((c) => (
+                <th
+                  key={c.key as string}
+                  className="whitespace-nowrap px-2 py-1 text-left text-[10px] font-medium uppercase tracking-wide text-muted-foreground border-b border-border"
+                >
+                  {c.label}
+                </th>
+              ))}
+            </tr>
+            <tr className="bg-card">
+              {NOTICE_COLUMNS.map((c) => (
+                <th key={`f-${c.key as string}`} className="px-1 py-1 border-b border-border align-middle">
+                  {c.filter ? (
+                    <Input
+                      value={filters[c.key as string] ?? ""}
+                      onChange={(e) =>
+                        setFilters((prev) => ({ ...prev, [c.key as string]: e.target.value }))
+                      }
+                      className="h-6 min-w-[70px] rounded px-1.5 text-[11px]"
+                      aria-label={`Filter ${c.label}`}
+                    />
+                  ) : null}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {filtered.length === 0 ? (
+              <tr>
+                <td colSpan={NOTICE_COLUMNS.length} className="px-2 py-6 text-center text-[11px] text-muted-foreground">
+                  No notice items match these filters.
+                </td>
+              </tr>
+            ) : (
+              filtered.map((n) => (
+                <tr key={n.id} className="border-b border-border/60 last:border-0 hover:bg-muted/40">
+                  <td className="whitespace-nowrap px-2 py-1">{n.loc}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.division}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.arrivalType}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.contactName}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.retestDue}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.manufacturer}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.model}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.description}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.serial}</td>
+                  <td className="whitespace-nowrap px-2 py-1 max-w-[160px] truncate">{n.custId}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.po}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.ic}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.rnType}</td>
+                  <td className="whitespace-nowrap px-2 py-1 font-medium">{n.report}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.ec}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.et}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.certDate}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.freq}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.rf1}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.rf2}</td>
+                  <td className="whitespace-nowrap px-2 py-1">{n.rf3}</td>
+                  <td className="whitespace-nowrap px-2 py-1">
+                    <button
+                      className="text-foreground underline underline-offset-2 hover:text-foreground/70"
+                      onClick={() => onAction("RFS Opened", `${n.report} retest follow-up sheet.`)}
+                    >
+                      RFS
+                    </button>
+                  </td>
+                  <td className="whitespace-nowrap px-2 py-1">
+                    <button
+                      className="text-foreground underline underline-offset-2 hover:text-foreground/70"
+                      onClick={() => onAction("MR Opened", `${n.report} maintenance record.`)}
+                    >
+                      MR
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
 const RetestFollowUp = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -221,6 +448,7 @@ const RetestFollowUp = () => {
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
   const [drawerRecord, setDrawerRecord] = useState<FollowUpRecord | null>(null);
+  const [expanded, setExpanded] = useState<string[]>([]);
   const [sortKey, setSortKey] = useState<"customer" | "remaining" | "totalNotices">("customer");
 
   const rows = useMemo(() => {
@@ -401,6 +629,7 @@ const RetestFollowUp = () => {
                 <Table>
                   <TableHeader className="sticky top-0 z-10 bg-card">
                     <TableRow className="[&>th]:py-1.5 [&>th]:text-[10px] [&>th]:uppercase [&>th]:tracking-wide [&>th]:whitespace-nowrap">
+                      <TableHead className="w-6" />
                       <TableHead className="w-8">
                         <Checkbox
                           checked={allSelected}
@@ -429,11 +658,28 @@ const RetestFollowUp = () => {
                   </TableHeader>
                   <TableBody>
                     {rows.map((r) => (
+                      <Fragment key={r.id}>
                       <TableRow
-                        key={r.id}
                         className="cursor-pointer [&>td]:py-1 [&>td]:text-[11px] [&>td]:whitespace-nowrap"
                         onClick={() => setDrawerRecord(r)}
                       >
+                        <TableCell onClick={(e) => e.stopPropagation()}>
+                          <button
+                            className="flex h-5 w-5 items-center justify-center rounded hover:bg-muted"
+                            onClick={() =>
+                              setExpanded((prev) =>
+                                prev.includes(r.id) ? prev.filter((id) => id !== r.id) : [...prev, r.id]
+                              )
+                            }
+                            aria-label={expanded.includes(r.id) ? "Collapse" : "Expand"}
+                          >
+                            {expanded.includes(r.id) ? (
+                              <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+                            ) : (
+                              <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
+                            )}
+                          </button>
+                        </TableCell>
                         <TableCell onClick={(e) => e.stopPropagation()}>
                           <Checkbox
                             checked={selected.includes(r.id)}
@@ -497,6 +743,14 @@ const RetestFollowUp = () => {
                           </DropdownMenu>
                         </TableCell>
                       </TableRow>
+                      {expanded.includes(r.id) && (
+                        <TableRow className="hover:bg-transparent">
+                          <TableCell colSpan={19} className="p-0">
+                            <NestedNoticeTable record={r} onAction={notify} />
+                          </TableCell>
+                        </TableRow>
+                      )}
+                      </Fragment>
                     ))}
                   </TableBody>
                 </Table>
