@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Search,
@@ -19,6 +19,8 @@ import {
   Send,
   Clock,
   ListChecks,
+  ChevronRight,
+  ChevronDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -446,6 +448,7 @@ const RetestFollowUp = () => {
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
   const [drawerRecord, setDrawerRecord] = useState<FollowUpRecord | null>(null);
+  const [expanded, setExpanded] = useState<string[]>([]);
   const [sortKey, setSortKey] = useState<"customer" | "remaining" | "totalNotices">("customer");
 
   const rows = useMemo(() => {
