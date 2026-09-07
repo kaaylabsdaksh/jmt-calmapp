@@ -527,14 +527,6 @@ const TransitLog = () => {
                 <div className="flex flex-wrap items-center gap-4">
                   <span className="text-[10px] uppercase tracking-wide text-muted-foreground">View Options</span>
                   <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
-                    <Checkbox checked={allExpanded} onCheckedChange={(c) => expandAll(!!c)} className="h-3.5 w-3.5" />
-                    Expand All
-                  </label>
-                  <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
-                    <Checkbox checked={showNotes} onCheckedChange={(c) => setShowNotes(!!c)} className="h-3.5 w-3.5" />
-                    Show Notes
-                  </label>
-                  <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
                     <Checkbox checked={rentalOnly} onCheckedChange={(c) => { setRentalOnly(!!c); setPage(1); }} className="h-3.5 w-3.5" />
                     Rental Only
                   </label>
