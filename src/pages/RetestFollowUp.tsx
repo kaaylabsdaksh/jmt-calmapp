@@ -352,7 +352,7 @@ const NestedNoticeTable = ({
       </div>
 
       <div className="overflow-x-auto rounded-md border border-border bg-card">
-        <table className="w-full text-[11px]">
+        <table className="min-w-full text-[11px]">
           <thead>
             <tr className="bg-muted/60">
               {NOTICE_COLUMNS.map((c) => (
