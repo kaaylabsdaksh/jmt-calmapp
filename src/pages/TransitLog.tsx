@@ -319,6 +319,7 @@ const TransitLog = () => {
 
   const [showNotes, setShowNotes] = useState(false);
   const [rentalOnly, setRentalOnly] = useState(false);
+  const [processedOnly, setProcessedOnly] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
   const [processOpen, setProcessOpen] = useState(false);
@@ -363,6 +364,7 @@ const TransitLog = () => {
     setFilters(defaultFilters);
     setApplied(defaultFilters);
     setRentalOnly(false);
+    setProcessedOnly(false);
     setPage(1);
   };
 
@@ -376,6 +378,7 @@ const TransitLog = () => {
       if (f.destination !== "all" && r.destination !== f.destination) return false;
       if (f.woLocation !== "all" && r.woLocation !== f.woLocation) return false;
       if (rentalOnly && !r.rental) return false;
+      if (processedOnly && !(r.rcvd >= r.woQty && r.woQty > 0)) return false;
       return true;
     });
 
@@ -397,7 +400,7 @@ const TransitLog = () => {
       }
     });
     return rows;
-  }, [applied, rentalOnly]);
+  }, [applied, rentalOnly, processedOnly]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
   const currentPage = Math.min(page, totalPages);
@@ -534,6 +537,10 @@ const TransitLog = () => {
                   <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
                     <Checkbox checked={rentalOnly} onCheckedChange={(c) => { setRentalOnly(!!c); setPage(1); }} className="h-3.5 w-3.5" />
                     Rental Only
+                  </label>
+                  <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
+                    <Checkbox checked={processedOnly} onCheckedChange={(c) => { setProcessedOnly(!!c); setPage(1); }} className="h-3.5 w-3.5" />
+                    Processed Only
                   </label>
                 </div>
 
