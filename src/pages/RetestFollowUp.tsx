@@ -177,6 +177,7 @@ const MOCK_RECORDS: FollowUpRecord[] = Array.from({ length: 24 }, (_, i) => {
       { item: "Line Hose Set", due: "04/02/2026" },
       { item: "Insulating Blanket", due: "04/22/2026" },
     ].slice(0, (i % 3) + 1),
+    notices: buildNotices(i, customer, CONTACTS[i % CONTACTS.length], STATES[i % STATES.length], ICS[i % ICS.length]),
     notes:
       i % 2 === 0
         ? "Customer requested follow-up after quarterly outage window."
