@@ -378,6 +378,7 @@ const TransitLog = () => {
       if (f.destination !== "all" && r.destination !== f.destination) return false;
       if (f.woLocation !== "all" && r.woLocation !== f.woLocation) return false;
       if (rentalOnly && !r.rental) return false;
+      if (processedOnly && !(r.rcvd >= r.woQty && r.woQty > 0)) return false;
       return true;
     });
 
@@ -399,7 +400,7 @@ const TransitLog = () => {
       }
     });
     return rows;
-  }, [applied, rentalOnly]);
+  }, [applied, rentalOnly, processedOnly]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
   const currentPage = Math.min(page, totalPages);
