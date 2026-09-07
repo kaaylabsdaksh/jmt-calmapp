@@ -530,7 +530,7 @@ const TransitLog = () => {
                     <Switch
                       checked={rentalOnly}
                       onCheckedChange={(c) => { setRentalOnly(c); setPage(1); }}
-                      className="h-4 w-7 data-[state=checked]:bg-primary"
+                      className="h-4 w-7 data-[state=checked]:bg-slate-700 data-[state=unchecked]:bg-slate-200"
                     />
                     Rental Only
                   </label>
@@ -538,7 +538,7 @@ const TransitLog = () => {
                     <Switch
                       checked={processedOnly}
                       onCheckedChange={(c) => { setProcessedOnly(c); setPage(1); }}
-                      className="h-4 w-7 data-[state=checked]:bg-primary"
+                      className="h-4 w-7 data-[state=checked]:bg-slate-700 data-[state=unchecked]:bg-slate-200"
                     />
                     Processed Only
                   </label>
