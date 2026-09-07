@@ -542,7 +542,7 @@ const TransitLog = () => {
                       onCheckedChange={(c) => { setProcessedOnly(c); setPage(1); }}
                       className="data-[state=checked]:bg-slate-700 data-[state=unchecked]:bg-slate-200"
                     />
-                    Processed Only
+                    Processed
                   </label>
                 </div>
 
