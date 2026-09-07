@@ -319,6 +319,7 @@ const TransitLog = () => {
 
   const [showNotes, setShowNotes] = useState(false);
   const [rentalOnly, setRentalOnly] = useState(false);
+  const [processedOnly, setProcessedOnly] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
   const [processOpen, setProcessOpen] = useState(false);
