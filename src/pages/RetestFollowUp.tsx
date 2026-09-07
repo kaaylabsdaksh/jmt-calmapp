@@ -626,6 +626,7 @@ const RetestFollowUp = () => {
                 <Table>
                   <TableHeader className="sticky top-0 z-10 bg-card">
                     <TableRow className="[&>th]:py-1.5 [&>th]:text-[10px] [&>th]:uppercase [&>th]:tracking-wide [&>th]:whitespace-nowrap">
+                      <TableHead className="w-6" />
                       <TableHead className="w-8">
                         <Checkbox
                           checked={allSelected}
