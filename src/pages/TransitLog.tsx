@@ -527,14 +527,6 @@ const TransitLog = () => {
                 <div className="flex flex-wrap items-center gap-4">
                   <span className="text-[10px] uppercase tracking-wide text-muted-foreground">View Options</span>
                   <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
-                    <Checkbox checked={allExpanded} onCheckedChange={(c) => expandAll(!!c)} className="h-3.5 w-3.5" />
-                    Expand All
-                  </label>
-                  <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
-                    <Checkbox checked={showNotes} onCheckedChange={(c) => setShowNotes(!!c)} className="h-3.5 w-3.5" />
-                    Show Notes
-                  </label>
-                  <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
                     <Checkbox checked={rentalOnly} onCheckedChange={(c) => { setRentalOnly(!!c); setPage(1); }} className="h-3.5 w-3.5" />
                     Rental Only
                   </label>
@@ -637,6 +629,17 @@ const TransitLog = () => {
               </div>
             ) : (
               <div className="overflow-x-auto">
+                <div className="flex items-center gap-4 border-b border-border bg-muted/30 px-3 py-1.5 min-w-[1700px]">
+                  <span className="text-[10px] uppercase tracking-wide text-muted-foreground">View Options</span>
+                  <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
+                    <Checkbox checked={allExpanded} onCheckedChange={(c) => expandAll(!!c)} className="h-3.5 w-3.5" />
+                    Expand All
+                  </label>
+                  <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
+                    <Checkbox checked={showNotes} onCheckedChange={(c) => setShowNotes(!!c)} className="h-3.5 w-3.5" />
+                    Show Notes
+                  </label>
+                </div>
                 <table className="w-full min-w-[1700px] text-[11px]">
                   <thead className="sticky top-0 z-10 bg-muted/60 backdrop-blur">
                     <tr className="border-b border-border text-left text-[10px] uppercase tracking-wide text-muted-foreground">
