@@ -538,6 +538,10 @@ const TransitLog = () => {
                     <Checkbox checked={rentalOnly} onCheckedChange={(c) => { setRentalOnly(!!c); setPage(1); }} className="h-3.5 w-3.5" />
                     Rental Only
                   </label>
+                  <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
+                    <Checkbox checked={processedOnly} onCheckedChange={(c) => { setProcessedOnly(!!c); setPage(1); }} className="h-3.5 w-3.5" />
+                    Processed Only
+                  </label>
                 </div>
 
                 <div className="flex items-center gap-2">
