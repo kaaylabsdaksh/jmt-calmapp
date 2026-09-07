@@ -144,6 +144,48 @@ const CONTACTS = [
 const EMAIL_CYCLE: EmailStatus[] = ["sent", "pending", "failed", "completed", "not-required"];
 const CALL_CYCLE: CallStatus[] = ["completed", "pending", "not-required"];
 
+const ARRIVAL_TYPES = ["Customer Dropoff", "Pickup", "Freight", "Onsite"];
+const DIVISIONS = ["Lab", "Onsite", "ESL", "Field"];
+const MANUFACTURERS = ["AMERICAN INNOVATIONS", "SALISBURY", "HASTINGS", "CHANCE", "GREENLEE"];
+const DESCRIPTIONS = ["DVM CARD", "RUBBER GLOVE", "LINE HOSE", "GROUND SET", "HOT STICK"];
+const RN_TYPES = ["ET", "RT", "CT"];
+
+const buildNotices = (
+  seed: number,
+  customer: string,
+  contact: string,
+  loc: string,
+  ic: string
+): NoticeDetail[] =>
+  Array.from({ length: (seed % 4) + 2 }, (_, j) => {
+    const k = seed + j;
+    return {
+      id: `nd-${seed}-${j}`,
+      loc,
+      division: DIVISIONS[k % DIVISIONS.length],
+      arrivalType: ARRIVAL_TYPES[k % ARRIVAL_TYPES.length],
+      contactName: contact,
+      retestDue: `${String((k % 12) + 1).padStart(2, "0")}/${String((k % 27) + 1).padStart(2, "0")}/2026`,
+      manufacturer: MANUFACTURERS[k % MANUFACTURERS.length],
+      model: `${626582 + k * 13}-000`,
+      description: DESCRIPTIONS[k % DESCRIPTIONS.length],
+      serial: `2019${10 + (k % 80)}QU`,
+      custId: customer.toUpperCase().slice(0, 16),
+      po: `CC ${contact}`,
+      ic: `${ic}${String((k % 9) + 1).padStart(2, "0")}`,
+      rnType: RN_TYPES[k % RN_TYPES.length],
+      report: `${507357 + k * 7}-00${(j % 9) + 1}`,
+      ec: k % 3,
+      et: `${755092 + k * 11}`,
+      certDate: `${String((k % 12) + 1).padStart(2, "0")}/11/2024`,
+      freq: [12, 24, 36][k % 3],
+      rf1: k % 2,
+      rf2: (k + 1) % 2,
+      rf3: k % 3 === 0 ? 1 : 0,
+    };
+  });
+
+
 const MOCK_RECORDS: FollowUpRecord[] = Array.from({ length: 24 }, (_, i) => {
   const totalNotices = 4 + ((i * 7) % 24);
   const rf1 = Math.max(0, totalNotices - ((i * 3) % 9));
