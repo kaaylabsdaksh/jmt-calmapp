@@ -538,8 +538,19 @@ const TransitLog = () => {
                     <Checkbox checked={rentalOnly} onCheckedChange={(c) => { setRentalOnly(!!c); setPage(1); }} className="h-3.5 w-3.5" />
                     Rental Only
                   </label>
-                  <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
-                    <Checkbox checked={processedOnly} onCheckedChange={(c) => { setProcessedOnly(!!c); setPage(1); }} className="h-3.5 w-3.5" />
+                  <label
+                    className={cn(
+                      "flex items-center gap-1.5 text-[11px] cursor-pointer rounded-full px-2.5 py-1 border transition-colors",
+                      processedOnly
+                        ? "bg-primary/15 border-primary text-primary font-medium"
+                        : "bg-background border-border text-foreground hover:border-primary/50"
+                    )}
+                  >
+                    <Checkbox
+                      checked={processedOnly}
+                      onCheckedChange={(c) => { setProcessedOnly(!!c); setPage(1); }}
+                      className={cn("h-3.5 w-3.5 border-current", processedOnly && "data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground")}
+                    />
                     Processed Only
                   </label>
                 </div>
