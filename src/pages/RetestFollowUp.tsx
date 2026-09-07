@@ -62,6 +62,31 @@ import ModernTopNav from "@/components/modern/ModernTopNav";
 type EmailStatus = "sent" | "pending" | "failed" | "completed" | "not-required";
 type CallStatus = "completed" | "pending" | "not-required";
 
+type NoticeDetail = {
+  id: string;
+  loc: string;
+  division: string;
+  arrivalType: string;
+  contactName: string;
+  retestDue: string;
+  manufacturer: string;
+  model: string;
+  description: string;
+  serial: string;
+  custId: string;
+  po: string;
+  ic: string;
+  rnType: string;
+  report: string;
+  ec: number;
+  et: string;
+  certDate: string;
+  freq: number;
+  rf1: number;
+  rf2: number;
+  rf3: number;
+};
+
 type FollowUpRecord = {
   id: string;
   account: string;
@@ -83,6 +108,7 @@ type FollowUpRecord = {
   rf3: number;
   remaining: number;
   equipment: { item: string; due: string }[];
+  notices: NoticeDetail[];
   notes: string;
 };
 
