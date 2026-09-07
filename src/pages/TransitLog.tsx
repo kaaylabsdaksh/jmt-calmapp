@@ -364,6 +364,7 @@ const TransitLog = () => {
     setFilters(defaultFilters);
     setApplied(defaultFilters);
     setRentalOnly(false);
+    setProcessedOnly(false);
     setPage(1);
   };
 
