@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Select,
@@ -525,22 +526,19 @@ const TransitLog = () => {
               <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-2.5">
                 {/* View options */}
                 <div className="flex flex-wrap items-center gap-4">
-                  <label className="flex items-center gap-1.5 text-[11px] cursor-pointer">
-                    <Checkbox checked={rentalOnly} onCheckedChange={(c) => { setRentalOnly(!!c); setPage(1); }} className="h-3.5 w-3.5" />
+                  <label className="flex items-center gap-2 text-[11px] cursor-pointer">
+                    <Switch
+                      checked={rentalOnly}
+                      onCheckedChange={(c) => { setRentalOnly(c); setPage(1); }}
+                      className="h-4 w-7 data-[state=checked]:bg-primary"
+                    />
                     Rental Only
                   </label>
-                  <label
-                    className={cn(
-                      "flex items-center gap-1.5 text-[11px] cursor-pointer rounded-full px-2.5 py-1 border transition-colors",
-                      processedOnly
-                        ? "bg-primary/15 border-primary text-primary font-medium"
-                        : "bg-background border-border text-foreground hover:border-primary/50"
-                    )}
-                  >
-                    <Checkbox
+                  <label className="flex items-center gap-2 text-[11px] cursor-pointer">
+                    <Switch
                       checked={processedOnly}
-                      onCheckedChange={(c) => { setProcessedOnly(!!c); setPage(1); }}
-                      className={cn("h-3.5 w-3.5 border-current", processedOnly && "data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground")}
+                      onCheckedChange={(c) => { setProcessedOnly(c); setPage(1); }}
+                      className="h-4 w-7 data-[state=checked]:bg-primary"
                     />
                     Processed Only
                   </label>
