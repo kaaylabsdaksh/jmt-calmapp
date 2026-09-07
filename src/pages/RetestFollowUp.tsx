@@ -626,7 +626,7 @@ const RetestFollowUp = () => {
               </div>
             ) : (
               <div className="overflow-x-auto">
-                <Table>
+                <Table className="table-fixed">
                   <TableHeader className="sticky top-0 z-10 bg-card">
                     <TableRow className="[&>th]:py-1.5 [&>th]:text-[10px] [&>th]:uppercase [&>th]:tracking-wide [&>th]:whitespace-nowrap">
                       <TableHead className="w-6" />
@@ -745,7 +745,7 @@ const RetestFollowUp = () => {
                       </TableRow>
                       {expanded.includes(r.id) && (
                         <TableRow className="hover:bg-transparent">
-                          <TableCell colSpan={19} className="p-0">
+                          <TableCell colSpan={19} className="p-0 w-full max-w-0">
                             <NestedNoticeTable record={r} onAction={notify} />
                           </TableCell>
                         </TableRow>
