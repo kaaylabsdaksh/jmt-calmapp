@@ -740,6 +740,14 @@ const RetestFollowUp = () => {
                           </DropdownMenu>
                         </TableCell>
                       </TableRow>
+                      {expanded.includes(r.id) && (
+                        <TableRow className="hover:bg-transparent">
+                          <TableCell colSpan={19} className="p-0">
+                            <NestedNoticeTable record={r} onAction={notify} />
+                          </TableCell>
+                        </TableRow>
+                      )}
+                      </Fragment>
                     ))}
                   </TableBody>
                 </Table>
