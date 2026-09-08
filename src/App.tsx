@@ -77,6 +77,7 @@ import { WhatsNewDrawer } from "@/components/tour/WhatsNewDrawer";
 import GlobalOpenDecisionsFab, {
   OpenDecisionsProvider,
 } from "@/components/onsite-scheduling/GlobalOpenDecisions";
+import CommandPalette from "@/components/CommandPalette";
 
 const App = () => {
   console.log("App component rendering");
@@ -85,6 +86,7 @@ const App = () => {
     <BrowserRouter>
       <TourProvider>
         <OpenDecisionsProvider>
+        <CommandPalette />
         <GlobalOpenDecisionsFab />
         <Routes>
           <Route path="/login" element={<Login />} />

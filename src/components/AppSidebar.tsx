@@ -57,7 +57,7 @@ import { Input } from "@/components/ui/input";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown, ChevronRight } from "lucide-react";
 
-const workOrderQuickActions = [
+export const workOrderQuickActions = [
   { title: "Hot List", icon: Flame },
   { title: "Transit Log", icon: TruckIcon, url: "/transit-log" },
   { title: "Update RFID's", icon: Wifi, url: "/update-rfid" },
@@ -70,7 +70,7 @@ const workOrderQuickActions = [
   { title: "Create Barcode", icon: Barcode },
 ];
 
-const viewsSubItems = [
+export const viewsSubItems = [
   { title: "Logistics View", icon: TruckIcon, url: "/logistics-view" },
   { title: "Customer Pickup View", icon: UserCheck, url: "/customer-pickup" },
   { title: "Shipping View", icon: Package, url: "/shipping-view" },
@@ -78,7 +78,7 @@ const viewsSubItems = [
   { title: "Lab Triage", icon: ClipboardList, url: "/lab-triage" },
 ];
 
-const quickActionCategories: Record<string, { title: string; icon: React.ElementType; hasSubItems?: boolean; url?: string }[]> = {
+export const quickActionCategories: Record<string, { title: string; icon: React.ElementType; hasSubItems?: boolean; url?: string }[]> = {
   "Core Operations": [
     { title: "Work Orders", icon: ClipboardList, hasSubItems: true },
     { title: "Views", icon: Eye, hasSubItems: true },
@@ -203,7 +203,7 @@ export function AppSidebar() {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="h-8 pl-8 pr-7 text-sm bg-sidebar-foreground/10 border-0 rounded-md text-sidebar-foreground placeholder:text-sidebar-foreground/60 focus-visible:ring-1 focus-visible:ring-sidebar-ring"
             />
-            {searchQuery && (
+            {searchQuery ? (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
@@ -212,6 +212,10 @@ export function AppSidebar() {
               >
                 <X className="h-3.5 w-3.5" />
               </button>
+            ) : (
+              <kbd className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 rounded border border-sidebar-foreground/20 px-1 text-[10px] font-medium text-sidebar-foreground/60">
+                Ctrl K
+              </kbd>
             )}
           </div>
         )}
