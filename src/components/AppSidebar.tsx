@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import React from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { 
-  Settings, 
-  FileText, 
-  Truck, 
-  RefreshCw, 
-  CreditCard, 
-  Users, 
-  MapPin, 
+import {
+  Settings,
+  FileText,
+  Truck,
+  RefreshCw,
+  CreditCard,
+  Users,
+  MapPin,
   FileSpreadsheet,
   DollarSign,
   Tags,
@@ -31,8 +31,9 @@ import {
   UserCheck,
   Sparkles,
   HelpCircle,
-  CalendarDays
-
+  CalendarDays,
+  Search,
+  X,
 } from "lucide-react";
 import { useTour } from "@/context/TourContext";
 import { NewBadge } from "@/components/tour/NewBadge";
@@ -52,7 +53,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Input } from "@/components/ui/input";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown, ChevronRight } from "lucide-react";
 
@@ -76,7 +77,8 @@ const viewsSubItems = [
   { title: "Account Admin", icon: ClipboardList, url: "/account-admin" },
   { title: "Lab Triage", icon: ClipboardList, url: "/lab-triage" },
 ];
-const quickActionCategories = {
+
+const quickActionCategories: Record<string, { title: string; icon: React.ElementType; hasSubItems?: boolean; url?: string }[]> = {
   "Core Operations": [
     { title: "Work Orders", icon: ClipboardList, hasSubItems: true },
     { title: "Views", icon: Eye, hasSubItems: true },
@@ -121,22 +123,60 @@ export function AppSidebar() {
   const [expandedViews, setExpandedViews] = useState(
     location.pathname === "/logistics-view" || location.pathname === "/customer-pickup"
   );
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleLogout = () => {
-    // Navigate to login page
     window.location.href = "/login";
   };
 
-
-
-
   const toggleGroup = (groupName: string) => {
-    setExpandedGroups(prev => 
-      prev.includes(groupName) 
+    setExpandedGroups(prev =>
+      prev.includes(groupName)
         ? prev.filter(name => name !== groupName)
         : [...prev, groupName]
     );
   };
+
+  const query = searchQuery.trim().toLowerCase();
+  const isSearching = query.length > 0;
+
+  const matches = (text: string) => text.toLowerCase().includes(query);
+
+  const filteredCategories = useMemo(() => {
+    if (!isSearching) return quickActionCategories;
+
+    const result: typeof quickActionCategories = {};
+
+    Object.entries(quickActionCategories).forEach(([categoryName, actions]) => {
+      const filtered = actions.filter(action => {
+        if (action.title === "Work Orders" && action.hasSubItems) {
+          return matches(action.title) || workOrderQuickActions.some(sub => matches(sub.title));
+        }
+        if (action.title === "Views" && action.hasSubItems) {
+          return matches(action.title) || viewsSubItems.some(sub => matches(sub.title));
+        }
+        return matches(action.title);
+      });
+
+      if (filtered.length > 0) {
+        result[categoryName] = filtered;
+      }
+    });
+
+    return result;
+  }, [isSearching, query]);
+
+  const visibleWorkOrderActions = useMemo(() => {
+    if (!isSearching || matches("Work Orders")) return workOrderQuickActions;
+    return workOrderQuickActions.filter(sub => matches(sub.title));
+  }, [isSearching, query]);
+
+  const visibleViewsItems = useMemo(() => {
+    if (!isSearching || matches("Views")) return viewsSubItems;
+    return viewsSubItems.filter(sub => matches(sub.title));
+  }, [isSearching, query]);
+
+  const groupIsExpanded = (name: string) => isSearching || expandedGroups.includes(name);
 
   return (
     <Sidebar
@@ -153,14 +193,36 @@ export function AppSidebar() {
             </div>
           )}
         </div>
+
+        {open && (
+          <div className="relative mt-3">
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-sidebar-foreground/60" />
+            <Input
+              placeholder="Search menu..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="h-8 pl-8 pr-7 text-sm bg-sidebar-foreground/10 border-0 rounded-md text-sidebar-foreground placeholder:text-sidebar-foreground/60 focus-visible:ring-1 focus-visible:ring-sidebar-ring"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-sidebar-foreground/60 hover:text-sidebar-foreground"
+                aria-label="Clear search"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            )}
+          </div>
+        )}
       </SidebarHeader>
 
       <SidebarContent className="px-2 py-4">
-        {Object.entries(quickActionCategories).map(([categoryName, actions], categoryIndex) => (
+        {Object.entries(filteredCategories).map(([categoryName, actions], categoryIndex) => (
           <SidebarGroup key={categoryName} className="mb-4">
             {open ? (
               <Collapsible
-                open={expandedGroups.includes(categoryName)}
+                open={groupIsExpanded(categoryName)}
                 onOpenChange={() => toggleGroup(categoryName)}
               >
                 <CollapsibleTrigger asChild>
@@ -169,7 +231,7 @@ export function AppSidebar() {
                   >
                     <span>{categoryName}</span>
                     <div className="group-hover:scale-110 transition-transform">
-                      {expandedGroups.includes(categoryName) ? (
+                      {groupIsExpanded(categoryName) ? (
                         <ChevronDown className="h-3 w-3" />
                       ) : (
                         <ChevronRight className="h-3 w-3" />
@@ -185,7 +247,7 @@ export function AppSidebar() {
                         <SidebarMenuItem key={action.title}>
                           {action.title === "Work Orders" && action.hasSubItems ? (
                             <Collapsible
-                              open={expandedWorkOrders}
+                              open={isSearching || expandedWorkOrders}
                               onOpenChange={setExpandedWorkOrders}
                             >
                               <div>
@@ -211,7 +273,7 @@ export function AppSidebar() {
                                       size="sm"
                                       className="h-8 w-8 p-0 hover:bg-sidebar-accent"
                                     >
-                                      {expandedWorkOrders ? (
+                                      {isSearching || expandedWorkOrders ? (
                                         <ChevronDown className="h-3 w-3" />
                                       ) : (
                                         <ChevronRight className="h-3 w-3" />
@@ -222,7 +284,7 @@ export function AppSidebar() {
 
                                 <CollapsibleContent>
                                   <div className="ml-6 mt-1 space-y-1 border-l-2 border-sidebar-border pl-3">
-                                    {workOrderQuickActions.map((subAction) => (
+                                    {visibleWorkOrderActions.map((subAction) => (
                                       <Button
                                         key={subAction.title}
                                         variant="ghost"
@@ -243,7 +305,7 @@ export function AppSidebar() {
                             </Collapsible>
                           ) : action.title === "Views" && action.hasSubItems ? (
                             <Collapsible
-                              open={expandedViews}
+                              open={isSearching || expandedViews}
                               onOpenChange={setExpandedViews}
                             >
                               <div>
@@ -268,7 +330,7 @@ export function AppSidebar() {
                                       size="sm"
                                       className="h-8 w-8 p-0 hover:bg-sidebar-accent"
                                     >
-                                      {expandedViews ? (
+                                      {isSearching || expandedViews ? (
                                         <ChevronDown className="h-3 w-3" />
                                       ) : (
                                         <ChevronRight className="h-3 w-3" />
@@ -279,7 +341,7 @@ export function AppSidebar() {
 
                                 <CollapsibleContent>
                                   <div className="ml-6 mt-1 space-y-1 border-l-2 border-sidebar-border pl-3">
-                                    {viewsSubItems.map((subAction) => (
+                                    {visibleViewsItems.map((subAction) => (
                                       <Link key={subAction.title} to={subAction.url}>
                                         <Button
                                           variant="ghost"
@@ -402,6 +464,11 @@ export function AppSidebar() {
           </SidebarGroup>
         ))}
 
+        {isSearching && Object.keys(filteredCategories).length === 0 && (
+          <div className="px-3 py-6 text-center">
+            <p className="text-xs text-sidebar-foreground/60">No menu items match "{searchQuery}"</p>
+          </div>
+        )}
       </SidebarContent>
 
       <SidebarFooter className="border-t border-sidebar-border p-2 space-y-1">
