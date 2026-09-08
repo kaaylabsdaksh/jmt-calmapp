@@ -203,7 +203,7 @@ export function AppSidebar() {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="h-8 pl-8 pr-7 text-sm bg-sidebar-foreground/10 border-0 rounded-md text-sidebar-foreground placeholder:text-sidebar-foreground/60 focus-visible:ring-1 focus-visible:ring-sidebar-ring"
             />
-            {searchQuery && (
+            {searchQuery ? (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
@@ -212,6 +212,10 @@ export function AppSidebar() {
               >
                 <X className="h-3.5 w-3.5" />
               </button>
+            ) : (
+              <kbd className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 rounded border border-sidebar-foreground/20 px-1 text-[10px] font-medium text-sidebar-foreground/60">
+                Ctrl K
+              </kbd>
             )}
           </div>
         )}
