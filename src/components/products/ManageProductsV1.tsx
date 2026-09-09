@@ -153,6 +153,9 @@ const ManageProductsV1 = () => {
   const [multiSelects, setMultiSelects] = useState<{ techCategory: string[]; rentalCategory: string[] }>({
     ...emptyMultiSelects,
   });
+  const [categorySelects, setCategorySelects] = useState<{ tech2nd: string; tech3rd: string; rental2nd: string; rental3rd: string }>({
+    ...emptyCategorySelects,
+  });
   const [checks, setChecks] = useState<Record<string, boolean>>({ ...emptyChecks });
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({ ...emptyColumnFilters });
   const [page, setPage] = useState(1);
