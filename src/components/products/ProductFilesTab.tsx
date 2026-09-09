@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { FileText, Paperclip, Plus, Trash2, Upload, X, Download } from "lucide-react";
+import { FileText, Paperclip, Trash2, Upload, X, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -33,22 +33,7 @@ type SupplementalFile = {
   addedOn: string;
 };
 
-const INITIAL_FILES: SupplementalFile[] = [
-  {
-    id: "sdf-1",
-    description: "Manufacturer specification sheet",
-    status: "Active",
-    fileName: "fluke-87v-spec.pdf",
-    addedOn: "04/18/2026",
-  },
-  {
-    id: "sdf-2",
-    description: "Legacy calibration procedure (superseded)",
-    status: "Inactive",
-    fileName: "cal-proc-rev2.docx",
-    addedOn: "11/02/2025",
-  },
-];
+const INITIAL_FILES: SupplementalFile[] = [];
 
 function FieldLabel({ label, required }: { label: string; required?: boolean }) {
   return (
@@ -161,7 +146,7 @@ export function ProductFilesTab() {
   const [procedure, setProcedure] = useState("");
   const [files, setFiles] = useState<SupplementalFile[]>(INITIAL_FILES);
 
-  const [adding, setAdding] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [status, setStatus] = useState("Active");
   const [description, setDescription] = useState("");
   const [upload, setUpload] = useState("");
@@ -170,7 +155,14 @@ export function ProductFilesTab() {
     setStatus("Active");
     setDescription("");
     setUpload("");
-    setAdding(false);
+    setEditingId(null);
+  };
+
+  const startEdit = (f: SupplementalFile) => {
+    setEditingId(f.id);
+    setStatus(f.status);
+    setDescription(f.description);
+    setUpload(f.fileName);
   };
 
   const handleAdd = () => {
@@ -182,17 +174,28 @@ export function ProductFilesTab() {
       });
       return;
     }
-    setFiles((prev) => [
-      {
-        id: `sdf-${Date.now()}`,
-        description: description.trim(),
-        status,
-        fileName: upload,
-        addedOn: new Date().toLocaleDateString("en-US"),
-      },
-      ...prev,
-    ]);
-    toast({ title: "File added", description: description.trim() });
+    if (editingId) {
+      setFiles((prev) =>
+        prev.map((f) =>
+          f.id === editingId
+            ? { ...f, description: description.trim(), status, fileName: upload }
+            : f,
+        ),
+      );
+      toast({ title: "File updated", description: description.trim() });
+    } else {
+      setFiles((prev) => [
+        {
+          id: `sdf-${Date.now()}`,
+          description: description.trim(),
+          status,
+          fileName: upload,
+          addedOn: new Date().toLocaleDateString("en-US"),
+        },
+        ...prev,
+      ]);
+      toast({ title: "File added", description: description.trim() });
+    }
     resetForm();
   };
 
@@ -203,16 +206,8 @@ export function ProductFilesTab() {
           icon={Paperclip}
           title="Supplemental Data Files"
           subtitle={`${files.length} file${files.length === 1 ? "" : "s"} attached`}
-          action={
-            !adding && (
-              <Button size="sm" className="h-7 text-xs" onClick={() => setAdding(true)}>
-                <Plus className="h-3.5 w-3.5 mr-1.5" />
-                Add File
-              </Button>
-            )
-          }
         >
-          {adding && (
+          {(
             <div className="mb-3 rounded-md border bg-muted/30 p-3 space-y-3">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="space-y-1">
@@ -258,7 +253,7 @@ export function ProductFilesTab() {
                   className="h-7 text-xs bg-green-600 hover:bg-green-700 text-white"
                   onClick={handleAdd}
                 >
-                  Add
+                  {editingId ? "Update" : "Add"}
                 </Button>
               </div>
             </div>
@@ -317,6 +312,14 @@ export function ProductFilesTab() {
                     <td className="px-3 py-2 text-muted-foreground">{f.addedOn}</td>
                     <td className="px-3 py-2">
                       <div className="flex items-center justify-end gap-1">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-6 px-2 text-[11px]"
+                          onClick={() => startEdit(f)}
+                        >
+                          Edit
+                        </Button>
                         <Button
                           variant="ghost"
                           size="icon"
