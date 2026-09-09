@@ -314,6 +314,14 @@ export function ProductFilesTab() {
                       <div className="flex items-center justify-end gap-1">
                         <Button
                           variant="ghost"
+                          size="sm"
+                          className="h-6 px-2 text-[11px]"
+                          onClick={() => startEdit(f)}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          variant="ghost"
                           size="icon"
                           className="h-6 w-6"
                           onClick={() => toast({ title: "Downloading", description: f.fileName })}
