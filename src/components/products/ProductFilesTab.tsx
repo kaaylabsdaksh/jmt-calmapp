@@ -253,7 +253,7 @@ export function ProductFilesTab() {
                   className="h-7 text-xs bg-green-600 hover:bg-green-700 text-white"
                   onClick={handleAdd}
                 >
-                  Add
+                  {editingId ? "Update" : "Add"}
                 </Button>
               </div>
             </div>
