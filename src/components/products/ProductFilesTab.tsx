@@ -200,13 +200,45 @@ export function ProductFilesTab() {
   };
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 items-start">
-      <div className="xl:col-span-2 space-y-4">
+    <div className="grid grid-cols-1 gap-4 items-start">
+      <div className="space-y-4">
         <SectionCard
           icon={Paperclip}
-          title="Supplemental Data Files"
-          subtitle={`${files.length} file${files.length === 1 ? "" : "s"} attached`}
+          title="Product Files"
+          subtitle={`${files.length} supplemental file${files.length === 1 ? "" : "s"} attached`}
         >
+          <div className="mb-3 rounded-md border bg-white p-3">
+            <div className="flex items-center gap-2 mb-2">
+              <FileText className="h-3.5 w-3.5 text-muted-foreground" />
+              <span className="text-[11px] font-semibold">Templates &amp; Procedures</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <FieldLabel label="Datasheet Template" />
+                <Select value={datasheet} onValueChange={setDatasheet}>
+                  <SelectTrigger className="h-8 text-xs">
+                    <SelectValue placeholder="Select template" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {DATASHEET_TEMPLATES.map((t) => (
+                      <SelectItem key={t} value={t} className="text-xs">
+                        {t}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <FilePickerField
+                label="Manufacturer Procedure"
+                value={procedure}
+                onPick={setProcedure}
+                onClear={() => setProcedure("")}
+              />
+            </div>
+          </div>
+
+          <div className="text-[11px] font-semibold mb-2">Supplemental Data Files</div>
+
           {(
             <div className="mb-3 rounded-md border bg-muted/30 p-3 space-y-3">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -345,38 +377,6 @@ export function ProductFilesTab() {
                 ))}
               </tbody>
             </table>
-          </div>
-        </SectionCard>
-      </div>
-
-      <div className="space-y-4">
-        <SectionCard icon={FileText} title="Templates & Procedures">
-          <div className="space-y-3">
-            <div className="space-y-1">
-              <FieldLabel label="Datasheet Template" />
-              <Select value={datasheet} onValueChange={setDatasheet}>
-                <SelectTrigger className="h-8 text-xs">
-                  <SelectValue placeholder="Select template" />
-                </SelectTrigger>
-                <SelectContent>
-                  {DATASHEET_TEMPLATES.map((t) => (
-                    <SelectItem key={t} value={t} className="text-xs">
-                      {t}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <FilePickerField
-              label="Manufacturer Procedure"
-              value={procedure}
-              onPick={setProcedure}
-              onClear={() => setProcedure("")}
-            />
-            <p className="text-[10px] text-muted-foreground leading-relaxed">
-              The datasheet template drives the calibration record layout. The manufacturer
-              procedure is attached to every work order for this product.
-            </p>
           </div>
         </SectionCard>
       </div>
