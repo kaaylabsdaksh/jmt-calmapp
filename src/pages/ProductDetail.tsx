@@ -116,14 +116,8 @@ const ProductDetail = () => {
     );
   }
 
-  const addComment = () => {
-    if (!comment.trim()) return;
-    setComments((prev) => [
-      { type: commentType, text: comment.trim(), user: "Admin User", entered: "just now" },
-      ...prev,
-    ]);
-    setComment("");
-  };
+
+
 
   const selectedLocations = Object.values(locations).filter(Boolean).length;
 
