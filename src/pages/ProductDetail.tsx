@@ -36,6 +36,8 @@ import {
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { PRODUCTS } from "@/lib/products";
+import ProductFilesTab from "@/components/products/ProductFilesTab";
+
 
 const CAPABLE_LOCATIONS = [
   "Baton Rouge",
@@ -336,12 +338,9 @@ const ProductDetail = () => {
             </TabsContent>
 
             <TabsContent value="files" className="mt-4">
-              <SectionCard icon={Paperclip} title="Files">
-                <div className="text-[11px] text-muted-foreground py-8 text-center">
-                  No files attached to this product.
-                </div>
-              </SectionCard>
+              <ProductFilesTab />
             </TabsContent>
+
 
             <TabsContent value="accessories" className="mt-4">
               <SectionCard icon={Boxes} title="Accessories">
