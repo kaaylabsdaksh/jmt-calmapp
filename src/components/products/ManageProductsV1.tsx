@@ -690,7 +690,26 @@ const ManageProductsV1 = () => {
               </div>
             </CardContent>
           </Card>
+      </div>
 
+      {/* Sticky footer */}
+      <div className="sticky bottom-0 z-20 bg-background border-t border-border px-4 py-3 shadow-[0_-2px_8px_rgba(0,0,0,0.04)]">
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-8 text-xs"
+            onClick={() => navigate("/manage-products/product-reviews")}
+          >
+            <ClipboardCheck className="h-3.5 w-3.5 mr-1.5" />
+            Product Reviews
+          </Button>
+          <Button variant="outline" size="sm" className="h-8 text-xs">
+            <ExternalLink className="h-3.5 w-3.5 mr-1.5" />
+            Competitive Price Guide
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };
