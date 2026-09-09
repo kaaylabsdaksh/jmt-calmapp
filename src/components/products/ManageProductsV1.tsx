@@ -134,6 +134,12 @@ const COLUMNS = [
 
 const emptySelects = Object.fromEntries(SELECT_FILTERS.map((f) => [f.key, ""])) as Record<string, string>;
 const emptyMultiSelects = { techCategory: [] as string[], rentalCategory: [] as string[] };
+const emptyCategorySelects = {
+  tech2nd: "",
+  tech3rd: "",
+  rental2nd: "",
+  rental3rd: "",
+};
 const emptyChecks = Object.fromEntries(CHECK_FILTERS.map((f) => [f.key, false])) as Record<string, boolean>;
 const emptyColumnFilters = Object.fromEntries(COLUMNS.map((c) => [c.key, ""])) as Record<string, string>;
 const HIDDEN_COLS_KEY = "manage-products-hidden-columns";
