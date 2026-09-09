@@ -36,6 +36,8 @@ import {
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { PRODUCTS } from "@/lib/products";
+import ProductFilesTab from "@/components/products/ProductFilesTab";
+
 
 const CAPABLE_LOCATIONS = [
   "Baton Rouge",
