@@ -324,13 +324,21 @@ const ManageProductsV1 = () => {
                     <span className="text-[11px] font-bold text-foreground uppercase tracking-wide">Technical / Labs</span>
                   </div>
                   <div className="space-y-2">
-                    <MultiSelect
-                      options={[...SELECT_FILTERS.find((f) => f.key === "techCategory")!.options]}
-                      values={multiSelects.techCategory}
-                      onChange={(v) => setMultiSelects((p) => ({ ...p, techCategory: v }))}
-                      max={3}
-                      placeholder="All"
-                    />
+                    <Select
+                      value={selects.techCategory || undefined}
+                      onValueChange={(v) => setSelects((p) => ({ ...p, techCategory: v }))}
+                    >
+                      <SelectTrigger className="h-7 text-[11px] px-2">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover z-50">
+                        {SELECT_FILTERS.find((f) => f.key === "techCategory")!.options.map((o) => (
+                          <SelectItem key={o} value={o} className="text-[11px]">
+                            {o}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <Select
                       value={categorySelects.tech2nd || undefined}
                       onValueChange={(v) => setCategorySelects((p) => ({ ...p, tech2nd: v }))}
@@ -371,13 +379,21 @@ const ManageProductsV1 = () => {
                     <span className="text-[11px] font-bold text-foreground uppercase tracking-wide">Rental / Sales</span>
                   </div>
                   <div className="space-y-2">
-                    <MultiSelect
-                      options={[...SELECT_FILTERS.find((f) => f.key === "rentalCategory")!.options]}
-                      values={multiSelects.rentalCategory}
-                      onChange={(v) => setMultiSelects((p) => ({ ...p, rentalCategory: v }))}
-                      max={3}
-                      placeholder="All"
-                    />
+                    <Select
+                      value={selects.rentalCategory || undefined}
+                      onValueChange={(v) => setSelects((p) => ({ ...p, rentalCategory: v }))}
+                    >
+                      <SelectTrigger className="h-7 text-[11px] px-2">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover z-50">
+                        {SELECT_FILTERS.find((f) => f.key === "rentalCategory")!.options.map((o) => (
+                          <SelectItem key={o} value={o} className="text-[11px]">
+                            {o}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <Select
                       value={categorySelects.rental2nd || undefined}
                       onValueChange={(v) => setCategorySelects((p) => ({ ...p, rental2nd: v }))}
