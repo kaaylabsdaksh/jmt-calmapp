@@ -207,8 +207,12 @@ export function ProductFilesTab() {
           title="Product Files"
           subtitle={`${files.length} supplemental file${files.length === 1 ? "" : "s"} attached`}
         >
-          <div className="mb-3 rounded-md border bg-white p-3 space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="mb-3 rounded-md border bg-white p-3">
+            <div className="flex items-center gap-2 mb-2">
+              <FileText className="h-3.5 w-3.5 text-muted-foreground" />
+              <span className="text-[11px] font-semibold">Templates &amp; Procedures</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1">
                 <FieldLabel label="Datasheet Template" />
                 <Select value={datasheet} onValueChange={setDatasheet}>
@@ -224,63 +228,68 @@ export function ProductFilesTab() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="sm:col-span-2">
-                <FilePickerField
-                  label="Manufacturer Procedure"
-                  value={procedure}
-                  onPick={setProcedure}
-                  onClear={() => setProcedure("")}
-                />
-              </div>
-
-              <div className="space-y-1">
-                <FieldLabel label="Status" />
-                <Select value={status} onValueChange={setStatus}>
-                  <SelectTrigger className="h-8 text-xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {FILE_STATUSES.map((s) => (
-                      <SelectItem key={s} value={s} className="text-xs">
-                        {s}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-1 sm:col-span-2">
-                <FieldLabel label="Description" required />
-                <Input
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="e.g. Manufacturer specification sheet"
-                  className="h-8 text-xs"
-                />
-              </div>
-              <div className="sm:col-span-3">
-                <FilePickerField
-                  label="Upload File"
-                  value={upload}
-                  required
-                  onPick={setUpload}
-                  onClear={() => setUpload("")}
-                />
-              </div>
-            </div>
-            <div className="flex items-center justify-end gap-2 border-t pt-2">
-              <Button variant="outline" size="sm" className="h-7 text-xs" onClick={resetForm}>
-                Cancel
-              </Button>
-              <Button
-                size="sm"
-                className="h-7 text-xs bg-green-600 hover:bg-green-700 text-white"
-                onClick={handleAdd}
-              >
-                {editingId ? "Update" : "Add"}
-              </Button>
+              <FilePickerField
+                label="Manufacturer Procedure"
+                value={procedure}
+                onPick={setProcedure}
+                onClear={() => setProcedure("")}
+              />
             </div>
           </div>
 
+          <div className="text-[11px] font-semibold mb-2">Supplemental Data Files</div>
+
+          {(
+            <div className="mb-3 rounded-md border bg-muted/30 p-3 space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="space-y-1">
+                  <FieldLabel label="Status" />
+                  <Select value={status} onValueChange={setStatus}>
+                    <SelectTrigger className="h-8 text-xs">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {FILE_STATUSES.map((s) => (
+                        <SelectItem key={s} value={s} className="text-xs">
+                          {s}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1 sm:col-span-2">
+                  <FieldLabel label="Description" required />
+                  <Input
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="e.g. Manufacturer specification sheet"
+                    className="h-8 text-xs"
+                  />
+                </div>
+                <div className="sm:col-span-3">
+                  <FilePickerField
+                    label="Upload File"
+                    value={upload}
+                    required
+                    onPick={setUpload}
+                    onClear={() => setUpload("")}
+                  />
+                </div>
+              </div>
+              <div className="flex items-center justify-end gap-2 border-t pt-2">
+                <Button variant="outline" size="sm" className="h-7 text-xs" onClick={resetForm}>
+                  Cancel
+                </Button>
+                <Button
+                  size="sm"
+                  className="h-7 text-xs bg-green-600 hover:bg-green-700 text-white"
+                  onClick={handleAdd}
+                >
+                  {editingId ? "Update" : "Add"}
+                </Button>
+              </div>
+            </div>
+          )}
 
           <div className="rounded-md border overflow-hidden">
             <table className="w-full text-xs">
