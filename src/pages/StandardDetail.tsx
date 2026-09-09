@@ -136,6 +136,96 @@ const ToggleRow = ({
   </div>
 );
 
+/* ------------------------------------------------- stepped-flow primitives */
+
+/** One numbered station on the vertical General-tab spine. */
+const Step = ({
+  index,
+  title,
+  hint,
+  badge,
+  action,
+  last,
+  children,
+}: {
+  index: string;
+  title: string;
+  hint?: string;
+  badge?: React.ReactNode;
+  action?: React.ReactNode;
+  last?: boolean;
+  children: React.ReactNode;
+}) => (
+  <section className={cn("relative pl-7", last ? "border-l border-transparent pb-0" : "border-l border-border pb-7")}>
+    <span
+      aria-hidden
+      className="absolute -left-[7px] top-0 h-3.5 w-3.5 rounded-full border-2 border-primary bg-card"
+    />
+    <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
+      <div className="flex items-baseline gap-2">
+        <h2 className="text-[11px] font-bold uppercase tracking-wider text-foreground">
+          <span className="mr-1.5 tabular-nums text-muted-foreground">{index}</span>
+          {title}
+        </h2>
+        {hint && <span className="text-[10px] text-muted-foreground">{hint}</span>}
+      </div>
+      <div className="flex items-center gap-2">
+        {badge}
+        {action}
+      </div>
+    </div>
+    {children}
+  </section>
+);
+
+/** Compact micro-label field used inside the stepped flow. */
+const StepField = ({
+  label,
+  htmlFor,
+  required,
+  error,
+  className,
+  children,
+}: {
+  label: string;
+  htmlFor?: string;
+  required?: boolean;
+  error?: string;
+  className?: string;
+  children: React.ReactNode;
+}) => (
+  <div className={cn("space-y-1", className)}>
+    <Label htmlFor={htmlFor} className="block text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+      {label}
+      {required && <span className="ml-0.5 text-destructive">*</span>}
+    </Label>
+    {children}
+    {error && <p className="text-[10px] font-medium text-destructive">{error}</p>}
+  </div>
+);
+
+/** Inline switch used in the compact flag strip. */
+const FlagSwitch = ({
+  id,
+  label,
+  checked,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  checked: boolean;
+  onChange: (v: boolean) => void;
+}) => (
+  <label htmlFor={id} className="flex cursor-pointer items-center gap-2">
+    <Switch id={id} checked={checked} onCheckedChange={onChange} className="scale-[0.8]" />
+    <span className={cn("text-[11px] font-semibold", checked ? "text-foreground" : "text-muted-foreground")}>
+      {label}
+    </span>
+  </label>
+);
+
+const CTRL = "h-8 text-xs";
+
 const MaintenanceStatusBadge = ({ status }: { status: string }) => {
   const map: Record<string, string> = {
     Scheduled: "bg-slate-100 text-slate-700",
@@ -387,328 +477,249 @@ const StandardDetail = () => {
           </TabsList>
 
           {/* ------------------------------------------------------ GENERAL */}
-          <TabsContent value="general" className="mt-4 space-y-4">
-            <div className="grid gap-4 xl:grid-cols-2">
-              <SectionCard title="Equipment">
-                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                  <Field label="Standard #" htmlFor="standardNo" required error={errors.standardNo}>
-                    <Input id="standardNo" className="h-9 text-sm" value={form.standardNo} onChange={(e) => set("standardNo", e.target.value)} />
-                  </Field>
-                  <Field label="Manufacturer" required error={errors.manufacturer}>
+          <TabsContent value="general" className="mt-4">
+            <div className="rounded-xl border border-border bg-card p-4 shadow-sm lg:p-5">
+              {/* 01. Equipment Identity */}
+              <Step
+                index="01"
+                title="Equipment Identity"
+                hint="Required identifiers and description"
+                badge={form.state ? <Badge variant="outline" className="rounded-full border-transparent bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-700">{form.state}</Badge> : null}
+              >
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  <StepField label="Standard #" htmlFor="standardNo" required error={errors.standardNo}>
+                    <Input id="standardNo" className={CTRL} value={form.standardNo} onChange={(e) => set("standardNo", e.target.value)} />
+                  </StepField>
+                  <StepField label="Manufacturer" required error={errors.manufacturer}>
                     <Select value={form.manufacturer} onValueChange={(v) => set("manufacturer", v)}>
-                      <SelectTrigger className="h-9 text-sm"><SelectValue placeholder="Select" /></SelectTrigger>
+                      <SelectTrigger className={CTRL}><SelectValue placeholder="Select" /></SelectTrigger>
                       <SelectContent>{MANUFACTURERS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}</SelectContent>
                     </Select>
-                  </Field>
-                  <Field label="Model" required error={errors.model}>
+                  </StepField>
+                  <StepField label="Model" required error={errors.model}>
                     <Select value={form.model} onValueChange={(v) => set("model", v)}>
-                      <SelectTrigger className="h-9 text-sm"><SelectValue placeholder="Select" /></SelectTrigger>
+                      <SelectTrigger className={CTRL}><SelectValue placeholder="Select" /></SelectTrigger>
                       <SelectContent>{MODELS.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}</SelectContent>
                     </Select>
-                  </Field>
-                  <Field label="Serial" htmlFor="serial" required error={errors.serial}>
-                    <Input id="serial" className="h-9 text-sm" value={form.serial} onChange={(e) => set("serial", e.target.value)} />
-                  </Field>
-                  <Field label="Description" htmlFor="description" className="sm:col-span-2">
-                    <Input id="description" className="h-9 text-sm" value={form.description} onChange={(e) => set("description", e.target.value)} />
-                  </Field>
-                  <Field label="Accuracy" htmlFor="accuracy">
-                    <Input id="accuracy" className="h-9 text-sm" value={form.accuracy} onChange={(e) => set("accuracy", e.target.value)} />
-                  </Field>
-                  <Field label="Range(s)" htmlFor="ranges">
-                    <Input id="ranges" className="h-9 text-sm" value={form.ranges} onChange={(e) => set("ranges", e.target.value)} />
-                  </Field>
-                  <Field label="Option(s)" htmlFor="options">
-                    <Input id="options" className="h-9 text-sm" value={form.options} onChange={(e) => set("options", e.target.value)} />
-                  </Field>
-                  <Field
+                  </StepField>
+                  <StepField label="Serial" htmlFor="serial" required error={errors.serial}>
+                    <Input id="serial" className={CTRL} value={form.serial} onChange={(e) => set("serial", e.target.value)} />
+                  </StepField>
+                  <StepField label="Description" htmlFor="description" className="sm:col-span-2 lg:col-span-4">
+                    <Input id="description" className={CTRL} value={form.description} onChange={(e) => set("description", e.target.value)} />
+                  </StepField>
+                </div>
+              </Step>
+
+              {/* 02. Technical Specifications */}
+              <Step index="02" title="Technical Specifications" hint="Accuracy, range, and RFID settings">
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  <StepField label="Accuracy" htmlFor="accuracy"><Input id="accuracy" className={CTRL} value={form.accuracy} onChange={(e) => set("accuracy", e.target.value)} /></StepField>
+                  <StepField label="Range(s)" htmlFor="ranges"><Input id="ranges" className={CTRL} value={form.ranges} onChange={(e) => set("ranges", e.target.value)} /></StepField>
+                  <StepField label="Option(s)" htmlFor="options"><Input id="options" className={CTRL} value={form.options} onChange={(e) => set("options", e.target.value)} /></StepField>
+                  <StepField
                     label="RFID"
                     htmlFor="rfid"
                     error={form.rfid && !/^[a-zA-Z0-9]{6,}$/.test(form.rfid) ? "RFID must be at least 6 alphanumeric characters." : undefined}
                   >
-                    <Input id="rfid" disabled={form.noRfid} className="h-9 text-sm" value={form.rfid} onChange={(e) => set("rfid", e.target.value)} />
-                  </Field>
-                  <div className="flex items-end pb-1">
-                    <label className="flex items-center gap-2 text-xs text-foreground">
-                      <Checkbox
-                        checked={form.noRfid}
-                        onCheckedChange={(v) => {
-                          set("noRfid", Boolean(v));
-                          if (v) set("rfid", "");
-                        }}
-                      />
-                      No RFID
-                    </label>
-                  </div>
+                    <Input id="rfid" disabled={form.noRfid} className={cn(CTRL, form.noRfid && "bg-muted")} value={form.rfid} onChange={(e) => set("rfid", e.target.value)} />
+                  </StepField>
                 </div>
-              </SectionCard>
+                <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 rounded-md border border-border bg-secondary/30 px-3 py-2">
+                  <FlagSwitch id="noRfid" label="No RFID" checked={form.noRfid} onChange={(v) => { set("noRfid", v); if (v) set("rfid", ""); }} />
+                </div>
+              </Step>
 
-              <SectionCard title="Calibration">
-                <div className="mb-3 grid gap-2 sm:grid-cols-3">
-                  <ToggleRow
-                    id="toFactory"
-                    label="To Factory"
-                    hint="Calibration performed by the manufacturer; lab procedure fields are not used."
-                    checked={form.toFactory}
-                    onChange={(v) => set("toFactory", v)}
-                  />
-                  <ToggleRow id="a17025" label="17025 Accredited" checked={form.accredited17025} onChange={(v) => set("accredited17025", v)} />
-                  <ToggleRow
-                    id="allowAcc"
-                    label="Allow Accredited Certification"
-                    checked={form.allowAccreditedCert}
-                    onChange={(v) => set("allowAccreditedCert", v)}
-                  />
+              {/* 03. Calibration & Assignment */}
+              <Step index="03" title="Calibration & Assignment" hint="Interval, due dates, and procedure">
+                <div className="mb-3 flex flex-wrap items-center gap-3 rounded-md border border-border bg-secondary/30 px-3 py-2">
+                  <FlagSwitch id="toFactory" label="To Factory" checked={form.toFactory} onChange={(v) => set("toFactory", v)} />
+                  <FlagSwitch id="a17025" label="17025 Accredited" checked={form.accredited17025} onChange={(v) => set("accredited17025", v)} />
+                  <FlagSwitch id="allowAcc" label="Allow Accredited Certification" checked={form.allowAccreditedCert} onChange={(v) => set("allowAccreditedCert", v)} />
                 </div>
                 {form.accredited17025 && (
-                  <div className="mb-3 rounded-md border border-border bg-muted/30 p-2 text-[11px] text-muted-foreground">
-                    Accredited scope applies. Certificates issued for this standard will include the A2LA accreditation
-                    statement and the assigned trace code.
-                  </div>
+                  <p className="mb-3 rounded-md border border-border bg-muted/30 p-2 text-[11px] text-muted-foreground">
+                    Accredited scope applies. Certificates issued for this standard will include the A2LA accreditation statement and the assigned trace code.
+                  </p>
                 )}
-                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                  <Field label="Calibration Interval Unit">
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  <StepField label="Interval Unit">
                     <Select value={form.unit} onValueChange={(v) => set("unit", v)}>
-                      <SelectTrigger className="h-9 text-sm"><SelectValue placeholder="Select" /></SelectTrigger>
+                      <SelectTrigger className={CTRL}><SelectValue placeholder="Select" /></SelectTrigger>
                       <SelectContent>{INTERVAL_UNITS.map((u) => <SelectItem key={u} value={u}>{u}</SelectItem>)}</SelectContent>
                     </Select>
-                  </Field>
-                  <Field label="Calibration Interval" htmlFor="interval">
-                    <Input id="interval" type="number" className="h-9 text-sm" value={form.interval} onChange={(e) => set("interval", Number(e.target.value))} />
-                  </Field>
-                  <Field label="Last Calibration Date" htmlFor="lastCal">
-                    <Input id="lastCal" placeholder="MM/DD/YYYY" className="h-9 text-sm" value={form.lastCalibration} onChange={(e) => set("lastCalibration", e.target.value)} />
-                  </Field>
-                  <Field label="Next Due Date" htmlFor="nextCal">
-                    <Input id="nextCal" placeholder="MM/DD/YYYY" className="h-9 text-sm" value={form.nextCalibrationDue} onChange={(e) => set("nextCalibrationDue", e.target.value)} />
-                  </Field>
-                  <Field label="State of Asset" required error={errors.state}>
+                  </StepField>
+                  <StepField label="Calibration Interval" htmlFor="interval"><Input id="interval" type="number" className={CTRL} value={form.interval} onChange={(e) => set("interval", Number(e.target.value))} /></StepField>
+                  <StepField label="Last Calibration" htmlFor="lastCal"><Input id="lastCal" placeholder="MM/DD/YYYY" className={CTRL} value={form.lastCalibration} onChange={(e) => set("lastCalibration", e.target.value)} /></StepField>
+                  <StepField label="Next Due Date" htmlFor="nextCal"><Input id="nextCal" placeholder="MM/DD/YYYY" className={CTRL} value={form.nextCalibrationDue} onChange={(e) => set("nextCalibrationDue", e.target.value)} /></StepField>
+                  <StepField label="State of Asset" required error={errors.state}>
                     <Select value={form.state} onValueChange={(v) => set("state", v as StandardRecord["state"])}>
-                      <SelectTrigger className="h-9 text-sm"><SelectValue placeholder="Select" /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Active">Active</SelectItem>
-                        <SelectItem value="Inactive">Inactive</SelectItem>
-                      </SelectContent>
+                      <SelectTrigger className={CTRL}><SelectValue placeholder="Select" /></SelectTrigger>
+                      <SelectContent><SelectItem value="Active">Active</SelectItem><SelectItem value="Inactive">Inactive</SelectItem></SelectContent>
                     </Select>
-                  </Field>
-                  <Field label="Assigned Standard" htmlFor="assignedStandard">
-                    <Input id="assignedStandard" className="h-9 text-sm" value={form.assignedStandard} onChange={(e) => set("assignedStandard", e.target.value)} />
-                  </Field>
-                  <Field label="Assigned Procedure" htmlFor="assignedProcedure">
-                    <Input id="assignedProcedure" className="h-9 text-sm" value={form.assignedProcedure} onChange={(e) => set("assignedProcedure", e.target.value)} />
-                  </Field>
-                  <Field label="Instructions to Technician" htmlFor="instructions" className="sm:col-span-2 lg:col-span-3">
-                    <Textarea
-                      id="instructions"
-                      className="min-h-[68px] text-sm"
-                      value={form.technicianInstructions}
-                      onChange={(e) => set("technicianInstructions", e.target.value)}
-                    />
-                  </Field>
+                  </StepField>
+                  <StepField label="Assigned Standard" htmlFor="assignedStandard"><Input id="assignedStandard" className={CTRL} value={form.assignedStandard} onChange={(e) => set("assignedStandard", e.target.value)} /></StepField>
+                  <StepField label="Assigned Procedure" htmlFor="assignedProcedure"><Input id="assignedProcedure" className={CTRL} value={form.assignedProcedure} onChange={(e) => set("assignedProcedure", e.target.value)} /></StepField>
+                  <StepField label="Instructions to Technician" htmlFor="instructions" className="sm:col-span-2 lg:col-span-4">
+                    <Textarea id="instructions" className="min-h-[56px] text-xs" value={form.technicianInstructions} onChange={(e) => set("technicianInstructions", e.target.value)} />
+                  </StepField>
                 </div>
-              </SectionCard>
-            </div>
+              </Step>
 
-            <SectionCard
-              title="Calibration Schedule"
-              description="Select the weeks in which this standard should be included in the calibration schedule."
-            >
-              <ToggleRow
-                id="addSchedule"
-                label="Add to Calibration Schedule"
-                checked={form.addToSchedule}
-                onChange={(v) => set("addToSchedule", v)}
-              />
-              {form.addToSchedule && (
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {Array.from({ length: 52 }, (_, i) => i + 1).map((w) => {
-                    const on = form.scheduleWeeks.includes(w);
-                    return (
-                      <button
-                        key={w}
-                        type="button"
-                        aria-pressed={on}
-                        aria-label={`Week ${w}`}
-                        onClick={() =>
-                          set(
-                            "scheduleWeeks",
-                            on ? form.scheduleWeeks.filter((x) => x !== w) : [...form.scheduleWeeks, w].sort((a, b) => a - b)
-                          )
-                        }
-                        className={cn(
-                          "h-8 w-9 rounded-md border text-xs font-medium transition-colors",
-                          on
-                            ? "border-foreground bg-foreground text-background"
-                            : "border-border bg-white text-muted-foreground hover:text-foreground"
-                        )}
-                      >
-                        {w}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-            </SectionCard>
-
-            <div className="grid gap-4 xl:grid-cols-3">
-              <SectionCard
-                title="Designated Location"
+              {/* 04. Location & Provider */}
+              <Step
+                index="04"
+                title="Location & Provider"
+                hint="Designated lab and calibration source"
                 action={
-                  <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" onClick={() => { setMove({ lab: form.lab, division: form.division, labArea: form.labArea }); setMoveOpen(true); }}>
-                    <MoveRight className="h-3.5 w-3.5" />
-                    Initiate Move
+                  <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => { setMove({ lab: form.lab, division: form.division, labArea: form.labArea }); setMoveOpen(true); }}>
+                    <MoveRight className="h-3.5 w-3.5" /> Initiate Move
                   </Button>
                 }
               >
-                <div className="grid gap-3 sm:grid-cols-3">
-                  <Field label="Lab">
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  <StepField label="Designated Lab">
                     <Select value={form.lab} onValueChange={(v) => set("lab", v)}>
-                      <SelectTrigger className="h-9 text-sm"><SelectValue placeholder="Select" /></SelectTrigger>
+                      <SelectTrigger className={CTRL}><SelectValue placeholder="Select" /></SelectTrigger>
                       <SelectContent>{LOCATIONS.map((l) => <SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent>
                     </Select>
-                  </Field>
-                  <Field label="Division">
+                  </StepField>
+                  <StepField label="Division">
                     <Select value={form.division} onValueChange={(v) => set("division", v)}>
-                      <SelectTrigger className="h-9 text-sm"><SelectValue placeholder="Select" /></SelectTrigger>
+                      <SelectTrigger className={CTRL}><SelectValue placeholder="Select" /></SelectTrigger>
                       <SelectContent>{DIVISIONS.map((l) => <SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent>
                     </Select>
-                  </Field>
-                  <Field label="Lab Area">
+                  </StepField>
+                  <StepField label="Lab Area">
                     <Select value={form.labArea} onValueChange={(v) => set("labArea", v)}>
-                      <SelectTrigger className="h-9 text-sm"><SelectValue placeholder="Select" /></SelectTrigger>
+                      <SelectTrigger className={CTRL}><SelectValue placeholder="Select" /></SelectTrigger>
                       <SelectContent>{LAB_AREAS.map((l) => <SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent>
                     </Select>
-                  </Field>
-                </div>
-              </SectionCard>
-
-              <SectionCard title="Calibration Provider" description="Where this standard is sent for calibration.">
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <Field label="Location">
+                  </StepField>
+                  <StepField label="Trace Code">
+                    <Select value={form.traceCode} onValueChange={(v) => set("traceCode", v)}>
+                      <SelectTrigger className={CTRL}><SelectValue placeholder="Select" /></SelectTrigger>
+                      <SelectContent>{TRACE_CODES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
+                    </Select>
+                  </StepField>
+                  <StepField label="Provider Location">
                     <Select value={form.providerLocation} onValueChange={(v) => set("providerLocation", v)}>
-                      <SelectTrigger className="h-9 text-sm"><SelectValue placeholder="Select" /></SelectTrigger>
+                      <SelectTrigger className={CTRL}><SelectValue placeholder="Select" /></SelectTrigger>
                       <SelectContent>{LOCATIONS.map((l) => <SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent>
                     </Select>
-                  </Field>
-                  <Field label="Division">
+                  </StepField>
+                  <StepField label="Provider Division">
                     <Select value={form.providerDivision} onValueChange={(v) => set("providerDivision", v)}>
-                      <SelectTrigger className="h-9 text-sm"><SelectValue placeholder="Select" /></SelectTrigger>
+                      <SelectTrigger className={CTRL}><SelectValue placeholder="Select" /></SelectTrigger>
                       <SelectContent>{DIVISIONS.map((l) => <SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent>
                     </Select>
-                  </Field>
-                  <div className="sm:col-span-2">
-                    <ToggleRow
-                      id="noOnsite"
-                      label="No Onsite Use"
-                      hint="Exclude this standard from onsite job assignment."
-                      checked={form.noOnsiteUse}
-                      onChange={(v) => set("noOnsiteUse", v)}
-                    />
+                  </StepField>
+                  <div className="flex items-center lg:col-span-2">
+                    <ToggleRow id="noOnsite" label="No Onsite Use" hint="Exclude this standard from onsite job assignment." checked={form.noOnsiteUse} onChange={(v) => set("noOnsiteUse", v)} />
                   </div>
                 </div>
-              </SectionCard>
+              </Step>
 
-              <SectionCard title="METCAL Mapped Fields">
-                <Field label="Trace Code">
-                  <Select value={form.traceCode} onValueChange={(v) => set("traceCode", v)}>
-                    <SelectTrigger className="h-9 text-sm"><SelectValue placeholder="Select trace code" /></SelectTrigger>
-                    <SelectContent>{TRACE_CODES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
-                  </Select>
-                </Field>
-              </SectionCard>
-            </div>
-
-            <SectionCard title="Purchasing">
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                <Field label="Purchase Order" htmlFor="po"><Input id="po" className="h-9 text-sm" value={form.purchaseOrder} onChange={(e) => set("purchaseOrder", e.target.value)} /></Field>
-                <Field label="Purchase Date" htmlFor="pdate"><Input id="pdate" placeholder="MM/DD/YYYY" className="h-9 text-sm" value={form.purchaseDate} onChange={(e) => set("purchaseDate", e.target.value)} /></Field>
-                <Field label="Acquired From" htmlFor="acq"><Input id="acq" className="h-9 text-sm" value={form.acquiredFrom} onChange={(e) => set("acquiredFrom", e.target.value)} /></Field>
-                <Field label="Condition">
-                  <Select value={form.condition} onValueChange={(v) => set("condition", v)}>
-                    <SelectTrigger className="h-9 text-sm"><SelectValue placeholder="Select" /></SelectTrigger>
-                    <SelectContent>{["New", "Used", "Refurbished"].map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
-                  </Select>
-                </Field>
-                <Field label="Used For" htmlFor="usedfor"><Input id="usedfor" className="h-9 text-sm" value={form.usedFor} onChange={(e) => set("usedFor", e.target.value)} /></Field>
-                <Field label="Owning Account #" htmlFor="acct"><Input id="acct" className="h-9 text-sm" value={form.owningAccount} onChange={(e) => set("owningAccount", e.target.value)} /></Field>
-                <Field label="GL Account" htmlFor="gl"><Input id="gl" className="h-9 text-sm" value={form.glAccount} onChange={(e) => set("glAccount", e.target.value)} /></Field>
-                <Field label="Purchase Cost" htmlFor="cost">
-                  <div className="relative">
-                    <span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">$</span>
-                    <Input id="cost" className="h-9 pl-6 text-sm" value={form.purchaseCost} onChange={(e) => set("purchaseCost", e.target.value)} />
+              {/* 05. Calibration Schedule */}
+              <Step index="05" title="Calibration Schedule" hint="Optional weekly schedule inclusion">
+                <div className="mb-3 flex flex-wrap items-center gap-3 rounded-md border border-border bg-secondary/30 px-3 py-2">
+                  <FlagSwitch id="addSchedule" label="Add to Calibration Schedule" checked={form.addToSchedule} onChange={(v) => set("addToSchedule", v)} />
+                </div>
+                {form.addToSchedule && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {Array.from({ length: 52 }, (_, i) => i + 1).map((w) => {
+                      const on = form.scheduleWeeks.includes(w);
+                      return (
+                        <button
+                          key={w}
+                          type="button"
+                          aria-pressed={on}
+                          aria-label={`Week ${w}`}
+                          onClick={() => set("scheduleWeeks", on ? form.scheduleWeeks.filter((x) => x !== w) : [...form.scheduleWeeks, w].sort((a, b) => a - b))}
+                          className={cn(
+                            "h-7 w-8 rounded-md border text-[10px] font-medium transition-colors",
+                            on ? "border-foreground bg-foreground text-background" : "border-border bg-card text-muted-foreground hover:text-foreground"
+                          )}
+                        >
+                          {w}
+                        </button>
+                      );
+                    })}
                   </div>
-                </Field>
-                <Field label="Replacement Cost" htmlFor="repl">
-                  <div className="relative">
-                    <span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">$</span>
-                    <Input id="repl" className="h-9 pl-6 text-sm" value={form.replacementCost} onChange={(e) => set("replacementCost", e.target.value)} />
-                  </div>
-                </Field>
-                <Field label="Ordered Date" htmlFor="odate"><Input id="odate" placeholder="MM/DD/YYYY" className="h-9 text-sm" value={form.orderedDate} onChange={(e) => set("orderedDate", e.target.value)} /></Field>
-                <Field label="Ordered By" htmlFor="oby"><Input id="oby" className="h-9 text-sm" value={form.orderedBy} onChange={(e) => set("orderedBy", e.target.value)} /></Field>
-                <Field label="Date Received" htmlFor="rdate"><Input id="rdate" placeholder="MM/DD/YYYY" className="h-9 text-sm" value={form.dateReceived} onChange={(e) => set("dateReceived", e.target.value)} /></Field>
-              </div>
-            </SectionCard>
+                )}
+              </Step>
 
-            <div className="grid gap-4 xl:grid-cols-2">
-              <SectionCard title="Other">
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <ToggleRow id="consumable" label="Consumable" checked={form.consumable} onChange={(v) => set("consumable", v)} />
-                  <ToggleRow id="tools" label="Has Software Tool(s)" checked={form.hasSoftwareTools} onChange={(v) => set("hasSoftwareTools", v)} />
+              {/* 06. Purchasing */}
+              <Step index="06" title="Purchasing" hint="Acquisition and ownership details">
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  <StepField label="Purchase Order" htmlFor="po"><Input id="po" className={CTRL} value={form.purchaseOrder} onChange={(e) => set("purchaseOrder", e.target.value)} /></StepField>
+                  <StepField label="Purchase Date" htmlFor="pdate"><Input id="pdate" placeholder="MM/DD/YYYY" className={CTRL} value={form.purchaseDate} onChange={(e) => set("purchaseDate", e.target.value)} /></StepField>
+                  <StepField label="Acquired From" htmlFor="acq"><Input id="acq" className={CTRL} value={form.acquiredFrom} onChange={(e) => set("acquiredFrom", e.target.value)} /></StepField>
+                  <StepField label="Condition">
+                    <Select value={form.condition} onValueChange={(v) => set("condition", v)}>
+                      <SelectTrigger className={CTRL}><SelectValue placeholder="Select" /></SelectTrigger>
+                      <SelectContent>{["New", "Used", "Refurbished"].map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+                    </Select>
+                  </StepField>
+                  <StepField label="Used For" htmlFor="usedfor"><Input id="usedfor" className={CTRL} value={form.usedFor} onChange={(e) => set("usedFor", e.target.value)} /></StepField>
+                  <StepField label="Owning Account #" htmlFor="acct"><Input id="acct" className={CTRL} value={form.owningAccount} onChange={(e) => set("owningAccount", e.target.value)} /></StepField>
+                  <StepField label="GL Account" htmlFor="gl"><Input id="gl" className={CTRL} value={form.glAccount} onChange={(e) => set("glAccount", e.target.value)} /></StepField>
+                  <StepField label="Purchase Cost" htmlFor="cost">
+                    <div className="relative">
+                      <span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">$</span>
+                      <Input id="cost" className={cn(CTRL, "pl-6")} value={form.purchaseCost} onChange={(e) => set("purchaseCost", e.target.value)} />
+                    </div>
+                  </StepField>
+                  <StepField label="Replacement Cost" htmlFor="repl">
+                    <div className="relative">
+                      <span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">$</span>
+                      <Input id="repl" className={cn(CTRL, "pl-6")} value={form.replacementCost} onChange={(e) => set("replacementCost", e.target.value)} />
+                    </div>
+                  </StepField>
+                  <StepField label="Ordered Date" htmlFor="odate"><Input id="odate" placeholder="MM/DD/YYYY" className={CTRL} value={form.orderedDate} onChange={(e) => set("orderedDate", e.target.value)} /></StepField>
+                  <StepField label="Ordered By" htmlFor="oby"><Input id="oby" className={CTRL} value={form.orderedBy} onChange={(e) => set("orderedBy", e.target.value)} /></StepField>
+                  <StepField label="Date Received" htmlFor="rdate"><Input id="rdate" placeholder="MM/DD/YYYY" className={CTRL} value={form.dateReceived} onChange={(e) => set("dateReceived", e.target.value)} /></StepField>
+                </div>
+              </Step>
+
+              {/* 07. Other & Accessories */}
+              <Step index="07" title="Other & Accessories" hint="Flags, tool links, and accessory list">
+                <div className="mb-3 flex flex-wrap items-center gap-3 rounded-md border border-border bg-secondary/30 px-3 py-2">
+                  <FlagSwitch id="consumable" label="Consumable" checked={form.consumable} onChange={(v) => set("consumable", v)} />
+                  <FlagSwitch id="tools" label="Has Software Tool(s)" checked={form.hasSoftwareTools} onChange={(v) => set("hasSoftwareTools", v)} />
                 </div>
                 {form.hasSoftwareTools && (
-                  <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                  <div className="mb-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                     {form.toolLinks.map((link, i) => (
-                      <Field key={i} label={`Link to Tool ${i + 1}`} htmlFor={`tool-${i}`}>
-                        <Input
-                          id={`tool-${i}`}
-                          className="h-9 text-sm"
-                          value={link}
-                          onChange={(e) => {
-                            const next = [...form.toolLinks];
-                            next[i] = e.target.value;
-                            set("toolLinks", next);
-                          }}
-                        />
-                      </Field>
+                      <StepField key={i} label={`Link to Tool ${i + 1}`} htmlFor={`tool-${i}`}>
+                        <Input id={`tool-${i}`} className={CTRL} value={link} onChange={(e) => { const next = [...form.toolLinks]; next[i] = e.target.value; set("toolLinks", next); }} />
+                      </StepField>
                     ))}
                   </div>
                 )}
-              </SectionCard>
-
-              <SectionCard title="Accessories">
-                <div className="grid items-end gap-2 sm:grid-cols-6">
-                  <Field label="Accessory" htmlFor="acc-name" className="sm:col-span-2">
-                    <Input id="acc-name" className="h-9 text-sm" value={accDraft.accessory} onChange={(e) => setAccDraft({ ...accDraft, accessory: e.target.value })} />
-                  </Field>
-                  <Field label="Type">
-                    <Select value={accDraft.type} onValueChange={(v) => setAccDraft({ ...accDraft, type: v })}>
-                      <SelectTrigger className="h-9 text-sm"><SelectValue placeholder="Type" /></SelectTrigger>
-                      <SelectContent>{ACCESSORY_TYPES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
-                    </Select>
-                  </Field>
-                  <Field label="Color" htmlFor="acc-color"><Input id="acc-color" className="h-9 text-sm" value={accDraft.color} onChange={(e) => setAccDraft({ ...accDraft, color: e.target.value })} /></Field>
-                  <Field label="Qty" htmlFor="acc-qty"><Input id="acc-qty" type="number" min={1} className="h-9 text-sm" value={accDraft.quantity} onChange={(e) => setAccDraft({ ...accDraft, quantity: e.target.value })} /></Field>
-                  <Field label="Material" htmlFor="acc-mat"><Input id="acc-mat" className="h-9 text-sm" value={accDraft.material} onChange={(e) => setAccDraft({ ...accDraft, material: e.target.value })} /></Field>
-                  <div className="sm:col-span-6">
-                    <Button size="sm" className="h-8 gap-1 text-xs" onClick={addAccessory}>
-                      <Plus className="h-3.5 w-3.5" /> Add
-                    </Button>
+                <div className="rounded-md border border-border p-3">
+                  <h4 className="mb-2.5 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">Add Accessory</h4>
+                  <div className="grid gap-3 sm:grid-cols-6">
+                    <StepField label="Accessory" htmlFor="acc-name" className="sm:col-span-2"><Input id="acc-name" className={CTRL} value={accDraft.accessory} onChange={(e) => setAccDraft({ ...accDraft, accessory: e.target.value })} /></StepField>
+                    <StepField label="Type">
+                      <Select value={accDraft.type} onValueChange={(v) => setAccDraft({ ...accDraft, type: v })}>
+                        <SelectTrigger className={CTRL}><SelectValue placeholder="Type" /></SelectTrigger>
+                        <SelectContent>{ACCESSORY_TYPES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
+                      </Select>
+                    </StepField>
+                    <StepField label="Color" htmlFor="acc-color"><Input id="acc-color" className={CTRL} value={accDraft.color} onChange={(e) => setAccDraft({ ...accDraft, color: e.target.value })} /></StepField>
+                    <StepField label="Qty" htmlFor="acc-qty"><Input id="acc-qty" type="number" min={1} className={CTRL} value={accDraft.quantity} onChange={(e) => setAccDraft({ ...accDraft, quantity: e.target.value })} /></StepField>
+                    <StepField label="Material" htmlFor="acc-mat"><Input id="acc-mat" className={CTRL} value={accDraft.material} onChange={(e) => setAccDraft({ ...accDraft, material: e.target.value })} /></StepField>
                   </div>
+                  <Button size="sm" className="mt-2.5 h-7 gap-1 text-[11px]" onClick={addAccessory}>
+                    <Plus className="h-3.5 w-3.5" /> Add Accessory
+                  </Button>
                 </div>
-
                 {form.accessories.length > 0 && (
                   <div className="mt-3 overflow-x-auto rounded-md border border-border">
                     <Table>
                       <TableHeader>
-                        <TableRow>
-                          <TableHead className="text-xs font-semibold">Accessory</TableHead>
-                          <TableHead className="text-xs font-semibold">Type</TableHead>
-                          <TableHead className="text-xs font-semibold">Color</TableHead>
-                          <TableHead className="text-xs font-semibold">Qty</TableHead>
-                          <TableHead className="text-xs font-semibold">Material</TableHead>
-                          <TableHead className="w-10" />
-                        </TableRow>
+                        <TableRow><TableHead className="text-[10px] font-semibold">Accessory</TableHead><TableHead className="text-[10px] font-semibold">Type</TableHead><TableHead className="text-[10px] font-semibold">Color</TableHead><TableHead className="text-[10px] font-semibold">Qty</TableHead><TableHead className="text-[10px] font-semibold">Material</TableHead><TableHead className="w-10" /></TableRow>
                       </TableHeader>
                       <TableBody>
                         {form.accessories.map((a) => (
@@ -719,13 +730,7 @@ const StandardDetail = () => {
                             <TableCell className="py-1.5">{a.quantity}</TableCell>
                             <TableCell className="py-1.5">{a.material}</TableCell>
                             <TableCell className="py-1.5">
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-7 w-7 text-muted-foreground hover:text-destructive"
-                                aria-label={`Remove ${a.accessory}`}
-                                onClick={() => set("accessories", form.accessories.filter((x) => x.id !== a.id))}
-                              >
+                              <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-destructive" aria-label={`Remove ${a.accessory}`} onClick={() => set("accessories", form.accessories.filter((x) => x.id !== a.id))}>
                                 <Trash2 className="h-3.5 w-3.5" />
                               </Button>
                             </TableCell>
@@ -735,43 +740,45 @@ const StandardDetail = () => {
                     </Table>
                   </div>
                 )}
-              </SectionCard>
-            </div>
+              </Step>
 
-            <SectionCard title="Comments" description="Newest first.">
-              <div className="grid items-end gap-2 sm:grid-cols-6">
-                <Field label="Type">
-                  <Select value={commentDraft.type} onValueChange={(v) => setCommentDraft({ ...commentDraft, type: v })}>
-                    <SelectTrigger className="h-9 text-sm"><SelectValue /></SelectTrigger>
-                    <SelectContent>{COMMENT_TYPES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
-                  </Select>
-                </Field>
-                <Field label="Comment" htmlFor="comment" className="sm:col-span-4">
-                  <Textarea id="comment" className="min-h-[40px] text-sm" value={commentDraft.comment} onChange={(e) => setCommentDraft({ ...commentDraft, comment: e.target.value })} />
-                </Field>
-                <Button size="sm" className="h-9 gap-1 text-xs" onClick={addComment} disabled={!commentDraft.comment.trim()}>
-                  <MessageSquarePlus className="h-3.5 w-3.5" /> Add Comment
-                </Button>
-              </div>
-
-              {form.comments.length === 0 ? (
-                <p className="mt-3 text-xs text-muted-foreground">No comments yet.</p>
-              ) : (
-                <div className="mt-3 space-y-2">
-                  {form.comments.map((c) => (
-                    <div key={c.id} className="rounded-md border border-border p-2.5">
-                      <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
-                        <Badge variant="outline" className="rounded-full border-transparent bg-muted px-2 py-0.5 text-[10px]">{c.type}</Badge>
-                        <span>{c.entered}</span>
-                        <span>·</span>
-                        <span>{c.user}</span>
-                      </div>
-                      <p className="mt-1 whitespace-pre-wrap text-xs text-foreground">{c.comment}</p>
+              {/* 08. Comments */}
+              <Step index="08" title="Comments" hint="Activity and notes" last>
+                <div className="rounded-md border border-border p-3">
+                  <div className="grid gap-3 sm:grid-cols-6">
+                    <StepField label="Type" className="sm:col-span-1">
+                      <Select value={commentDraft.type} onValueChange={(v) => setCommentDraft({ ...commentDraft, type: v })}>
+                        <SelectTrigger className={CTRL}><SelectValue /></SelectTrigger>
+                        <SelectContent>{COMMENT_TYPES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
+                      </Select>
+                    </StepField>
+                    <StepField label="Comment" htmlFor="comment" className="sm:col-span-4">
+                      <Textarea id="comment" className="min-h-[40px] text-xs" value={commentDraft.comment} onChange={(e) => setCommentDraft({ ...commentDraft, comment: e.target.value })} />
+                    </StepField>
+                    <div className="flex items-end">
+                      <Button size="sm" className="h-8 w-full gap-1 text-[11px]" onClick={addComment} disabled={!commentDraft.comment.trim()}>
+                        <MessageSquarePlus className="h-3.5 w-3.5" /> Add
+                      </Button>
                     </div>
-                  ))}
+                  </div>
                 </div>
-              )}
-            </SectionCard>
+                {form.comments.length === 0 ? (
+                  <p className="mt-3 text-xs text-muted-foreground">No comments yet.</p>
+                ) : (
+                  <div className="mt-3 space-y-2">
+                    {form.comments.map((c) => (
+                      <div key={c.id} className="rounded-md border border-border p-2.5">
+                        <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
+                          <Badge variant="outline" className="rounded-full border-transparent bg-muted px-2 py-0.5 text-[10px]">{c.type}</Badge>
+                          <span>{c.entered}</span><span>·</span><span>{c.user}</span>
+                        </div>
+                        <p className="mt-1 whitespace-pre-wrap text-xs text-foreground">{c.comment}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </Step>
+            </div>
           </TabsContent>
 
           {/* -------------------------------------------------- MAINTENANCE */}
