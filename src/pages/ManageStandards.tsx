@@ -443,26 +443,6 @@ const ManageStandards = () => {
 
 
 
-          {/* Action bar */}
-          <div className="flex flex-wrap items-center gap-2">
-            <Button className="h-9 gap-2 text-sm" onClick={() => navigate("/standards/new")}>
-              <Plus className="h-4 w-4" />
-              Add Standard
-            </Button>
-            <Button variant="outline" className="h-9 gap-2 text-sm" onClick={() => toast.success("Export started.")}>
-              <Download className="h-4 w-4" />
-              Export
-            </Button>
-            <Button
-              variant="outline"
-              className="h-9 gap-2 text-sm"
-              onClick={() => toast.success("Export with history started.")}
-            >
-              <FileSpreadsheet className="h-4 w-4" />
-              Export with History
-            </Button>
-          </div>
-
           {/* Table */}
           <div className="overflow-hidden rounded-lg border border-border bg-white shadow-sm">
             <div className="flex items-center justify-between border-b border-border px-3 py-2">
