@@ -218,8 +218,8 @@ const ManageProductsV1 = () => {
       )
         return false;
       if (selects.labCode && p.lc !== selects.labCode) return false;
-      if (multiSelects.techCategory.length > 0 && !multiSelects.techCategory.includes(p.groupType)) return false;
-      if (multiSelects.rentalCategory.length > 0 && !multiSelects.rentalCategory.includes(p.rental)) return false;
+      if (selects.techCategory && p.groupType !== selects.techCategory) return false;
+      if (selects.rentalCategory && p.rental !== selects.rentalCategory) return false;
       return COLUMNS.every((c) => {
         const v = columnFilters[c.key];
         if (!v || v === "all") return true;
@@ -228,7 +228,7 @@ const ManageProductsV1 = () => {
         return cell.toLowerCase().includes(v.toLowerCase());
       });
     });
-  }, [generalSearch, selects, multiSelects, columnFilters]);
+  }, [generalSearch, selects, columnFilters]);
 
   const size = Number(pageSize);
   const totalPages = Math.max(1, Math.ceil(rows.length / size));
@@ -238,7 +238,6 @@ const ManageProductsV1 = () => {
   const activeCount =
     (generalSearch ? 1 : 0) +
     Object.values(selects).filter(Boolean).length +
-    Object.values(multiSelects).reduce((acc, v) => acc + v.length, 0) +
     Object.values(categorySelects).filter(Boolean).length +
     Object.values(checks).filter(Boolean).length +
     Object.values(columnFilters).filter(Boolean).length;
@@ -246,7 +245,6 @@ const ManageProductsV1 = () => {
   const handleClear = () => {
     setGeneralSearch("");
     setSelects({ ...emptySelects });
-    setMultiSelects({ ...emptyMultiSelects });
     setCategorySelects({ ...emptyCategorySelects });
     setChecks({ ...emptyChecks });
     setColumnFilters({ ...emptyColumnFilters });
