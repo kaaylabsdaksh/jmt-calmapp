@@ -245,6 +245,7 @@ const ManageProductsV1 = () => {
     (generalSearch ? 1 : 0) +
     Object.values(selects).filter(Boolean).length +
     Object.values(multiSelects).reduce((acc, v) => acc + v.length, 0) +
+    Object.values(categorySelects).filter(Boolean).length +
     Object.values(checks).filter(Boolean).length +
     Object.values(columnFilters).filter(Boolean).length;
 
