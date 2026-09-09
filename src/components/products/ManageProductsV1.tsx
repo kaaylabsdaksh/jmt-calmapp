@@ -253,6 +253,7 @@ const ManageProductsV1 = () => {
     setGeneralSearch("");
     setSelects({ ...emptySelects });
     setMultiSelects({ ...emptyMultiSelects });
+    setCategorySelects({ ...emptyCategorySelects });
     setChecks({ ...emptyChecks });
     setColumnFilters({ ...emptyColumnFilters });
     setPage(1);
