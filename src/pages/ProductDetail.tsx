@@ -38,6 +38,8 @@ import { cn } from "@/lib/utils";
 import { PRODUCTS } from "@/lib/products";
 import ProductFilesTab from "@/components/products/ProductFilesTab";
 import ProductAccessoriesTab from "@/components/products/ProductAccessoriesTab";
+import ActivityLog, { type ActivityEntry } from "@/components/shared/ActivityLog";
+
 
 
 
@@ -88,16 +90,16 @@ const ProductDetail = () => {
       .forEach((l) => (init[l] = true));
     return init;
   });
-  const [comment, setComment] = useState("");
-  const [commentType, setCommentType] = useState("Other");
-  const [comments, setComments] = useState([
+  const [comments, setComments] = useState<ActivityEntry[]>([
     {
+      id: "act-1",
       type: "Other",
       text: "Bulk Updates to CertTime as per Project Apex",
       user: "Admin User",
-      entered: "01/26/2026 00:00 AM",
+      ts: "01/26/2026 12:00 AM",
     },
   ]);
+
 
   if (!product) {
     return (
@@ -116,14 +118,8 @@ const ProductDetail = () => {
     );
   }
 
-  const addComment = () => {
-    if (!comment.trim()) return;
-    setComments((prev) => [
-      { type: commentType, text: comment.trim(), user: "Admin User", entered: "just now" },
-      ...prev,
-    ]);
-    setComment("");
-  };
+
+
 
   const selectedLocations = Object.values(locations).filter(Boolean).length;
 
@@ -275,68 +271,13 @@ const ProductDetail = () => {
                 </div>
               </div>
 
-              {/* Comments */}
-              <Card>
-                <CardContent className="p-4 space-y-3">
-                  <div className="flex items-center gap-2">
-                    <MessageSquare className="h-3.5 w-3.5 text-muted-foreground" />
-                    <div className="text-xs font-semibold">Comments</div>
-                  </div>
-                  <div className="flex flex-col sm:flex-row items-start gap-2">
-                    <Select value={commentType} onValueChange={setCommentType}>
-                      <SelectTrigger className="h-8 w-full sm:w-40 text-xs">
-                        <SelectValue placeholder="Type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {COMMENT_TYPES.map((t) => (
-                          <SelectItem key={t} value={t} className="text-xs">{t}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <Textarea
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                      placeholder="Add a comment…"
-                      className="min-h-[60px] text-xs flex-1"
-                    />
-                    <Button size="sm" className="h-8 text-xs" onClick={addComment} disabled={!comment.trim()}>
-                      <Plus className="h-3.5 w-3.5 mr-1.5" />
-                      Add
-                    </Button>
-                  </div>
+              {/* Activity Log */}
+              <ActivityLog
+                entries={comments}
+                types={COMMENT_TYPES}
+                onAdd={(entry) => setComments((prev) => [entry, ...prev])}
+              />
 
-                  {comments.length === 0 ? (
-                    <div className="text-[11px] text-muted-foreground flex items-center gap-1.5">
-                      <ClipboardList className="h-3.5 w-3.5" />
-                      No comments yet.
-                    </div>
-                  ) : (
-                    <div className="space-y-2">
-                      {comments.map((c, i) => (
-                        <div key={i} className="group rounded-md border p-2">
-                          <div className="flex items-center justify-between gap-2">
-                            <div className="flex items-center gap-2">
-                              <Badge variant="outline" className="text-[10px]">{c.type}</Badge>
-                              <span className="text-[10px] text-muted-foreground">
-                                {c.user} · {c.entered}
-                              </span>
-                            </div>
-                            <button
-                              type="button"
-                              onClick={() => setComments((prev) => prev.filter((_, idx) => idx !== i))}
-                              className="opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-destructive transition-opacity"
-                              aria-label="Delete comment"
-                            >
-                              <Trash2 className="h-3.5 w-3.5" />
-                            </button>
-                          </div>
-                          <p className="text-xs mt-1">{c.text}</p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
             </TabsContent>
 
             <TabsContent value="files" className="mt-4">
