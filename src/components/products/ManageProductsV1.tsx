@@ -324,7 +324,7 @@ const ManageProductsV1 = () => {
               </div>
 
               {/* Category lanes */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 p-4 bg-muted/30 rounded-lg border">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 p-4 bg-white rounded-lg border">
                 {/* Technical/Labs */}
                 <div className="space-y-2 pr-0 lg:pr-6 lg:border-r border-border">
                   <div className="flex items-center gap-2 mb-1">
