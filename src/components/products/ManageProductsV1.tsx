@@ -147,7 +147,7 @@ const ManageProductsV1 = () => {
   const navigate = useNavigate();
   const [generalSearch, setGeneralSearch] = useState("");
   const [selects, setSelects] = useState<Record<string, string>>({ ...emptySelects });
-  const [categorySelects, setCategorySelects] = useState<{ tech2nd: string; tech3rd: string; rental2nd: string; rental3rd: string }>(
+  const [categorySelects, setCategorySelects] = useState<{ tech2nd: string; tech3rd: string; rental2nd: string; rental3rd: string }>({
     ...emptyCategorySelects,
   });
   const [checks, setChecks] = useState<Record<string, boolean>>({ ...emptyChecks });
