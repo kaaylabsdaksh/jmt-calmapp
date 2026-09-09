@@ -260,7 +260,8 @@ const ManageProductsV1 = () => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col min-h-full">
+      <div className="flex-1 space-y-4">
           {/* Header */}
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
