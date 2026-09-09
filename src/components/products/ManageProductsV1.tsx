@@ -55,6 +55,11 @@ const SELECT_FILTERS = [
   },
 ] as const;
 
+const TECH_2ND_OPTIONS = ["Caliper - Slide Type", "Caliper - Digital", "Multimeter - Handheld", "Clamp Meter", "Pressure Gauge"];
+const TECH_3RD_OPTIONS = ["Dial (Inside)", "Dial (Outside)", "Vernier", "Electronic", "100AMP", "600AMP"];
+const RENTAL_2ND_OPTIONS = ["Case", "Kit", "Accessory", "Tool", "Tester"];
+const RENTAL_3RD_OPTIONS = ["100AMP", "600AMP", "Standard", "Premium", "Basic"];
+
 const CHECK_FILTERS = [
   { key: "includeProductReview", label: "Include Product Review" },
   { key: "onlyProductReview", label: "Only Include Product Review" },
@@ -129,6 +134,12 @@ const COLUMNS = [
 
 const emptySelects = Object.fromEntries(SELECT_FILTERS.map((f) => [f.key, ""])) as Record<string, string>;
 const emptyMultiSelects = { techCategory: [] as string[], rentalCategory: [] as string[] };
+const emptyCategorySelects = {
+  tech2nd: "",
+  tech3rd: "",
+  rental2nd: "",
+  rental3rd: "",
+};
 const emptyChecks = Object.fromEntries(CHECK_FILTERS.map((f) => [f.key, false])) as Record<string, boolean>;
 const emptyColumnFilters = Object.fromEntries(COLUMNS.map((c) => [c.key, ""])) as Record<string, string>;
 const HIDDEN_COLS_KEY = "manage-products-hidden-columns";
@@ -141,6 +152,9 @@ const ManageProductsV1 = () => {
   const [selects, setSelects] = useState<Record<string, string>>({ ...emptySelects });
   const [multiSelects, setMultiSelects] = useState<{ techCategory: string[]; rentalCategory: string[] }>({
     ...emptyMultiSelects,
+  });
+  const [categorySelects, setCategorySelects] = useState<{ tech2nd: string; tech3rd: string; rental2nd: string; rental3rd: string }>({
+    ...emptyCategorySelects,
   });
   const [checks, setChecks] = useState<Record<string, boolean>>({ ...emptyChecks });
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({ ...emptyColumnFilters });
@@ -231,6 +245,7 @@ const ManageProductsV1 = () => {
     (generalSearch ? 1 : 0) +
     Object.values(selects).filter(Boolean).length +
     Object.values(multiSelects).reduce((acc, v) => acc + v.length, 0) +
+    Object.values(categorySelects).filter(Boolean).length +
     Object.values(checks).filter(Boolean).length +
     Object.values(columnFilters).filter(Boolean).length;
 
@@ -238,6 +253,7 @@ const ManageProductsV1 = () => {
     setGeneralSearch("");
     setSelects({ ...emptySelects });
     setMultiSelects({ ...emptyMultiSelects });
+    setCategorySelects({ ...emptyCategorySelects });
     setChecks({ ...emptyChecks });
     setColumnFilters({ ...emptyColumnFilters });
     setPage(1);
@@ -265,7 +281,7 @@ const ManageProductsV1 = () => {
           {/* Filters */}
           <Card>
             <CardContent className="p-4 space-y-4">
-              {/* Top row: General Search + Dropdowns */}
+              {/* Top row: General Search + Lab Code */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
                 <div className="md:col-span-6 space-y-1">
                   <Label className="text-[10px] font-medium text-muted-foreground">General Search</Label>
@@ -298,27 +314,108 @@ const ManageProductsV1 = () => {
                     </SelectContent>
                   </Select>
                 </div>
+              </div>
 
-                <div className="md:col-span-2 space-y-1">
-                  <Label className="text-[10px] font-medium text-muted-foreground">Technical/Labs Category</Label>
-                  <MultiSelect
-                    options={[...SELECT_FILTERS.find((f) => f.key === "techCategory")!.options]}
-                    values={multiSelects.techCategory}
-                    onChange={(v) => setMultiSelects((p) => ({ ...p, techCategory: v }))}
-                    max={3}
-                    placeholder="All"
-                  />
+              {/* Categories — label-left / dropdown-right rows */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-2">
+                {/* Technical/Labs Category column */}
+                <div className="space-y-1.5">
+                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
+                    <Label className="text-[11px] text-right text-foreground">Technical/Labs Category:</Label>
+                    <MultiSelect
+                      options={[...SELECT_FILTERS.find((f) => f.key === "techCategory")!.options]}
+                      values={multiSelects.techCategory}
+                      onChange={(v) => setMultiSelects((p) => ({ ...p, techCategory: v }))}
+                      max={3}
+                      placeholder="All"
+                    />
+                  </div>
+                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
+                    <Label className="text-[11px] text-right text-foreground">2nd Category:</Label>
+                    <Select
+                      value={categorySelects.tech2nd || undefined}
+                      onValueChange={(v) => setCategorySelects((p) => ({ ...p, tech2nd: v }))}
+                    >
+                      <SelectTrigger className="h-7 text-[11px] px-2">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover z-50">
+                        {TECH_2ND_OPTIONS.map((o) => (
+                          <SelectItem key={o} value={o} className="text-[11px]">
+                            {o}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
+                    <Label className="text-[11px] text-right text-foreground">3rd Category:</Label>
+                    <Select
+                      value={categorySelects.tech3rd || undefined}
+                      onValueChange={(v) => setCategorySelects((p) => ({ ...p, tech3rd: v }))}
+                    >
+                      <SelectTrigger className="h-7 text-[11px] px-2">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover z-50">
+                        {TECH_3RD_OPTIONS.map((o) => (
+                          <SelectItem key={o} value={o} className="text-[11px]">
+                            {o}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
 
-                <div className="md:col-span-2 space-y-1">
-                  <Label className="text-[10px] font-medium text-muted-foreground">Rental/Sales Category</Label>
-                  <MultiSelect
-                    options={[...SELECT_FILTERS.find((f) => f.key === "rentalCategory")!.options]}
-                    values={multiSelects.rentalCategory}
-                    onChange={(v) => setMultiSelects((p) => ({ ...p, rentalCategory: v }))}
-                    max={3}
-                    placeholder="All"
-                  />
+                {/* Rental/Sales Category column */}
+                <div className="space-y-1.5">
+                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
+                    <Label className="text-[11px] text-right text-foreground">Rental/Sales Category:</Label>
+                    <MultiSelect
+                      options={[...SELECT_FILTERS.find((f) => f.key === "rentalCategory")!.options]}
+                      values={multiSelects.rentalCategory}
+                      onChange={(v) => setMultiSelects((p) => ({ ...p, rentalCategory: v }))}
+                      max={3}
+                      placeholder="All"
+                    />
+                  </div>
+                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
+                    <Label className="text-[11px] text-right text-foreground">2nd Category:</Label>
+                    <Select
+                      value={categorySelects.rental2nd || undefined}
+                      onValueChange={(v) => setCategorySelects((p) => ({ ...p, rental2nd: v }))}
+                    >
+                      <SelectTrigger className="h-7 text-[11px] px-2">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover z-50">
+                        {RENTAL_2ND_OPTIONS.map((o) => (
+                          <SelectItem key={o} value={o} className="text-[11px]">
+                            {o}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
+                    <Label className="text-[11px] text-right text-foreground">3rd Category:</Label>
+                    <Select
+                      value={categorySelects.rental3rd || undefined}
+                      onValueChange={(v) => setCategorySelects((p) => ({ ...p, rental3rd: v }))}
+                    >
+                      <SelectTrigger className="h-7 text-[11px] px-2">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover z-50">
+                        {RENTAL_3RD_OPTIONS.map((o) => (
+                          <SelectItem key={o} value={o} className="text-[11px]">
+                            {o}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </div>
 
