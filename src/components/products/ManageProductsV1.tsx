@@ -55,6 +55,11 @@ const SELECT_FILTERS = [
   },
 ] as const;
 
+const TECH_2ND_OPTIONS = ["Caliper - Slide Type", "Caliper - Digital", "Multimeter - Handheld", "Clamp Meter", "Pressure Gauge"];
+const TECH_3RD_OPTIONS = ["Dial (Inside)", "Dial (Outside)", "Vernier", "Electronic", "100AMP", "600AMP"];
+const RENTAL_2ND_OPTIONS = ["Case", "Kit", "Accessory", "Tool", "Tester"];
+const RENTAL_3RD_OPTIONS = ["100AMP", "600AMP", "Standard", "Premium", "Basic"];
+
 const CHECK_FILTERS = [
   { key: "includeProductReview", label: "Include Product Review" },
   { key: "onlyProductReview", label: "Only Include Product Review" },
