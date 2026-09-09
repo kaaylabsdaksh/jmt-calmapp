@@ -21,7 +21,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import { MultiSelect } from "@/components/ui/multi-select";
+
 import {
   Table,
   TableBody,
@@ -45,13 +45,11 @@ const SELECT_FILTERS = [
     key: "techCategory",
     label: "Technical/Labs Category",
     options: ["Electrical", "Mechanical", "Temperature", "Pressure"],
-    multi: true,
   },
   {
     key: "rentalCategory",
     label: "Rental/Sales Category",
     options: ["Rental", "Sales", "Both"],
-    multi: true,
   },
 ] as const;
 
@@ -133,7 +131,6 @@ const COLUMNS = [
 ] as const;
 
 const emptySelects = Object.fromEntries(SELECT_FILTERS.map((f) => [f.key, ""])) as Record<string, string>;
-const emptyMultiSelects = { techCategory: [] as string[], rentalCategory: [] as string[] };
 const emptyCategorySelects = {
   tech2nd: "",
   tech3rd: "",
@@ -150,9 +147,6 @@ const ManageProductsV1 = () => {
   const navigate = useNavigate();
   const [generalSearch, setGeneralSearch] = useState("");
   const [selects, setSelects] = useState<Record<string, string>>({ ...emptySelects });
-  const [multiSelects, setMultiSelects] = useState<{ techCategory: string[]; rentalCategory: string[] }>({
-    ...emptyMultiSelects,
-  });
   const [categorySelects, setCategorySelects] = useState<{ tech2nd: string; tech3rd: string; rental2nd: string; rental3rd: string }>({
     ...emptyCategorySelects,
   });
@@ -224,8 +218,8 @@ const ManageProductsV1 = () => {
       )
         return false;
       if (selects.labCode && p.lc !== selects.labCode) return false;
-      if (multiSelects.techCategory.length > 0 && !multiSelects.techCategory.includes(p.groupType)) return false;
-      if (multiSelects.rentalCategory.length > 0 && !multiSelects.rentalCategory.includes(p.rental)) return false;
+      if (selects.techCategory && p.groupType !== selects.techCategory) return false;
+      if (selects.rentalCategory && p.rental !== selects.rentalCategory) return false;
       return COLUMNS.every((c) => {
         const v = columnFilters[c.key];
         if (!v || v === "all") return true;
@@ -234,7 +228,7 @@ const ManageProductsV1 = () => {
         return cell.toLowerCase().includes(v.toLowerCase());
       });
     });
-  }, [generalSearch, selects, multiSelects, columnFilters]);
+  }, [generalSearch, selects, columnFilters]);
 
   const size = Number(pageSize);
   const totalPages = Math.max(1, Math.ceil(rows.length / size));
@@ -244,7 +238,6 @@ const ManageProductsV1 = () => {
   const activeCount =
     (generalSearch ? 1 : 0) +
     Object.values(selects).filter(Boolean).length +
-    Object.values(multiSelects).reduce((acc, v) => acc + v.length, 0) +
     Object.values(categorySelects).filter(Boolean).length +
     Object.values(checks).filter(Boolean).length +
     Object.values(columnFilters).filter(Boolean).length;
@@ -252,7 +245,6 @@ const ManageProductsV1 = () => {
   const handleClear = () => {
     setGeneralSearch("");
     setSelects({ ...emptySelects });
-    setMultiSelects({ ...emptyMultiSelects });
     setCategorySelects({ ...emptyCategorySelects });
     setChecks({ ...emptyChecks });
     setColumnFilters({ ...emptyColumnFilters });
@@ -332,13 +324,21 @@ const ManageProductsV1 = () => {
                     <span className="text-[11px] font-bold text-foreground uppercase tracking-wide">Technical / Labs</span>
                   </div>
                   <div className="space-y-2">
-                    <MultiSelect
-                      options={[...SELECT_FILTERS.find((f) => f.key === "techCategory")!.options]}
-                      values={multiSelects.techCategory}
-                      onChange={(v) => setMultiSelects((p) => ({ ...p, techCategory: v }))}
-                      max={3}
-                      placeholder="All"
-                    />
+                    <Select
+                      value={selects.techCategory || undefined}
+                      onValueChange={(v) => setSelects((p) => ({ ...p, techCategory: v }))}
+                    >
+                      <SelectTrigger className="h-7 text-[11px] px-2">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover z-50">
+                        {SELECT_FILTERS.find((f) => f.key === "techCategory")!.options.map((o) => (
+                          <SelectItem key={o} value={o} className="text-[11px]">
+                            {o}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <Select
                       value={categorySelects.tech2nd || undefined}
                       onValueChange={(v) => setCategorySelects((p) => ({ ...p, tech2nd: v }))}
@@ -379,13 +379,21 @@ const ManageProductsV1 = () => {
                     <span className="text-[11px] font-bold text-foreground uppercase tracking-wide">Rental / Sales</span>
                   </div>
                   <div className="space-y-2">
-                    <MultiSelect
-                      options={[...SELECT_FILTERS.find((f) => f.key === "rentalCategory")!.options]}
-                      values={multiSelects.rentalCategory}
-                      onChange={(v) => setMultiSelects((p) => ({ ...p, rentalCategory: v }))}
-                      max={3}
-                      placeholder="All"
-                    />
+                    <Select
+                      value={selects.rentalCategory || undefined}
+                      onValueChange={(v) => setSelects((p) => ({ ...p, rentalCategory: v }))}
+                    >
+                      <SelectTrigger className="h-7 text-[11px] px-2">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover z-50">
+                        {SELECT_FILTERS.find((f) => f.key === "rentalCategory")!.options.map((o) => (
+                          <SelectItem key={o} value={o} className="text-[11px]">
+                            {o}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <Select
                       value={categorySelects.rental2nd || undefined}
                       onValueChange={(v) => setCategorySelects((p) => ({ ...p, rental2nd: v }))}
