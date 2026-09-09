@@ -689,7 +689,7 @@ const ManageProductsV1 = () => {
       </div>
 
       {/* Sticky footer */}
-      <div className="sticky bottom-0 z-20 bg-background border-t border-border px-4 py-3 shadow-[0_-2px_8px_rgba(0,0,0,0.04)]">
+      <div className="sticky bottom-0 z-20 -mx-2 sm:-mx-4 lg:-mx-6 bg-background border-t border-border px-4 sm:px-6 lg:px-8 py-3 shadow-[0_-2px_8px_rgba(0,0,0,0.04)]">
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
