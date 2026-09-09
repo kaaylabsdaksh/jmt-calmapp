@@ -348,38 +348,6 @@ export function ProductFilesTab() {
           </div>
         </SectionCard>
       </div>
-
-      <div className="space-y-4">
-        <SectionCard icon={FileText} title="Templates & Procedures">
-          <div className="space-y-3">
-            <div className="space-y-1">
-              <FieldLabel label="Datasheet Template" />
-              <Select value={datasheet} onValueChange={setDatasheet}>
-                <SelectTrigger className="h-8 text-xs">
-                  <SelectValue placeholder="Select template" />
-                </SelectTrigger>
-                <SelectContent>
-                  {DATASHEET_TEMPLATES.map((t) => (
-                    <SelectItem key={t} value={t} className="text-xs">
-                      {t}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <FilePickerField
-              label="Manufacturer Procedure"
-              value={procedure}
-              onPick={setProcedure}
-              onClear={() => setProcedure("")}
-            />
-            <p className="text-[10px] text-muted-foreground leading-relaxed">
-              The datasheet template drives the calibration record layout. The manufacturer
-              procedure is attached to every work order for this product.
-            </p>
-          </div>
-        </SectionCard>
-      </div>
     </div>
   );
 }
