@@ -316,24 +316,24 @@ const ManageProductsV1 = () => {
               </div>
 
               {/* Category lanes */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 p-4 bg-white rounded-lg border">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 p-3 bg-white rounded-lg border">
                 {/* Technical/Labs */}
-                <div className="space-y-2 pr-0 lg:pr-6 lg:border-r border-border">
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="h-1 w-4 bg-blue-500 rounded-full" />
-                    <span className="text-[11px] font-bold text-foreground uppercase tracking-wide">Technical / Labs</span>
+                <div className="space-y-1 pr-0 lg:pr-5 lg:border-r border-border">
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <div className="h-1 w-3 bg-blue-500 rounded-full" />
+                    <span className="text-[10px] font-bold text-foreground uppercase tracking-wide">Technical / Labs</span>
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-1">
                     <Select
                       value={selects.techCategory || undefined}
                       onValueChange={(v) => setSelects((p) => ({ ...p, techCategory: v }))}
                     >
-                      <SelectTrigger className="h-7 text-[11px] px-2">
+                      <SelectTrigger className="h-6 text-[10px] px-1.5">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent className="bg-popover z-50">
                         {SELECT_FILTERS.find((f) => f.key === "techCategory")!.options.map((o) => (
-                          <SelectItem key={o} value={o} className="text-[11px]">
+                          <SelectItem key={o} value={o} className="text-[10px]">
                             {o}
                           </SelectItem>
                         ))}
@@ -343,12 +343,12 @@ const ManageProductsV1 = () => {
                       value={categorySelects.tech2nd || undefined}
                       onValueChange={(v) => setCategorySelects((p) => ({ ...p, tech2nd: v }))}
                     >
-                      <SelectTrigger className="h-7 text-[11px] px-2">
+                      <SelectTrigger className="h-6 text-[10px] px-1.5">
                         <SelectValue placeholder="2nd Category" />
                       </SelectTrigger>
                       <SelectContent className="bg-popover z-50">
                         {TECH_2ND_OPTIONS.map((o) => (
-                          <SelectItem key={o} value={o} className="text-[11px]">
+                          <SelectItem key={o} value={o} className="text-[10px]">
                             {o}
                           </SelectItem>
                         ))}
@@ -358,12 +358,12 @@ const ManageProductsV1 = () => {
                       value={categorySelects.tech3rd || undefined}
                       onValueChange={(v) => setCategorySelects((p) => ({ ...p, tech3rd: v }))}
                     >
-                      <SelectTrigger className="h-7 text-[11px] px-2">
+                      <SelectTrigger className="h-6 text-[10px] px-1.5">
                         <SelectValue placeholder="3rd Category" />
                       </SelectTrigger>
                       <SelectContent className="bg-popover z-50">
                         {TECH_3RD_OPTIONS.map((o) => (
-                          <SelectItem key={o} value={o} className="text-[11px]">
+                          <SelectItem key={o} value={o} className="text-[10px]">
                             {o}
                           </SelectItem>
                         ))}
@@ -373,22 +373,22 @@ const ManageProductsV1 = () => {
                 </div>
 
                 {/* Rental/Sales */}
-                <div className="space-y-2 pl-0 lg:pl-6 pt-4 lg:pt-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="h-1 w-4 bg-emerald-500 rounded-full" />
-                    <span className="text-[11px] font-bold text-foreground uppercase tracking-wide">Rental / Sales</span>
+                <div className="space-y-1 pl-0 lg:pl-5 pt-3 lg:pt-0">
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <div className="h-1 w-3 bg-emerald-500 rounded-full" />
+                    <span className="text-[10px] font-bold text-foreground uppercase tracking-wide">Rental / Sales</span>
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-1">
                     <Select
                       value={selects.rentalCategory || undefined}
                       onValueChange={(v) => setSelects((p) => ({ ...p, rentalCategory: v }))}
                     >
-                      <SelectTrigger className="h-7 text-[11px] px-2">
+                      <SelectTrigger className="h-6 text-[10px] px-1.5">
                         <SelectValue placeholder="All" />
                       </SelectTrigger>
                       <SelectContent className="bg-popover z-50">
                         {SELECT_FILTERS.find((f) => f.key === "rentalCategory")!.options.map((o) => (
-                          <SelectItem key={o} value={o} className="text-[11px]">
+                          <SelectItem key={o} value={o} className="text-[10px]">
                             {o}
                           </SelectItem>
                         ))}
@@ -398,12 +398,12 @@ const ManageProductsV1 = () => {
                       value={categorySelects.rental2nd || undefined}
                       onValueChange={(v) => setCategorySelects((p) => ({ ...p, rental2nd: v }))}
                     >
-                      <SelectTrigger className="h-7 text-[11px] px-2">
+                      <SelectTrigger className="h-6 text-[10px] px-1.5">
                         <SelectValue placeholder="2nd Category" />
                       </SelectTrigger>
                       <SelectContent className="bg-popover z-50">
                         {RENTAL_2ND_OPTIONS.map((o) => (
-                          <SelectItem key={o} value={o} className="text-[11px]">
+                          <SelectItem key={o} value={o} className="text-[10px]">
                             {o}
                           </SelectItem>
                         ))}
@@ -413,12 +413,12 @@ const ManageProductsV1 = () => {
                       value={categorySelects.rental3rd || undefined}
                       onValueChange={(v) => setCategorySelects((p) => ({ ...p, rental3rd: v }))}
                     >
-                      <SelectTrigger className="h-7 text-[11px] px-2">
+                      <SelectTrigger className="h-6 text-[10px] px-1.5">
                         <SelectValue placeholder="3rd Category" />
                       </SelectTrigger>
                       <SelectContent className="bg-popover z-50">
                         {RENTAL_3RD_OPTIONS.map((o) => (
-                          <SelectItem key={o} value={o} className="text-[11px]">
+                          <SelectItem key={o} value={o} className="text-[10px]">
                             {o}
                           </SelectItem>
                         ))}
