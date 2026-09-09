@@ -146,7 +146,7 @@ export function ProductFilesTab() {
   const [procedure, setProcedure] = useState("");
   const [files, setFiles] = useState<SupplementalFile[]>(INITIAL_FILES);
 
-  const [adding, setAdding] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [status, setStatus] = useState("Active");
   const [description, setDescription] = useState("");
   const [upload, setUpload] = useState("");
@@ -155,7 +155,14 @@ export function ProductFilesTab() {
     setStatus("Active");
     setDescription("");
     setUpload("");
-    setAdding(false);
+    setEditingId(null);
+  };
+
+  const startEdit = (f: SupplementalFile) => {
+    setEditingId(f.id);
+    setStatus(f.status);
+    setDescription(f.description);
+    setUpload(f.fileName);
   };
 
   const handleAdd = () => {
@@ -167,17 +174,28 @@ export function ProductFilesTab() {
       });
       return;
     }
-    setFiles((prev) => [
-      {
-        id: `sdf-${Date.now()}`,
-        description: description.trim(),
-        status,
-        fileName: upload,
-        addedOn: new Date().toLocaleDateString("en-US"),
-      },
-      ...prev,
-    ]);
-    toast({ title: "File added", description: description.trim() });
+    if (editingId) {
+      setFiles((prev) =>
+        prev.map((f) =>
+          f.id === editingId
+            ? { ...f, description: description.trim(), status, fileName: upload }
+            : f,
+        ),
+      );
+      toast({ title: "File updated", description: description.trim() });
+    } else {
+      setFiles((prev) => [
+        {
+          id: `sdf-${Date.now()}`,
+          description: description.trim(),
+          status,
+          fileName: upload,
+          addedOn: new Date().toLocaleDateString("en-US"),
+        },
+        ...prev,
+      ]);
+      toast({ title: "File added", description: description.trim() });
+    }
     resetForm();
   };
 
@@ -188,16 +206,8 @@ export function ProductFilesTab() {
           icon={Paperclip}
           title="Supplemental Data Files"
           subtitle={`${files.length} file${files.length === 1 ? "" : "s"} attached`}
-          action={
-            !adding && (
-              <Button size="sm" className="h-7 text-xs" onClick={() => setAdding(true)}>
-                <Plus className="h-3.5 w-3.5 mr-1.5" />
-                Add File
-              </Button>
-            )
-          }
         >
-          {adding && (
+          {(
             <div className="mb-3 rounded-md border bg-muted/30 p-3 space-y-3">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="space-y-1">
