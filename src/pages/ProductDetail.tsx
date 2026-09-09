@@ -343,12 +343,9 @@ const ProductDetail = () => {
 
 
             <TabsContent value="accessories" className="mt-4">
-              <SectionCard icon={Boxes} title="Accessories">
-                <div className="text-[11px] text-muted-foreground py-8 text-center">
-                  No accessories linked to this product.
-                </div>
-              </SectionCard>
+              <ProductAccessoriesTab />
             </TabsContent>
+
 
             <TabsContent value="ref" className="mt-4">
               <SectionCard icon={ClipboardList} title={`Reference ${product.id}`}>
