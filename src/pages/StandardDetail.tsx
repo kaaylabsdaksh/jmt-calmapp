@@ -136,6 +136,96 @@ const ToggleRow = ({
   </div>
 );
 
+/* ------------------------------------------------- stepped-flow primitives */
+
+/** One numbered station on the vertical General-tab spine. */
+const Step = ({
+  index,
+  title,
+  hint,
+  badge,
+  action,
+  last,
+  children,
+}: {
+  index: string;
+  title: string;
+  hint?: string;
+  badge?: React.ReactNode;
+  action?: React.ReactNode;
+  last?: boolean;
+  children: React.ReactNode;
+}) => (
+  <section className={cn("relative pl-7", last ? "border-l border-transparent pb-0" : "border-l border-border pb-7")}>
+    <span
+      aria-hidden
+      className="absolute -left-[7px] top-0 h-3.5 w-3.5 rounded-full border-2 border-primary bg-card"
+    />
+    <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
+      <div className="flex items-baseline gap-2">
+        <h2 className="text-[11px] font-bold uppercase tracking-wider text-foreground">
+          <span className="mr-1.5 tabular-nums text-muted-foreground">{index}</span>
+          {title}
+        </h2>
+        {hint && <span className="text-[10px] text-muted-foreground">{hint}</span>}
+      </div>
+      <div className="flex items-center gap-2">
+        {badge}
+        {action}
+      </div>
+    </div>
+    {children}
+  </section>
+);
+
+/** Compact micro-label field used inside the stepped flow. */
+const StepField = ({
+  label,
+  htmlFor,
+  required,
+  error,
+  className,
+  children,
+}: {
+  label: string;
+  htmlFor?: string;
+  required?: boolean;
+  error?: string;
+  className?: string;
+  children: React.ReactNode;
+}) => (
+  <div className={cn("space-y-1", className)}>
+    <Label htmlFor={htmlFor} className="block text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+      {label}
+      {required && <span className="ml-0.5 text-destructive">*</span>}
+    </Label>
+    {children}
+    {error && <p className="text-[10px] font-medium text-destructive">{error}</p>}
+  </div>
+);
+
+/** Inline switch used in the compact flag strip. */
+const FlagSwitch = ({
+  id,
+  label,
+  checked,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  checked: boolean;
+  onChange: (v: boolean) => void;
+}) => (
+  <label htmlFor={id} className="flex cursor-pointer items-center gap-2">
+    <Switch id={id} checked={checked} onCheckedChange={onChange} className="scale-[0.8]" />
+    <span className={cn("text-[11px] font-semibold", checked ? "text-foreground" : "text-muted-foreground")}>
+      {label}
+    </span>
+  </label>
+);
+
+const CTRL = "h-8 text-xs";
+
 const MaintenanceStatusBadge = ({ status }: { status: string }) => {
   const map: Record<string, string> = {
     Scheduled: "bg-slate-100 text-slate-700",
