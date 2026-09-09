@@ -961,7 +961,7 @@ const StandardDetail = () => {
       </main>
 
       {/* Sticky actions */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 border-t border-border bg-white px-4 py-2.5 shadow-[0_-2px_8px_rgba(0,0,0,0.04)] lg:pl-[var(--sidebar-width,16rem)]">
+      <div className="sticky bottom-0 z-30 w-full border-t border-border bg-white px-4 py-2.5 shadow-[0_-2px_8px_rgba(0,0,0,0.04)]">
         <div className="flex items-center justify-between gap-2">
           <div className="text-xs text-muted-foreground">{dirty ? "Unsaved changes" : "All changes saved"}</div>
           <div className="flex items-center gap-2">
