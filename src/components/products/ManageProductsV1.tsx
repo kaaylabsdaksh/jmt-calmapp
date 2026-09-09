@@ -281,11 +281,17 @@ const ManageProductsV1 = () => {
 
           {/* Filters */}
           <Card>
-            <CardContent className="p-4 space-y-4">
+            <CardContent className="p-5 space-y-5">
+              {/* Card header */}
+              <div className="flex items-center justify-between border-b pb-3">
+                <h2 className="text-sm font-semibold text-foreground uppercase tracking-wider">Filter &amp; Search Products</h2>
+                <span className="text-[10px] text-muted-foreground font-medium">ADVANCED FILTERS</span>
+              </div>
+
               {/* Top row: General Search + Lab Code */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
-                <div className="md:col-span-6 space-y-1">
-                  <Label className="text-[10px] font-medium text-muted-foreground">General Search</Label>
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+                <div className="md:col-span-8 space-y-1.5">
+                  <Label className="text-[11px] font-semibold text-muted-foreground uppercase">General Search</Label>
                   <div className="relative">
                     <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
                     <Input
@@ -297,8 +303,8 @@ const ManageProductsV1 = () => {
                   </div>
                 </div>
 
-                <div className="md:col-span-2 space-y-1">
-                  <Label className="text-[10px] font-medium text-muted-foreground">Lab Code</Label>
+                <div className="md:col-span-4 space-y-1.5">
+                  <Label className="text-[11px] font-semibold text-muted-foreground uppercase">Lab Code</Label>
                   <Select
                     value={selects.labCode || undefined}
                     onValueChange={(v) => setSelects((p) => ({ ...p, labCode: v }))}
@@ -317,12 +323,15 @@ const ManageProductsV1 = () => {
                 </div>
               </div>
 
-              {/* Categories — label-left / dropdown-right rows */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-2">
-                {/* Technical/Labs Category column */}
-                <div className="space-y-1.5">
-                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
-                    <Label className="text-[11px] text-right text-foreground">Technical/Labs Category:</Label>
+              {/* Category lanes */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 p-4 bg-muted/30 rounded-lg border">
+                {/* Technical/Labs */}
+                <div className="space-y-2 pr-0 lg:pr-6 lg:border-r border-border">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="h-1 w-4 bg-blue-500 rounded-full" />
+                    <span className="text-[11px] font-bold text-foreground uppercase tracking-wide">Technical / Labs</span>
+                  </div>
+                  <div className="space-y-2">
                     <MultiSelect
                       options={[...SELECT_FILTERS.find((f) => f.key === "techCategory")!.options]}
                       values={multiSelects.techCategory}
@@ -330,15 +339,12 @@ const ManageProductsV1 = () => {
                       max={3}
                       placeholder="All"
                     />
-                  </div>
-                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
-                    <Label className="text-[11px] text-right text-foreground">2nd Category:</Label>
                     <Select
                       value={categorySelects.tech2nd || undefined}
                       onValueChange={(v) => setCategorySelects((p) => ({ ...p, tech2nd: v }))}
                     >
                       <SelectTrigger className="h-7 text-[11px] px-2">
-                        <SelectValue placeholder="All" />
+                        <SelectValue placeholder="2nd Category" />
                       </SelectTrigger>
                       <SelectContent className="bg-popover z-50">
                         {TECH_2ND_OPTIONS.map((o) => (
@@ -348,15 +354,12 @@ const ManageProductsV1 = () => {
                         ))}
                       </SelectContent>
                     </Select>
-                  </div>
-                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
-                    <Label className="text-[11px] text-right text-foreground">3rd Category:</Label>
                     <Select
                       value={categorySelects.tech3rd || undefined}
                       onValueChange={(v) => setCategorySelects((p) => ({ ...p, tech3rd: v }))}
                     >
                       <SelectTrigger className="h-7 text-[11px] px-2">
-                        <SelectValue placeholder="All" />
+                        <SelectValue placeholder="3rd Category" />
                       </SelectTrigger>
                       <SelectContent className="bg-popover z-50">
                         {TECH_3RD_OPTIONS.map((o) => (
@@ -369,10 +372,13 @@ const ManageProductsV1 = () => {
                   </div>
                 </div>
 
-                {/* Rental/Sales Category column */}
-                <div className="space-y-1.5">
-                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
-                    <Label className="text-[11px] text-right text-foreground">Rental/Sales Category:</Label>
+                {/* Rental/Sales */}
+                <div className="space-y-2 pl-0 lg:pl-6 pt-4 lg:pt-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="h-1 w-4 bg-emerald-500 rounded-full" />
+                    <span className="text-[11px] font-bold text-foreground uppercase tracking-wide">Rental / Sales</span>
+                  </div>
+                  <div className="space-y-2">
                     <MultiSelect
                       options={[...SELECT_FILTERS.find((f) => f.key === "rentalCategory")!.options]}
                       values={multiSelects.rentalCategory}
@@ -380,15 +386,12 @@ const ManageProductsV1 = () => {
                       max={3}
                       placeholder="All"
                     />
-                  </div>
-                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
-                    <Label className="text-[11px] text-right text-foreground">2nd Category:</Label>
                     <Select
                       value={categorySelects.rental2nd || undefined}
                       onValueChange={(v) => setCategorySelects((p) => ({ ...p, rental2nd: v }))}
                     >
                       <SelectTrigger className="h-7 text-[11px] px-2">
-                        <SelectValue placeholder="All" />
+                        <SelectValue placeholder="2nd Category" />
                       </SelectTrigger>
                       <SelectContent className="bg-popover z-50">
                         {RENTAL_2ND_OPTIONS.map((o) => (
@@ -398,15 +401,12 @@ const ManageProductsV1 = () => {
                         ))}
                       </SelectContent>
                     </Select>
-                  </div>
-                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
-                    <Label className="text-[11px] text-right text-foreground">3rd Category:</Label>
                     <Select
                       value={categorySelects.rental3rd || undefined}
                       onValueChange={(v) => setCategorySelects((p) => ({ ...p, rental3rd: v }))}
                     >
                       <SelectTrigger className="h-7 text-[11px] px-2">
-                        <SelectValue placeholder="All" />
+                        <SelectValue placeholder="3rd Category" />
                       </SelectTrigger>
                       <SelectContent className="bg-popover z-50">
                         {RENTAL_3RD_OPTIONS.map((o) => (
@@ -420,9 +420,9 @@ const ManageProductsV1 = () => {
                 </div>
               </div>
 
-              {/* Checkbox grid */}
-              <div className="bg-muted/40 rounded-lg p-3">
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+              {/* Checkbox + actions row */}
+              <div className="flex flex-wrap items-center justify-between gap-4 pt-1">
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
                   {CHECK_FILTERS.map((f) => (
                     <label
                       key={f.key}
@@ -441,10 +441,6 @@ const ManageProductsV1 = () => {
                     </label>
                   ))}
                 </div>
-              </div>
-
-              {/* Footer controls */}
-              <div className="flex flex-wrap items-center justify-end gap-2 pt-2 border-t">
                 <div className="flex items-center gap-2">
                   <Button variant="ghost" size="sm" className="h-8 text-xs" onClick={handleClear}>
                     <X className="h-3.5 w-3.5 mr-1.5" />
