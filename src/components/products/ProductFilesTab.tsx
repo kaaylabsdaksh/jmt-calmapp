@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { FileText, Paperclip, Plus, Trash2, Upload, X, Download } from "lucide-react";
+import { FileText, Paperclip, Trash2, Upload, X, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
