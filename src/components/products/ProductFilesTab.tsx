@@ -33,22 +33,7 @@ type SupplementalFile = {
   addedOn: string;
 };
 
-const INITIAL_FILES: SupplementalFile[] = [
-  {
-    id: "sdf-1",
-    description: "Manufacturer specification sheet",
-    status: "Active",
-    fileName: "fluke-87v-spec.pdf",
-    addedOn: "04/18/2026",
-  },
-  {
-    id: "sdf-2",
-    description: "Legacy calibration procedure (superseded)",
-    status: "Inactive",
-    fileName: "cal-proc-rev2.docx",
-    addedOn: "11/02/2025",
-  },
-];
+const INITIAL_FILES: SupplementalFile[] = [];
 
 function FieldLabel({ label, required }: { label: string; required?: boolean }) {
   return (
