@@ -88,16 +88,16 @@ const ProductDetail = () => {
       .forEach((l) => (init[l] = true));
     return init;
   });
-  const [comment, setComment] = useState("");
-  const [commentType, setCommentType] = useState("Other");
-  const [comments, setComments] = useState([
+  const [comments, setComments] = useState<ActivityEntry[]>([
     {
+      id: "act-1",
       type: "Other",
       text: "Bulk Updates to CertTime as per Project Apex",
       user: "Admin User",
-      entered: "01/26/2026 00:00 AM",
+      ts: "01/26/2026 12:00 AM",
     },
   ]);
+
 
   if (!product) {
     return (
