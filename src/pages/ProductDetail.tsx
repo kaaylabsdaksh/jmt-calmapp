@@ -37,6 +37,8 @@ import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { PRODUCTS } from "@/lib/products";
 import ProductFilesTab from "@/components/products/ProductFilesTab";
+import ProductAccessoriesTab from "@/components/products/ProductAccessoriesTab";
+
 
 
 const CAPABLE_LOCATIONS = [
