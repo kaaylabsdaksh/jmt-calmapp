@@ -21,7 +21,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import { MultiSelect } from "@/components/ui/multi-select";
+
 import {
   Table,
   TableBody,
@@ -45,13 +45,11 @@ const SELECT_FILTERS = [
     key: "techCategory",
     label: "Technical/Labs Category",
     options: ["Electrical", "Mechanical", "Temperature", "Pressure"],
-    multi: true,
   },
   {
     key: "rentalCategory",
     label: "Rental/Sales Category",
     options: ["Rental", "Sales", "Both"],
-    multi: true,
   },
 ] as const;
 
@@ -133,7 +131,6 @@ const COLUMNS = [
 ] as const;
 
 const emptySelects = Object.fromEntries(SELECT_FILTERS.map((f) => [f.key, ""])) as Record<string, string>;
-const emptyMultiSelects = { techCategory: [] as string[], rentalCategory: [] as string[] };
 const emptyCategorySelects = {
   tech2nd: "",
   tech3rd: "",
@@ -150,10 +147,7 @@ const ManageProductsV1 = () => {
   const navigate = useNavigate();
   const [generalSearch, setGeneralSearch] = useState("");
   const [selects, setSelects] = useState<Record<string, string>>({ ...emptySelects });
-  const [multiSelects, setMultiSelects] = useState<{ techCategory: string[]; rentalCategory: string[] }>({
-    ...emptyMultiSelects,
-  });
-  const [categorySelects, setCategorySelects] = useState<{ tech2nd: string; tech3rd: string; rental2nd: string; rental3rd: string }>({
+  const [categorySelects, setCategorySelects] = useState<{ tech2nd: string; tech3rd: string; rental2nd: string; rental3rd: string }>(
     ...emptyCategorySelects,
   });
   const [checks, setChecks] = useState<Record<string, boolean>>({ ...emptyChecks });
