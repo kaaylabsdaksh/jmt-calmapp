@@ -281,7 +281,7 @@ const ManageProductsV1 = () => {
           {/* Filters */}
           <Card>
             <CardContent className="p-4 space-y-4">
-              {/* Top row: General Search + Dropdowns */}
+              {/* Top row: General Search + Lab Code */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
                 <div className="md:col-span-6 space-y-1">
                   <Label className="text-[10px] font-medium text-muted-foreground">General Search</Label>
@@ -314,27 +314,108 @@ const ManageProductsV1 = () => {
                     </SelectContent>
                   </Select>
                 </div>
+              </div>
 
-                <div className="md:col-span-2 space-y-1">
-                  <Label className="text-[10px] font-medium text-muted-foreground">Technical/Labs Category</Label>
-                  <MultiSelect
-                    options={[...SELECT_FILTERS.find((f) => f.key === "techCategory")!.options]}
-                    values={multiSelects.techCategory}
-                    onChange={(v) => setMultiSelects((p) => ({ ...p, techCategory: v }))}
-                    max={3}
-                    placeholder="All"
-                  />
+              {/* Categories — label-left / dropdown-right rows */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-2">
+                {/* Technical/Labs Category column */}
+                <div className="space-y-1.5">
+                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
+                    <Label className="text-[11px] text-right text-foreground">Technical/Labs Category:</Label>
+                    <MultiSelect
+                      options={[...SELECT_FILTERS.find((f) => f.key === "techCategory")!.options]}
+                      values={multiSelects.techCategory}
+                      onChange={(v) => setMultiSelects((p) => ({ ...p, techCategory: v }))}
+                      max={3}
+                      placeholder="All"
+                    />
+                  </div>
+                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
+                    <Label className="text-[11px] text-right text-foreground">2nd Category:</Label>
+                    <Select
+                      value={categorySelects.tech2nd || undefined}
+                      onValueChange={(v) => setCategorySelects((p) => ({ ...p, tech2nd: v }))}
+                    >
+                      <SelectTrigger className="h-7 text-[11px] px-2">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover z-50">
+                        {TECH_2ND_OPTIONS.map((o) => (
+                          <SelectItem key={o} value={o} className="text-[11px]">
+                            {o}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
+                    <Label className="text-[11px] text-right text-foreground">3rd Category:</Label>
+                    <Select
+                      value={categorySelects.tech3rd || undefined}
+                      onValueChange={(v) => setCategorySelects((p) => ({ ...p, tech3rd: v }))}
+                    >
+                      <SelectTrigger className="h-7 text-[11px] px-2">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover z-50">
+                        {TECH_3RD_OPTIONS.map((o) => (
+                          <SelectItem key={o} value={o} className="text-[11px]">
+                            {o}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
 
-                <div className="md:col-span-2 space-y-1">
-                  <Label className="text-[10px] font-medium text-muted-foreground">Rental/Sales Category</Label>
-                  <MultiSelect
-                    options={[...SELECT_FILTERS.find((f) => f.key === "rentalCategory")!.options]}
-                    values={multiSelects.rentalCategory}
-                    onChange={(v) => setMultiSelects((p) => ({ ...p, rentalCategory: v }))}
-                    max={3}
-                    placeholder="All"
-                  />
+                {/* Rental/Sales Category column */}
+                <div className="space-y-1.5">
+                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
+                    <Label className="text-[11px] text-right text-foreground">Rental/Sales Category:</Label>
+                    <MultiSelect
+                      options={[...SELECT_FILTERS.find((f) => f.key === "rentalCategory")!.options]}
+                      values={multiSelects.rentalCategory}
+                      onChange={(v) => setMultiSelects((p) => ({ ...p, rentalCategory: v }))}
+                      max={3}
+                      placeholder="All"
+                    />
+                  </div>
+                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
+                    <Label className="text-[11px] text-right text-foreground">2nd Category:</Label>
+                    <Select
+                      value={categorySelects.rental2nd || undefined}
+                      onValueChange={(v) => setCategorySelects((p) => ({ ...p, rental2nd: v }))}
+                    >
+                      <SelectTrigger className="h-7 text-[11px] px-2">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover z-50">
+                        {RENTAL_2ND_OPTIONS.map((o) => (
+                          <SelectItem key={o} value={o} className="text-[11px]">
+                            {o}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid grid-cols-[9.5rem_1fr] items-center gap-x-3">
+                    <Label className="text-[11px] text-right text-foreground">3rd Category:</Label>
+                    <Select
+                      value={categorySelects.rental3rd || undefined}
+                      onValueChange={(v) => setCategorySelects((p) => ({ ...p, rental3rd: v }))}
+                    >
+                      <SelectTrigger className="h-7 text-[11px] px-2">
+                        <SelectValue placeholder="All" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-popover z-50">
+                        {RENTAL_3RD_OPTIONS.map((o) => (
+                          <SelectItem key={o} value={o} className="text-[11px]">
+                            {o}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </div>
 
