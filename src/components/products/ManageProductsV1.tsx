@@ -264,82 +264,88 @@ const ManageProductsV1 = () => {
 
           {/* Filters */}
           <Card>
-            <CardContent className="p-3 space-y-2.5">
-              {/* General Search */}
-              <div className="space-y-0.5">
-                <Label className="text-[10px] font-medium text-muted-foreground">General Search</Label>
-                <div className="flex items-center gap-2">
-                  <div className="relative max-w-xl flex-1">
+            <CardContent className="p-4 space-y-4">
+              {/* Top row: General Search + Dropdowns */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-3">
+                <div className="md:col-span-6 space-y-1">
+                  <Label className="text-[10px] font-medium text-muted-foreground">General Search</Label>
+                  <div className="relative">
                     <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
                     <Input
                       value={generalSearch}
                       onChange={(e) => setGeneralSearch(e.target.value)}
                       placeholder="Manufacturer, model or description"
-                      className="h-7 text-[11px] pl-8"
+                      className="h-8 text-[11px] pl-8"
                     />
                   </div>
-                  <Button size="sm" className="h-7 text-xs">
-                    <Search className="h-3.5 w-3.5 mr-1.5" />
-                    Search
-                  </Button>
+                </div>
+
+                <div className="md:col-span-2 space-y-1">
+                  <Label className="text-[10px] font-medium text-muted-foreground">Lab Code</Label>
+                  <Select
+                    value={selects.labCode || undefined}
+                    onValueChange={(v) => setSelects((p) => ({ ...p, labCode: v }))}
+                  >
+                    <SelectTrigger className="h-8 text-[11px] px-2">
+                      <SelectValue placeholder="All" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover z-50">
+                      {SELECT_FILTERS.find((f) => f.key === "labCode")?.options.map((o) => (
+                        <SelectItem key={o} value={o} className="text-[11px]">
+                          {o}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="md:col-span-2 space-y-1">
+                  <Label className="text-[10px] font-medium text-muted-foreground">Technical/Labs Category</Label>
+                  <MultiSelect
+                    options={[...SELECT_FILTERS.find((f) => f.key === "techCategory")!.options]}
+                    values={multiSelects.techCategory}
+                    onChange={(v) => setMultiSelects((p) => ({ ...p, techCategory: v }))}
+                    max={3}
+                    placeholder="All"
+                  />
+                </div>
+
+                <div className="md:col-span-2 space-y-1">
+                  <Label className="text-[10px] font-medium text-muted-foreground">Rental/Sales Category</Label>
+                  <MultiSelect
+                    options={[...SELECT_FILTERS.find((f) => f.key === "rentalCategory")!.options]}
+                    values={multiSelects.rentalCategory}
+                    onChange={(v) => setMultiSelects((p) => ({ ...p, rentalCategory: v }))}
+                    max={3}
+                    placeholder="All"
+                  />
                 </div>
               </div>
 
-              {/* Category selects */}
-              <div className="flex flex-nowrap gap-2 overflow-x-auto pb-1">
-                {SELECT_FILTERS.map((f) => (
-                  <div key={f.key} className="space-y-0.5 min-w-[130px] flex-1">
-                    <Label className="text-[10px] font-medium text-muted-foreground whitespace-nowrap">
-                      {f.label}
-                    </Label>
-                    {"multi" in f && f.multi ? (
-                      <MultiSelect
-                        options={[...f.options]}
-                        values={multiSelects[f.key as keyof typeof multiSelects]}
-                        onChange={(v) => setMultiSelects((p) => ({ ...p, [f.key]: v }))}
-                        max={3}
-                        placeholder="All"
+              {/* Checkbox grid */}
+              <div className="bg-muted/40 rounded-lg p-3">
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                  {CHECK_FILTERS.map((f) => (
+                    <label
+                      key={f.key}
+                      className="inline-flex items-center gap-1.5 cursor-pointer group"
+                    >
+                      <Checkbox
+                        checked={checks[f.key]}
+                        onCheckedChange={(v) =>
+                          setChecks((p) => ({ ...p, [f.key]: Boolean(v) }))
+                        }
+                        className="h-3.5 w-3.5 rounded-[3px] border data-[state=checked]:border-primary [&_svg]:h-2.5 [&_svg]:w-2.5 [&_svg]:stroke-[3]"
                       />
-                    ) : (
-                      <Select
-                        value={selects[f.key] || undefined}
-                        onValueChange={(v) => setSelects((p) => ({ ...p, [f.key]: v }))}
-                      >
-                        <SelectTrigger className="h-7 text-[11px] px-2">
-                          <SelectValue placeholder="All" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-popover z-50">
-                          {f.options.map((o) => (
-                            <SelectItem key={o} value={o} className="text-[11px]">
-                              {o}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    )}
-                  </div>
-                ))}
+                      <span className="text-[11px] text-foreground group-hover:text-foreground/80 transition-colors">
+                        {f.label}
+                      </span>
+                    </label>
+                  ))}
+                </div>
               </div>
 
-              {/* Check filters */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-                {CHECK_FILTERS.map((f) => (
-                  <label
-                    key={f.key}
-                    className="flex items-center gap-1.5 rounded-md border bg-muted/30 px-2 py-1 cursor-pointer hover:bg-muted/60 transition-colors"
-                  >
-                    <Checkbox
-                      checked={checks[f.key]}
-                      onCheckedChange={(v) =>
-                        setChecks((p) => ({ ...p, [f.key]: Boolean(v) }))
-                      }
-                      className="h-3.5 w-3.5 rounded-[3px] border data-[state=checked]:border-primary [&_svg]:h-2.5 [&_svg]:w-2.5 [&_svg]:stroke-[3]"
-                    />
-                    <span className="text-[10px] leading-tight">{f.label}</span>
-                  </label>
-                ))}
-              </div>
-
+              {/* Footer controls */}
               <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t">
                 <div className="flex items-center gap-2">
                   <Button
