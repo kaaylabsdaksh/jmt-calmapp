@@ -273,12 +273,32 @@ const ManageStandards = () => {
           {/* Search Criteria */}
 
           <section className="bg-card rounded-xl shadow-sm border p-3">
-            <div className="mb-2 flex items-center gap-2">
-              <Search className="h-3.5 w-3.5 text-muted-foreground" />
-              <h2 className="text-xs font-semibold text-foreground">Search Criteria</h2>
-              {activeAdvancedCount > 0 && (
-                <Badge className="h-4 rounded-full px-1.5 text-[10px]">{activeAdvancedCount}</Badge>
-              )}
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <Search className="h-3.5 w-3.5 text-muted-foreground" />
+                <h2 className="text-xs font-semibold text-foreground">Search Criteria</h2>
+                {activeAdvancedCount > 0 && (
+                  <Badge className="h-4 rounded-full px-1.5 text-[10px]">{activeAdvancedCount}</Badge>
+                )}
+              </div>
+              <div className="flex items-center gap-2">
+                <Button className="h-7 gap-1.5 text-[11px]" onClick={() => navigate("/standards/new")}>
+                  <Plus className="h-3.5 w-3.5" />
+                  Add Standard
+                </Button>
+                <Button variant="outline" className="h-7 gap-1.5 text-[11px]" onClick={() => toast.success("Export started.")}>
+                  <Download className="h-3.5 w-3.5" />
+                  Export
+                </Button>
+                <Button
+                  variant="outline"
+                  className="h-7 gap-1.5 text-[11px]"
+                  onClick={() => toast.success("Export with history started.")}
+                >
+                  <FileSpreadsheet className="h-3.5 w-3.5" />
+                  Export with History
+                </Button>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-3">
@@ -422,26 +442,6 @@ const ManageStandards = () => {
 
 
 
-
-          {/* Action bar */}
-          <div className="flex flex-wrap items-center gap-2">
-            <Button className="h-9 gap-2 text-sm" onClick={() => navigate("/standards/new")}>
-              <Plus className="h-4 w-4" />
-              Add Standard
-            </Button>
-            <Button variant="outline" className="h-9 gap-2 text-sm" onClick={() => toast.success("Export started.")}>
-              <Download className="h-4 w-4" />
-              Export
-            </Button>
-            <Button
-              variant="outline"
-              className="h-9 gap-2 text-sm"
-              onClick={() => toast.success("Export with history started.")}
-            >
-              <FileSpreadsheet className="h-4 w-4" />
-              Export with History
-            </Button>
-          </div>
 
           {/* Table */}
           <div className="overflow-hidden rounded-lg border border-border bg-white shadow-sm">
