@@ -38,6 +38,8 @@ import { cn } from "@/lib/utils";
 import { PRODUCTS } from "@/lib/products";
 import ProductFilesTab from "@/components/products/ProductFilesTab";
 import ProductAccessoriesTab from "@/components/products/ProductAccessoriesTab";
+import ActivityLog, { type ActivityEntry } from "@/components/shared/ActivityLog";
+
 
 
 
