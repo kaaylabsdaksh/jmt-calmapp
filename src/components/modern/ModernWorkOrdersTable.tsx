@@ -5861,7 +5861,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                         (k === 'manufacturer') ? 'font-medium' :
                         (k === 'labCode') ? 'font-mono text-foreground' :
                         '';
-                      return <TableCell key={k} className={cellClass}>{content}</TableCell>;
+                      return <TableCell key={k} style={colWidthStyle(k)} className={cn(cellClass, columnWidths[k] && "truncate")}>{content}</TableCell>;
                     })}
                   </TableRow>
                 ))
