@@ -4417,8 +4417,11 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
       title="Drag to resize · double-click to reset"
       onMouseDown={(e) => startColumnResize(e, columnKey)}
       onDoubleClick={(e) => { e.stopPropagation(); resetColumnWidth(columnKey); }}
-      className="absolute right-0 top-0 h-full w-1.5 cursor-col-resize select-none hover:bg-primary/60 active:bg-primary"
-    />
+      className="absolute right-0 top-1/2 -translate-y-1/2 h-[70%] w-3 cursor-col-resize select-none flex items-center justify-center group/handle"
+    >
+      <span className="w-px h-full bg-border group-hover/handle:bg-primary/70 group-active/handle:bg-primary transition-colors" />
+      <span className="absolute inset-y-0 right-0 w-1.5 bg-primary/0 group-hover/handle:bg-primary/10 group-active/handle:bg-primary/20 transition-colors" />
+    </span>
   );
   const visibleItemColumns = columnPrefs.order
     .map(k => ITEM_COLUMN_DEFS.find(c => c.key === k))
