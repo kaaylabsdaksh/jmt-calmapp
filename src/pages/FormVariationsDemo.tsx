@@ -10153,24 +10153,29 @@ const FormVariationsDemo = () => {
                   const IconComp = config.icon;
                   const isLast = sectionOrder.indexOf(sectionId) === sectionOrder.length - 1;
                     return (
-                    <div key={sectionId}>
-                    <AccordionItem value={sectionId} className={isLast ? "border-b-0" : "border-b"}>
-                      <AccordionTrigger className="hover:no-underline py-4">
-                        <div className="flex items-center gap-3">
-                          <IconComp className="h-5 w-5 text-foreground" />
-                          <h3 className="font-semibold">{config.label}</h3>
-                          {config.statusKey && tabStatus[config.statusKey] === 'completed' && (
-                            <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
-                          )}
-                          {config.statusKey && tabStatus[config.statusKey] === 'error' && (
-                            <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
-                          )}
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="pb-4">
-                        {config.render()}
-                      </AccordionContent>
-                    </AccordionItem>
+                    <div
+                      key={sectionId}
+                      ref={(el) => { sectionRefs.current[sectionId] = el; }}
+                    >
+                      <AccordionItem value={sectionId} className={cn(isLast ? "border-b-0" : "border-b", "group")}>
+                        <AccordionTrigger className="hover:no-underline py-2.5 px-2 text-sm transition-colors hover:bg-muted/40 [&>svg]:h-4 [&>svg]:w-4">
+                          <div className="flex items-center gap-2.5">
+                            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-muted group-hover:bg-muted/70">
+                              <IconComp className="h-3.5 w-3.5 text-muted-foreground" />
+                            </span>
+                            <span className="font-medium">{config.label}</span>
+                            {config.statusKey && tabStatus[config.statusKey] === 'completed' && (
+                              <CheckCircle className="h-3.5 w-3.5 ml-auto mr-1 text-green-600" />
+                            )}
+                            {config.statusKey && tabStatus[config.statusKey] === 'error' && (
+                              <AlertCircle className="h-3.5 w-3.5 ml-auto mr-1 text-destructive" />
+                            )}
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-3 px-2">
+                          {config.render()}
+                        </AccordionContent>
+                      </AccordionItem>
                     </div>
                   );
                 })}
