@@ -10186,7 +10186,15 @@ const FormVariationsDemo = () => {
                         </Command>
                       </PopoverContent>
                     </Popover>
-
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-7 gap-1.5 text-xs"
+                      onClick={() => { setAiFillOpen(true); setAiError(null); }}
+                    >
+                      <Sparkles className="h-3.5 w-3.5" />
+                      AI Fill
+                    </Button>
                   </div>
                   <div className="flex items-center gap-2">
                     <Popover>
