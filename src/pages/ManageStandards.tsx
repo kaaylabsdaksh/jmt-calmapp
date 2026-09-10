@@ -579,7 +579,7 @@ const ManageStandards = () => {
                                     <Button
                                       variant="link"
                                       size="sm"
-                                      className="h-auto p-0 text-xs"
+                                      className="h-auto p-0 text-xs text-black hover:text-black/80"
                                       onClick={() => navigate(`/standards/${s.id}?tab=history`)}
                                     >
                                       View full history
