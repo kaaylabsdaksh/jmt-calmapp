@@ -80,11 +80,11 @@ const FormVariationsDemo = () => {
   const [draggedSection, setDraggedSection] = useState<string | null>(null);
   const [dragOverSection, setDragOverSection] = useState<string | null>(null);
   const [jumpOpen, setJumpOpen] = useState(false);
-  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const singleSectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const jumpToSection = (id: string) => {
     setOpenAccordions((prev) => (prev.includes(id) ? prev : [...prev, id]));
     setTimeout(() => {
-      sectionRefs.current[id]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      singleSectionRefs.current[id]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 60);
     setJumpOpen(false);
   };
