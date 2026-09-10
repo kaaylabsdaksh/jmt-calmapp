@@ -132,7 +132,14 @@ const FormVariationsDemo = () => {
       }, 140);
     }
   };
-  const jumpToField = (sectionId: string, label: string) => {
+  const setNativeValue = (el: HTMLInputElement | HTMLTextAreaElement, value: string) => {
+    const proto = el instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
+    const setter = Object.getOwnPropertyDescriptor(proto, 'value')?.set;
+    setter?.call(el, value);
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  };
+  const jumpToField = (sectionId: string, label: string, value?: string) => {
     setJumpOpen(false);
     setOpenAccordions((prev) => (prev.includes(sectionId) ? prev : [...prev, sectionId]));
     setTimeout(() => {
@@ -152,8 +159,69 @@ const FormVariationsDemo = () => {
         wrapper.classList.remove('ring-2', 'ring-primary', 'ring-offset-2', 'ring-offset-background');
       }, 2200);
       const input = wrapper.querySelector('input, textarea, select') as HTMLElement | null;
+      if (value && (input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement)) {
+        setNativeValue(input, value);
+      }
       input?.focus?.();
     }, 160);
+  };
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
+  const [jumpQuery, setJumpQuery] = useState('');
+  const [aiSuggestions, setAiSuggestions] = useState<{ section: string; label: string; value: string; reason: string }[]>([]);
+  const ensureFieldIndex = async () => {
+    if (fieldsIndexedRef.current) return;
+    const prevOpen = openAccordions;
+    setOpenAccordions([...singleAccordionValues]);
+    await new Promise((r) => setTimeout(r, 160));
+    scanFieldLabels();
+    fieldsIndexedRef.current = true;
+    setOpenAccordions(prevOpen);
+  };
+  const askAiForFields = async () => {
+    const text = jumpQuery.trim();
+    if (!text) return;
+    setAiLoading(true);
+    setAiError(null);
+    setAiSuggestions([]);
+    try {
+      await ensureFieldIndex();
+      const fields = fieldIndex.length ? fieldIndex : [];
+      const { data, error } = await supabase.functions.invoke('suggest-fields', {
+        body: { text, fields },
+      });
+      if (error) throw error;
+      const suggestions = (data as { suggestions?: typeof aiSuggestions })?.suggestions ?? [];
+      setAiSuggestions(suggestions);
+      if (!suggestions.length) setAiError('No matching fields found for that description.');
+    } catch (e) {
+      setAiError('Could not reach the AI service. Please try again.');
+    } finally {
+      setAiLoading(false);
+    }
+  };
+  const applyAllAiSuggestions = () => {
+    const withValues = aiSuggestions.filter((s) => s.value);
+    if (!withValues.length) return;
+    setOpenAccordions((prev) => Array.from(new Set([...prev, ...withValues.map((s) => s.section)])));
+    setJumpOpen(false);
+    setTimeout(() => {
+      withValues.forEach((s) => {
+        const container = singleSectionRefs.current[s.section];
+        if (!container) return;
+        const target = Array.from(container.querySelectorAll('label')).find(
+          (l) => (l.textContent || '').replace(/\*/g, '').trim().toLowerCase() === s.label.toLowerCase()
+        );
+        const wrapper = target?.closest('div') as HTMLElement | null;
+        const input = wrapper?.querySelector('input, textarea') as HTMLElement | null;
+        if (input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement) {
+          setNativeValue(input, s.value);
+          wrapper?.classList.add('ring-2', 'ring-primary', 'ring-offset-2', 'rounded-md');
+          setTimeout(() => wrapper?.classList.remove('ring-2', 'ring-primary', 'ring-offset-2'), 2200);
+        }
+      });
+      toast({ title: 'Fields filled', description: `${withValues.length} field(s) updated from your description.` });
+    }, 200);
   };
 
   const [stampInspectorOpen, setStampInspectorOpen] = useState(false);
