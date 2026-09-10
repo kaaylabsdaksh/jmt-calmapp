@@ -36,6 +36,7 @@ import { QF3Dialog } from "@/components/QF3Dialog";
 import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import { Toaster } from "@/components/ui/toaster";
 
 const FormVariationsDemo = () => {
