@@ -81,6 +81,8 @@ const FormVariationsDemo = () => {
   const [dragOverSection, setDragOverSection] = useState<string | null>(null);
   const [jumpOpen, setJumpOpen] = useState(false);
   const singleSectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const [fieldIndex, setFieldIndex] = useState<{ section: string; label: string }[]>([]);
+  const fieldsIndexedRef = useRef(false);
   const jumpToSection = (id: string) => {
     setOpenAccordions((prev) => (prev.includes(id) ? prev : [...prev, id]));
     setTimeout(() => {
@@ -88,6 +90,71 @@ const FormVariationsDemo = () => {
     }, 60);
     setJumpOpen(false);
   };
+  const scanFieldLabels = () => {
+    const found: { section: string; label: string }[] = [];
+    const seen = new Set<string>();
+    Object.entries(singleSectionRefs.current).forEach(([sectionId, el]) => {
+      if (!el) return;
+      el.querySelectorAll('label').forEach((labelEl) => {
+        const text = (labelEl.textContent || '').replace(/\*/g, '').trim();
+        if (!text || text.length > 48) return;
+        const key = `${sectionId}::${text.toLowerCase()}`;
+        if (seen.has(key)) return;
+        seen.add(key);
+        found.push({ section: sectionId, label: text });
+      });
+    });
+    if (found.length) {
+      setFieldIndex((prev) => {
+        const merged = [...prev];
+        const existing = new Set(prev.map((f) => `${f.section}::${f.label.toLowerCase()}`));
+        found.forEach((f) => {
+          const k = `${f.section}::${f.label.toLowerCase()}`;
+          if (!existing.has(k)) {
+            existing.add(k);
+            merged.push(f);
+          }
+        });
+        return merged;
+      });
+    }
+  };
+  const handleJumpOpenChange = (open: boolean) => {
+    setJumpOpen(open);
+    if (open && !fieldsIndexedRef.current) {
+      const prevOpen = openAccordions;
+      setOpenAccordions([...singleAccordionValues]);
+      setTimeout(() => {
+        scanFieldLabels();
+        fieldsIndexedRef.current = true;
+        setOpenAccordions(prevOpen);
+      }, 140);
+    }
+  };
+  const jumpToField = (sectionId: string, label: string) => {
+    setJumpOpen(false);
+    setOpenAccordions((prev) => (prev.includes(sectionId) ? prev : [...prev, sectionId]));
+    setTimeout(() => {
+      const container = singleSectionRefs.current[sectionId];
+      if (!container) return;
+      const target = Array.from(container.querySelectorAll('label')).find(
+        (l) => (l.textContent || '').replace(/\*/g, '').trim().toLowerCase() === label.toLowerCase()
+      );
+      const wrapper = (target?.closest('div') as HTMLElement) || (target as HTMLElement | undefined);
+      if (!wrapper) {
+        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+      wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      wrapper.classList.add('ring-2', 'ring-primary', 'ring-offset-2', 'rounded-md', 'transition-all');
+      setTimeout(() => {
+        wrapper.classList.remove('ring-2', 'ring-primary', 'ring-offset-2', 'ring-offset-background');
+      }, 2200);
+      const input = wrapper.querySelector('input, textarea, select') as HTMLElement | null;
+      input?.focus?.();
+    }, 160);
+  };
+
   const [stampInspectorOpen, setStampInspectorOpen] = useState(false);
   const [stampLogin, setStampLogin] = useState("admin");
   const [stampPassword, setStampPassword] = useState("");
