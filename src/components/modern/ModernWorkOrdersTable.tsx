@@ -4362,6 +4362,64 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   const gridLoadMoreRef = useRef<HTMLDivElement>(null);
   const [columnPrefs, setColumnPrefs] = useState<ColumnPrefs>(() => loadColumnPrefs());
   useEffect(() => { saveColumnPrefs(columnPrefs); }, [columnPrefs]);
+
+  // ---- Resizable columns (drag the divider between headers) ----
+  const COLUMN_WIDTH_KEY = 'calmapp-wo-column-widths';
+  const [columnWidths, setColumnWidths] = useState<Record<string, number>>(() => {
+    try { return JSON.parse(localStorage.getItem(COLUMN_WIDTH_KEY) || '{}'); } catch { return {}; }
+  });
+  useEffect(() => {
+    try { localStorage.setItem(COLUMN_WIDTH_KEY, JSON.stringify(columnWidths)); } catch { /* ignore */ }
+  }, [columnWidths]);
+  const resizeState = useRef<{ key: string; startX: number; startWidth: number } | null>(null);
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      const s = resizeState.current;
+      if (!s) return;
+      const next = Math.max(60, Math.round(s.startWidth + (e.clientX - s.startX)));
+      setColumnWidths(prev => ({ ...prev, [s.key]: next }));
+    };
+    const onUp = () => {
+      if (!resizeState.current) return;
+      resizeState.current = null;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+  }, []);
+  const startColumnResize = (e: React.MouseEvent, key: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const th = (e.currentTarget as HTMLElement).closest('th');
+    const startWidth = columnWidths[key] ?? th?.getBoundingClientRect().width ?? 120;
+    resizeState.current = { key, startX: e.clientX, startWidth };
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+  };
+  const resetColumnWidth = (key: string) => setColumnWidths(prev => {
+    const next = { ...prev };
+    delete next[key];
+    return next;
+  });
+  const colWidthStyle = (key: string) => {
+    const w = columnWidths[key];
+    return w ? { width: w, minWidth: w, maxWidth: w } : undefined;
+  };
+  const ColumnResizeHandle = ({ columnKey }: { columnKey: string }) => (
+    <span
+      role="separator"
+      aria-orientation="vertical"
+      title="Drag to resize · double-click to reset"
+      onMouseDown={(e) => startColumnResize(e, columnKey)}
+      onDoubleClick={(e) => { e.stopPropagation(); resetColumnWidth(columnKey); }}
+      className="absolute right-0 top-0 h-full w-1.5 cursor-col-resize select-none hover:bg-primary/60 active:bg-primary"
+    />
+  );
   const visibleItemColumns = columnPrefs.order
     .map(k => ITEM_COLUMN_DEFS.find(c => c.key === k))
     .filter((c): c is typeof ITEM_COLUMN_DEFS[number] => !!c && !columnPrefs.hidden.includes(c.key))
