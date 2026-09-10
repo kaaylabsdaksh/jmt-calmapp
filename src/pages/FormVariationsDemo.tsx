@@ -10155,7 +10155,7 @@ const FormVariationsDemo = () => {
                     return (
                     <div
                       key={sectionId}
-                      ref={(el) => { sectionRefs.current[sectionId] = el; }}
+                      ref={(el) => { singleSectionRefs.current[sectionId] = el; }}
                     >
                       <AccordionItem value={sectionId} className={cn(isLast ? "border-b-0" : "border-b", "group")}>
                         <AccordionTrigger className="hover:no-underline py-2.5 px-2 text-sm transition-colors hover:bg-muted/40 [&>svg]:h-4 [&>svg]:w-4">
