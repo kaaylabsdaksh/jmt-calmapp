@@ -14,7 +14,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, Search, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, EyeOff, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, ArrowDown, ArrowLeft, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2, GripVertical, RotateCcw, Lock as LockIcon } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, Search, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, EyeOff, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, ArrowDown, ArrowLeft, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2, GripVertical, RotateCcw, Sparkles, Lock as LockIcon } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
@@ -119,6 +119,7 @@ const FormVariationsDemo = () => {
         return merged;
       });
     }
+    return found;
   };
   const handleJumpOpenChange = (open: boolean) => {
     setJumpOpen(open);
@@ -168,31 +169,37 @@ const FormVariationsDemo = () => {
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
   const [jumpQuery, setJumpQuery] = useState('');
+  const [aiFillOpen, setAiFillOpen] = useState(false);
+  const [aiText, setAiText] = useState('');
   const [aiSuggestions, setAiSuggestions] = useState<{ section: string; label: string; value: string; reason: string }[]>([]);
+  const [aiAccepted, setAiAccepted] = useState<Record<string, boolean>>({});
   const ensureFieldIndex = async () => {
-    if (fieldsIndexedRef.current) return;
+    if (fieldsIndexedRef.current) return fieldIndex;
     const prevOpen = openAccordions;
     setOpenAccordions([...singleAccordionValues]);
-    await new Promise((r) => setTimeout(r, 160));
-    scanFieldLabels();
+    await new Promise((r) => setTimeout(r, 200));
+    const scanned = scanFieldLabels();
     fieldsIndexedRef.current = true;
     setOpenAccordions(prevOpen);
+    return scanned ?? fieldIndex;
   };
   const askAiForFields = async () => {
-    const text = jumpQuery.trim();
+    const text = aiText.trim();
     if (!text) return;
     setAiLoading(true);
     setAiError(null);
     setAiSuggestions([]);
+    setAiAccepted({});
     try {
-      await ensureFieldIndex();
-      const fields = fieldIndex.length ? fieldIndex : [];
+      const indexed = await ensureFieldIndex();
+      const fields = (indexed && indexed.length ? indexed : fieldIndex) || [];
       const { data, error } = await supabase.functions.invoke('suggest-fields', {
         body: { text, fields },
       });
       if (error) throw error;
-      const suggestions = (data as { suggestions?: typeof aiSuggestions })?.suggestions ?? [];
+      const suggestions = ((data as { suggestions?: typeof aiSuggestions })?.suggestions ?? []).filter((s) => s.value);
       setAiSuggestions(suggestions);
+      setAiAccepted(Object.fromEntries(suggestions.map((s) => [`${s.section}-${s.label}`, true])));
       if (!suggestions.length) setAiError('No matching fields found for that description.');
     } catch (e) {
       setAiError('Could not reach the AI service. Please try again.');
@@ -201,10 +208,10 @@ const FormVariationsDemo = () => {
     }
   };
   const applyAllAiSuggestions = () => {
-    const withValues = aiSuggestions.filter((s) => s.value);
+    const withValues = aiSuggestions.filter((s) => s.value && aiAccepted[`${s.section}-${s.label}`]);
     if (!withValues.length) return;
     setOpenAccordions((prev) => Array.from(new Set([...prev, ...withValues.map((s) => s.section)])));
-    setJumpOpen(false);
+    setAiFillOpen(false);
     setTimeout(() => {
       withValues.forEach((s) => {
         const container = singleSectionRefs.current[s.section];
@@ -10142,58 +10149,11 @@ const FormVariationsDemo = () => {
                       <PopoverContent className="w-80 p-0" align="start">
                         <Command>
                           <CommandInput
-                            placeholder="Search a field, or describe the work order..."
+                            placeholder="Type a field name..."
                             className="h-8 text-xs"
                             value={jumpQuery}
-                            onValueChange={(v) => { setJumpQuery(v); setAiError(null); }}
+                            onValueChange={setJumpQuery}
                           />
-                          {jumpQuery.trim().length > 0 && (
-                            <div className="border-b bg-muted/30 px-2 py-1.5">
-                              <div className="flex items-center gap-2">
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  className="h-6 gap-1 text-[11px]"
-                                  disabled={aiLoading}
-                                  onClick={askAiForFields}
-                                >
-                                  {aiLoading ? <RefreshCw className="h-3 w-3 animate-spin" /> : <Activity className="h-3 w-3" />}
-                                  {aiLoading ? 'Matching…' : 'Ask AI to match fields'}
-                                </Button>
-                                {aiSuggestions.some((s) => s.value) && (
-                                  <Button size="sm" className="h-6 text-[11px]" onClick={applyAllAiSuggestions}>
-                                    Fill all
-                                  </Button>
-                                )}
-                              </div>
-                              {aiError && <p className="mt-1 text-[10px] text-destructive">{aiError}</p>}
-                              {aiSuggestions.length > 0 && (
-                                <div className="mt-1.5 space-y-1">
-                                  {aiSuggestions.map((s) => (
-                                    <button
-                                      key={`${s.section}-${s.label}`}
-                                      type="button"
-                                      onClick={() => jumpToField(s.section, s.label, s.value || undefined)}
-                                      className="flex w-full items-center justify-between gap-2 rounded-md border bg-background px-2 py-1 text-left hover:bg-muted/60"
-                                    >
-                                      <span className="min-w-0">
-                                        <span className="block truncate text-[11px] font-medium">{s.label}</span>
-                                        <span className="block truncate text-[10px] text-muted-foreground">
-                                          {singleAccordionLabels[s.section] || s.section}
-                                          {s.reason ? ` · ${s.reason}` : ''}
-                                        </span>
-                                      </span>
-                                      {s.value && (
-                                        <Badge variant="secondary" className="shrink-0 max-w-[110px] truncate text-[10px]">
-                                          {s.value}
-                                        </Badge>
-                                      )}
-                                    </button>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          )}
                           <CommandList className="max-h-72">
                             <CommandEmpty className="py-3 text-center text-xs">No field found.</CommandEmpty>
                             {sectionOrder
@@ -10226,7 +10186,82 @@ const FormVariationsDemo = () => {
                         </Command>
                       </PopoverContent>
                     </Popover>
-
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-7 gap-1.5 text-xs"
+                      onClick={() => { setAiFillOpen(true); setAiError(null); }}
+                    >
+                      <Sparkles className="h-3.5 w-3.5" />
+                      AI Fill
+                    </Button>
+                    <Dialog open={aiFillOpen} onOpenChange={setAiFillOpen}>
+                      <DialogContent className="max-w-lg">
+                        <DialogHeader>
+                          <DialogTitle className="flex items-center gap-2 text-base">
+                            <Sparkles className="h-4 w-4" />
+                            AI Fill
+                          </DialogTitle>
+                          <DialogDescription className="text-xs">
+                            Paste an email, quote note, or describe the item. Review what AI found before it goes into the form.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <Textarea
+                          value={aiText}
+                          onChange={(e) => { setAiText(e.target.value); setAiError(null); }}
+                          rows={4}
+                          placeholder="e.g. Fluke 87V multimeter, serial 4521XZ, PO 88123, deliver by 10/15/2026"
+                          className="text-xs"
+                        />
+                        <div className="flex items-center gap-2">
+                          <Button size="sm" className="h-7 gap-1.5 text-xs" disabled={aiLoading || !aiText.trim()} onClick={askAiForFields}>
+                            {aiLoading ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <Sparkles className="h-3.5 w-3.5" />}
+                            {aiLoading ? 'Reading…' : 'Analyze'}
+                          </Button>
+                          {aiSuggestions.length > 0 && (
+                            <span className="text-[11px] text-muted-foreground">
+                              {Object.values(aiAccepted).filter(Boolean).length} of {aiSuggestions.length} selected
+                            </span>
+                          )}
+                        </div>
+                        {aiError && <p className="text-[11px] text-destructive">{aiError}</p>}
+                        {aiSuggestions.length > 0 && (
+                          <div className="max-h-60 space-y-1 overflow-y-auto rounded-md border p-1.5">
+                            {aiSuggestions.map((s) => {
+                              const key = `${s.section}-${s.label}`;
+                              return (
+                                <label key={key} className="flex cursor-pointer items-start gap-2 rounded-md px-2 py-1.5 hover:bg-muted/60">
+                                  <Checkbox
+                                    checked={!!aiAccepted[key]}
+                                    onCheckedChange={(c) => setAiAccepted((prev) => ({ ...prev, [key]: !!c }))}
+                                    className="mt-0.5"
+                                  />
+                                  <span className="min-w-0 flex-1">
+                                    <span className="block truncate text-[11px] font-medium">{s.label}</span>
+                                    <span className="block truncate text-[10px] text-muted-foreground">
+                                      {singleAccordionLabels[s.section] || s.section}
+                                      {s.reason ? ` · ${s.reason}` : ''}
+                                    </span>
+                                  </span>
+                                  <Badge variant="secondary" className="shrink-0 max-w-[130px] truncate text-[10px]">{s.value}</Badge>
+                                </label>
+                              );
+                            })}
+                          </div>
+                        )}
+                        <DialogFooter>
+                          <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => setAiFillOpen(false)}>Cancel</Button>
+                          <Button
+                            size="sm"
+                            className="h-7 text-xs"
+                            disabled={!Object.values(aiAccepted).some(Boolean)}
+                            onClick={applyAllAiSuggestions}
+                          >
+                            Fill {Object.values(aiAccepted).filter(Boolean).length || ''} field(s)
+                          </Button>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
                   </div>
                   <div className="flex items-center gap-2">
                     <Popover>
