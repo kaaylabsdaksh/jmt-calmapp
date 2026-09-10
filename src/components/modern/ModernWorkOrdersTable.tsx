@@ -4470,6 +4470,20 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   };
   const [draggedColumnKey, setDraggedColumnKey] = useState<string | null>(null);
   const resetColumns = () => setColumnPrefs({ order: ITEM_COLUMN_DEFS.map(c => c.key), hidden: ['labCode', 'template'] });
+  const [findFieldOpen, setFindFieldOpen] = useState(false);
+  const jumpToColumn = (key: string) => {
+    setFindFieldOpen(false);
+    if (columnPrefs.hidden.includes(key)) toggleColumnVisible(key);
+    setTimeout(() => {
+      const cell = document.querySelector(`[data-colfilter="${key}"]`) as HTMLElement | null;
+      if (!cell) return;
+      cell.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      cell.classList.add('ring-2', 'ring-primary', 'ring-inset', 'rounded-md');
+      setTimeout(() => cell.classList.remove('ring-2', 'ring-primary', 'ring-inset'), 2000);
+      const input = cell.querySelector('input') as HTMLInputElement | null;
+      input?.focus();
+    }, 120);
+  };
   const navigate = useNavigate();
 
 
