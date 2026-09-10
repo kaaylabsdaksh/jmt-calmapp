@@ -79,6 +79,15 @@ const FormVariationsDemo = () => {
   const [hiddenSections, setHiddenSections] = useState<string[]>([]);
   const [draggedSection, setDraggedSection] = useState<string | null>(null);
   const [dragOverSection, setDragOverSection] = useState<string | null>(null);
+  const [jumpOpen, setJumpOpen] = useState(false);
+  const singleSectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const jumpToSection = (id: string) => {
+    setOpenAccordions((prev) => (prev.includes(id) ? prev : [...prev, id]));
+    setTimeout(() => {
+      singleSectionRefs.current[id]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+    setJumpOpen(false);
+  };
   const [stampInspectorOpen, setStampInspectorOpen] = useState(false);
   const [stampLogin, setStampLogin] = useState("admin");
   const [stampPassword, setStampPassword] = useState("");
@@ -9981,116 +9990,149 @@ const FormVariationsDemo = () => {
             ) : (
               // SINGLE Type Accordion (expanded sections)
               <>
-                {/* Expand/Collapse All buttons */}
-                <div className="flex justify-end gap-2 mb-3 items-center">
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-xs text-muted-foreground hover:text-foreground"
-                      >
-                        <Settings className="h-3.5 w-3.5 mr-1" />
-                        ({expandAllSections.length}/{singleAccordionValues.length})
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-56 p-3" align="end">
-                      <div className="space-y-1">
-                        <div className="flex items-center justify-between mb-2">
-                          <p className="text-xs font-medium text-muted-foreground">Select &amp; reorder sections</p>
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <button
-                                onClick={() => {
-                                  setExpandAllSections([...singleAccordionValues]);
-                                  setSectionOrder([...singleAccordionValues]);
-                                  setHiddenSections([]);
-                                }}
-                                className="p-1 rounded-md hover:bg-muted transition-colors"
-                              >
-                                <RotateCcw className="h-3 w-3 text-muted-foreground" />
-                              </button>
-                            </TooltipTrigger>
-                            <TooltipContent side="bottom" className="text-xs">
-                              Reset to defaults
-                            </TooltipContent>
-                          </Tooltip>
-                        </div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([...singleAccordionValues])}>All</Button>
-                          <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([])}>None</Button>
-                        </div>
-                         {sectionOrder.map((val, idx) => (
-                          <div
-                            key={val}
-                            draggable
-                            onDragStart={(e) => handleDragStart(e, val)}
-                            onDragOver={(e) => handleDragOver(e, val)}
-                            onDragLeave={handleDragLeave}
-                            onDrop={(e) => handleDrop(e, val)}
-                            onDragEnd={handleDragEnd}
-                            className={cn(
-                              "flex items-center gap-1.5 py-1 px-1 rounded-md transition-all",
-                              draggedSection === val && "opacity-40",
-                              dragOverSection === val && "border-t-2 border-primary"
-                            )}
-                          >
-                            <GripVertical className="h-3 w-3 text-muted-foreground cursor-grab active:cursor-grabbing shrink-0" />
-                            <Checkbox
-                              id={`expand-${val}`}
-                              checked={expandAllSections.includes(val)}
-                              onCheckedChange={(checked) => {
-                                setExpandAllSections(prev =>
-                                  checked ? [...prev, val] : prev.filter(v => v !== val)
-                                );
-                              }}
-                            />
-                            <label htmlFor={`expand-${val}`} className="text-xs cursor-pointer flex-1">{singleAccordionLabels[val]}</label>
+                {/* Sticky section navigator */}
+                <div className="sticky top-0 z-20 -mx-6 mb-3 flex items-center justify-between gap-3 border-b bg-white/95 px-6 py-2 backdrop-blur">
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="h-6 text-[10px] font-medium tabular-nums">
+                      {sectionOrder.filter((id) => !hiddenSections.includes(id)).length} sections
+                    </Badge>
+                    <Popover open={jumpOpen} onOpenChange={setJumpOpen}>
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" size="sm" className="h-7 gap-1.5 text-xs">
+                          <List className="h-3.5 w-3.5" />
+                          Jump to section
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-64 p-0" align="start">
+                        <Command>
+                          <CommandInput placeholder="Find section..." className="h-8 text-xs" />
+                          <CommandList className="max-h-64">
+                            <CommandEmpty className="py-2 text-center text-xs">No section found.</CommandEmpty>
+                            <CommandGroup>
+                              {sectionOrder
+                                .filter((id) => !hiddenSections.includes(id))
+                                .map((id) => (
+                                  <CommandItem
+                                    key={id}
+                                    value={singleAccordionLabels[id]}
+                                    onSelect={() => jumpToSection(id)}
+                                    className="cursor-pointer text-xs"
+                                  >
+                                    {singleAccordionLabels[id]}
+                                  </CommandItem>
+                                ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant="ghost" size="sm" className="h-7 text-xs text-muted-foreground hover:text-foreground">
+                          <Settings className="h-3.5 w-3.5 mr-1" />
+                          ({expandAllSections.length}/{singleAccordionValues.length})
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-56 p-3" align="end">
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-xs font-medium text-muted-foreground">Select &amp; reorder sections</p>
                             <Tooltip>
                               <TooltipTrigger asChild>
                                 <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setHiddenSections(prev =>
-                                      prev.includes(val) ? prev.filter(v => v !== val) : [...prev, val]
-                                    );
+                                  onClick={() => {
+                                    setExpandAllSections([...singleAccordionValues]);
+                                    setSectionOrder([...singleAccordionValues]);
+                                    setHiddenSections([]);
                                   }}
-                                  className="p-0.5 rounded hover:bg-muted transition-colors"
+                                  className="p-1 rounded-md hover:bg-muted transition-colors"
                                 >
-                                  {hiddenSections.includes(val) ? (
-                                    <EyeOff className="h-3 w-3 text-muted-foreground" />
-                                  ) : (
-                                    <Eye className="h-3 w-3 text-muted-foreground" />
-                                  )}
+                                  <RotateCcw className="h-3 w-3 text-muted-foreground" />
                                 </button>
                               </TooltipTrigger>
-                              <TooltipContent side="left" className="text-xs">
-                                {hiddenSections.includes(val) ? 'Show section' : 'Hide section'}
+                              <TooltipContent side="bottom" className="text-xs">
+                                Reset to defaults
                               </TooltipContent>
                             </Tooltip>
                           </div>
-                        ))}
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-xs text-muted-foreground hover:text-foreground"
-                    onClick={() => setOpenAccordions(expandAllSections)}
-                  >
-                    <Maximize2 className="h-3.5 w-3.5 mr-1" />
-                    Expand
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-xs text-muted-foreground hover:text-foreground"
-                    onClick={() => setOpenAccordions([])}
-                  >
-                    <Minimize2 className="h-3.5 w-3.5 mr-1" />
-                    Collapse
-                  </Button>
+                          <div className="flex items-center gap-2 mb-2">
+                            <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([...singleAccordionValues])}>All</Button>
+                            <Button variant="outline" size="sm" className="text-[10px] h-6 px-2" onClick={() => setExpandAllSections([])}>None</Button>
+                          </div>
+                          {sectionOrder.map((val, idx) => (
+                            <div
+                              key={val}
+                              draggable
+                              onDragStart={(e) => handleDragStart(e, val)}
+                              onDragOver={(e) => handleDragOver(e, val)}
+                              onDragLeave={handleDragLeave}
+                              onDrop={(e) => handleDrop(e, val)}
+                              onDragEnd={handleDragEnd}
+                              className={cn(
+                                "flex items-center gap-1.5 py-1 px-1 rounded-md transition-all",
+                                draggedSection === val && "opacity-40",
+                                dragOverSection === val && "border-t-2 border-primary"
+                              )}
+                            >
+                              <GripVertical className="h-3 w-3 text-muted-foreground cursor-grab active:cursor-grabbing shrink-0" />
+                              <Checkbox
+                                id={`expand-${val}`}
+                                checked={expandAllSections.includes(val)}
+                                onCheckedChange={(checked) => {
+                                  setExpandAllSections(prev =>
+                                    checked ? [...prev, val] : prev.filter(v => v !== val)
+                                  );
+                                }}
+                              />
+                              <label htmlFor={`expand-${val}`} className="text-xs cursor-pointer flex-1">{singleAccordionLabels[val]}</label>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setHiddenSections(prev =>
+                                        prev.includes(val) ? prev.filter(v => v !== val) : [...prev, val]
+                                      );
+                                    }}
+                                    className="p-0.5 rounded hover:bg-muted transition-colors"
+                                  >
+                                    {hiddenSections.includes(val) ? (
+                                      <EyeOff className="h-3 w-3 text-muted-foreground" />
+                                    ) : (
+                                      <Eye className="h-3 w-3 text-muted-foreground" />
+                                    )}
+                                  </button>
+                                </TooltipTrigger>
+                                <TooltipContent side="left" className="text-xs">
+                                  {hiddenSections.includes(val) ? 'Show section' : 'Hide section'}
+                                </TooltipContent>
+                              </Tooltip>
+                            </div>
+                          ))}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-7 text-xs text-muted-foreground hover:text-foreground"
+                      onClick={() => setOpenAccordions([...singleAccordionValues])}
+                    >
+                      <Maximize2 className="h-3.5 w-3.5 mr-1" />
+                      Expand
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-7 text-xs text-muted-foreground hover:text-foreground"
+                      onClick={() => setOpenAccordions([])}
+                    >
+                      <Minimize2 className="h-3.5 w-3.5 mr-1" />
+                      Collapse
+                    </Button>
+                  </div>
                 </div>
                 <Accordion type="multiple" value={openAccordions} onValueChange={setOpenAccordions} className="space-y-0 accordion-fields">
                 {sectionOrder.filter(id => !hiddenSections.includes(id)).map((sectionId) => {
@@ -10111,24 +10153,29 @@ const FormVariationsDemo = () => {
                   const IconComp = config.icon;
                   const isLast = sectionOrder.indexOf(sectionId) === sectionOrder.length - 1;
                     return (
-                    <div key={sectionId}>
-                    <AccordionItem value={sectionId} className={isLast ? "border-b-0" : "border-b"}>
-                      <AccordionTrigger className="hover:no-underline py-4">
-                        <div className="flex items-center gap-3">
-                          <IconComp className="h-5 w-5 text-foreground" />
-                          <h3 className="font-semibold">{config.label}</h3>
-                          {config.statusKey && tabStatus[config.statusKey] === 'completed' && (
-                            <CheckCircle className="h-4 w-4 ml-auto mr-2 text-green-600" />
-                          )}
-                          {config.statusKey && tabStatus[config.statusKey] === 'error' && (
-                            <AlertCircle className="h-4 w-4 ml-auto mr-2 text-destructive" />
-                          )}
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="pb-4">
-                        {config.render()}
-                      </AccordionContent>
-                    </AccordionItem>
+                    <div
+                      key={sectionId}
+                      ref={(el) => { singleSectionRefs.current[sectionId] = el; }}
+                    >
+                      <AccordionItem value={sectionId} className={cn(isLast ? "border-b-0" : "border-b", "group")}>
+                        <AccordionTrigger className="hover:no-underline py-2.5 px-2 text-sm transition-colors hover:bg-muted/40 [&>svg]:h-4 [&>svg]:w-4">
+                          <div className="flex items-center gap-2.5">
+                            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-muted group-hover:bg-muted/70">
+                              <IconComp className="h-3.5 w-3.5 text-muted-foreground" />
+                            </span>
+                            <span className="font-medium">{config.label}</span>
+                            {config.statusKey && tabStatus[config.statusKey] === 'completed' && (
+                              <CheckCircle className="h-3.5 w-3.5 ml-auto mr-1 text-green-600" />
+                            )}
+                            {config.statusKey && tabStatus[config.statusKey] === 'error' && (
+                              <AlertCircle className="h-3.5 w-3.5 ml-auto mr-1 text-destructive" />
+                            )}
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-3 px-2">
+                          {config.render()}
+                        </AccordionContent>
+                      </AccordionItem>
                     </div>
                   );
                 })}
