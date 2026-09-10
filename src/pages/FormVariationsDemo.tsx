@@ -10063,36 +10063,49 @@ const FormVariationsDemo = () => {
                     <Badge variant="outline" className="h-6 text-[10px] font-medium tabular-nums">
                       {sectionOrder.filter((id) => !hiddenSections.includes(id)).length} sections
                     </Badge>
-                    <Popover open={jumpOpen} onOpenChange={setJumpOpen}>
+                    <Popover open={jumpOpen} onOpenChange={handleJumpOpenChange}>
                       <PopoverTrigger asChild>
                         <Button variant="outline" size="sm" className="h-7 gap-1.5 text-xs">
-                          <List className="h-3.5 w-3.5" />
-                          Jump to section
+                          <Search className="h-3.5 w-3.5" />
+                          Find a field
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-64 p-0" align="start">
+                      <PopoverContent className="w-80 p-0" align="start">
                         <Command>
-                          <CommandInput placeholder="Find section..." className="h-8 text-xs" />
-                          <CommandList className="max-h-64">
-                            <CommandEmpty className="py-2 text-center text-xs">No section found.</CommandEmpty>
-                            <CommandGroup>
-                              {sectionOrder
-                                .filter((id) => !hiddenSections.includes(id))
-                                .map((id) => (
-                                  <CommandItem
-                                    key={id}
-                                    value={singleAccordionLabels[id]}
-                                    onSelect={() => jumpToSection(id)}
-                                    className="cursor-pointer text-xs"
-                                  >
-                                    {singleAccordionLabels[id]}
-                                  </CommandItem>
-                                ))}
-                            </CommandGroup>
+                          <CommandInput placeholder="Search fields (e.g. serial, PO, due date)..." className="h-8 text-xs" />
+                          <CommandList className="max-h-72">
+                            <CommandEmpty className="py-3 text-center text-xs">No field found.</CommandEmpty>
+                            {sectionOrder
+                              .filter((id) => !hiddenSections.includes(id))
+                              .map((id) => {
+                                const fields = fieldIndex.filter((f) => f.section === id);
+                                return (
+                                  <CommandGroup key={id} heading={singleAccordionLabels[id]}>
+                                    <CommandItem
+                                      value={`${singleAccordionLabels[id]} section`}
+                                      onSelect={() => jumpToSection(id)}
+                                      className="cursor-pointer text-xs text-muted-foreground"
+                                    >
+                                      Go to {singleAccordionLabels[id]} section
+                                    </CommandItem>
+                                    {fields.map((f) => (
+                                      <CommandItem
+                                        key={`${id}-${f.label}`}
+                                        value={`${f.label} ${singleAccordionLabels[id]}`}
+                                        onSelect={() => jumpToField(id, f.label)}
+                                        className="cursor-pointer text-xs"
+                                      >
+                                        {f.label}
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup>
+                                );
+                              })}
                           </CommandList>
                         </Command>
                       </PopoverContent>
                     </Popover>
+
                   </div>
                   <div className="flex items-center gap-2">
                     <Popover>
