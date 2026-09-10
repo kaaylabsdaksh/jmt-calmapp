@@ -79,6 +79,15 @@ const FormVariationsDemo = () => {
   const [hiddenSections, setHiddenSections] = useState<string[]>([]);
   const [draggedSection, setDraggedSection] = useState<string | null>(null);
   const [dragOverSection, setDragOverSection] = useState<string | null>(null);
+  const [jumpOpen, setJumpOpen] = useState(false);
+  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const jumpToSection = (id: string) => {
+    setOpenAccordions((prev) => (prev.includes(id) ? prev : [...prev, id]));
+    setTimeout(() => {
+      sectionRefs.current[id]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+    setJumpOpen(false);
+  };
   const [stampInspectorOpen, setStampInspectorOpen] = useState(false);
   const [stampLogin, setStampLogin] = useState("admin");
   const [stampPassword, setStampPassword] = useState("");
