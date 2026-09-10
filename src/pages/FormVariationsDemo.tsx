@@ -36,6 +36,7 @@ import { QF3Dialog } from "@/components/QF3Dialog";
 import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import { Toaster } from "@/components/ui/toaster";
 
 const FormVariationsDemo = () => {
@@ -131,7 +132,14 @@ const FormVariationsDemo = () => {
       }, 140);
     }
   };
-  const jumpToField = (sectionId: string, label: string) => {
+  const setNativeValue = (el: HTMLInputElement | HTMLTextAreaElement, value: string) => {
+    const proto = el instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
+    const setter = Object.getOwnPropertyDescriptor(proto, 'value')?.set;
+    setter?.call(el, value);
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  };
+  const jumpToField = (sectionId: string, label: string, value?: string) => {
     setJumpOpen(false);
     setOpenAccordions((prev) => (prev.includes(sectionId) ? prev : [...prev, sectionId]));
     setTimeout(() => {
@@ -151,8 +159,69 @@ const FormVariationsDemo = () => {
         wrapper.classList.remove('ring-2', 'ring-primary', 'ring-offset-2', 'ring-offset-background');
       }, 2200);
       const input = wrapper.querySelector('input, textarea, select') as HTMLElement | null;
+      if (value && (input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement)) {
+        setNativeValue(input, value);
+      }
       input?.focus?.();
     }, 160);
+  };
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
+  const [jumpQuery, setJumpQuery] = useState('');
+  const [aiSuggestions, setAiSuggestions] = useState<{ section: string; label: string; value: string; reason: string }[]>([]);
+  const ensureFieldIndex = async () => {
+    if (fieldsIndexedRef.current) return;
+    const prevOpen = openAccordions;
+    setOpenAccordions([...singleAccordionValues]);
+    await new Promise((r) => setTimeout(r, 160));
+    scanFieldLabels();
+    fieldsIndexedRef.current = true;
+    setOpenAccordions(prevOpen);
+  };
+  const askAiForFields = async () => {
+    const text = jumpQuery.trim();
+    if (!text) return;
+    setAiLoading(true);
+    setAiError(null);
+    setAiSuggestions([]);
+    try {
+      await ensureFieldIndex();
+      const fields = fieldIndex.length ? fieldIndex : [];
+      const { data, error } = await supabase.functions.invoke('suggest-fields', {
+        body: { text, fields },
+      });
+      if (error) throw error;
+      const suggestions = (data as { suggestions?: typeof aiSuggestions })?.suggestions ?? [];
+      setAiSuggestions(suggestions);
+      if (!suggestions.length) setAiError('No matching fields found for that description.');
+    } catch (e) {
+      setAiError('Could not reach the AI service. Please try again.');
+    } finally {
+      setAiLoading(false);
+    }
+  };
+  const applyAllAiSuggestions = () => {
+    const withValues = aiSuggestions.filter((s) => s.value);
+    if (!withValues.length) return;
+    setOpenAccordions((prev) => Array.from(new Set([...prev, ...withValues.map((s) => s.section)])));
+    setJumpOpen(false);
+    setTimeout(() => {
+      withValues.forEach((s) => {
+        const container = singleSectionRefs.current[s.section];
+        if (!container) return;
+        const target = Array.from(container.querySelectorAll('label')).find(
+          (l) => (l.textContent || '').replace(/\*/g, '').trim().toLowerCase() === s.label.toLowerCase()
+        );
+        const wrapper = target?.closest('div') as HTMLElement | null;
+        const input = wrapper?.querySelector('input, textarea') as HTMLElement | null;
+        if (input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement) {
+          setNativeValue(input, s.value);
+          wrapper?.classList.add('ring-2', 'ring-primary', 'ring-offset-2', 'rounded-md');
+          setTimeout(() => wrapper?.classList.remove('ring-2', 'ring-primary', 'ring-offset-2'), 2200);
+        }
+      });
+      toast({ title: 'Fields filled', description: `${withValues.length} field(s) updated from your description.` });
+    }, 200);
   };
 
   const [stampInspectorOpen, setStampInspectorOpen] = useState(false);
@@ -10072,7 +10141,59 @@ const FormVariationsDemo = () => {
                       </PopoverTrigger>
                       <PopoverContent className="w-80 p-0" align="start">
                         <Command>
-                          <CommandInput placeholder="Search fields (e.g. serial, PO, due date)..." className="h-8 text-xs" />
+                          <CommandInput
+                            placeholder="Search a field, or describe the work order..."
+                            className="h-8 text-xs"
+                            value={jumpQuery}
+                            onValueChange={(v) => { setJumpQuery(v); setAiError(null); }}
+                          />
+                          {jumpQuery.trim().length > 0 && (
+                            <div className="border-b bg-muted/30 px-2 py-1.5">
+                              <div className="flex items-center gap-2">
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="h-6 gap-1 text-[11px]"
+                                  disabled={aiLoading}
+                                  onClick={askAiForFields}
+                                >
+                                  {aiLoading ? <RefreshCw className="h-3 w-3 animate-spin" /> : <Activity className="h-3 w-3" />}
+                                  {aiLoading ? 'Matching…' : 'Ask AI to match fields'}
+                                </Button>
+                                {aiSuggestions.some((s) => s.value) && (
+                                  <Button size="sm" className="h-6 text-[11px]" onClick={applyAllAiSuggestions}>
+                                    Fill all
+                                  </Button>
+                                )}
+                              </div>
+                              {aiError && <p className="mt-1 text-[10px] text-destructive">{aiError}</p>}
+                              {aiSuggestions.length > 0 && (
+                                <div className="mt-1.5 space-y-1">
+                                  {aiSuggestions.map((s) => (
+                                    <button
+                                      key={`${s.section}-${s.label}`}
+                                      type="button"
+                                      onClick={() => jumpToField(s.section, s.label, s.value || undefined)}
+                                      className="flex w-full items-center justify-between gap-2 rounded-md border bg-background px-2 py-1 text-left hover:bg-muted/60"
+                                    >
+                                      <span className="min-w-0">
+                                        <span className="block truncate text-[11px] font-medium">{s.label}</span>
+                                        <span className="block truncate text-[10px] text-muted-foreground">
+                                          {singleAccordionLabels[s.section] || s.section}
+                                          {s.reason ? ` · ${s.reason}` : ''}
+                                        </span>
+                                      </span>
+                                      {s.value && (
+                                        <Badge variant="secondary" className="shrink-0 max-w-[110px] truncate text-[10px]">
+                                          {s.value}
+                                        </Badge>
+                                      )}
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          )}
                           <CommandList className="max-h-72">
                             <CommandEmpty className="py-3 text-center text-xs">No field found.</CommandEmpty>
                             {sectionOrder

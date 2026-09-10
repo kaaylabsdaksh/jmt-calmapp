@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import WorkOrderBatchDetails from "@/components/WorkOrderBatchDetails";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
@@ -4469,6 +4470,20 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
   };
   const [draggedColumnKey, setDraggedColumnKey] = useState<string | null>(null);
   const resetColumns = () => setColumnPrefs({ order: ITEM_COLUMN_DEFS.map(c => c.key), hidden: ['labCode', 'template'] });
+  const [findFieldOpen, setFindFieldOpen] = useState(false);
+  const jumpToColumn = (key: string) => {
+    setFindFieldOpen(false);
+    if (columnPrefs.hidden.includes(key)) toggleColumnVisible(key);
+    setTimeout(() => {
+      const cell = document.querySelector(`[data-colfilter="${key}"]`) as HTMLElement | null;
+      if (!cell) return;
+      cell.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      cell.classList.add('ring-2', 'ring-primary', 'ring-inset', 'rounded-md');
+      setTimeout(() => cell.classList.remove('ring-2', 'ring-primary', 'ring-inset'), 2000);
+      const input = cell.querySelector('input') as HTMLInputElement | null;
+      input?.focus();
+    }, 120);
+  };
   const navigate = useNavigate();
 
 
@@ -5457,6 +5472,41 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
               </Button>
             </div>
 
+            {/* Find a field (Item view only) */}
+            {currentView === 'item' && (
+              <Popover open={findFieldOpen} onOpenChange={setFindFieldOpen}>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" size="sm" className="h-6 gap-1 px-2 text-[11px]">
+                    <Search className="h-3 w-3" />
+                    Find a field
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent align="end" className="w-64 p-0">
+                  <Command>
+                    <CommandInput placeholder="Type a field name..." className="h-8 text-xs" />
+                    <CommandList className="max-h-72">
+                      <CommandEmpty className="py-3 text-center text-xs">No field found.</CommandEmpty>
+                      <CommandGroup heading="Columns">
+                        {ITEM_COLUMN_DEFS.map((col) => (
+                          <CommandItem
+                            key={col.key}
+                            value={col.label}
+                            onSelect={() => jumpToColumn(col.key)}
+                            className="cursor-pointer text-xs"
+                          >
+                            <span className="flex-1">{col.label}</span>
+                            {columnPrefs.hidden.includes(col.key) && (
+                              <span className="text-[10px] text-muted-foreground">hidden</span>
+                            )}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            )}
+
             {/* Column personalization (Item view only) */}
             {currentView === 'item' && (
               <Popover>
@@ -5662,7 +5712,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 ) : (
                   <>
                     {visibleItemColumns.map((col) => (
-                      <TableHead key={col.key} style={colWidthStyle(col.key)} className="py-0.5 px-1.5">
+                      <TableHead key={col.key} data-colfilter={col.key} style={colWidthStyle(col.key)} className="py-0.5 px-1.5">
                         <div className="relative">
                           {col.type === 'date' ? (
                             <DateColumnFilter
