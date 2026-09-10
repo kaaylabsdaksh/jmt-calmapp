@@ -5540,14 +5540,25 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                     </>
                   ) : (
                     <>
-                      <TableHead className="font-semibold text-gray-900">WO Batch</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Acct #</TableHead>
-                      <TableHead className="font-semibold text-gray-900">SR #</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Customer Name</TableHead>
-                      <TableHead className="font-semibold text-gray-900 min-w-[150px]">Min Need By Date</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Total Count</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Total Lab Open</TableHead>
-                      <TableHead className="font-semibold text-gray-900">Total AR Count</TableHead>
+                      {[
+                        { key: 'woBatch', label: 'WO Batch' },
+                        { key: 'acctNumber', label: 'Acct #' },
+                        { key: 'srNumber', label: 'SR #' },
+                        { key: 'customerName', label: 'Customer Name' },
+                        { key: 'minNeedByDate', label: 'Min Need By Date' },
+                        { key: 'totalCount', label: 'Total Count' },
+                        { key: 'totalLabOpen', label: 'Total Lab Open' },
+                        { key: 'totalArCount', label: 'Total AR Count' },
+                      ].map(col => (
+                        <TableHead
+                          key={col.key}
+                          style={colWidthStyle(`batch:${col.key}`)}
+                          className={cn("relative font-semibold text-gray-900", col.key === 'minNeedByDate' && !columnWidths[`batch:${col.key}`] && "min-w-[150px]")}
+                        >
+                          <span className="block truncate pr-1">{col.label}</span>
+                          <ColumnResizeHandle columnKey={`batch:${col.key}`} />
+                        </TableHead>
+                      ))}
                     </>
                   )
                 ) : (
