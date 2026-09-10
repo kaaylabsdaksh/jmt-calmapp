@@ -10149,58 +10149,11 @@ const FormVariationsDemo = () => {
                       <PopoverContent className="w-80 p-0" align="start">
                         <Command>
                           <CommandInput
-                            placeholder="Search a field, or describe the work order..."
+                            placeholder="Type a field name..."
                             className="h-8 text-xs"
                             value={jumpQuery}
-                            onValueChange={(v) => { setJumpQuery(v); setAiError(null); }}
+                            onValueChange={setJumpQuery}
                           />
-                          {jumpQuery.trim().length > 0 && (
-                            <div className="border-b bg-muted/30 px-2 py-1.5">
-                              <div className="flex items-center gap-2">
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  className="h-6 gap-1 text-[11px]"
-                                  disabled={aiLoading}
-                                  onClick={askAiForFields}
-                                >
-                                  {aiLoading ? <RefreshCw className="h-3 w-3 animate-spin" /> : <Activity className="h-3 w-3" />}
-                                  {aiLoading ? 'Matching…' : 'Ask AI to match fields'}
-                                </Button>
-                                {aiSuggestions.some((s) => s.value) && (
-                                  <Button size="sm" className="h-6 text-[11px]" onClick={applyAllAiSuggestions}>
-                                    Fill all
-                                  </Button>
-                                )}
-                              </div>
-                              {aiError && <p className="mt-1 text-[10px] text-destructive">{aiError}</p>}
-                              {aiSuggestions.length > 0 && (
-                                <div className="mt-1.5 space-y-1">
-                                  {aiSuggestions.map((s) => (
-                                    <button
-                                      key={`${s.section}-${s.label}`}
-                                      type="button"
-                                      onClick={() => jumpToField(s.section, s.label, s.value || undefined)}
-                                      className="flex w-full items-center justify-between gap-2 rounded-md border bg-background px-2 py-1 text-left hover:bg-muted/60"
-                                    >
-                                      <span className="min-w-0">
-                                        <span className="block truncate text-[11px] font-medium">{s.label}</span>
-                                        <span className="block truncate text-[10px] text-muted-foreground">
-                                          {singleAccordionLabels[s.section] || s.section}
-                                          {s.reason ? ` · ${s.reason}` : ''}
-                                        </span>
-                                      </span>
-                                      {s.value && (
-                                        <Badge variant="secondary" className="shrink-0 max-w-[110px] truncate text-[10px]">
-                                          {s.value}
-                                        </Badge>
-                                      )}
-                                    </button>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          )}
                           <CommandList className="max-h-72">
                             <CommandEmpty className="py-3 text-center text-xs">No field found.</CommandEmpty>
                             {sectionOrder
