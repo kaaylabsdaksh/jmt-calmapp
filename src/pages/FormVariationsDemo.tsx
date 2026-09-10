@@ -14,7 +14,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, EyeOff, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, ArrowDown, ArrowLeft, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2, GripVertical, RotateCcw, Lock as LockIcon } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, Search, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, EyeOff, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, ArrowDown, ArrowLeft, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2, GripVertical, RotateCcw, Lock as LockIcon } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
@@ -81,6 +81,8 @@ const FormVariationsDemo = () => {
   const [dragOverSection, setDragOverSection] = useState<string | null>(null);
   const [jumpOpen, setJumpOpen] = useState(false);
   const singleSectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const [fieldIndex, setFieldIndex] = useState<{ section: string; label: string }[]>([]);
+  const fieldsIndexedRef = useRef(false);
   const jumpToSection = (id: string) => {
     setOpenAccordions((prev) => (prev.includes(id) ? prev : [...prev, id]));
     setTimeout(() => {
@@ -88,6 +90,71 @@ const FormVariationsDemo = () => {
     }, 60);
     setJumpOpen(false);
   };
+  const scanFieldLabels = () => {
+    const found: { section: string; label: string }[] = [];
+    const seen = new Set<string>();
+    Object.entries(singleSectionRefs.current).forEach(([sectionId, el]) => {
+      if (!el) return;
+      el.querySelectorAll('label').forEach((labelEl) => {
+        const text = (labelEl.textContent || '').replace(/\*/g, '').trim();
+        if (!text || text.length > 48) return;
+        const key = `${sectionId}::${text.toLowerCase()}`;
+        if (seen.has(key)) return;
+        seen.add(key);
+        found.push({ section: sectionId, label: text });
+      });
+    });
+    if (found.length) {
+      setFieldIndex((prev) => {
+        const merged = [...prev];
+        const existing = new Set(prev.map((f) => `${f.section}::${f.label.toLowerCase()}`));
+        found.forEach((f) => {
+          const k = `${f.section}::${f.label.toLowerCase()}`;
+          if (!existing.has(k)) {
+            existing.add(k);
+            merged.push(f);
+          }
+        });
+        return merged;
+      });
+    }
+  };
+  const handleJumpOpenChange = (open: boolean) => {
+    setJumpOpen(open);
+    if (open && !fieldsIndexedRef.current) {
+      const prevOpen = openAccordions;
+      setOpenAccordions([...singleAccordionValues]);
+      setTimeout(() => {
+        scanFieldLabels();
+        fieldsIndexedRef.current = true;
+        setOpenAccordions(prevOpen);
+      }, 140);
+    }
+  };
+  const jumpToField = (sectionId: string, label: string) => {
+    setJumpOpen(false);
+    setOpenAccordions((prev) => (prev.includes(sectionId) ? prev : [...prev, sectionId]));
+    setTimeout(() => {
+      const container = singleSectionRefs.current[sectionId];
+      if (!container) return;
+      const target = Array.from(container.querySelectorAll('label')).find(
+        (l) => (l.textContent || '').replace(/\*/g, '').trim().toLowerCase() === label.toLowerCase()
+      );
+      const wrapper = (target?.closest('div') as HTMLElement) || (target as HTMLElement | undefined);
+      if (!wrapper) {
+        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+      wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      wrapper.classList.add('ring-2', 'ring-primary', 'ring-offset-2', 'rounded-md', 'transition-all');
+      setTimeout(() => {
+        wrapper.classList.remove('ring-2', 'ring-primary', 'ring-offset-2', 'ring-offset-background');
+      }, 2200);
+      const input = wrapper.querySelector('input, textarea, select') as HTMLElement | null;
+      input?.focus?.();
+    }, 160);
+  };
+
   const [stampInspectorOpen, setStampInspectorOpen] = useState(false);
   const [stampLogin, setStampLogin] = useState("admin");
   const [stampPassword, setStampPassword] = useState("");
@@ -9996,36 +10063,49 @@ const FormVariationsDemo = () => {
                     <Badge variant="outline" className="h-6 text-[10px] font-medium tabular-nums">
                       {sectionOrder.filter((id) => !hiddenSections.includes(id)).length} sections
                     </Badge>
-                    <Popover open={jumpOpen} onOpenChange={setJumpOpen}>
+                    <Popover open={jumpOpen} onOpenChange={handleJumpOpenChange}>
                       <PopoverTrigger asChild>
                         <Button variant="outline" size="sm" className="h-7 gap-1.5 text-xs">
-                          <List className="h-3.5 w-3.5" />
-                          Jump to section
+                          <Search className="h-3.5 w-3.5" />
+                          Find a field
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-64 p-0" align="start">
+                      <PopoverContent className="w-80 p-0" align="start">
                         <Command>
-                          <CommandInput placeholder="Find section..." className="h-8 text-xs" />
-                          <CommandList className="max-h-64">
-                            <CommandEmpty className="py-2 text-center text-xs">No section found.</CommandEmpty>
-                            <CommandGroup>
-                              {sectionOrder
-                                .filter((id) => !hiddenSections.includes(id))
-                                .map((id) => (
-                                  <CommandItem
-                                    key={id}
-                                    value={singleAccordionLabels[id]}
-                                    onSelect={() => jumpToSection(id)}
-                                    className="cursor-pointer text-xs"
-                                  >
-                                    {singleAccordionLabels[id]}
-                                  </CommandItem>
-                                ))}
-                            </CommandGroup>
+                          <CommandInput placeholder="Search fields (e.g. serial, PO, due date)..." className="h-8 text-xs" />
+                          <CommandList className="max-h-72">
+                            <CommandEmpty className="py-3 text-center text-xs">No field found.</CommandEmpty>
+                            {sectionOrder
+                              .filter((id) => !hiddenSections.includes(id))
+                              .map((id) => {
+                                const fields = fieldIndex.filter((f) => f.section === id);
+                                return (
+                                  <CommandGroup key={id} heading={singleAccordionLabels[id]}>
+                                    <CommandItem
+                                      value={`${singleAccordionLabels[id]} section`}
+                                      onSelect={() => jumpToSection(id)}
+                                      className="cursor-pointer text-xs text-muted-foreground"
+                                    >
+                                      Go to {singleAccordionLabels[id]} section
+                                    </CommandItem>
+                                    {fields.map((f) => (
+                                      <CommandItem
+                                        key={`${id}-${f.label}`}
+                                        value={`${f.label} ${singleAccordionLabels[id]}`}
+                                        onSelect={() => jumpToField(id, f.label)}
+                                        className="cursor-pointer text-xs"
+                                      >
+                                        {f.label}
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup>
+                                );
+                              })}
                           </CommandList>
                         </Command>
                       </PopoverContent>
                     </Popover>
+
                   </div>
                   <div className="flex items-center gap-2">
                     <Popover>
