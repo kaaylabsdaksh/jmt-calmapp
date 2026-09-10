@@ -5677,7 +5677,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                 ) : (
                   <>
                     {visibleItemColumns.map((col) => (
-                      <TableHead key={col.key} style={colWidthStyle(col.key)} className="py-0.5 px-1.5">
+                      <TableHead key={col.key} data-colfilter={col.key} style={colWidthStyle(col.key)} className="py-0.5 px-1.5">
                         <div className="relative">
                           {col.type === 'date' ? (
                             <DateColumnFilter
