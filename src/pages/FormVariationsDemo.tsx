@@ -10195,6 +10195,73 @@ const FormVariationsDemo = () => {
                       <Sparkles className="h-3.5 w-3.5" />
                       AI Fill
                     </Button>
+                    <Dialog open={aiFillOpen} onOpenChange={setAiFillOpen}>
+                      <DialogContent className="max-w-lg">
+                        <DialogHeader>
+                          <DialogTitle className="flex items-center gap-2 text-base">
+                            <Sparkles className="h-4 w-4" />
+                            AI Fill
+                          </DialogTitle>
+                          <DialogDescription className="text-xs">
+                            Paste an email, quote note, or describe the item. Review what AI found before it goes into the form.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <Textarea
+                          value={aiText}
+                          onChange={(e) => { setAiText(e.target.value); setAiError(null); }}
+                          rows={4}
+                          placeholder="e.g. Fluke 87V multimeter, serial 4521XZ, PO 88123, deliver by 10/15/2026"
+                          className="text-xs"
+                        />
+                        <div className="flex items-center gap-2">
+                          <Button size="sm" className="h-7 gap-1.5 text-xs" disabled={aiLoading || !aiText.trim()} onClick={askAiForFields}>
+                            {aiLoading ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <Sparkles className="h-3.5 w-3.5" />}
+                            {aiLoading ? 'Reading…' : 'Analyze'}
+                          </Button>
+                          {aiSuggestions.length > 0 && (
+                            <span className="text-[11px] text-muted-foreground">
+                              {Object.values(aiAccepted).filter(Boolean).length} of {aiSuggestions.length} selected
+                            </span>
+                          )}
+                        </div>
+                        {aiError && <p className="text-[11px] text-destructive">{aiError}</p>}
+                        {aiSuggestions.length > 0 && (
+                          <div className="max-h-60 space-y-1 overflow-y-auto rounded-md border p-1.5">
+                            {aiSuggestions.map((s) => {
+                              const key = `${s.section}-${s.label}`;
+                              return (
+                                <label key={key} className="flex cursor-pointer items-start gap-2 rounded-md px-2 py-1.5 hover:bg-muted/60">
+                                  <Checkbox
+                                    checked={!!aiAccepted[key]}
+                                    onCheckedChange={(c) => setAiAccepted((prev) => ({ ...prev, [key]: !!c }))}
+                                    className="mt-0.5"
+                                  />
+                                  <span className="min-w-0 flex-1">
+                                    <span className="block truncate text-[11px] font-medium">{s.label}</span>
+                                    <span className="block truncate text-[10px] text-muted-foreground">
+                                      {singleAccordionLabels[s.section] || s.section}
+                                      {s.reason ? ` · ${s.reason}` : ''}
+                                    </span>
+                                  </span>
+                                  <Badge variant="secondary" className="shrink-0 max-w-[130px] truncate text-[10px]">{s.value}</Badge>
+                                </label>
+                              );
+                            })}
+                          </div>
+                        )}
+                        <DialogFooter>
+                          <Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => setAiFillOpen(false)}>Cancel</Button>
+                          <Button
+                            size="sm"
+                            className="h-7 text-xs"
+                            disabled={!Object.values(aiAccepted).some(Boolean)}
+                            onClick={applyAllAiSuggestions}
+                          >
+                            Fill {Object.values(aiAccepted).filter(Boolean).length || ''} field(s)
+                          </Button>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
                   </div>
                   <div className="flex items-center gap-2">
                     <Popover>
