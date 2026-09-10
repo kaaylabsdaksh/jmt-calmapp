@@ -168,31 +168,37 @@ const FormVariationsDemo = () => {
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
   const [jumpQuery, setJumpQuery] = useState('');
+  const [aiFillOpen, setAiFillOpen] = useState(false);
+  const [aiText, setAiText] = useState('');
   const [aiSuggestions, setAiSuggestions] = useState<{ section: string; label: string; value: string; reason: string }[]>([]);
+  const [aiAccepted, setAiAccepted] = useState<Record<string, boolean>>({});
   const ensureFieldIndex = async () => {
-    if (fieldsIndexedRef.current) return;
+    if (fieldsIndexedRef.current) return fieldIndex;
     const prevOpen = openAccordions;
     setOpenAccordions([...singleAccordionValues]);
-    await new Promise((r) => setTimeout(r, 160));
-    scanFieldLabels();
+    await new Promise((r) => setTimeout(r, 200));
+    const scanned = scanFieldLabels();
     fieldsIndexedRef.current = true;
     setOpenAccordions(prevOpen);
+    return scanned ?? fieldIndex;
   };
   const askAiForFields = async () => {
-    const text = jumpQuery.trim();
+    const text = aiText.trim();
     if (!text) return;
     setAiLoading(true);
     setAiError(null);
     setAiSuggestions([]);
+    setAiAccepted({});
     try {
-      await ensureFieldIndex();
-      const fields = fieldIndex.length ? fieldIndex : [];
+      const indexed = await ensureFieldIndex();
+      const fields = (indexed && indexed.length ? indexed : fieldIndex) || [];
       const { data, error } = await supabase.functions.invoke('suggest-fields', {
         body: { text, fields },
       });
       if (error) throw error;
-      const suggestions = (data as { suggestions?: typeof aiSuggestions })?.suggestions ?? [];
+      const suggestions = ((data as { suggestions?: typeof aiSuggestions })?.suggestions ?? []).filter((s) => s.value);
       setAiSuggestions(suggestions);
+      setAiAccepted(Object.fromEntries(suggestions.map((s) => [`${s.section}-${s.label}`, true])));
       if (!suggestions.length) setAiError('No matching fields found for that description.');
     } catch (e) {
       setAiError('Could not reach the AI service. Please try again.');
@@ -201,10 +207,10 @@ const FormVariationsDemo = () => {
     }
   };
   const applyAllAiSuggestions = () => {
-    const withValues = aiSuggestions.filter((s) => s.value);
+    const withValues = aiSuggestions.filter((s) => s.value && aiAccepted[`${s.section}-${s.label}`]);
     if (!withValues.length) return;
     setOpenAccordions((prev) => Array.from(new Set([...prev, ...withValues.map((s) => s.section)])));
-    setJumpOpen(false);
+    setAiFillOpen(false);
     setTimeout(() => {
       withValues.forEach((s) => {
         const container = singleSectionRefs.current[s.section];
