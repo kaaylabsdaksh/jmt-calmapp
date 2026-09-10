@@ -119,6 +119,7 @@ const FormVariationsDemo = () => {
         return merged;
       });
     }
+    return found;
   };
   const handleJumpOpenChange = (open: boolean) => {
     setJumpOpen(open);
