@@ -5554,9 +5554,9 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                   // Item View Headers
                   <>
                     {visibleItemColumns.map(col => (
-                      <TableHead key={col.key} className="font-semibold text-gray-900 text-[11px] py-1 px-2 whitespace-nowrap">
-                        <div className="flex items-center gap-1">
-                          <span>{col.label}</span>
+                      <TableHead key={col.key} style={colWidthStyle(col.key)} className="relative font-semibold text-gray-900 text-[11px] py-1 px-2 whitespace-nowrap">
+                        <div className="flex items-center gap-1 overflow-hidden">
+                          <span className="truncate">{col.label}</span>
                           <button
                             onClick={() => handleSort(col.key)}
                             className="flex-shrink-0 p-0.5 rounded hover:bg-muted transition-colors"
@@ -5565,6 +5565,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                             <SortIcon columnKey={col.key} />
                           </button>
                         </div>
+                        <ColumnResizeHandle columnKey={col.key} />
                       </TableHead>
                     ))}
                   </>
