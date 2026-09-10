@@ -5610,7 +5610,7 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
                       { key: 'totalLabOpen', placeholder: '', type: 'text' },
                       { key: 'totalArCount', placeholder: '', type: 'text' },
                     ]).map((col) => (
-                      <TableHead key={col.key} className="py-1.5 px-2">
+                      <TableHead key={col.key} style={searchViewMode === 'csa' ? undefined : colWidthStyle(`batch:${col.key}`)} className="py-1.5 px-2">
                         <div className="relative flex items-center gap-1">
                           {col.type === 'date' ? (
                             <DateColumnFilter
