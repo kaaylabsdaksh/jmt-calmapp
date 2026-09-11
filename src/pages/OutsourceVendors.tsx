@@ -280,25 +280,6 @@ const OutsourceVendors = () => {
 
   const set = (patch: Partial<VendorRecord>) => setEditing((p) => (p ? { ...p, ...patch } : p));
 
-  const yesNoFilter = (key: keyof Filters, label: string) => (
-    <div className="space-y-0.5">
-      <Label className={LABEL}>{label}</Label>
-      <Select
-        value={draft[key] as string}
-        onValueChange={(v) => setDraft({ ...draft, [key]: v })}
-      >
-        <SelectTrigger className={fieldClass(draft[key] as string, "[&>svg]:h-3 [&>svg]:w-3")}>
-          <SelectValue placeholder="Any" />
-        </SelectTrigger>
-        <SelectContent className={SELECT_CONTENT}>
-          <SelectItem value="all">Any</SelectItem>
-          <SelectItem value="Yes">Yes</SelectItem>
-          <SelectItem value="No">No</SelectItem>
-        </SelectContent>
-      </Select>
-    </div>
-  );
-
   const yesNoField = (label: string, value: YesNo, onChange: (v: YesNo) => void) => (
     <div className="space-y-0.5">
       <Label className={LABEL}>{label}</Label>
