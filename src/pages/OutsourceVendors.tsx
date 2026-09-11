@@ -12,6 +12,7 @@ import {
   X,
 } from "lucide-react";
 import { toast } from "sonner";
+import { format } from "date-fns";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
   Breadcrumb,
@@ -611,7 +612,12 @@ const OutsourceVendors = () => {
                       {colInput(columnFilters.zip, (v) => setCol({ zip: v }))}
                     </TableHead>
                     <TableHead className="h-7 py-0.5 px-1.5">
-                      {colInput(columnFilters.originalApprovalDate, (v) => setCol({ originalApprovalDate: v }), "MM/DD/YYYY")}
+                      <ModernDatePicker
+                        size="xs"
+                        placeholder="MM/DD/YYYY"
+                        value={columnFilters.originalApprovalDate}
+                        onChange={(d) => setCol({ originalApprovalDate: d ? format(d, "MM/dd/yyyy") : "" })}
+                      />
                     </TableHead>
                     <TableHead className="h-7 py-0.5 px-1.5">
                       {colSelect(
@@ -688,7 +694,12 @@ const OutsourceVendors = () => {
                       )}
                     </TableHead>
                     <TableHead className="h-7 py-0.5 px-1.5">
-                      {colInput(columnFilters.approvalExpires, (v) => setCol({ approvalExpires: v }), "MM/DD/YYYY")}
+                      <ModernDatePicker
+                        size="xs"
+                        placeholder="MM/DD/YYYY"
+                        value={columnFilters.approvalExpires}
+                        onChange={(d) => setCol({ approvalExpires: d ? format(d, "MM/dd/yyyy") : "" })}
+                      />
                     </TableHead>
                   </TableRow>
                 </TableHeader>
