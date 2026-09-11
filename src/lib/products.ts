@@ -21,7 +21,7 @@ export type Product = {
 };
 
 export const PRODUCTS: Product[] = [
-  { id: "9719", manufacturer: "FLUKE", model: "10", description: "MULTIMETER", alias: "", lc: "M", locations: "", tf: "No", calCost: "102.50", groupType: "Electrical", productType: "", accredCal: "", status: "ACTIVE", prItem: "", prStatus: "", rental: "No", option: "", range: "", accuracy: "" },
+  { id: "17025", manufacturer: "FLUKE", model: "10", description: "MULTIMETER", alias: "", lc: "M", locations: "", tf: "No", calCost: "102.50", groupType: "Electrical", productType: "", accredCal: "", status: "ACTIVE", prItem: "", prStatus: "", rental: "No", option: "", range: "", accuracy: "" },
   { id: "9723", manufacturer: "FLUKE", model: "105 SERIES II", description: "SCOPEMETER", alias: "", lc: "Q", locations: "", tf: "No", calCost: "358.75", groupType: "Electrical", productType: "", accredCal: "", status: "ACTIVE", prItem: "", prStatus: "", rental: "No", option: "", range: "", accuracy: "" },
   { id: "9724", manufacturer: "FLUKE", model: "105B", description: "SCOPEMETER", alias: "", lc: "Q", locations: "", tf: "No", calCost: "358.75", groupType: "Electrical", productType: "", accredCal: "", status: "ACTIVE", prItem: "", prStatus: "", rental: "No", option: "", range: "", accuracy: "" },
   { id: "9727", manufacturer: "FLUKE", model: "11", description: "MULTIMETER", alias: "", lc: "M", locations: "", tf: "No", calCost: "205.00", groupType: "Electrical", productType: "", accredCal: "", status: "ACTIVE", prItem: "", prStatus: "", rental: "No", option: "", range: "", accuracy: "" },
