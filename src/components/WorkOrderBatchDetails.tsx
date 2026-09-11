@@ -383,7 +383,7 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
    return (
     <div className="space-y-2">
       {/* Header */}
-      <div className="flex items-center justify-between pb-2 border-b">
+      <div className="sticky top-0 z-40 bg-background flex items-center justify-between py-2 border-b">
         <Button variant="ghost" size="sm" onClick={onBack} className="h-7 text-xs px-2">
           <ArrowLeft className="h-3 w-3 mr-1" />
           Back to Batches
