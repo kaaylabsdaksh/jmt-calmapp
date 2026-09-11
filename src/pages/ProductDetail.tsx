@@ -78,7 +78,20 @@ const OPTIONS = ["None", "Standard", "Extended"];
 const RANGES = ["0-100 PSI", "0-300 PSI", "0-600 PSI", "Custom"];
 const ACCURACIES = ["0.25%", "0.5%", "1.0%", "Custom"];
 
+type Accred17025 = "No" | "Full" | "Partial";
+
+function buildScope(
+  all: string[],
+  capable: Record<string, boolean>,
+  level: Accred17025,
+): Record<string, Accred17025> {
+  const next: Record<string, Accred17025> = {};
+  all.forEach((loc) => (next[loc] = capable[loc] ? level : "No"));
+  return next;
+}
+
 const ProductDetail = () => {
+
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const product = PRODUCTS.find((p) => p.id === id);
