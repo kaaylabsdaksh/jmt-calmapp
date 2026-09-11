@@ -192,8 +192,9 @@ const FormVariationsDemo = () => {
   });
   const [aiSuggestions, setAiSuggestions] = useState<{ section: string; label: string; value: string; reason: string }[]>([]);
   const [aiAccepted, setAiAccepted] = useState<Record<string, boolean>>({});
-  const ensureFieldIndex = async () => {
-    if (fieldsIndexedRef.current) return fieldIndex;
+  const [mandatory, setMandatory] = useState<{ section: string; label: string }[]>([]);
+  const ensureFieldIndex = async (force = false) => {
+    if (fieldsIndexedRef.current && !force) return fieldIndex;
     const prevOpen = openAccordions;
     setOpenAccordions([...singleAccordionValues]);
     await new Promise((r) => setTimeout(r, 200));
@@ -201,6 +202,17 @@ const FormVariationsDemo = () => {
     fieldsIndexedRef.current = true;
     setOpenAccordions(prevOpen);
     return scanned ?? fieldIndex;
+  };
+  const openAiFill = async () => {
+    setAiFillOpen(true);
+    setAiError(null);
+    const scanned = await ensureFieldIndex(true);
+    setMandatory(
+      (scanned || [])
+        .filter((f) => f.required && f.empty)
+        .map((f) => ({ section: f.section, label: f.label }))
+        .slice(0, 12)
+    );
   };
   const askAiForFields = async () => {
     const text = aiText.trim();
