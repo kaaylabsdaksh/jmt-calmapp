@@ -600,6 +600,10 @@ const OutsourceVendors = () => {
                         placeholder="MM/DD/YYYY"
                         value={columnFilters.approvalExpires}
                         onChange={(d) => setCol({ approvalExpires: d ? format(d, "MM/dd/yyyy") : "" })}
+                        inputClassName={cn(
+                          columnFilters.approvalExpires &&
+                            "border-slate-400 bg-slate-50 font-medium text-foreground"
+                        )}
                       />
                     </TableHead>
                   </TableRow>
