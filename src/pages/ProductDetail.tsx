@@ -354,7 +354,12 @@ const ProductDetail = () => {
                     <span className="text-center">Partial</span>
                   </div>
                   <div className="divide-y">
-                    {CAPABLE_LOCATIONS.map((loc) => {
+                    {[...CAPABLE_LOCATIONS].sort((a, b) => {
+                      const aEnabled = SCOPE_ENABLED_LOCATIONS.includes(a);
+                      const bEnabled = SCOPE_ENABLED_LOCATIONS.includes(b);
+                      if (aEnabled === bEnabled) return a.localeCompare(b);
+                      return aEnabled ? -1 : 1;
+                    }).map((loc) => {
                       const capable = !!locations[loc];
                       const scopeEnabled = SCOPE_ENABLED_LOCATIONS.includes(loc);
                       const value = capable ? accred17025[loc] || "No" : "No";
