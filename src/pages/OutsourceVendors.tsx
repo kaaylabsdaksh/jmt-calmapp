@@ -430,16 +430,6 @@ const OutsourceVendors = () => {
                   <Badge className="h-4 rounded-full px-1.5 text-[10px]">{activeCount}</Badge>
                 )}
               </div>
-              <Button
-                variant="outline"
-                className="h-7 gap-1.5 text-[11px]"
-                onClick={() => setShowMore((s) => !s)}
-                aria-expanded={showMore}
-              >
-                <SlidersHorizontal className="h-3.5 w-3.5" />
-                More Filters
-                <ChevronDown className={cn("h-3 w-3 transition-transform", showMore && "rotate-180")} />
-              </Button>
             </div>
 
             <div className="grid grid-cols-1 gap-x-3 gap-y-2 sm:grid-cols-2 lg:grid-cols-5">
