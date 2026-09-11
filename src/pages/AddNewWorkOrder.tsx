@@ -60,8 +60,8 @@ const AddNewWorkOrder = () => {
       setIsSaved(true);
       setHasContact(true);
       setActiveTab("general");
-    } else {
-      // Normal entry - reset fields
+    } else if (localStorage.getItem('addNewWorkOrderIsSaved') !== 'true') {
+      // Fresh work order - reset fields and start on General
       setWorkOrderData(prev => ({
         ...prev,
         accountNumber: "",
