@@ -410,10 +410,6 @@ const OutsourceVendors = () => {
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
-            <Button className="h-8 gap-1.5 text-xs" onClick={openAdd}>
-              <Plus className="h-3.5 w-3.5" />
-              Add Vendor
-            </Button>
           </div>
         </header>
 
