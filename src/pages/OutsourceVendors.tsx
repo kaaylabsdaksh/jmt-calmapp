@@ -303,9 +303,6 @@ const OutsourceVendors = () => {
             <SidebarTrigger className="text-foreground hover:bg-muted" />
             <div className="flex-1">
               <h1 className="text-lg font-semibold leading-tight text-foreground">Outsource Vendors</h1>
-              <p className="text-xs text-muted-foreground">
-                Manage and maintain approved outsource vendor information.
-              </p>
               <Breadcrumb className="mt-1">
                 <BreadcrumbList>
                   <BreadcrumbItem>
