@@ -193,9 +193,6 @@ export default function MissingCost() {
                   placeholder="Enter one or more WO numbers"
                   className="min-h-[76px] resize-y rounded-md text-sm"
                 />
-                <p className="text-[11px] text-muted-foreground">
-                  Separate multiple work orders with commas, e.g. 123123, 123151.
-                </p>
               </div>
 
               {/* Missing cost only */}
