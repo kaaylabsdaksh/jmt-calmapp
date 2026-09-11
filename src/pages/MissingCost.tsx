@@ -86,7 +86,7 @@ export default function MissingCost() {
     .map((w) => w.trim())
     .filter(Boolean);
 
-  const canExport = !exporting && (parsedWos.length > 0 || missingCostOnly);
+  const canExport = !exporting && parsedWos.length > 0;
 
   const handleExport = () => {
     setExporting(true);
