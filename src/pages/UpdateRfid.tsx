@@ -13,7 +13,7 @@ import {
   ScanLine,
   ArrowRight,
 } from "lucide-react";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
   Breadcrumb,
@@ -216,7 +216,7 @@ const UpdateRfid = () => {
   const handleSearch = () => {
     if (!model.trim() || !serial.trim()) {
       setFormError("Please enter a model and serial number to continue.");
-      toast.error("Model and manufacturer serial number are required.");
+      toast({ title: "Model and manufacturer serial number are required.", variant: "destructive" });
       return;
     }
     setFormError("");
@@ -283,7 +283,7 @@ const UpdateRfid = () => {
     }
     if (EXISTING_RFIDS.has(value.toUpperCase()) && value.toUpperCase() !== selected.rfid.toUpperCase()) {
       setRfidError("This RFID is already assigned to another equipment record.");
-      toast.error("This RFID is already assigned to another equipment record.");
+      toast({ title: "This RFID is already assigned to another equipment record.", variant: "destructive" });
       return;
     }
     setRfidError("");
@@ -295,9 +295,7 @@ const UpdateRfid = () => {
       EXISTING_RFIDS.add(value.toUpperCase());
       setUpdating(false);
       setSuccess({ reportNo: selected.reportNo, previous, next: value });
-      toast.success("RFID updated successfully.", {
-        description: `${selected.reportNo} · ${previous || "—"} → ${value}`,
-      });
+      toast({ title: "RFID updated successfully.", description: `${selected.reportNo} · ${previous || "—"} → ${value}` });
     }, 700);
   };
 

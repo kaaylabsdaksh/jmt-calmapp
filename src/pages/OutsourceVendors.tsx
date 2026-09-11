@@ -10,7 +10,7 @@ import {
   Clock,
   X,
 } from "lucide-react";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
@@ -282,13 +282,13 @@ const OutsourceVendors = () => {
     }
     setErrors(next);
     if (Object.keys(next).length) {
-      toast.error("Please correct the highlighted fields.");
+      toast({ title: "Please correct the highlighted fields.", variant: "destructive" });
       return;
     }
     setVendors((prev) =>
       isNew ? [{ ...editing }, ...prev] : prev.map((v) => (v.id === editing.id ? { ...editing } : v))
     );
-    toast.success(isNew ? `Vendor ${editing.id} added.` : `Vendor ${editing.id} updated.`);
+    toast({ title: isNew ? `Vendor ${editing.id} added.` : `Vendor ${editing.id} updated.` });
     setEditing(null);
   };
 

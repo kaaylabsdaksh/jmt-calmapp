@@ -1,6 +1,6 @@
 import { Fragment, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -425,14 +425,14 @@ const TransitLog = () => {
 
   const handleProcess = () => {
     if (selectedRecords.length === 0) {
-      toast.info("Opening Transit Processing", { description: "No records selected — the full transit queue will be processed." });
+      toast({ title: "Opening Transit Processing", description: "No records selected — the full transit queue will be processed." });
       return;
     }
     setProcessOpen(true);
   };
 
   const confirmProcess = () => {
-    toast.success(`${selectedRecords.length} transit record(s) processed`);
+    toast({ title: `${selectedRecords.length} transit record(s) processed` });
     setProcessOpen(false);
     setSelected([]);
   };
@@ -841,7 +841,7 @@ const TransitLog = () => {
                 size="sm"
                 variant="outline"
                 className="h-8 text-xs"
-                onClick={() => toast.success("Transit Log report generated")}
+                onClick={() => toast({ title: "Transit Log report generated" })}
               >
                 <FileText className="h-3.5 w-3.5 mr-1.5" />
                 Report

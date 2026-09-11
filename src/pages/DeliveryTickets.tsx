@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 import StandardTopNav from "@/components/shared/StandardTopNav";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -141,7 +141,7 @@ export default function DeliveryTickets() {
 
   const addToFile = () => {
     if (!collectionAccount.trim()) {
-      toast.error("Collection Account is required");
+      toast({ title: "Collection Account is required", variant: "destructive" });
       return;
     }
     const nextId = `wo-${records.length + 1}`;
@@ -159,7 +159,7 @@ export default function DeliveryTickets() {
         deliveryType: type,
       },
     ]);
-    toast.success("Record added to processing file");
+    toast({ title: "Record added to processing file" });
   };
 
   const removeRecord = (id: string) =>
@@ -167,13 +167,13 @@ export default function DeliveryTickets() {
 
   const processTickets = () => {
     if (records.length === 0) {
-      toast.error("No Records Selected");
+      toast({ title: "No Records Selected", variant: "destructive" });
       return;
     }
     setConfirmOpen(false);
     // Simulate processing
     setTimeout(() => {
-      toast.success("Delivery Tickets Generated Successfully");
+      toast({ title: "Delivery Tickets Generated Successfully" });
       setRecords([]);
     }, 400);
   };

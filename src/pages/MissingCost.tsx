@@ -12,7 +12,7 @@ import {
   Download,
   RotateCcw,
 } from "lucide-react";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
   Breadcrumb,
@@ -92,11 +92,9 @@ export default function MissingCost() {
     setExporting(true);
     setTimeout(() => {
       setExporting(false);
-      toast.success("Export started", {
-        description: `${parsedWos.length > 0 ? `${parsedWos.length} work order(s)` : "All work orders"} · ${
+      toast({ title: "Export started", description: `${parsedWos.length > 0 ? `${parsedWos.length} work order(s)` : "All work orders"} · ${
           divisions.length > 0 ? divisions.join(", ") : "All divisions"
-        } · ${location}`,
-      });
+        } · ${location}` });
     }, 800);
   };
 
@@ -105,7 +103,7 @@ export default function MissingCost() {
     setMissingCostOnly(true);
     setLocation("All Locations");
     setDivisions([]);
-    toast.info("Export filters reset");
+    toast({ title: "Export filters reset" });
   };
 
   /* -------------------------------------------------------------- import */
@@ -119,7 +117,7 @@ export default function MissingCost() {
     const ok = /\.(xlsx|xls|csv)$/i.test(f.name);
     if (!ok) {
       setUploadState("failed");
-      toast.error("Unsupported file", { description: "Please upload an XLSX, XLS or CSV file." });
+      toast({ title: "Unsupported file", description: "Please upload an XLSX, XLS or CSV file.", variant: "destructive" });
       return;
     }
     setFile(f);
@@ -131,7 +129,7 @@ export default function MissingCost() {
     setUploadState("uploading");
     setTimeout(() => {
       setUploadState("success");
-      toast.success("Import complete", { description: `${file.name} processed successfully.` });
+      toast({ title: "Import complete", description: `${file.name} processed successfully.` });
     }, 1200);
   };
 
