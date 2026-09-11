@@ -485,23 +485,6 @@ const OutsourceVendors = () => {
 
           {/* Results */}
           <section className="rounded-xl border bg-card shadow-sm">
-            <div className="flex items-center justify-between gap-2 border-b px-3 py-2">
-              <p className="text-xs text-muted-foreground">
-                {filtered.length === 0
-                  ? "No vendors found"
-                  : `Showing ${start + 1}–${Math.min(start + pageSize, filtered.length)} of ${filtered.length.toLocaleString()} vendors`}
-              </p>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] text-muted-foreground">Rows</span>
-                <Select value={String(pageSize)} onValueChange={(v) => { setPageSize(Number(v)); setPage(1); }}>
-                  <SelectTrigger className="h-7 w-[68px] text-[11px]"><SelectValue /></SelectTrigger>
-                  <SelectContent className={SELECT_CONTENT}>
-                    {[10, 25, 50, 100].map((n) => <SelectItem key={n} value={String(n)}>{n}</SelectItem>)}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
             <div className="max-h-[62vh] overflow-auto">
               <Table className="min-w-[1800px] text-xs">
                 <TableHeader className="sticky top-0 z-10 bg-muted/60 backdrop-blur">
@@ -595,10 +578,26 @@ const OutsourceVendors = () => {
             </div>
 
             <div className="flex flex-wrap items-center justify-between gap-2 border-t px-3 py-2">
-              <p className="text-[11px] text-muted-foreground">
-                Page {currentPage} of {totalPages}
-              </p>
+              <div className="flex items-center gap-4">
+                <p className="text-[11px] text-muted-foreground">
+                  {filtered.length === 0
+                    ? "No vendors found"
+                    : `Showing ${start + 1}–${Math.min(start + pageSize, filtered.length)} of ${filtered.length.toLocaleString()} vendors`}
+                </p>
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] text-muted-foreground">Rows</span>
+                  <Select value={String(pageSize)} onValueChange={(v) => { setPageSize(Number(v)); setPage(1); }}>
+                    <SelectTrigger className="h-7 w-[68px] text-[11px]"><SelectValue /></SelectTrigger>
+                    <SelectContent className={SELECT_CONTENT}>
+                      {[10, 25, 50, 100].map((n) => <SelectItem key={n} value={String(n)}>{n}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
               <div className="flex items-center gap-1">
+                <p className="text-[11px] text-muted-foreground">
+                  Page {currentPage} of {totalPages}
+                </p>
                 <Button
                   variant="outline"
                   className="h-7 gap-1 text-[11px]"
