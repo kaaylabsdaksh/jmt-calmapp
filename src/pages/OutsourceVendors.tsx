@@ -10,7 +10,6 @@ import {
   ChevronRight,
   AlertTriangle,
   Clock,
-  ChevronDown,
   X,
 } from "lucide-react";
 import { toast } from "sonner";
