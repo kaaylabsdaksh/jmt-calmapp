@@ -114,6 +114,9 @@ const ProductDetail = () => {
       ts: "01/26/2026 12:00 AM",
     },
   ]);
+  const [accred17025, setAccred17025] = useState<Record<string, Accred17025>>({});
+
+
 
 
   if (!product) {
