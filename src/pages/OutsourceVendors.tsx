@@ -514,6 +514,10 @@ const OutsourceVendors = () => {
                         placeholder="MM/DD/YYYY"
                         value={columnFilters.originalApprovalDate}
                         onChange={(d) => setCol({ originalApprovalDate: d ? format(d, "MM/dd/yyyy") : "" })}
+                        inputClassName={cn(
+                          columnFilters.originalApprovalDate &&
+                            "border-slate-400 bg-slate-50 font-medium text-foreground"
+                        )}
                       />
                     </TableHead>
                     <TableHead className="h-7 py-0.5 px-1.5">
