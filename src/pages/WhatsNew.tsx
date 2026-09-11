@@ -116,7 +116,7 @@ const WhatsNew = () => {
   return (
     <div className="bg-background min-h-full">
       {/* Header (matches ModernTopNav visual style) */}
-      <header className="bg-white px-2 sm:px-4 lg:px-6 py-3 border-b border-border">
+      <header className="sticky top-0 z-40 bg-white px-2 sm:px-4 lg:px-6 py-3 border-b border-border">
         <div>
           <h1 className="text-base sm:text-lg font-semibold text-foreground leading-tight flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-primary" />

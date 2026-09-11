@@ -142,7 +142,7 @@ const LabTriage = () => {
   return (
     <div className="min-h-screen bg-muted/20">
       {/* Header */}
-      <header className="bg-card border-b border-border px-6 py-3">
+      <header className="sticky top-0 z-40 bg-card border-b border-border px-6 py-3">
         <div className="flex items-center gap-3">
           <SidebarTrigger className="text-foreground transition-all hover:bg-muted" />
           <div>

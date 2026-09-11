@@ -103,7 +103,7 @@ const WorkOrderSearchV2 = () => {
   return (
     <div className="bg-background min-h-screen">
       {/* Header matching v1 style */}
-      <header className="bg-card shadow-sm border-b">
+      <header className="sticky top-0 z-40 bg-card shadow-sm border-b">
         <div className="w-full px-2 sm:px-4 lg:px-6 py-3 sm:py-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
             <div className="flex items-center gap-2 sm:gap-4">

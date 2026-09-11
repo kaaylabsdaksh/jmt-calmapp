@@ -363,7 +363,7 @@ const LogisticsView = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Top Nav - matching Work Order Management style */}
-      <header className="bg-white px-2 sm:px-4 lg:px-6 py-3 border-b border-border">
+      <header className="sticky top-0 z-40 bg-white px-2 sm:px-4 lg:px-6 py-3 border-b border-border">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
           <div className="flex items-center gap-2 sm:gap-3">
             <SidebarTrigger className="text-foreground hover:bg-muted hover:text-foreground transition-all duration-300 transform hover:scale-105" />

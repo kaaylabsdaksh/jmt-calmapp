@@ -11692,7 +11692,7 @@ const FormVariationsDemo = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-background py-4 border-b border-border px-3 sm:px-4 lg:px-6">
+      <header className="sticky top-0 z-40 bg-background py-4 border-b border-border px-3 sm:px-4 lg:px-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-4">
           <div className="flex items-center gap-3">
             <SidebarTrigger className="p-2 rounded-lg hover:bg-muted hover:text-foreground transition-all duration-300" />

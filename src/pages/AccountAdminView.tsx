@@ -1013,7 +1013,7 @@ const AccountAdminView = () => {
     <TooltipProvider delayDuration={200}>
       <div className="min-h-screen bg-background pb-20">
         {/* Header */}
-        <header className="border-b border-border bg-card px-2 py-3 sm:px-4 lg:px-6">
+        <header className="sticky top-0 z-40 border-b border-border bg-card px-2 py-3 sm:px-4 lg:px-6">
           <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center sm:gap-0">
             <div className="flex items-center gap-2 sm:gap-3">
               <SidebarTrigger className="text-foreground transition-all hover:bg-muted" />
