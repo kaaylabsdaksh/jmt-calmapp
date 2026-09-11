@@ -93,28 +93,42 @@ const FormVariationsDemo = () => {
     setJumpOpen(false);
   };
   const scanFieldLabels = () => {
-    const found: { section: string; label: string }[] = [];
+    const found: { section: string; label: string; required?: boolean; empty?: boolean }[] = [];
     const seen = new Set<string>();
     Object.entries(singleSectionRefs.current).forEach(([sectionId, el]) => {
       if (!el) return;
       el.querySelectorAll('label').forEach((labelEl) => {
-        const text = (labelEl.textContent || '').replace(/\*/g, '').trim();
+        const raw = labelEl.textContent || '';
+        const text = raw.replace(/\*/g, '').trim();
         if (!text || text.length > 48) return;
         const key = `${sectionId}::${text.toLowerCase()}`;
         if (seen.has(key)) return;
         seen.add(key);
-        found.push({ section: sectionId, label: text });
+        const wrapper = labelEl.closest('div') as HTMLElement | null;
+        const control = wrapper?.querySelector('input, textarea, [role="combobox"]') as HTMLElement | null;
+        const required =
+          raw.includes('*') ||
+          !!wrapper?.querySelector('[data-required], .text-destructive') && raw.includes('*') ||
+          (control instanceof HTMLInputElement || control instanceof HTMLTextAreaElement ? control.required : false);
+        const empty =
+          control instanceof HTMLInputElement || control instanceof HTMLTextAreaElement
+            ? !control.value.trim()
+            : !(control?.textContent || '').trim() || /select/i.test(control?.textContent || '');
+        found.push({ section: sectionId, label: text, required, empty });
       });
     });
     if (found.length) {
       setFieldIndex((prev) => {
         const merged = [...prev];
-        const existing = new Set(prev.map((f) => `${f.section}::${f.label.toLowerCase()}`));
+        const existing = new Map(prev.map((f, i) => [`${f.section}::${f.label.toLowerCase()}`, i]));
         found.forEach((f) => {
           const k = `${f.section}::${f.label.toLowerCase()}`;
-          if (!existing.has(k)) {
-            existing.add(k);
+          const at = existing.get(k);
+          if (at === undefined) {
+            existing.set(k, merged.length);
             merged.push(f);
+          } else {
+            merged[at] = f;
           }
         });
         return merged;
