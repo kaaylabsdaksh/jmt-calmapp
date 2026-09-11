@@ -16,6 +16,8 @@ import {
   Tags,
   Paperclip,
   Trash2,
+  Check,
+
   type LucideIcon,
 } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
