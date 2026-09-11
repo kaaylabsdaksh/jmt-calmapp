@@ -199,7 +199,7 @@ const OutsourceVendors = () => {
 
   const activeCount = useMemo(
     () =>
-      (Object.keys(emptyFilters) as (keyof Filters)[]).filter(
+      (["id", "name", "city", "state", "status"] as (keyof Filters)[]).filter(
         (k) => applied[k] && applied[k] !== "all"
       ).length,
     [applied]
@@ -445,79 +445,6 @@ const OutsourceVendors = () => {
                 </Select>
               </div>
             </div>
-
-            <div className="mt-3 space-y-3 border-t pt-3">
-                <div className="grid grid-cols-1 gap-x-3 gap-y-2 sm:grid-cols-2 lg:grid-cols-5">
-                  <div className="space-y-0.5">
-                    <Label htmlFor="f-addr" className={LABEL}>Address</Label>
-                    <Input id="f-addr" className={fieldClass(draft.address)} placeholder="Address" value={draft.address}
-                      onChange={(e) => setDraft({ ...draft, address: e.target.value })} />
-                  </div>
-                  <div className="space-y-0.5">
-                    <Label htmlFor="f-zip" className={LABEL}>ZIP</Label>
-                    <Input id="f-zip" className={fieldClass(draft.zip)} placeholder="ZIP" value={draft.zip}
-                      onChange={(e) => setDraft({ ...draft, zip: e.target.value })} />
-                  </div>
-                  <div className="space-y-0.5">
-                    <Label className={LABEL}>Criticality</Label>
-                    <Select value={draft.criticality} onValueChange={(v) => setDraft({ ...draft, criticality: v })}>
-                      <SelectTrigger className={fieldClass(draft.criticality, "[&>svg]:h-3 [&>svg]:w-3")}>
-                        <SelectValue placeholder="Any" />
-                      </SelectTrigger>
-                      <SelectContent className={SELECT_CONTENT}>
-                        <SelectItem value="all">Any</SelectItem>
-                        {CRITICALITY.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-0.5 lg:col-span-2">
-                    <Label className={LABEL}>Qualification Based On</Label>
-                    <Select
-                      value={draft.qualificationBasedOn}
-                      onValueChange={(v) => setDraft({ ...draft, qualificationBasedOn: v })}
-                    >
-                      <SelectTrigger className={fieldClass(draft.qualificationBasedOn, "[&>svg]:h-3 [&>svg]:w-3")}>
-                        <SelectValue placeholder="Any" />
-                      </SelectTrigger>
-                      <SelectContent className={cn(SELECT_CONTENT, "max-h-64")}>
-                        <SelectItem value="all">Any</SelectItem>
-                        {QUALIFICATION_BASIS.map((q) => <SelectItem key={q} value={q}>{q}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 gap-x-3 gap-y-2 sm:grid-cols-2 lg:grid-cols-5">
-                  {yesNoFilterWrapper("iso9001", "ISO 9001 Registered", draft, setDraft)}
-                  {yesNoFilterWrapper("qf133", "QF133 Issued", draft, setDraft)}
-                  {yesNoFilterWrapper("oem", "OEM", draft, setDraft)}
-                  {yesNoFilterWrapper("qf131", "QF131 on File", draft, setDraft)}
-                  {yesNoFilterWrapper("z540", "Z540.1 Accredited", draft, setDraft)}
-                </div>
-
-                <div className="grid grid-cols-1 gap-x-3 gap-y-2 sm:grid-cols-2 lg:grid-cols-4">
-                  <div className="space-y-0.5">
-                    <Label className={LABEL}>Original Approval — From</Label>
-                    <ModernDatePicker size="sm" value={draft.approvalFrom}
-                      onChange={(d) => setDraft({ ...draft, approvalFrom: d ? d.toISOString() : "" })} />
-                  </div>
-                  <div className="space-y-0.5">
-                    <Label className={LABEL}>Original Approval — To</Label>
-                    <ModernDatePicker size="sm" value={draft.approvalTo}
-                      onChange={(d) => setDraft({ ...draft, approvalTo: d ? d.toISOString() : "" })} />
-                  </div>
-                  <div className="space-y-0.5">
-                    <Label className={LABEL}>Approval Expires — From</Label>
-                    <ModernDatePicker size="sm" value={draft.expiresFrom}
-                      onChange={(d) => setDraft({ ...draft, expiresFrom: d ? d.toISOString() : "" })} />
-                  </div>
-                  <div className="space-y-0.5">
-                    <Label className={LABEL}>Approval Expires — To</Label>
-                    <ModernDatePicker size="sm" value={draft.expiresTo}
-                      onChange={(d) => setDraft({ ...draft, expiresTo: d ? d.toISOString() : "" })} />
-                  </div>
-                </div>
-              </div>
 
             <div className="mt-3 flex justify-end gap-2 border-t pt-3">
               <Button variant="outline" className="h-7 gap-1.5 text-[11px]" onClick={clearFilters}>
@@ -976,29 +903,5 @@ const OutsourceVendors = () => {
     </TooltipProvider>
   );
 };
-
-function yesNoFilterWrapper(
-  key: keyof Filters,
-  label: string,
-  draft: Filters,
-  setDraft: (f: Filters) => void
-) {
-  const value = draft[key] as string;
-  return (
-    <div className="space-y-0.5" key={key as string}>
-      <Label className={LABEL}>{label}</Label>
-      <Select value={value} onValueChange={(v) => setDraft({ ...draft, [key]: v })}>
-        <SelectTrigger className={fieldClass(value, "[&>svg]:h-3 [&>svg]:w-3")}>
-          <SelectValue placeholder="Any" />
-        </SelectTrigger>
-        <SelectContent className={SELECT_CONTENT}>
-          <SelectItem value="all">Any</SelectItem>
-          <SelectItem value="Yes">Yes</SelectItem>
-          <SelectItem value="No">No</SelectItem>
-        </SelectContent>
-      </Select>
-    </div>
-  );
-}
 
 export default OutsourceVendors;
