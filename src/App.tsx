@@ -120,6 +120,7 @@ const App = () => {
             <Route path="/account-admin" element={<AccountAdminView />} />
             <Route path="/lab-triage" element={<LabTriage />} />
             <Route path="/update-rfid" element={<UpdateRfid />} />
+            <Route path="/missing-cost" element={<MissingCost />} />
 
 
             <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
