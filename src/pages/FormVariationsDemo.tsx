@@ -10136,9 +10136,6 @@ const FormVariationsDemo = () => {
                 {/* Sticky section navigator */}
                 <div className="sticky top-0 z-20 -mx-6 mb-3 flex items-center justify-between gap-3 border-b bg-white/95 px-6 py-2 backdrop-blur">
                   <div className="flex items-center gap-2">
-                    <Badge variant="outline" className="h-6 text-[10px] font-medium tabular-nums">
-                      {sectionOrder.filter((id) => !hiddenSections.includes(id)).length} sections
-                    </Badge>
                     <Popover open={jumpOpen} onOpenChange={handleJumpOpenChange}>
                       <PopoverTrigger asChild>
                         <Button variant="outline" size="sm" className="h-7 gap-1.5 text-xs">
