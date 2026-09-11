@@ -515,6 +515,7 @@ const OutsourceVendors = () => {
                         value={columnFilters.originalApprovalDate}
                         onChange={(d) => setCol({ originalApprovalDate: d ? format(d, "MM/dd/yyyy") : "" })}
                         inputClassName={cn(
+                          "rounded-md border-muted bg-muted/30 placeholder:text-muted-foreground/40 focus:border-primary/30 focus:bg-background",
                           columnFilters.originalApprovalDate &&
                             "border-slate-400 bg-slate-50 font-medium text-foreground"
                         )}
