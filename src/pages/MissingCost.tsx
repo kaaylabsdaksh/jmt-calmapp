@@ -201,6 +201,7 @@ export default function MissingCost() {
                   id="missing-cost-only"
                   checked={missingCostOnly}
                   onCheckedChange={(v) => setMissingCostOnly(v === true)}
+                  disabled={parsedWos.length === 0}
                   className="mt-0.5"
                 />
                 <div className="space-y-0.5">
