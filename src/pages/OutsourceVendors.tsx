@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Search,
-  Plus,
   RotateCcw,
   Pencil,
   ChevronLeft,
@@ -185,25 +184,6 @@ const inRange = (value: string, from: string, to: string) => {
   return true;
 };
 
-const blankVendor = (): VendorRecord => ({
-  id: "",
-  name: "",
-  address: "",
-  city: "",
-  state: "TX",
-  zip: "",
-  originalApprovalDate: "",
-  criticality: "Major",
-  iso9001: "No",
-  qf133: "No",
-  oem: "No",
-  qf131: "No",
-  qualificationBasedOn: QUALIFICATION_BASIS[0],
-  z540: "No",
-  comments: "",
-  status: "Active",
-  approvalExpires: "",
-});
 
 const OutsourceVendors = () => {
   const [vendors, setVendors] = useState<VendorRecord[]>(VENDORS);
@@ -291,12 +271,6 @@ const OutsourceVendors = () => {
     setIsNew(false);
     setErrors({});
   };
-  const openAdd = () => {
-    setEditing(blankVendor());
-    setIsNew(true);
-    setErrors({});
-  };
-
   const saveVendor = () => {
     if (!editing) return;
     const next: Record<string, string> = {};
@@ -411,10 +385,6 @@ const OutsourceVendors = () => {
                 </BreadcrumbList>
               </Breadcrumb>
             </div>
-            <Button className="h-8 gap-1.5 text-xs" onClick={openAdd}>
-              <Plus className="h-3.5 w-3.5" />
-              Add Vendor
-            </Button>
           </div>
         </header>
 
