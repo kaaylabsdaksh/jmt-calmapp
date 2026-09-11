@@ -694,7 +694,12 @@ const OutsourceVendors = () => {
                       )}
                     </TableHead>
                     <TableHead className="h-7 py-0.5 px-1.5">
-                      {colInput(columnFilters.approvalExpires, (v) => setCol({ approvalExpires: v }), "MM/DD/YYYY")}
+                      <ModernDatePicker
+                        size="xs"
+                        placeholder="MM/DD/YYYY"
+                        value={columnFilters.approvalExpires}
+                        onChange={(d) => setCol({ approvalExpires: d ? format(d, "MM/dd/yyyy") : "" })}
+                      />
                     </TableHead>
                   </TableRow>
                 </TableHeader>
