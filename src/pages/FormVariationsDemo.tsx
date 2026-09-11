@@ -10218,7 +10218,7 @@ const FormVariationsDemo = () => {
                       variant="outline"
                       size="sm"
                       className="h-7 gap-1.5 text-xs"
-                      onClick={() => { setAiFillOpen(true); setAiError(null); }}
+                      onClick={() => { void openAiFill(); }}
                     >
                       <Sparkles className="h-3.5 w-3.5" />
                       AI Fill
