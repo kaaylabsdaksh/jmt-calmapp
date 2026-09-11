@@ -171,311 +171,339 @@ export default function MissingCost() {
         </div>
       </header>
 
-      <div className="mx-auto w-full max-w-[1200px] px-4 py-6 sm:px-6">
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-          {/* ------------------------------------------------ export card */}
-          <section className="rounded-lg border border-border bg-card p-5 shadow-sm">
-            <h2 className="text-sm font-semibold text-foreground">Export Missing Cost Data</h2>
-            <p className="mt-1 text-xs text-muted-foreground">
-              Export work order items with missing cost information for review and update.
-            </p>
-
-            <div className="mt-5 space-y-4">
-              {/* WO numbers */}
-              <div className="space-y-1.5">
-                <Label htmlFor="wo-numbers" className="text-xs font-medium">
-                  Work Order #
-                </Label>
-                <Textarea
-                  id="wo-numbers"
-                  value={workOrders}
-                  onChange={(e) => setWorkOrders(e.target.value)}
-                  placeholder="Enter one or more WO numbers"
-                  className="min-h-[76px] resize-y rounded-md text-sm"
-                />
+      <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
+        <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+          <div className="grid grid-cols-1 lg:grid-cols-12">
+            {/* ------------------------------------------------ export section */}
+            <section className="border-b border-border p-8 lg:col-span-7 lg:border-b-0 lg:border-r lg:border-border">
+              <div className="mb-8">
+                <h2 className="text-xl font-bold text-foreground">Export Missing Cost Data</h2>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Export work order items with missing cost information for review and update.
+                </p>
               </div>
 
-              {/* Missing cost only */}
-              <div className="flex items-start gap-2 rounded-md border border-border bg-muted/30 p-3">
-                <Checkbox
-                  id="missing-cost-only"
-                  checked={missingCostOnly}
-                  onCheckedChange={(v) => setMissingCostOnly(v === true)}
-                  disabled={parsedWos.length === 0}
-                  className="mt-0.5"
-                />
-                <div className="space-y-0.5">
-                  <Label htmlFor="missing-cost-only" className="cursor-pointer text-xs font-medium">
-                    Missing Cost Only
+              <div className="space-y-6">
+                {/* Work Order numbers */}
+                <div className="space-y-2">
+                  <Label htmlFor="wo-numbers" className="text-xs font-semibold uppercase tracking-wider text-foreground">
+                    Work Order #
                   </Label>
-                  <p className="text-[11px] text-muted-foreground">
-                    When enabled, only items with missing cost will be included.
-                  </p>
+                  <Textarea
+                    id="wo-numbers"
+                    value={workOrders}
+                    onChange={(e) => setWorkOrders(e.target.value)}
+                    placeholder="Enter work order numbers..."
+                    className="min-h-[120px] resize-none rounded-xl border-border bg-secondary/30 p-4 text-sm transition-all focus:border-transparent focus:ring-2 focus:ring-primary"
+                  />
                 </div>
-              </div>
 
-              {/* Location */}
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium">Location</Label>
-                <Popover open={locationOpen} onOpenChange={setLocationOpen}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      aria-expanded={locationOpen}
-                      className="h-9 w-full justify-between rounded-md text-sm font-normal"
-                    >
-                      {location}
-                      <ChevronsUpDown className="h-3.5 w-3.5 opacity-50" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
-                    <Command>
-                      <CommandInput placeholder="Search locations..." className="h-9 text-sm" />
-                      <CommandList>
-                        <CommandEmpty className="py-4 text-center text-xs text-muted-foreground">
-                          No location found.
-                        </CommandEmpty>
-                        <CommandGroup>
-                          {LOCATIONS.map((loc) => (
-                            <CommandItem
-                              key={loc}
-                              value={loc}
-                              onSelect={() => {
-                                setLocation(loc);
-                                setLocationOpen(false);
-                              }}
-                              className="text-sm"
-                            >
-                              <Check
-                                className={cn(
-                                  "mr-2 h-3.5 w-3.5",
-                                  location === loc ? "opacity-100" : "opacity-0"
-                                )}
-                              />
-                              {loc}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-              </div>
-
-              {/* Divisions */}
-              <div className="space-y-1.5">
-                <Label className="text-xs font-medium">Division(s)</Label>
-                <Popover open={divisionsOpen} onOpenChange={setDivisionsOpen}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      aria-expanded={divisionsOpen}
-                      className="h-9 w-full justify-between rounded-md text-sm font-normal"
-                    >
-                      <span className={cn(divisions.length === 0 && "text-muted-foreground")}>
-                        {divisions.length === 0
-                          ? "All Divisions"
-                          : `${divisions.length} division${divisions.length > 1 ? "s" : ""} selected`}
-                      </span>
-                      <ChevronsUpDown className="h-3.5 w-3.5 opacity-50" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
-                    <Command>
-                      <CommandInput placeholder="Search divisions..." className="h-9 text-sm" />
-                      <div className="flex items-center justify-between border-b border-border px-2 py-1.5">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-6 px-2 text-[11px]"
-                          onClick={() => setDivisions([...DIVISIONS])}
-                        >
-                          Select All
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-6 px-2 text-[11px]"
-                          onClick={() => setDivisions([])}
-                        >
-                          Clear All
-                        </Button>
-                      </div>
-                      <CommandList>
-                        <CommandEmpty className="py-4 text-center text-xs text-muted-foreground">
-                          No division found.
-                        </CommandEmpty>
-                        <CommandGroup>
-                          {DIVISIONS.map((d) => (
-                            <CommandItem
-                              key={d}
-                              value={d}
-                              onSelect={() => toggleDivision(d)}
-                              className="gap-2 text-sm"
-                            >
-                              <Checkbox checked={divisions.includes(d)} className="pointer-events-none" />
-                              {d}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-
-                {divisions.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {divisions.map((d) => (
-                      <Badge
-                        key={d}
-                        variant="secondary"
-                        className="gap-1 rounded-full px-2 py-0.5 text-[11px] font-normal"
-                      >
-                        {d}
-                        <button
-                          type="button"
-                          aria-label={`Remove ${d}`}
-                          onClick={() => toggleDivision(d)}
-                          className="rounded-full text-muted-foreground hover:text-foreground"
-                        >
-                          <X className="h-3 w-3" />
-                        </button>
-                      </Badge>
-                    ))}
+                {/* Missing cost only */}
+                <div className="flex items-start gap-3 rounded-xl border border-primary/20 bg-primary/5 p-4">
+                  <Checkbox
+                    id="missing-cost-only"
+                    checked={missingCostOnly}
+                    onCheckedChange={(v) => setMissingCostOnly(v === true)}
+                    disabled={parsedWos.length === 0}
+                    className="mt-0.5"
+                  />
+                  <div className="space-y-0.5">
+                    <Label htmlFor="missing-cost-only" className="cursor-pointer text-sm font-semibold text-foreground">
+                      Missing Cost Only
+                    </Label>
+                    <p className="text-xs text-muted-foreground">
+                      When enabled, only items with missing cost will be included.
+                    </p>
                   </div>
-                )}
-              </div>
-            </div>
-
-            <div className="mt-5 flex items-center justify-end gap-2 border-t border-border pt-4">
-              <Button variant="outline" size="sm" onClick={handleReset} disabled={exporting}>
-                <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
-                Reset
-              </Button>
-              <Button size="sm" onClick={handleExport} disabled={!canExport}>
-                {exporting ? (
-                  <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
-                ) : (
-                  <Download className="mr-1.5 h-3.5 w-3.5" />
-                )}
-                Export
-              </Button>
-            </div>
-          </section>
-
-          {/* ------------------------------------------------ import card */}
-          <section className="rounded-lg border border-border bg-card p-5 shadow-sm">
-            <h2 className="text-sm font-semibold text-foreground">Import Updated Missing Cost Data</h2>
-            <p className="mt-1 text-xs text-muted-foreground">
-              Upload the spreadsheet containing updated missing cost information.
-            </p>
-
-            <div className="mt-5">
-              {uploadState === "empty" || uploadState === "failed" ? (
-                <div
-                  onDragOver={(e) => {
-                    e.preventDefault();
-                    setDragging(true);
-                  }}
-                  onDragLeave={() => setDragging(false)}
-                  onDrop={(e) => {
-                    e.preventDefault();
-                    setDragging(false);
-                    acceptFile(e.dataTransfer.files?.[0]);
-                  }}
-                  className={cn(
-                    "flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-10 text-center transition-colors",
-                    dragging ? "border-primary bg-primary/5" : "border-border bg-muted/20"
-                  )}
-                >
-                  <UploadCloud className="h-8 w-8 text-muted-foreground" />
-                  <p className="text-sm font-medium text-foreground">Drag &amp; drop your spreadsheet here</p>
-                  <p className="text-xs text-muted-foreground">or browse from your computer</p>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="mt-1"
-                    onClick={() => inputRef.current?.click()}
-                  >
-                    Browse Files
-                  </Button>
-                  <p className="text-[11px] text-muted-foreground">Supported formats: XLSX, XLS, CSV</p>
                 </div>
-              ) : (
-                <div className="rounded-lg border border-border p-4">
-                  <div className="flex items-start gap-3">
-                    <div className="rounded-md bg-muted p-2">
-                      <FileSpreadsheet className="h-5 w-5 text-muted-foreground" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-medium text-foreground">{file?.name}</p>
-                      <p className="text-[11px] text-muted-foreground">
-                        {file?.name.split(".").pop()?.toUpperCase()} · {formatSize(file?.size ?? 0)}
-                      </p>
-                    </div>
-                    {uploadState !== "uploading" && (
-                      <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={clearFile}>
-                        <X className="h-3.5 w-3.5" />
-                      </Button>
+
+                {/* Location + Divisions */}
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  {/* Location */}
+                  <div className="space-y-2">
+                    <Label className="text-xs font-semibold uppercase tracking-wider text-foreground">Location</Label>
+                    <Popover open={locationOpen} onOpenChange={setLocationOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={locationOpen}
+                          className="h-11 w-full justify-between rounded-xl border-border bg-secondary/30 text-sm font-normal"
+                        >
+                          {location}
+                          <ChevronsUpDown className="h-4 w-4 opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
+                        <Command>
+                          <CommandInput placeholder="Search locations..." className="h-9 text-sm" />
+                          <CommandList>
+                            <CommandEmpty className="py-4 text-center text-xs text-muted-foreground">
+                              No location found.
+                            </CommandEmpty>
+                            <CommandGroup>
+                              {LOCATIONS.map((loc) => (
+                                <CommandItem
+                                  key={loc}
+                                  value={loc}
+                                  onSelect={() => {
+                                    setLocation(loc);
+                                    setLocationOpen(false);
+                                  }}
+                                  className="text-sm"
+                                >
+                                  <Check
+                                    className={cn(
+                                      "mr-2 h-3.5 w-3.5",
+                                      location === loc ? "opacity-100" : "opacity-0"
+                                    )}
+                                  />
+                                  {loc}
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+
+                  {/* Divisions */}
+                  <div className="space-y-2">
+                    <Label className="text-xs font-semibold uppercase tracking-wider text-foreground">Division(s)</Label>
+                    <Popover open={divisionsOpen} onOpenChange={setDivisionsOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={divisionsOpen}
+                          className="h-11 w-full justify-between rounded-xl border-border bg-secondary/30 text-sm font-normal"
+                        >
+                          <span className={cn(divisions.length === 0 && "text-muted-foreground")}>
+                            {divisions.length === 0
+                              ? "All Divisions"
+                              : `${divisions.length} division${divisions.length > 1 ? "s" : ""} selected`}
+                          </span>
+                          <ChevronsUpDown className="h-4 w-4 opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
+                        <Command>
+                          <CommandInput placeholder="Search divisions..." className="h-9 text-sm" />
+                          <div className="flex items-center justify-between border-b border-border px-2 py-1.5">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-6 px-2 text-[11px]"
+                              onClick={() => setDivisions([...DIVISIONS])}
+                            >
+                              Select All
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-6 px-2 text-[11px]"
+                              onClick={() => setDivisions([])}
+                            >
+                              Clear All
+                            </Button>
+                          </div>
+                          <CommandList>
+                            <CommandEmpty className="py-4 text-center text-xs text-muted-foreground">
+                              No division found.
+                            </CommandEmpty>
+                            <CommandGroup>
+                              {DIVISIONS.map((d) => (
+                                <CommandItem
+                                  key={d}
+                                  value={d}
+                                  onSelect={() => toggleDivision(d)}
+                                  className="gap-2 text-sm"
+                                >
+                                  <Checkbox checked={divisions.includes(d)} className="pointer-events-none" />
+                                  {d}
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+
+                    {divisions.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {divisions.map((d) => (
+                          <Badge
+                            key={d}
+                            variant="secondary"
+                            className="gap-1 rounded-full px-2 py-0.5 text-[11px] font-normal"
+                          >
+                            {d}
+                            <button
+                              type="button"
+                              aria-label={`Remove ${d}`}
+                              onClick={() => toggleDivision(d)}
+                              className="rounded-full text-muted-foreground hover:text-foreground"
+                            >
+                              <X className="h-3 w-3" />
+                            </button>
+                          </Badge>
+                        ))}
+                      </div>
                     )}
                   </div>
-
-                  {uploadState === "uploading" && (
-                    <p className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                      Uploading and processing...
-                    </p>
-                  )}
-                  {uploadState === "success" && (
-                    <p className="mt-3 flex items-center gap-2 text-xs text-emerald-600">
-                      <CheckCircle2 className="h-3.5 w-3.5" />
-                      Upload successful — missing cost update process triggered.
-                    </p>
-                  )}
                 </div>
-              )}
+              </div>
 
-              {uploadState === "failed" && (
-                <p className="mt-3 flex items-center gap-2 text-xs text-destructive">
-                  <AlertCircle className="h-3.5 w-3.5" />
-                  Upload failed. Please select an XLSX, XLS or CSV file.
+              <div className="mt-10 flex items-center justify-end gap-3 border-t border-border pt-6">
+                <Button variant="outline" size="default" onClick={handleReset} disabled={exporting}>
+                  <RotateCcw className="mr-1.5 h-4 w-4" />
+                  Reset
+                </Button>
+                <Button size="default" onClick={handleExport} disabled={!canExport}>
+                  {exporting ? (
+                    <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />
+                  ) : (
+                    <Download className="mr-1.5 h-4 w-4" />
+                  )}
+                  Export Data
+                </Button>
+              </div>
+            </section>
+
+            {/* ------------------------------------------------ import section */}
+            <section className="bg-muted/30 p-8 lg:col-span-5">
+              <div className="mb-8">
+                <h2 className="text-xl font-bold text-foreground">Import Updated Data</h2>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Upload the spreadsheet containing updated missing cost information.
                 </p>
-              )}
+              </div>
 
-              <input
-                ref={inputRef}
-                type="file"
-                accept=".xlsx,.xls,.csv"
-                className="hidden"
-                onChange={(e) => acceptFile(e.target.files?.[0])}
-              />
-            </div>
-
-            <div className="mt-5 flex items-center justify-end gap-2 border-t border-border pt-4">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={clearFile}
-                disabled={uploadState === "empty" || uploadState === "uploading"}
-              >
-                Remove
-              </Button>
-              <Button
-                size="sm"
-                onClick={handleImport}
-                disabled={!file || uploadState === "uploading" || uploadState === "success"}
-              >
-                {uploadState === "uploading" ? (
-                  <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
+              <div className="relative">
+                {uploadState === "empty" || uploadState === "failed" ? (
+                  <div
+                    onDragOver={(e) => {
+                      e.preventDefault();
+                      setDragging(true);
+                    }}
+                    onDragLeave={() => setDragging(false)}
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      setDragging(false);
+                      acceptFile(e.dataTransfer.files?.[0]);
+                    }}
+                    onClick={() => inputRef.current?.click()}
+                    className={cn(
+                      "flex h-64 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed bg-card p-8 text-center transition-colors",
+                      dragging
+                        ? "border-primary bg-primary/5"
+                        : "border-border hover:border-primary"
+                    )}
+                  >
+                    <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-secondary transition-colors group-hover:bg-primary/10">
+                      <UploadCloud className="h-8 w-8 text-muted-foreground" />
+                    </div>
+                    <h3 className="text-sm font-semibold text-foreground">Drag &amp; drop your spreadsheet here</h3>
+                    <p className="mt-1 text-xs text-muted-foreground">or browse from your computer</p>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="mt-6"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        inputRef.current?.click();
+                      }}
+                    >
+                      Browse Files
+                    </Button>
+                  </div>
                 ) : (
-                  <UploadCloud className="mr-1.5 h-3.5 w-3.5" />
+                  <div className="rounded-2xl border border-border bg-card p-6">
+                    <div className="flex items-start gap-4">
+                      <div className="rounded-md bg-muted p-2">
+                        <FileSpreadsheet className="h-6 w-6 text-muted-foreground" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium text-foreground">{file?.name}</p>
+                        <p className="text-[11px] text-muted-foreground">
+                          {file?.name.split(".").pop()?.toUpperCase()} · {formatSize(file?.size ?? 0)}
+                        </p>
+                      </div>
+                      {uploadState !== "uploading" && (
+                        <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={clearFile}>
+                          <X className="h-3.5 w-3.5" />
+                        </Button>
+                      )}
+                    </div>
+
+                    {uploadState === "uploading" && (
+                      <p className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
+                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        Uploading and processing...
+                      </p>
+                    )}
+                    {uploadState === "success" && (
+                      <p className="mt-4 flex items-center gap-2 text-xs text-emerald-600">
+                        <CheckCircle2 className="h-3.5 w-3.5" />
+                        Upload successful — missing cost update process triggered.
+                      </p>
+                    )}
+                  </div>
                 )}
-                Import
-              </Button>
-            </div>
-          </section>
+
+                {(uploadState === "empty" || uploadState === "failed") && (
+                  <div className="mt-4 flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                    <span>XLSX</span>
+                    <span className="h-1 w-1 rounded-full bg-muted-foreground/40" />
+                    <span>XLS</span>
+                    <span className="h-1 w-1 rounded-full bg-muted-foreground/40" />
+                    <span>CSV</span>
+                  </div>
+                )}
+
+                {uploadState === "failed" && (
+                  <p className="mt-3 flex items-center gap-2 text-xs text-destructive">
+                    <AlertCircle className="h-3.5 w-3.5" />
+                    Upload failed. Please select an XLSX, XLS or CSV file.
+                  </p>
+                )}
+
+                <input
+                  ref={inputRef}
+                  type="file"
+                  accept=".xlsx,.xls,.csv"
+                  className="hidden"
+                  onChange={(e) => acceptFile(e.target.files?.[0])}
+                />
+              </div>
+
+              <div className="mt-10 flex items-center justify-end gap-3 border-t border-border pt-6">
+                <Button
+                  variant="ghost"
+                  size="default"
+                  onClick={clearFile}
+                  disabled={uploadState === "empty" || uploadState === "uploading"}
+                  className="text-muted-foreground hover:text-destructive"
+                >
+                  Remove
+                </Button>
+                <Button
+                  size="default"
+                  onClick={handleImport}
+                  disabled={!file || uploadState === "uploading" || uploadState === "success"}
+                >
+                  {uploadState === "uploading" ? (
+                    <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />
+                  ) : (
+                    <UploadCloud className="mr-1.5 h-4 w-4" />
+                  )}
+                  Import
+                </Button>
+              </div>
+            </section>
+          </div>
         </div>
       </div>
     </div>
