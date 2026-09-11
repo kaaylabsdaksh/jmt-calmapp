@@ -49,7 +49,7 @@ const StandardTopNav = ({
   };
 
   return (
-    <header className="bg-white px-6 py-3 border-b border-border">
+    <header className="sticky top-0 z-40 bg-white px-6 py-3 border-b border-border">
       <div className="flex items-center justify-between">
         {/* Sidebar Toggle and Title */}
         <div className="flex items-center gap-3">
