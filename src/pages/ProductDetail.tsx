@@ -140,6 +140,10 @@ const ProductDetail = () => {
 
 
   const selectedLocations = Object.values(locations).filter(Boolean).length;
+  const scopeEntries = CAPABLE_LOCATIONS.filter((l) => locations[l]);
+  const fullCount = scopeEntries.filter((l) => accred17025[l] === "Full").length;
+  const partialCount = scopeEntries.filter((l) => accred17025[l] === "Partial").length;
+
 
   return (
     <div className="bg-background min-h-full flex flex-col">
