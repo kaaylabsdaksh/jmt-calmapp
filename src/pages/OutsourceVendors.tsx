@@ -3,14 +3,12 @@ import { Link } from "react-router-dom";
 import {
   Search,
   Plus,
-  SlidersHorizontal,
   RotateCcw,
   Pencil,
   ChevronLeft,
   ChevronRight,
   AlertTriangle,
   Clock,
-  ChevronDown,
   X,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -211,7 +209,6 @@ const OutsourceVendors = () => {
   const [draft, setDraft] = useState<Filters>(emptyFilters);
   const [applied, setApplied] = useState<Filters>(emptyFilters);
   const [columnFilters, setColumnFilters] = useState<ColumnFilters>(emptyColumnFilters);
-  const [showMore, setShowMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
@@ -431,16 +428,6 @@ const OutsourceVendors = () => {
                   <Badge className="h-4 rounded-full px-1.5 text-[10px]">{activeCount}</Badge>
                 )}
               </div>
-              <Button
-                variant="outline"
-                className="h-7 gap-1.5 text-[11px]"
-                onClick={() => setShowMore((s) => !s)}
-                aria-expanded={showMore}
-              >
-                <SlidersHorizontal className="h-3.5 w-3.5" />
-                More Filters
-                <ChevronDown className={cn("h-3 w-3 transition-transform", showMore && "rotate-180")} />
-              </Button>
             </div>
 
             <div className="grid grid-cols-1 gap-x-3 gap-y-2 sm:grid-cols-2 lg:grid-cols-5">
@@ -488,8 +475,7 @@ const OutsourceVendors = () => {
               </div>
             </div>
 
-            {showMore && (
-              <div className="mt-3 space-y-3 border-t pt-3">
+            <div className="mt-3 space-y-3 border-t pt-3">
                 <div className="grid grid-cols-1 gap-x-3 gap-y-2 sm:grid-cols-2 lg:grid-cols-5">
                   <div className="space-y-0.5">
                     <Label htmlFor="f-addr" className={LABEL}>Address</Label>
@@ -561,7 +547,6 @@ const OutsourceVendors = () => {
                   </div>
                 </div>
               </div>
-            )}
 
             <div className="mt-3 flex justify-end gap-2 border-t pt-3">
               <Button variant="outline" className="h-7 gap-1.5 text-[11px]" onClick={clearFilters}>
