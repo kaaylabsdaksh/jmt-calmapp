@@ -209,7 +209,6 @@ const OutsourceVendors = () => {
   const [draft, setDraft] = useState<Filters>(emptyFilters);
   const [applied, setApplied] = useState<Filters>(emptyFilters);
   const [columnFilters, setColumnFilters] = useState<ColumnFilters>(emptyColumnFilters);
-  const [showMore, setShowMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
