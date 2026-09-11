@@ -82,15 +82,8 @@ const ACCURACIES = ["0.25%", "0.5%", "1.0%", "Custom"];
 
 type Accred17025 = "No" | "Full" | "Partial";
 
-function buildScope(
-  all: string[],
-  capable: Record<string, boolean>,
-  level: Accred17025,
-): Record<string, Accred17025> {
-  const next: Record<string, Accred17025> = {};
-  all.forEach((loc) => (next[loc] = capable[loc] ? level : "No"));
-  return next;
-}
+
+
 
 const ProductDetail = () => {
 
@@ -142,7 +135,7 @@ const ProductDetail = () => {
 
 
   const selectedLocations = Object.values(locations).filter(Boolean).length;
-  const scopeEntries = SCOPE_ENABLED_LOCATIONS.filter((l) => locations[l]);
+  const scopeEntries = SCOPE_ENABLED_LOCATIONS;
   const fullCount = scopeEntries.filter((l) => accred17025[l] === "Full").length;
   const partialCount = scopeEntries.filter((l) => accred17025[l] === "Partial").length;
 
@@ -327,15 +320,23 @@ const ProductDetail = () => {
                       variant="outline"
                       size="sm"
                       className="h-6 text-[10px] px-2"
-                      onClick={() => setAccred17025(buildScope(SCOPE_ENABLED_LOCATIONS, locations, "Full"))}
+                      onClick={() =>
+                        setAccred17025(
+                          Object.fromEntries(SCOPE_ENABLED_LOCATIONS.map((l) => [l, "Full" as Accred17025])),
+                        )
+                      }
                     >
-                      Set capable to Full
+                      Set all to Full
                     </Button>
                     <Button
                       variant="outline"
                       size="sm"
                       className="h-6 text-[10px] px-2"
-                      onClick={() => setAccred17025(buildScope(SCOPE_ENABLED_LOCATIONS, locations, "No"))}
+                      onClick={() =>
+                        setAccred17025(
+                          Object.fromEntries(SCOPE_ENABLED_LOCATIONS.map((l) => [l, "No" as Accred17025])),
+                        )
+                      }
                     >
                       Clear
                     </Button>
@@ -360,10 +361,9 @@ const ProductDetail = () => {
                       if (aEnabled === bEnabled) return a.localeCompare(b);
                       return aEnabled ? -1 : 1;
                     }).map((loc) => {
-                      const capable = !!locations[loc];
                       const scopeEnabled = SCOPE_ENABLED_LOCATIONS.includes(loc);
-                      const value = capable ? accred17025[loc] || "No" : "No";
-                      const interactive = capable && scopeEnabled;
+                      const value = scopeEnabled ? accred17025[loc] || "No" : "No";
+                      const interactive = scopeEnabled;
                       return (
                         <div
                           key={loc}
