@@ -380,8 +380,14 @@ const AddNewWorkOrder = () => {
     return data;
   });
 
-  const [isSaved, setIsSaved] = useState(false);
-  const [hasContact, setHasContact] = useState(false);
+  const [isSaved, setIsSaved] = useState(() => localStorage.getItem('addNewWorkOrderIsSaved') === 'true');
+  const [hasContact, setHasContact] = useState(() => localStorage.getItem('addNewWorkOrderHasContact') === 'true');
+
+  // Remember the saved state so a re-render / return visit keeps the same tab open
+  useEffect(() => {
+    localStorage.setItem('addNewWorkOrderIsSaved', String(isSaved));
+    localStorage.setItem('addNewWorkOrderHasContact', String(hasContact));
+  }, [isSaved, hasContact]);
 
   // Save to localStorage whenever workOrderData changes
   useEffect(() => {
