@@ -327,15 +327,23 @@ const ProductDetail = () => {
                       variant="outline"
                       size="sm"
                       className="h-6 text-[10px] px-2"
-                      onClick={() => setAccred17025(buildScope(SCOPE_ENABLED_LOCATIONS, locations, "Full"))}
+                      onClick={() =>
+                        setAccred17025(
+                          Object.fromEntries(SCOPE_ENABLED_LOCATIONS.map((l) => [l, "Full" as Accred17025])),
+                        )
+                      }
                     >
-                      Set capable to Full
+                      Set all to Full
                     </Button>
                     <Button
                       variant="outline"
                       size="sm"
                       className="h-6 text-[10px] px-2"
-                      onClick={() => setAccred17025(buildScope(SCOPE_ENABLED_LOCATIONS, locations, "No"))}
+                      onClick={() =>
+                        setAccred17025(
+                          Object.fromEntries(SCOPE_ENABLED_LOCATIONS.map((l) => [l, "No" as Accred17025])),
+                        )
+                      }
                     >
                       Clear
                     </Button>
