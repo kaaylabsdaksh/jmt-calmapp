@@ -65,6 +65,8 @@ const CAPABLE_LOCATIONS = [
   "Leechburg",
 ];
 
+const SCOPE_ENABLED_LOCATIONS = ["Baton Rouge", "Clute", "Odessa", "Groves", "Port Arthur"];
+
 const STATUSES = ["ACTIVE", "INACTIVE", "PENDING", "OBSOLETE"];
 const GROUP_TYPES = ["Electrical", "Mechanical", "Temperature", "Pressure", "ESL"];
 const PRODUCT_TYPES = ["Calibration", "Testing", "Repair", "Rental", "Sales"];
@@ -140,7 +142,7 @@ const ProductDetail = () => {
 
 
   const selectedLocations = Object.values(locations).filter(Boolean).length;
-  const scopeEntries = CAPABLE_LOCATIONS.filter((l) => locations[l]);
+  const scopeEntries = SCOPE_ENABLED_LOCATIONS.filter((l) => locations[l]);
   const fullCount = scopeEntries.filter((l) => accred17025[l] === "Full").length;
   const partialCount = scopeEntries.filter((l) => accred17025[l] === "Partial").length;
 
@@ -325,7 +327,7 @@ const ProductDetail = () => {
                       variant="outline"
                       size="sm"
                       className="h-6 text-[10px] px-2"
-                      onClick={() => setAccred17025(buildScope(CAPABLE_LOCATIONS, locations, "Full"))}
+                      onClick={() => setAccred17025(buildScope(SCOPE_ENABLED_LOCATIONS, locations, "Full"))}
                     >
                       Set capable to Full
                     </Button>
@@ -333,7 +335,7 @@ const ProductDetail = () => {
                       variant="outline"
                       size="sm"
                       className="h-6 text-[10px] px-2"
-                      onClick={() => setAccred17025(buildScope(CAPABLE_LOCATIONS, locations, "No"))}
+                      onClick={() => setAccred17025(buildScope(SCOPE_ENABLED_LOCATIONS, locations, "No"))}
                     >
                       Clear
                     </Button>
@@ -354,19 +356,21 @@ const ProductDetail = () => {
                   <div className="divide-y">
                     {CAPABLE_LOCATIONS.map((loc) => {
                       const capable = !!locations[loc];
+                      const scopeEnabled = SCOPE_ENABLED_LOCATIONS.includes(loc);
                       const value = capable ? accred17025[loc] || "No" : "No";
+                      const interactive = capable && scopeEnabled;
                       return (
                         <div
                           key={loc}
                           className={cn(
                             "grid grid-cols-[minmax(0,1fr)_repeat(3,72px)] items-center px-3 py-1.5 text-[11px]",
-                            capable ? "hover:bg-muted/40" : "bg-muted/20",
+                            interactive ? "hover:bg-muted/40" : "bg-muted/20",
                           )}
                         >
                           <span
                             className={cn(
                               "truncate",
-                              capable ? "font-medium text-foreground" : "text-muted-foreground",
+                              interactive ? "font-medium text-foreground" : "text-muted-foreground",
                             )}
                           >
                             {loc}
@@ -375,25 +379,25 @@ const ProductDetail = () => {
                             <div key={lvl} className="flex justify-center">
                               <button
                                 type="button"
-                                disabled={!capable}
+                                disabled={!interactive}
                                 aria-label={`${loc} ${lvl}`}
                                 aria-pressed={value === lvl}
                                 onClick={() => setAccred17025((p) => ({ ...p, [loc]: lvl }))}
                                 className={cn(
                                   "h-4 w-4 rounded-[4px] border transition-colors",
                                   value === lvl
-                                    ? capable
+                                    ? interactive
                                       ? "bg-slate-900 border-slate-900"
                                       : "bg-muted-foreground/30 border-muted-foreground/30"
                                     : "bg-background border-input hover:border-slate-400",
-                                  !capable && "cursor-not-allowed",
+                                  !interactive && "cursor-not-allowed",
                                 )}
                               >
                                 {value === lvl && (
                                   <Check
                                     className={cn(
                                       "h-3 w-3 mx-auto",
-                                      capable ? "text-slate-50" : "text-white/80",
+                                      interactive ? "text-slate-50" : "text-white/80",
                                     )}
                                   />
                                 )}
