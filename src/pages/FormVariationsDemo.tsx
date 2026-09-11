@@ -10274,6 +10274,54 @@ const FormVariationsDemo = () => {
                             </span>
                           )}
                         </div>
+                        {(voice.recording || voice.transcribing || voice.caption) && (
+                          <div className="rounded-md border bg-muted/40 p-2">
+                            <div className="mb-1 flex items-center justify-between">
+                              <span className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">Live caption</span>
+                              {voice.caption && !voice.recording && (
+                                <button
+                                  type="button"
+                                  className="text-[10px] text-muted-foreground underline-offset-2 hover:underline"
+                                  onClick={voice.clearCaption}
+                                >
+                                  Clear
+                                </button>
+                              )}
+                            </div>
+                            <p className="max-h-20 overflow-y-auto text-[11px] leading-relaxed text-foreground">
+                              {voice.caption || (voice.recording ? 'Listening… start speaking.' : '')}
+                              {voice.recording && <span className="ml-0.5 inline-block h-3 w-1 animate-pulse bg-foreground align-middle" />}
+                            </p>
+                          </div>
+                        )}
+                        {mandatory.length > 0 && (
+                          <div className="rounded-md border p-2">
+                            <p className="mb-1.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                              Required details to mention
+                            </p>
+                            <div className="flex flex-wrap gap-1">
+                              {mandatory.map((m) => {
+                                const said = `${aiText} ${voice.caption}`.toLowerCase();
+                                const covered =
+                                  said.includes(m.label.toLowerCase()) ||
+                                  aiSuggestions.some((s) => s.label.toLowerCase() === m.label.toLowerCase() && s.value);
+                                return (
+                                  <Badge
+                                    key={`${m.section}-${m.label}`}
+                                    variant={covered ? 'secondary' : 'outline'}
+                                    className={`gap-1 text-[10px] font-normal ${covered ? '' : 'text-muted-foreground'}`}
+                                  >
+                                    {covered ? <Check className="h-3 w-3" /> : <span className="h-1.5 w-1.5 rounded-full bg-destructive" />}
+                                    {m.label}
+                                  </Badge>
+                                );
+                              })}
+                            </div>
+                            <p className="mt-1.5 text-[10px] text-muted-foreground">
+                              Mention these while speaking so nothing mandatory is left blank.
+                            </p>
+                          </div>
+                        )}
                         {(aiError || voice.error) && <p className="text-[11px] text-destructive">{aiError || voice.error}</p>}
                         {aiSuggestions.length > 0 && (
                           <div className="max-h-60 space-y-1 overflow-y-auto rounded-md border p-1.5">
