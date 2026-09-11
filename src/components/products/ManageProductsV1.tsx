@@ -275,9 +275,8 @@ const ManageProductsV1 = () => {
           <Card>
             <CardContent className="p-5 space-y-5">
               {/* Card header */}
-              <div className="flex items-center justify-between border-b pb-3">
+              <div className="flex items-center border-b pb-3">
                 <h2 className="text-sm font-semibold text-foreground uppercase tracking-wider">Filter &amp; Search Products</h2>
-                <span className="text-[10px] text-muted-foreground font-medium">ADVANCED FILTERS</span>
               </div>
 
               {/* Top row: General Search + Lab Code */}
