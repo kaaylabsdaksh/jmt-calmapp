@@ -184,25 +184,6 @@ const inRange = (value: string, from: string, to: string) => {
   return true;
 };
 
-const blankVendor = (): VendorRecord => ({
-  id: "",
-  name: "",
-  address: "",
-  city: "",
-  state: "TX",
-  zip: "",
-  originalApprovalDate: "",
-  criticality: "Major",
-  iso9001: "No",
-  qf133: "No",
-  oem: "No",
-  qf131: "No",
-  qualificationBasedOn: QUALIFICATION_BASIS[0],
-  z540: "No",
-  comments: "",
-  status: "Active",
-  approvalExpires: "",
-});
 
 const OutsourceVendors = () => {
   const [vendors, setVendors] = useState<VendorRecord[]>(VENDORS);
