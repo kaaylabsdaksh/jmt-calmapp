@@ -30,6 +30,7 @@ import ShippingView from "./pages/ShippingView";
 import AccountAdminView from "./pages/AccountAdminView";
 import LabTriage from "./pages/LabTriage";
 import UpdateRfid from "./pages/UpdateRfid";
+import MissingCost from "./pages/MissingCost";
 import OnsiteProjects from "./pages/OnsiteProjects";
 import ManageStandards from "./pages/ManageStandards";
 import StandardsDashboard from "./pages/StandardsDashboard";
