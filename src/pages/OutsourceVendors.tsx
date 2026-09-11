@@ -547,7 +547,6 @@ const OutsourceVendors = () => {
                   </div>
                 </div>
               </div>
-            )}
 
             <div className="mt-3 flex justify-end gap-2 border-t pt-3">
               <Button variant="outline" className="h-7 gap-1.5 text-[11px]" onClick={clearFilters}>
