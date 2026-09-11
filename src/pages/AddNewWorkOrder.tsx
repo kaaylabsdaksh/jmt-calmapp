@@ -624,6 +624,9 @@ const AddNewWorkOrder = () => {
   };
 
   const handleCancel = () => {
+    localStorage.removeItem('addNewWorkOrderIsSaved');
+    localStorage.removeItem('addNewWorkOrderHasContact');
+    localStorage.removeItem('addNewWorkOrderActiveTab');
     navigate("/");
   };
 
@@ -633,6 +636,12 @@ const AddNewWorkOrder = () => {
     if (["warranty", "estimate", "fail-log", "cert"].includes(tabValue)) {
       return true;
     }
+
+    // Never disable the tab the user is currently on
+    if (tabValue === activeTab) {
+      return false;
+    }
+
     
     const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
     
