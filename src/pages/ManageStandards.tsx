@@ -18,7 +18,7 @@ import {
   BarChart3,
 } from "lucide-react";
 import { format } from "date-fns";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
   Breadcrumb,
@@ -286,14 +286,14 @@ const ManageStandards = () => {
                   <Plus className="h-3.5 w-3.5" />
                   Add Standard
                 </Button>
-                <Button variant="outline" className="h-7 gap-1.5 text-[11px]" onClick={() => toast.success("Export started.")}>
+                <Button variant="outline" className="h-7 gap-1.5 text-[11px]" onClick={() => toast({ title: "Export started." })}>
                   <Download className="h-3.5 w-3.5" />
                   Export
                 </Button>
                 <Button
                   variant="outline"
                   className="h-7 gap-1.5 text-[11px]"
-                  onClick={() => toast.success("Export with history started.")}
+                  onClick={() => toast({ title: "Export with history started." })}
                 >
                   <FileSpreadsheet className="h-3.5 w-3.5" />
                   Export with History
@@ -699,15 +699,15 @@ const ManageStandards = () => {
 
           {/* Footer actions */}
           <footer className="sticky bottom-0 z-20 -mx-4 lg:-mx-6 flex h-12 shrink-0 items-center justify-end gap-2 overflow-x-auto whitespace-nowrap border-t bg-white px-4 lg:px-6">
-            <Button variant="outline" className="h-8 shrink-0 gap-2 text-xs" onClick={() => toast.success("On-Site Batch Loans opened.")}>
+            <Button variant="outline" className="h-8 shrink-0 gap-2 text-xs" onClick={() => toast({ title: "On-Site Batch Loans opened." })}>
               <Truck className="h-3.5 w-3.5" />
               On-Site Batch Loans
             </Button>
-            <Button variant="outline" className="h-8 shrink-0 gap-2 text-xs" onClick={() => toast.success("Create Lab Standard WOs opened.")}>
+            <Button variant="outline" className="h-8 shrink-0 gap-2 text-xs" onClick={() => toast({ title: "Create Lab Standard WOs opened." })}>
               <ClipboardList className="h-3.5 w-3.5" />
               Create Lab Standard WOs
             </Button>
-            <Button variant="outline" className="h-8 shrink-0 gap-2 text-xs" onClick={() => toast.success("Manage PM / Interim Checks opened.")}>
+            <Button variant="outline" className="h-8 shrink-0 gap-2 text-xs" onClick={() => toast({ title: "Manage PM / Interim Checks opened." })}>
               <Wrench className="h-3.5 w-3.5" />
               Manage PM / Interim Checks
             </Button>
