@@ -11,6 +11,7 @@ import {
   AlertTriangle,
   Clock,
   ChevronDown,
+  X,
 } from "lucide-react";
 import { toast } from "sonner";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -80,6 +81,27 @@ const emptyFilters = {
   expiresTo: "",
 };
 type Filters = typeof emptyFilters;
+
+const emptyColumnFilters = {
+  id: "",
+  name: "",
+  address: "",
+  city: "",
+  state: "all",
+  zip: "",
+  originalApprovalDate: "",
+  criticality: "all",
+  iso9001: "all",
+  qf133: "all",
+  oem: "all",
+  qf131: "all",
+  qualificationBasedOn: "all",
+  z540: "all",
+  comments: "",
+  status: "all",
+  approvalExpires: "",
+};
+type ColumnFilters = typeof emptyColumnFilters;
 
 const FIELD = "h-7 min-h-0 rounded-md border-gray-200 bg-white px-2 py-0 text-[11px]";
 const FIELD_ACTIVE = "border-slate-700 bg-slate-100 text-slate-900 font-semibold";
@@ -188,6 +210,7 @@ const OutsourceVendors = () => {
   const [vendors, setVendors] = useState<VendorRecord[]>(VENDORS);
   const [draft, setDraft] = useState<Filters>(emptyFilters);
   const [applied, setApplied] = useState<Filters>(emptyFilters);
+  const [columnFilters, setColumnFilters] = useState<ColumnFilters>(emptyColumnFilters);
   const [showMore, setShowMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -224,9 +247,27 @@ const OutsourceVendors = () => {
           yesNoMatch(applied.qf131, v.qf131) &&
           yesNoMatch(applied.z540, v.z540) &&
           inRange(v.originalApprovalDate, applied.approvalFrom, applied.approvalTo) &&
-          inRange(v.approvalExpires, applied.expiresFrom, applied.expiresTo)
+          inRange(v.approvalExpires, applied.expiresFrom, applied.expiresTo) &&
+          textMatch(columnFilters.id, v.id) &&
+          textMatch(columnFilters.name, v.name) &&
+          textMatch(columnFilters.address, v.address) &&
+          textMatch(columnFilters.city, v.city) &&
+          (columnFilters.state === "all" || v.state === columnFilters.state) &&
+          textMatch(columnFilters.zip, v.zip) &&
+          textMatch(columnFilters.originalApprovalDate, v.originalApprovalDate) &&
+          (columnFilters.criticality === "all" || v.criticality === columnFilters.criticality) &&
+          yesNoMatch(columnFilters.iso9001, v.iso9001) &&
+          yesNoMatch(columnFilters.qf133, v.qf133) &&
+          yesNoMatch(columnFilters.oem, v.oem) &&
+          yesNoMatch(columnFilters.qf131, v.qf131) &&
+          (columnFilters.qualificationBasedOn === "all" ||
+            v.qualificationBasedOn === columnFilters.qualificationBasedOn) &&
+          yesNoMatch(columnFilters.z540, v.z540) &&
+          textMatch(columnFilters.comments, v.comments) &&
+          (columnFilters.status === "all" || v.status === columnFilters.status) &&
+          textMatch(columnFilters.approvalExpires, v.approvalExpires)
       ),
-    [vendors, applied]
+    [vendors, applied, columnFilters]
   );
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
@@ -243,6 +284,7 @@ const OutsourceVendors = () => {
   const clearFilters = () => {
     setDraft(emptyFilters);
     setApplied(emptyFilters);
+    setColumnFilters(emptyColumnFilters);
     setPage(1);
   };
 
@@ -294,6 +336,56 @@ const OutsourceVendors = () => {
       </Select>
     </div>
   );
+
+  const colInput = (value: string, onChange: (val: string) => void, placeholder = "Search…") => (
+    <div className="relative flex items-center">
+      <Search className="absolute left-1.5 top-1/2 h-3 w-3 -translate-y-1/2 text-muted-foreground/50" />
+      <Input
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className={cn(
+          "h-6 w-full rounded-md border-muted bg-muted/30 pl-6 pr-5 text-[11px] placeholder:text-muted-foreground/40 focus:border-primary/30 focus:bg-background",
+          value && "border-slate-400 bg-slate-50 font-medium text-foreground"
+        )}
+      />
+      {value && (
+        <button
+          onClick={() => onChange("")}
+          className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full p-0.5 hover:bg-muted"
+        >
+          <X className="h-3 w-3 text-muted-foreground" />
+        </button>
+      )}
+    </div>
+  );
+
+  const colSelect = (
+    value: string,
+    onChange: (val: string) => void,
+    options: { value: string; label: string }[],
+    placeholder = "All"
+  ) => (
+    <Select value={value} onValueChange={onChange}>
+      <SelectTrigger
+        className={cn(
+          "h-6 w-full rounded-md border-muted bg-muted/30 text-[11px] [&>svg]:h-3 [&>svg]:w-3",
+          value && value !== "all" && "border-slate-400 bg-slate-50 font-medium text-foreground"
+        )}
+      >
+        <SelectValue placeholder={placeholder} />
+      </SelectTrigger>
+      <SelectContent className={cn(SELECT_CONTENT, "max-h-64")}>
+        <SelectItem value="all">{placeholder}</SelectItem>
+        {options.map((o) => (
+          <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+
+  const setCol = (patch: Partial<ColumnFilters>) =>
+    setColumnFilters((p) => ({ ...p, ...patch }));
 
   return (
     <TooltipProvider delayDuration={200}>
@@ -507,6 +599,112 @@ const OutsourceVendors = () => {
                     <TableHead className="h-9 min-w-[220px] text-[11px]">Comments</TableHead>
                     <TableHead className="h-9 w-24 text-[11px]">Status</TableHead>
                     <TableHead className="h-9 w-36 text-[11px]">Approval Expires</TableHead>
+                  </TableRow>
+                  <TableRow className="border-b-0 hover:bg-transparent">
+                    <TableHead className="h-7 py-0.5 px-1.5"></TableHead>
+                    <TableHead className="h-7 py-0.5 px-1.5">
+                      {colInput(columnFilters.id, (v) => setCol({ id: v }))}
+                    </TableHead>
+                    <TableHead className="h-7 py-0.5 px-1.5">
+                      {colInput(columnFilters.name, (v) => setCol({ name: v }))}
+                    </TableHead>
+                    <TableHead className="h-7 py-0.5 px-1.5">
+                      {colInput(columnFilters.address, (v) => setCol({ address: v }))}
+                    </TableHead>
+                    <TableHead className="h-7 py-0.5 px-1.5">
+                      {colInput(columnFilters.city, (v) => setCol({ city: v }))}
+                    </TableHead>
+                    <TableHead className="h-7 py-0.5 px-1.5">
+                      {colSelect(
+                        columnFilters.state,
+                        (v) => setCol({ state: v }),
+                        STATES.map((s) => ({ value: s, label: s })),
+                        "All"
+                      )}
+                    </TableHead>
+                    <TableHead className="h-7 py-0.5 px-1.5">
+                      {colInput(columnFilters.zip, (v) => setCol({ zip: v }))}
+                    </TableHead>
+                    <TableHead className="h-7 py-0.5 px-1.5">
+                      {colInput(columnFilters.originalApprovalDate, (v) => setCol({ originalApprovalDate: v }), "MM/DD/YYYY")}
+                    </TableHead>
+                    <TableHead className="h-7 py-0.5 px-1.5">
+                      {colSelect(
+                        columnFilters.criticality,
+                        (v) => setCol({ criticality: v }),
+                        CRITICALITY.map((c) => ({ value: c, label: c }))
+                      )}
+                    </TableHead>
+                    <TableHead className="h-7 py-0.5 px-1.5">
+                      {colSelect(
+                        columnFilters.iso9001,
+                        (v) => setCol({ iso9001: v }),
+                        [
+                          { value: "Yes", label: "Yes" },
+                          { value: "No", label: "No" },
+                        ]
+                      )}
+                    </TableHead>
+                    <TableHead className="h-7 py-0.5 px-1.5">
+                      {colSelect(
+                        columnFilters.qf133,
+                        (v) => setCol({ qf133: v }),
+                        [
+                          { value: "Yes", label: "Yes" },
+                          { value: "No", label: "No" },
+                        ]
+                      )}
+                    </TableHead>
+                    <TableHead className="h-7 py-0.5 px-1.5">
+                      {colSelect(
+                        columnFilters.oem,
+                        (v) => setCol({ oem: v }),
+                        [
+                          { value: "Yes", label: "Yes" },
+                          { value: "No", label: "No" },
+                        ]
+                      )}
+                    </TableHead>
+                    <TableHead className="h-7 py-0.5 px-1.5">
+                      {colSelect(
+                        columnFilters.qf131,
+                        (v) => setCol({ qf131: v }),
+                        [
+                          { value: "Yes", label: "Yes" },
+                          { value: "No", label: "No" },
+                        ]
+                      )}
+                    </TableHead>
+                    <TableHead className="h-7 py-0.5 px-1.5">
+                      {colSelect(
+                        columnFilters.qualificationBasedOn,
+                        (v) => setCol({ qualificationBasedOn: v }),
+                        QUALIFICATION_BASIS.map((q) => ({ value: q, label: q }))
+                      )}
+                    </TableHead>
+                    <TableHead className="h-7 py-0.5 px-1.5">
+                      {colSelect(
+                        columnFilters.z540,
+                        (v) => setCol({ z540: v }),
+                        [
+                          { value: "Yes", label: "Yes" },
+                          { value: "No", label: "No" },
+                        ]
+                      )}
+                    </TableHead>
+                    <TableHead className="h-7 py-0.5 px-1.5">
+                      {colInput(columnFilters.comments, (v) => setCol({ comments: v }))}
+                    </TableHead>
+                    <TableHead className="h-7 py-0.5 px-1.5">
+                      {colSelect(
+                        columnFilters.status,
+                        (v) => setCol({ status: v }),
+                        VENDOR_STATUS.map((s) => ({ value: s, label: s }))
+                      )}
+                    </TableHead>
+                    <TableHead className="h-7 py-0.5 px-1.5">
+                      {colInput(columnFilters.approvalExpires, (v) => setCol({ approvalExpires: v }), "MM/DD/YYYY")}
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
