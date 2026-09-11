@@ -108,7 +108,7 @@ export const quickActionCategories: Record<string, { title: string; icon: React.
     { title: "Onsite Projects", icon: MapPin, url: "/onsite-projects" },
     { title: "Onsite Scheduling", icon: CalendarDays, url: "/onsite-scheduling" },
     { title: "Onsite Scheduling V2", icon: CalendarDays, url: "/onsite-scheduling-v2" },
-    { title: "Outsource Vendors", icon: Truck },
+    { title: "Outsource Vendors", icon: Truck, url: "/outsource-vendors" },
     { title: "Onsite Work Orders", icon: ClipboardList },
   ]
 };
