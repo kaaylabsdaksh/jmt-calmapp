@@ -83,7 +83,7 @@ const FormVariationsDemo = () => {
   const [dragOverSection, setDragOverSection] = useState<string | null>(null);
   const [jumpOpen, setJumpOpen] = useState(false);
   const singleSectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const [fieldIndex, setFieldIndex] = useState<{ section: string; label: string }[]>([]);
+  const [fieldIndex, setFieldIndex] = useState<{ section: string; label: string; required?: boolean; empty?: boolean }[]>([]);
   const fieldsIndexedRef = useRef(false);
   const jumpToSection = (id: string) => {
     setOpenAccordions((prev) => (prev.includes(id) ? prev : [...prev, id]));
