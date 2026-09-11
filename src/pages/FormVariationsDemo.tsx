@@ -14,7 +14,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Save, X, Package, Truck, Settings, Info, Layers, List, Search, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, EyeOff, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, ArrowDown, ArrowLeft, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2, GripVertical, RotateCcw, Sparkles, Lock as LockIcon } from "lucide-react";
+import { Save, X, Package, Truck, Settings, Info, Layers, List, Search, ChevronRight, ChevronLeft, ChevronDown, ChevronUp, Menu, CalendarIcon, Check, ChevronsUpDown, Eye, EyeOff, Trash2, FileText, Camera, User, Shield, Wrench, Activity, MessageSquare, AlertCircle, DollarSign, Paperclip, Upload, Printer, Mail, CheckCircle, XCircle, Clock, ExternalLink, ArrowUp, ArrowDown, ArrowLeft, Pencil, ImageIcon, Plus, Minus, MoreHorizontal, Play, Square, RefreshCw, Minimize2, Maximize2, GripVertical, RotateCcw, Sparkles, Mic, Lock as LockIcon } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
@@ -36,6 +36,7 @@ import { QF3Dialog } from "@/components/QF3Dialog";
 import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { useVoiceDictation } from "@/hooks/use-voice-dictation";
 import { supabase } from "@/integrations/supabase/client";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -171,6 +172,10 @@ const FormVariationsDemo = () => {
   const [jumpQuery, setJumpQuery] = useState('');
   const [aiFillOpen, setAiFillOpen] = useState(false);
   const [aiText, setAiText] = useState('');
+  const voice = useVoiceDictation((spoken) => {
+    setAiError(null);
+    setAiText((prev) => (prev.trim() ? `${prev.trim()} ${spoken}` : spoken));
+  });
   const [aiSuggestions, setAiSuggestions] = useState<{ section: string; label: string; value: string; reason: string }[]>([]);
   const [aiAccepted, setAiAccepted] = useState<Record<string, boolean>>({});
   const ensureFieldIndex = async () => {
@@ -10207,21 +10212,43 @@ const FormVariationsDemo = () => {
                           value={aiText}
                           onChange={(e) => { setAiText(e.target.value); setAiError(null); }}
                           rows={4}
-                          placeholder="e.g. Fluke 87V multimeter, serial 4521XZ, PO 88123, deliver by 10/15/2026"
+                          placeholder="Type, paste, or press Speak and dictate the details"
                           className="text-xs"
                         />
                         <div className="flex items-center gap-2">
+                          <Button
+                            variant={voice.recording ? 'destructive' : 'outline'}
+                            size="sm"
+                            className="h-7 gap-1.5 text-xs"
+                            disabled={voice.transcribing}
+                            onClick={voice.toggle}
+                          >
+                            {voice.transcribing ? (
+                              <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                            ) : voice.recording ? (
+                              <Square className="h-3.5 w-3.5" />
+                            ) : (
+                              <Mic className="h-3.5 w-3.5" />
+                            )}
+                            {voice.transcribing ? 'Converting…' : voice.recording ? 'Stop' : 'Speak'}
+                          </Button>
                           <Button size="sm" className="h-7 gap-1.5 text-xs" disabled={aiLoading || !aiText.trim()} onClick={askAiForFields}>
                             {aiLoading ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <Sparkles className="h-3.5 w-3.5" />}
                             {aiLoading ? 'Reading…' : 'Analyze'}
                           </Button>
-                          {aiSuggestions.length > 0 && (
+                          {voice.recording && (
+                            <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-destructive" />
+                              Listening…
+                            </span>
+                          )}
+                          {!voice.recording && aiSuggestions.length > 0 && (
                             <span className="text-[11px] text-muted-foreground">
                               {Object.values(aiAccepted).filter(Boolean).length} of {aiSuggestions.length} selected
                             </span>
                           )}
                         </div>
-                        {aiError && <p className="text-[11px] text-destructive">{aiError}</p>}
+                        {(aiError || voice.error) && <p className="text-[11px] text-destructive">{aiError || voice.error}</p>}
                         {aiSuggestions.length > 0 && (
                           <div className="max-h-60 space-y-1 overflow-y-auto rounded-md border p-1.5">
                             {aiSuggestions.map((s) => {
