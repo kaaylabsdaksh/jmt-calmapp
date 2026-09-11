@@ -45,9 +45,12 @@ function encodeWav(chunks: Float32Array[], sampleRate: number, targetRate = 1600
   return new Blob([buffer], { type: "audio/wav" });
 }
 
+const SEGMENT_MS = 4000;
+
 export function useVoiceDictation(onText: (text: string) => void) {
   const [recording, setRecording] = useState(false);
   const [transcribing, setTranscribing] = useState(false);
+  const [caption, setCaption] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const streamRef = useRef<MediaStream | null>(null);
@@ -55,8 +58,15 @@ export function useVoiceDictation(onText: (text: string) => void) {
   const nodeRef = useRef<ScriptProcessorNode | null>(null);
   const sourceRef = useRef<MediaStreamAudioSourceNode | null>(null);
   const chunksRef = useRef<Float32Array[]>([]);
+  const sentIndexRef = useRef(0);
+  const busyRef = useRef(false);
+  const timerRef = useRef<number | null>(null);
+  const onTextRef = useRef(onText);
+  onTextRef.current = onText;
 
   const cleanup = useCallback(() => {
+    if (timerRef.current) window.clearInterval(timerRef.current);
+    timerRef.current = null;
     nodeRef.current?.disconnect();
     sourceRef.current?.disconnect();
     streamRef.current?.getTracks().forEach((t) => t.stop());
@@ -67,8 +77,44 @@ export function useVoiceDictation(onText: (text: string) => void) {
     ctxRef.current = null;
   }, []);
 
+  const transcribeBlob = useCallback(async (blob: Blob) => {
+    const form = new FormData();
+    form.append("file", blob, "recording.wav");
+    const { data, error: fnError } = await supabase.functions.invoke("transcribe-audio", { body: form });
+    if (fnError) throw fnError;
+    return ((data as { text?: string })?.text ?? "").trim();
+  }, []);
+
+  // Transcribes everything recorded since the last flush and appends it to the caption.
+  const flush = useCallback(
+    async (final: boolean) => {
+      if (busyRef.current && !final) return;
+      const all = chunksRef.current;
+      const slice = all.slice(sentIndexRef.current);
+      const samples = slice.reduce((n, c) => n + c.length, 0);
+      const sampleRate = ctxRef.current?.sampleRate ?? 44100;
+      if (!slice.length || samples < sampleRate * (final ? 0.4 : 1.2)) return;
+      sentIndexRef.current = all.length;
+      busyRef.current = true;
+      try {
+        const blob = encodeWav(slice, sampleRate);
+        if (blob.size < 4096) return;
+        const text = await transcribeBlob(blob);
+        if (!text) return;
+        setCaption((prev) => (prev ? `${prev} ${text}` : text));
+        onTextRef.current(text);
+      } catch {
+        if (final) setError("Could not turn that recording into text. Please try again.");
+      } finally {
+        busyRef.current = false;
+      }
+    },
+    [transcribeBlob]
+  );
+
   const start = useCallback(async () => {
     setError(null);
+    setCaption("");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: { echoCancellation: true, noiseSuppression: true },
@@ -81,55 +127,51 @@ export function useVoiceDictation(onText: (text: string) => void) {
       const node = ctx.createScriptProcessor(4096, 1, 1);
       nodeRef.current = node;
       chunksRef.current = [];
+      sentIndexRef.current = 0;
+      busyRef.current = false;
       node.onaudioprocess = (e) => {
         chunksRef.current.push(new Float32Array(e.inputBuffer.getChannelData(0)));
       };
       source.connect(node);
       node.connect(ctx.destination);
       setRecording(true);
+      timerRef.current = window.setInterval(() => void flush(false), SEGMENT_MS);
     } catch {
       cleanup();
       setError("Microphone access is needed to dictate. Please allow it and try again.");
     }
-  }, [cleanup]);
+  }, [cleanup, flush]);
 
   const stop = useCallback(async () => {
     if (!recording) return;
     setRecording(false);
-    const sampleRate = ctxRef.current?.sampleRate ?? 44100;
-    const chunks = chunksRef.current;
-    chunksRef.current = [];
-    cleanup();
-
-    const blob = encodeWav(chunks, sampleRate);
-    if (blob.size < 4096) {
-      setError("That recording was empty — please try again.");
-      return;
-    }
+    if (timerRef.current) window.clearInterval(timerRef.current);
+    timerRef.current = null;
 
     setTranscribing(true);
     try {
-      const form = new FormData();
-      form.append("file", blob, "recording.wav");
-      const { data, error: fnError } = await supabase.functions.invoke("transcribe-audio", { body: form });
-      if (fnError) throw fnError;
-      const text = ((data as { text?: string })?.text ?? "").trim();
-      if (!text) {
-        setError("Nothing was picked up in that recording. Please try again.");
-        return;
+      // wait for any in-flight segment, then transcribe the tail
+      for (let i = 0; i < 40 && busyRef.current; i++) {
+        await new Promise((r) => setTimeout(r, 150));
       }
-      onText(text);
-    } catch {
-      setError("Could not turn that recording into text. Please try again.");
+      await flush(true);
+      if (!caption && sentIndexRef.current === 0) {
+        setError("That recording was empty — please try again.");
+      }
     } finally {
       setTranscribing(false);
+      chunksRef.current = [];
+      sentIndexRef.current = 0;
+      cleanup();
     }
-  }, [recording, cleanup, onText]);
+  }, [recording, cleanup, flush, caption]);
 
   const toggle = useCallback(() => {
     if (recording) void stop();
     else void start();
   }, [recording, start, stop]);
 
-  return { recording, transcribing, error, toggle, start, stop };
+  const clearCaption = useCallback(() => setCaption(""), []);
+
+  return { recording, transcribing, caption, error, toggle, start, stop, clearCaption };
 }

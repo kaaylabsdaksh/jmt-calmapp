@@ -83,7 +83,7 @@ const FormVariationsDemo = () => {
   const [dragOverSection, setDragOverSection] = useState<string | null>(null);
   const [jumpOpen, setJumpOpen] = useState(false);
   const singleSectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const [fieldIndex, setFieldIndex] = useState<{ section: string; label: string }[]>([]);
+  const [fieldIndex, setFieldIndex] = useState<{ section: string; label: string; required?: boolean; empty?: boolean }[]>([]);
   const fieldsIndexedRef = useRef(false);
   const jumpToSection = (id: string) => {
     setOpenAccordions((prev) => (prev.includes(id) ? prev : [...prev, id]));
@@ -93,28 +93,42 @@ const FormVariationsDemo = () => {
     setJumpOpen(false);
   };
   const scanFieldLabels = () => {
-    const found: { section: string; label: string }[] = [];
+    const found: { section: string; label: string; required?: boolean; empty?: boolean }[] = [];
     const seen = new Set<string>();
     Object.entries(singleSectionRefs.current).forEach(([sectionId, el]) => {
       if (!el) return;
       el.querySelectorAll('label').forEach((labelEl) => {
-        const text = (labelEl.textContent || '').replace(/\*/g, '').trim();
+        const raw = labelEl.textContent || '';
+        const text = raw.replace(/\*/g, '').trim();
         if (!text || text.length > 48) return;
         const key = `${sectionId}::${text.toLowerCase()}`;
         if (seen.has(key)) return;
         seen.add(key);
-        found.push({ section: sectionId, label: text });
+        const wrapper = labelEl.closest('div') as HTMLElement | null;
+        const control = wrapper?.querySelector('input, textarea, [role="combobox"]') as HTMLElement | null;
+        const required =
+          raw.includes('*') ||
+          !!wrapper?.querySelector('[data-required], .text-destructive') && raw.includes('*') ||
+          (control instanceof HTMLInputElement || control instanceof HTMLTextAreaElement ? control.required : false);
+        const empty =
+          control instanceof HTMLInputElement || control instanceof HTMLTextAreaElement
+            ? !control.value.trim()
+            : !(control?.textContent || '').trim() || /select/i.test(control?.textContent || '');
+        found.push({ section: sectionId, label: text, required, empty });
       });
     });
     if (found.length) {
       setFieldIndex((prev) => {
         const merged = [...prev];
-        const existing = new Set(prev.map((f) => `${f.section}::${f.label.toLowerCase()}`));
+        const existing = new Map(prev.map((f, i) => [`${f.section}::${f.label.toLowerCase()}`, i]));
         found.forEach((f) => {
           const k = `${f.section}::${f.label.toLowerCase()}`;
-          if (!existing.has(k)) {
-            existing.add(k);
+          const at = existing.get(k);
+          if (at === undefined) {
+            existing.set(k, merged.length);
             merged.push(f);
+          } else {
+            merged[at] = f;
           }
         });
         return merged;
@@ -178,8 +192,9 @@ const FormVariationsDemo = () => {
   });
   const [aiSuggestions, setAiSuggestions] = useState<{ section: string; label: string; value: string; reason: string }[]>([]);
   const [aiAccepted, setAiAccepted] = useState<Record<string, boolean>>({});
-  const ensureFieldIndex = async () => {
-    if (fieldsIndexedRef.current) return fieldIndex;
+  const [mandatory, setMandatory] = useState<{ section: string; label: string }[]>([]);
+  const ensureFieldIndex = async (force = false) => {
+    if (fieldsIndexedRef.current && !force) return fieldIndex;
     const prevOpen = openAccordions;
     setOpenAccordions([...singleAccordionValues]);
     await new Promise((r) => setTimeout(r, 200));
@@ -187,6 +202,17 @@ const FormVariationsDemo = () => {
     fieldsIndexedRef.current = true;
     setOpenAccordions(prevOpen);
     return scanned ?? fieldIndex;
+  };
+  const openAiFill = async () => {
+    setAiFillOpen(true);
+    setAiError(null);
+    const scanned = await ensureFieldIndex(true);
+    setMandatory(
+      (scanned || [])
+        .filter((f) => f.required && f.empty)
+        .map((f) => ({ section: f.section, label: f.label }))
+        .slice(0, 12)
+    );
   };
   const askAiForFields = async () => {
     const text = aiText.trim();
@@ -10192,7 +10218,7 @@ const FormVariationsDemo = () => {
                       variant="outline"
                       size="sm"
                       className="h-7 gap-1.5 text-xs"
-                      onClick={() => { setAiFillOpen(true); setAiError(null); }}
+                      onClick={() => { void openAiFill(); }}
                     >
                       <Sparkles className="h-3.5 w-3.5" />
                       AI Fill
@@ -10248,6 +10274,54 @@ const FormVariationsDemo = () => {
                             </span>
                           )}
                         </div>
+                        {(voice.recording || voice.transcribing || voice.caption) && (
+                          <div className="rounded-md border bg-muted/40 p-2">
+                            <div className="mb-1 flex items-center justify-between">
+                              <span className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">Live caption</span>
+                              {voice.caption && !voice.recording && (
+                                <button
+                                  type="button"
+                                  className="text-[10px] text-muted-foreground underline-offset-2 hover:underline"
+                                  onClick={voice.clearCaption}
+                                >
+                                  Clear
+                                </button>
+                              )}
+                            </div>
+                            <p className="max-h-20 overflow-y-auto text-[11px] leading-relaxed text-foreground">
+                              {voice.caption || (voice.recording ? 'Listening… start speaking.' : '')}
+                              {voice.recording && <span className="ml-0.5 inline-block h-3 w-1 animate-pulse bg-foreground align-middle" />}
+                            </p>
+                          </div>
+                        )}
+                        {mandatory.length > 0 && (
+                          <div className="rounded-md border p-2">
+                            <p className="mb-1.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+                              Required details to mention
+                            </p>
+                            <div className="flex flex-wrap gap-1">
+                              {mandatory.map((m) => {
+                                const said = `${aiText} ${voice.caption}`.toLowerCase();
+                                const covered =
+                                  said.includes(m.label.toLowerCase()) ||
+                                  aiSuggestions.some((s) => s.label.toLowerCase() === m.label.toLowerCase() && s.value);
+                                return (
+                                  <Badge
+                                    key={`${m.section}-${m.label}`}
+                                    variant={covered ? 'secondary' : 'outline'}
+                                    className={`gap-1 text-[10px] font-normal ${covered ? '' : 'text-muted-foreground'}`}
+                                  >
+                                    {covered ? <Check className="h-3 w-3" /> : <span className="h-1.5 w-1.5 rounded-full bg-destructive" />}
+                                    {m.label}
+                                  </Badge>
+                                );
+                              })}
+                            </div>
+                            <p className="mt-1.5 text-[10px] text-muted-foreground">
+                              Mention these while speaking so nothing mandatory is left blank.
+                            </p>
+                          </div>
+                        )}
                         {(aiError || voice.error) && <p className="text-[11px] text-destructive">{aiError || voice.error}</p>}
                         {aiSuggestions.length > 0 && (
                           <div className="max-h-60 space-y-1 overflow-y-auto rounded-md border p-1.5">
