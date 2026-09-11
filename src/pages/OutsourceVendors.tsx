@@ -633,92 +633,118 @@ const OutsourceVendors = () => {
 
         {/* Edit / Add vendor */}
         <Dialog open={!!editing} onOpenChange={(o) => !o && setEditing(null)}>
-          <DialogContent className="max-h-[88vh] max-w-3xl overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle className="text-base">{isNew ? "Add Vendor" : `Edit Vendor ${editing?.id}`}</DialogTitle>
+          <DialogContent className="max-w-2xl gap-0 overflow-hidden p-0">
+            <DialogHeader className="px-6 py-4 border-b">
+              <DialogTitle className="text-base">
+                {isNew ? "Add Vendor" : `Edit Vendor ${editing?.id}`}
+              </DialogTitle>
               <DialogDescription className="text-xs">
                 Update vendor details, approval status and qualification records.
               </DialogDescription>
             </DialogHeader>
 
             {editing && (
-              <div className="space-y-5">
-                <section className="space-y-2">
+              <div className="px-6 py-5 space-y-6 max-h-[60vh] overflow-y-auto">
+                {/* Vendor Information */}
+                <section className="space-y-3">
                   <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                     Vendor Information
                   </h3>
-                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                    <div className="space-y-0.5">
-                      <Label className={LABEL}>Vendor ID *</Label>
-                      <Input className="h-8 text-xs" value={editing.id} disabled={!isNew}
-                        onChange={(e) => set({ id: e.target.value })} />
-                      {errors.id && <p className="text-[10px] text-destructive">{errors.id}</p>}
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <Label className={LABEL}>Vendor ID *</Label>
+                        <Input
+                          className="h-8 text-xs disabled:bg-muted disabled:text-muted-foreground"
+                          value={editing.id}
+                          disabled={!isNew}
+                          onChange={(e) => set({ id: e.target.value })}
+                        />
+                        {errors.id && <p className="text-[10px] text-destructive">{errors.id}</p>}
+                      </div>
+                      <div className="space-y-1">
+                        <Label className={LABEL}>Vendor Name *</Label>
+                        <Input
+                          className="h-8 text-xs"
+                          value={editing.name}
+                          onChange={(e) => set({ name: e.target.value })}
+                        />
+                        {errors.name && <p className="text-[10px] text-destructive">{errors.name}</p>}
+                      </div>
                     </div>
-                    <div className="space-y-0.5 sm:col-span-2">
-                      <Label className={LABEL}>Vendor Name *</Label>
-                      <Input className="h-8 text-xs" value={editing.name}
-                        onChange={(e) => set({ name: e.target.value })} />
-                      {errors.name && <p className="text-[10px] text-destructive">{errors.name}</p>}
-                    </div>
-                    <div className="space-y-0.5 sm:col-span-3">
+                    <div className="space-y-1">
                       <Label className={LABEL}>Address</Label>
-                      <Input className="h-8 text-xs" value={editing.address}
-                        onChange={(e) => set({ address: e.target.value })} />
+                      <Input
+                        className="h-8 text-xs"
+                        value={editing.address}
+                        onChange={(e) => set({ address: e.target.value })}
+                      />
                     </div>
-                    <div className="space-y-0.5">
-                      <Label className={LABEL}>City *</Label>
-                      <Input className="h-8 text-xs" value={editing.city}
-                        onChange={(e) => set({ city: e.target.value })} />
-                      {errors.city && <p className="text-[10px] text-destructive">{errors.city}</p>}
-                    </div>
-                    <div className="space-y-0.5">
-                      <Label className={LABEL}>State</Label>
-                      <Select value={editing.state} onValueChange={(v) => set({ state: v })}>
-                        <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
-                        <SelectContent className={cn(SELECT_CONTENT, "max-h-64")}>
-                          {STATES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-0.5">
-                      <Label className={LABEL}>ZIP</Label>
-                      <Input className="h-8 text-xs" value={editing.zip}
-                        onChange={(e) => set({ zip: e.target.value })} />
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="space-y-1">
+                        <Label className={LABEL}>City *</Label>
+                        <Input
+                          className="h-8 text-xs"
+                          value={editing.city}
+                          onChange={(e) => set({ city: e.target.value })}
+                        />
+                        {errors.city && <p className="text-[10px] text-destructive">{errors.city}</p>}
+                      </div>
+                      <div className="space-y-1">
+                        <Label className={LABEL}>State</Label>
+                        <Select value={editing.state} onValueChange={(v) => set({ state: v })}>
+                          <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                          <SelectContent className={cn(SELECT_CONTENT, "max-h-64")}>
+                            {STATES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-1">
+                        <Label className={LABEL}>ZIP</Label>
+                        <Input
+                          className="h-8 text-xs"
+                          value={editing.zip}
+                          onChange={(e) => set({ zip: e.target.value })}
+                        />
+                      </div>
                     </div>
                   </div>
                 </section>
 
-                <section className="space-y-2">
+                {/* Approval & Qualification */}
+                <section className="space-y-3">
                   <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                     Approval &amp; Qualification
                   </h3>
-                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                    <div className="space-y-0.5">
-                      <Label className={LABEL}>Original Approval Date</Label>
-                      <ModernDatePicker
-                        value={editing.originalApprovalDate}
-                        onChange={(d) =>
-                          set({ originalApprovalDate: d ? d.toLocaleDateString("en-US") : "" })
-                        }
-                      />
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="space-y-1">
+                        <Label className={LABEL}>Original Approval Date</Label>
+                        <ModernDatePicker
+                          value={editing.originalApprovalDate}
+                          onChange={(d) =>
+                            set({ originalApprovalDate: d ? d.toLocaleDateString("en-US") : "" })
+                          }
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <Label className={LABEL}>Criticality</Label>
+                        <Select value={editing.criticality} onValueChange={(v) => set({ criticality: v })}>
+                          <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                          <SelectContent className={SELECT_CONTENT}>
+                            {CRITICALITY.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-1">
+                        <Label className={LABEL}>Approval Expires</Label>
+                        <ModernDatePicker
+                          value={editing.approvalExpires}
+                          onChange={(d) => set({ approvalExpires: d ? d.toLocaleDateString("en-US") : "" })}
+                        />
+                      </div>
                     </div>
-                    <div className="space-y-0.5">
-                      <Label className={LABEL}>Criticality</Label>
-                      <Select value={editing.criticality} onValueChange={(v) => set({ criticality: v })}>
-                        <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
-                        <SelectContent className={SELECT_CONTENT}>
-                          {CRITICALITY.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-0.5">
-                      <Label className={LABEL}>Approval Expires</Label>
-                      <ModernDatePicker
-                        value={editing.approvalExpires}
-                        onChange={(d) => set({ approvalExpires: d ? d.toLocaleDateString("en-US") : "" })}
-                      />
-                    </div>
-                    <div className="space-y-0.5 sm:col-span-3">
+                    <div className="space-y-1">
                       <Label className={LABEL}>Qualification Based On</Label>
                       <Select
                         value={editing.qualificationBasedOn}
@@ -730,25 +756,33 @@ const OutsourceVendors = () => {
                         </SelectContent>
                       </Select>
                     </div>
-                    {yesNoField("ISO 9001 Registered", editing.iso9001, (v) => set({ iso9001: v }))}
-                    {yesNoField("QF133 Issued", editing.qf133, (v) => set({ qf133: v }))}
-                    {yesNoField("OEM", editing.oem, (v) => set({ oem: v }))}
-                    {yesNoField("QF131 on File", editing.qf131, (v) => set({ qf131: v }))}
-                    {yesNoField("Z540.1 Accredited", editing.z540, (v) => set({ z540: v }))}
+                    <div className="grid grid-cols-3 gap-4">
+                      {yesNoField("ISO 9001 Registered", editing.iso9001, (v) => set({ iso9001: v }))}
+                      {yesNoField("QF133 Issued", editing.qf133, (v) => set({ qf133: v }))}
+                      {yesNoField("OEM", editing.oem, (v) => set({ oem: v }))}
+                    </div>
+                    <div className="grid grid-cols-3 gap-4">
+                      {yesNoField("QF131 on File", editing.qf131, (v) => set({ qf131: v }))}
+                      {yesNoField("Z540.1 Accredited", editing.z540, (v) => set({ z540: v }))}
+                    </div>
                   </div>
                 </section>
 
-                <section className="space-y-2">
+                {/* Additional Information */}
+                <section className="space-y-3">
                   <h3 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
                     Additional Information
                   </h3>
-                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                    <div className="space-y-0.5 sm:col-span-2">
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="col-span-2 space-y-1">
                       <Label className={LABEL}>Comments</Label>
-                      <Textarea className="min-h-[80px] text-xs" value={editing.comments}
-                        onChange={(e) => set({ comments: e.target.value })} />
+                      <Textarea
+                        className="min-h-[80px] resize-none text-xs"
+                        value={editing.comments}
+                        onChange={(e) => set({ comments: e.target.value })}
+                      />
                     </div>
-                    <div className="space-y-0.5">
+                    <div className="space-y-1">
                       <Label className={LABEL}>Status</Label>
                       <Select
                         value={editing.status}
@@ -765,7 +799,7 @@ const OutsourceVendors = () => {
               </div>
             )}
 
-            <DialogFooter>
+            <DialogFooter className="px-6 py-4 border-t bg-muted/30">
               <Button variant="outline" className="h-8 text-xs" onClick={() => setEditing(null)}>
                 Cancel
               </Button>
