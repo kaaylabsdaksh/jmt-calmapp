@@ -290,12 +290,6 @@ const OutsourceVendors = () => {
     setIsNew(false);
     setErrors({});
   };
-  const openAdd = () => {
-    setEditing(blankVendor());
-    setIsNew(true);
-    setErrors({});
-  };
-
   const saveVendor = () => {
     if (!editing) return;
     const next: Record<string, string> = {};
