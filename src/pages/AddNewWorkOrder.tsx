@@ -60,8 +60,8 @@ const AddNewWorkOrder = () => {
       setIsSaved(true);
       setHasContact(true);
       setActiveTab("general");
-    } else {
-      // Normal entry - reset fields
+    } else if (localStorage.getItem('addNewWorkOrderIsSaved') !== 'true') {
+      // Fresh work order - reset fields and start on General
       setWorkOrderData(prev => ({
         ...prev,
         accountNumber: "",
@@ -380,8 +380,14 @@ const AddNewWorkOrder = () => {
     return data;
   });
 
-  const [isSaved, setIsSaved] = useState(false);
-  const [hasContact, setHasContact] = useState(false);
+  const [isSaved, setIsSaved] = useState(() => localStorage.getItem('addNewWorkOrderIsSaved') === 'true');
+  const [hasContact, setHasContact] = useState(() => localStorage.getItem('addNewWorkOrderHasContact') === 'true');
+
+  // Remember the saved state so a re-render / return visit keeps the same tab open
+  useEffect(() => {
+    localStorage.setItem('addNewWorkOrderIsSaved', String(isSaved));
+    localStorage.setItem('addNewWorkOrderHasContact', String(hasContact));
+  }, [isSaved, hasContact]);
 
   // Save to localStorage whenever workOrderData changes
   useEffect(() => {
@@ -618,6 +624,9 @@ const AddNewWorkOrder = () => {
   };
 
   const handleCancel = () => {
+    localStorage.removeItem('addNewWorkOrderIsSaved');
+    localStorage.removeItem('addNewWorkOrderHasContact');
+    localStorage.removeItem('addNewWorkOrderActiveTab');
     navigate("/");
   };
 
@@ -627,6 +636,12 @@ const AddNewWorkOrder = () => {
     if (["warranty", "estimate", "fail-log", "cert"].includes(tabValue)) {
       return true;
     }
+
+    // Never disable the tab the user is currently on
+    if (tabValue === activeTab) {
+      return false;
+    }
+
     
     const isValidFormat = /^\d{4}\.\d{2}$/.test(workOrderData.accountNumber);
     
