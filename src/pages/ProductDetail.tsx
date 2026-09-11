@@ -65,6 +65,8 @@ const CAPABLE_LOCATIONS = [
   "Leechburg",
 ];
 
+const SCOPE_ENABLED_LOCATIONS = ["Baton Rouge", "Clute", "Odessa", "Groves", "Port Arthur"];
+
 const STATUSES = ["ACTIVE", "INACTIVE", "PENDING", "OBSOLETE"];
 const GROUP_TYPES = ["Electrical", "Mechanical", "Temperature", "Pressure", "ESL"];
 const PRODUCT_TYPES = ["Calibration", "Testing", "Repair", "Rental", "Sales"];
