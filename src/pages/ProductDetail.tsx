@@ -356,19 +356,21 @@ const ProductDetail = () => {
                   <div className="divide-y">
                     {CAPABLE_LOCATIONS.map((loc) => {
                       const capable = !!locations[loc];
+                      const scopeEnabled = SCOPE_ENABLED_LOCATIONS.includes(loc);
                       const value = capable ? accred17025[loc] || "No" : "No";
+                      const interactive = capable && scopeEnabled;
                       return (
                         <div
                           key={loc}
                           className={cn(
                             "grid grid-cols-[minmax(0,1fr)_repeat(3,72px)] items-center px-3 py-1.5 text-[11px]",
-                            capable ? "hover:bg-muted/40" : "bg-muted/20",
+                            interactive ? "hover:bg-muted/40" : "bg-muted/20",
                           )}
                         >
                           <span
                             className={cn(
                               "truncate",
-                              capable ? "font-medium text-foreground" : "text-muted-foreground",
+                              interactive ? "font-medium text-foreground" : "text-muted-foreground",
                             )}
                           >
                             {loc}
@@ -377,25 +379,25 @@ const ProductDetail = () => {
                             <div key={lvl} className="flex justify-center">
                               <button
                                 type="button"
-                                disabled={!capable}
+                                disabled={!interactive}
                                 aria-label={`${loc} ${lvl}`}
                                 aria-pressed={value === lvl}
                                 onClick={() => setAccred17025((p) => ({ ...p, [loc]: lvl }))}
                                 className={cn(
                                   "h-4 w-4 rounded-[4px] border transition-colors",
                                   value === lvl
-                                    ? capable
+                                    ? interactive
                                       ? "bg-slate-900 border-slate-900"
                                       : "bg-muted-foreground/30 border-muted-foreground/30"
                                     : "bg-background border-input hover:border-slate-400",
-                                  !capable && "cursor-not-allowed",
+                                  !interactive && "cursor-not-allowed",
                                 )}
                               >
                                 {value === lvl && (
                                   <Check
                                     className={cn(
                                       "h-3 w-3 mx-auto",
-                                      capable ? "text-slate-50" : "text-white/80",
+                                      interactive ? "text-slate-50" : "text-white/80",
                                     )}
                                   />
                                 )}
