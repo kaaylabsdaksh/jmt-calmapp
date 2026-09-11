@@ -360,10 +360,9 @@ const ProductDetail = () => {
                       if (aEnabled === bEnabled) return a.localeCompare(b);
                       return aEnabled ? -1 : 1;
                     }).map((loc) => {
-                      const capable = !!locations[loc];
                       const scopeEnabled = SCOPE_ENABLED_LOCATIONS.includes(loc);
-                      const value = capable ? accred17025[loc] || "No" : "No";
-                      const interactive = capable && scopeEnabled;
+                      const value = scopeEnabled ? accred17025[loc] || "No" : "No";
+                      const interactive = scopeEnabled;
                       return (
                         <div
                           key={loc}
