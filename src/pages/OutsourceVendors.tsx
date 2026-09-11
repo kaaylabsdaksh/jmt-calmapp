@@ -475,8 +475,7 @@ const OutsourceVendors = () => {
               </div>
             </div>
 
-            {showMore && (
-              <div className="mt-3 space-y-3 border-t pt-3">
+            <div className="mt-3 space-y-3 border-t pt-3">
                 <div className="grid grid-cols-1 gap-x-3 gap-y-2 sm:grid-cols-2 lg:grid-cols-5">
                   <div className="space-y-0.5">
                     <Label htmlFor="f-addr" className={LABEL}>Address</Label>
