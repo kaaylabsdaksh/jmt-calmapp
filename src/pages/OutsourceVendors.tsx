@@ -199,7 +199,7 @@ const OutsourceVendors = () => {
 
   const activeCount = useMemo(
     () =>
-      (Object.keys(emptyFilters) as (keyof Filters)[]).filter(
+      (["id", "name", "city", "state", "status"] as (keyof Filters)[]).filter(
         (k) => applied[k] && applied[k] !== "all"
       ).length,
     [applied]
