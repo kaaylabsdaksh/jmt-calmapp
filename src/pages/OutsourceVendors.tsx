@@ -904,28 +904,4 @@ const OutsourceVendors = () => {
   );
 };
 
-function yesNoFilterWrapper(
-  key: keyof Filters,
-  label: string,
-  draft: Filters,
-  setDraft: (f: Filters) => void
-) {
-  const value = draft[key] as string;
-  return (
-    <div className="space-y-0.5" key={key as string}>
-      <Label className={LABEL}>{label}</Label>
-      <Select value={value} onValueChange={(v) => setDraft({ ...draft, [key]: v })}>
-        <SelectTrigger className={fieldClass(value, "[&>svg]:h-3 [&>svg]:w-3")}>
-          <SelectValue placeholder="Any" />
-        </SelectTrigger>
-        <SelectContent className={SELECT_CONTENT}>
-          <SelectItem value="all">Any</SelectItem>
-          <SelectItem value="Yes">Yes</SelectItem>
-          <SelectItem value="No">No</SelectItem>
-        </SelectContent>
-      </Select>
-    </div>
-  );
-}
-
 export default OutsourceVendors;
