@@ -291,12 +291,101 @@ const ProductDetail = () => {
 
 
             <TabsContent value="ref" className="mt-4">
-              <SectionCard icon={ClipboardList} title={`Reference ${product.id}`}>
-                <div className="text-[11px] text-muted-foreground py-8 text-center">
-                  No records to display.
+              <SectionCard
+                icon={ClipboardList}
+                title={`ISO ${product.id} Accreditation Scope`}
+                action={
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[10px] text-muted-foreground mr-1">
+                      {fullCount} Full · {partialCount} Partial
+                    </span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-6 text-[10px] px-2"
+                      onClick={() => setAccred17025(buildScope(CAPABLE_LOCATIONS, locations, "Full"))}
+                    >
+                      Set capable to Full
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-6 text-[10px] px-2"
+                      onClick={() => setAccred17025(buildScope(CAPABLE_LOCATIONS, locations, "No"))}
+                    >
+                      Clear
+                    </Button>
+                  </div>
+                }
+              >
+                <p className="text-[11px] text-muted-foreground mb-3">
+                  Set the accreditation level for each location. Locations not marked capable on the General
+                  tab are locked to <span className="font-medium text-foreground">No</span>.
+                </p>
+                <div className="rounded-md border overflow-hidden">
+                  <div className="grid grid-cols-[minmax(0,1fr)_repeat(3,72px)] items-center bg-muted/60 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                    <span>Location</span>
+                    <span className="text-center">No</span>
+                    <span className="text-center">Full</span>
+                    <span className="text-center">Partial</span>
+                  </div>
+                  <div className="divide-y">
+                    {CAPABLE_LOCATIONS.map((loc) => {
+                      const capable = !!locations[loc];
+                      const value = capable ? accred17025[loc] || "No" : "No";
+                      return (
+                        <div
+                          key={loc}
+                          className={cn(
+                            "grid grid-cols-[minmax(0,1fr)_repeat(3,72px)] items-center px-3 py-1.5 text-[11px]",
+                            capable ? "hover:bg-muted/40" : "bg-muted/20",
+                          )}
+                        >
+                          <span
+                            className={cn(
+                              "truncate",
+                              capable ? "font-medium text-foreground" : "text-muted-foreground",
+                            )}
+                          >
+                            {loc}
+                          </span>
+                          {(["No", "Full", "Partial"] as Accred17025[]).map((lvl) => (
+                            <div key={lvl} className="flex justify-center">
+                              <button
+                                type="button"
+                                disabled={!capable}
+                                aria-label={`${loc} ${lvl}`}
+                                aria-pressed={value === lvl}
+                                onClick={() => setAccred17025((p) => ({ ...p, [loc]: lvl }))}
+                                className={cn(
+                                  "h-4 w-4 rounded-[4px] border transition-colors",
+                                  value === lvl
+                                    ? capable
+                                      ? "bg-slate-900 border-slate-900"
+                                      : "bg-muted-foreground/30 border-muted-foreground/30"
+                                    : "bg-background border-input hover:border-slate-400",
+                                  !capable && "cursor-not-allowed",
+                                )}
+                              >
+                                {value === lvl && (
+                                  <Check
+                                    className={cn(
+                                      "h-3 w-3 mx-auto",
+                                      capable ? "text-slate-50" : "text-white/80",
+                                    )}
+                                  />
+                                )}
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </SectionCard>
             </TabsContent>
+
           </Tabs>
         </div>
       </main>
