@@ -13,7 +13,7 @@ import {
   CalendarCheck,
   ArrowUpDown,
 } from "lucide-react";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
   Breadcrumb,
@@ -275,7 +275,7 @@ const StandardDetail = () => {
   const [accDraft, setAccDraft] = useState({ accessory: "", type: "", color: "", quantity: "1", material: "" });
   const addAccessory = () => {
     if (!accDraft.accessory.trim()) {
-      toast.error("Enter an accessory name.");
+      toast({ title: "Accessory required", description: "Enter an accessory name.", variant: "destructive" });
       return;
     }
     set("accessories", [
@@ -348,15 +348,15 @@ const StandardDetail = () => {
 
   const handleSave = () => {
     if (!validate()) {
-      toast.error("Please fix the highlighted fields.");
+      toast({ title: "Missing required information", description: "Please fix the highlighted fields.", variant: "destructive" });
       return;
     }
     setDirty(false);
     if (isNew) {
       setSavedNo(form.standardNo);
-      toast.success(`Standard ${form.standardNo} created successfully.`);
+      toast({ title: "Standard created", description: `Standard ${form.standardNo} was created successfully.` });
     } else {
-      toast.success(`Standard ${form.standardNo} updated successfully.`);
+      toast({ title: "Standard updated", description: `Standard ${form.standardNo} was updated successfully.` });
     }
   };
 
@@ -816,14 +816,14 @@ const StandardDetail = () => {
                           <TableCell className="py-1.5 max-w-[280px] text-muted-foreground">{m.notes || "—"}</TableCell>
                           <TableCell className="py-1.5">
                             <div className="flex items-center gap-1">
-                              <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={() => toast(`${m.checkType} — ${m.status}`)}>View</Button>
+                              <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={() => toast({ title: m.checkType, description: m.status })}>View</Button>
                               <Button
                                 variant="ghost"
                                 size="sm"
                                 className="h-7 text-xs"
                                 onClick={() => {
                                   set("maintenance", form.maintenance.map((x) => (x.id === m.id ? { ...x, status: "Completed" as const, lastCompleted: new Date().toLocaleDateString("en-US") } : x)));
-                                  toast.success("Check marked completed.");
+                                  toast({ title: "Check completed", description: "The maintenance check was marked completed." });
                                 }}
                               >
                                 Edit
@@ -853,7 +853,7 @@ const StandardDetail = () => {
             <SectionCard
               title="Work Order History"
               action={
-                <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" onClick={() => toast.success("History export started.")}>
+                <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" onClick={() => toast({ title: "Export started", description: "Standard history is being exported." })}>
                   <Download className="h-3.5 w-3.5" /> Export History
                 </Button>
               }
@@ -1019,7 +1019,7 @@ const StandardDetail = () => {
                 set("division", move.division);
                 set("labArea", move.labArea);
                 setMoveOpen(false);
-                toast.success("Move initiated.");
+                toast({ title: "Move initiated", description: "The standard location was updated." });
               }}
             >
               Confirm Move
@@ -1065,7 +1065,7 @@ const StandardDetail = () => {
                 ]);
                 setCheckOpen(false);
                 setCheckDraft({ checkType: CHECK_TYPES[0], frequency: "Quarterly", lastCompleted: "", nextDue: "", assignedTo: "", notes: "" });
-                toast.success("Maintenance check added.");
+                toast({ title: "Maintenance check added", description: "The new check was added to the schedule." });
               }}
             >
               Add Check
@@ -1087,7 +1087,7 @@ const StandardDetail = () => {
               onClick={() => {
                 set("maintenance", form.maintenance.filter((m) => m.id !== deleteCheck));
                 setDeleteCheck(null);
-                toast.success("Maintenance check deleted.");
+                toast({ title: "Maintenance check deleted", description: "The scheduled check was removed." });
               }}
             >
               Delete
