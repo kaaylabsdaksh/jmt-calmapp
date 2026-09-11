@@ -752,7 +752,7 @@ const EditBatchWorkOrder = () => {
   return (
     <div className="bg-background min-h-screen">
       {/* Navigation Bar */}
-      <div className="bg-card border-b py-4 px-3 sm:px-4 lg:px-6">
+      <div className="sticky top-0 z-40 bg-card border-b py-4 px-3 sm:px-4 lg:px-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <SidebarTrigger className="p-2 rounded-lg hover:bg-blue-500 hover:text-white hover:shadow-md transition-all duration-300 transform hover:scale-105" />

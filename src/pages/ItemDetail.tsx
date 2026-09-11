@@ -34,7 +34,7 @@ const ItemDetail = () => {
   return (
     <div className="container mx-auto p-6 max-w-5xl">
       {/* Header */}
-      <div className="mb-6">
+      <div className="sticky top-0 z-40 -mx-6 -mt-6 mb-6 bg-background px-6 pt-6 pb-4 border-b border-border">
         <Button 
           variant="ghost" 
           onClick={() => navigate(-1)}
