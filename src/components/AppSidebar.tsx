@@ -66,7 +66,7 @@ export const workOrderQuickActions = [
   { title: "Assign Techs", icon: Users },
   { title: "Assign Departure Info", icon: MapPin },
   { title: "Export Excel", icon: FileSpreadsheet },
-  { title: "Missing Cost", icon: DollarSign },
+  { title: "Missing Cost", icon: DollarSign, url: "/missing-cost" },
   { title: "Create Barcode", icon: Barcode },
 ];
 
