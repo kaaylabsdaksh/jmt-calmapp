@@ -171,6 +171,10 @@ const FormVariationsDemo = () => {
   const [jumpQuery, setJumpQuery] = useState('');
   const [aiFillOpen, setAiFillOpen] = useState(false);
   const [aiText, setAiText] = useState('');
+  const voice = useVoiceDictation((spoken) => {
+    setAiError(null);
+    setAiText((prev) => (prev.trim() ? `${prev.trim()} ${spoken}` : spoken));
+  });
   const [aiSuggestions, setAiSuggestions] = useState<{ section: string; label: string; value: string; reason: string }[]>([]);
   const [aiAccepted, setAiAccepted] = useState<Record<string, boolean>>({});
   const ensureFieldIndex = async () => {
