@@ -43,6 +43,7 @@ interface WorkOrderItemsReceivingProps {
   setItems: React.Dispatch<React.SetStateAction<WorkOrderReceivingItem[]>>;
   onSelectedItemsChange?: (count: number) => void;
   onSelectedItemsIdsChange?: (ids: string[]) => void;
+  accountNumber?: string;
 }
 
 const manufacturers = [
@@ -94,8 +95,9 @@ const truncateDescription = (description: string): string => {
   return words.length > 3 ? words.slice(0, 3).join(" ") + "..." : description;
 };
 
-export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange, onSelectedItemsIdsChange }: WorkOrderItemsReceivingProps) => {
+export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange, onSelectedItemsIdsChange, accountNumber }: WorkOrderItemsReceivingProps) => {
   const [newItems, setNewItems] = useState<WorkOrderReceivingItem[]>([]);
+  const [serialWarning, setSerialWarning] = useState<{ itemId: string; groups: SerialMatchGroup[] } | null>(null);
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
