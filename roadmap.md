@@ -6,4 +6,4 @@
 - [ ] Add select-all option to Matching Equipment table in Update RFID page
 - [ ] Quote page: onsite/ESL project details prefill + quote-type-specific summary charges
 - [x] Add the Capable Locations matrix to Edit Product
-- [ ] Build modern Create Lab Standard Work Orders workflow
+- [x] Build modern Create Lab Standard Work Orders workflow
