@@ -32,6 +32,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import ProductFilesTab from "@/components/products/ProductFilesTab";
 import ProductAccessoriesTab from "@/components/products/ProductAccessoriesTab";
 import { toast } from "@/hooks/use-toast";
@@ -66,6 +74,38 @@ const TECH_CATEGORIES = ["Electrical", "Mechanical", "Temperature", "Pressure", 
 const RENTAL_CATEGORIES = ["Rental", "Sales", "Both", "Consumable"];
 const COMMENT_TYPES = ["General", "Lab", "Pricing", "Customer"];
 
+const CAPABILITY_COLUMNS = [
+  "Calibration",
+  "Limited Calibration",
+  "Adjustment (in lab)",
+  "17025 (Full)",
+  "17025 (Limited)",
+  "\"No\" 17025",
+  "Send to Alternate Lab",
+  "To Factory (Cal Outsource)",
+  "Adjustment (To Factory)",
+  "Repair (Full)",
+  "Repair (Limited)",
+  "Repair (No)",
+  "Unserviceable",
+];
+
+const CAPABILITY_LEGEND = [
+  { term: "Calibration", def: "Full verification of UUT." },
+  { term: "Limited Calibration", def: "Limited parameter verification of UUT, including un-adjustable and TAR <2:1." },
+  { term: "Adjustment (in lab)", def: "Our ability to adjust in lab." },
+  { term: "17025 (Full)", def: "Can accredit to UUT full range." },
+  { term: "17025 (Limited)", def: "Can accredit to limited range of UUT." },
+  { term: "\"No\" 17025", def: "Can not accredit UUT, parameters not on scope, may require outsourcing." },
+  { term: "Send to Alternate Lab", def: "This lab must send it to another JM Test lab for calibration." },
+  { term: "To Factory (Cal Outsource)", def: "We are not able to calibrate in any lab." },
+  { term: "Adjustment (To Factory)", def: "We can \"calibrate\" but not \"adjust\" in lab." },
+  { term: "Repair (Full)", def: "Can completely repair unit." },
+  { term: "Repair (Limited)", def: "Can partially repair unit; certain repairs require to-factory/OEM service." },
+  { term: "Repair (No)", def: "Can not repair; must go to factory/OEM for repair." },
+  { term: "Unserviceable", def: "No OEM or alternate vendor to service this; parts/technical info unavailable." },
+];
+
 export default function NewProduct() {
   const navigate = useNavigate();
   const [locations, setLocations] = useState<Record<string, boolean>>({});
@@ -79,6 +119,7 @@ export default function NewProduct() {
   const [modelNumber, setModelNumber] = useState("");
   const [description, setDescription] = useState("");
   const [labCode, setLabCode] = useState("");
+  const [matrix, setMatrix] = useState<Record<string, Record<string, boolean>>>({});
 
   const canSave = !!(manufacturer && modelNumber.trim() && description.trim() && labCode);
 
@@ -92,7 +133,17 @@ export default function NewProduct() {
       return;
     }
     setSaved(true);
-    toast({ title: "Product saved", description: "Files and Accessories are now available." });
+    toast({
+      title: "Product saved",
+      description: "Capable Locations, Files and Accessories are now available.",
+    });
+  };
+
+  const toggleMatrix = (location: string, cap: string) => {
+    setMatrix((prev) => ({
+      ...prev,
+      [location]: { ...prev[location], [cap]: !prev[location]?.[cap] },
+    }));
   };
 
   const addComment = () => {
@@ -129,9 +180,64 @@ export default function NewProduct() {
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="h-8">
               <TabsTrigger value="general" className="text-xs h-7">General</TabsTrigger>
+              {saved && <TabsTrigger value="capable" className="text-xs h-7">Capable Locations</TabsTrigger>}
               {saved && <TabsTrigger value="files" className="text-xs h-7">Files</TabsTrigger>}
               {saved && <TabsTrigger value="accessories" className="text-xs h-7">Accessories</TabsTrigger>}
             </TabsList>
+
+            <TabsContent value="capable" className="mt-4 space-y-4">
+              <Card>
+                <CardContent className="p-0 overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="bg-muted/50 hover:bg-muted/50">
+                        <TableHead className="text-[11px] font-semibold whitespace-nowrap">Capable Location</TableHead>
+                        {CAPABILITY_COLUMNS.map((cap) => (
+                          <TableHead
+                            key={cap}
+                            className="text-[10px] font-semibold text-center"
+                            style={{ writingMode: "vertical-rl", transform: "rotate(180deg)", minWidth: "2.5rem" }}
+                          >
+                            {cap}
+                          </TableHead>
+                        ))}
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {CAPABLE_LOCATIONS.map((loc) => (
+                        <TableRow key={loc}>
+                          <TableCell className="text-xs font-medium bg-muted/30">{loc}</TableCell>
+                          {CAPABILITY_COLUMNS.map((cap) => (
+                            <TableCell key={cap} className="text-center p-2">
+                              <Checkbox
+                                checked={!!matrix[loc]?.[cap]}
+                                onCheckedChange={() => toggleMatrix(loc, cap)}
+                                className="h-4 w-4"
+                              />
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-4">
+                  <div className="text-xs font-semibold text-foreground mb-2">Breakdown of Matrix (Definitions)</div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-xs">
+                    {CAPABILITY_LEGEND.map((l) => (
+                      <div key={l.term} className="flex gap-2">
+                        <span className="font-semibold whitespace-nowrap">{l.term}:</span>
+                        <span className="text-muted-foreground">{l.def}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-[10px] text-muted-foreground mt-2">** Onsite capabilities are influenced by the supporting lab.</p>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
             <TabsContent value="files" className="mt-4">
               <ProductFilesTab />
