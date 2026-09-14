@@ -4599,6 +4599,18 @@ const AddNewWorkOrder = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <SerialDuplicateDialog
+        open={serialWarningGroups.length > 0}
+        groups={serialWarningGroups}
+        accountNumber={workOrderData.accountNumber}
+        onOpenChange={(open) => { if (!open) setSerialWarningGroups([]); }}
+        onReview={() => setSerialWarningGroups([])}
+        onContinue={() => {
+          setSerialWarningGroups([]);
+          commitWorkOrder();
+        }}
+      />
     </div>
   );
 };
