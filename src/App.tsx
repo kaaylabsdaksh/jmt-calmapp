@@ -36,6 +36,7 @@ import OnsiteProjects from "./pages/OnsiteProjects";
 import ManageStandards from "./pages/ManageStandards";
 import StandardsDashboard from "./pages/StandardsDashboard";
 import StandardDetail from "./pages/StandardDetail";
+import OnsiteBatchLoans from "./pages/OnsiteBatchLoans";
 import OnsiteScheduling from "./pages/OnsiteScheduling";
 import OnsiteSchedulingV2 from "./pages/OnsiteSchedulingV2";
 import OnsiteProjectDetail from "./pages/OnsiteProjectDetail";
@@ -130,6 +131,7 @@ const App = () => {
             <Route path="/standards" element={<ManageStandards />} />
             <Route path="/standards/dashboard" element={<StandardsDashboard />} />
             <Route path="/standards/new" element={<StandardDetail />} />
+            <Route path="/standards/onsite-batch-loans" element={<OnsiteBatchLoans />} />
             <Route path="/standards/:id" element={<StandardDetail />} />
             <Route path="/design-system" element={<DesignSystemGallery />} />
             <Route path="/onsite-projects" element={<OnsiteProjects />} />

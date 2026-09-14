@@ -699,9 +699,11 @@ const ManageStandards = () => {
 
           {/* Footer actions */}
           <footer className="sticky bottom-0 z-20 -mx-4 lg:-mx-6 flex h-12 shrink-0 items-center justify-end gap-2 overflow-x-auto whitespace-nowrap border-t bg-white px-4 lg:px-6">
-            <Button variant="outline" className="h-8 shrink-0 gap-2 text-xs" onClick={() => toast({ title: "On-Site Batch Loans opened." })}>
-              <Truck className="h-3.5 w-3.5" />
-              On-Site Batch Loans
+            <Button asChild variant="outline" className="h-8 shrink-0 gap-2 text-xs">
+              <Link to="/standards/onsite-batch-loans">
+                <Truck className="h-3.5 w-3.5" />
+                On-Site Batch Loans
+              </Link>
             </Button>
             <Button variant="outline" className="h-8 shrink-0 gap-2 text-xs" onClick={() => toast({ title: "Create Lab Standard WOs opened." })}>
               <ClipboardList className="h-3.5 w-3.5" />
