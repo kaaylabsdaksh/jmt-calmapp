@@ -632,6 +632,15 @@ const AddNewWorkOrder = () => {
     });
   };
 
+  const handleSave = () => {
+    const groups = collectSerialWarnings();
+    if (groups.length > 0) {
+      setSerialWarningGroups(groups);
+      return;
+    }
+    commitWorkOrder();
+  };
+
   const handleCancel = () => {
     localStorage.removeItem('addNewWorkOrderIsSaved');
     localStorage.removeItem('addNewWorkOrderHasContact');
