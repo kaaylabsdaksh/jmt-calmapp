@@ -472,8 +472,8 @@ const OnsiteBatchLoans = () => {
                     <TableRow><TableCell colSpan={11} className="h-40 text-center"><Search className="mx-auto mb-2 h-6 w-6 text-muted-foreground" /><p className="text-sm font-medium">No batch loans found</p><p className="mt-1 text-xs text-muted-foreground">Adjust the search criteria and try again.</p></TableCell></TableRow>
                   )}
                   {pageRows.map((loan) => (
-                    <TableRow key={loan.id} className="text-xs">
-                      <TableCell className="py-2 font-semibold"><button className="text-foreground underline-offset-2 hover:underline" onClick={() => openBatch(loan)}>{loan.id}</button></TableCell>
+                    <TableRow key={loan.id} className="group text-xs">
+                      <TableCell className="sticky left-0 z-10 bg-background py-2 font-semibold group-hover:bg-muted/50"><button className="text-foreground underline-offset-2 hover:underline" onClick={() => openBatch(loan)}>{loan.id}</button></TableCell>
                       <TableCell className="py-2 tabular-nums">{loan.account}</TableCell>
                       <TableCell className="max-w-[240px] py-2"><Tooltip><TooltipTrigger asChild><span className="block truncate">{loan.customer}</span></TooltipTrigger><TooltipContent>{loan.customer}</TooltipContent></Tooltip></TableCell>
                       <TableCell className="py-2"><StatusBadge status={loan.status} /></TableCell>
