@@ -111,6 +111,7 @@ export default function NewProduct() {
   const [modelNumber, setModelNumber] = useState("");
   const [description, setDescription] = useState("");
   const [labCode, setLabCode] = useState("");
+  const [matrix, setMatrix] = useState<Record<string, Record<string, boolean>>>({});
 
   const canSave = !!(manufacturer && modelNumber.trim() && description.trim() && labCode);
 
