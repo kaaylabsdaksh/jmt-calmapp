@@ -1,5 +1,15 @@
 export type BatchLoanStatus = "Open" | "Returned" | "Cancelled";
 
+export interface BatchLoanStandard {
+  standardNo: string;
+  state: string;
+  nextCalibrationDue: string;
+  manufacturer: string;
+  model: string;
+  serial: string;
+  labCode: string;
+}
+
 export interface OnsiteBatchLoan {
   id: number;
   account: string;
@@ -11,6 +21,15 @@ export interface OnsiteBatchLoan {
   created: string;
   needed: string;
   expectedReturn: string;
+  fromDivision?: string;
+  toDivision?: string;
+  fromUser?: string;
+  toUser?: string;
+  movedBy?: string;
+  movedDate?: string;
+  returnedBy?: string;
+  returnedDate?: string;
+  standards?: BatchLoanStandard[];
 }
 
 export const BATCH_LOAN_LOCATIONS = [
