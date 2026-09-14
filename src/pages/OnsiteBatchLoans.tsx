@@ -560,21 +560,36 @@ const OnsiteBatchLoans = () => {
           <DialogContent className="max-h-[94vh] max-w-5xl gap-0 overflow-hidden p-0">
             <DialogHeader className="border-b border-border px-5 py-4"><div className="flex items-center justify-between pr-8"><div><DialogTitle className="text-base">Edit On-Site Batch {editLoan?.id}</DialogTitle><DialogDescription className="text-xs">Review the movement lifecycle and standards assigned to this loan.</DialogDescription></div>{editLoan && <div className="flex items-center gap-2"><StatusBadge status={editLoan.status} />{editLoan.status === "Returned" && <Button variant="link" className="h-7 px-1 text-xs text-foreground">Batch Report</Button>}</div>}</div></DialogHeader>
             {editLoan && <div className="max-h-[72vh] space-y-4 overflow-y-auto p-5">
-              <section className="space-y-3"><h3 className="text-[10px] font-semibold uppercase text-muted-foreground">Batch details</h3><div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                <div className="space-y-1"><Label className={LABEL}>Batch ID</Label><Input className={FIELD} value={editLoan.id} readOnly /></div>
-                <div className="space-y-1"><Label className={LABEL}>Account #</Label><Input className={FIELD} value={editLoan.account} readOnly={editLoan.status !== "Open"} onChange={(event) => setEditLoan({ ...editLoan, account: event.target.value })} /></div>
-                <div className="space-y-1 sm:col-span-2"><Label className={LABEL}>Customer</Label><Input className={FIELD} value={editLoan.customer} readOnly /></div>
-              </div></section>
-              <section className="space-y-3 border-t border-border pt-4"><h3 className="text-[10px] font-semibold uppercase text-muted-foreground">Movement</h3><div className="grid gap-x-5 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
-                <div className="space-y-1"><Label className={LABEL}>From Location</Label><Input className={FIELD} value={editLoan.fromLocation} readOnly /></div>
-                <div className="space-y-1"><Label className={LABEL}>To Location</Label><Input className={FIELD} value={editLoan.toLocation} readOnly /></div>
-                 <div className="space-y-1"><Label className={LABEL}>From Division</Label><Input className={FIELD} value={editLoan.fromDivision} readOnly /></div>
-                <div className="space-y-1"><Label className={LABEL}>To Division</Label><Input className={FIELD} value={editLoan.toDivision} readOnly /></div>
-                <div className="space-y-1"><Label className={LABEL}>From User</Label><Input className={FIELD} value={editLoan.fromUser} readOnly /></div>
-                <div className="space-y-1"><Label className={LABEL}>To User</Label><Input className={FIELD} value={editLoan.toUser} readOnly /></div>
-                 <div className="space-y-1"><Label className={LABEL}>Date Needed</Label><Input className={FIELD} value={editLoan.needed} readOnly /></div>
-                <div className="space-y-1"><Label className={LABEL}>Expected Return Date</Label><Input className={FIELD} value={editLoan.expectedReturn} readOnly /></div>
-               </div><LifecycleAudit createdBy={editLoan.createdBy} createdDate={editLoan.created} movedBy={editLoan.movedBy} movedDate={editLoan.movedDate} returnedBy={editLoan.returnedBy} returnedDate={editLoan.returnedDate} /></section>
+              <section className="grid grid-cols-12 gap-6">
+                <div className="col-span-12 space-y-3 lg:col-span-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-1 h-4 bg-foreground rounded-full" />
+                    <h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Batch Details</h3>
+                  </div>
+                  <div className="space-y-1"><Label className={LABEL}>Batch ID</Label><Input className={FIELD} value={editLoan.id} readOnly /></div>
+                  <div className="space-y-1"><Label className={LABEL}>Account #</Label><Input className={FIELD} value={editLoan.account} readOnly={editLoan.status !== "Open"} onChange={(event) => setEditLoan({ ...editLoan, account: event.target.value })} /></div>
+                  <div className="space-y-1"><Label className={LABEL}>Customer</Label><Input className={FIELD} value={editLoan.customer} readOnly /></div>
+                </div>
+                <div className="col-span-12 space-y-3 lg:col-span-8 lg:border-l lg:border-border lg:pl-6">
+                  <div className="flex items-center gap-2">
+                    <div className="w-1 h-4 bg-foreground rounded-full" />
+                    <h3 className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Movement</h3>
+                  </div>
+                  <div className="grid gap-x-5 gap-y-3 sm:grid-cols-2">
+                    <div className="space-y-1"><Label className={LABEL}>From Location</Label><Input className={FIELD} value={editLoan.fromLocation} readOnly /></div>
+                    <div className="space-y-1"><Label className={LABEL}>To Location</Label><Input className={FIELD} value={editLoan.toLocation} readOnly /></div>
+                    <div className="space-y-1"><Label className={LABEL}>From Division</Label><Input className={FIELD} value={editLoan.fromDivision} readOnly /></div>
+                    <div className="space-y-1"><Label className={LABEL}>To Division</Label><Input className={FIELD} value={editLoan.toDivision} readOnly /></div>
+                    <div className="space-y-1"><Label className={LABEL}>From User</Label><Input className={FIELD} value={editLoan.fromUser} readOnly /></div>
+                    <div className="space-y-1"><Label className={LABEL}>To User</Label><Input className={FIELD} value={editLoan.toUser} readOnly /></div>
+                    <div className="space-y-1"><Label className={LABEL}>Date Needed</Label><Input className={FIELD} value={editLoan.needed} readOnly /></div>
+                    <div className="space-y-1"><Label className={LABEL}>Expected Return Date</Label><Input className={FIELD} value={editLoan.expectedReturn} readOnly /></div>
+                  </div>
+                </div>
+              </section>
+              <section className="space-y-3 border-t border-border pt-4">
+                <LifecycleAudit createdBy={editLoan.createdBy} createdDate={editLoan.created} movedBy={editLoan.movedBy} movedDate={editLoan.movedDate} returnedBy={editLoan.returnedBy} returnedDate={editLoan.returnedDate} />
+              </section>
               <section className="space-y-3 border-t border-border pt-4"><div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"><div><h3 className="text-[10px] font-semibold uppercase text-muted-foreground">Standards in batch</h3><p className="mt-1 text-[11px] text-muted-foreground">{editStandards.length} {editStandards.length === 1 ? "standard" : "standards"}</p></div>{editLoan.status === "Open" && <div className="flex items-end gap-2"><div className="space-y-1"><Label htmlFor="edit-standard-number" className={LABEL}>Standard #</Label><Input id="edit-standard-number" className={`${FIELD} w-48`} value={editStandardNumber} placeholder="Enter standard number" onChange={(event) => { setEditStandardNumber(event.target.value); setEditStandardError(""); }} onKeyDown={(event) => event.key === "Enter" && addEditStandard()} /></div><Button variant="outline" className="h-7 gap-1 text-[11px]" onClick={addEditStandard}><Plus className="h-3 w-3" />Add</Button></div>}</div>{editStandardError && <p className="text-[10px] text-destructive">{editStandardError}</p>}
                 <div className="overflow-hidden rounded-md border border-border"><Table><TableHeader className="bg-muted/60"><TableRow><TableHead className="h-8 px-2 text-[10px]">Standard #</TableHead><TableHead className="h-8 px-2 text-[10px]">State of Asset</TableHead><TableHead className="h-8 px-2 text-[10px]">Next Cal Date</TableHead><TableHead className="h-8 px-2 text-[10px]">Manufacturer</TableHead><TableHead className="h-8 px-2 text-[10px]">Model</TableHead><TableHead className="h-8 px-2 text-[10px]">Serial</TableHead><TableHead className="h-8 px-2 text-[10px]">Lab Code</TableHead>{editLoan.status === "Open" && <TableHead className="h-8 w-10 px-2"><span className="sr-only">Remove</span></TableHead>}</TableRow></TableHeader><TableBody>{editStandards.map((standard) => <TableRow key={standard.standardNo} className="text-[11px]"><TableCell className="px-2 py-2 font-semibold">{standard.standardNo}</TableCell><TableCell className="px-2 py-2">{standard.state}</TableCell><TableCell className="px-2 py-2 tabular-nums">{standard.nextCalibrationDue}</TableCell><TableCell className="px-2 py-2">{standard.manufacturer}</TableCell><TableCell className="px-2 py-2">{standard.model}</TableCell><TableCell className="px-2 py-2">{standard.serial}</TableCell><TableCell className="px-2 py-2">{standard.labCode}</TableCell>{editLoan.status === "Open" && <TableCell className="px-2 py-2"><Button variant="ghost" size="icon" className="h-6 w-6 text-destructive hover:bg-destructive/10 hover:text-destructive" aria-label={`Remove standard ${standard.standardNo}`} onClick={() => setEditStandards((current) => current.filter((item) => item.standardNo !== standard.standardNo))}><Trash2 className="h-3 w-3" /></Button></TableCell>}</TableRow>)}</TableBody></Table></div>
               </section>
