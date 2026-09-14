@@ -106,31 +106,42 @@ type LifecycleAuditProps = {
 
 const LifecycleAudit = ({ createdBy, createdDate, movedBy, movedDate, returnedBy, returnedDate }: LifecycleAuditProps) => {
   const events = [
-    { label: "Created", person: createdBy, date: createdDate, complete: true, Icon: Check },
-    { label: "Moved", person: movedBy, date: movedDate, complete: Boolean(movedBy || movedDate), Icon: Truck },
-    { label: "Returned", person: returnedBy, date: returnedDate, complete: Boolean(returnedBy || returnedDate), Icon: RotateCcw },
+    { label: "Created", person: createdBy, date: createdDate, complete: true },
+    { label: "Moved", person: movedBy, date: movedDate, complete: Boolean(movedBy || movedDate) },
+    { label: "Returned", person: returnedBy, date: returnedDate, complete: Boolean(returnedBy || returnedDate) },
   ];
 
   return (
-    <div className="rounded-md border border-border bg-muted/20 px-3 py-3" aria-label="Batch lifecycle">
-      <p className="mb-3 text-[10px] font-semibold uppercase text-muted-foreground">Lifecycle</p>
-      <div className="grid gap-3 sm:grid-cols-3">
-        {events.map(({ label, person, date, complete, Icon }, index) => (
-          <div key={label} className="relative flex min-w-0 gap-2.5">
-            {index < events.length - 1 && <span className="absolute left-[11px] top-6 hidden h-px w-[calc(100%-0.5rem)] bg-border sm:block" />}
-            <span className={cn("relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border", complete ? "border-success/30 bg-success/10 text-success" : "border-border bg-background text-muted-foreground")}>
-              <Icon className="h-3 w-3" />
-            </span>
-            <div className="min-w-0 pt-0.5">
-              <p className={cn("text-[11px] font-semibold", complete ? "text-foreground" : "text-muted-foreground")}>{label}</p>
-              {complete ? (
-                <p className="mt-0.5 truncate text-[10px] text-muted-foreground" title={`${person || ""} · ${date || ""}`}>{person || "—"} <span aria-hidden="true">·</span> <span className="tabular-nums">{date || "—"}</span></p>
-              ) : (
-                <p className="mt-0.5 text-[10px] text-muted-foreground">Not yet completed</p>
-              )}
+    <div className="rounded-md border border-border bg-muted/20 px-4 py-4" aria-label="Batch lifecycle">
+      <p className="mb-4 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Lifecycle</p>
+      <div className="relative flex items-start justify-between">
+        <div className="absolute top-3 left-0 w-full h-0.5 bg-border" />
+        {events.map(({ label, person, date, complete }, index) => {
+          const isLast = index === events.length - 1;
+          const widthClass = index === 0 ? "w-1/2" : isLast ? "w-1/2" : "w-full";
+          return (
+            <div key={label} className="relative flex flex-1 flex-col items-center">
+              <div className={`absolute top-3 left-0 ${widthClass} h-0.5 ${complete ? "bg-success" : "bg-border"}`} />
+              <span className={cn("relative z-10 flex h-6 w-6 items-center justify-center rounded-full ring-4 ring-background", complete ? "bg-success text-success-foreground" : "border-2 border-muted-foreground/40 bg-background text-muted-foreground/50")}>
+                {complete ? <Check className="h-3.5 w-3.5" strokeWidth={3} /> : <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/40" />}
+              </span>
+              <div className="mt-3 px-2 text-center">
+                <p className={cn("text-[11px] font-semibold uppercase tracking-wider", complete ? "text-foreground" : "text-muted-foreground")}>{label}</p>
+                {complete ? (
+                  <>
+                    <p className="mt-1 text-[11px] font-medium text-muted-foreground">{person || "—"}</p>
+                    <p className="text-[10px] tabular-nums text-muted-foreground/70">{date || "—"}</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="mt-1 text-[11px] font-medium italic text-muted-foreground/60">Pending Action</p>
+                    <p className="text-[10px] text-muted-foreground/50">—</p>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
