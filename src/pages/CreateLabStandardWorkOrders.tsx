@@ -270,8 +270,7 @@ const CreateLabStandardWorkOrders = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-2 border-t bg-muted/20 px-4 py-2.5">
-              <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" onClick={() => navigate("/standards")}>Back to Standards</Button>
+            <div className="flex flex-wrap items-center justify-end gap-2 border-t bg-muted/20 px-4 py-2.5">
               <div className="flex flex-wrap justify-end gap-2">
                 <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" onClick={() => {
                   setDateFrom(undefined);
