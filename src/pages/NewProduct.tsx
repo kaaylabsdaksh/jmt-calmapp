@@ -351,13 +351,10 @@ export default function NewProduct() {
             <Button
               size="sm"
               className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
-              onClick={() => {
-                toast({ title: "Product saved", description: "The new product has been created." });
-                navigate("/manage-products");
-              }}
+              onClick={handleSave}
             >
               <Save className="h-3.5 w-3.5 mr-1.5" />
-              Save
+              {saved ? "Save" : "Save & Continue"}
             </Button>
           </div>
         </div>
