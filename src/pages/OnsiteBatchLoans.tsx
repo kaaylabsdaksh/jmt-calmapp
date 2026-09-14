@@ -471,9 +471,6 @@ const OnsiteBatchLoans = () => {
                    <div className="space-y-1"><Label className={LABEL}>Date Needed <span className="text-destructive">*</span></Label><ModernDatePicker size="sm" value={newLoan.needed} onChange={(date) => setNewLoan({ ...newLoan, needed: date ? format(date, "yyyy-MM-dd") : "" })} />{errors.needed && <p className="text-[10px] text-destructive">{errors.needed}</p>}</div>
                   <div className="space-y-1"><Label className={LABEL}>Expected Return Date <span className="text-destructive">*</span></Label><ModernDatePicker size="sm" value={newLoan.expectedReturn} onChange={(date) => setNewLoan({ ...newLoan, expectedReturn: date ? format(date, "yyyy-MM-dd") : "" })} />{errors.expectedReturn && <p className="text-[10px] text-destructive">{errors.expectedReturn}</p>}</div>
                 </div>
-                <div className="grid gap-3 rounded-md border border-border bg-muted/20 p-3 sm:grid-cols-2 lg:grid-cols-4">
-                  {[ ["Created By", "Admin User"], ["Created Date", format(new Date(), "MM/dd/yyyy")], ["Moved By", "—"], ["Moved Date", "—"], ["Returned By", "—"], ["Returned Date", "—"] ].map(([label, value]) => <div key={label}><p className="text-[10px] font-medium text-muted-foreground">{label}</p><p className="mt-0.5 text-[11px] font-medium text-foreground">{value}</p></div>)}
-                </div>
               </section>
               <section className="space-y-3 border-t border-border pt-4">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
