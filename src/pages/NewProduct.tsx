@@ -66,6 +66,38 @@ const TECH_CATEGORIES = ["Electrical", "Mechanical", "Temperature", "Pressure", 
 const RENTAL_CATEGORIES = ["Rental", "Sales", "Both", "Consumable"];
 const COMMENT_TYPES = ["General", "Lab", "Pricing", "Customer"];
 
+const CAPABILITY_COLUMNS = [
+  "Calibration",
+  "Limited Calibration",
+  "Adjustment (in lab)",
+  "17025 (Full)",
+  "17025 (Limited)",
+  "\"No\" 17025",
+  "Send to Alternate Lab",
+  "To Factory (Cal Outsource)",
+  "Adjustment (To Factory)",
+  "Repair (Full)",
+  "Repair (Limited)",
+  "Repair (No)",
+  "Unserviceable",
+];
+
+const CAPABILITY_LEGEND = [
+  { term: "Calibration", def: "Full verification of UUT." },
+  { term: "Limited Calibration", def: "Limited parameter verification of UUT, including un-adjustable and TAR <2:1." },
+  { term: "Adjustment (in lab)", def: "Our ability to adjust in lab." },
+  { term: "17025 (Full)", def: "Can accredit to UUT full range." },
+  { term: "17025 (Limited)", def: "Can accredit to limited range of UUT." },
+  { term: "\"No\" 17025", def: "Can not accredit UUT, parameters not on scope, may require outsourcing." },
+  { term: "Send to Alternate Lab", def: "This lab must send it to another JM Test lab for calibration." },
+  { term: "To Factory (Cal Outsource)", def: "We are not able to calibrate in any lab." },
+  { term: "Adjustment (To Factory)", def: "We can \"calibrate\" but not \"adjust\" in lab." },
+  { term: "Repair (Full)", def: "Can completely repair unit." },
+  { term: "Repair (Limited)", def: "Can partially repair unit; certain repairs require to-factory/OEM service." },
+  { term: "Repair (No)", def: "Can not repair; must go to factory/OEM for repair." },
+  { term: "Unserviceable", def: "No OEM or alternate vendor to service this; parts/technical info unavailable." },
+];
+
 export default function NewProduct() {
   const navigate = useNavigate();
   const [locations, setLocations] = useState<Record<string, boolean>>({});
