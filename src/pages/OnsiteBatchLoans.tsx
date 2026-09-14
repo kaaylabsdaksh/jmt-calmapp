@@ -107,6 +107,10 @@ const OnsiteBatchLoans = () => {
   const [standardError, setStandardError] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [selected, setSelected] = useState<OnsiteBatchLoan | null>(null);
+  const [editLoan, setEditLoan] = useState<OnsiteBatchLoan | null>(null);
+  const [editStandards, setEditStandards] = useState<BatchLoanStandard[]>([]);
+  const [editStandardNumber, setEditStandardNumber] = useState("");
+  const [editStandardError, setEditStandardError] = useState("");
 
   const filtered = useMemo(() => {
     const rows = loans.filter((loan) => {
@@ -220,6 +224,63 @@ const OnsiteBatchLoans = () => {
     setStandardNumber("");
     setStandardError("");
     setErrors((current) => ({ ...current, standards: "" }));
+  };
+
+  const openBatch = (loan: OnsiteBatchLoan) => {
+    const representativeStandards = loan.standards ?? STANDARDS.slice(0, loan.id === 33 ? 10 : 3).map((standard) => ({
+      standardNo: standard.standardNo,
+      state: standard.state,
+      nextCalibrationDue: standard.nextCalibrationDue,
+      manufacturer: standard.manufacturer,
+      model: standard.model,
+      serial: standard.serial,
+      labCode: standard.labCode,
+    }));
+    const hydrated = {
+      ...loan,
+      fromDivision: loan.fromDivision ?? "Lab",
+      toDivision: loan.toDivision ?? "OnSite",
+      fromUser: loan.fromUser ?? loan.createdBy,
+      toUser: loan.toUser ?? (loan.createdBy === "Admin User" ? "Admin User" : "James L. Powell"),
+      movedBy: loan.movedBy ?? (loan.status === "Returned" ? loan.createdBy : ""),
+      movedDate: loan.movedDate ?? (loan.status === "Returned" ? loan.created : ""),
+      returnedBy: loan.returnedBy ?? (loan.status === "Returned" ? loan.createdBy : ""),
+      returnedDate: loan.returnedDate ?? (loan.status === "Returned" ? loan.expectedReturn : ""),
+      standards: representativeStandards,
+    };
+    setSelected(loan);
+    setEditLoan(hydrated);
+    setEditStandards(representativeStandards);
+    setEditStandardNumber("");
+    setEditStandardError("");
+  };
+
+  const addEditStandard = () => {
+    const number = editStandardNumber.trim();
+    if (!number) return setEditStandardError("Enter a Standard #.");
+    if (editStandards.some((standard) => standard.standardNo === number)) return setEditStandardError("This standard is already in the batch.");
+    const standard = STANDARDS.find((item) => item.standardNo === number);
+    if (!standard) return setEditStandardError("Standard # was not found.");
+    setEditStandards((current) => [...current, { standardNo: standard.standardNo, state: standard.state, nextCalibrationDue: standard.nextCalibrationDue, manufacturer: standard.manufacturer, model: standard.model, serial: standard.serial, labCode: standard.labCode }]);
+    setEditStandardNumber("");
+    setEditStandardError("");
+  };
+
+  const persistEditedLoan = (patch: Partial<OnsiteBatchLoan> = {}, message = "Batch changes saved.") => {
+    if (!editLoan) return;
+    const updated = { ...editLoan, ...patch, standards: editStandards };
+    setLoans((current) => current.map((loan) => loan.id === updated.id ? updated : loan));
+    setEditLoan(updated);
+    setSelected(updated);
+    toast({ title: message });
+  };
+
+  const changeBatchStatus = (status: BatchLoanStatus) => {
+    if (!editLoan) return;
+    const today = format(new Date(), "MM/dd/yyyy");
+    if (status === "Cancelled") persistEditedLoan({ status }, `Batch loan ${editLoan.id} cancelled.`);
+    if (status === "Returned") persistEditedLoan({ status, returnedBy: "Admin User", returnedDate: today }, `Batch loan ${editLoan.id} returned.`);
+    if (status === "Open") persistEditedLoan({ movedBy: "Admin User", movedDate: today }, `Batch loan ${editLoan.id} marked as moved.`);
   };
 
   const SortHead = ({ label, column }: { label: string; column: SortKey }) => (
@@ -359,7 +420,7 @@ const OnsiteBatchLoans = () => {
                   )}
                   {pageRows.map((loan) => (
                     <TableRow key={loan.id} className="text-xs">
-                      <TableCell className="py-2 font-semibold"><button className="text-foreground underline-offset-2 hover:underline" onClick={() => setSelected(loan)}>{loan.id}</button></TableCell>
+                      <TableCell className="py-2 font-semibold"><button className="text-foreground underline-offset-2 hover:underline" onClick={() => openBatch(loan)}>{loan.id}</button></TableCell>
                       <TableCell className="py-2 tabular-nums">{loan.account}</TableCell>
                       <TableCell className="max-w-[240px] py-2"><Tooltip><TooltipTrigger asChild><span className="block truncate">{loan.customer}</span></TooltipTrigger><TooltipContent>{loan.customer}</TooltipContent></Tooltip></TableCell>
                       <TableCell className="py-2"><StatusBadge status={loan.status} /></TableCell>
@@ -369,7 +430,7 @@ const OnsiteBatchLoans = () => {
                       <TableCell className="whitespace-nowrap py-2 tabular-nums">{loan.created}</TableCell>
                       <TableCell className="whitespace-nowrap py-2 tabular-nums">{loan.needed}</TableCell>
                       <TableCell className="whitespace-nowrap py-2 tabular-nums">{loan.expectedReturn}</TableCell>
-                      <TableCell className="py-2"><Button variant="ghost" size="icon" className="h-7 w-7" aria-label={`View batch loan ${loan.id}`} onClick={() => setSelected(loan)}><Eye className="h-3.5 w-3.5" /></Button></TableCell>
+                      <TableCell className="py-2"><Button variant="ghost" size="icon" className="h-7 w-7" aria-label={`View batch loan ${loan.id}`} onClick={() => openBatch(loan)}><Eye className="h-3.5 w-3.5" /></Button></TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -433,13 +494,30 @@ const OnsiteBatchLoans = () => {
           </DialogContent>
         </Dialog>
 
-        <Dialog open={Boolean(selected)} onOpenChange={(open) => !open && setSelected(null)}>
-          <DialogContent className="max-w-xl gap-0 overflow-hidden p-0">
-            <DialogHeader className="border-b border-border px-5 py-4"><DialogTitle className="text-base">Batch Loan {selected?.id}</DialogTitle><DialogDescription className="text-xs">On-site standard movement details</DialogDescription></DialogHeader>
-            {selected && <div className="space-y-5 p-5"><div className="grid grid-cols-2 gap-x-6 gap-y-4 text-xs sm:grid-cols-3">{[
-              ["Account #", selected.account], ["Customer", selected.customer], ["Status", selected.status], ["From", selected.fromLocation], ["To", selected.toLocation], ["Created By", selected.createdBy], ["Created", selected.created], ["Needed", selected.needed], ["Expected Return", selected.expectedReturn],
-            ].map(([label, value]) => <div key={label} className={cn(label === "Customer" && "col-span-2")}><p className="text-[10px] font-semibold uppercase text-muted-foreground">{label}</p><div className="mt-1 font-medium text-foreground">{label === "Status" ? <StatusBadge status={selected.status} /> : value}</div></div>)}</div>{selected.standards && selected.standards.length > 0 && <div><p className="mb-2 text-[10px] font-semibold uppercase text-muted-foreground">Standards ({selected.standards.length})</p><div className="flex flex-wrap gap-2">{selected.standards.map((standard) => <Badge key={standard.standardNo} variant="secondary" className="text-[10px]">#{standard.standardNo} · {standard.manufacturer} {standard.model}</Badge>)}</div></div>}</div>}
-            <DialogFooter className="border-t border-border bg-muted/20 px-5 py-3"><Button variant="outline" className="h-8 text-xs" onClick={() => setSelected(null)}>Close</Button></DialogFooter>
+        <Dialog open={Boolean(selected)} onOpenChange={(open) => { if (!open) { setSelected(null); setEditLoan(null); } }}>
+          <DialogContent className="max-h-[94vh] max-w-5xl gap-0 overflow-hidden p-0">
+            <DialogHeader className="border-b border-border px-5 py-4"><div className="flex items-center justify-between pr-8"><div><DialogTitle className="text-base">Edit On-Site Batch {editLoan?.id}</DialogTitle><DialogDescription className="text-xs">Review the movement lifecycle and standards assigned to this loan.</DialogDescription></div>{editLoan && <div className="flex items-center gap-2"><StatusBadge status={editLoan.status} />{editLoan.status === "Returned" && <Button variant="link" className="h-7 px-1 text-xs text-foreground">Batch Report</Button>}</div>}</div></DialogHeader>
+            {editLoan && <div className="max-h-[72vh] space-y-4 overflow-y-auto p-5">
+              <section className="space-y-3"><h3 className="text-[10px] font-semibold uppercase text-muted-foreground">Batch details</h3><div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="space-y-1"><Label className={LABEL}>Batch ID</Label><Input className={FIELD} value={editLoan.id} readOnly /></div>
+                <div className="space-y-1"><Label className={LABEL}>Account #</Label><Input className={FIELD} value={editLoan.account} readOnly={editLoan.status !== "Open"} onChange={(event) => setEditLoan({ ...editLoan, account: event.target.value })} /></div>
+                <div className="space-y-1 sm:col-span-2"><Label className={LABEL}>Customer</Label><Input className={FIELD} value={editLoan.customer} readOnly /></div>
+              </div></section>
+              <section className="space-y-3 border-t border-border pt-4"><h3 className="text-[10px] font-semibold uppercase text-muted-foreground">Movement</h3><div className="grid gap-x-5 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="space-y-1"><Label className={LABEL}>From Location</Label><Input className={FIELD} value={editLoan.fromLocation} readOnly /></div>
+                <div className="space-y-1"><Label className={LABEL}>From Division</Label><Input className={FIELD} value={editLoan.fromDivision} readOnly /></div>
+                <div className="space-y-1"><Label className={LABEL}>To Location</Label><Input className={FIELD} value={editLoan.toLocation} readOnly /></div>
+                <div className="space-y-1"><Label className={LABEL}>To Division</Label><Input className={FIELD} value={editLoan.toDivision} readOnly /></div>
+                <div className="space-y-1"><Label className={LABEL}>From User</Label><Input className={FIELD} value={editLoan.fromUser} readOnly /></div>
+                <div className="space-y-1"><Label className={LABEL}>Date Needed</Label><Input className={FIELD} value={editLoan.needed} readOnly /></div>
+                <div className="space-y-1"><Label className={LABEL}>To User</Label><Input className={FIELD} value={editLoan.toUser} readOnly /></div>
+                <div className="space-y-1"><Label className={LABEL}>Expected Return Date</Label><Input className={FIELD} value={editLoan.expectedReturn} readOnly /></div>
+              </div><div className="grid gap-3 rounded-md border border-border bg-muted/20 p-3 sm:grid-cols-2 lg:grid-cols-4">{[["Created By", editLoan.createdBy], ["Created Date", editLoan.created], ["Moved By", editLoan.movedBy || "—"], ["Moved Date", editLoan.movedDate || "—"], ["Returned By", editLoan.returnedBy || "—"], ["Returned Date", editLoan.returnedDate || "—"]].map(([label, value]) => <div key={label}><p className="text-[10px] font-medium text-muted-foreground">{label}</p><p className="mt-0.5 text-[11px] font-medium text-foreground">{value}</p></div>)}</div></section>
+              <section className="space-y-3 border-t border-border pt-4"><div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"><div><h3 className="text-[10px] font-semibold uppercase text-muted-foreground">Standards in batch</h3><p className="mt-1 text-[11px] text-muted-foreground">{editStandards.length} {editStandards.length === 1 ? "standard" : "standards"}</p></div>{editLoan.status === "Open" && <div className="flex items-end gap-2"><div className="space-y-1"><Label htmlFor="edit-standard-number" className={LABEL}>Standard #</Label><Input id="edit-standard-number" className={`${FIELD} w-48`} value={editStandardNumber} placeholder="Enter standard number" onChange={(event) => { setEditStandardNumber(event.target.value); setEditStandardError(""); }} onKeyDown={(event) => event.key === "Enter" && addEditStandard()} /></div><Button variant="outline" className="h-7 gap-1 text-[11px]" onClick={addEditStandard}><Plus className="h-3 w-3" />Add</Button></div>}</div>{editStandardError && <p className="text-[10px] text-destructive">{editStandardError}</p>}
+                <div className="overflow-hidden rounded-md border border-border"><Table><TableHeader className="bg-muted/60"><TableRow><TableHead className="h-8 px-2 text-[10px]">Standard #</TableHead><TableHead className="h-8 px-2 text-[10px]">State of Asset</TableHead><TableHead className="h-8 px-2 text-[10px]">Next Cal Date</TableHead><TableHead className="h-8 px-2 text-[10px]">Manufacturer</TableHead><TableHead className="h-8 px-2 text-[10px]">Model</TableHead><TableHead className="h-8 px-2 text-[10px]">Serial</TableHead><TableHead className="h-8 px-2 text-[10px]">Lab Code</TableHead>{editLoan.status === "Open" && <TableHead className="h-8 w-10 px-2"><span className="sr-only">Remove</span></TableHead>}</TableRow></TableHeader><TableBody>{editStandards.map((standard) => <TableRow key={standard.standardNo} className="text-[11px]"><TableCell className="px-2 py-2 font-semibold">{standard.standardNo}</TableCell><TableCell className="px-2 py-2">{standard.state}</TableCell><TableCell className="px-2 py-2 tabular-nums">{standard.nextCalibrationDue}</TableCell><TableCell className="px-2 py-2">{standard.manufacturer}</TableCell><TableCell className="px-2 py-2">{standard.model}</TableCell><TableCell className="px-2 py-2">{standard.serial}</TableCell><TableCell className="px-2 py-2">{standard.labCode}</TableCell>{editLoan.status === "Open" && <TableCell className="px-2 py-2"><Button variant="ghost" size="icon" className="h-6 w-6 text-destructive hover:bg-destructive/10 hover:text-destructive" aria-label={`Remove standard ${standard.standardNo}`} onClick={() => setEditStandards((current) => current.filter((item) => item.standardNo !== standard.standardNo))}><Trash2 className="h-3 w-3" /></Button></TableCell>}</TableRow>)}</TableBody></Table></div>
+              </section>
+            </div>}
+            <DialogFooter className="flex-row border-t border-border bg-muted/20 px-5 py-3 sm:justify-between"><div className="flex gap-2"><Button variant="outline" className="h-8 text-xs" disabled={!editLoan || editLoan.status !== "Open"} onClick={() => persistEditedLoan()}>Save</Button><Button variant="outline" className="h-8 text-xs" disabled={!editLoan || editLoan.status !== "Open"} onClick={() => changeBatchStatus("Cancelled")}>Cancel Batch</Button><Button variant="outline" className="h-8 text-xs" disabled={!editLoan || editLoan.status !== "Open" || Boolean(editLoan.movedDate)} onClick={() => changeBatchStatus("Open")}>Move</Button><Button variant="outline" className="h-8 text-xs" disabled={!editLoan || editLoan.status !== "Open"} onClick={() => changeBatchStatus("Returned")}>Return</Button></div><Button variant="outline" className="h-8 text-xs" onClick={() => { setSelected(null); setEditLoan(null); }}>Back</Button></DialogFooter>
           </DialogContent>
         </Dialog>
       </div>
