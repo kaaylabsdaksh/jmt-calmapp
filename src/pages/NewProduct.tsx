@@ -123,6 +123,21 @@ export default function NewProduct() {
             </div>
           </div>
 
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="h-8">
+              <TabsTrigger value="general" className="text-xs h-7">General</TabsTrigger>
+              {saved && <TabsTrigger value="files" className="text-xs h-7">Files</TabsTrigger>}
+              {saved && <TabsTrigger value="accessories" className="text-xs h-7">Accessories</TabsTrigger>}
+            </TabsList>
+
+            <TabsContent value="files" className="mt-4">
+              <ProductFilesTab />
+            </TabsContent>
+            <TabsContent value="accessories" className="mt-4">
+              <ProductAccessoriesTab />
+            </TabsContent>
+
+            <TabsContent value="general" className="mt-4 space-y-4">
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 items-start">
             {/* Left — identification + spec */}
             <div className="xl:col-span-2 space-y-4">
@@ -130,10 +145,10 @@ export default function NewProduct() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   <SelectField label="Group Type" options={GROUP_TYPES} />
                   <SelectField label="Product Type" options={PRODUCT_TYPES} />
-                  <SelectField label="Manufacturer" options={MANUFACTURERS} required />
-                  <TextField label="Model Number" required />
-                  <TextField label="Description" required className="sm:col-span-2" />
-                  <SelectField label="Lab Code" options={LAB_CODES} required />
+                  <SelectField label="Manufacturer" options={MANUFACTURERS} required value={manufacturer} onChange={setManufacturer} />
+                  <TextField label="Model Number" required value={modelNumber} onChange={setModelNumber} />
+                  <TextField label="Description" required className="sm:col-span-2" value={description} onChange={setDescription} />
+                  <SelectField label="Lab Code" options={LAB_CODES} required value={labCode} onChange={setLabCode} />
                   <TextField label="Alias" />
                   <TextField label="Img File Name" />
                 </div>
