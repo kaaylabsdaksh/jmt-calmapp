@@ -351,14 +351,14 @@ const OnsiteBatchLoans = () => {
                 <Label htmlFor="loan-account" className={LABEL}>Account #</Label>
                 <Input id="loan-account" className={FIELD} value={draft.account} placeholder="Account #" onChange={(event) => setDraft({ ...draft, account: event.target.value })} onKeyDown={(event) => event.key === "Enter" && applyFilters()} />
               </div>
-              {selectField("loan-from", "From Location", draft.fromLocation, (value) => setDraft({ ...draft, fromLocation: value }), BATCH_LOAN_LOCATIONS.filter((location) => location !== "Onsite"), "All Locations")}
               {selectField("loan-user", "Created By", draft.createdBy, (value) => setDraft({ ...draft, createdBy: value }), BATCH_LOAN_USERS, "All Users")}
+              {selectField("loan-status", "Batch Loan Status", draft.status, (value) => setDraft({ ...draft, status: value }), ["Open", "Returned", "Cancelled"], "All Statuses")}
+              {selectField("loan-from", "From Location", draft.fromLocation, (value) => setDraft({ ...draft, fromLocation: value }), BATCH_LOAN_LOCATIONS.filter((location) => location !== "Onsite"), "All Locations")}
+              {selectField("loan-to", "To Location", draft.toLocation, (value) => setDraft({ ...draft, toLocation: value }), BATCH_LOAN_LOCATIONS, "All Locations")}
               <div className="space-y-1">
                 <Label htmlFor="created-from" className={LABEL}>Created From</Label>
                 <ModernDatePicker id="created-from" size="sm" value={draft.createdFrom} onChange={(date) => setDraft({ ...draft, createdFrom: date ? format(date, "MM/dd/yyyy") : "" })} />
               </div>
-              {selectField("loan-to", "To Location", draft.toLocation, (value) => setDraft({ ...draft, toLocation: value }), BATCH_LOAN_LOCATIONS, "All Locations")}
-              {selectField("loan-status", "Batch Loan Status", draft.status, (value) => setDraft({ ...draft, status: value }), ["Open", "Returned", "Cancelled"], "All Statuses")}
               <div className="space-y-1">
                 <Label htmlFor="created-to" className={LABEL}>Created To</Label>
                 <ModernDatePicker id="created-to" size="sm" value={draft.createdTo} onChange={(date) => setDraft({ ...draft, createdTo: date ? format(date, "MM/dd/yyyy") : "" })} />
