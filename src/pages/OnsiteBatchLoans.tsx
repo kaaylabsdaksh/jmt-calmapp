@@ -332,11 +332,6 @@ const OnsiteBatchLoans = () => {
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Button className="h-8 gap-1.5 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={() => setCreateOpen(true)}>
-                <Plus className="h-3.5 w-3.5" />Add New
-              </Button>
-            </div>
           </div>
         </header>
 
