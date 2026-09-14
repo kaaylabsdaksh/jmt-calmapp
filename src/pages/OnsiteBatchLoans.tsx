@@ -451,7 +451,7 @@ const OnsiteBatchLoans = () => {
               <span className="text-[11px] text-muted-foreground">{filtered.length} {filtered.length === 1 ? "record" : "records"}</span>
             </div>
             <div className="max-h-[58vh] overflow-auto">
-              <Table className="min-w-max">
+              <table className="w-full min-w-max caption-bottom text-sm">
                 <TableHeader>
                   <TableRow>
                     <SortHead label="ID" column="id" className="left-0 z-20" />
@@ -487,7 +487,7 @@ const OnsiteBatchLoans = () => {
                     </TableRow>
                   ))}
                 </TableBody>
-              </Table>
+              </table>
             </div>
             <div className="flex flex-col gap-2 border-t border-border px-3 py-2 sm:flex-row sm:items-center sm:justify-between">
               <span className="text-xs text-muted-foreground">{filtered.length === 0 ? "No results" : `Showing ${start + 1}–${Math.min(start + pageSize, filtered.length)} of ${filtered.length}`}</span>
