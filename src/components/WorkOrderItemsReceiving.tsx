@@ -15,6 +15,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { SerialDuplicateDialog } from "@/components/SerialDuplicateDialog";
+import { findSerialMatches, type SerialMatchGroup } from "@/lib/serial-history";
 
 interface WorkOrderReceivingItem {
   id: string;
@@ -194,6 +196,21 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
 
   const handleAddNewItem = () => {
     setNewItems([...newItems, createEmptyItem()]);
+  };
+
+  const commitNewItem = (newItemId: string) => {
+    const itemToSave = newItems.find(item => item.id === newItemId);
+    if (!itemToSave) return;
+
+    // Auto-generate item number in 3-digit format if not provided
+    let itemNumber = itemToSave.itemNumber;
+    if (!itemNumber) {
+      const nextNumber = items.length + 1;
+      itemNumber = nextNumber.toString().padStart(3, '0');
+    }
+
+    setItems([...items, { ...itemToSave, itemNumber }]);
+    setNewItems(newItems.filter(item => item.id !== newItemId));
   };
 
   const handleSaveNewItem = (newItemId: string) => {
