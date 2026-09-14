@@ -124,7 +124,17 @@ export default function NewProduct() {
       return;
     }
     setSaved(true);
-    toast({ title: "Product saved", description: "Files and Accessories are now available." });
+    toast({
+      title: "Product saved",
+      description: "Capable Locations, Files and Accessories are now available.",
+    });
+  };
+
+  const toggleMatrix = (location: string, cap: string) => {
+    setMatrix((prev) => ({
+      ...prev,
+      [location]: { ...prev[location], [cap]: !prev[location]?.[cap] },
+    }));
   };
 
   const addComment = () => {
