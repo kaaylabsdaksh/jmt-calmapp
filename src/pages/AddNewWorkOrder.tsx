@@ -32,6 +32,8 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { SerialDuplicateDialog } from "@/components/SerialDuplicateDialog";
+import { findSerialMatches, type SerialMatchGroup } from "@/lib/serial-history";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -381,6 +383,7 @@ const AddNewWorkOrder = () => {
   });
 
   const [isSaved, setIsSaved] = useState(() => localStorage.getItem('addNewWorkOrderIsSaved') === 'true');
+  const [serialWarningGroups, setSerialWarningGroups] = useState<SerialMatchGroup[]>([]);
   const [hasContact, setHasContact] = useState(() => localStorage.getItem('addNewWorkOrderHasContact') === 'true');
 
   // Remember the saved state so a re-render / return visit keeps the same tab open
