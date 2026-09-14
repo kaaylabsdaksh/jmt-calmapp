@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import {
   ArrowUpDown,
+  Check,
   ClipboardList,
   Eye,
   Plus,
+  RotateCcw,
   Search,
   Trash2,
+  Truck,
   X,
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
@@ -91,6 +94,47 @@ const StatusBadge = ({ status }: { status: BatchLoanStatus }) => (
     {status}
   </Badge>
 );
+
+type LifecycleAuditProps = {
+  createdBy: string;
+  createdDate: string;
+  movedBy?: string;
+  movedDate?: string;
+  returnedBy?: string;
+  returnedDate?: string;
+};
+
+const LifecycleAudit = ({ createdBy, createdDate, movedBy, movedDate, returnedBy, returnedDate }: LifecycleAuditProps) => {
+  const events = [
+    { label: "Created", person: createdBy, date: createdDate, complete: true, Icon: Check },
+    { label: "Moved", person: movedBy, date: movedDate, complete: Boolean(movedBy || movedDate), Icon: Truck },
+    { label: "Returned", person: returnedBy, date: returnedDate, complete: Boolean(returnedBy || returnedDate), Icon: RotateCcw },
+  ];
+
+  return (
+    <div className="rounded-md border border-border bg-muted/20 px-3 py-3" aria-label="Batch lifecycle">
+      <p className="mb-3 text-[10px] font-semibold uppercase text-muted-foreground">Lifecycle</p>
+      <div className="grid gap-3 sm:grid-cols-3">
+        {events.map(({ label, person, date, complete, Icon }, index) => (
+          <div key={label} className="relative flex min-w-0 gap-2.5">
+            {index < events.length - 1 && <span className="absolute left-[11px] top-6 hidden h-px w-[calc(100%-0.5rem)] bg-border sm:block" />}
+            <span className={cn("relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border", complete ? "border-success/30 bg-success/10 text-success" : "border-border bg-background text-muted-foreground")}>
+              <Icon className="h-3 w-3" />
+            </span>
+            <div className="min-w-0 pt-0.5">
+              <p className={cn("text-[11px] font-semibold", complete ? "text-foreground" : "text-muted-foreground")}>{label}</p>
+              {complete ? (
+                <p className="mt-0.5 truncate text-[10px] text-muted-foreground" title={`${person || ""} · ${date || ""}`}>{person || "—"} <span aria-hidden="true">·</span> <span className="tabular-nums">{date || "—"}</span></p>
+              ) : (
+                <p className="mt-0.5 text-[10px] text-muted-foreground">Not yet completed</p>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const OnsiteBatchLoans = () => {
   const [loans, setLoans] = useState(BATCH_LOANS);
@@ -471,9 +515,7 @@ const OnsiteBatchLoans = () => {
                    <div className="space-y-1"><Label className={LABEL}>Date Needed <span className="text-destructive">*</span></Label><ModernDatePicker size="sm" value={newLoan.needed} onChange={(date) => setNewLoan({ ...newLoan, needed: date ? format(date, "yyyy-MM-dd") : "" })} />{errors.needed && <p className="text-[10px] text-destructive">{errors.needed}</p>}</div>
                   <div className="space-y-1"><Label className={LABEL}>Expected Return Date <span className="text-destructive">*</span></Label><ModernDatePicker size="sm" value={newLoan.expectedReturn} onChange={(date) => setNewLoan({ ...newLoan, expectedReturn: date ? format(date, "yyyy-MM-dd") : "" })} />{errors.expectedReturn && <p className="text-[10px] text-destructive">{errors.expectedReturn}</p>}</div>
                 </div>
-                <div className="grid gap-3 rounded-md border border-border bg-muted/20 p-3 sm:grid-cols-2 lg:grid-cols-4">
-                  {[ ["Created By", "Admin User"], ["Created Date", format(new Date(), "MM/dd/yyyy")], ["Moved By", "—"], ["Moved Date", "—"], ["Returned By", "—"], ["Returned Date", "—"] ].map(([label, value]) => <div key={label}><p className="text-[10px] font-medium text-muted-foreground">{label}</p><p className="mt-0.5 text-[11px] font-medium text-foreground">{value}</p></div>)}
-                </div>
+                 <LifecycleAudit createdBy="Admin User" createdDate={format(new Date(), "MM/dd/yyyy")} />
               </section>
               <section className="space-y-3 border-t border-border pt-4">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
@@ -510,7 +552,7 @@ const OnsiteBatchLoans = () => {
                 <div className="space-y-1"><Label className={LABEL}>To User</Label><Input className={FIELD} value={editLoan.toUser} readOnly /></div>
                  <div className="space-y-1"><Label className={LABEL}>Date Needed</Label><Input className={FIELD} value={editLoan.needed} readOnly /></div>
                 <div className="space-y-1"><Label className={LABEL}>Expected Return Date</Label><Input className={FIELD} value={editLoan.expectedReturn} readOnly /></div>
-              </div><div className="grid gap-3 rounded-md border border-border bg-muted/20 p-3 sm:grid-cols-2 lg:grid-cols-4">{[["Created By", editLoan.createdBy], ["Created Date", editLoan.created], ["Moved By", editLoan.movedBy || "—"], ["Moved Date", editLoan.movedDate || "—"], ["Returned By", editLoan.returnedBy || "—"], ["Returned Date", editLoan.returnedDate || "—"]].map(([label, value]) => <div key={label}><p className="text-[10px] font-medium text-muted-foreground">{label}</p><p className="mt-0.5 text-[11px] font-medium text-foreground">{value}</p></div>)}</div></section>
+               </div><LifecycleAudit createdBy={editLoan.createdBy} createdDate={editLoan.created} movedBy={editLoan.movedBy} movedDate={editLoan.movedDate} returnedBy={editLoan.returnedBy} returnedDate={editLoan.returnedDate} /></section>
               <section className="space-y-3 border-t border-border pt-4"><div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"><div><h3 className="text-[10px] font-semibold uppercase text-muted-foreground">Standards in batch</h3><p className="mt-1 text-[11px] text-muted-foreground">{editStandards.length} {editStandards.length === 1 ? "standard" : "standards"}</p></div>{editLoan.status === "Open" && <div className="flex items-end gap-2"><div className="space-y-1"><Label htmlFor="edit-standard-number" className={LABEL}>Standard #</Label><Input id="edit-standard-number" className={`${FIELD} w-48`} value={editStandardNumber} placeholder="Enter standard number" onChange={(event) => { setEditStandardNumber(event.target.value); setEditStandardError(""); }} onKeyDown={(event) => event.key === "Enter" && addEditStandard()} /></div><Button variant="outline" className="h-7 gap-1 text-[11px]" onClick={addEditStandard}><Plus className="h-3 w-3" />Add</Button></div>}</div>{editStandardError && <p className="text-[10px] text-destructive">{editStandardError}</p>}
                 <div className="overflow-hidden rounded-md border border-border"><Table><TableHeader className="bg-muted/60"><TableRow><TableHead className="h-8 px-2 text-[10px]">Standard #</TableHead><TableHead className="h-8 px-2 text-[10px]">State of Asset</TableHead><TableHead className="h-8 px-2 text-[10px]">Next Cal Date</TableHead><TableHead className="h-8 px-2 text-[10px]">Manufacturer</TableHead><TableHead className="h-8 px-2 text-[10px]">Model</TableHead><TableHead className="h-8 px-2 text-[10px]">Serial</TableHead><TableHead className="h-8 px-2 text-[10px]">Lab Code</TableHead><TableHead className="h-8 w-10 px-2"><span className="sr-only">Remove</span></TableHead></TableRow></TableHeader><TableBody>{editStandards.map((standard) => <TableRow key={standard.standardNo} className="text-[11px]"><TableCell className="px-2 py-2 font-semibold">{standard.standardNo}</TableCell><TableCell className="px-2 py-2">{standard.state}</TableCell><TableCell className="px-2 py-2 tabular-nums">{standard.nextCalibrationDue}</TableCell><TableCell className="px-2 py-2">{standard.manufacturer}</TableCell><TableCell className="px-2 py-2">{standard.model}</TableCell><TableCell className="px-2 py-2">{standard.serial}</TableCell><TableCell className="px-2 py-2">{standard.labCode}</TableCell><TableCell className="px-2 py-2"><Button variant="ghost" size="icon" className="h-6 w-6 text-destructive hover:bg-destructive/10 hover:text-destructive" aria-label={`Remove standard ${standard.standardNo}`} onClick={() => setEditStandards((current) => current.filter((item) => item.standardNo !== standard.standardNo))}><Trash2 className="h-3 w-3" /></Button></TableCell></TableRow>)}</TableBody></Table></div>
               </section>
