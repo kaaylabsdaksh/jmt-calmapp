@@ -451,10 +451,10 @@ const OnsiteBatchLoans = () => {
               <span className="text-[11px] text-muted-foreground">{filtered.length} {filtered.length === 1 ? "record" : "records"}</span>
             </div>
             <div className="max-h-[58vh] overflow-auto">
-              <Table>
-                <TableHeader className="sticky top-0 z-10 bg-muted/80 backdrop-blur">
+              <Table className="min-w-max">
+                <TableHeader>
                   <TableRow>
-                    <SortHead label="ID" column="id" />
+                    <SortHead label="ID" column="id" className="left-0 z-20" />
                     <SortHead label="Account #" column="account" />
                     <SortHead label="Customer" column="customer" />
                     <SortHead label="Status" column="status" />
@@ -464,7 +464,7 @@ const OnsiteBatchLoans = () => {
                     <SortHead label="Created" column="created" />
                     <SortHead label="Needed" column="needed" />
                     <SortHead label="Expected Return" column="expectedReturn" />
-                    <TableHead className="h-9 w-12 px-3"><span className="sr-only">Actions</span></TableHead>
+                    <TableHead className="sticky top-0 z-10 h-9 w-12 bg-muted/80 px-3 backdrop-blur"><span className="sr-only">Actions</span></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
