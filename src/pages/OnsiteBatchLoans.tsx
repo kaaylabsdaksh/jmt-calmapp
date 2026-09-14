@@ -8,6 +8,7 @@ import {
   Eye,
   Plus,
   Search,
+  Trash2,
   X,
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
@@ -26,9 +27,11 @@ import {
   BATCH_LOANS,
   BATCH_LOAN_LOCATIONS,
   BATCH_LOAN_USERS,
+  BatchLoanStandard,
   BatchLoanStatus,
   OnsiteBatchLoan,
 } from "@/lib/standards/onsite-batch-loans";
+import { STANDARDS } from "@/lib/standards/data";
 
 type SortKey = keyof Pick<OnsiteBatchLoan, "id" | "account" | "customer" | "status" | "fromLocation" | "toLocation" | "createdBy" | "created" | "needed" | "expectedReturn">;
 
@@ -46,11 +49,17 @@ const emptyNewLoan = {
   account: "",
   customer: "",
   fromLocation: "",
+  fromDivision: "Lab",
+  fromUser: "Admin User",
   toLocation: "Onsite",
+  toDivision: "OnSite",
+  toUser: "",
   status: "Open" as BatchLoanStatus,
   needed: "",
   expectedReturn: "",
 };
+
+const DIVISIONS = ["Lab", "OnSite", "Electrical", "Mechanical", "Pressure", "Temperature"];
 
 const FIELD = "h-7 min-h-0 rounded-md border-input bg-background px-2 py-0 text-[11px]";
 const LABEL = "text-[11px] font-medium text-foreground/80";
@@ -93,6 +102,9 @@ const OnsiteBatchLoans = () => {
   const [pageSize, setPageSize] = useState(20);
   const [createOpen, setCreateOpen] = useState(false);
   const [newLoan, setNewLoan] = useState(emptyNewLoan);
+  const [newStandards, setNewStandards] = useState<BatchLoanStandard[]>([]);
+  const [standardNumber, setStandardNumber] = useState("");
+  const [standardError, setStandardError] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [selected, setSelected] = useState<OnsiteBatchLoan | null>(null);
 
@@ -147,6 +159,8 @@ const OnsiteBatchLoans = () => {
     if (!newLoan.toLocation) nextErrors.toLocation = "To Location is required.";
     if (!newLoan.needed) nextErrors.needed = "Needed date is required.";
     if (!newLoan.expectedReturn) nextErrors.expectedReturn = "Expected return date is required.";
+    if (!newLoan.toUser) nextErrors.toUser = "To User is required.";
+    if (newStandards.length === 0) nextErrors.standards = "Add at least one standard to this batch.";
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) return;
 
@@ -162,13 +176,50 @@ const OnsiteBatchLoans = () => {
       created: format(new Date(), "MM/dd/yyyy"),
       needed: format(new Date(newLoan.needed), "MM/dd/yyyy"),
       expectedReturn: format(new Date(newLoan.expectedReturn), "MM/dd/yyyy"),
+      fromDivision: newLoan.fromDivision,
+      toDivision: newLoan.toDivision,
+      fromUser: newLoan.fromUser,
+      toUser: newLoan.toUser,
+      standards: newStandards,
     };
     setLoans((current) => [saved, ...current]);
     setCreateOpen(false);
     setNewLoan(emptyNewLoan);
+    setNewStandards([]);
+    setStandardNumber("");
+    setStandardError("");
     setErrors({});
     clearFilters();
     toast({ title: `Batch loan ${nextId} created.` });
+  };
+
+  const addStandard = () => {
+    const number = standardNumber.trim();
+    if (!number) {
+      setStandardError("Enter a Standard #.");
+      return;
+    }
+    if (newStandards.some((standard) => standard.standardNo === number)) {
+      setStandardError("This standard is already in the batch.");
+      return;
+    }
+    const standard = STANDARDS.find((item) => item.standardNo === number);
+    if (!standard) {
+      setStandardError("Standard # was not found.");
+      return;
+    }
+    setNewStandards((current) => [...current, {
+      standardNo: standard.standardNo,
+      state: standard.state,
+      nextCalibrationDue: standard.nextCalibrationDue,
+      manufacturer: standard.manufacturer,
+      model: standard.model,
+      serial: standard.serial,
+      labCode: standard.labCode,
+    }]);
+    setStandardNumber("");
+    setStandardError("");
+    setErrors((current) => ({ ...current, standards: "" }));
   };
 
   const SortHead = ({ label, column }: { label: string; column: SortKey }) => (
@@ -337,23 +388,46 @@ const OnsiteBatchLoans = () => {
           </section>
         </main>
 
-        <Dialog open={createOpen} onOpenChange={(open) => { setCreateOpen(open); if (!open) setErrors({}); }}>
-          <DialogContent className="max-h-[90vh] max-w-2xl gap-0 overflow-hidden p-0">
-            <DialogHeader className="border-b border-border px-5 py-4"><DialogTitle className="text-base">Add On-Site Batch Loan</DialogTitle><DialogDescription className="text-xs">Create the movement record and expected return window.</DialogDescription></DialogHeader>
-            <div className="max-h-[65vh] space-y-4 overflow-y-auto p-5">
-              <section className="space-y-3"><h3 className="text-[10px] font-semibold uppercase text-muted-foreground">Customer</h3><div className="grid gap-3 sm:grid-cols-2">
-                <div className="space-y-1"><Label htmlFor="new-account" className={LABEL}>Account # <span className="text-destructive">*</span></Label><Input id="new-account" className={FIELD} value={newLoan.account} onChange={(e) => setNewLoan({ ...newLoan, account: e.target.value })} />{errors.account && <p className="text-[10px] text-destructive">{errors.account}</p>}</div>
-                <div className="space-y-1"><Label htmlFor="new-customer" className={LABEL}>Customer <span className="text-destructive">*</span></Label><Input id="new-customer" className={FIELD} value={newLoan.customer} onChange={(e) => setNewLoan({ ...newLoan, customer: e.target.value })} />{errors.customer && <p className="text-[10px] text-destructive">{errors.customer}</p>}</div>
-              </div></section>
-              <section className="space-y-3 border-t border-border pt-4"><h3 className="text-[10px] font-semibold uppercase text-muted-foreground">Loan movement</h3><div className="grid gap-3 sm:grid-cols-3">
-                <div className="space-y-1"><Label className={LABEL}>From Location <span className="text-destructive">*</span></Label><Select value={newLoan.fromLocation} onValueChange={(value) => setNewLoan({ ...newLoan, fromLocation: value })}><SelectTrigger className={FIELD}><SelectValue placeholder="Select location" /></SelectTrigger><SelectContent className={SELECT_CONTENT}>{BATCH_LOAN_LOCATIONS.filter((location) => location !== "Onsite").map((location) => <SelectItem key={location} value={location}>{location}</SelectItem>)}</SelectContent></Select>{errors.fromLocation && <p className="text-[10px] text-destructive">{errors.fromLocation}</p>}</div>
-                <div className="space-y-1"><Label className={LABEL}>To Location <span className="text-destructive">*</span></Label><Select value={newLoan.toLocation} onValueChange={(value) => setNewLoan({ ...newLoan, toLocation: value })}><SelectTrigger className={FIELD}><SelectValue /></SelectTrigger><SelectContent className={SELECT_CONTENT}>{BATCH_LOAN_LOCATIONS.map((location) => <SelectItem key={location} value={location}>{location}</SelectItem>)}</SelectContent></Select></div>
-                <div className="space-y-1"><Label className={LABEL}>Status</Label><Select value={newLoan.status} onValueChange={(value) => setNewLoan({ ...newLoan, status: value as BatchLoanStatus })}><SelectTrigger className={FIELD}><SelectValue /></SelectTrigger><SelectContent className={SELECT_CONTENT}>{["Open", "Returned", "Cancelled"].map((status) => <SelectItem key={status} value={status}>{status}</SelectItem>)}</SelectContent></Select></div>
-              </div></section>
-              <section className="space-y-3 border-t border-border pt-4"><h3 className="text-[10px] font-semibold uppercase text-muted-foreground">Schedule</h3><div className="grid gap-3 sm:grid-cols-2">
-                <div className="space-y-1"><Label className={LABEL}>Needed <span className="text-destructive">*</span></Label><ModernDatePicker size="sm" value={newLoan.needed} onChange={(date) => setNewLoan({ ...newLoan, needed: date ? format(date, "yyyy-MM-dd") : "" })} />{errors.needed && <p className="text-[10px] text-destructive">{errors.needed}</p>}</div>
-                <div className="space-y-1"><Label className={LABEL}>Expected Return <span className="text-destructive">*</span></Label><ModernDatePicker size="sm" value={newLoan.expectedReturn} onChange={(date) => setNewLoan({ ...newLoan, expectedReturn: date ? format(date, "yyyy-MM-dd") : "" })} />{errors.expectedReturn && <p className="text-[10px] text-destructive">{errors.expectedReturn}</p>}</div>
-              </div></section>
+        <Dialog open={createOpen} onOpenChange={(open) => { setCreateOpen(open); if (!open) { setErrors({}); setStandardError(""); } }}>
+          <DialogContent className="max-h-[94vh] max-w-5xl gap-0 overflow-hidden p-0">
+            <DialogHeader className="border-b border-border px-5 py-4"><DialogTitle className="text-base">Add New On-Site Batch</DialogTitle><DialogDescription className="text-xs">Enter the movement details, then add the standards included in this loan.</DialogDescription></DialogHeader>
+            <div className="max-h-[72vh] space-y-4 overflow-y-auto p-5">
+              <section className="space-y-3">
+                <div className="flex items-center justify-between"><h3 className="text-[10px] font-semibold uppercase text-muted-foreground">Batch details</h3><StatusBadge status="Open" /></div>
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  <div className="space-y-1"><Label className={LABEL}>Batch ID</Label><Input className={FIELD} value={Math.max(...loans.map((loan) => loan.id)) + 1} readOnly /></div>
+                  <div className="space-y-1"><Label htmlFor="new-account" className={LABEL}>Account # <span className="text-destructive">*</span></Label><Input id="new-account" className={FIELD} value={newLoan.account} onChange={(e) => setNewLoan({ ...newLoan, account: e.target.value })} />{errors.account && <p className="text-[10px] text-destructive">{errors.account}</p>}</div>
+                  <div className="space-y-1 sm:col-span-2"><Label htmlFor="new-customer" className={LABEL}>Customer <span className="text-destructive">*</span></Label><Input id="new-customer" className={FIELD} value={newLoan.customer} onChange={(e) => setNewLoan({ ...newLoan, customer: e.target.value })} />{errors.customer && <p className="text-[10px] text-destructive">{errors.customer}</p>}</div>
+                </div>
+              </section>
+              <section className="space-y-3 border-t border-border pt-4">
+                <h3 className="text-[10px] font-semibold uppercase text-muted-foreground">Movement</h3>
+                <div className="grid gap-x-5 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
+                  <div className="space-y-1"><Label className={LABEL}>From Location <span className="text-destructive">*</span></Label><Select value={newLoan.fromLocation} onValueChange={(value) => setNewLoan({ ...newLoan, fromLocation: value })}><SelectTrigger className={FIELD}><SelectValue placeholder="Select location" /></SelectTrigger><SelectContent className={SELECT_CONTENT}>{BATCH_LOAN_LOCATIONS.filter((location) => location !== "Onsite").map((location) => <SelectItem key={location} value={location}>{location}</SelectItem>)}</SelectContent></Select>{errors.fromLocation && <p className="text-[10px] text-destructive">{errors.fromLocation}</p>}</div>
+                  <div className="space-y-1"><Label className={LABEL}>From Division</Label><Select value={newLoan.fromDivision} onValueChange={(value) => setNewLoan({ ...newLoan, fromDivision: value })}><SelectTrigger className={FIELD}><SelectValue /></SelectTrigger><SelectContent className={SELECT_CONTENT}>{DIVISIONS.map((division) => <SelectItem key={division} value={division}>{division}</SelectItem>)}</SelectContent></Select></div>
+                  <div className="space-y-1"><Label className={LABEL}>To Location <span className="text-destructive">*</span></Label><Select value={newLoan.toLocation} onValueChange={(value) => setNewLoan({ ...newLoan, toLocation: value })}><SelectTrigger className={FIELD}><SelectValue /></SelectTrigger><SelectContent className={SELECT_CONTENT}>{BATCH_LOAN_LOCATIONS.map((location) => <SelectItem key={location} value={location}>{location}</SelectItem>)}</SelectContent></Select></div>
+                  <div className="space-y-1"><Label className={LABEL}>To Division</Label><Select value={newLoan.toDivision} onValueChange={(value) => setNewLoan({ ...newLoan, toDivision: value })}><SelectTrigger className={FIELD}><SelectValue /></SelectTrigger><SelectContent className={SELECT_CONTENT}>{DIVISIONS.map((division) => <SelectItem key={division} value={division}>{division}</SelectItem>)}</SelectContent></Select></div>
+                  <div className="space-y-1"><Label className={LABEL}>From User</Label><Input className={FIELD} value={newLoan.fromUser} readOnly /></div>
+                  <div className="space-y-1"><Label className={LABEL}>Date Needed <span className="text-destructive">*</span></Label><ModernDatePicker size="sm" value={newLoan.needed} onChange={(date) => setNewLoan({ ...newLoan, needed: date ? format(date, "yyyy-MM-dd") : "" })} />{errors.needed && <p className="text-[10px] text-destructive">{errors.needed}</p>}</div>
+                  <div className="space-y-1"><Label className={LABEL}>To User <span className="text-destructive">*</span></Label><Select value={newLoan.toUser} onValueChange={(value) => setNewLoan({ ...newLoan, toUser: value })}><SelectTrigger className={FIELD}><SelectValue placeholder="Select user" /></SelectTrigger><SelectContent className={SELECT_CONTENT}>{BATCH_LOAN_USERS.map((user) => <SelectItem key={user} value={user}>{user}</SelectItem>)}</SelectContent></Select>{errors.toUser && <p className="text-[10px] text-destructive">{errors.toUser}</p>}</div>
+                  <div className="space-y-1"><Label className={LABEL}>Expected Return Date <span className="text-destructive">*</span></Label><ModernDatePicker size="sm" value={newLoan.expectedReturn} onChange={(date) => setNewLoan({ ...newLoan, expectedReturn: date ? format(date, "yyyy-MM-dd") : "" })} />{errors.expectedReturn && <p className="text-[10px] text-destructive">{errors.expectedReturn}</p>}</div>
+                </div>
+                <div className="grid gap-3 rounded-md border border-border bg-muted/20 p-3 sm:grid-cols-2 lg:grid-cols-4">
+                  {[ ["Created By", "Admin User"], ["Created Date", format(new Date(), "MM/dd/yyyy")], ["Moved By", "—"], ["Moved Date", "—"], ["Returned By", "—"], ["Returned Date", "—"] ].map(([label, value]) => <div key={label}><p className="text-[10px] font-medium text-muted-foreground">{label}</p><p className="mt-0.5 text-[11px] font-medium text-foreground">{value}</p></div>)}
+                </div>
+              </section>
+              <section className="space-y-3 border-t border-border pt-4">
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                  <div><h3 className="text-[10px] font-semibold uppercase text-muted-foreground">Standards in batch</h3><p className="mt-1 text-[11px] text-muted-foreground">{newStandards.length} {newStandards.length === 1 ? "standard" : "standards"} added</p></div>
+                  <div className="flex items-end gap-2"><div className="space-y-1"><Label htmlFor="new-standard-number" className={LABEL}>Standard # <span className="text-destructive">*</span></Label><Input id="new-standard-number" className={`${FIELD} w-48`} value={standardNumber} placeholder="Enter standard number" onChange={(event) => { setStandardNumber(event.target.value); setStandardError(""); }} onKeyDown={(event) => event.key === "Enter" && addStandard()} /></div><Button variant="outline" className="h-7 gap-1 text-[11px]" onClick={addStandard}><Plus className="h-3 w-3" />Add</Button></div>
+                </div>
+                {(standardError || errors.standards) && <p className="text-[10px] text-destructive">{standardError || errors.standards}</p>}
+                <div className="overflow-hidden rounded-md border border-border">
+                  <Table><TableHeader className="bg-muted/60"><TableRow><TableHead className="h-8 px-2 text-[10px]">Standard #</TableHead><TableHead className="h-8 px-2 text-[10px]">State of Asset</TableHead><TableHead className="h-8 px-2 text-[10px]">Next Cal Date</TableHead><TableHead className="h-8 px-2 text-[10px]">Manufacturer</TableHead><TableHead className="h-8 px-2 text-[10px]">Model</TableHead><TableHead className="h-8 px-2 text-[10px]">Serial</TableHead><TableHead className="h-8 px-2 text-[10px]">Lab Code</TableHead><TableHead className="h-8 w-10 px-2"><span className="sr-only">Remove</span></TableHead></TableRow></TableHeader><TableBody>
+                    {newStandards.length === 0 ? <TableRow><TableCell colSpan={8} className="h-20 text-center text-[11px] text-muted-foreground">No standards added yet.</TableCell></TableRow> : newStandards.map((standard) => <TableRow key={standard.standardNo} className="text-[11px]"><TableCell className="px-2 py-2 font-semibold">{standard.standardNo}</TableCell><TableCell className="px-2 py-2">{standard.state}</TableCell><TableCell className="px-2 py-2 tabular-nums">{standard.nextCalibrationDue}</TableCell><TableCell className="px-2 py-2">{standard.manufacturer}</TableCell><TableCell className="px-2 py-2">{standard.model}</TableCell><TableCell className="px-2 py-2">{standard.serial}</TableCell><TableCell className="px-2 py-2">{standard.labCode}</TableCell><TableCell className="px-2 py-2"><Button variant="ghost" size="icon" className="h-6 w-6 text-destructive hover:bg-destructive/10 hover:text-destructive" aria-label={`Remove standard ${standard.standardNo}`} onClick={() => setNewStandards((current) => current.filter((item) => item.standardNo !== standard.standardNo))}><Trash2 className="h-3 w-3" /></Button></TableCell></TableRow>)}
+                  </TableBody></Table>
+                </div>
+              </section>
             </div>
             <DialogFooter className="border-t border-border bg-muted/20 px-5 py-3"><Button variant="outline" className="h-8 text-xs" onClick={() => setCreateOpen(false)}>Cancel</Button><Button className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={saveLoan}>Save Batch Loan</Button></DialogFooter>
           </DialogContent>
@@ -362,9 +436,9 @@ const OnsiteBatchLoans = () => {
         <Dialog open={Boolean(selected)} onOpenChange={(open) => !open && setSelected(null)}>
           <DialogContent className="max-w-xl gap-0 overflow-hidden p-0">
             <DialogHeader className="border-b border-border px-5 py-4"><DialogTitle className="text-base">Batch Loan {selected?.id}</DialogTitle><DialogDescription className="text-xs">On-site standard movement details</DialogDescription></DialogHeader>
-            {selected && <div className="grid grid-cols-2 gap-x-6 gap-y-4 p-5 text-xs sm:grid-cols-3">{[
+            {selected && <div className="space-y-5 p-5"><div className="grid grid-cols-2 gap-x-6 gap-y-4 text-xs sm:grid-cols-3">{[
               ["Account #", selected.account], ["Customer", selected.customer], ["Status", selected.status], ["From", selected.fromLocation], ["To", selected.toLocation], ["Created By", selected.createdBy], ["Created", selected.created], ["Needed", selected.needed], ["Expected Return", selected.expectedReturn],
-            ].map(([label, value]) => <div key={label} className={cn(label === "Customer" && "col-span-2")}><p className="text-[10px] font-semibold uppercase text-muted-foreground">{label}</p><div className="mt-1 font-medium text-foreground">{label === "Status" ? <StatusBadge status={selected.status} /> : value}</div></div>)}</div>}
+            ].map(([label, value]) => <div key={label} className={cn(label === "Customer" && "col-span-2")}><p className="text-[10px] font-semibold uppercase text-muted-foreground">{label}</p><div className="mt-1 font-medium text-foreground">{label === "Status" ? <StatusBadge status={selected.status} /> : value}</div></div>)}</div>{selected.standards && selected.standards.length > 0 && <div><p className="mb-2 text-[10px] font-semibold uppercase text-muted-foreground">Standards ({selected.standards.length})</p><div className="flex flex-wrap gap-2">{selected.standards.map((standard) => <Badge key={standard.standardNo} variant="secondary" className="text-[10px]">#{standard.standardNo} · {standard.manufacturer} {standard.model}</Badge>)}</div></div>}</div>}
             <DialogFooter className="border-t border-border bg-muted/20 px-5 py-3"><Button variant="outline" className="h-8 text-xs" onClick={() => setSelected(null)}>Close</Button></DialogFooter>
           </DialogContent>
         </Dialog>
