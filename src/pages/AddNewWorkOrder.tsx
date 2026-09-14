@@ -3937,6 +3937,7 @@ const AddNewWorkOrder = () => {
                         setItems={setReceivingItems}
                         onSelectedItemsChange={setSelectedItemsCount}
                         onSelectedItemsIdsChange={setSelectedItemIds}
+                        accountNumber={workOrderData.accountNumber}
                       />
                     ) : viewMode === 'table' ? (
                       <WorkOrderItemsTable 
