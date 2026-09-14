@@ -32,8 +32,6 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
 import { Check, ChevronsUpDown } from "lucide-react";
-import { SerialDuplicateDialog } from "@/components/SerialDuplicateDialog";
-import { findSerialMatches, type SerialMatchGroup } from "@/lib/serial-history";
 
 const AddNewWorkOrder = () => {
   const navigate = useNavigate();
@@ -383,7 +381,6 @@ const AddNewWorkOrder = () => {
   });
 
   const [isSaved, setIsSaved] = useState(() => localStorage.getItem('addNewWorkOrderIsSaved') === 'true');
-  const [serialWarningGroups, setSerialWarningGroups] = useState<SerialMatchGroup[]>([]);
   const [hasContact, setHasContact] = useState(() => localStorage.getItem('addNewWorkOrderHasContact') === 'true');
 
   // Remember the saved state so a re-render / return visit keeps the same tab open
@@ -607,16 +604,7 @@ const AddNewWorkOrder = () => {
 
 
 
-  const collectSerialWarnings = (): SerialMatchGroup[] =>
-    receivingItems
-      .map((item) => ({
-        typedSerial: item.mfgSerial,
-        itemLabel: `Item ${item.itemNumber || "—"} · ${item.manufacturer} ${item.model}`.trim(),
-        matches: findSerialMatches(item.mfgSerial, workOrderData.accountNumber),
-      }))
-      .filter((group) => group.matches.length > 0);
-
-  const commitWorkOrder = () => {
+  const handleSave = () => {
     // TODO: Implement save functionality
     console.log("Saving work order:", workOrderData);
     setIsSaved(true);
@@ -633,15 +621,6 @@ const AddNewWorkOrder = () => {
       description: "Your work order has been successfully created.",
       duration: 1500,
     });
-  };
-
-  const handleSave = () => {
-    const groups = collectSerialWarnings();
-    if (groups.length > 0) {
-      setSerialWarningGroups(groups);
-      return;
-    }
-    commitWorkOrder();
   };
 
   const handleCancel = () => {
@@ -3958,7 +3937,6 @@ const AddNewWorkOrder = () => {
                         setItems={setReceivingItems}
                         onSelectedItemsChange={setSelectedItemsCount}
                         onSelectedItemsIdsChange={setSelectedItemIds}
-                        accountNumber={workOrderData.accountNumber}
                       />
                     ) : viewMode === 'table' ? (
                       <WorkOrderItemsTable 
@@ -4599,18 +4577,6 @@ const AddNewWorkOrder = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      <SerialDuplicateDialog
-        open={serialWarningGroups.length > 0}
-        groups={serialWarningGroups}
-        accountNumber={workOrderData.accountNumber}
-        onOpenChange={(open) => { if (!open) setSerialWarningGroups([]); }}
-        onReview={() => setSerialWarningGroups([])}
-        onContinue={() => {
-          setSerialWarningGroups([]);
-          commitWorkOrder();
-        }}
-      />
     </div>
   );
 };

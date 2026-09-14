@@ -15,8 +15,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
-import { SerialDuplicateDialog } from "@/components/SerialDuplicateDialog";
-import { findSerialMatches, type SerialMatchGroup } from "@/lib/serial-history";
 
 interface WorkOrderReceivingItem {
   id: string;
@@ -45,7 +43,6 @@ interface WorkOrderItemsReceivingProps {
   setItems: React.Dispatch<React.SetStateAction<WorkOrderReceivingItem[]>>;
   onSelectedItemsChange?: (count: number) => void;
   onSelectedItemsIdsChange?: (ids: string[]) => void;
-  accountNumber?: string;
 }
 
 const manufacturers = [
@@ -97,9 +94,8 @@ const truncateDescription = (description: string): string => {
   return words.length > 3 ? words.slice(0, 3).join(" ") + "..." : description;
 };
 
-export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange, onSelectedItemsIdsChange, accountNumber }: WorkOrderItemsReceivingProps) => {
+export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange, onSelectedItemsIdsChange }: WorkOrderItemsReceivingProps) => {
   const [newItems, setNewItems] = useState<WorkOrderReceivingItem[]>([]);
-  const [serialWarning, setSerialWarning] = useState<{ itemId: string; groups: SerialMatchGroup[] } | null>(null);
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
@@ -198,21 +194,6 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
     setNewItems([...newItems, createEmptyItem()]);
   };
 
-  const commitNewItem = (newItemId: string) => {
-    const itemToSave = newItems.find(item => item.id === newItemId);
-    if (!itemToSave) return;
-
-    // Auto-generate item number in 3-digit format if not provided
-    let itemNumber = itemToSave.itemNumber;
-    if (!itemNumber) {
-      const nextNumber = items.length + 1;
-      itemNumber = nextNumber.toString().padStart(3, '0');
-    }
-
-    setItems([...items, { ...itemToSave, itemNumber }]);
-    setNewItems(newItems.filter(item => item.id !== newItemId));
-  };
-
   const handleSaveNewItem = (newItemId: string) => {
     const itemToSave = newItems.find(item => item.id === newItemId);
     if (!itemToSave) return;
@@ -237,21 +218,15 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
       return newErrors;
     });
     
-    // Warn when this serial (or a near match) was already received on this account
-    const matches = findSerialMatches(itemToSave.mfgSerial, accountNumber);
-    if (matches.length > 0) {
-      setSerialWarning({
-        itemId: newItemId,
-        groups: [{
-          typedSerial: itemToSave.mfgSerial,
-          itemLabel: `${itemToSave.manufacturer || "New item"} ${itemToSave.model || ""}`.trim(),
-          matches,
-        }],
-      });
-      return;
+    // Auto-generate item number in 3-digit format if not provided
+    let itemNumber = itemToSave.itemNumber;
+    if (!itemNumber) {
+      const nextNumber = items.length + 1;
+      itemNumber = nextNumber.toString().padStart(3, '0');
     }
-
-    commitNewItem(newItemId);
+    
+    setItems([...items, { ...itemToSave, itemNumber }]);
+    setNewItems(newItems.filter(item => item.id !== newItemId));
   };
 
   const handleCancelNewItem = (newItemId: string) => {
@@ -1918,18 +1893,6 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
           </div>
         </div>
       )}
-
-      <SerialDuplicateDialog
-        open={!!serialWarning}
-        groups={serialWarning?.groups ?? []}
-        accountNumber={accountNumber}
-        onOpenChange={(open) => { if (!open) setSerialWarning(null); }}
-        onReview={() => setSerialWarning(null)}
-        onContinue={() => {
-          if (serialWarning) commitNewItem(serialWarning.itemId);
-          setSerialWarning(null);
-        }}
-      />
     </div>
   );
 };

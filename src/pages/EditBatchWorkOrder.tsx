@@ -3176,7 +3176,6 @@ const EditBatchWorkOrder = () => {
                         setItems={setReceivingItems}
                         onSelectedItemsChange={setSelectedItemsCount}
                         onSelectedItemsIdsChange={setSelectedItemIds}
-                        accountNumber={workOrderData.accountNumber}
                       />
                     ) : viewMode === 'table' ? (
                       <WorkOrderItemsTable 
