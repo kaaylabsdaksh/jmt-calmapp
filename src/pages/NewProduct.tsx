@@ -410,12 +410,16 @@ function TextField({
   required,
   prefix,
   className,
+  value,
+  onChange,
 }: {
   label: string;
   placeholder?: string;
   required?: boolean;
   prefix?: string;
   className?: string;
+  value?: string;
+  onChange?: (v: string) => void;
 }) {
   return (
     <div className={cn("space-y-1", className)}>
@@ -426,7 +430,12 @@ function TextField({
             {prefix}
           </span>
         )}
-        <Input placeholder={placeholder} className={cn("h-8 text-xs", prefix && "pl-5")} />
+        <Input
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange ? (e) => onChange(e.target.value) : undefined}
+          className={cn("h-8 text-xs", prefix && "pl-5")}
+        />
       </div>
     </div>
   );
@@ -437,16 +446,20 @@ function SelectField({
   options,
   required,
   className,
+  value,
+  onChange,
 }: {
   label: string;
   options: string[];
   required?: boolean;
   className?: string;
+  value?: string;
+  onChange?: (v: string) => void;
 }) {
   return (
     <div className={cn("space-y-1", className)}>
       <FieldLabel label={label} required={required} />
-      <Select>
+      <Select value={value} onValueChange={onChange}>
         <SelectTrigger className="h-8 text-xs">
           <SelectValue placeholder="Select" />
         </SelectTrigger>
