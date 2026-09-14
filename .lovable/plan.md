@@ -1,41 +1,21 @@
-Goal: Add a user toggle on `/invoicing` that switches between the existing **Invoices** view and a new **Billing Specialist** view matching the provided reference image.
+# Modern On-Site Batch Loans
 
-Scope of work:
-1. **View-mode state**
-   - Add `viewMode` state with values `"invoices" | "billingSpecialist"`.
-   - Default to the current Invoices view so existing behavior is unchanged.
+## Goal
+Create a modern, functional On-Site Batch Loans workspace inside Standards, based on the selected integrated workflow direction and the legacy screens.
 
-2. **User toggle**
-   - Add a visible toggle control (segmented button or tab-like switch) labeled **Invoices** / **Billing Specialist**.
-   - Place it in the page header area so it is obvious and persists across the page.
+## What will be built
+- Add a dedicated `/standards/onsite-batch-loans` page opened by the existing Standards footer action.
+- Keep the current CalMApp design system, Work Sans typography, sticky header, compact controls, and full-width stacked sections.
+- Recreate the legacy filters: Account #, From Location, Created By, Created From, To Location, Batch Loan Status, and Created To.
+- Add functional Search and Clear actions with populated mock loan records and a clear record count.
+- Add a dense, sortable results table with ID, Account, Customer, Status, From, To, Created By, Created, Needed, and Expected Return.
+- Show statuses using the shared soft-pill and status-dot pattern.
+- Add a structured Add New Batch dialog with account/customer, movement, status, and date fields; validate required fields and insert the saved batch into the table.
+- Make linked batch IDs open a read-only detail dialog so users can inspect a record without leaving the page.
 
-3. **Billing Specialist view** (rendered when `viewMode === "billingSpecialist"`)
-   - **Title**: Change top nav title to "Invoicing (Billing Specialist)".
-   - **Filters**: Replace the current filter row with the six fields from the image:
-     - Invoicing Type
-     - Work Order Type
-     - Location
-     - Division
-     - Invoice Status
-     - Customer Group
-   - **Action buttons**: Add a centered row with:
-     - Clear
-     - Menu
-     - Invoicing
-     - Delivery Tickets
-     - Process Invoice(s)
-   - **Table**: Replace the main invoice table with columns shown in the image:
-     - WO Batch, Acct #, SR#, Customer Name, RTB Count, Total Count, Last Comment Date, Last Comment, Min Need By Date, Min RTB Date, To Shipping, Sales Order
-     - Each column header includes a compact sub-filter input.
-     - Start with the "No data to display" empty state shown in the image.
-   - **Footer**: Add a centered footer with:
-     - Process Invoice(s) button
-     - Text links: "Set Default View" and "Set Search Field Defaults"
-
-4. **Invoices view** (existing behavior)
-   - Keep the current filters, table, reports section, sticky footer, and selection bulk-action bar exactly as they are now.
-
-5. **Data**
-   - Use local mock state for the Billing Specialist table (empty by default, matching the reference image).
-
-No backend changes are required; this is a frontend-only presentation feature.
+## Technical details
+- Frontend-only local React state and mock data; no backend or new dependencies.
+- Reuse existing Button, Dialog, Select, Input, Table, Tooltip, and ModernDatePicker components.
+- Add the new route to the app and update the Standards footer button to navigate there.
+- Use semantic design tokens and existing notification behavior.
+- Verify search, clear, create, details, sorting, sticky header, and desktop/mobile layout in the browser.
