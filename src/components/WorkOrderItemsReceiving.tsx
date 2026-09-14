@@ -1918,6 +1918,18 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
           </div>
         </div>
       )}
+
+      <SerialDuplicateDialog
+        open={!!serialWarning}
+        groups={serialWarning?.groups ?? []}
+        accountNumber={accountNumber}
+        onOpenChange={(open) => { if (!open) setSerialWarning(null); }}
+        onReview={() => setSerialWarning(null)}
+        onContinue={() => {
+          if (serialWarning) commitNewItem(serialWarning.itemId);
+          setSerialWarning(null);
+        }}
+      />
     </div>
   );
 };
