@@ -604,7 +604,16 @@ const AddNewWorkOrder = () => {
 
 
 
-  const handleSave = () => {
+  const collectSerialWarnings = (): SerialMatchGroup[] =>
+    receivingItems
+      .map((item) => ({
+        typedSerial: item.mfgSerial,
+        itemLabel: `Item ${item.itemNumber || "—"} · ${item.manufacturer} ${item.model}`.trim(),
+        matches: findSerialMatches(item.mfgSerial, workOrderData.accountNumber),
+      }))
+      .filter((group) => group.matches.length > 0);
+
+  const commitWorkOrder = () => {
     // TODO: Implement save functionality
     console.log("Saving work order:", workOrderData);
     setIsSaved(true);
