@@ -337,8 +337,8 @@ const OnsiteBatchLoans = () => {
     if (status === "Open") persistEditedLoan({ movedBy: "Admin User", movedDate: today }, `Batch loan ${editLoan.id} marked as moved.`);
   };
 
-  const SortHead = ({ label, column }: { label: string; column: SortKey }) => (
-    <TableHead className="h-9 whitespace-nowrap px-3 text-[11px] font-semibold">
+  const SortHead = ({ label, column, className }: { label: string; column: SortKey; className?: string }) => (
+    <TableHead className={cn("h-9 whitespace-nowrap px-3 text-[11px] font-semibold sticky top-0 z-10 bg-muted/80 backdrop-blur", className)}>
       <Button variant="ghost" className="h-7 gap-1 px-0 text-[11px] font-semibold hover:bg-transparent" onClick={() => toggleSort(column)}>
         {label}
         <ArrowUpDown className={cn("h-3 w-3", sort.key === column ? "text-foreground" : "text-muted-foreground/50")} />
