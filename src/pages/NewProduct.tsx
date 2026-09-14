@@ -172,9 +172,64 @@ export default function NewProduct() {
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="h-8">
               <TabsTrigger value="general" className="text-xs h-7">General</TabsTrigger>
+              {saved && <TabsTrigger value="capable" className="text-xs h-7">Capable Locations</TabsTrigger>}
               {saved && <TabsTrigger value="files" className="text-xs h-7">Files</TabsTrigger>}
               {saved && <TabsTrigger value="accessories" className="text-xs h-7">Accessories</TabsTrigger>}
             </TabsList>
+
+            <TabsContent value="capable" className="mt-4 space-y-4">
+              <Card>
+                <CardContent className="p-0 overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow className="bg-muted/50 hover:bg-muted/50">
+                        <TableHead className="text-[11px] font-semibold whitespace-nowrap">Capable Location</TableHead>
+                        {CAPABILITY_COLUMNS.map((cap) => (
+                          <TableHead
+                            key={cap}
+                            className="text-[10px] font-semibold text-center"
+                            style={{ writingMode: "vertical-rl", transform: "rotate(180deg)", minWidth: "2.5rem" }}
+                          >
+                            {cap}
+                          </TableHead>
+                        ))}
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {CAPABLE_LOCATIONS.map((loc) => (
+                        <TableRow key={loc}>
+                          <TableCell className="text-xs font-medium bg-muted/30">{loc}</TableCell>
+                          {CAPABILITY_COLUMNS.map((cap) => (
+                            <TableCell key={cap} className="text-center p-2">
+                              <Checkbox
+                                checked={!!matrix[loc]?.[cap]}
+                                onCheckedChange={() => toggleMatrix(loc, cap)}
+                                className="h-4 w-4"
+                              />
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-4">
+                  <div className="text-xs font-semibold text-foreground mb-2">Breakdown of Matrix (Definitions)</div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-xs">
+                    {CAPABILITY_LEGEND.map((l) => (
+                      <div key={l.term} className="flex gap-2">
+                        <span className="font-semibold whitespace-nowrap">{l.term}:</span>
+                        <span className="text-muted-foreground">{l.def}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-[10px] text-muted-foreground mt-2">** Onsite capabilities are influenced by the supporting lab.</p>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
             <TabsContent value="files" className="mt-4">
               <ProductFilesTab />
