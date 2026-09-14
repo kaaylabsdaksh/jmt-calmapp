@@ -133,7 +133,6 @@ const downloadCsv = (filename: string, rows: Array<Array<string | number>>) => {
 };
 
 const CreateLabStandardWorkOrders = () => {
-  const navigate = useNavigate();
   const [dateFrom, setDateFrom] = useState<Date>();
   const [dateTo, setDateTo] = useState<Date>();
   const [excluded, setExcluded] = useState("");
