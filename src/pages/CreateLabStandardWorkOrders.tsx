@@ -249,7 +249,7 @@ const CreateLabStandardWorkOrders = () => {
             </div>
 
             <div className="flex flex-col lg:flex-row lg:divide-x">
-              <div className="flex w-full flex-col gap-3 bg-muted/20 px-4 py-4 lg:w-56">
+              <div className="flex w-full flex-col gap-3 bg-white px-4 py-4 lg:w-56">
                 <div className="space-y-1.5">
                   <Label htmlFor="lab-wo-date-from" className="text-[11px] font-medium">Date From <span className="text-destructive">*</span></Label>
                   <ModernDatePicker id="lab-wo-date-from" value={dateFrom} onChange={setDateFrom} size="sm" />
