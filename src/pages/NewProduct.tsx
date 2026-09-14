@@ -70,6 +70,27 @@ export default function NewProduct() {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState<{ type: string; text: string }[]>([]);
   const [commentType, setCommentType] = useState("General");
+  const [saved, setSaved] = useState(false);
+  const [activeTab, setActiveTab] = useState("general");
+  const [manufacturer, setManufacturer] = useState("");
+  const [modelNumber, setModelNumber] = useState("");
+  const [description, setDescription] = useState("");
+  const [labCode, setLabCode] = useState("");
+
+  const canSave = !!(manufacturer && modelNumber.trim() && description.trim() && labCode);
+
+  const handleSave = () => {
+    if (!canSave) {
+      toast({
+        title: "Missing required details",
+        description: "Enter Manufacturer, Model Number, Description and Lab Code before saving.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setSaved(true);
+    toast({ title: "Product saved", description: "Files and Accessories are now available." });
+  };
 
   const addComment = () => {
     if (!comment.trim()) return;
