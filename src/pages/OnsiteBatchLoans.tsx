@@ -336,10 +336,15 @@ const OnsiteBatchLoans = () => {
 
         <main className="space-y-4 p-4 lg:p-6">
           <section className="rounded-lg border border-border bg-card p-3 shadow-sm">
-            <div className="mb-2 flex items-center gap-2">
-              <Search className="h-3.5 w-3.5 text-muted-foreground" />
-              <h2 className="text-xs font-semibold text-foreground">Search Criteria</h2>
-              {activeCount > 0 && <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">{activeCount} active</Badge>}
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <Search className="h-3.5 w-3.5 text-muted-foreground" />
+                <h2 className="text-xs font-semibold text-foreground">Search Criteria</h2>
+                {activeCount > 0 && <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">{activeCount} active</Badge>}
+              </div>
+              <Button className="h-7 gap-1.5 bg-success px-3 text-[11px] text-success-foreground hover:bg-success/90" onClick={() => setCreateOpen(true)}>
+                <Plus className="h-3 w-3" />Add New
+              </Button>
             </div>
             <div className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
               <div className="space-y-1">
