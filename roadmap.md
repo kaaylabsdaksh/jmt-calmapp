@@ -7,3 +7,5 @@
 - [ ] Quote page: onsite/ESL project details prefill + quote-type-specific summary charges
 - [x] Add the Capable Locations matrix to Edit Product
 - [x] Build modern Create Lab Standard Work Orders workflow
+
+- [x] Duplicate / near-match serial warning on save (Add New Work Order + Receiving items)
