@@ -237,15 +237,21 @@ export const WorkOrderItemsReceiving = ({ items, setItems, onSelectedItemsChange
       return newErrors;
     });
     
-    // Auto-generate item number in 3-digit format if not provided
-    let itemNumber = itemToSave.itemNumber;
-    if (!itemNumber) {
-      const nextNumber = items.length + 1;
-      itemNumber = nextNumber.toString().padStart(3, '0');
+    // Warn when this serial (or a near match) was already received on this account
+    const matches = findSerialMatches(itemToSave.mfgSerial, accountNumber);
+    if (matches.length > 0) {
+      setSerialWarning({
+        itemId: newItemId,
+        groups: [{
+          typedSerial: itemToSave.mfgSerial,
+          itemLabel: `${itemToSave.manufacturer || "New item"} ${itemToSave.model || ""}`.trim(),
+          matches,
+        }],
+      });
+      return;
     }
-    
-    setItems([...items, { ...itemToSave, itemNumber }]);
-    setNewItems(newItems.filter(item => item.id !== newItemId));
+
+    commitNewItem(newItemId);
   };
 
   const handleCancelNewItem = (newItemId: string) => {
