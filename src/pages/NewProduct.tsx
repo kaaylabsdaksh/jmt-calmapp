@@ -32,6 +32,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import ProductFilesTab from "@/components/products/ProductFilesTab";
 import ProductAccessoriesTab from "@/components/products/ProductAccessoriesTab";
 import { toast } from "@/hooks/use-toast";
