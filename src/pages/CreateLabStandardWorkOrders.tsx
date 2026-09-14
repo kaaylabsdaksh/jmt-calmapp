@@ -248,53 +248,59 @@ const CreateLabStandardWorkOrders = () => {
               ) : null}
             </div>
 
-            <div className="grid gap-4 px-4 py-4 lg:grid-cols-[180px_180px_minmax(320px,1fr)]">
-              <div className="space-y-1.5">
-                <Label htmlFor="lab-wo-date-from" className="text-[11px] font-medium">Date From <span className="text-destructive">*</span></Label>
-                <ModernDatePicker id="lab-wo-date-from" value={dateFrom} onChange={setDateFrom} size="sm" />
+            <div className="flex flex-col lg:flex-row lg:divide-x">
+              <div className="flex w-full flex-col gap-3 bg-muted/20 px-4 py-4 lg:w-56">
+                <div className="space-y-1.5">
+                  <Label htmlFor="lab-wo-date-from" className="text-[11px] font-medium">Date From <span className="text-destructive">*</span></Label>
+                  <ModernDatePicker id="lab-wo-date-from" value={dateFrom} onChange={setDateFrom} size="sm" />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="lab-wo-date-to" className="text-[11px] font-medium">Date To <span className="text-destructive">*</span></Label>
+                  <ModernDatePicker id="lab-wo-date-to" value={dateTo} onChange={setDateTo} size="sm" />
+                </div>
               </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="lab-wo-date-to" className="text-[11px] font-medium">Date To <span className="text-destructive">*</span></Label>
-                <ModernDatePicker id="lab-wo-date-to" value={dateTo} onChange={setDateTo} size="sm" />
-              </div>
-              <div className="space-y-1.5">
+
+              <div className="flex flex-1 flex-col space-y-1.5 px-4 py-4">
                 <Label htmlFor="excluded-standards" className="text-[11px] font-medium">Standards to Exclude</Label>
                 <Textarea
                   id="excluded-standards"
                   value={excluded}
                   onChange={(event) => setExcluded(event.target.value)}
                   placeholder="Enter Standard numbers separated by commas, for example: 1832, 2522"
-                  className="min-h-[64px] resize-y text-xs"
+                  className="min-h-[84px] flex-1 resize-none text-xs"
                 />
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-end gap-2 border-t bg-muted/20 px-4 py-2.5">
-              <div className="flex flex-wrap justify-end gap-2">
-                <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" onClick={() => {
-                  setDateFrom(undefined);
-                  setDateTo(undefined);
-                  setExcluded("");
-                  setHasPreview(false);
-                  setProcessed(false);
-                  setExpanded(new Set());
-                }}>
-                  <RotateCcw className="h-3.5 w-3.5" /> Reset
-                </Button>
+            <div className="flex flex-wrap items-center justify-between gap-2 border-t bg-muted/20 px-4 py-2.5">
+              <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" onClick={() => {
+                setDateFrom(undefined);
+                setDateTo(undefined);
+                setExcluded("");
+                setHasPreview(false);
+                setProcessed(false);
+                setExpanded(new Set());
+              }}>
+                <RotateCcw className="h-3.5 w-3.5" /> Reset
+              </Button>
+
+              <div className="flex flex-wrap items-center gap-2">
                 <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" onClick={refreshPreview} disabled={processed}>
                   <Eye className="h-3.5 w-3.5" /> {hasPreview ? "Refresh Preview" : "Preview Run"}
                 </Button>
-                <Button size="sm" className="h-8 gap-1.5 bg-info text-xs text-info-foreground hover:bg-info/90" onClick={processRun} disabled={!hasPreview || processed || groups.length === 0}>
-                  <Play className="h-3.5 w-3.5" /> Process Run
-                </Button>
+                <span className="mx-1 hidden h-4 w-px bg-border sm:block" />
                 <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" disabled={!processed} onClick={exportCounts}>
                   <Download className="h-3.5 w-3.5" /> Export Counts
                 </Button>
                 <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" disabled={!processed} onClick={exportWorkOrders}>
                   <FileCheck2 className="h-3.5 w-3.5" /> Export Work Orders
                 </Button>
+                <Button size="sm" className="h-8 gap-1.5 bg-info text-xs text-info-foreground hover:bg-info/90" onClick={processRun} disabled={!hasPreview || processed || groups.length === 0}>
+                  <Play className="h-3.5 w-3.5" /> Process Run
+                </Button>
               </div>
             </div>
+
           </section>
 
           <section className="overflow-hidden border bg-card">
