@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import {
@@ -286,7 +286,7 @@ const CreateLabStandardWorkOrders = () => {
                 <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" onClick={refreshPreview} disabled={processed}>
                   <Eye className="h-3.5 w-3.5" /> {hasPreview ? "Refresh Preview" : "Preview Run"}
                 </Button>
-                <Button size="sm" className="h-8 gap-1.5 bg-blue-600 text-xs text-white hover:bg-blue-700" onClick={processRun} disabled={!hasPreview || processed || groups.length === 0}>
+                <Button size="sm" className="h-8 gap-1.5 bg-info text-xs text-info-foreground hover:bg-info/90" onClick={processRun} disabled={!hasPreview || processed || groups.length === 0}>
                   <Play className="h-3.5 w-3.5" /> Process Run
                 </Button>
                 <Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" disabled={!processed} onClick={exportCounts}>
@@ -338,7 +338,7 @@ const CreateLabStandardWorkOrders = () => {
                     {groups.map((group) => {
                       const isExpanded = expanded.has(group.workOrderNo);
                       return (
-                        <>
+                        <Fragment key={group.workOrderNo}>
                           <TableRow key={group.workOrderNo} className="bg-muted/20">
                             <TableCell className="h-9 px-3 py-1">
                               <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => toggleExpanded(group.workOrderNo)} aria-label={`${isExpanded ? "Collapse" : "Expand"} work order ${group.workOrderNo}`}>
@@ -381,7 +381,7 @@ const CreateLabStandardWorkOrders = () => {
                               </TableCell>
                             </TableRow>
                           )}
-                        </>
+                        </Fragment>
                       );
                     })}
                   </TableBody>

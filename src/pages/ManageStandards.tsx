@@ -705,9 +705,11 @@ const ManageStandards = () => {
                 On-Site Batch Loans
               </Link>
             </Button>
-            <Button variant="outline" className="h-8 shrink-0 gap-2 text-xs" onClick={() => toast({ title: "Create Lab Standard WOs opened." })}>
-              <ClipboardList className="h-3.5 w-3.5" />
-              Create Lab Standard WOs
+            <Button asChild variant="outline" className="h-8 shrink-0 gap-2 text-xs">
+              <Link to="/standards/create-lab-work-orders">
+                <ClipboardList className="h-3.5 w-3.5" />
+                Create Lab Standard WOs
+              </Link>
             </Button>
             <Button variant="outline" className="h-8 shrink-0 gap-2 text-xs" onClick={() => toast({ title: "Manage PM / Interim Checks opened." })}>
               <Wrench className="h-3.5 w-3.5" />
