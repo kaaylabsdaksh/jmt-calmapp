@@ -361,6 +361,9 @@ const OnsiteBatchLoans = () => {
               </div>
             </div>
             <div className="mt-3 flex items-center justify-end gap-2 border-t border-border pt-3">
+              <Button className="h-7 gap-1.5 bg-success px-3 text-[11px] text-success-foreground hover:bg-success/90" onClick={() => setCreateOpen(true)}>
+                <Plus className="h-3 w-3" />Add New
+              </Button>
               <Button variant="outline" className="h-7 gap-1.5 border-destructive px-3 text-[11px] text-destructive hover:bg-destructive/10 hover:text-destructive" onClick={clearFilters}>
                 <X className="h-3 w-3" />Clear
               </Button>
