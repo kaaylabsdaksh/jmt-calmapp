@@ -326,6 +326,8 @@ export default function NewProduct() {
               )}
             </CardContent>
           </Card>
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
 
