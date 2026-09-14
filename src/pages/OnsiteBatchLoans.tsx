@@ -326,7 +326,9 @@ const OnsiteBatchLoans = () => {
                   <span>/</span>
                   <Link to="/standards" className="hover:text-foreground">Standards</Link>
                   <span>/</span>
-                  <span className="font-medium text-foreground">On-Site Batch Loans</span>
+                  <Link to="/standards" className="hover:text-foreground">Manage Standards</Link>
+                  <span>/</span>
+                  <span className="font-medium text-foreground">Onsite batch loans</span>
                 </div>
               </div>
             </div>
