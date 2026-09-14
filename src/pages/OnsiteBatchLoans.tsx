@@ -337,8 +337,8 @@ const OnsiteBatchLoans = () => {
     if (status === "Open") persistEditedLoan({ movedBy: "Admin User", movedDate: today }, `Batch loan ${editLoan.id} marked as moved.`);
   };
 
-  const SortHead = ({ label, column }: { label: string; column: SortKey }) => (
-    <TableHead className="h-9 whitespace-nowrap px-3 text-[11px] font-semibold">
+  const SortHead = ({ label, column, className }: { label: string; column: SortKey; className?: string }) => (
+    <TableHead className={cn("h-9 whitespace-nowrap px-3 text-[11px] font-semibold sticky top-0 z-10 bg-muted/80 backdrop-blur", className)}>
       <Button variant="ghost" className="h-7 gap-1 px-0 text-[11px] font-semibold hover:bg-transparent" onClick={() => toggleSort(column)}>
         {label}
         <ArrowUpDown className={cn("h-3 w-3", sort.key === column ? "text-foreground" : "text-muted-foreground/50")} />
@@ -451,10 +451,10 @@ const OnsiteBatchLoans = () => {
               <span className="text-[11px] text-muted-foreground">{filtered.length} {filtered.length === 1 ? "record" : "records"}</span>
             </div>
             <div className="max-h-[58vh] overflow-auto">
-              <Table>
-                <TableHeader className="sticky top-0 z-10 bg-muted/80 backdrop-blur">
+              <table className="w-full min-w-max caption-bottom text-sm">
+                <TableHeader>
                   <TableRow>
-                    <SortHead label="ID" column="id" />
+                    <SortHead label="ID" column="id" className="left-0 z-20" />
                     <SortHead label="Account #" column="account" />
                     <SortHead label="Customer" column="customer" />
                     <SortHead label="Status" column="status" />
@@ -464,7 +464,7 @@ const OnsiteBatchLoans = () => {
                     <SortHead label="Created" column="created" />
                     <SortHead label="Needed" column="needed" />
                     <SortHead label="Expected Return" column="expectedReturn" />
-                    <TableHead className="h-9 w-12 px-3"><span className="sr-only">Actions</span></TableHead>
+                    <TableHead className="sticky top-0 z-10 h-9 w-12 bg-muted/80 px-3 backdrop-blur"><span className="sr-only">Actions</span></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -472,8 +472,8 @@ const OnsiteBatchLoans = () => {
                     <TableRow><TableCell colSpan={11} className="h-40 text-center"><Search className="mx-auto mb-2 h-6 w-6 text-muted-foreground" /><p className="text-sm font-medium">No batch loans found</p><p className="mt-1 text-xs text-muted-foreground">Adjust the search criteria and try again.</p></TableCell></TableRow>
                   )}
                   {pageRows.map((loan) => (
-                    <TableRow key={loan.id} className="text-xs">
-                      <TableCell className="py-2 font-semibold"><button className="text-foreground underline-offset-2 hover:underline" onClick={() => openBatch(loan)}>{loan.id}</button></TableCell>
+                    <TableRow key={loan.id} className="group text-xs">
+                      <TableCell className="sticky left-0 z-10 bg-background py-2 font-semibold group-hover:bg-muted/50"><button className="text-foreground underline-offset-2 hover:underline" onClick={() => openBatch(loan)}>{loan.id}</button></TableCell>
                       <TableCell className="py-2 tabular-nums">{loan.account}</TableCell>
                       <TableCell className="max-w-[240px] py-2"><Tooltip><TooltipTrigger asChild><span className="block truncate">{loan.customer}</span></TooltipTrigger><TooltipContent>{loan.customer}</TooltipContent></Tooltip></TableCell>
                       <TableCell className="py-2"><StatusBadge status={loan.status} /></TableCell>
@@ -487,7 +487,7 @@ const OnsiteBatchLoans = () => {
                     </TableRow>
                   ))}
                 </TableBody>
-              </Table>
+              </table>
             </div>
             <div className="flex flex-col gap-2 border-t border-border px-3 py-2 sm:flex-row sm:items-center sm:justify-between">
               <span className="text-xs text-muted-foreground">{filtered.length === 0 ? "No results" : `Showing ${start + 1}–${Math.min(start + pageSize, filtered.length)} of ${filtered.length}`}</span>
