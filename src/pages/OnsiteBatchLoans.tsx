@@ -473,6 +473,17 @@ const OnsiteBatchLoans = () => {
                 </div>
               </section>
               <section className="space-y-3 border-t border-border pt-4">
+                <h3 className="text-[10px] font-semibold uppercase text-muted-foreground">Lifecycle</h3>
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="space-y-1"><Label className={LABEL}>Created By</Label><Input className={FIELD} value="Admin User" readOnly /></div>
+                  <div className="space-y-1"><Label className={LABEL}>Created Date</Label><Input className={FIELD} value={format(new Date(), "MM/dd/yyyy")} readOnly /></div>
+                  <div className="space-y-1"><Label className={LABEL}>Moved By</Label><Input className={FIELD} value="" readOnly /></div>
+                  <div className="space-y-1"><Label className={LABEL}>Moved Date</Label><Input className={FIELD} value="" readOnly /></div>
+                  <div className="space-y-1"><Label className={LABEL}>Returned By</Label><Input className={FIELD} value="" readOnly /></div>
+                  <div className="space-y-1"><Label className={LABEL}>Returned Date</Label><Input className={FIELD} value="" readOnly /></div>
+                </div>
+              </section>
+              <section className="space-y-3 border-t border-border pt-4">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
                   <div><h3 className="text-[10px] font-semibold uppercase text-muted-foreground">Standards in batch</h3><p className="mt-1 text-[11px] text-muted-foreground">{newStandards.length} {newStandards.length === 1 ? "standard" : "standards"} added</p></div>
                   <div className="flex items-end gap-2"><div className="space-y-1"><Label htmlFor="new-standard-number" className={LABEL}>Standard # <span className="text-destructive">*</span></Label><Input id="new-standard-number" className={`${FIELD} w-48`} value={standardNumber} placeholder="Enter standard number" onChange={(event) => { setStandardNumber(event.target.value); setStandardError(""); }} onKeyDown={(event) => event.key === "Enter" && addStandard()} /></div><Button variant="outline" className="h-7 gap-1 text-[11px]" onClick={addStandard}><Plus className="h-3 w-3" />Add</Button></div>
@@ -508,6 +519,17 @@ const OnsiteBatchLoans = () => {
                  <div className="space-y-1"><Label className={LABEL}>Date Needed</Label><Input className={FIELD} value={editLoan.needed} readOnly /></div>
                 <div className="space-y-1"><Label className={LABEL}>Expected Return Date</Label><Input className={FIELD} value={editLoan.expectedReturn} readOnly /></div>
               </div></section>
+              <section className="space-y-3 border-t border-border pt-4">
+                <h3 className="text-[10px] font-semibold uppercase text-muted-foreground">Lifecycle</h3>
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="space-y-1"><Label className={LABEL}>Created By</Label><Input className={FIELD} value={editLoan.createdBy} readOnly /></div>
+                  <div className="space-y-1"><Label className={LABEL}>Created Date</Label><Input className={FIELD} value={editLoan.created} readOnly /></div>
+                  <div className="space-y-1"><Label className={LABEL}>Moved By</Label><Input className={FIELD} value={editLoan.movedBy || ""} readOnly /></div>
+                  <div className="space-y-1"><Label className={LABEL}>Moved Date</Label><Input className={FIELD} value={editLoan.movedDate || ""} readOnly /></div>
+                  <div className="space-y-1"><Label className={LABEL}>Returned By</Label><Input className={FIELD} value={editLoan.returnedBy || ""} readOnly /></div>
+                  <div className="space-y-1"><Label className={LABEL}>Returned Date</Label><Input className={FIELD} value={editLoan.returnedDate || ""} readOnly /></div>
+                </div>
+              </section>
               <section className="space-y-3 border-t border-border pt-4"><div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"><div><h3 className="text-[10px] font-semibold uppercase text-muted-foreground">Standards in batch</h3><p className="mt-1 text-[11px] text-muted-foreground">{editStandards.length} {editStandards.length === 1 ? "standard" : "standards"}</p></div>{editLoan.status === "Open" && <div className="flex items-end gap-2"><div className="space-y-1"><Label htmlFor="edit-standard-number" className={LABEL}>Standard #</Label><Input id="edit-standard-number" className={`${FIELD} w-48`} value={editStandardNumber} placeholder="Enter standard number" onChange={(event) => { setEditStandardNumber(event.target.value); setEditStandardError(""); }} onKeyDown={(event) => event.key === "Enter" && addEditStandard()} /></div><Button variant="outline" className="h-7 gap-1 text-[11px]" onClick={addEditStandard}><Plus className="h-3 w-3" />Add</Button></div>}</div>{editStandardError && <p className="text-[10px] text-destructive">{editStandardError}</p>}
                 <div className="overflow-hidden rounded-md border border-border"><Table><TableHeader className="bg-muted/60"><TableRow><TableHead className="h-8 px-2 text-[10px]">Standard #</TableHead><TableHead className="h-8 px-2 text-[10px]">State of Asset</TableHead><TableHead className="h-8 px-2 text-[10px]">Next Cal Date</TableHead><TableHead className="h-8 px-2 text-[10px]">Manufacturer</TableHead><TableHead className="h-8 px-2 text-[10px]">Model</TableHead><TableHead className="h-8 px-2 text-[10px]">Serial</TableHead><TableHead className="h-8 px-2 text-[10px]">Lab Code</TableHead><TableHead className="h-8 w-10 px-2"><span className="sr-only">Remove</span></TableHead></TableRow></TableHeader><TableBody>{editStandards.map((standard) => <TableRow key={standard.standardNo} className="text-[11px]"><TableCell className="px-2 py-2 font-semibold">{standard.standardNo}</TableCell><TableCell className="px-2 py-2">{standard.state}</TableCell><TableCell className="px-2 py-2 tabular-nums">{standard.nextCalibrationDue}</TableCell><TableCell className="px-2 py-2">{standard.manufacturer}</TableCell><TableCell className="px-2 py-2">{standard.model}</TableCell><TableCell className="px-2 py-2">{standard.serial}</TableCell><TableCell className="px-2 py-2">{standard.labCode}</TableCell><TableCell className="px-2 py-2"><Button variant="ghost" size="icon" className="h-6 w-6 text-destructive hover:bg-destructive/10 hover:text-destructive" aria-label={`Remove standard ${standard.standardNo}`} onClick={() => setEditStandards((current) => current.filter((item) => item.standardNo !== standard.standardNo))}><Trash2 className="h-3 w-3" /></Button></TableCell></TableRow>)}</TableBody></Table></div>
               </section>
