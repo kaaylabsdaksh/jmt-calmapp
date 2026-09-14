@@ -412,7 +412,7 @@ const OnsiteBatchLoans = () => {
               <Button variant="outline" className="h-7 gap-1.5 border-destructive px-3 text-[11px] text-destructive hover:bg-destructive/10 hover:text-destructive" onClick={clearFilters}>
                 <X className="h-3 w-3" />Clear
               </Button>
-              <Button className="h-7 gap-1.5 bg-foreground px-4 text-[11px] text-background hover:bg-foreground/90" onClick={applyFilters}>
+              <Button className="h-7 gap-1.5 bg-blue-600 px-4 text-[11px] text-white hover:bg-blue-700" onClick={applyFilters}>
                 <Search className="h-3 w-3" />Search
               </Button>
             </div>
