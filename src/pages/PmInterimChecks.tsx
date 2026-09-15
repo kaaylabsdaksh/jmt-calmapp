@@ -30,7 +30,7 @@ import { LAB_CODES, LOCATIONS } from "@/lib/standards/data";
 import { PM_SCHEDULES, PM_STATIONS, PM_TEMPLATES, PmSchedule, PmScheduleStatus } from "@/lib/standards/pm-interim-checks";
 
 type SortKey = keyof Pick<PmSchedule, "id" | "dueDate" | "terminalDate" | "account" | "type" | "status" | "lastResult" | "frequency" | "division" | "labCodes" | "station">;
-type ViewMode = "schedule" | "standard";
+type ViewMode = "schedule" | "standard" | "station" | "template";
 type ManagerKind = "stations" | "templates" | "schedules" | null;
 
 const emptyFilters = {
@@ -123,15 +123,29 @@ const PmInterimChecks = () => {
   }, [filters, sort]);
 
   const activeFilters = Object.entries(filters).filter(([key, value]) => key !== "includeHistory" && value !== undefined && value !== "" && value !== "all" && value !== emptyFilters[key as keyof typeof emptyFilters]).length + (filters.includeHistory ? 1 : 0);
-  const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const viewRows = useMemo(() => {
+    if (viewMode === "schedule") return filtered;
+    const groupValue = (row: PmSchedule) => viewMode === "station" ? row.station : viewMode === "template" ? row.templateDescription : row.standards[0] ?? "Unassigned";
+    return [...filtered].sort((a, b) => groupValue(a).localeCompare(groupValue(b), undefined, { numeric: true }) || a.id.localeCompare(b.id, undefined, { numeric: true }));
+  }, [filtered, viewMode]);
+  const pageCount = Math.max(1, Math.ceil(viewRows.length / pageSize));
   const start = (page - 1) * pageSize;
-  const pageRows = filtered.slice(start, start + pageSize);
+  const pageRows = viewRows.slice(start, start + pageSize);
 
   const updateDraft = <K extends keyof typeof emptyFilters>(key: K, value: (typeof emptyFilters)[K]) => setDraft((current) => ({ ...current, [key]: value }));
   const applyFilters = () => { setFilters(draft); setPage(1); };
   const clearFilters = () => { setDraft(emptyFilters); setFilters(emptyFilters); setPage(1); };
   const toggleSort = (key: SortKey) => setSort((current) => ({ key, dir: current.key === key && current.dir === "asc" ? "desc" : "asc" }));
   const toggleExpanded = (id: string) => setExpanded((current) => { const next = new Set(current); next.has(id) ? next.delete(id) : next.add(id); return next; });
+  const changeViewMode = (value: ViewMode) => {
+    setViewMode(value);
+    setPage(1);
+    if (value === "template") {
+      setDraft((current) => ({ ...current, location: "all", division: "all", labCode: "all", account: "" }));
+      setFilters((current) => ({ ...current, location: "all", division: "all", labCode: "all", account: "" }));
+    }
+  };
+  const groupLabel = (row: PmSchedule) => viewMode === "station" ? row.station : viewMode === "template" ? row.templateDescription : viewMode === "standard" ? row.standards[0] ?? "Unassigned" : "";
   const exportRows = () => {
     const rows = [["Schedule #", "Due Date", "Terminal Date", "Account #", "Type", "Status", "Last Result", "Frequency", "Division", "Lab Code(s)", "Station", "Document/Tool", "Standards"], ...filtered.map((row) => [row.id, row.dueDate, row.terminalDate, row.account, row.type, row.status, row.lastResult, row.frequency, row.division, row.labCodes, row.station, row.documentTool, row.standards.join(", ")])];
     const url = URL.createObjectURL(new Blob([rows.map((row) => row.map(csvCell).join(",")).join("\n")], { type: "text/csv" }));
@@ -158,7 +172,7 @@ const PmInterimChecks = () => {
                 {activeFilters > 0 && <Badge variant="secondary" className="h-5 text-[10px]">{activeFilters} active</Badge>}
               </div>
               <div className="flex items-center gap-2">
-                <Select value={viewMode} onValueChange={(value) => setViewMode(value as ViewMode)}><SelectTrigger className="h-7 w-[150px] text-[11px]"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="schedule">View by Schedule</SelectItem><SelectItem value="standard">View by Standard</SelectItem></SelectContent></Select>
+                <Select value={viewMode} onValueChange={(value) => changeViewMode(value as ViewMode)}><SelectTrigger className="h-7 w-[156px] text-[11px]"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="schedule">View by Schedule</SelectItem><SelectItem value="standard">View by Standard</SelectItem><SelectItem value="station">View by Station</SelectItem><SelectItem value="template">View by Template</SelectItem></SelectContent></Select>
                 <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={exportRows}><Download className="h-3.5 w-3.5" /> Export</Button>
               </div>
             </div>
@@ -167,8 +181,8 @@ const PmInterimChecks = () => {
                 <Field label="Schedule Status"><Select value={draft.status} onValueChange={(value) => updateDraft("status", value)}><SelectTrigger className={FIELD}><SelectValue /></SelectTrigger><SelectContent><SelectItem value="all">All statuses</SelectItem><SelectItem value="Active">Active</SelectItem><SelectItem value="Completed">Completed</SelectItem></SelectContent></Select></Field>
                 <Field label="Schedule Type"><Select value={draft.type} onValueChange={(value) => updateDraft("type", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All types" /></SelectTrigger><SelectContent><SelectItem value="all">All types</SelectItem><SelectItem value="IM">Interim Check</SelectItem><SelectItem value="PM">Preventive Maintenance</SelectItem></SelectContent></Select></Field>
                 <Field label="Standard #"><Input className={FIELD} value={draft.standardNo} onChange={(event) => updateDraft("standardNo", event.target.value)} /></Field>
-                <Field label="Location"><Select value={draft.location} onValueChange={(value) => updateDraft("location", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All locations" /></SelectTrigger><SelectContent><SelectItem value="all">All locations</SelectItem>{LOCATIONS.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></Field>
-                <Field label="Division"><Select value={draft.division} onValueChange={(value) => updateDraft("division", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All divisions" /></SelectTrigger><SelectContent><SelectItem value="all">All divisions</SelectItem>{["Lab", "OnSite", "ESL"].map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></Field>
+                <Field label="Location"><Select disabled={viewMode === "template"} value={draft.location} onValueChange={(value) => updateDraft("location", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All locations" /></SelectTrigger><SelectContent><SelectItem value="all">All locations</SelectItem>{LOCATIONS.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></Field>
+                <Field label="Division"><Select disabled={viewMode === "template"} value={draft.division} onValueChange={(value) => updateDraft("division", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All divisions" /></SelectTrigger><SelectContent><SelectItem value="all">All divisions</SelectItem>{["Lab", "OnSite", "ESL"].map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></Field>
                 <Field label="Template Description"><Input className={FIELD} value={draft.template} onChange={(event) => updateDraft("template", event.target.value)} /></Field>
               </div>
               <DateBlock title="Schedule Dates" fields={[{ label: "Due Date From", value: draft.dueFrom, key: "dueFrom" }, { label: "Due Date To", value: draft.dueTo, key: "dueTo" }, { label: "Terminal Date From", value: draft.terminalFrom, key: "terminalFrom" }, { label: "Terminal Date To", value: draft.terminalTo, key: "terminalTo" }]} onChange={updateDraft} />
@@ -176,8 +190,8 @@ const PmInterimChecks = () => {
                 <Field label="Station"><Select value={draft.station} onValueChange={(value) => updateDraft("station", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All stations" /></SelectTrigger><SelectContent><SelectItem value="all">All stations</SelectItem>{PM_STATIONS.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></Field>
                 <Field label="Frequency"><Select value={draft.frequency} onValueChange={(value) => updateDraft("frequency", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All frequencies" /></SelectTrigger><SelectContent><SelectItem value="all">All frequencies</SelectItem><SelectItem value="D">Daily</SelectItem><SelectItem value="M">Monthly</SelectItem></SelectContent></Select></Field>
                 <Field label="Document / Tool"><Input className={FIELD} value={draft.documentTool} onChange={(event) => updateDraft("documentTool", event.target.value)} /></Field>
-                <Field label="Lab Code"><Select value={draft.labCode} onValueChange={(value) => updateDraft("labCode", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All lab codes" /></SelectTrigger><SelectContent><SelectItem value="all">All lab codes</SelectItem>{LAB_CODES.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></Field>
-                <Field label="Account #"><Input className={FIELD} value={draft.account} onChange={(event) => updateDraft("account", event.target.value)} /></Field>
+                <Field label="Lab Code"><Select disabled={viewMode === "template"} value={draft.labCode} onValueChange={(value) => updateDraft("labCode", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All lab codes" /></SelectTrigger><SelectContent><SelectItem value="all">All lab codes</SelectItem>{LAB_CODES.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></Field>
+                <Field label="Account #"><Input disabled={viewMode === "template"} className={FIELD} value={draft.account} onChange={(event) => updateDraft("account", event.target.value)} /></Field>
               </div>
               <div className="space-y-3">
                 <Field label="Completed Status"><Select value={draft.completedStatus} onValueChange={(value) => updateDraft("completedStatus", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All results" /></SelectTrigger><SelectContent><SelectItem value="all">All results</SelectItem><SelectItem value="Pass">Pass</SelectItem><SelectItem value="Not Performed">Not Performed</SelectItem></SelectContent></Select></Field>
@@ -195,7 +209,7 @@ const PmInterimChecks = () => {
 
           <section className="border bg-card">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b px-4 py-3">
-              <div><h2 className="text-sm font-semibold">{viewMode === "schedule" ? "Schedule Results" : "Standards by Schedule"}</h2><p className="text-[11px] text-muted-foreground">{filtered.length} records returned · Select a row to view check history.</p></div>
+              <div><h2 className="text-sm font-semibold">{{ schedule: "Schedule Results", standard: "Results by Standard", station: "Results by Station", template: "Results by Template" }[viewMode]}</h2><p className="text-[11px] text-muted-foreground">{filtered.length} records returned · Select a row to view check history.</p></div>
               <div className="flex flex-wrap items-center gap-2">
                 <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => setManager("stations")}><Building2 className="h-3.5 w-3.5" /> Manage Stations</Button>
                 <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => setManager("templates")}><FileSpreadsheet className="h-3.5 w-3.5" /> Manage Templates</Button>
@@ -208,9 +222,12 @@ const PmInterimChecks = () => {
                   <TableHead className="sticky left-0 top-0 z-20 h-8 w-8 bg-muted/95 px-2" />
                   <SortHead column="id" className="left-8 z-20">Schedule #</SortHead><SortHead column="dueDate">Due Date</SortHead><SortHead column="terminalDate">Terminal Date</SortHead><SortHead column="account">Account #</SortHead><SortHead column="type">Type</SortHead><SortHead column="status">Status</SortHead><SortHead column="lastResult">Last Result</SortHead><SortHead column="frequency">Freq.</SortHead><SortHead column="division">Division</SortHead><SortHead column="labCodes">Lab Code(s)</SortHead><SortHead column="station">Station</SortHead><TableHead className="sticky top-0 z-10 h-8 bg-muted/95 px-2 text-[10px] font-semibold">Document / Tool</TableHead><TableHead className="sticky top-0 z-10 h-8 bg-muted/95 px-2 text-[10px] font-semibold">Standards</TableHead>
                 </TableRow></TableHeader>
-                <TableBody>{pageRows.map((row) => {
+                <TableBody>{pageRows.map((row, rowIndex) => {
                   const histories = filters.includeHistory ? row.histories : row.histories.slice(0, 1);
+                  const currentGroup = groupLabel(row);
+                  const previousGroup = rowIndex > 0 ? groupLabel(pageRows[rowIndex - 1]) : "";
                   return <Fragment key={row.id}>
+                    {viewMode !== "schedule" && currentGroup !== previousGroup && <TableRow className="bg-muted/40"><TableCell colSpan={14} className="h-8 px-3 py-1.5"><span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{viewMode}</span><span className="ml-2 text-xs font-semibold text-foreground">{currentGroup}</span></TableCell></TableRow>}
                     <TableRow className="group cursor-pointer" onClick={() => toggleExpanded(row.id)}>
                       <TableCell className="sticky left-0 z-10 bg-card px-2 group-hover:bg-muted/50"><Button variant="ghost" size="icon" className="h-5 w-5" aria-label={`${expanded.has(row.id) ? "Collapse" : "Expand"} schedule ${row.id}`}>{expanded.has(row.id) ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}</Button></TableCell>
                       <TableCell className="sticky left-8 z-10 bg-card px-2 font-semibold text-info group-hover:bg-muted/50">{row.id}</TableCell><TableCell className="px-2 tabular-nums">{row.dueDate}</TableCell><TableCell className="px-2 tabular-nums">{row.terminalDate}</TableCell><TableCell className="px-2">{row.account}</TableCell><TableCell className="px-2">{row.type}</TableCell><TableCell className="px-2"><StatusBadge status={row.status} /></TableCell><TableCell className="px-2">{row.lastResult || "—"}</TableCell><TableCell className="px-2">{row.frequency}</TableCell><TableCell className="px-2">{row.division}</TableCell><TableCell className="px-2">{row.labCodes}</TableCell><TableCell className="px-2"><Truncated text={row.station} /></TableCell><TableCell className="px-2 text-info"><Truncated text={row.documentTool} /></TableCell><TableCell className="px-2">{row.standards.join(", ")}</TableCell>
