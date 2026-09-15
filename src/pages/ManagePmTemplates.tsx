@@ -43,6 +43,8 @@ const StatusBadge = ({ status }: { status: PmTemplateStatus }) => (
 );
 
 const ManagePmTemplates = () => {
+  const [searchParams] = useSearchParams();
+  const openedFromUrl = useRef(false);
   const [templates, setTemplates] = useState(PM_TEMPLATE_RECORDS);
   const [draftFilters, setDraftFilters] = useState(EMPTY_FILTERS);
   const [filters, setFilters] = useState(EMPTY_FILTERS);
@@ -52,6 +54,19 @@ const ManagePmTemplates = () => {
   const [pendingFile, setPendingFile] = useState("");
   const [page, setPage] = useState(1);
   const fileInput = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const templateId = searchParams.get("template");
+    if (templateId && !openedFromUrl.current) {
+      openedFromUrl.current = true;
+      const template = templates.find((item) => item.id === templateId);
+      if (template) {
+        setEditing({ ...template });
+        setIsNew(false);
+        setPendingFile("");
+      }
+    }
+  }, [searchParams, templates]);
 
   const filtered = useMemo(() => templates.filter((template) => {
     if (filters.status !== "all" && template.status !== filters.status) return false;
