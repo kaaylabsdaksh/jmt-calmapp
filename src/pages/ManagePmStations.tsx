@@ -135,8 +135,8 @@ const ManagePmStations = () => {
     <div className="min-h-full bg-background">
       <ModernTopNav />
       <main className="w-full px-3 py-4 sm:px-4 lg:px-6">
-        <section className="flex min-h-[calc(100vh-7rem)] flex-col overflow-hidden border bg-card">
-          <div className="flex items-center gap-2 border-b px-5 py-4">
+        <section className="flex min-h-[calc(100vh-7rem)] flex-col gap-4">
+          <div className="flex items-center gap-2 border bg-card px-5 py-4">
             <Building2 className="h-4 w-4 text-muted-foreground" />
             <div>
               <h2 className="text-sm font-semibold">{editing ? `${isNew ? "Add New" : "Edit"} PM / Interim Check Station` : "Manage PM / Interim Check Stations"}</h2>
@@ -146,8 +146,8 @@ const ManagePmStations = () => {
         {editing ? (
           <StationEditor station={editing} isNew={isNew} onChange={updateEditing} onBack={() => { setEditing(null); setIsNew(false); }} onSave={saveStation} />
         ) : (
-          <div className="flex min-h-0 flex-1 flex-col">
-            <section className="border-b bg-card px-5 py-4">
+          <div className="flex min-h-0 flex-1 flex-col gap-4">
+            <section className="border bg-card px-5 py-4">
               <div className="mb-3 flex items-center justify-between gap-3"><h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Search Criteria</h3><Button size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => { setEditing(emptyStation()); setIsNew(true); }}><Plus className="h-3.5 w-3.5" /> Add New</Button></div>
               <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                 <CompactField label="Type"><Select value={draftFilters.type} onValueChange={(value) => updateFilter("type", value)}><SelectTrigger className={CONTROL}><SelectValue /></SelectTrigger><SelectContent><SelectItem value="all">All types</SelectItem><SelectItem value="Process">Process</SelectItem><SelectItem value="Station">Station</SelectItem></SelectContent></Select></CompactField>
@@ -162,6 +162,10 @@ const ManagePmStations = () => {
               <div className="mt-3 flex justify-end gap-2"><Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => { setDraftFilters(EMPTY_FILTERS); setFilters(EMPTY_FILTERS); setPage(1); }}><RotateCcw className="h-3.5 w-3.5" /> Clear</Button><Button size="sm" className="h-7 gap-1.5 bg-info text-info-foreground hover:bg-info/90 text-[11px]" onClick={() => { setFilters(draftFilters); setPage(1); }}><Search className="h-3.5 w-3.5" /> Search</Button></div>
             </section>
 
+            <section className="flex min-h-0 flex-1 flex-col overflow-hidden border bg-card">
+              <div className="flex items-center justify-between border-b px-5 py-3">
+                <div><h3 className="text-sm font-semibold">Station Results</h3><p className="text-[11px] text-muted-foreground">{filtered.length} records returned · Expand a row to review linked standards.</p></div>
+              </div>
             <div className="min-h-0 flex-1 overflow-auto">
               <Table className="min-w-[1040px] text-[11px]">
                 <TableHeader><TableRow><TableHead className="sticky left-0 top-0 z-20 h-8 w-8 bg-muted/95" /><TableHead className="sticky left-8 top-0 z-20 h-8 min-w-[300px] bg-muted/95">Station</TableHead>{["Type", "Account #", "Location", "Division", "Lab Code(s)", "Description"].map((heading) => <TableHead key={heading} className="sticky top-0 z-10 h-8 bg-muted/95">{heading}</TableHead>)}</TableRow></TableHeader>
@@ -169,6 +173,7 @@ const ManagePmStations = () => {
               </Table>
             </div>
             <div className="flex items-center justify-between border-t px-4 py-2"><p className="text-[11px] text-muted-foreground">{filtered.length} records returned</p><div className="flex items-center gap-2"><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page === 1} onClick={() => setPage((value) => value - 1)}>Previous</Button><span className="text-[11px] text-muted-foreground">Page {page} of {pageCount}</span><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page === pageCount} onClick={() => setPage((value) => value + 1)}>Next</Button></div></div>
+            </section>
           </div>
         )}
         </section>
