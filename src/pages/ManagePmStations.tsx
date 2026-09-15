@@ -1,4 +1,5 @@
 import { Fragment, useMemo, useState } from "react";
+import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
 import { Building2, ChevronDown, ChevronRight, FileText, Plus, RotateCcw, Search, Trash2 } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Button } from "@/components/ui/button";
