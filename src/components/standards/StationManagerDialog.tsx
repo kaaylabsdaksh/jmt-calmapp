@@ -1,0 +1,215 @@
+import { Fragment, useMemo, useState } from "react";
+import { Building2, ChevronDown, ChevronRight, Plus, RotateCcw, Search, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/hooks/use-toast";
+import { LAB_CODES, LOCATIONS, STANDARDS, StandardRecord } from "@/lib/standards/data";
+import { PM_SCHEDULES, PM_STATIONS } from "@/lib/standards/pm-interim-checks";
+
+type StationType = "Process" | "Station";
+
+interface StationRecord {
+  id: string;
+  type: StationType;
+  account: string;
+  location: string;
+  division: string;
+  number: string;
+  name: string;
+  description: string;
+  labCodes: string[];
+  standardNumbers: string[];
+  createdBy: string;
+  createdDate: string;
+  modifiedBy: string;
+  modifiedDate: string;
+  comments: { id: string; type: string; text: string }[];
+}
+
+type StationFilters = {
+  type: string;
+  location: string;
+  division: string;
+  description: string;
+  name: string;
+  account: string;
+  labCode: string;
+  standardNo: string;
+};
+
+const EMPTY_FILTERS: StationFilters = { type: "all", location: "all", division: "all", description: "", name: "", account: "", labCode: "all", standardNo: "" };
+const DIVISIONS = ["Regular", "OnSite", "ESL"];
+const PAGE_SIZE = 10;
+const CONTROL = "h-7 text-[11px]";
+const FIELD_LABEL = "text-[11px] font-medium text-foreground/80";
+
+const buildSeedStations = (): StationRecord[] => PM_STATIONS.slice(0, 18).map((name, index) => {
+  const schedule = PM_SCHEDULES.find((row) => row.station === name) ?? PM_SCHEDULES[index % PM_SCHEDULES.length];
+  const standardNumbers = schedule?.standards ?? [];
+  return {
+    id: `station-${index + 1}`,
+    type: index % 5 === 4 ? "Station" : "Process",
+    account: schedule?.account ?? "0152.00",
+    location: schedule?.location ?? LOCATIONS[index % LOCATIONS.length],
+    division: schedule?.division === "Lab" ? "Regular" : schedule?.division ?? "OnSite",
+    number: String(2144 + index * 37),
+    name,
+    description: schedule?.templateDescription ?? "Interim Check",
+    labCodes: schedule?.labCodes.split(" ").filter(Boolean) ?? [],
+    standardNumbers,
+    createdBy: "Admin User",
+    createdDate: "09/15/2026 03:53 AM",
+    modifiedBy: index % 3 === 0 ? "Admin User" : "",
+    modifiedDate: index % 3 === 0 ? "09/15/2026 03:53 AM" : "",
+    comments: index % 4 === 0 ? [{ id: `comment-${index}`, type: "Other", text: "Reviewed for the current PM cycle." }] : [],
+  };
+});
+
+const emptyStation = (): StationRecord => ({
+  id: `station-${Date.now()}`,
+  type: "Station",
+  account: "",
+  location: LOCATIONS[0] ?? "",
+  division: "Regular",
+  number: "",
+  name: "",
+  description: "",
+  labCodes: [],
+  standardNumbers: [],
+  createdBy: "Admin User",
+  createdDate: "",
+  modifiedBy: "",
+  modifiedDate: "",
+  comments: [],
+});
+
+const resolveStandard = (standardNo: string): StandardRecord | undefined => STANDARDS.find((standard) => standard.standardNo === standardNo);
+
+export const StationManagerDialog = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
+  const [stations, setStations] = useState(buildSeedStations);
+  const [draftFilters, setDraftFilters] = useState(EMPTY_FILTERS);
+  const [filters, setFilters] = useState(EMPTY_FILTERS);
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const [page, setPage] = useState(1);
+  const [editing, setEditing] = useState<StationRecord | null>(null);
+  const [isNew, setIsNew] = useState(false);
+
+  const filtered = useMemo(() => stations.filter((station) => {
+    if (filters.type !== "all" && station.type !== filters.type) return false;
+    if (filters.location !== "all" && station.location !== filters.location) return false;
+    if (filters.division !== "all" && station.division !== filters.division) return false;
+    if (filters.description && !station.description.toLowerCase().includes(filters.description.toLowerCase())) return false;
+    if (filters.name && !station.name.toLowerCase().includes(filters.name.toLowerCase())) return false;
+    if (filters.account && !station.account.includes(filters.account)) return false;
+    if (filters.labCode !== "all" && !station.labCodes.includes(filters.labCode)) return false;
+    if (filters.standardNo && !station.standardNumbers.some((value) => value.includes(filters.standardNo))) return false;
+    return true;
+  }), [filters, stations]);
+
+  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const pageRows = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const updateFilter = (key: keyof StationFilters, value: string) => setDraftFilters((current) => ({ ...current, [key]: value }));
+  const updateEditing = <K extends keyof StationRecord>(key: K, value: StationRecord[K]) => setEditing((current) => current ? { ...current, [key]: value } : current);
+  const toggleExpanded = (id: string) => setExpanded((current) => { const next = new Set(current); next.has(id) ? next.delete(id) : next.add(id); return next; });
+
+  const saveStation = () => {
+    if (!editing || !editing.account.trim() || !editing.name.trim() || !editing.number.trim()) {
+      toast({ title: "Complete required fields", description: "Account #, Number, and Name are required.", variant: "destructive" });
+      return;
+    }
+    const now = "09/15/2026 04:25 AM";
+    const saved = { ...editing, createdDate: editing.createdDate || now, modifiedBy: "Admin User", modifiedDate: now };
+    setStations((current) => isNew ? [saved, ...current] : current.map((station) => station.id === saved.id ? saved : station));
+    toast({ title: isNew ? "Station added" : "Station updated", description: `${saved.name} was saved.` });
+    setEditing(null);
+    setIsNew(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={(nextOpen) => !nextOpen && onClose()}>
+      <DialogContent className="flex max-h-[92vh] max-w-[min(96vw,1280px)] flex-col gap-0 overflow-hidden p-0">
+        <DialogHeader className="border-b px-5 py-4">
+          <DialogTitle className="flex items-center gap-2 text-base"><Building2 className="h-4 w-4" />{editing ? `${isNew ? "Add New" : "Edit"} PM / Interim Check Station` : "Manage PM / Interim Check Stations"}</DialogTitle>
+          <DialogDescription>{editing ? "Maintain station details, lab codes, linked standards, schedules, and comments." : "Search stations, review linked standards, or add and edit station records."}</DialogDescription>
+        </DialogHeader>
+
+        {editing ? (
+          <StationEditor station={editing} isNew={isNew} onChange={updateEditing} onBack={() => { setEditing(null); setIsNew(false); }} onSave={saveStation} />
+        ) : (
+          <div className="flex min-h-0 flex-1 flex-col">
+            <section className="border-b bg-card px-5 py-4">
+              <div className="mb-3 flex items-center justify-between gap-3"><h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Search Criteria</h3><Button size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => { setEditing(emptyStation()); setIsNew(true); }}><Plus className="h-3.5 w-3.5" /> Add New</Button></div>
+              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                <CompactField label="Type"><Select value={draftFilters.type} onValueChange={(value) => updateFilter("type", value)}><SelectTrigger className={CONTROL}><SelectValue /></SelectTrigger><SelectContent><SelectItem value="all">All types</SelectItem><SelectItem value="Process">Process</SelectItem><SelectItem value="Station">Station</SelectItem></SelectContent></Select></CompactField>
+                <CompactField label="Location"><Select value={draftFilters.location} onValueChange={(value) => updateFilter("location", value)}><SelectTrigger className={CONTROL}><SelectValue /></SelectTrigger><SelectContent><SelectItem value="all">All locations</SelectItem>{LOCATIONS.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></CompactField>
+                <CompactField label="Division"><Select value={draftFilters.division} onValueChange={(value) => updateFilter("division", value)}><SelectTrigger className={CONTROL}><SelectValue /></SelectTrigger><SelectContent><SelectItem value="all">All divisions</SelectItem>{DIVISIONS.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></CompactField>
+                <CompactField label="Description"><Input className={CONTROL} value={draftFilters.description} onChange={(event) => updateFilter("description", event.target.value)} /></CompactField>
+                <CompactField label="Name"><Input className={CONTROL} value={draftFilters.name} onChange={(event) => updateFilter("name", event.target.value)} /></CompactField>
+                <CompactField label="Account #"><Input className={CONTROL} value={draftFilters.account} onChange={(event) => updateFilter("account", event.target.value)} /></CompactField>
+                <CompactField label="Lab Code"><Select value={draftFilters.labCode} onValueChange={(value) => updateFilter("labCode", value)}><SelectTrigger className={CONTROL}><SelectValue /></SelectTrigger><SelectContent><SelectItem value="all">All lab codes</SelectItem>{LAB_CODES.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></CompactField>
+                <CompactField label="Standard #"><Input className={CONTROL} value={draftFilters.standardNo} onChange={(event) => updateFilter("standardNo", event.target.value)} /></CompactField>
+              </div>
+              <div className="mt-3 flex justify-end gap-2"><Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => { setDraftFilters(EMPTY_FILTERS); setFilters(EMPTY_FILTERS); setPage(1); }}><RotateCcw className="h-3.5 w-3.5" /> Clear</Button><Button size="sm" className="h-7 gap-1.5 bg-info text-info-foreground hover:bg-info/90 text-[11px]" onClick={() => { setFilters(draftFilters); setPage(1); }}><Search className="h-3.5 w-3.5" /> Search</Button></div>
+            </section>
+
+            <div className="min-h-0 flex-1 overflow-auto">
+              <Table className="min-w-[1040px] text-[11px]">
+                <TableHeader><TableRow><TableHead className="sticky left-0 top-0 z-20 h-8 w-8 bg-muted/95" /><TableHead className="sticky left-8 top-0 z-20 h-8 min-w-[300px] bg-muted/95">Station</TableHead>{["Type", "Account #", "Location", "Division", "Lab Code(s)", "Description"].map((heading) => <TableHead key={heading} className="sticky top-0 z-10 h-8 bg-muted/95">{heading}</TableHead>)}</TableRow></TableHeader>
+                <TableBody>{pageRows.length ? pageRows.map((station) => <Fragment key={station.id}><TableRow className="group cursor-pointer" onClick={() => toggleExpanded(station.id)}><TableCell className="sticky left-0 z-10 bg-card px-2 group-hover:bg-muted/50"><Button variant="ghost" size="icon" className="h-5 w-5" aria-label={`${expanded.has(station.id) ? "Collapse" : "Expand"} ${station.name}`}>{expanded.has(station.id) ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}</Button></TableCell><TableCell className="sticky left-8 z-10 bg-card px-2 font-medium group-hover:bg-muted/50"><Button variant="link" className="h-auto p-0 text-[11px] text-info" onClick={(event) => { event.stopPropagation(); setEditing({ ...station }); setIsNew(false); }}>{station.name}</Button></TableCell><TableCell>{station.type}</TableCell><TableCell>{station.account}</TableCell><TableCell>{station.location}</TableCell><TableCell>{station.division}</TableCell><TableCell>{station.labCodes.join(" ") || "—"}</TableCell><TableCell>{station.description || "—"}</TableCell></TableRow>{expanded.has(station.id) && <TableRow className="bg-muted/20"><TableCell colSpan={8} className="p-3"><LinkedStandardsTable standardNumbers={station.standardNumbers} /></TableCell></TableRow>}</Fragment>) : <TableRow><TableCell colSpan={8} className="h-24 text-center text-muted-foreground">No stations match the selected criteria.</TableCell></TableRow>}</TableBody>
+              </Table>
+            </div>
+            <div className="flex items-center justify-between border-t px-4 py-2"><p className="text-[11px] text-muted-foreground">{filtered.length} records returned</p><div className="flex items-center gap-2"><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page === 1} onClick={() => setPage((value) => value - 1)}>Previous</Button><span className="text-[11px] text-muted-foreground">Page {page} of {pageCount}</span><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page === pageCount} onClick={() => setPage((value) => value + 1)}>Next</Button></div></div>
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+const CompactField = ({ label, children }: { label: string; children: React.ReactNode }) => <div className="space-y-1"><Label className={FIELD_LABEL}>{label}</Label>{children}</div>;
+
+const LinkedStandardsTable = ({ standardNumbers, onRemove }: { standardNumbers: string[]; onRemove?: (standardNo: string) => void }) => (
+  <div className="overflow-hidden rounded-md border bg-card"><Table><TableHeader><TableRow><TableHead className="h-7 text-[10px]">Standard #</TableHead><TableHead className="h-7 text-[10px]">Manufacturer</TableHead><TableHead className="h-7 text-[10px]">Model</TableHead><TableHead className="h-7 text-[10px]">Description</TableHead>{onRemove && <TableHead className="h-7 w-20 text-right text-[10px]">Action</TableHead>}</TableRow></TableHeader><TableBody>{standardNumbers.length ? standardNumbers.map((standardNo) => { const standard = resolveStandard(standardNo); return <TableRow key={standardNo}><TableCell className="py-2 text-[11px] font-medium text-info">{standardNo}</TableCell><TableCell className="py-2 text-[11px]">{standard?.manufacturer ?? "—"}</TableCell><TableCell className="py-2 text-[11px]">{standard?.model ?? "—"}</TableCell><TableCell className="py-2 text-[11px]">{standard?.description ?? "Standard details unavailable"}</TableCell>{onRemove && <TableCell className="py-1 text-right"><Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" aria-label={`Remove standard ${standardNo}`} onClick={() => onRemove(standardNo)}><Trash2 className="h-3.5 w-3.5" /></Button></TableCell>}</TableRow>; }) : <TableRow><TableCell colSpan={onRemove ? 5 : 4} className="h-12 text-center text-[11px] text-muted-foreground">No standards linked.</TableCell></TableRow>}</TableBody></Table></div>
+);
+
+const StationEditor = ({ station, isNew, onChange, onBack, onSave }: { station: StationRecord; isNew: boolean; onChange: <K extends keyof StationRecord>(key: K, value: StationRecord[K]) => void; onBack: () => void; onSave: () => void }) => {
+  const [standardsEntry, setStandardsEntry] = useState("");
+  const [commentType, setCommentType] = useState("Other");
+  const [commentText, setCommentText] = useState("");
+  const addStandards = () => {
+    const values = standardsEntry.split(",").map((value) => value.trim()).filter(Boolean);
+    if (!values.length) return;
+    onChange("standardNumbers", [...new Set([...station.standardNumbers, ...values])]);
+    setStandardsEntry("");
+    toast({ title: "Standards added", description: values.join(", ") });
+  };
+  const addComment = () => {
+    if (!commentText.trim()) return;
+    onChange("comments", [...station.comments, { id: `comment-${Date.now()}`, type: commentType, text: commentText.trim() }]);
+    setCommentText("");
+  };
+  return <div className="min-h-0 flex-1 overflow-auto">
+    <div className="grid gap-5 px-5 py-4 lg:grid-cols-[minmax(0,2fr)_minmax(260px,1fr)]">
+      <section><h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Station Details</h3><div className="grid gap-3 sm:grid-cols-2">
+        <CompactField label="Type"><Select value={station.type} onValueChange={(value) => onChange("type", value as StationType)}><SelectTrigger className={CONTROL}><SelectValue /></SelectTrigger><SelectContent><SelectItem value="Process">Process</SelectItem><SelectItem value="Station">Station</SelectItem></SelectContent></Select></CompactField>
+        <CompactField label="Account # *"><Input className={CONTROL} value={station.account} onChange={(event) => onChange("account", event.target.value)} /></CompactField>
+        <CompactField label="Location"><Select value={station.location} onValueChange={(value) => onChange("location", value)}><SelectTrigger className={CONTROL}><SelectValue /></SelectTrigger><SelectContent>{LOCATIONS.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></CompactField>
+        <CompactField label="Division"><Select value={station.division} onValueChange={(value) => onChange("division", value)}><SelectTrigger className={CONTROL}><SelectValue /></SelectTrigger><SelectContent>{DIVISIONS.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></CompactField>
+        <CompactField label="Number *"><Input className={CONTROL} value={station.number} onChange={(event) => onChange("number", event.target.value.replace(/\D/g, ""))} /></CompactField>
+        <CompactField label="Name *"><Input className={CONTROL} value={station.name} onChange={(event) => onChange("name", event.target.value)} /></CompactField>
+        <div className="sm:col-span-2"><CompactField label="Description"><Input className={CONTROL} value={station.description} onChange={(event) => onChange("description", event.target.value)} /></CompactField></div>
+      </div></section>
+      <section><h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Lab Codes</h3><div className="max-h-52 space-y-1 overflow-auto rounded-md border p-2">{LAB_CODES.map((code) => <label key={code} className="flex items-center gap-2 rounded px-2 py-1.5 text-xs hover:bg-muted"><Checkbox checked={station.labCodes.includes(code)} onCheckedChange={(checked) => onChange("labCodes", checked ? [...station.labCodes, code] : station.labCodes.filter((value) => value !== code))} />{code} · {{ M: "Mechanical", E: "Electrical", P: "Pressure", T: "Temperature" }[code] ?? "Lab"}</label>)}</div></section>
+    </div>
+    <div className="grid gap-2 border-y bg-muted/20 px-5 py-3 text-[11px] sm:grid-cols-2 lg:grid-cols-4"><p><span className="text-muted-foreground">Created by:</span> {station.createdBy}</p><p><span className="text-muted-foreground">Created date:</span> {station.createdDate || "On save"}</p><p><span className="text-muted-foreground">Modified by:</span> {station.modifiedBy || "—"}</p><p><span className="text-muted-foreground">Modified date:</span> {station.modifiedDate || "—"}</p></div>
+    <section className="space-y-3 px-5 py-4"><h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Standards</h3><div className="flex gap-2"><Textarea className="min-h-12 resize-none text-xs" value={standardsEntry} onChange={(event) => setStandardsEntry(event.target.value)} placeholder="Enter standard numbers separated by commas" /><Button variant="outline" size="sm" className="h-8 self-start text-xs" onClick={addStandards}>Add</Button></div><LinkedStandardsTable standardNumbers={station.standardNumbers} onRemove={(standardNo) => onChange("standardNumbers", station.standardNumbers.filter((value) => value !== standardNo))} /></section>
+    {!isNew && <><section className="border-t px-5 py-4"><h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Schedule Information</h3><div className="rounded-md border bg-muted/20 px-3 py-3 text-[11px] text-muted-foreground">{PM_SCHEDULES.filter((schedule) => schedule.station === station.name).length || "No"} active or completed schedules linked to this station.</div></section><section className="border-t px-5 py-4"><h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Comments</h3><div className="flex gap-2"><Select value={commentType} onValueChange={setCommentType}><SelectTrigger className="h-8 w-36 text-xs"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="Other">Other</SelectItem><SelectItem value="Maintenance">Maintenance</SelectItem><SelectItem value="Schedule">Schedule</SelectItem></SelectContent></Select><Input className="h-8 text-xs" value={commentText} onChange={(event) => setCommentText(event.target.value)} placeholder="Add a comment" /><Button variant="outline" size="sm" className="h-8 text-xs" onClick={addComment}>Add</Button></div>{station.comments.length > 0 && <div className="mt-3 space-y-2">{station.comments.map((comment) => <div key={comment.id} className="rounded-md border px-3 py-2 text-[11px]"><span className="font-semibold">{comment.type}</span><span className="ml-2 text-muted-foreground">{comment.text}</span></div>)}</div>}</section></>}
+    <div className="sticky bottom-0 flex justify-end gap-2 border-t bg-card px-5 py-3"><Button variant="outline" className="h-8 text-xs" onClick={onBack}>Cancel</Button><Button className="h-8 text-xs" onClick={onSave}>Save</Button></div>
+  </div>;
+};

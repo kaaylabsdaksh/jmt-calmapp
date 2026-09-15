@@ -14,6 +14,7 @@ import {
   Wrench,
 } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
+import { StationManagerDialog } from "@/components/standards/StationManagerDialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -305,7 +306,7 @@ const PmInterimChecks = () => {
             <div className="flex flex-col gap-2 border-t px-3 py-2 sm:flex-row sm:items-center sm:justify-between"><p className="text-xs text-muted-foreground">{filtered.length === 0 ? "No results" : `Showing ${start + 1}–${Math.min(start + pageSize, filtered.length)} of ${filtered.length} records`}</p><div className="flex items-center gap-2"><Label className="text-xs text-muted-foreground">Rows</Label><Select value={String(pageSize)} onValueChange={(value) => { setPageSize(Number(value)); setPage(1); }}><SelectTrigger className="h-7 w-[70px] text-xs"><SelectValue /></SelectTrigger><SelectContent>{[10, 20, 50].map((value) => <SelectItem key={value} value={String(value)}>{value}</SelectItem>)}</SelectContent></Select><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page === 1} onClick={() => setPage((value) => value - 1)}>Previous</Button><span className="text-xs text-muted-foreground">Page {page} of {pageCount}</span><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page >= pageCount} onClick={() => setPage((value) => value + 1)}>Next</Button></div></div>
           </section>
         </main>
-        <ManagerDialog key={manager ?? "closed"} kind={manager} onClose={() => setManager(null)} />
+        {manager === "stations" ? <StationManagerDialog open onClose={() => setManager(null)} /> : <ManagerDialog key={manager ?? "closed"} kind={manager} onClose={() => setManager(null)} />}
       </div>
     </TooltipProvider>
   );
@@ -320,11 +321,11 @@ const ColumnField = ({ label, children, className }: { label: string; children: 
 
 
 const ManagerDialog = ({ kind, onClose }: { kind: ManagerKind; onClose: () => void }) => {
-  const title = kind === "stations" ? "Manage Stations" : kind === "templates" ? "Manage Templates" : "Manage Schedules";
-  const seedItems = kind === "stations" ? PM_STATIONS.slice(0, 8) : kind === "templates" ? PM_TEMPLATES : PM_SCHEDULES.slice(0, 8).map((row) => `#${row.id} · ${row.station}`);
+  const title = kind === "templates" ? "Manage Templates" : "Manage Schedules";
+  const seedItems = kind === "templates" ? PM_TEMPLATES : PM_SCHEDULES.slice(0, 8).map((row) => `#${row.id} · ${row.station}`);
   const [items, setItems] = useState(seedItems);
   const updateItem = (index: number, value: string) => setItems((current) => current.map((item, itemIndex) => itemIndex === index ? value : item));
-  return <Dialog open={kind !== null} onOpenChange={(open) => !open && onClose()}><DialogContent className="max-w-2xl"><DialogHeader><DialogTitle className="flex items-center gap-2 text-base"><Wrench className="h-4 w-4" />{title}</DialogTitle><DialogDescription>Edit the mock records used by PM and interim-check schedules.</DialogDescription></DialogHeader><div className="max-h-[50vh] overflow-auto rounded-md border">{items.map((item, index) => <div key={`${kind}-${index}`} className="grid grid-cols-[1fr_auto] items-center gap-3 border-b px-3 py-2 last:border-b-0"><div><Input aria-label={`${title} row ${index + 1}`} className="h-7 text-xs" value={item} onChange={(event) => updateItem(index, event.target.value)} /><p className="mt-1 text-[10px] text-muted-foreground">{kind === "schedules" ? "Active schedule" : `${index + 1} linked schedule${index === 0 ? "" : "s"}`}</p></div><Button variant="ghost" size="sm" className="h-7 text-[11px] text-destructive" onClick={() => setItems((current) => current.filter((_, itemIndex) => itemIndex !== index))}>Remove</Button></div>)}</div><DialogFooter><Button variant="outline" className="h-8 text-xs" onClick={onClose}>Close</Button><Button variant="outline" className="h-8 text-xs" onClick={() => setItems((current) => [...current, `New ${kind === "stations" ? "station" : kind === "templates" ? "template" : "schedule"}`])}>Add New</Button><Button className="h-8 text-xs" onClick={() => { toast({ title: `${title} saved`, description: `${items.length} mock records updated.` }); onClose(); }}>Save Changes</Button></DialogFooter></DialogContent></Dialog>;
+  return <Dialog open={kind !== null} onOpenChange={(open) => !open && onClose()}><DialogContent className="max-w-2xl"><DialogHeader><DialogTitle className="flex items-center gap-2 text-base"><Wrench className="h-4 w-4" />{title}</DialogTitle><DialogDescription>Edit the mock records used by PM and interim-check schedules.</DialogDescription></DialogHeader><div className="max-h-[50vh] overflow-auto rounded-md border">{items.map((item, index) => <div key={`${kind}-${index}`} className="grid grid-cols-[1fr_auto] items-center gap-3 border-b px-3 py-2 last:border-b-0"><div><Input aria-label={`${title} row ${index + 1}`} className="h-7 text-xs" value={item} onChange={(event) => updateItem(index, event.target.value)} /><p className="mt-1 text-[10px] text-muted-foreground">{kind === "schedules" ? "Active schedule" : `${index + 1} linked schedule${index === 0 ? "" : "s"}`}</p></div><Button variant="ghost" size="sm" className="h-7 text-[11px] text-destructive" onClick={() => setItems((current) => current.filter((_, itemIndex) => itemIndex !== index))}>Remove</Button></div>)}</div><DialogFooter><Button variant="outline" className="h-8 text-xs" onClick={onClose}>Close</Button><Button variant="outline" className="h-8 text-xs" onClick={() => setItems((current) => [...current, `New ${kind === "templates" ? "template" : "schedule"}`])}>Add New</Button><Button className="h-8 text-xs" onClick={() => { toast({ title: `${title} saved`, description: `${items.length} mock records updated.` }); onClose(); }}>Save Changes</Button></DialogFooter></DialogContent></Dialog>;
 };
 
 export default PmInterimChecks;
