@@ -144,10 +144,10 @@ const ManagePmStations = () => {
   };
 
   return (
-    <div className="min-h-full bg-background">
+    <div className="flex h-full min-h-0 flex-col bg-background">
       <ModernTopNav />
-      <main className="w-full px-3 py-4 sm:px-4 lg:px-6">
-        <section className="flex min-h-[calc(100vh-7rem)] flex-col gap-4">
+      <main className="flex min-h-0 flex-1 flex-col px-3 py-4 sm:px-4 lg:px-6">
+        <section className="flex min-h-0 flex-1 flex-col gap-4">
           <div className="hidden flex items-center gap-2 border bg-card px-5 py-4">
             <Building2 className="h-4 w-4 text-muted-foreground" />
             <div>
@@ -184,7 +184,7 @@ const ManagePmStations = () => {
                 <TableBody>{pageRows.length ? pageRows.map((station) => <Fragment key={station.id}><TableRow className="group cursor-pointer" onClick={() => toggleExpanded(station.id)}><TableCell className="sticky left-0 z-10 bg-card px-2 group-hover:bg-muted/50"><Button variant="ghost" size="icon" className="h-5 w-5" aria-label={`${expanded.has(station.id) ? "Collapse" : "Expand"} ${station.name}`}>{expanded.has(station.id) ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}</Button></TableCell><TableCell className="sticky left-8 z-10 bg-card px-2 font-medium group-hover:bg-muted/50"><Button variant="link" className="h-auto p-0 text-[11px] text-info" onClick={(event) => { event.stopPropagation(); setEditing({ ...station }); setIsNew(false); }}>{station.name}</Button></TableCell><TableCell>{station.type}</TableCell><TableCell>{station.account}</TableCell><TableCell>{station.location}</TableCell><TableCell>{station.division}</TableCell><TableCell>{station.labCodes.join(" ") || "—"}</TableCell><TableCell>{station.description || "—"}</TableCell></TableRow>{expanded.has(station.id) && <TableRow className="bg-muted/20"><TableCell colSpan={8} className="p-3"><LinkedStandardsTable standardNumbers={station.standardNumbers} /></TableCell></TableRow>}</Fragment>) : <TableRow><TableCell colSpan={8} className="h-24 text-center text-muted-foreground">No stations match the selected criteria.</TableCell></TableRow>}</TableBody>
               </Table>
             </div>
-            <div className="sticky bottom-0 z-30 flex items-center justify-between gap-2 border-t bg-card px-4 py-2 shadow-[0_-1px_3px_rgba(0,0,0,0.06)]"><Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => navigate(-1)}><ArrowLeft className="h-3.5 w-3.5" /> Back</Button><div className="flex items-center gap-2"><p className="text-[11px] text-muted-foreground">{filtered.length} records returned</p><div className="flex items-center gap-2"><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page === 1} onClick={() => setPage((value) => value - 1)}>Previous</Button><span className="text-[11px] text-muted-foreground">Page {page} of {pageCount}</span><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page === pageCount} onClick={() => setPage((value) => value + 1)}>Next</Button></div></div></div>
+            <div className="shrink-0 flex items-center justify-between gap-2 border-t bg-card px-4 py-2 shadow-[0_-1px_3px_rgba(0,0,0,0.06)]"><Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => navigate(-1)}><ArrowLeft className="h-3.5 w-3.5" /> Back</Button><div className="flex items-center gap-2"><p className="text-[11px] text-muted-foreground">{filtered.length} records returned</p><div className="flex items-center gap-2"><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page === 1} onClick={() => setPage((value) => value - 1)}>Previous</Button><span className="text-[11px] text-muted-foreground">Page {page} of {pageCount}</span><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page === pageCount} onClick={() => setPage((value) => value + 1)}>Next</Button></div></div></div>
             </section>
           </div>
         )}
@@ -192,7 +192,7 @@ const ManagePmStations = () => {
       </main>
     </div>
   );
-};
+}
 
 export default ManagePmStations;
 
