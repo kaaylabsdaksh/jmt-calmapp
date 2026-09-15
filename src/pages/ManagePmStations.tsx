@@ -99,6 +99,16 @@ const ManagePmStations = () => {
   const [page, setPage] = useState(1);
   const [editing, setEditing] = useState<StationRecord | null>(null);
   const [isNew, setIsNew] = useState(false);
+  const { setExtraCrumbs } = useBreadcrumb();
+
+  useEffect(() => {
+    if (editing && !isNew) {
+      setExtraCrumbs([{ label: editing.name }]);
+    } else {
+      setExtraCrumbs([]);
+    }
+    return () => setExtraCrumbs([]);
+  }, [editing, isNew, setExtraCrumbs]);
 
   const filtered = useMemo(() => stations.filter((station) => {
     if (filters.type !== "all" && station.type !== filters.type) return false;
