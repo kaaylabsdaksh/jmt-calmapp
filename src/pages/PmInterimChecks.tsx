@@ -2,6 +2,7 @@ import { Fragment, useMemo, useState } from "react";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import {
+  ArrowLeft,
   ArrowUpDown,
   Building2,
   ChevronDown,
@@ -12,6 +13,7 @@ import {
   Search,
   Settings2,
 } from "lucide-react";
+
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -302,7 +304,7 @@ const PmInterimChecks = () => {
                 })}</TableBody>
               </Table>
             </div>
-            <div className="flex flex-col gap-2 border-t px-3 py-2 sm:flex-row sm:items-center sm:justify-between"><p className="text-xs text-muted-foreground">{filtered.length === 0 ? "No results" : `Showing ${start + 1}–${Math.min(start + pageSize, filtered.length)} of ${filtered.length} records`}</p><div className="flex items-center gap-2"><Label className="text-xs text-muted-foreground">Rows</Label><Select value={String(pageSize)} onValueChange={(value) => { setPageSize(Number(value)); setPage(1); }}><SelectTrigger className="h-7 w-[70px] text-xs"><SelectValue /></SelectTrigger><SelectContent>{[10, 20, 50].map((value) => <SelectItem key={value} value={String(value)}>{value}</SelectItem>)}</SelectContent></Select><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page === 1} onClick={() => setPage((value) => value - 1)}>Previous</Button><span className="text-xs text-muted-foreground">Page {page} of {pageCount}</span><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page >= pageCount} onClick={() => setPage((value) => value + 1)}>Next</Button></div></div>
+            <div className="flex flex-col gap-2 border-t px-3 py-2 sm:flex-row sm:items-center sm:justify-between"><Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => navigate(-1)}><ArrowLeft className="h-3.5 w-3.5" /> Back</Button><p className="text-xs text-muted-foreground">{filtered.length === 0 ? "No results" : `Showing ${start + 1}–${Math.min(start + pageSize, filtered.length)} of ${filtered.length} records`}</p><div className="flex items-center gap-2"><Label className="text-xs text-muted-foreground">Rows</Label><Select value={String(pageSize)} onValueChange={(value) => { setPageSize(Number(value)); setPage(1); }}><SelectTrigger className="h-7 w-[70px] text-xs"><SelectValue /></SelectTrigger><SelectContent>{[10, 20, 50].map((value) => <SelectItem key={value} value={String(value)}>{value}</SelectItem>)}</SelectContent></Select><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page === 1} onClick={() => setPage((value) => value - 1)}>Previous</Button><span className="text-xs text-muted-foreground">Page {page} of {pageCount}</span><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page >= pageCount} onClick={() => setPage((value) => value + 1)}>Next</Button></div></div>
           </section>
         </main>
         <ManagerDialog key={manager ?? "closed"} kind={manager} onClose={() => setManager(null)} />
