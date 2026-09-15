@@ -146,8 +146,8 @@ const ManagePmStations = () => {
   return (
     <div className="flex h-dvh min-h-0 flex-col bg-background">
       <ModernTopNav />
-      <main className="flex min-h-0 flex-1 flex-col px-3 py-4 sm:px-4 lg:px-6">
-        <section className="flex min-h-0 flex-1 flex-col gap-4">
+      <main className="flex min-h-0 w-full flex-1 flex-col gap-4 overflow-y-auto px-3 py-4 sm:px-4 lg:px-6">
+        <section className="flex shrink-0 flex-col gap-4">
           <div className="hidden flex items-center gap-2 border bg-card px-5 py-4">
             <Building2 className="h-4 w-4 text-muted-foreground" />
             <div>
@@ -158,8 +158,8 @@ const ManagePmStations = () => {
         {editing ? (
           <StationEditor station={editing} isNew={isNew} onChange={updateEditing} onBack={() => { setEditing(null); setIsNew(false); }} onSave={saveStation} />
         ) : (
-          <div className="flex min-h-0 flex-1 flex-col gap-4">
-            <section className="border bg-card px-5 py-4">
+          <div className="flex flex-col gap-4">
+            <section className="shrink-0 border bg-card px-5 py-4">
               <div className="mb-3 flex items-center justify-between gap-3"><h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Search Criteria</h3><Button size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => { setEditing(emptyStation()); setIsNew(true); }}><Plus className="h-3.5 w-3.5" /> Add New</Button></div>
               <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                 <CompactField label="Type"><Select value={draftFilters.type} onValueChange={(value) => updateFilter("type", value)}><SelectTrigger className={CONTROL}><SelectValue /></SelectTrigger><SelectContent><SelectItem value="all">All types</SelectItem><SelectItem value="Process">Process</SelectItem><SelectItem value="Station">Station</SelectItem></SelectContent></Select></CompactField>
