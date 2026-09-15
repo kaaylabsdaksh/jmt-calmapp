@@ -112,8 +112,8 @@ const PmInterimChecks = () => {
       if (filters.account && !row.account.includes(filters.account)) return false;
       if (filters.completedStatus !== "all" && row.lastResult !== filters.completedStatus) return false;
       if (filters.completedUser !== "all" && row.completedUser !== filters.completedUser) return false;
-      if (filters.completedFrom || filters.completedTo) {
-        const matchesCurrent = row.histories.some((history) => inRange(history.completedDate, filters.completedFrom, filters.completedTo));
+      if ((filters.dateFrom || filters.dateTo) && filters.dateType === "completed") {
+        const matchesCurrent = row.histories.some((history) => inRange(history.completedDate, filters.dateFrom, filters.dateTo));
         if (!matchesCurrent) return false;
       }
       return true;
