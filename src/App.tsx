@@ -38,6 +38,7 @@ import StandardsDashboard from "./pages/StandardsDashboard";
 import StandardDetail from "./pages/StandardDetail";
 import OnsiteBatchLoans from "./pages/OnsiteBatchLoans";
 import CreateLabStandardWorkOrders from "./pages/CreateLabStandardWorkOrders";
+import PmInterimChecks from "./pages/PmInterimChecks";
 import OnsiteScheduling from "./pages/OnsiteScheduling";
 import OnsiteSchedulingV2 from "./pages/OnsiteSchedulingV2";
 import OnsiteProjectDetail from "./pages/OnsiteProjectDetail";
@@ -134,6 +135,7 @@ const App = () => {
             <Route path="/standards/new" element={<StandardDetail />} />
             <Route path="/standards/onsite-batch-loans" element={<OnsiteBatchLoans />} />
             <Route path="/standards/create-lab-work-orders" element={<CreateLabStandardWorkOrders />} />
+            <Route path="/standards/manage-pm-interim-checks" element={<PmInterimChecks />} />
             <Route path="/standards/:id" element={<StandardDetail />} />
             <Route path="/design-system" element={<DesignSystemGallery />} />
             <Route path="/onsite-projects" element={<OnsiteProjects />} />

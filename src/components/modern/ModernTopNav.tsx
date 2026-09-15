@@ -43,6 +43,7 @@ const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
   "/manage-customers/:accountNumber": { title: "Customer Details", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Customer Details" }] },
   "/standards/onsite-batch-loans": { title: "Manage On-Site Batch Loans", crumbs: [{ label: "Home", to: "/" }, { label: "Standards", to: "/standards" }, { label: "On-Site Batch Loans" }] },
   "/standards/create-lab-work-orders": { title: "Create Lab Standard Work Orders", crumbs: [{ label: "Equipment" }, { label: "Standards", to: "/standards" }, { label: "Manage Standards", to: "/standards" }, { label: "Create Lab Standard Work Orders" }] },
+  "/standards/manage-pm-interim-checks": { title: "Manage PM / Interim Checks", crumbs: [{ label: "Equipment" }, { label: "Standards", to: "/standards" }, { label: "Manage Standards", to: "/standards" }, { label: "Manage PM / Interim Checks" }] },
 };
 
 const eslOnsiteMeta = { title: "Add New Work Order Item", crumbs: [{ label: "Home", to: "/" }, { label: "Add New Work Order", to: "/add-new-work-order" }, { label: "Add New Item" }] };
