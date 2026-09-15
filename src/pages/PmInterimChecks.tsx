@@ -1,5 +1,6 @@
 import { Fragment, useMemo, useState } from "react";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowUpDown,
   Building2,
@@ -14,7 +15,6 @@ import {
   Wrench,
 } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
-import { StationManagerDialog } from "@/components/standards/StationManagerDialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -32,7 +32,7 @@ import { PM_SCHEDULES, PM_STATIONS, PM_TEMPLATES, PmSchedule, PmScheduleStatus }
 
 type SortKey = keyof Pick<PmSchedule, "id" | "dueDate" | "terminalDate" | "account" | "type" | "status" | "lastResult" | "frequency" | "division" | "labCodes" | "station">;
 type ViewMode = "schedule" | "standard" | "station" | "template";
-type ManagerKind = "stations" | "templates" | "schedules" | null;
+type ManagerKind = "templates" | "schedules" | null;
 
 const emptyFilters = {
   status: "Active",
@@ -100,6 +100,7 @@ const Truncated = ({ text, className }: { text: string; className?: string }) =>
 );
 
 const PmInterimChecks = () => {
+  const navigate = useNavigate();
   const [draft, setDraft] = useState(emptyFilters);
   const [filters, setFilters] = useState(emptyFilters);
   const [viewMode, setViewMode] = useState<ViewMode>("schedule");
@@ -277,7 +278,7 @@ const PmInterimChecks = () => {
             <div className="flex flex-wrap items-center justify-between gap-2 border-b px-4 py-3">
               <div><h2 className="text-sm font-semibold">{{ schedule: "Schedule Results", standard: "Results by Standard", station: "Results by Station", template: "Results by Template" }[viewMode]}</h2><p className="text-[11px] text-muted-foreground">{filtered.length} records returned · Select a row to view check history.</p></div>
               <div className="flex flex-wrap items-center gap-2">
-                <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => setManager("stations")}><Building2 className="h-3.5 w-3.5" /> Manage Stations</Button>
+                <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => navigate("/standards/manage-pm-interim-checks/stations")}><Building2 className="h-3.5 w-3.5" /> Manage Stations</Button>
                 <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => setManager("templates")}><FileSpreadsheet className="h-3.5 w-3.5" /> Manage Templates</Button>
                 <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => setManager("schedules")}><ListChecks className="h-3.5 w-3.5" /> Manage Schedules</Button>
               </div>
@@ -306,7 +307,7 @@ const PmInterimChecks = () => {
             <div className="flex flex-col gap-2 border-t px-3 py-2 sm:flex-row sm:items-center sm:justify-between"><p className="text-xs text-muted-foreground">{filtered.length === 0 ? "No results" : `Showing ${start + 1}–${Math.min(start + pageSize, filtered.length)} of ${filtered.length} records`}</p><div className="flex items-center gap-2"><Label className="text-xs text-muted-foreground">Rows</Label><Select value={String(pageSize)} onValueChange={(value) => { setPageSize(Number(value)); setPage(1); }}><SelectTrigger className="h-7 w-[70px] text-xs"><SelectValue /></SelectTrigger><SelectContent>{[10, 20, 50].map((value) => <SelectItem key={value} value={String(value)}>{value}</SelectItem>)}</SelectContent></Select><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page === 1} onClick={() => setPage((value) => value - 1)}>Previous</Button><span className="text-xs text-muted-foreground">Page {page} of {pageCount}</span><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page >= pageCount} onClick={() => setPage((value) => value + 1)}>Next</Button></div></div>
           </section>
         </main>
-        {manager === "stations" ? <StationManagerDialog open onClose={() => setManager(null)} /> : <ManagerDialog key={manager ?? "closed"} kind={manager} onClose={() => setManager(null)} />}
+        <ManagerDialog key={manager ?? "closed"} kind={manager} onClose={() => setManager(null)} />
       </div>
     </TooltipProvider>
   );

@@ -1,8 +1,8 @@
 import { Fragment, useMemo, useState } from "react";
 import { Building2, ChevronDown, ChevronRight, Plus, RotateCcw, Search, Trash2 } from "lucide-react";
+import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -91,7 +91,7 @@ const emptyStation = (): StationRecord => ({
 
 const resolveStandard = (standardNo: string): StandardRecord | undefined => STANDARDS.find((standard) => standard.standardNo === standardNo);
 
-export const StationManagerDialog = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
+const ManagePmStations = () => {
   const [stations, setStations] = useState(buildSeedStations);
   const [draftFilters, setDraftFilters] = useState(EMPTY_FILTERS);
   const [filters, setFilters] = useState(EMPTY_FILTERS);
@@ -132,13 +132,17 @@ export const StationManagerDialog = ({ open, onClose }: { open: boolean; onClose
   };
 
   return (
-    <Dialog open={open} onOpenChange={(nextOpen) => !nextOpen && onClose()}>
-      <DialogContent className="flex max-h-[92vh] max-w-[min(96vw,1280px)] flex-col gap-0 overflow-hidden p-0">
-        <DialogHeader className="border-b px-5 py-4">
-          <DialogTitle className="flex items-center gap-2 text-base"><Building2 className="h-4 w-4" />{editing ? `${isNew ? "Add New" : "Edit"} PM / Interim Check Station` : "Manage PM / Interim Check Stations"}</DialogTitle>
-          <DialogDescription>{editing ? "Maintain station details, lab codes, linked standards, schedules, and comments." : "Search stations, review linked standards, or add and edit station records."}</DialogDescription>
-        </DialogHeader>
-
+    <div className="min-h-full bg-background">
+      <ModernTopNav />
+      <main className="w-full px-3 py-4 sm:px-4 lg:px-6">
+        <section className="flex min-h-[calc(100vh-7rem)] flex-col overflow-hidden border bg-card">
+          <div className="flex items-center gap-2 border-b px-5 py-4">
+            <Building2 className="h-4 w-4 text-muted-foreground" />
+            <div>
+              <h2 className="text-sm font-semibold">{editing ? `${isNew ? "Add New" : "Edit"} PM / Interim Check Station` : "Manage PM / Interim Check Stations"}</h2>
+              <p className="text-[11px] text-muted-foreground">{editing ? "Maintain station details, lab codes, linked standards, schedules, and comments." : "Search stations, review linked standards, or add and edit station records."}</p>
+            </div>
+          </div>
         {editing ? (
           <StationEditor station={editing} isNew={isNew} onChange={updateEditing} onBack={() => { setEditing(null); setIsNew(false); }} onSave={saveStation} />
         ) : (
@@ -167,10 +171,13 @@ export const StationManagerDialog = ({ open, onClose }: { open: boolean; onClose
             <div className="flex items-center justify-between border-t px-4 py-2"><p className="text-[11px] text-muted-foreground">{filtered.length} records returned</p><div className="flex items-center gap-2"><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page === 1} onClick={() => setPage((value) => value - 1)}>Previous</Button><span className="text-[11px] text-muted-foreground">Page {page} of {pageCount}</span><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page === pageCount} onClick={() => setPage((value) => value + 1)}>Next</Button></div></div>
           </div>
         )}
-      </DialogContent>
-    </Dialog>
+        </section>
+      </main>
+    </div>
   );
 };
+
+export default ManagePmStations;
 
 const CompactField = ({ label, children }: { label: string; children: React.ReactNode }) => <div className="space-y-1"><Label className={FIELD_LABEL}>{label}</Label>{children}</div>;
 
