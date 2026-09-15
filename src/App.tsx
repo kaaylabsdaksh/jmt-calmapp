@@ -52,6 +52,7 @@ import DeliveryTickets from "./pages/DeliveryTickets";
 import TransitLog from "./pages/TransitLog";
 import ManageCustomers from "./pages/ManageCustomers";
 import ManageProducts from "./pages/ManageProducts";
+import ManageManufacturers from "./pages/ManageManufacturers";
 import ProductDetail from "./pages/ProductDetail";
 import NewProductReview from "./pages/NewProductReview";
 import NewProduct from "./pages/NewProduct";
@@ -154,6 +155,7 @@ const App = () => {
             <Route path="/quotes" element={<Quotes />} />
             <Route path="/quotes/new" element={<NewQuote />} />
             <Route path="/manage-products" element={<ManageProducts />} />
+            <Route path="/manage-manufacturers" element={<ManageManufacturers />} />
             <Route path="/manage-products/new" element={<NewProduct />} />
             <Route path="/manage-products/product-reviews" element={<ProductReviews />} />
             <Route path="/manage-products/product-review/new" element={<NewProductReview />} />

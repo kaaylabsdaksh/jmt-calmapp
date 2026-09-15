@@ -93,7 +93,7 @@ export const quickActionCategories: Record<string, { title: string; icon: React.
     { title: "Manage Cust Portal Users", icon: Users },
   ],
   "Product & Customer": [
-    { title: "Manage Manufacturers", icon: Settings },
+    { title: "Manage Manufacturers", icon: Settings, url: "/manage-manufacturers" },
     { title: "Manage Products", icon: Tags, url: "/manage-products" },
     { title: "Manage Customers", icon: Users, url: "/manage-customers" },
     { title: "Search Multiple ID's", icon: FileText },
