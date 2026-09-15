@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ChevronDown, ChevronRight, FileSpreadsheet, Plus, RotateCcw, Search, Upload } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Badge } from "@/components/ui/badge";
@@ -43,8 +43,9 @@ const StatusBadge = ({ status }: { status: PmTemplateStatus }) => (
 );
 
 const ManagePmTemplates = () => {
-  const [searchParams] = useSearchParams();
-  const openedFromUrl = useRef(false);
+  const navigate = useNavigate();
+  const { templateId } = useParams();
+  const LIST_PATH = "/standards/manage-pm-interim-checks/templates";
   const [templates, setTemplates] = useState(PM_TEMPLATE_RECORDS);
   const [draftFilters, setDraftFilters] = useState(EMPTY_FILTERS);
   const [filters, setFilters] = useState(EMPTY_FILTERS);
@@ -56,17 +57,13 @@ const ManagePmTemplates = () => {
   const fileInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const templateId = searchParams.get("template");
-    if (templateId && !openedFromUrl.current) {
-      openedFromUrl.current = true;
-      const template = templates.find((item) => item.id === templateId);
-      if (template) {
-        setEditing({ ...template });
-        setIsNew(false);
-        setPendingFile("");
-      }
-    }
-  }, [searchParams, templates]);
+    if (!templateId) { setEditing(null); setIsNew(false); setPendingFile(""); return; }
+    if (templateId === "new") { setEditing(emptyTemplate()); setIsNew(true); setPendingFile(""); return; }
+    const template = templates.find((item) => item.id === templateId);
+    if (template) { setEditing({ ...template }); setIsNew(false); setPendingFile(""); }
+    else navigate(LIST_PATH, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [templateId]);
 
   const filtered = useMemo(() => templates.filter((template) => {
     if (filters.status !== "all" && template.status !== filters.status) return false;
@@ -78,8 +75,8 @@ const ManagePmTemplates = () => {
   const pageRows = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
   const toggleExpanded = (id: string) => setExpanded((current) => { const next = new Set(current); next.has(id) ? next.delete(id) : next.add(id); return next; });
   const updateEditing = <K extends keyof PmTemplateRecord>(key: K, value: PmTemplateRecord[K]) => setEditing((current) => current ? { ...current, [key]: value } : current);
-  const openEditor = (template?: PmTemplateRecord) => { setEditing(template ? { ...template } : emptyTemplate()); setIsNew(!template); setPendingFile(""); };
-  const cancelEditor = () => { setEditing(null); setIsNew(false); setPendingFile(""); };
+  const openEditor = (template?: PmTemplateRecord) => navigate(`${LIST_PATH}/${template ? template.id : "new"}`);
+  const cancelEditor = () => navigate(LIST_PATH);
   const saveTemplate = () => {
     if (!editing?.description.trim()) {
       toast({ title: "Description is required", description: "Enter a template description before saving.", variant: "destructive" });
