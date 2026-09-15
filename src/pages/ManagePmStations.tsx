@@ -101,6 +101,7 @@ const ManagePmStations = () => {
   const [editing, setEditing] = useState<StationRecord | null>(null);
   const [isNew, setIsNew] = useState(false);
   const { setExtraCrumbs } = useBreadcrumb();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (editing && !isNew) {
