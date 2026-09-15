@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ChevronDown, ChevronRight, FileSpreadsheet, Plus, RotateCcw, Search, Upload } from "lucide-react";
+import { ArrowLeft, ChevronDown, ChevronRight, FileSpreadsheet, Plus, RotateCcw, Search, Upload } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
