@@ -144,11 +144,18 @@ const PmInterimChecks = () => {
   const changeViewMode = (value: ViewMode) => {
     setViewMode(value);
     setPage(1);
-    if (value === "template") {
-      setDraft((current) => ({ ...current, location: "all", division: "all", labCode: "all", account: "" }));
-      setFilters((current) => ({ ...current, location: "all", division: "all", labCode: "all", account: "" }));
-    }
+    setExpanded(new Set());
+    const reset = DISABLED_FIELDS[value].reduce<Record<string, unknown>>((acc, key) => {
+      acc[key] = emptyFilters[key];
+      return acc;
+    }, {});
+    setDraft((current) => {
+      const next = { ...current, ...reset } as typeof emptyFilters;
+      setFilters(next);
+      return next;
+    });
   };
+
   const groupLabel = (row: PmSchedule) => viewMode === "station" ? row.station : viewMode === "template" ? row.templateDescription : viewMode === "standard" ? row.standards[0] ?? "Unassigned" : "";
   const exportRows = () => {
     const rows = [["Schedule #", "Due Date", "Terminal Date", "Account #", "Type", "Status", "Last Result", "Frequency", "Division", "Lab Code(s)", "Station", "Document/Tool", "Standards"], ...filtered.map((row) => [row.id, row.dueDate, row.terminalDate, row.account, row.type, row.status, row.lastResult, row.frequency, row.division, row.labCodes, row.station, row.documentTool, row.standards.join(", ")])];
