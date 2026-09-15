@@ -130,8 +130,28 @@ const TemplateEditor = ({ template, isNew, pendingFile, fileInput, onFile, onCha
     <div className="space-y-3 lg:border-x lg:px-6"><BandTitle label="Document Control" /><CompactField label="Active Doc / Tool"><Input className={CONTROL} value={template.document || "No active document"} disabled /></CompactField><input ref={fileInput} type="file" className="hidden" accept=".xlsx,.xls,.pdf,.doc,.docx" onChange={(event) => onFile(event.target.files?.[0]?.name ?? "")} /><Button type="button" variant="outline" className="h-20 w-full border-dashed text-[11px]" onClick={() => fileInput.current?.click()}><Upload className="mr-2 h-4 w-4" />{pendingFile || "Select or drag a replacement document"}</Button><CompactField label="Reason for New Doc / Tool"><Textarea className="min-h-16 resize-none text-xs" value={template.replacementReason} onChange={(event) => onChange("replacementReason", event.target.value)} /></CompactField></div>
     <div className="space-y-3"><BandTitle label="Audit & Schedule Information" /><div className="grid grid-cols-2 gap-x-4 gap-y-3 text-[11px]"><Audit label="Created By" value={template.createdBy} /><Audit label="Created Date" value={template.createdDate || "On save"} /><Audit label="Modified By" value={template.modifiedBy || "—"} /><Audit label="Modified Date" value={template.modifiedDate || "—"} /><Audit label="Validated By" value={template.validatedBy || "—"} /><Audit label="Validated Date" value={template.validatedDate || "—"} /></div><div className="border bg-muted/20 p-3 text-[11px] text-muted-foreground">{template.linkedSchedules ? `${template.linkedSchedules} active or completed schedules use this template.` : "No schedules are linked to this template yet."}</div>{!isNew && <Button variant="outline" size="sm" className="h-7 text-[11px]" onClick={() => onChange("status", template.status === "Inactive" ? "Active" : "Inactive")}>{template.status === "Inactive" ? "Set Active" : "Set Inactive"}</Button>}</div>
   </div>
+  {!isNew && <div className="border-t px-4 py-4"><ScheduleInformationTable template={template} /></div>}
   <div className="sticky bottom-0 flex justify-end gap-2 border-t bg-card px-4 py-3"><Button variant="outline" className="h-8 text-xs" onClick={onCancel}>Cancel</Button><Button className="h-8 text-xs" onClick={onSave}>Save</Button></div>
 </section>;
+
+const ScheduleInformationTable = ({ template }: { template: PmTemplateRecord }) => {
+  const schedules = useMemo(() => buildTemplateSchedules(template), [template]);
+  return <div className="overflow-hidden border bg-card">
+    <div className="flex items-center justify-between border-b bg-muted/40 px-3 py-2"><h3 className="text-[11px] font-semibold">Schedule Information</h3><span className="text-[10px] text-muted-foreground">{schedules.length} schedules use this document</span></div>
+    <div className="max-h-[320px] overflow-auto"><Table className="min-w-[900px] text-[11px]"><TableHeader><TableRow>
+      <TableHead className="sticky top-0 z-10 h-7 bg-muted/95 text-[10px]">Sched ID</TableHead><TableHead className="sticky top-0 z-10 h-7 bg-muted/95 text-[10px]">Description</TableHead><TableHead className="sticky top-0 z-10 h-7 bg-muted/95 text-[10px]">Due Date</TableHead><TableHead className="sticky top-0 z-10 h-7 bg-muted/95 text-[10px]">Standards Checked</TableHead><TableHead className="sticky top-0 z-10 h-7 bg-muted/95 text-[10px]">Sched Status</TableHead><TableHead className="sticky top-0 z-10 h-7 bg-muted/95 text-[10px]">Type</TableHead><TableHead className="sticky top-0 z-10 h-7 bg-muted/95 text-[10px]">Freq</TableHead><TableHead className="sticky top-0 z-10 h-7 bg-muted/95 text-[10px]">Doc / Tool</TableHead>
+    </TableRow></TableHeader><TableBody>{schedules.map((schedule) => <TableRow key={schedule.id} className={cn(schedule.status === "Completed" && "bg-muted/20")}>
+      <TableCell className="py-1.5"><button type="button" className="text-info hover:underline" onClick={() => toast({ title: `Schedule ${schedule.scheduleId}`, description: "Schedule details are available from Manage PM / Interim Checks." })}>{schedule.scheduleId}</button></TableCell>
+      <TableCell className="py-1.5">{schedule.description}</TableCell>
+      <TableCell className="py-1.5 tabular-nums">{schedule.dueDate}</TableCell>
+      <TableCell className="py-1.5 tabular-nums">{schedule.standardsChecked || "—"}</TableCell>
+      <TableCell className="py-1.5"><span className="inline-flex items-center gap-1.5"><span className={cn("inline-block h-1.5 w-1.5 rounded-full", schedule.status === "Active" ? "bg-success" : "bg-muted-foreground")} />{schedule.status}</span></TableCell>
+      <TableCell className="py-1.5">{schedule.type}</TableCell>
+      <TableCell className="py-1.5">{schedule.frequency}</TableCell>
+      <TableCell className="py-1.5"><button type="button" className="text-info hover:underline" onClick={() => toast({ title: schedule.document, description: "Document preview is not available in mock data." })}>{schedule.document}</button></TableCell>
+    </TableRow>)}</TableBody></Table></div>
+  </div>;
+};
 
 const BandTitle = ({ label }: { label: string }) => <div className="flex items-center gap-2"><span className="h-3 w-1 bg-info" /><h3 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{label}</h3></div>;
 const Audit = ({ label, value }: { label: string; value: string }) => <div><p className="text-[10px] uppercase text-muted-foreground">{label}</p><p className="font-medium text-foreground">{value}</p></div>;
