@@ -218,7 +218,7 @@ const StationEditor = ({ station, isNew, onChange, onBack, onSave }: { station: 
     toast({ title: "Standards added", description: values.join(", ") });
   };
   return <div className="flex min-h-0 flex-1 flex-col">
-    <div className="flex-1 overflow-auto">
+    <div className="flex-1 overflow-auto pb-4">
       <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(300px,1fr)]">
         <section className="border bg-card px-5 py-4"><div className="mb-3 flex items-center gap-2"><span className="h-4 w-1 bg-info" /><h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Station Details</h3></div><div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           <CompactField label="Type"><Select value={station.type} onValueChange={(value) => onChange("type", value as StationType)}><SelectTrigger className={CONTROL}><SelectValue /></SelectTrigger><SelectContent><SelectItem value="Process">Process</SelectItem><SelectItem value="Station">Station</SelectItem></SelectContent></Select></CompactField>
