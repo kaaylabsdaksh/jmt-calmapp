@@ -166,6 +166,7 @@ const PmInterimChecks = () => {
     });
   };
 
+  const isDisabled = (key: FilterKey) => DISABLED_FIELDS[viewMode].includes(key);
   const groupLabel = (row: PmSchedule) => viewMode === "station" ? row.station : viewMode === "template" ? row.templateDescription : viewMode === "standard" ? row.standards[0] ?? "Unassigned" : "";
   const exportRows = () => {
     const rows = [["Schedule #", "Due Date", "Terminal Date", "Account #", "Type", "Status", "Last Result", "Frequency", "Division", "Lab Code(s)", "Station", "Document/Tool", "Standards"], ...filtered.map((row) => [row.id, row.dueDate, row.terminalDate, row.account, row.type, row.status, row.lastResult, row.frequency, row.division, row.labCodes, row.station, row.documentTool, row.standards.join(", ")])];
@@ -217,7 +218,7 @@ const PmInterimChecks = () => {
                   </div>
                   <ColumnField label="Standard #"><Input className={FIELD} value={draft.standardNo} onChange={(event) => updateDraft("standardNo", event.target.value)} /></ColumnField>
                   <ColumnField label="Template Description"><Input className={FIELD} value={draft.template} onChange={(event) => updateDraft("template", event.target.value)} /></ColumnField>
-                  <ColumnField label="Document / Tool"><Input className={FIELD} value={draft.documentTool} onChange={(event) => updateDraft("documentTool", event.target.value)} /></ColumnField>
+                  <ColumnField label="Document / Tool"><Input disabled={isDisabled("documentTool")} className={FIELD} value={draft.documentTool} onChange={(event) => updateDraft("documentTool", event.target.value)} /></ColumnField>
                 </div>
               </div>
               {/* Entity & Lab */}
@@ -228,20 +229,20 @@ const PmInterimChecks = () => {
                 </div>
                 <div className="space-y-2.5">
                   <ColumnField label="Location">
-                    <Select disabled={viewMode === "template"} value={draft.location} onValueChange={(value) => updateDraft("location", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All locations" /></SelectTrigger><SelectContent><SelectItem value="all">All locations</SelectItem>{LOCATIONS.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
+                    <Select disabled={isDisabled("location")} value={draft.location} onValueChange={(value) => updateDraft("location", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All locations" /></SelectTrigger><SelectContent><SelectItem value="all">All locations</SelectItem>{LOCATIONS.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
                   </ColumnField>
                   <ColumnField label="Division">
-                    <Select disabled={viewMode === "template"} value={draft.division} onValueChange={(value) => updateDraft("division", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All divisions" /></SelectTrigger><SelectContent><SelectItem value="all">All divisions</SelectItem>{["Lab", "OnSite", "ESL"].map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
+                    <Select disabled={isDisabled("division")} value={draft.division} onValueChange={(value) => updateDraft("division", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All divisions" /></SelectTrigger><SelectContent><SelectItem value="all">All divisions</SelectItem>{["Lab", "OnSite", "ESL"].map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
                   </ColumnField>
                   <ColumnField label="Station">
-                    <Select value={draft.station} onValueChange={(value) => updateDraft("station", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All stations" /></SelectTrigger><SelectContent><SelectItem value="all">All stations</SelectItem>{PM_STATIONS.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
+                    <Select disabled={isDisabled("station")} value={draft.station} onValueChange={(value) => updateDraft("station", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All stations" /></SelectTrigger><SelectContent><SelectItem value="all">All stations</SelectItem>{PM_STATIONS.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
                   </ColumnField>
                   <div className="grid grid-cols-2 gap-3">
                     <ColumnField label="Lab Code">
-                      <Select disabled={viewMode === "template"} value={draft.labCode} onValueChange={(value) => updateDraft("labCode", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All lab codes" /></SelectTrigger><SelectContent><SelectItem value="all">All lab codes</SelectItem>{LAB_CODES.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
+                      <Select disabled={isDisabled("labCode")} value={draft.labCode} onValueChange={(value) => updateDraft("labCode", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All lab codes" /></SelectTrigger><SelectContent><SelectItem value="all">All lab codes</SelectItem>{LAB_CODES.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
                     </ColumnField>
                     <ColumnField label="Account #">
-                      <Input disabled={viewMode === "template"} className={FIELD} value={draft.account} onChange={(event) => updateDraft("account", event.target.value)} />
+                      <Input disabled={isDisabled("account")} className={FIELD} value={draft.account} onChange={(event) => updateDraft("account", event.target.value)} />
                     </ColumnField>
                   </div>
                   <ColumnField label="Frequency">
