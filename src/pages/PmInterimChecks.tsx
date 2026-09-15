@@ -59,6 +59,16 @@ const DATE_TYPE_OPTIONS = [
   { value: "completed", label: "Completed Date" },
 ];
 
+type FilterKey = keyof typeof emptyFilters;
+
+// Fields that do not apply to a given "View by" grouping — cleared and locked when selected.
+const DISABLED_FIELDS: Record<ViewMode, FilterKey[]> = {
+  schedule: [],
+  standard: ["station", "documentTool"],
+  station: ["location", "division", "labCode"],
+  template: ["location", "division", "labCode", "account"],
+};
+
 
 const FIELD = "h-7 min-h-0 rounded-md border-input bg-background px-2 py-0 text-[11px]";
 const LABEL = "text-[11px] font-medium text-foreground/80";
