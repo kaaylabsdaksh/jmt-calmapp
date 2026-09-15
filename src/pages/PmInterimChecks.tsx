@@ -2,6 +2,7 @@ import { Fragment, useMemo, useState } from "react";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import {
+  ArrowLeft,
   ArrowUpDown,
   Building2,
   ChevronDown,
@@ -12,6 +13,7 @@ import {
   Search,
   Settings2,
 } from "lucide-react";
+
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
