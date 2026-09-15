@@ -78,117 +78,120 @@ import WhatsNew from "./pages/WhatsNew";
 import { Layout } from "./components/Layout";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as SonnerToaster } from "@/components/ui/sonner";
-import { TourProvider } from "@/context/TourContext";
+import { TourProvider } from "./context/TourContext";
 import { WelcomeModal } from "@/components/tour/WelcomeModal";
 import { GuidedTour } from "@/components/tour/GuidedTour";
 import { WhatsNewDrawer } from "@/components/tour/WhatsNewDrawer";
 import GlobalOpenDecisionsFab, {
   OpenDecisionsProvider,
-} from "@/components/onsite-scheduling/GlobalOpenDecisions";
-import CommandPalette from "@/components/CommandPalette";
+} from "./components/onsite-scheduling/GlobalOpenDecisions";
+import CommandPalette from "./components/CommandPalette";
+import { BreadcrumbProvider } from "./context/BreadcrumbContext";
 
 const App = () => {
   console.log("App component rendering");
-  
+
   return (
     <BrowserRouter>
       <TourProvider>
         <OpenDecisionsProvider>
-        <CommandPalette />
-        <GlobalOpenDecisionsFab />
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route element={<Layout><Outlet /></Layout>}>
-            <Route path="/" element={<ModernWorkOrderManagement />} />
-            <Route path="/add-new-work-order" element={<AddNewWorkOrder />} />
-            <Route path="/edit-batch-work-order" element={<EditBatchWorkOrder />} />
-            <Route path="/unused-items" element={<UnusedItemsManagement />} />
-            <Route path="/form-variations" element={<FormVariationsDemo />} />
-            <Route path="/esl-items" element={<ESLItemDemo />} />
-            <Route path="/esl/blankets" element={<EslBlankets />} />
-            <Route path="/esl/coverups" element={<EslCoverUps />} />
-            <Route path="/esl/footwear" element={<EslFootwear />} />
-            <Route path="/esl/gloves" element={<EslGloves />} />
-            <Route path="/esl/grounds" element={<EslGrounds />} />
-            <Route path="/esl/onsite/blankets" element={<EslOnsiteBlankets />} />
-            <Route path="/esl/onsite/bucket-trucks" element={<EslOnsiteBucketTrucks />} />
-            <Route path="/esl/onsite/coverups" element={<EslOnsiteCoverUps />} />
-            <Route path="/esl/onsite/grounds" element={<EslOnsiteGrounds />} />
-            <Route path="/esl/onsite/hotsticks" element={<EslOnsiteHotsticks />} />
-            <Route path="/esl/onsite/jumpers" element={<EslOnsiteJumpers />} />
-            <Route path="/esl/onsite/line-hoses" element={<EslOnsiteLineHoses />} />
-            <Route path="/edit-order" element={<EditOrder />} />
+          <BreadcrumbProvider>
+            <CommandPalette />
+            <GlobalOpenDecisionsFab />
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route element={<Layout><Outlet /></Layout>}>
+                <Route path="/" element={<ModernWorkOrderManagement />} />
+                <Route path="/add-new-work-order" element={<AddNewWorkOrder />} />
+                <Route path="/edit-batch-work-order" element={<EditBatchWorkOrder />} />
+                <Route path="/unused-items" element={<UnusedItemsManagement />} />
+                <Route path="/form-variations" element={<FormVariationsDemo />} />
+                <Route path="/esl-items" element={<ESLItemDemo />} />
+                <Route path="/esl/blankets" element={<EslBlankets />} />
+                <Route path="/esl/coverups" element={<EslCoverUps />} />
+                <Route path="/esl/footwear" element={<EslFootwear />} />
+                <Route path="/esl/gloves" element={<EslGloves />} />
+                <Route path="/esl/grounds" element={<EslGrounds />} />
+                <Route path="/esl/onsite/blankets" element={<EslOnsiteBlankets />} />
+                <Route path="/esl/onsite/bucket-trucks" element={<EslOnsiteBucketTrucks />} />
+                <Route path="/esl/onsite/coverups" element={<EslOnsiteCoverUps />} />
+                <Route path="/esl/onsite/grounds" element={<EslOnsiteGrounds />} />
+                <Route path="/esl/onsite/hotsticks" element={<EslOnsiteHotsticks />} />
+                <Route path="/esl/onsite/jumpers" element={<EslOnsiteJumpers />} />
+                <Route path="/esl/onsite/line-hoses" element={<EslOnsiteLineHoses />} />
+                <Route path="/edit-order" element={<EditOrder />} />
 
-            <Route path="/work-orders-v2" element={<WorkOrderSearchV2 />} />
-            <Route path="/work-order/:id" element={<WorkOrderDetail />} />
-            <Route path="/item/:id" element={<ItemDetail />} />
-            <Route path="/logistics-view" element={<LogisticsView />} />
-            <Route path="/customer-pickup" element={<CustomerPickupView />} />
-            <Route path="/shipping-view" element={<ShippingView />} />
-            <Route path="/account-admin" element={<AccountAdminView />} />
-            <Route path="/lab-triage" element={<LabTriage />} />
-            <Route path="/update-rfid" element={<UpdateRfid />} />
-            <Route path="/missing-cost" element={<MissingCost />} />
-            <Route path="/outsource-vendors" element={<OutsourceVendors />} />
-
-
-            <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
-            <Route path="/standards" element={<ManageStandards />} />
-            <Route path="/standards/dashboard" element={<StandardsDashboard />} />
-            <Route path="/standards/new" element={<StandardDetail />} />
-            <Route path="/standards/onsite-batch-loans" element={<OnsiteBatchLoans />} />
-            <Route path="/standards/create-lab-work-orders" element={<CreateLabStandardWorkOrders />} />
-            <Route path="/standards/manage-pm-interim-checks" element={<PmInterimChecks />} />
-            <Route path="/standards/manage-pm-interim-checks/stations" element={<ManagePmStations />} />
-            <Route path="/standards/manage-pm-interim-checks/templates" element={<ManagePmTemplates />} />
-            <Route path="/standards/:id" element={<StandardDetail />} />
-            <Route path="/design-system" element={<DesignSystemGallery />} />
-            <Route path="/onsite-projects" element={<OnsiteProjects />} />
-            <Route path="/onsite-scheduling" element={<OnsiteScheduling />} />
-            {/* the demo prototype's own route name, kept as an alias */}
-            <Route path="/onsite-scheduling-prototype" element={<OnsiteScheduling />} />
-            <Route path="/onsite-scheduling-v2" element={<OnsiteSchedulingV2 />} />
-
-            <Route path="/onsite-projects/new" element={<OnsiteProjectDetail />} />
-            <Route path="/onsite-projects/vehicle-standards" element={<VehicleStandards />} />
-            <Route path="/invoicing" element={<Invoicing />} />
-            <Route path="/invoicing-unified" element={<InvoicingUnified />} />
-            <Route path="/delivery-tickets" element={<DeliveryTickets />} />
-            <Route path="/transit-log" element={<TransitLog />} />
-            <Route path="/manage-customers" element={<ManageCustomers />} />
-            <Route path="/quotes" element={<Quotes />} />
-            <Route path="/quotes/new" element={<NewQuote />} />
-            <Route path="/manage-products" element={<ManageProducts />} />
-            <Route path="/manage-manufacturers" element={<ManageManufacturers />} />
-            <Route path="/manage-products/new" element={<NewProduct />} />
-            <Route path="/manage-products/product-reviews" element={<ProductReviews />} />
-            <Route path="/manage-products/product-review/new" element={<NewProductReview />} />
-            <Route path="/manage-products/:id" element={<ProductDetail />} />
-            <Route path="/manage-customers/new" element={<EditCustomer />} />
-            <Route path="/manage-customers/retest-notices" element={<RetestNotices />} />
-            <Route path="/manage-customers/retest-followup" element={<RetestFollowUp />} />
-            <Route path="/manage-customers/cdr" element={<CustomerDocumentReviews />} />
-            <Route path="/manage-customers/cdr/new" element={<NewCdr />} />
-            <Route path="/manage-customers/cdr/:cdrId" element={<EditCdr />} />
-            <Route path="/manage-customers/sr-documents" element={<SrDocuments />} />
-            <Route path="/manage-customers/sr-documents/new" element={<NewSrDocument />} />
-            <Route path="/manage-customers/sr-documents/:sr" element={<SrDocumentDetail />} />
+                <Route path="/work-orders-v2" element={<WorkOrderSearchV2 />} />
+                <Route path="/work-order/:id" element={<WorkOrderDetail />} />
+                <Route path="/item/:id" element={<ItemDetail />} />
+                <Route path="/logistics-view" element={<LogisticsView />} />
+                <Route path="/customer-pickup" element={<CustomerPickupView />} />
+                <Route path="/shipping-view" element={<ShippingView />} />
+                <Route path="/account-admin" element={<AccountAdminView />} />
+                <Route path="/lab-triage" element={<LabTriage />} />
+                <Route path="/update-rfid" element={<UpdateRfid />} />
+                <Route path="/missing-cost" element={<MissingCost />} />
+                <Route path="/outsource-vendors" element={<OutsourceVendors />} />
 
 
-            <Route path="/manage-customers/bulk-contract-pricing" element={<BulkContractPricingUpdate />} />
+                <Route path="/batch-details" element={<WorkOrderBatchDetailsDemo />} />
+                <Route path="/standards" element={<ManageStandards />} />
+                <Route path="/standards/dashboard" element={<StandardsDashboard />} />
+                <Route path="/standards/new" element={<StandardDetail />} />
+                <Route path="/standards/onsite-batch-loans" element={<OnsiteBatchLoans />} />
+                <Route path="/standards/create-lab-work-orders" element={<CreateLabStandardWorkOrders />} />
+                <Route path="/standards/manage-pm-interim-checks" element={<PmInterimChecks />} />
+                <Route path="/standards/manage-pm-interim-checks/stations" element={<ManagePmStations />} />
+                <Route path="/standards/manage-pm-interim-checks/templates" element={<ManagePmTemplates />} />
+                <Route path="/standards/:id" element={<StandardDetail />} />
+                <Route path="/design-system" element={<DesignSystemGallery />} />
+                <Route path="/onsite-projects" element={<OnsiteProjects />} />
+                <Route path="/onsite-scheduling" element={<OnsiteScheduling />} />
+                {/* the demo prototype's own route name, kept as an alias */}
+                <Route path="/onsite-scheduling-prototype" element={<OnsiteScheduling />} />
+                <Route path="/onsite-scheduling-v2" element={<OnsiteSchedulingV2 />} />
+
+                <Route path="/onsite-projects/new" element={<OnsiteProjectDetail />} />
+                <Route path="/onsite-projects/vehicle-standards" element={<VehicleStandards />} />
+                <Route path="/invoicing" element={<Invoicing />} />
+                <Route path="/invoicing-unified" element={<InvoicingUnified />} />
+                <Route path="/delivery-tickets" element={<DeliveryTickets />} />
+                <Route path="/transit-log" element={<TransitLog />} />
+                <Route path="/manage-customers" element={<ManageCustomers />} />
+                <Route path="/quotes" element={<Quotes />} />
+                <Route path="/quotes/new" element={<NewQuote />} />
+                <Route path="/manage-products" element={<ManageProducts />} />
+                <Route path="/manage-manufacturers" element={<ManageManufacturers />} />
+                <Route path="/manage-products/new" element={<NewProduct />} />
+                <Route path="/manage-products/product-reviews" element={<ProductReviews />} />
+                <Route path="/manage-products/product-review/new" element={<NewProductReview />} />
+                <Route path="/manage-products/:id" element={<ProductDetail />} />
+                <Route path="/manage-customers/new" element={<EditCustomer />} />
+                <Route path="/manage-customers/retest-notices" element={<RetestNotices />} />
+                <Route path="/manage-customers/retest-followup" element={<RetestFollowUp />} />
+                <Route path="/manage-customers/cdr" element={<CustomerDocumentReviews />} />
+                <Route path="/manage-customers/cdr/new" element={<NewCdr />} />
+                <Route path="/manage-customers/cdr/:cdrId" element={<EditCdr />} />
+                <Route path="/manage-customers/sr-documents" element={<SrDocuments />} />
+                <Route path="/manage-customers/sr-documents/new" element={<NewSrDocument />} />
+                <Route path="/manage-customers/sr-documents/:sr" element={<SrDocumentDetail />} />
 
 
-            <Route path="/manage-customers/contract-reviews" element={<ContractReviews />} />
-            <Route path="/manage-customers/contract-reviews/new" element={<NewContractReview />} />
-            <Route path="/manage-customers/contract-reviews/:reviewId" element={<EditContractReview />} />
-            <Route path="/manage-customers/:accountNumber" element={<EditCustomer />} />
+                <Route path="/manage-customers/bulk-contract-pricing" element={<BulkContractPricingUpdate />} />
+
+
+                <Route path="/manage-customers/contract-reviews" element={<ContractReviews />} />
+                <Route path="/manage-customers/contract-reviews/new" element={<NewContractReview />} />
+                <Route path="/manage-customers/contract-reviews/:reviewId" element={<EditContractReview />} />
+                <Route path="/manage-customers/:accountNumber" element={<EditCustomer />} />
 
 
 
-            <Route path="/whats-new" element={<WhatsNew />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
+                <Route path="/whats-new" element={<WhatsNew />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            </Routes>
+          </BreadcrumbProvider>
         </OpenDecisionsProvider>
         <PointerEventsGuard />
         <WelcomeModal />

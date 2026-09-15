@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
 import { ArrowLeft, Building2, ChevronDown, ChevronRight, FileText, Plus, RotateCcw, Search, Trash2 } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
@@ -10,8 +10,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
+import { useBreadcrumb } from "@/context/BreadcrumbContext";
 import { LAB_CODES, LOCATIONS, STANDARDS, StandardRecord } from "@/lib/standards/data";
 import { PM_SCHEDULES, PM_STATIONS } from "@/lib/standards/pm-interim-checks";
+
 
 type StationType = "Process" | "Station";
 
@@ -97,6 +99,16 @@ const ManagePmStations = () => {
   const [page, setPage] = useState(1);
   const [editing, setEditing] = useState<StationRecord | null>(null);
   const [isNew, setIsNew] = useState(false);
+  const { setExtraCrumbs } = useBreadcrumb();
+
+  useEffect(() => {
+    if (editing && !isNew) {
+      setExtraCrumbs([{ label: editing.name }]);
+    } else {
+      setExtraCrumbs([]);
+    }
+    return () => setExtraCrumbs([]);
+  }, [editing, isNew, setExtraCrumbs]);
 
   const filtered = useMemo(() => stations.filter((station) => {
     if (filters.type !== "all" && station.type !== filters.type) return false;
