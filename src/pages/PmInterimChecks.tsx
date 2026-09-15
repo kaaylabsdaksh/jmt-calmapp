@@ -196,8 +196,6 @@ const PmInterimChecks = () => {
               <div className="flex flex-wrap items-center justify-end gap-2">
                 <Select value={viewMode} onValueChange={(value) => changeViewMode(value as ViewMode)}><SelectTrigger className="h-7 w-[156px] text-[11px]"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="schedule">View by Schedule</SelectItem><SelectItem value="standard">View by Standard</SelectItem><SelectItem value="station">View by Station</SelectItem><SelectItem value="template">View by Template</SelectItem></SelectContent></Select>
                 <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={exportRows}><Download className="h-3.5 w-3.5" /> Export</Button>
-                <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={clearFilters}><RotateCcw className="h-3.5 w-3.5" /> Clear</Button>
-                <Button size="sm" className="h-7 gap-1.5 bg-info text-info-foreground hover:bg-info/90 text-[11px]" onClick={applyFilters}><Search className="h-3.5 w-3.5" /> Search</Button>
               </div>
             </div>
             <div className="grid grid-cols-1 gap-6 px-4 py-4 lg:grid-cols-3">
@@ -267,6 +265,10 @@ const PmInterimChecks = () => {
                   <label className="flex h-7 items-center gap-2 pt-3 text-[11px]"><Checkbox checked={draft.includeHistory} onCheckedChange={(checked) => updateDraft("includeHistory", checked === true)} /> Include history in search</label>
                 </div>
               </div>
+            </div>
+            <div className="flex flex-wrap items-center justify-end gap-2 border-t bg-muted/30 px-4 py-2.5">
+              <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={clearFilters}><RotateCcw className="h-3.5 w-3.5" /> Clear</Button>
+              <Button size="sm" className="h-7 gap-1.5 bg-info text-info-foreground hover:bg-info/90 text-[11px]" onClick={applyFilters}><Search className="h-3.5 w-3.5" /> Search</Button>
             </div>
           </section>
 
