@@ -175,31 +175,80 @@ const PmInterimChecks = () => {
                 <div><h2 className="text-sm font-semibold">Search Criteria</h2><p className="text-[11px] text-muted-foreground">Find active schedules or completed maintenance checks.</p></div>
                 {activeFilters > 0 && <Badge variant="secondary" className="h-5 text-[10px]">{activeFilters} active</Badge>}
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center justify-end gap-2">
                 <Select value={viewMode} onValueChange={(value) => changeViewMode(value as ViewMode)}><SelectTrigger className="h-7 w-[156px] text-[11px]"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="schedule">View by Schedule</SelectItem><SelectItem value="standard">View by Standard</SelectItem><SelectItem value="station">View by Station</SelectItem><SelectItem value="template">View by Template</SelectItem></SelectContent></Select>
                 <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={exportRows}><Download className="h-3.5 w-3.5" /> Export</Button>
+                <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={clearFilters}><RotateCcw className="h-3.5 w-3.5" /> Clear</Button>
+                <Button size="sm" className="h-7 gap-1.5 bg-info text-info-foreground hover:bg-info/90 text-[11px]" onClick={applyFilters}><Search className="h-3.5 w-3.5" /> Search</Button>
               </div>
             </div>
-            <div className="grid gap-x-4 gap-y-2 px-4 py-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
-              <Field label="Schedule Status"><Select value={draft.status} onValueChange={(value) => updateDraft("status", value)}><SelectTrigger className={FIELD}><SelectValue /></SelectTrigger><SelectContent><SelectItem value="all">All statuses</SelectItem><SelectItem value="Active">Active</SelectItem><SelectItem value="Completed">Completed</SelectItem></SelectContent></Select></Field>
-              <Field label="Schedule Type"><Select value={draft.type} onValueChange={(value) => updateDraft("type", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All types" /></SelectTrigger><SelectContent><SelectItem value="all">All types</SelectItem><SelectItem value="IM">Interim Check</SelectItem><SelectItem value="PM">Preventive Maintenance</SelectItem></SelectContent></Select></Field>
-              <Field label="Standard #"><Input className={FIELD} value={draft.standardNo} onChange={(event) => updateDraft("standardNo", event.target.value)} /></Field>
-              <Field label="Location"><Select disabled={viewMode === "template"} value={draft.location} onValueChange={(value) => updateDraft("location", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All locations" /></SelectTrigger><SelectContent><SelectItem value="all">All locations</SelectItem>{LOCATIONS.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></Field>
-              <Field label="Division"><Select disabled={viewMode === "template"} value={draft.division} onValueChange={(value) => updateDraft("division", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All divisions" /></SelectTrigger><SelectContent><SelectItem value="all">All divisions</SelectItem>{["Lab", "OnSite", "ESL"].map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></Field>
-              <Field label="Template Description"><Input className={FIELD} value={draft.template} onChange={(event) => updateDraft("template", event.target.value)} /></Field>
-              <div className="md:col-span-2"><Field label="Date Range"><DateRangePicker dateFrom={draft.dateFrom} dateTo={draft.dateTo} onDateFromChange={(value) => updateDraft("dateFrom", value)} onDateToChange={(value) => updateDraft("dateTo", value)} dateType={draft.dateType} onDateTypeChange={(value) => updateDraft("dateType", value)} dateTypeOptions={DATE_TYPE_OPTIONS} triggerClassName="w-full" /></Field></div>
-              <Field label="Station"><Select value={draft.station} onValueChange={(value) => updateDraft("station", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All stations" /></SelectTrigger><SelectContent><SelectItem value="all">All stations</SelectItem>{PM_STATIONS.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></Field>
-              <Field label="Frequency"><Select value={draft.frequency} onValueChange={(value) => updateDraft("frequency", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All frequencies" /></SelectTrigger><SelectContent><SelectItem value="all">All frequencies</SelectItem><SelectItem value="D">Daily</SelectItem><SelectItem value="M">Monthly</SelectItem></SelectContent></Select></Field>
-              <Field label="Document / Tool"><Input className={FIELD} value={draft.documentTool} onChange={(event) => updateDraft("documentTool", event.target.value)} /></Field>
-              <Field label="Lab Code"><Select disabled={viewMode === "template"} value={draft.labCode} onValueChange={(value) => updateDraft("labCode", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All lab codes" /></SelectTrigger><SelectContent><SelectItem value="all">All lab codes</SelectItem>{LAB_CODES.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></Field>
-              <Field label="Account #"><Input disabled={viewMode === "template"} className={FIELD} value={draft.account} onChange={(event) => updateDraft("account", event.target.value)} /></Field>
-              <Field label="Completed Status"><Select value={draft.completedStatus} onValueChange={(value) => updateDraft("completedStatus", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All results" /></SelectTrigger><SelectContent><SelectItem value="all">All results</SelectItem><SelectItem value="Pass">Pass</SelectItem><SelectItem value="Not Performed">Not Performed</SelectItem></SelectContent></Select></Field>
-              <Field label="Completed User"><Select value={draft.completedUser} onValueChange={(value) => updateDraft("completedUser", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All users" /></SelectTrigger><SelectContent><SelectItem value="all">All users</SelectItem>{completedUsers.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></Field>
-              <label className="flex h-7 items-center gap-2 text-[11px] pt-5"><Checkbox checked={draft.includeHistory} onCheckedChange={(checked) => updateDraft("includeHistory", checked === true)} /> Include history in search</label>
-            </div>
-            <div className="flex items-center justify-end gap-2 border-t px-4 py-2">
-              <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={clearFilters}><RotateCcw className="h-3.5 w-3.5" /> Clear</Button>
-              <Button size="sm" className="h-7 gap-1.5 bg-info text-info-foreground hover:bg-info/90 text-[11px]" onClick={applyFilters}><Search className="h-3.5 w-3.5" /> Search</Button>
+            <div className="grid grid-cols-1 gap-6 px-4 py-4 lg:grid-cols-3">
+              {/* Check Details */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-3 rounded-full bg-info" />
+                  <h3 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Check Details</h3>
+                </div>
+                <div className="space-y-2.5">
+                  <div className="grid grid-cols-2 gap-3">
+                    <ColumnField label="Schedule Status">
+                      <Select value={draft.status} onValueChange={(value) => updateDraft("status", value)}><SelectTrigger className={FIELD}><SelectValue /></SelectTrigger><SelectContent><SelectItem value="all">All statuses</SelectItem><SelectItem value="Active">Active</SelectItem><SelectItem value="Completed">Completed</SelectItem></SelectContent></Select>
+                    </ColumnField>
+                    <ColumnField label="Schedule Type">
+                      <Select value={draft.type} onValueChange={(value) => updateDraft("type", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All types" /></SelectTrigger><SelectContent><SelectItem value="all">All types</SelectItem><SelectItem value="IM">Interim Check</SelectItem><SelectItem value="PM">Preventive Maintenance</SelectItem></SelectContent></Select>
+                    </ColumnField>
+                  </div>
+                  <ColumnField label="Standard #"><Input className={FIELD} value={draft.standardNo} onChange={(event) => updateDraft("standardNo", event.target.value)} /></ColumnField>
+                  <ColumnField label="Template Description"><Input className={FIELD} value={draft.template} onChange={(event) => updateDraft("template", event.target.value)} /></ColumnField>
+                  <ColumnField label="Document / Tool"><Input className={FIELD} value={draft.documentTool} onChange={(event) => updateDraft("documentTool", event.target.value)} /></ColumnField>
+                </div>
+              </div>
+              {/* Entity & Lab */}
+              <div className="space-y-3 lg:border-x lg:border-border lg:px-6">
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-3 rounded-full bg-muted-foreground" />
+                  <h3 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Entity & Lab</h3>
+                </div>
+                <div className="space-y-2.5">
+                  <ColumnField label="Location">
+                    <Select disabled={viewMode === "template"} value={draft.location} onValueChange={(value) => updateDraft("location", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All locations" /></SelectTrigger><SelectContent><SelectItem value="all">All locations</SelectItem>{LOCATIONS.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
+                  </ColumnField>
+                  <ColumnField label="Division">
+                    <Select disabled={viewMode === "template"} value={draft.division} onValueChange={(value) => updateDraft("division", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All divisions" /></SelectTrigger><SelectContent><SelectItem value="all">All divisions</SelectItem>{["Lab", "OnSite", "ESL"].map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
+                  </ColumnField>
+                  <ColumnField label="Station">
+                    <Select value={draft.station} onValueChange={(value) => updateDraft("station", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All stations" /></SelectTrigger><SelectContent><SelectItem value="all">All stations</SelectItem>{PM_STATIONS.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
+                  </ColumnField>
+                  <div className="grid grid-cols-2 gap-3">
+                    <ColumnField label="Lab Code">
+                      <Select disabled={viewMode === "template"} value={draft.labCode} onValueChange={(value) => updateDraft("labCode", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All lab codes" /></SelectTrigger><SelectContent><SelectItem value="all">All lab codes</SelectItem>{LAB_CODES.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
+                    </ColumnField>
+                    <ColumnField label="Account #">
+                      <Input disabled={viewMode === "template"} className={FIELD} value={draft.account} onChange={(event) => updateDraft("account", event.target.value)} />
+                    </ColumnField>
+                  </div>
+                  <ColumnField label="Frequency">
+                    <Select value={draft.frequency} onValueChange={(value) => updateDraft("frequency", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All frequencies" /></SelectTrigger><SelectContent><SelectItem value="all">All frequencies</SelectItem><SelectItem value="D">Daily</SelectItem><SelectItem value="M">Monthly</SelectItem></SelectContent></Select>
+                  </ColumnField>
+                </div>
+              </div>
+              {/* Timeline & User */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-3 rounded-full bg-success" />
+                  <h3 className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Timeline & User</h3>
+                </div>
+                <div className="space-y-2.5">
+                  <ColumnField label="Date Range"><DateRangePicker dateFrom={draft.dateFrom} dateTo={draft.dateTo} onDateFromChange={(value) => updateDraft("dateFrom", value)} onDateToChange={(value) => updateDraft("dateTo", value)} dateType={draft.dateType} onDateTypeChange={(value) => updateDraft("dateType", value)} dateTypeOptions={DATE_TYPE_OPTIONS} triggerClassName="w-full" /></ColumnField>
+                  <ColumnField label="Completed Status">
+                    <Select value={draft.completedStatus} onValueChange={(value) => updateDraft("completedStatus", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All results" /></SelectTrigger><SelectContent><SelectItem value="all">All results</SelectItem><SelectItem value="Pass">Pass</SelectItem><SelectItem value="Not Performed">Not Performed</SelectItem></SelectContent></Select>
+                  </ColumnField>
+                  <ColumnField label="Completed User">
+                    <Select value={draft.completedUser} onValueChange={(value) => updateDraft("completedUser", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All users" /></SelectTrigger><SelectContent><SelectItem value="all">All users</SelectItem>{completedUsers.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
+                  </ColumnField>
+                  <label className="flex h-7 items-center gap-2 pt-3 text-[11px]"><Checkbox checked={draft.includeHistory} onCheckedChange={(checked) => updateDraft("includeHistory", checked === true)} /> Include history in search</label>
+                </div>
+              </div>
             </div>
           </section>
 
