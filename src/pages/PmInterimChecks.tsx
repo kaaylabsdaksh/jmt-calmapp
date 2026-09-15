@@ -185,9 +185,9 @@ const PmInterimChecks = () => {
 
   return (
     <TooltipProvider>
-      <div className="min-h-full bg-background">
+      <div className="flex h-dvh min-h-0 flex-col bg-background">
         <ModernTopNav />
-        <main className="w-full space-y-4 px-3 py-4 sm:px-4 lg:px-6">
+        <main className="flex min-h-0 w-full flex-1 flex-col gap-4 px-3 py-4 sm:px-4 lg:px-6">
           <section className="border bg-card">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b px-4 py-3">
               <div className="flex items-center gap-2">
