@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ChevronDown, ChevronRight, FileSpreadsheet, Plus, RotateCcw, Search, Upload } from "lucide-react";
+import { ArrowLeft, ChevronDown, ChevronRight, FileSpreadsheet, Plus, RotateCcw, Search, Upload } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -146,7 +146,7 @@ const TemplateEditor = ({ template, isNew, pendingFile, fileInput, onFile, onCha
     <div className="space-y-3"><BandTitle label="Audit & Schedule Information" /><div className="grid grid-cols-2 gap-x-4 gap-y-3 text-[11px]"><Audit label="Created By" value={template.createdBy} /><Audit label="Created Date" value={template.createdDate || "On save"} /><Audit label="Modified By" value={template.modifiedBy || "—"} /><Audit label="Modified Date" value={template.modifiedDate || "—"} /><Audit label="Validated By" value={template.validatedBy || "—"} /><Audit label="Validated Date" value={template.validatedDate || "—"} /></div><div className="border bg-muted/20 p-3 text-[11px] text-muted-foreground">{template.linkedSchedules ? `${template.linkedSchedules} active or completed schedules use this template.` : "No schedules are linked to this template yet."}</div>{!isNew && <Button variant="outline" size="sm" className="h-7 text-[11px]" onClick={() => onChange("status", template.status === "Inactive" ? "Active" : "Inactive")}>{template.status === "Inactive" ? "Set Active" : "Set Inactive"}</Button>}</div>
   </div>
   {!isNew && <div className="border-t px-4 py-4"><ScheduleInformationTable template={template} /></div>}
-  <div className="sticky bottom-0 flex justify-end gap-2 border-t bg-card px-4 py-3"><Button variant="outline" className="h-8 text-xs" onClick={onCancel}>Cancel</Button><Button className="h-8 text-xs" onClick={onSave}>Save</Button></div>
+  <div className="sticky bottom-0 flex items-center justify-between gap-2 border-t bg-card px-4 py-3"><Button variant="outline" className="h-8 gap-1.5 text-xs" onClick={onCancel}><ArrowLeft className="h-3.5 w-3.5" /> Back</Button><div className="flex items-center gap-2"><Button variant="outline" className="h-8 text-xs" onClick={onCancel}>Cancel</Button><Button className="h-8 text-xs" onClick={onSave}>Save</Button></div></div>
 </section>;
 
 const ScheduleInformationTable = ({ template }: { template: PmTemplateRecord }) => {
