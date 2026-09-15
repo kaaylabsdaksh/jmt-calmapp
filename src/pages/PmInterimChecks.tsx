@@ -274,7 +274,7 @@ const PmInterimChecks = () => {
             </div>
           </section>
 
-          <section className="border bg-card">
+          <section className="flex min-h-0 flex-1 flex-col border bg-card">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b px-4 py-3">
               <div><h2 className="text-sm font-semibold">{{ schedule: "Schedule Results", standard: "Results by Standard", station: "Results by Station", template: "Results by Template" }[viewMode]}</h2><p className="text-[11px] text-muted-foreground">{filtered.length} records returned · Select a row to view check history.</p></div>
               <div className="flex flex-wrap items-center gap-2">
