@@ -143,6 +143,7 @@ const App = () => {
                 <Route path="/standards/manage-pm-interim-checks" element={<PmInterimChecks />} />
                 <Route path="/standards/manage-pm-interim-checks/stations" element={<ManagePmStations />} />
                 <Route path="/standards/manage-pm-interim-checks/templates" element={<ManagePmTemplates />} />
+                <Route path="/standards/manage-pm-interim-checks/templates/:templateId" element={<ManagePmTemplates />} />
                 <Route path="/standards/:id" element={<StandardDetail />} />
                 <Route path="/design-system" element={<DesignSystemGallery />} />
                 <Route path="/onsite-projects" element={<OnsiteProjects />} />

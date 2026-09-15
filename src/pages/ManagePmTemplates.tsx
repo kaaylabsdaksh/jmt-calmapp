@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ChevronDown, ChevronRight, FileSpreadsheet, Plus, RotateCcw, Search, Upload } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Badge } from "@/components/ui/badge";
@@ -43,8 +43,9 @@ const StatusBadge = ({ status }: { status: PmTemplateStatus }) => (
 );
 
 const ManagePmTemplates = () => {
-  const [searchParams] = useSearchParams();
-  const openedFromUrl = useRef(false);
+  const navigate = useNavigate();
+  const { templateId } = useParams();
+  const LIST_PATH = "/standards/manage-pm-interim-checks/templates";
   const [templates, setTemplates] = useState(PM_TEMPLATE_RECORDS);
   const [draftFilters, setDraftFilters] = useState(EMPTY_FILTERS);
   const [filters, setFilters] = useState(EMPTY_FILTERS);
@@ -56,17 +57,13 @@ const ManagePmTemplates = () => {
   const fileInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const templateId = searchParams.get("template");
-    if (templateId && !openedFromUrl.current) {
-      openedFromUrl.current = true;
-      const template = templates.find((item) => item.id === templateId);
-      if (template) {
-        setEditing({ ...template });
-        setIsNew(false);
-        setPendingFile("");
-      }
-    }
-  }, [searchParams, templates]);
+    if (!templateId) { setEditing(null); setIsNew(false); setPendingFile(""); return; }
+    if (templateId === "new") { setEditing(emptyTemplate()); setIsNew(true); setPendingFile(""); return; }
+    const template = templates.find((item) => item.id === templateId);
+    if (template) { setEditing({ ...template }); setIsNew(false); setPendingFile(""); }
+    else navigate(LIST_PATH, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [templateId]);
 
   const filtered = useMemo(() => templates.filter((template) => {
     if (filters.status !== "all" && template.status !== filters.status) return false;
@@ -78,8 +75,8 @@ const ManagePmTemplates = () => {
   const pageRows = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
   const toggleExpanded = (id: string) => setExpanded((current) => { const next = new Set(current); next.has(id) ? next.delete(id) : next.add(id); return next; });
   const updateEditing = <K extends keyof PmTemplateRecord>(key: K, value: PmTemplateRecord[K]) => setEditing((current) => current ? { ...current, [key]: value } : current);
-  const openEditor = (template?: PmTemplateRecord) => { setEditing(template ? { ...template } : emptyTemplate()); setIsNew(!template); setPendingFile(""); };
-  const cancelEditor = () => { setEditing(null); setIsNew(false); setPendingFile(""); };
+  const openEditor = (template?: PmTemplateRecord) => navigate(`${LIST_PATH}/${template ? template.id : "new"}`);
+  const cancelEditor = () => navigate(LIST_PATH);
   const saveTemplate = () => {
     if (!editing?.description.trim()) {
       toast({ title: "Description is required", description: "Enter a template description before saving.", variant: "destructive" });
@@ -109,6 +106,7 @@ const ManagePmTemplates = () => {
   return <div className="min-h-full bg-background">
     <ModernTopNav />
     <main className="w-full space-y-4 px-3 py-4 sm:px-4 lg:px-6">
+      {editing ? <TemplateEditor template={editing} isNew={isNew} pendingFile={pendingFile} fileInput={fileInput} onFile={setPendingFile} onChange={updateEditing} onCancel={cancelEditor} onSave={saveTemplate} /> : <>
       <section className="border bg-card">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3">
           <div className="flex items-center gap-2"><FileSpreadsheet className="h-4 w-4 text-muted-foreground" /><div><h2 className="text-sm font-semibold">Manage PM / Interim Check Templates</h2><p className="text-[11px] text-muted-foreground">Search templates, review revisions, and maintain controlled documents.</p></div></div>
@@ -122,7 +120,7 @@ const ManagePmTemplates = () => {
         <div className="flex justify-end gap-2 border-t bg-muted/30 px-4 py-2.5"><Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => { setDraftFilters(EMPTY_FILTERS); setFilters(EMPTY_FILTERS); setPage(1); }}><RotateCcw className="h-3.5 w-3.5" /> Clear</Button><Button size="sm" className="h-7 gap-1.5 bg-info text-info-foreground hover:bg-info/90 text-[11px]" onClick={() => { setFilters(draftFilters); setPage(1); }}><Search className="h-3.5 w-3.5" /> Search</Button></div>
       </section>
 
-      {editing && <TemplateEditor template={editing} isNew={isNew} pendingFile={pendingFile} fileInput={fileInput} onFile={setPendingFile} onChange={updateEditing} onCancel={cancelEditor} onSave={saveTemplate} />}
+
 
       <section className="overflow-hidden border bg-card">
         <div className="border-b px-4 py-3"><h2 className="text-sm font-semibold">Template Results</h2><p className="text-[11px] text-muted-foreground">{filtered.length} records returned · Expand a row to review revision history.</p></div>
@@ -131,6 +129,7 @@ const ManagePmTemplates = () => {
             {expanded.has(template.id) && <TableRow className="bg-muted/20"><TableCell colSpan={9} className="p-3"><RevisionTable template={template} /></TableCell></TableRow>}</Fragment>) : <TableRow><TableCell colSpan={9} className="h-24 text-center text-muted-foreground">No templates match the selected criteria.</TableCell></TableRow>}</TableBody></Table></div>
         <div className="flex items-center justify-between border-t px-4 py-2"><p className="text-[11px] text-muted-foreground">{filtered.length ? `Showing ${(page - 1) * PAGE_SIZE + 1}–${Math.min(page * PAGE_SIZE, filtered.length)} of ${filtered.length}` : "No results"}</p><div className="flex items-center gap-2"><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page === 1} onClick={() => setPage((value) => value - 1)}>Previous</Button><span className="text-[11px] text-muted-foreground">Page {page} of {pageCount}</span><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page >= pageCount} onClick={() => setPage((value) => value + 1)}>Next</Button></div></div>
       </section>
+      </>}
     </main>
   </div>;
 };
