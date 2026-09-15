@@ -174,7 +174,7 @@ const ManagePmStations = () => {
               <div className="mt-3 flex justify-end gap-2"><Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => { setDraftFilters(EMPTY_FILTERS); setFilters(EMPTY_FILTERS); setPage(1); }}><RotateCcw className="h-3.5 w-3.5" /> Clear</Button><Button size="sm" className="h-7 gap-1.5 bg-info text-info-foreground hover:bg-info/90 text-[11px]" onClick={() => { setFilters(draftFilters); setPage(1); }}><Search className="h-3.5 w-3.5" /> Search</Button></div>
             </section>
 
-            <section className="flex min-h-0 flex-1 flex-col overflow-hidden border bg-card">
+            <section className="flex min-h-0 flex-1 flex-col border bg-card">
               <div className="flex items-center justify-between border-b px-5 py-3">
                 <div><h3 className="text-sm font-semibold">Station Results</h3><p className="text-[11px] text-muted-foreground">{filtered.length} records returned · Expand a row to review linked standards.</p></div>
               </div>
