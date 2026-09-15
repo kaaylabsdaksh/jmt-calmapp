@@ -11,4 +11,5 @@
 - [x] Add Schedule, Standard, Station, and Template result formats to PM / Interim Checks
 - [x] Build the full Manage Stations list and add/edit workflows for PM / Interim Checks
 - [x] Convert Manage Stations from a dialog to a dedicated full page
-- [ ] Build modern Manage Manufacturers list and Add/Edit workflow
+- [x] Build modern Manage Manufacturers list and Add/Edit workflow
+- [x] Build modern Manage Templates list and Add/Edit workflow for PM / Interim Checks
