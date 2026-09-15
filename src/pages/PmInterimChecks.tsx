@@ -20,7 +20,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ModernDatePicker } from "@/components/ui/modern-date-picker";
+import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -40,10 +40,9 @@ const emptyFilters = {
   location: "all",
   division: "all",
   template: "",
-  dueFrom: undefined as Date | undefined,
-  dueTo: undefined as Date | undefined,
-  terminalFrom: undefined as Date | undefined,
-  terminalTo: undefined as Date | undefined,
+  dateType: "due",
+  dateFrom: undefined as Date | undefined,
+  dateTo: undefined as Date | undefined,
   station: "all",
   frequency: "all",
   documentTool: "",
@@ -51,10 +50,15 @@ const emptyFilters = {
   account: "",
   completedStatus: "all",
   completedUser: "all",
-  completedFrom: undefined as Date | undefined,
-  completedTo: undefined as Date | undefined,
   includeHistory: false,
 };
+
+const DATE_TYPE_OPTIONS = [
+  { value: "due", label: "Due Date" },
+  { value: "terminal", label: "Terminal Date" },
+  { value: "completed", label: "Completed Date" },
+];
+
 
 const FIELD = "h-7 min-h-0 rounded-md border-input bg-background px-2 py-0 text-[11px]";
 const LABEL = "text-[11px] font-medium text-foreground/80";
@@ -103,8 +107,8 @@ const PmInterimChecks = () => {
       if (filters.location !== "all" && row.location !== filters.location) return false;
       if (filters.division !== "all" && row.division !== filters.division) return false;
       if (filters.template && !row.templateDescription.toLowerCase().includes(filters.template.toLowerCase())) return false;
-      if ((filters.dueFrom || filters.dueTo) && !inRange(row.dueDate, filters.dueFrom, filters.dueTo)) return false;
-      if ((filters.terminalFrom || filters.terminalTo) && !inRange(row.terminalDate, filters.terminalFrom, filters.terminalTo)) return false;
+      if ((filters.dateFrom || filters.dateTo) && filters.dateType === "due" && !inRange(row.dueDate, filters.dateFrom, filters.dateTo)) return false;
+      if ((filters.dateFrom || filters.dateTo) && filters.dateType === "terminal" && !inRange(row.terminalDate, filters.dateFrom, filters.dateTo)) return false;
       if (filters.station !== "all" && row.station !== filters.station) return false;
       if (filters.frequency !== "all" && row.frequency !== filters.frequency) return false;
       if (filters.documentTool && !row.documentTool.toLowerCase().includes(filters.documentTool.toLowerCase())) return false;
@@ -112,8 +116,8 @@ const PmInterimChecks = () => {
       if (filters.account && !row.account.includes(filters.account)) return false;
       if (filters.completedStatus !== "all" && row.lastResult !== filters.completedStatus) return false;
       if (filters.completedUser !== "all" && row.completedUser !== filters.completedUser) return false;
-      if (filters.completedFrom || filters.completedTo) {
-        const matchesCurrent = row.histories.some((history) => inRange(history.completedDate, filters.completedFrom, filters.completedTo));
+      if ((filters.dateFrom || filters.dateTo) && filters.dateType === "completed") {
+        const matchesCurrent = row.histories.some((history) => inRange(history.completedDate, filters.dateFrom, filters.dateTo));
         if (!matchesCurrent) return false;
       }
       return true;
@@ -183,10 +187,7 @@ const PmInterimChecks = () => {
               <Field label="Location"><Select disabled={viewMode === "template"} value={draft.location} onValueChange={(value) => updateDraft("location", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All locations" /></SelectTrigger><SelectContent><SelectItem value="all">All locations</SelectItem>{LOCATIONS.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></Field>
               <Field label="Division"><Select disabled={viewMode === "template"} value={draft.division} onValueChange={(value) => updateDraft("division", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All divisions" /></SelectTrigger><SelectContent><SelectItem value="all">All divisions</SelectItem>{["Lab", "OnSite", "ESL"].map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></Field>
               <Field label="Template Description"><Input className={FIELD} value={draft.template} onChange={(event) => updateDraft("template", event.target.value)} /></Field>
-              <Field label="Due Date From"><ModernDatePicker size="sm" value={draft.dueFrom} onChange={(value) => updateDraft("dueFrom", value)} /></Field>
-              <Field label="Due Date To"><ModernDatePicker size="sm" value={draft.dueTo} onChange={(value) => updateDraft("dueTo", value)} /></Field>
-              <Field label="Terminal Date From"><ModernDatePicker size="sm" value={draft.terminalFrom} onChange={(value) => updateDraft("terminalFrom", value)} /></Field>
-              <Field label="Terminal Date To"><ModernDatePicker size="sm" value={draft.terminalTo} onChange={(value) => updateDraft("terminalTo", value)} /></Field>
+              <div className="md:col-span-2"><Field label="Date Range"><DateRangePicker dateFrom={draft.dateFrom} dateTo={draft.dateTo} onDateFromChange={(value) => updateDraft("dateFrom", value)} onDateToChange={(value) => updateDraft("dateTo", value)} dateType={draft.dateType} onDateTypeChange={(value) => updateDraft("dateType", value)} dateTypeOptions={DATE_TYPE_OPTIONS} triggerClassName="w-full" /></Field></div>
               <Field label="Station"><Select value={draft.station} onValueChange={(value) => updateDraft("station", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All stations" /></SelectTrigger><SelectContent><SelectItem value="all">All stations</SelectItem>{PM_STATIONS.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></Field>
               <Field label="Frequency"><Select value={draft.frequency} onValueChange={(value) => updateDraft("frequency", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All frequencies" /></SelectTrigger><SelectContent><SelectItem value="all">All frequencies</SelectItem><SelectItem value="D">Daily</SelectItem><SelectItem value="M">Monthly</SelectItem></SelectContent></Select></Field>
               <Field label="Document / Tool"><Input className={FIELD} value={draft.documentTool} onChange={(event) => updateDraft("documentTool", event.target.value)} /></Field>
@@ -194,8 +195,6 @@ const PmInterimChecks = () => {
               <Field label="Account #"><Input disabled={viewMode === "template"} className={FIELD} value={draft.account} onChange={(event) => updateDraft("account", event.target.value)} /></Field>
               <Field label="Completed Status"><Select value={draft.completedStatus} onValueChange={(value) => updateDraft("completedStatus", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All results" /></SelectTrigger><SelectContent><SelectItem value="all">All results</SelectItem><SelectItem value="Pass">Pass</SelectItem><SelectItem value="Not Performed">Not Performed</SelectItem></SelectContent></Select></Field>
               <Field label="Completed User"><Select value={draft.completedUser} onValueChange={(value) => updateDraft("completedUser", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All users" /></SelectTrigger><SelectContent><SelectItem value="all">All users</SelectItem>{completedUsers.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></Field>
-              <Field label="Completed Date From"><ModernDatePicker size="sm" value={draft.completedFrom} onChange={(value) => updateDraft("completedFrom", value)} /></Field>
-              <Field label="Completed Date To"><ModernDatePicker size="sm" value={draft.completedTo} onChange={(value) => updateDraft("completedTo", value)} /></Field>
               <label className="flex h-7 items-center gap-2 text-[11px] pt-5"><Checkbox checked={draft.includeHistory} onCheckedChange={(checked) => updateDraft("includeHistory", checked === true)} /> Include history in search</label>
             </div>
             <div className="flex items-center justify-end gap-2 border-t px-4 py-2">
@@ -245,8 +244,6 @@ const PmInterimChecks = () => {
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => <div className="grid grid-cols-[104px_minmax(0,1fr)] items-center gap-2"><Label className={LABEL}>{label}</Label>{children}</div>;
 
-type DateFieldKey = "dueFrom" | "dueTo" | "terminalFrom" | "terminalTo";
-const DateBlock = ({ title, fields, onChange }: { title: string; fields: Array<{ label: string; value?: Date; key: DateFieldKey }>; onChange: (key: DateFieldKey, value: Date | undefined) => void }) => <div className="space-y-3"><p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{title}</p>{fields.map((field) => <Field key={field.key} label={field.label}><ModernDatePicker size="sm" value={field.value} onChange={(value) => onChange(field.key, value)} /></Field>)}</div>;
 
 const ManagerDialog = ({ kind, onClose }: { kind: ManagerKind; onClose: () => void }) => {
   const title = kind === "stations" ? "Manage Stations" : kind === "templates" ? "Manage Templates" : "Manage Schedules";
