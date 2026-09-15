@@ -1,6 +1,6 @@
 import { Fragment, useMemo, useState } from "react";
 import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
-import { Building2, ChevronDown, ChevronRight, FileText, Plus, RotateCcw, Search, Trash2 } from "lucide-react";
+import { ArrowLeft, Building2, ChevronDown, ChevronRight, FileText, Plus, RotateCcw, Search, Trash2 } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -232,6 +232,6 @@ const StationEditor = ({ station, isNew, onChange, onBack, onSave }: { station: 
     </div>
     <section className="mt-4 space-y-3 border bg-card px-5 py-4"><div className="flex items-center gap-2"><span className="h-4 w-1 bg-muted-foreground" /><h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Standards</h3></div><div className="grid gap-2 lg:grid-cols-[220px_minmax(0,1fr)_auto]"><div className="text-[11px]"><p className="font-medium">Standards to Add</p><p className="text-muted-foreground">Separate multiple entries with commas.</p></div><Textarea className="min-h-12 resize-none text-xs" value={standardsEntry} onChange={(event) => setStandardsEntry(event.target.value)} placeholder="Example: 1.1, 1.2, 1.3" /><Button variant="outline" size="sm" className="h-8 self-start text-xs" onClick={addStandards}>Add</Button></div><LinkedStandardsTable standardNumbers={station.standardNumbers} onRemove={(standardNo) => onChange("standardNumbers", station.standardNumbers.filter((value) => value !== standardNo))} /></section>
     {!isNew && <><section className="mt-4 border bg-card px-5 py-4"><div className="mb-3 flex items-center gap-2"><span className="h-4 w-1 bg-info" /><h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Schedule Information</h3></div><ScheduleInformationTable stationName={station.name} /></section><section className="mt-4 border bg-card px-5 py-4"><div className="mb-3 flex items-center gap-2"><span className="h-4 w-1 bg-muted-foreground" /><h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Comments</h3></div><WorkOrderItemComments workOrderItemId={station.id} /></section></>}
-    <div className="sticky bottom-0 flex justify-end gap-2 border-t bg-card px-5 py-3"><Button variant="outline" className="h-8 text-xs" onClick={onBack}>Cancel</Button><Button className="h-8 text-xs" onClick={onSave}>Save</Button></div>
+    <div className="sticky bottom-0 flex items-center justify-between gap-2 border-t bg-card px-5 py-3"><Button variant="outline" size="sm" className="h-8 gap-1.5 text-xs" onClick={onBack}><ArrowLeft className="h-3.5 w-3.5" /> Back</Button><div className="flex items-center gap-2"><Button variant="outline" className="h-8 text-xs" onClick={onBack}>Cancel</Button><Button className="h-8 text-xs" onClick={onSave}>Save</Button></div></div>
   </div>;
 };
