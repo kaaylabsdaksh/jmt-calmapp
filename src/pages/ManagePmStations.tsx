@@ -136,7 +136,7 @@ const ManagePmStations = () => {
       <ModernTopNav />
       <main className="w-full px-3 py-4 sm:px-4 lg:px-6">
         <section className="flex min-h-[calc(100vh-7rem)] flex-col gap-4">
-          <div className="flex items-center gap-2 border bg-card px-5 py-4">
+          <div className="hidden flex items-center gap-2 border bg-card px-5 py-4">
             <Building2 className="h-4 w-4 text-muted-foreground" />
             <div>
               <h2 className="text-sm font-semibold">{editing ? `${isNew ? "Add New" : "Edit"} PM / Interim Check Station` : "Manage PM / Interim Check Stations"}</h2>
