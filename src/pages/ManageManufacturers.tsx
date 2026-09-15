@@ -19,8 +19,8 @@ type Filters = typeof emptyFilters;
 type SortKey = keyof Omit<ManufacturerRecord, "status"> | "status";
 
 const StatusBadge = ({ status }: { status: ManufacturerStatus }) => (
-  <Badge variant="outline" className={cn("gap-1.5 rounded-full border-transparent px-2 py-0 text-[10px] font-medium", status === "Active" && "bg-success/10 text-success", status === "Pending" && "bg-warning/15 text-warning-foreground", status === "Inactive" && "bg-muted text-muted-foreground")}>
-    <span className={cn("h-1.5 w-1.5 rounded-full", status === "Active" && "bg-success", status === "Pending" && "bg-warning", status === "Inactive" && "bg-muted-foreground")} />
+  <Badge variant="outline" className={cn("gap-1.5 rounded-full border-transparent px-2 py-0 text-[10px] font-medium", status === "Active" && "bg-success/10 text-success", status === "Pending" && "bg-warning text-warning-foreground", status === "Inactive" && "bg-muted text-muted-foreground")}>
+    <span className={cn("h-1.5 w-1.5 rounded-full", status === "Active" && "bg-success", status === "Pending" && "bg-warning-foreground", status === "Inactive" && "bg-muted-foreground")} />
     {status}
   </Badge>
 );
