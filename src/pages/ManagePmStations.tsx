@@ -30,7 +30,6 @@ interface StationRecord {
   createdDate: string;
   modifiedBy: string;
   modifiedDate: string;
-  comments: { id: string; type: string; text: string }[];
 }
 
 type StationFilters = {
@@ -68,7 +67,6 @@ const buildSeedStations = (): StationRecord[] => PM_STATIONS.slice(0, 18).map((n
     createdDate: "09/15/2026 03:53 AM",
     modifiedBy: index % 3 === 0 ? "Admin User" : "",
     modifiedDate: index % 3 === 0 ? "09/15/2026 03:53 AM" : "",
-    comments: index % 4 === 0 ? [{ id: `comment-${index}`, type: "Other", text: "Reviewed for the current PM cycle." }] : [],
   };
 });
 
@@ -87,7 +85,6 @@ const emptyStation = (): StationRecord => ({
   createdDate: "",
   modifiedBy: "",
   modifiedDate: "",
-  comments: [],
 });
 
 const resolveStandard = (standardNo: string): StandardRecord | undefined => STANDARDS.find((standard) => standard.standardNo === standardNo);
