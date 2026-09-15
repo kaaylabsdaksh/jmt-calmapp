@@ -106,6 +106,7 @@ const ManagePmTemplates = () => {
   return <div className="min-h-full bg-background">
     <ModernTopNav />
     <main className="w-full space-y-4 px-3 py-4 sm:px-4 lg:px-6">
+      {editing ? <TemplateEditor template={editing} isNew={isNew} pendingFile={pendingFile} fileInput={fileInput} onFile={setPendingFile} onChange={updateEditing} onCancel={cancelEditor} onSave={saveTemplate} /> : <>
       <section className="border bg-card">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3">
           <div className="flex items-center gap-2"><FileSpreadsheet className="h-4 w-4 text-muted-foreground" /><div><h2 className="text-sm font-semibold">Manage PM / Interim Check Templates</h2><p className="text-[11px] text-muted-foreground">Search templates, review revisions, and maintain controlled documents.</p></div></div>
@@ -119,7 +120,7 @@ const ManagePmTemplates = () => {
         <div className="flex justify-end gap-2 border-t bg-muted/30 px-4 py-2.5"><Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => { setDraftFilters(EMPTY_FILTERS); setFilters(EMPTY_FILTERS); setPage(1); }}><RotateCcw className="h-3.5 w-3.5" /> Clear</Button><Button size="sm" className="h-7 gap-1.5 bg-info text-info-foreground hover:bg-info/90 text-[11px]" onClick={() => { setFilters(draftFilters); setPage(1); }}><Search className="h-3.5 w-3.5" /> Search</Button></div>
       </section>
 
-      {editing && <TemplateEditor template={editing} isNew={isNew} pendingFile={pendingFile} fileInput={fileInput} onFile={setPendingFile} onChange={updateEditing} onCancel={cancelEditor} onSave={saveTemplate} />}
+
 
       <section className="overflow-hidden border bg-card">
         <div className="border-b px-4 py-3"><h2 className="text-sm font-semibold">Template Results</h2><p className="text-[11px] text-muted-foreground">{filtered.length} records returned · Expand a row to review revision history.</p></div>
@@ -128,6 +129,7 @@ const ManagePmTemplates = () => {
             {expanded.has(template.id) && <TableRow className="bg-muted/20"><TableCell colSpan={9} className="p-3"><RevisionTable template={template} /></TableCell></TableRow>}</Fragment>) : <TableRow><TableCell colSpan={9} className="h-24 text-center text-muted-foreground">No templates match the selected criteria.</TableCell></TableRow>}</TableBody></Table></div>
         <div className="flex items-center justify-between border-t px-4 py-2"><p className="text-[11px] text-muted-foreground">{filtered.length ? `Showing ${(page - 1) * PAGE_SIZE + 1}–${Math.min(page * PAGE_SIZE, filtered.length)} of ${filtered.length}` : "No results"}</p><div className="flex items-center gap-2"><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page === 1} onClick={() => setPage((value) => value - 1)}>Previous</Button><span className="text-[11px] text-muted-foreground">Page {page} of {pageCount}</span><Button variant="outline" size="sm" className="h-7 text-[11px]" disabled={page >= pageCount} onClick={() => setPage((value) => value + 1)}>Next</Button></div></div>
       </section>
+      </>}
     </main>
   </div>;
 };
