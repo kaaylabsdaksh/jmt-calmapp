@@ -103,8 +103,8 @@ const PmInterimChecks = () => {
       if (filters.location !== "all" && row.location !== filters.location) return false;
       if (filters.division !== "all" && row.division !== filters.division) return false;
       if (filters.template && !row.templateDescription.toLowerCase().includes(filters.template.toLowerCase())) return false;
-      if ((filters.dueFrom || filters.dueTo) && !inRange(row.dueDate, filters.dueFrom, filters.dueTo)) return false;
-      if ((filters.terminalFrom || filters.terminalTo) && !inRange(row.terminalDate, filters.terminalFrom, filters.terminalTo)) return false;
+      if ((filters.dateFrom || filters.dateTo) && filters.dateType === "due" && !inRange(row.dueDate, filters.dateFrom, filters.dateTo)) return false;
+      if ((filters.dateFrom || filters.dateTo) && filters.dateType === "terminal" && !inRange(row.terminalDate, filters.dateFrom, filters.dateTo)) return false;
       if (filters.station !== "all" && row.station !== filters.station) return false;
       if (filters.frequency !== "all" && row.frequency !== filters.frequency) return false;
       if (filters.documentTool && !row.documentTool.toLowerCase().includes(filters.documentTool.toLowerCase())) return false;
