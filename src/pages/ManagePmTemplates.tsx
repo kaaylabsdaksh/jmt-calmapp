@@ -106,7 +106,7 @@ const ManagePmTemplates = () => {
   return <div className="min-h-full bg-background">
     <ModernTopNav />
     <main className="w-full space-y-4 px-3 py-4 sm:px-4 lg:px-6">
-      {editing ? <TemplateEditor template={editing} isNew={isNew} pendingFile={pendingFile} fileInput={fileInput} onFile={setPendingFile} onChange={updateEditing} onCancel={cancelEditor} onSave={saveTemplate} /> : <>
+      {editing ? <div className="flex min-h-0 flex-1 flex-col"><TemplateEditor template={editing} isNew={isNew} pendingFile={pendingFile} fileInput={fileInput} onFile={setPendingFile} onChange={updateEditing} onCancel={cancelEditor} onSave={saveTemplate} /></div> : <>
       <section className="border bg-card">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3">
           <div className="flex items-center gap-2"><FileSpreadsheet className="h-4 w-4 text-muted-foreground" /><div><h2 className="text-sm font-semibold">Manage PM / Interim Check Templates</h2><p className="text-[11px] text-muted-foreground">Search templates, review revisions, and maintain controlled documents.</p></div></div>
