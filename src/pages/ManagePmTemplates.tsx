@@ -103,7 +103,7 @@ const ManagePmTemplates = () => {
     cancelEditor();
   };
 
-  return <div className="flex h-full min-h-0 flex-col bg-background">
+  return <div className="flex h-dvh min-h-0 flex-col bg-background">
     <ModernTopNav />
     <main className="flex min-h-0 flex-1 flex-col gap-4 px-3 py-4 sm:px-4 lg:px-6">
       {editing ? <div className="flex min-h-0 flex-1 flex-col"><TemplateEditor template={editing} isNew={isNew} pendingFile={pendingFile} fileInput={fileInput} onFile={setPendingFile} onChange={updateEditing} onCancel={cancelEditor} onSave={saveTemplate} /></div> : <>
