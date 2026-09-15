@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
@@ -10,6 +11,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { HelpMenu } from "@/components/tour/HelpMenu";
+import { useBreadcrumb } from "@/context/BreadcrumbContext";
+
 
 type Crumb = { label: string; to?: string };
 const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
