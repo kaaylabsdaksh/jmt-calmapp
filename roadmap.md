@@ -8,3 +8,4 @@
 - [x] Add the Capable Locations matrix to Edit Product
 - [x] Build modern Create Lab Standard Work Orders workflow
 - [x] Build modern Manage PM / Interim Checks workflow
+- [x] Add Schedule, Standard, Station, and Template result formats to PM / Interim Checks
