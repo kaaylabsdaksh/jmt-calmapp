@@ -125,10 +125,10 @@ export const buildTemplateSchedules = (template: PmTemplateRecord): PmTemplateSc
   const completed: PmTemplateSchedule[] = Array.from({ length: 12 }, (_, index) => {
     const offset = 6 - index;
     const month = ((offset % 12) + 12) % 12 + 1;
-    const year = offset > 0 ? 2023 : 2022;
+    const year = offset >= 0 ? 2023 : 2022;
     return {
       id: `${template.id}-completed-${index}`,
-      scheduleId: offset > 0 ? "13186" : "8721",
+      scheduleId: offset >= 0 ? "13186" : "8721",
       description: template.description,
       dueDate: monthEnd(month, year),
       standardsChecked: standard,
