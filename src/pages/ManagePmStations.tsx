@@ -210,19 +210,12 @@ const ScheduleInformationTable = ({ stationName }: { stationName: string }) => {
 
 const StationEditor = ({ station, isNew, onChange, onBack, onSave }: { station: StationRecord; isNew: boolean; onChange: <K extends keyof StationRecord>(key: K, value: StationRecord[K]) => void; onBack: () => void; onSave: () => void }) => {
   const [standardsEntry, setStandardsEntry] = useState("");
-  const [commentType, setCommentType] = useState("Other");
-  const [commentText, setCommentText] = useState("");
   const addStandards = () => {
     const values = standardsEntry.split(",").map((value) => value.trim()).filter(Boolean);
     if (!values.length) return;
     onChange("standardNumbers", [...new Set([...station.standardNumbers, ...values])]);
     setStandardsEntry("");
     toast({ title: "Standards added", description: values.join(", ") });
-  };
-  const addComment = () => {
-    if (!commentText.trim()) return;
-    onChange("comments", [...station.comments, { id: `comment-${Date.now()}`, type: commentType, text: commentText.trim() }]);
-    setCommentText("");
   };
   return <div className="min-h-0 flex-1 overflow-auto">
     <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(300px,1fr)]">
