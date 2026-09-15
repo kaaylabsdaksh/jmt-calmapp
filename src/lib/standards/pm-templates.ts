@@ -84,3 +84,60 @@ export const PM_TEMPLATE_RECORDS: PmTemplateRecord[] = templateNames.map(([docum
     }),
   };
 });
+export interface PmTemplateSchedule {
+  id: string;
+  scheduleId: string;
+  description: string;
+  dueDate: string;
+  standardsChecked: string;
+  status: "Active" | "Completed";
+  type: "IM" | "PM";
+  frequency: string;
+  document: string;
+}
+
+const pad = (value: number) => String(value).padStart(2, "0");
+const monthEnd = (month: number, year: number) => {
+  const days = [31, year % 4 === 0 ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  return `${pad(month)}/${pad(days[month - 1])}/${year}`;
+};
+
+export const buildTemplateSchedules = (template: PmTemplateRecord): PmTemplateSchedule[] => {
+  const standard = template.document.match(/ID (\d+)/)?.[1] ?? "";
+  const type: PmTemplateSchedule["type"] = template.description.toLowerCase().includes("interim") ? "IM" : "PM";
+  const base = template.document.replace(/\.xlsx$/, "");
+  const active: PmTemplateSchedule[] = [
+    { year: 2026, scheduleId: "17003" },
+    { year: 2025, scheduleId: "16172" },
+    { year: 2024, scheduleId: "15542" },
+  ].map(({ year, scheduleId }) => ({
+    id: `${template.id}-active-${year}`,
+    scheduleId,
+    description: template.description,
+    dueDate: `01/31/${year}`,
+    standardsChecked: "",
+    status: "Active" as const,
+    type,
+    frequency: "M",
+    document: template.document,
+  }));
+
+  const completed: PmTemplateSchedule[] = Array.from({ length: 12 }, (_, index) => {
+    const offset = 6 - index;
+    const month = ((offset % 12) + 12) % 12 + 1;
+    const year = offset > 0 ? 2023 : 2022;
+    return {
+      id: `${template.id}-completed-${index}`,
+      scheduleId: offset > 0 ? "13186" : "8721",
+      description: template.description,
+      dueDate: monthEnd(month, year),
+      standardsChecked: standard,
+      status: "Completed" as const,
+      type,
+      frequency: "M",
+      document: `${base}.${year}${pad(month)}${monthEnd(month, year).slice(3, 5)}.xlsx`,
+    };
+  });
+
+  return [...active, ...completed];
+};
