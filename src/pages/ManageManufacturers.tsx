@@ -25,9 +25,9 @@ const StatusBadge = ({ status }: { status: ManufacturerStatus }) => (
   </Badge>
 );
 
-const Field = ({ label, required, children, className }: { label: string; required?: boolean; children: React.ReactNode; className?: string }) => (
+const Field = ({ label, required, children, className, htmlFor }: { label: string; required?: boolean; children: React.ReactNode; className?: string; htmlFor?: string }) => (
   <div className={cn("space-y-1", className)}>
-    <Label className="text-[11px] font-medium text-foreground">{label}{required && <span className="ml-0.5 text-destructive">*</span>}</Label>
+    <Label htmlFor={htmlFor} className="text-[11px] font-medium text-foreground">{label}{required && <span className="ml-0.5 text-destructive">*</span>}</Label>
     {children}
   </div>
 );
@@ -85,16 +85,16 @@ const ManageManufacturers = () => {
           </div>
           <div className="grid gap-5 p-4 lg:grid-cols-[220px_minmax(0,1fr)]">
             <div className="space-y-4 border-b border-border pb-4 lg:border-b-0 lg:border-r lg:pb-0 lg:pr-5">
-              <Field label="Status" required><Select value={editing.status} onValueChange={(value) => update("status", value as ManufacturerStatus)}><SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="Active">Active</SelectItem><SelectItem value="Pending">Pending</SelectItem><SelectItem value="Inactive">Inactive</SelectItem></SelectContent></Select></Field>
-              <Field label="Date Added" required><ModernDatePicker size="md" value={editing.dateAdded} onChange={(date) => update("dateAdded", date ? format(date, "MM/dd/yyyy") : "")} inputClassName={cn(errors.dateAdded && "border-destructive")} /></Field>
+              <Field label="Status" required><Select value={editing.status} onValueChange={(value) => update("status", value as ManufacturerStatus)}><SelectTrigger aria-label="Status" className="h-8 text-xs"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="Active">Active</SelectItem><SelectItem value="Pending">Pending</SelectItem><SelectItem value="Inactive">Inactive</SelectItem></SelectContent></Select></Field>
+              <Field label="Date Added" required htmlFor="manufacturer-date-added"><ModernDatePicker id="manufacturer-date-added" size="md" value={editing.dateAdded} onChange={(date) => update("dateAdded", date ? format(date, "MM/dd/yyyy") : "")} inputClassName={cn(errors.dateAdded && "border-destructive")} /></Field>
               {errors.dateAdded && <p className="text-[10px] text-destructive">{errors.dateAdded}</p>}
               <div className="rounded-md bg-muted/50 p-3"><p className="text-[10px] font-semibold uppercase text-muted-foreground">Record state</p><div className="mt-2"><StatusBadge status={editing.status} /></div></div>
             </div>
             <div className="grid content-start gap-4 md:grid-cols-2">
-              <Field label="Manufacturer" required className="md:col-span-2"><Input value={editing.manufacturer} onChange={(e) => update("manufacturer", e.target.value)} className={cn("h-8 text-xs", errors.manufacturer && "border-destructive")} />{errors.manufacturer && <p className="text-[10px] text-destructive">{errors.manufacturer}</p>}</Field>
-              <Field label="Full Name" className="md:col-span-2"><Input value={editing.fullName} onChange={(e) => update("fullName", e.target.value)} className="h-8 text-xs" /></Field>
-              <Field label="Website" className="md:col-span-2"><Input value={editing.website} onChange={(e) => update("website", e.target.value)} placeholder="https://" className={cn("h-8 text-xs", errors.website && "border-destructive")} />{errors.website && <p className="text-[10px] text-destructive">{errors.website}</p>}</Field>
-              <Field label="ASC Info" className="md:col-span-2"><Textarea value={editing.ascInfo} onChange={(e) => update("ascInfo", e.target.value)} placeholder="File name, link, or supporting information" className="min-h-24 resize-y text-xs" /></Field>
+              <Field label="Manufacturer" required className="md:col-span-2" htmlFor="manufacturer-name"><Input id="manufacturer-name" value={editing.manufacturer} onChange={(e) => update("manufacturer", e.target.value)} className={cn("h-8 text-xs", errors.manufacturer && "border-destructive")} />{errors.manufacturer && <p className="text-[10px] text-destructive">{errors.manufacturer}</p>}</Field>
+              <Field label="Full Name" className="md:col-span-2" htmlFor="manufacturer-full-name"><Input id="manufacturer-full-name" value={editing.fullName} onChange={(e) => update("fullName", e.target.value)} className="h-8 text-xs" /></Field>
+              <Field label="Website" className="md:col-span-2" htmlFor="manufacturer-website"><Input id="manufacturer-website" value={editing.website} onChange={(e) => update("website", e.target.value)} placeholder="https://" className={cn("h-8 text-xs", errors.website && "border-destructive")} />{errors.website && <p className="text-[10px] text-destructive">{errors.website}</p>}</Field>
+              <Field label="ASC Info" className="md:col-span-2" htmlFor="manufacturer-asc-info"><Textarea id="manufacturer-asc-info" value={editing.ascInfo} onChange={(e) => update("ascInfo", e.target.value)} placeholder="File name, link, or supporting information" className="min-h-24 resize-y text-xs" /></Field>
             </div>
           </div>
           <footer className="sticky bottom-0 flex justify-end gap-2 border-t border-border bg-card px-4 py-3">
