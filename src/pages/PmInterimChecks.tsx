@@ -283,7 +283,7 @@ const PmInterimChecks = () => {
                 <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => setManager("schedules")}><ListChecks className="h-3.5 w-3.5" /> Manage Schedules</Button>
               </div>
             </div>
-            <div className="max-h-[54vh] overflow-auto">
+            <div className="overflow-x-auto">
               <Table className="min-w-[1320px] text-[11px]">
                 <TableHeader><TableRow>
                   <TableHead className="sticky left-0 top-0 z-20 h-8 w-8 bg-muted/95 px-2" />
