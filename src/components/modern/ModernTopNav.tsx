@@ -45,6 +45,7 @@ const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
   "/standards/onsite-batch-loans": { title: "Manage On-Site Batch Loans", crumbs: [{ label: "Home", to: "/" }, { label: "Standards", to: "/standards" }, { label: "On-Site Batch Loans" }] },
   "/standards/create-lab-work-orders": { title: "Create Lab Standard Work Orders", crumbs: [{ label: "Equipment" }, { label: "Standards", to: "/standards" }, { label: "Manage Standards", to: "/standards" }, { label: "Create Lab Standard Work Orders" }] },
   "/standards/manage-pm-interim-checks": { title: "Manage PM / Interim Checks", crumbs: [{ label: "Equipment" }, { label: "Standards", to: "/standards" }, { label: "Manage Standards", to: "/standards" }, { label: "Manage PM / Interim Checks" }] },
+  "/standards/manage-pm-interim-checks/stations": { title: "Manage PM / Interim Check Stations", crumbs: [{ label: "Equipment" }, { label: "Standards", to: "/standards" }, { label: "Manage Standards", to: "/standards" }, { label: "Manage PM / Interim Checks", to: "/standards/manage-pm-interim-checks" }, { label: "Manage Stations" }] },
 };
 
 const eslOnsiteMeta = { title: "Add New Work Order Item", crumbs: [{ label: "Home", to: "/" }, { label: "Add New Work Order", to: "/add-new-work-order" }, { label: "Add New Item" }] };
@@ -121,7 +122,7 @@ const ModernTopNav = () => {
 
         {/* Action Buttons */}
         <div className="flex items-center gap-1 sm:gap-2 w-full sm:w-auto">
-          {location.pathname !== "/onsite-projects/new" && location.pathname !== "/onsite-projects/vehicle-standards" && location.pathname !== "/manage-manufacturers" && !customerDetailMatch && (location.pathname !== "/quotes" && location.pathname !== "/quotes/new") && !location.pathname.startsWith("/onsite-scheduling") && (
+          {location.pathname !== "/onsite-projects/new" && location.pathname !== "/onsite-projects/vehicle-standards" && location.pathname !== "/manage-manufacturers" && location.pathname !== "/standards/manage-pm-interim-checks/stations" && !customerDetailMatch && (location.pathname !== "/quotes" && location.pathname !== "/quotes/new") && !location.pathname.startsWith("/onsite-scheduling") && (
             <Button 
               variant="outline"
               className="rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary bg-transparent transform hover:scale-105 text-xs sm:text-sm font-medium px-3 sm:px-4"
