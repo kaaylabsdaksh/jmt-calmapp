@@ -122,7 +122,7 @@ const ModernTopNav = () => {
 
         {/* Action Buttons */}
         <div className="flex items-center gap-1 sm:gap-2 w-full sm:w-auto">
-          {location.pathname !== "/onsite-projects/new" && location.pathname !== "/onsite-projects/vehicle-standards" && location.pathname !== "/manage-manufacturers" && !customerDetailMatch && (location.pathname !== "/quotes" && location.pathname !== "/quotes/new") && !location.pathname.startsWith("/onsite-scheduling") && (
+          {location.pathname !== "/onsite-projects/new" && location.pathname !== "/onsite-projects/vehicle-standards" && location.pathname !== "/manage-manufacturers" && location.pathname !== "/standards/manage-pm-interim-checks/stations" && !customerDetailMatch && (location.pathname !== "/quotes" && location.pathname !== "/quotes/new") && !location.pathname.startsWith("/onsite-scheduling") && (
             <Button 
               variant="outline"
               className="rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary bg-transparent transform hover:scale-105 text-xs sm:text-sm font-medium px-3 sm:px-4"
