@@ -144,7 +144,7 @@ const ManagePmStations = () => {
   };
 
   return (
-    <div className="flex h-full min-h-0 flex-col bg-background">
+    <div className="flex flex-1 min-h-0 flex-col bg-background">
       <ModernTopNav />
       <main className="flex min-h-0 flex-1 flex-col px-3 py-4 sm:px-4 lg:px-6">
         <section className="flex min-h-0 flex-1 flex-col gap-4">
