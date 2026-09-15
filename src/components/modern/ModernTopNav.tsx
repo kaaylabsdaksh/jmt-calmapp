@@ -84,6 +84,8 @@ const ModernTopNav = () => {
     : customerDetailMatch
     ? routeMeta["/manage-customers/:accountNumber"]
     : exactMeta ?? routeMeta["/"];
+  const { extraCrumbs } = useBreadcrumb();
+  const crumbs = useMemo(() => [...meta.crumbs, ...extraCrumbs], [meta.crumbs, extraCrumbs]);
 
   return (
     <header className="sticky top-0 z-40 bg-white px-2 sm:px-4 lg:px-6 py-3 border-b border-border">
@@ -93,11 +95,11 @@ const ModernTopNav = () => {
           <SidebarTrigger className="text-foreground hover:bg-muted hover:text-foreground transition-all duration-300 transform hover:scale-105" />
           <div>
             <h1 className="text-base sm:text-lg font-semibold text-foreground leading-tight">{meta.title}</h1>
-            {location.pathname === "/onsite-projects" || meta.crumbs.length === 0 ? null : (
+            {location.pathname === "/onsite-projects" || crumbs.length === 0 ? null : (
               <Breadcrumb className="mt-1 hidden sm:block">
                 <BreadcrumbList>
-                  {meta.crumbs.map((c, i) => {
-                    const isLast = i === meta.crumbs.length - 1;
+                  {crumbs.map((c, i) => {
+                    const isLast = i === crumbs.length - 1;
                     return (
                       <span key={`${c.label}-${i}`} className="contents">
                         <BreadcrumbItem>
