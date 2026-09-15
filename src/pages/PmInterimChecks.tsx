@@ -191,8 +191,6 @@ const PmInterimChecks = () => {
               <Field label="Account #"><Input disabled={viewMode === "template"} className={FIELD} value={draft.account} onChange={(event) => updateDraft("account", event.target.value)} /></Field>
               <Field label="Completed Status"><Select value={draft.completedStatus} onValueChange={(value) => updateDraft("completedStatus", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All results" /></SelectTrigger><SelectContent><SelectItem value="all">All results</SelectItem><SelectItem value="Pass">Pass</SelectItem><SelectItem value="Not Performed">Not Performed</SelectItem></SelectContent></Select></Field>
               <Field label="Completed User"><Select value={draft.completedUser} onValueChange={(value) => updateDraft("completedUser", value)}><SelectTrigger className={FIELD}><SelectValue placeholder="All users" /></SelectTrigger><SelectContent><SelectItem value="all">All users</SelectItem>{completedUsers.map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select></Field>
-              <Field label="Completed Date From"><ModernDatePicker size="sm" value={draft.completedFrom} onChange={(value) => updateDraft("completedFrom", value)} /></Field>
-              <Field label="Completed Date To"><ModernDatePicker size="sm" value={draft.completedTo} onChange={(value) => updateDraft("completedTo", value)} /></Field>
               <label className="flex h-7 items-center gap-2 text-[11px] pt-5"><Checkbox checked={draft.includeHistory} onCheckedChange={(checked) => updateDraft("includeHistory", checked === true)} /> Include history in search</label>
             </div>
             <div className="flex items-center justify-end gap-2 border-t px-4 py-2">
