@@ -291,7 +291,12 @@ const PmInterimChecks = () => {
   );
 };
 
-const Field = ({ label, children }: { label: string; children: React.ReactNode }) => <div className="grid grid-cols-[104px_minmax(0,1fr)] items-center gap-2"><Label className={LABEL}>{label}</Label>{children}</div>;
+const ColumnField = ({ label, children, className }: { label: string; children: React.ReactNode; className?: string }) => (
+  <div className={cn("flex flex-col gap-1", className)}>
+    <Label className={LABEL}>{label}</Label>
+    {children}
+  </div>
+);
 
 
 const ManagerDialog = ({ kind, onClose }: { kind: ManagerKind; onClose: () => void }) => {
