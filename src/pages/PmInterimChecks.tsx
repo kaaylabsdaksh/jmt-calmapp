@@ -187,8 +187,8 @@ const PmInterimChecks = () => {
     <TooltipProvider>
       <div className="flex h-dvh min-h-0 flex-col bg-background">
         <ModernTopNav />
-        <main className="flex min-h-0 w-full flex-1 flex-col gap-4 px-3 py-4 sm:px-4 lg:px-6">
-          <section className="border bg-card">
+          <main className="flex min-h-0 w-full flex-1 flex-col gap-4 overflow-y-auto px-3 py-4 sm:px-4 lg:px-6">
+          <section className="shrink-0 border bg-card">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b px-4 py-3">
               <div className="flex items-center gap-2">
                 <Search className="h-4 w-4 text-muted-foreground" />
@@ -274,7 +274,7 @@ const PmInterimChecks = () => {
             </div>
           </section>
 
-          <section className="flex min-h-0 flex-1 flex-col border bg-card">
+          <section className="flex shrink-0 flex-col border bg-card">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b px-4 py-3">
               <div><h2 className="text-sm font-semibold">{{ schedule: "Schedule Results", standard: "Results by Standard", station: "Results by Station", template: "Results by Template" }[viewMode]}</h2><p className="text-[11px] text-muted-foreground">{filtered.length} records returned · Select a row to view check history.</p></div>
               <div className="flex flex-wrap items-center gap-2">
