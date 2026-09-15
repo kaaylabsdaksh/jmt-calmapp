@@ -1,4 +1,5 @@
 import { Fragment, useMemo, useState } from "react";
+import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
 import { Building2, ChevronDown, ChevronRight, FileText, Plus, RotateCcw, Search, Trash2 } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Button } from "@/components/ui/button";
@@ -29,7 +30,6 @@ interface StationRecord {
   createdDate: string;
   modifiedBy: string;
   modifiedDate: string;
-  comments: { id: string; type: string; text: string }[];
 }
 
 type StationFilters = {
@@ -67,7 +67,6 @@ const buildSeedStations = (): StationRecord[] => PM_STATIONS.slice(0, 18).map((n
     createdDate: "09/15/2026 03:53 AM",
     modifiedBy: index % 3 === 0 ? "Admin User" : "",
     modifiedDate: index % 3 === 0 ? "09/15/2026 03:53 AM" : "",
-    comments: index % 4 === 0 ? [{ id: `comment-${index}`, type: "Other", text: "Reviewed for the current PM cycle." }] : [],
   };
 });
 
@@ -86,7 +85,6 @@ const emptyStation = (): StationRecord => ({
   createdDate: "",
   modifiedBy: "",
   modifiedDate: "",
-  comments: [],
 });
 
 const resolveStandard = (standardNo: string): StandardRecord | undefined => STANDARDS.find((standard) => standard.standardNo === standardNo);
@@ -212,19 +210,12 @@ const ScheduleInformationTable = ({ stationName }: { stationName: string }) => {
 
 const StationEditor = ({ station, isNew, onChange, onBack, onSave }: { station: StationRecord; isNew: boolean; onChange: <K extends keyof StationRecord>(key: K, value: StationRecord[K]) => void; onBack: () => void; onSave: () => void }) => {
   const [standardsEntry, setStandardsEntry] = useState("");
-  const [commentType, setCommentType] = useState("Other");
-  const [commentText, setCommentText] = useState("");
   const addStandards = () => {
     const values = standardsEntry.split(",").map((value) => value.trim()).filter(Boolean);
     if (!values.length) return;
     onChange("standardNumbers", [...new Set([...station.standardNumbers, ...values])]);
     setStandardsEntry("");
     toast({ title: "Standards added", description: values.join(", ") });
-  };
-  const addComment = () => {
-    if (!commentText.trim()) return;
-    onChange("comments", [...station.comments, { id: `comment-${Date.now()}`, type: commentType, text: commentText.trim() }]);
-    setCommentText("");
   };
   return <div className="min-h-0 flex-1 overflow-auto">
     <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(300px,1fr)]">
@@ -240,7 +231,7 @@ const StationEditor = ({ station, isNew, onChange, onBack, onSave }: { station: 
       <section className="border bg-card px-5 py-4"><div className="mb-3 flex items-center gap-2"><span className="h-4 w-1 bg-success" /><h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Lab Codes</h3></div><div className="max-h-48 space-y-1 overflow-auto border p-2">{LAB_CODES.map((code) => <label key={code} className="flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-muted"><Checkbox checked={station.labCodes.includes(code)} onCheckedChange={(checked) => onChange("labCodes", checked ? [...station.labCodes, code] : station.labCodes.filter((value) => value !== code))} />{code} · {{ M: "Mechanical", E: "Electrical", P: "Pressure", T: "Temperature" }[code] ?? "Lab"}</label>)}</div></section>
     </div>
     <section className="mt-4 space-y-3 border bg-card px-5 py-4"><div className="flex items-center gap-2"><span className="h-4 w-1 bg-muted-foreground" /><h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Standards</h3></div><div className="grid gap-2 lg:grid-cols-[220px_minmax(0,1fr)_auto]"><div className="text-[11px]"><p className="font-medium">Standards to Add</p><p className="text-muted-foreground">Separate multiple entries with commas.</p></div><Textarea className="min-h-12 resize-none text-xs" value={standardsEntry} onChange={(event) => setStandardsEntry(event.target.value)} placeholder="Example: 1.1, 1.2, 1.3" /><Button variant="outline" size="sm" className="h-8 self-start text-xs" onClick={addStandards}>Add</Button></div><LinkedStandardsTable standardNumbers={station.standardNumbers} onRemove={(standardNo) => onChange("standardNumbers", station.standardNumbers.filter((value) => value !== standardNo))} /></section>
-    {!isNew && <><section className="mt-4 border bg-card px-5 py-4"><div className="mb-3 flex items-center gap-2"><span className="h-4 w-1 bg-info" /><h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Schedule Information</h3></div><ScheduleInformationTable stationName={station.name} /></section><section className="mt-4 border bg-card px-5 py-4"><div className="mb-3 flex items-center gap-2"><span className="h-4 w-1 bg-muted-foreground" /><h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Comments</h3></div><div className="flex gap-2"><Select value={commentType} onValueChange={setCommentType}><SelectTrigger className="h-8 w-36 text-xs"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="Other">Other</SelectItem><SelectItem value="Maintenance">Maintenance</SelectItem><SelectItem value="Schedule">Schedule</SelectItem></SelectContent></Select><Input className="h-8 text-xs" value={commentText} onChange={(event) => setCommentText(event.target.value)} placeholder="Add a comment" /><Button variant="outline" size="sm" className="h-8 text-xs" onClick={addComment}>Add</Button></div>{station.comments.length > 0 && <div className="mt-3 space-y-2">{station.comments.map((comment) => <div key={comment.id} className="border px-3 py-2 text-[11px]"><span className="font-semibold">{comment.type}</span><span className="ml-2 text-muted-foreground">{comment.text}</span></div>)}</div>}</section></>}
+    {!isNew && <><section className="mt-4 border bg-card px-5 py-4"><div className="mb-3 flex items-center gap-2"><span className="h-4 w-1 bg-info" /><h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Schedule Information</h3></div><ScheduleInformationTable stationName={station.name} /></section><section className="mt-4 border bg-card px-5 py-4"><div className="mb-3 flex items-center gap-2"><span className="h-4 w-1 bg-muted-foreground" /><h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Comments</h3></div><WorkOrderItemComments workOrderItemId={station.id} /></section></>}
     <div className="sticky bottom-0 flex justify-end gap-2 border-t bg-card px-5 py-3"><Button variant="outline" className="h-8 text-xs" onClick={onBack}>Cancel</Button><Button className="h-8 text-xs" onClick={onSave}>Save</Button></div>
   </div>;
 };
