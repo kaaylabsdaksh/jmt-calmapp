@@ -243,7 +243,7 @@ const PmInterimChecks = () => {
   );
 };
 
-const Field = ({ label, children }: { label: string; children: React.ReactNode }) => <div className="grid grid-cols-[112px_minmax(0,1fr)] items-center gap-2"><Label className={LABEL}>{label}</Label>{children}</div>;
+const Field = ({ label, children }: { label: string; children: React.ReactNode }) => <div className="grid grid-cols-[104px_minmax(0,1fr)] items-center gap-2"><Label className={LABEL}>{label}</Label>{children}</div>;
 
 type DateFieldKey = "dueFrom" | "dueTo" | "terminalFrom" | "terminalTo";
 const DateBlock = ({ title, fields, onChange }: { title: string; fields: Array<{ label: string; value?: Date; key: DateFieldKey }>; onChange: (key: DateFieldKey, value: Date | undefined) => void }) => <div className="space-y-3"><p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{title}</p>{fields.map((field) => <Field key={field.key} label={field.label}><ModernDatePicker size="sm" value={field.value} onChange={(value) => onChange(field.key, value)} /></Field>)}</div>;
