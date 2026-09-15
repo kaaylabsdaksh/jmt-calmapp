@@ -50,10 +50,15 @@ const emptyFilters = {
   account: "",
   completedStatus: "all",
   completedUser: "all",
-  completedFrom: undefined as Date | undefined,
-  completedTo: undefined as Date | undefined,
   includeHistory: false,
 };
+
+const DATE_TYPE_OPTIONS = [
+  { value: "due", label: "Due Date" },
+  { value: "terminal", label: "Terminal Date" },
+  { value: "completed", label: "Completed Date" },
+];
+
 
 const FIELD = "h-7 min-h-0 rounded-md border-input bg-background px-2 py-0 text-[11px]";
 const LABEL = "text-[11px] font-medium text-foreground/80";
