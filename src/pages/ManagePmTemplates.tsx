@@ -105,7 +105,7 @@ const ManagePmTemplates = () => {
 
   return <div className="min-h-full bg-background">
     <ModernTopNav />
-    <main className="w-full space-y-4 px-3 py-4 sm:px-4 lg:px-6">
+    <main className="flex min-h-0 flex-1 flex-col gap-4 px-3 py-4 sm:px-4 lg:px-6">
       {editing ? <div className="flex min-h-0 flex-1 flex-col"><TemplateEditor template={editing} isNew={isNew} pendingFile={pendingFile} fileInput={fileInput} onFile={setPendingFile} onChange={updateEditing} onCancel={cancelEditor} onSave={saveTemplate} /></div> : <>
       <section className="border bg-card">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3">
