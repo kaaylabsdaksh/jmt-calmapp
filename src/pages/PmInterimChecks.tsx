@@ -11,7 +11,6 @@ import {
   ListChecks,
   RotateCcw,
   Search,
-  Settings2,
 } from "lucide-react";
 
 import ModernTopNav from "@/components/modern/ModernTopNav";
