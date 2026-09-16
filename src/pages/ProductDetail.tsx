@@ -365,30 +365,30 @@ const ProductDetail = () => {
                 <CardContent className="p-0 overflow-x-auto">
                   <Table className="w-auto table-fixed">
                     <colgroup>
-                      <col className="w-36" />
-                      {CAPABILITY_COLUMNS.map((capability) => (
-                        <col key={capability} className="w-7" />
+                      <col className="w-48" />
+                      {CAPABLE_LOCATIONS.map((location) => (
+                        <col key={location} className="w-16" />
                       ))}
                     </colgroup>
                     <TableHeader>
                       <TableRow className="bg-muted/50 hover:bg-muted/50">
-                        <TableHead className="h-7 w-36 text-[10px] font-semibold whitespace-nowrap px-2">Capable Location</TableHead>
-                        {CAPABILITY_COLUMNS.map((capability) => (
+                        <TableHead className="h-7 w-48 text-[10px] font-semibold whitespace-nowrap px-2">Capability</TableHead>
+                        {CAPABLE_LOCATIONS.map((location) => (
                           <TableHead
-                            key={capability}
-                            className="h-32 w-7 px-0.5 pb-1 text-center align-bottom text-[9px] font-semibold leading-none"
+                            key={location}
+                            className="h-10 w-16 px-0.5 text-center align-middle text-[9px] font-semibold leading-tight"
                           >
-                            <span className="inline-block [writing-mode:vertical-rl] rotate-180">{capability}</span>
+                            <span className="inline-block max-w-14 break-words">{location}</span>
                           </TableHead>
                         ))}
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {CAPABLE_LOCATIONS.map((location) => (
-                        <TableRow key={location} className="h-6">
-                          <TableCell className="w-36 bg-muted/30 text-[11px] font-medium whitespace-nowrap px-2 py-0.5">{location}</TableCell>
-                          {CAPABILITY_COLUMNS.map((capability) => (
-                            <TableCell key={capability} className="px-0.5 py-0.5 text-center">
+                      {CAPABILITY_COLUMNS.map((capability) => (
+                        <TableRow key={capability} className="h-6">
+                          <TableCell className="w-48 bg-muted/30 text-[11px] font-medium whitespace-nowrap px-2 py-0.5">{capability}</TableCell>
+                          {CAPABLE_LOCATIONS.map((location) => (
+                            <TableCell key={location} className="px-0.5 py-0.5 text-center">
                               <Checkbox
                                 aria-label={`${location} ${capability}`}
                                 checked={!!capabilityMatrix[location]?.[capability]}
