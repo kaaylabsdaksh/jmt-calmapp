@@ -366,28 +366,28 @@ const ProductDetail = () => {
                   <Table>
                     <TableHeader>
                       <TableRow className="bg-muted/50 hover:bg-muted/50">
-                        <TableHead className="text-[11px] font-semibold whitespace-nowrap">Capable Location</TableHead>
+                        <TableHead className="h-7 text-[10px] font-semibold whitespace-nowrap px-2">Capable Location</TableHead>
                         {CAPABILITY_COLUMNS.map((capability) => (
                           <TableHead
                             key={capability}
-                            className="h-36 min-w-10 px-2 text-center align-bottom text-[10px] font-semibold"
+                            className="h-24 min-w-6 w-6 px-0.5 text-center align-bottom text-[9px] font-semibold leading-none"
                           >
-                            <span className="inline-block [writing-mode:vertical-rl] rotate-180">{capability}</span>
+                            <span className="inline-block [writing-mode:vertical-rl] rotate-180 max-h-24 truncate">{capability}</span>
                           </TableHead>
                         ))}
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {CAPABLE_LOCATIONS.map((location) => (
-                        <TableRow key={location}>
-                          <TableCell className="bg-muted/30 text-xs font-medium whitespace-nowrap">{location}</TableCell>
+                        <TableRow key={location} className="h-6">
+                          <TableCell className="bg-muted/30 text-[11px] font-medium whitespace-nowrap px-2 py-0.5">{location}</TableCell>
                           {CAPABILITY_COLUMNS.map((capability) => (
-                            <TableCell key={capability} className="p-2 text-center">
+                            <TableCell key={capability} className="px-0.5 py-0.5 text-center">
                               <Checkbox
                                 aria-label={`${location} ${capability}`}
                                 checked={!!capabilityMatrix[location]?.[capability]}
                                 onCheckedChange={() => toggleCapability(location, capability)}
-                                className="h-4 w-4"
+                                className="h-3 w-3 mx-auto"
                               />
                             </TableCell>
                           ))}
