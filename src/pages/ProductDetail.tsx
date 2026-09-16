@@ -370,9 +370,9 @@ const ProductDetail = () => {
                         {CAPABILITY_COLUMNS.map((capability) => (
                           <TableHead
                             key={capability}
-                            className="h-24 min-w-6 w-6 px-0.5 text-center align-bottom text-[9px] font-semibold leading-none"
+                            className="h-32 min-w-6 w-6 px-0.5 pb-1 text-center align-bottom text-[9px] font-semibold leading-none"
                           >
-                            <span className="inline-block [writing-mode:vertical-rl] rotate-180 max-h-24 truncate">{capability}</span>
+                            <span className="inline-block [writing-mode:vertical-rl] rotate-180">{capability}</span>
                           </TableHead>
                         ))}
                       </TableRow>
