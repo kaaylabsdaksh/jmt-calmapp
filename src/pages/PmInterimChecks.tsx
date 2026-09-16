@@ -18,7 +18,6 @@ import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
@@ -32,7 +31,6 @@ import { PM_SCHEDULES, PM_STATIONS, PM_TEMPLATES, PmSchedule, PmScheduleStatus }
 
 type SortKey = keyof Pick<PmSchedule, "id" | "dueDate" | "terminalDate" | "account" | "type" | "status" | "lastResult" | "frequency" | "division" | "labCodes" | "station">;
 type ViewMode = "schedule" | "standard" | "station" | "template";
-type ManagerKind = "schedules" | null;
 
 const emptyFilters = {
   status: "Active",
@@ -108,7 +106,6 @@ const PmInterimChecks = () => {
   const [sort, setSort] = useState<{ key: SortKey; dir: "asc" | "desc" }>({ key: "id", dir: "desc" });
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
-  const [manager, setManager] = useState<ManagerKind>(null);
 
   const completedUsers = [...new Set(PM_SCHEDULES.map((row) => row.completedUser).filter(Boolean))];
   const filtered = useMemo(() => {
@@ -280,7 +277,7 @@ const PmInterimChecks = () => {
               <div className="flex flex-wrap items-center gap-2">
                 <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => navigate("/standards/manage-pm-interim-checks/stations")}><Building2 className="h-3.5 w-3.5" /> Manage Stations</Button>
                 <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => navigate("/standards/manage-pm-interim-checks/templates")}><ListChecks className="h-3.5 w-3.5" /> Manage Templates</Button>
-                <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => setManager("schedules")}><ListChecks className="h-3.5 w-3.5" /> Manage Schedules</Button>
+                 <Button variant="outline" size="sm" className="h-7 gap-1.5 text-[11px]" onClick={() => navigate("/standards/manage-pm-interim-checks/schedules")}><ListChecks className="h-3.5 w-3.5" /> Manage Schedules</Button>
               </div>
             </div>
             <div className="overflow-x-auto">
@@ -314,7 +311,6 @@ const PmInterimChecks = () => {
             </div>
           </section>
         </main>
-        <ManagerDialog key={manager ?? "closed"} kind={manager} onClose={() => setManager(null)} />
       </div>
     </TooltipProvider>
   );
@@ -326,14 +322,5 @@ const ColumnField = ({ label, children, className }: { label: string; children: 
     {children}
   </div>
 );
-
-
-const ManagerDialog = ({ kind, onClose }: { kind: ManagerKind; onClose: () => void }) => {
-  const title = "Manage Schedules";
-  const seedItems = PM_SCHEDULES.slice(0, 8).map((row) => `#${row.id} · ${row.station}`);
-  const [items, setItems] = useState(seedItems);
-  const updateItem = (index: number, value: string) => setItems((current) => current.map((item, itemIndex) => itemIndex === index ? value : item));
-  return <Dialog open={kind !== null} onOpenChange={(open) => !open && onClose()}><DialogContent className="max-w-2xl"><DialogHeader><DialogTitle className="flex items-center gap-2 text-base"><ListChecks className="h-4 w-4" />{title}</DialogTitle><DialogDescription>Edit the mock records used by PM and interim-check schedules.</DialogDescription></DialogHeader><div className="max-h-[50vh] overflow-auto rounded-md border">{items.map((item, index) => <div key={`${kind}-${index}`} className="grid grid-cols-[1fr_auto] items-center gap-3 border-b px-3 py-2 last:border-b-0"><div><Input aria-label={`${title} row ${index + 1}`} className="h-7 text-xs" value={item} onChange={(event) => updateItem(index, event.target.value)} /><p className="mt-1 text-[10px] text-muted-foreground">Active schedule</p></div><Button variant="ghost" size="sm" className="h-7 text-[11px] text-destructive" onClick={() => setItems((current) => current.filter((_, itemIndex) => itemIndex !== index))}>Remove</Button></div>)}</div><DialogFooter><Button variant="outline" className="h-8 text-xs" onClick={onClose}>Close</Button><Button variant="outline" className="h-8 text-xs" onClick={() => setItems((current) => [...current, "New schedule"])}>Add New</Button><Button className="h-8 text-xs" onClick={() => { toast({ title: `${title} saved`, description: `${items.length} mock records updated.` }); onClose(); }}>Save Changes</Button></DialogFooter></DialogContent></Dialog>;
-};
 
 export default PmInterimChecks;

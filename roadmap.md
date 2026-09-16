@@ -13,4 +13,5 @@
 - [x] Convert Manage Stations from a dialog to a dedicated full page
 - [x] Build modern Manage Manufacturers list and Add/Edit workflow
 - [x] Build modern Manage Templates list and Add/Edit workflow for PM / Interim Checks
+- [x] Build modern Manage Schedules list and Add/Edit workflow for PM / Interim Checks
 - [ ] Build modern Manage Schedules list and Add/Edit workflow for PM / Interim Checks
