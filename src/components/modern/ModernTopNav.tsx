@@ -51,6 +51,8 @@ const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
   "/standards/manage-pm-interim-checks/stations": { title: "Manage PM / Interim Check Stations", crumbs: [{ label: "Equipment" }, { label: "Standards", to: "/standards" }, { label: "Manage Standards", to: "/standards" }, { label: "Manage PM / Interim Checks", to: "/standards/manage-pm-interim-checks" }, { label: "Manage Stations" }] },
   "/standards/manage-pm-interim-checks/templates": { title: "Manage PM / Interim Check Templates", crumbs: [{ label: "Equipment" }, { label: "Standards", to: "/standards" }, { label: "Manage Standards", to: "/standards" }, { label: "Manage PM / Interim Checks", to: "/standards/manage-pm-interim-checks" }, { label: "Manage Templates" }] },
   "/standards/manage-pm-interim-checks/templates/:templateId": { title: "Manage PM / Interim Check Templates", crumbs: [{ label: "Equipment" }, { label: "Standards", to: "/standards" }, { label: "Manage Standards", to: "/standards" }, { label: "Manage PM / Interim Checks", to: "/standards/manage-pm-interim-checks" }, { label: "Manage Templates", to: "/standards/manage-pm-interim-checks/templates" }, { label: "Template Details" }] },
+  "/standards/manage-pm-interim-checks/schedules": { title: "Manage PM / Interim Check Schedules", crumbs: [{ label: "Equipment" }, { label: "Standards", to: "/standards" }, { label: "Manage Standards", to: "/standards" }, { label: "Manage PM / Interim Checks", to: "/standards/manage-pm-interim-checks" }, { label: "Manage Schedules" }] },
+  "/standards/manage-pm-interim-checks/schedules/:scheduleId": { title: "PM / Interim Check Schedule", crumbs: [{ label: "Equipment" }, { label: "Standards", to: "/standards" }, { label: "Manage Standards", to: "/standards" }, { label: "Manage PM / Interim Checks", to: "/standards/manage-pm-interim-checks" }, { label: "Manage Schedules", to: "/standards/manage-pm-interim-checks/schedules" }, { label: "Schedule Details" }] },
 };
 
 const eslOnsiteMeta = { title: "Add New Work Order Item", crumbs: [{ label: "Home", to: "/" }, { label: "Add New Work Order", to: "/add-new-work-order" }, { label: "Add New Item" }] };
@@ -75,7 +77,10 @@ const ModernTopNav = () => {
   const customerDetailMatch = !exactMeta && !cdrDetailMatch && !contractReviewDetailMatch && !srDetailMatch && /^\/manage-customers\/[^/]+$/.test(location.pathname);
   const productDetailMatch = !exactMeta && /^\/manage-products\/[^/]+$/.test(location.pathname);
   const pmTemplateDetailMatch = !exactMeta && /^\/standards\/manage-pm-interim-checks\/templates\/[^/]+$/.test(location.pathname);
-  const meta = pmTemplateDetailMatch
+  const pmScheduleDetailMatch = !exactMeta && /^\/standards\/manage-pm-interim-checks\/schedules\/[^/]+$/.test(location.pathname);
+  const meta = pmScheduleDetailMatch
+    ? routeMeta["/standards/manage-pm-interim-checks/schedules/:scheduleId"]
+    : pmTemplateDetailMatch
     ? routeMeta["/standards/manage-pm-interim-checks/templates/:templateId"]
     : productDetailMatch
     ? routeMeta["/manage-products/:id"]

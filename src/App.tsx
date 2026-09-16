@@ -41,6 +41,7 @@ import CreateLabStandardWorkOrders from "./pages/CreateLabStandardWorkOrders";
 import PmInterimChecks from "./pages/PmInterimChecks";
 import ManagePmStations from "./pages/ManagePmStations";
 import ManagePmTemplates from "./pages/ManagePmTemplates";
+import ManagePmSchedules from "./pages/ManagePmSchedules";
 import OnsiteScheduling from "./pages/OnsiteScheduling";
 import OnsiteSchedulingV2 from "./pages/OnsiteSchedulingV2";
 import OnsiteProjectDetail from "./pages/OnsiteProjectDetail";
@@ -144,6 +145,8 @@ const App = () => {
                 <Route path="/standards/manage-pm-interim-checks/stations" element={<ManagePmStations />} />
                 <Route path="/standards/manage-pm-interim-checks/templates" element={<ManagePmTemplates />} />
                 <Route path="/standards/manage-pm-interim-checks/templates/:templateId" element={<ManagePmTemplates />} />
+                <Route path="/standards/manage-pm-interim-checks/schedules" element={<ManagePmSchedules />} />
+                <Route path="/standards/manage-pm-interim-checks/schedules/:scheduleId" element={<ManagePmSchedules />} />
                 <Route path="/standards/:id" element={<StandardDetail />} />
                 <Route path="/design-system" element={<DesignSystemGallery />} />
                 <Route path="/onsite-projects" element={<OnsiteProjects />} />
