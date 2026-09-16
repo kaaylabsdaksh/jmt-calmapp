@@ -361,16 +361,22 @@ const ProductDetail = () => {
             </TabsContent>
 
             <TabsContent value="capable" className="mt-4 space-y-4">
-              <Card>
+              <Card className="w-fit max-w-full">
                 <CardContent className="p-0 overflow-x-auto">
-                  <Table>
+                  <Table className="w-auto table-fixed">
+                    <colgroup>
+                      <col className="w-36" />
+                      {CAPABILITY_COLUMNS.map((capability) => (
+                        <col key={capability} className="w-7" />
+                      ))}
+                    </colgroup>
                     <TableHeader>
                       <TableRow className="bg-muted/50 hover:bg-muted/50">
-                        <TableHead className="h-7 text-[10px] font-semibold whitespace-nowrap px-2">Capable Location</TableHead>
+                        <TableHead className="h-7 w-36 text-[10px] font-semibold whitespace-nowrap px-2">Capable Location</TableHead>
                         {CAPABILITY_COLUMNS.map((capability) => (
                           <TableHead
                             key={capability}
-                            className="h-32 min-w-6 w-6 px-0.5 pb-1 text-center align-bottom text-[9px] font-semibold leading-none"
+                            className="h-32 w-7 px-0.5 pb-1 text-center align-bottom text-[9px] font-semibold leading-none"
                           >
                             <span className="inline-block [writing-mode:vertical-rl] rotate-180">{capability}</span>
                           </TableHead>
@@ -380,7 +386,7 @@ const ProductDetail = () => {
                     <TableBody>
                       {CAPABLE_LOCATIONS.map((location) => (
                         <TableRow key={location} className="h-6">
-                          <TableCell className="bg-muted/30 text-[11px] font-medium whitespace-nowrap px-2 py-0.5">{location}</TableCell>
+                          <TableCell className="w-36 bg-muted/30 text-[11px] font-medium whitespace-nowrap px-2 py-0.5">{location}</TableCell>
                           {CAPABILITY_COLUMNS.map((capability) => (
                             <TableCell key={capability} className="px-0.5 py-0.5 text-center">
                               <Checkbox
