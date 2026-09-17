@@ -306,9 +306,29 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
       </main>
 
       <footer className="shrink-0 border-t bg-background px-2 py-2 sm:px-4 lg:px-6"><div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2"><Button variant="outline" size="sm" className="h-8 text-xs" onClick={onBack}><ArrowLeft />Back to PR Items</Button><DropdownMenu><DropdownMenuTrigger asChild><Button variant="outline" size="sm" className="h-8 text-xs"><MoreHorizontal />More Actions</Button></DropdownMenuTrigger><DropdownMenuContent align="start">{["To Lab Management", "To Metrology", "To Lead Tech", "To Initiator", "Cancel Review", "Cannot Service", "Approve Capability", "Approve PR Completion"].map((action) => <DropdownMenuItem key={action}>{action}</DropdownMenuItem>)}</DropdownMenuContent></DropdownMenu></div>
+        <div className="flex items-center gap-2"><Button variant="outline" size="sm" className="h-8 text-xs" onClick={onBack}><ArrowLeft />Back to PR Items</Button><DropdownMenu><DropdownMenuTrigger asChild><Button variant="outline" size="sm" className="h-8 text-xs"><MoreHorizontal />More Actions</Button></DropdownMenuTrigger><DropdownMenuContent align="start">{[...ROUTING_ACTIONS, ...DECISION_ACTIONS].map((action) => <DropdownMenuItem key={action} onSelect={() => { setPendingAction(action); setRoutingComment(""); }}>{action}</DropdownMenuItem>)}</DropdownMenuContent></DropdownMenu></div>
         <div className="flex items-center gap-2"><Button variant="outline" size="sm" className="h-8 text-xs"><Mail />Email Customer</Button><Button size="sm" className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={save}><Save />Save</Button></div>
       </div></footer>
+
+      <Dialog open={Boolean(pendingAction)} onOpenChange={(open) => { if (!open) { setPendingAction(null); setRoutingComment(""); } }}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader><DialogTitle className="text-sm">Add Comments</DialogTitle></DialogHeader>
+          <div className="space-y-3">
+            <div className="grid grid-cols-[130px_1fr] items-center gap-2">
+              <Label className="text-right text-xs text-muted-foreground">Going to Status:</Label>
+              <Input readOnly value={pendingAction ? ACTION_STATUS[pendingAction] ?? pendingAction : ""} className="h-8 bg-muted/40 text-xs" />
+            </div>
+            <div className="grid grid-cols-[130px_1fr] items-start gap-2">
+              <Label className="pt-2 text-right text-xs text-muted-foreground">Comment:</Label>
+              <Textarea aria-label="Comment" className="min-h-28 resize-none text-xs" value={routingComment} onChange={(event) => setRoutingComment(event.target.value)} />
+            </div>
+          </div>
+          <DialogFooter className="sm:justify-center">
+            <Button variant="outline" size="sm" className="h-8 min-w-24 text-xs" onClick={() => { setPendingAction(null); setRoutingComment(""); }}>Cancel</Button>
+            <Button size="sm" className="h-8 min-w-24 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={confirmRouting}>Ok</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
