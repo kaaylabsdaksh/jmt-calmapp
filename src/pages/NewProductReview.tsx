@@ -228,7 +228,7 @@ export default function NewProductReview() {
                 </Table></div>
               </CardContent></Card>
 
-              {prNumber && <WorkOrderItemComments workOrderItemId={prNumber} />}
+              {prNumber && <WorkOrderItemComments workOrderItemId={prNumber} items={items.map((item) => item.itemNumber)} />}
           </div>
 
         </div>
