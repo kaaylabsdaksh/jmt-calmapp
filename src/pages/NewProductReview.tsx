@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { ArrowLeft, Check, ChevronRight, Plus, Save, Search, Trash2, UserPlus, X } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import ProductReviewItemWorkspace, { type ProductReviewItem } from "@/components/products/ProductReviewItemWorkspace";
@@ -16,6 +16,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { PRODUCT_REVIEWS } from "@/lib/product-reviews";
 
 const MATCHES = [
   { manufacturer: "FLUKE", model: "789", description: "PROCESSMETER" },
@@ -63,12 +64,20 @@ const EMPTY_ITEM: ItemDraft = { manufacturer: "", model: "", manufacturerUnknown
 
 export default function NewProductReview() {
   const navigate = useNavigate();
+  const { prNumber: existingPrNumber } = useParams();
+  const [searchParams] = useSearchParams();
   const { toast } = useToast();
-  const [review, setReview] = useState<ReviewDraft>(EMPTY_REVIEW);
-  const [prNumber, setPrNumber] = useState("");
-  const [activeTab, setActiveTab] = useState("general");
-  const [items, setItems] = useState<ProductReviewItem[]>([]);
-  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+  const existingRows = PRODUCT_REVIEWS.filter((row) => row.pr === existingPrNumber);
+  const existingRow = existingRows[0];
+  const customerMatch = existingRow?.customer.match(/^(.*) \(([^)]+)\)$/);
+  const initialReview: ReviewDraft = existingRow ? { ...EMPTY_REVIEW, account: customerMatch?.[2] || "", customer: customerMatch?.[1] || existingRow.customer, address1: "Saved customer address", city: "Customer city", state: "LA", zip: "70801", status: "Open", contact: existingRow.createdBy, firstName: existingRow.createdBy.split(" ")[0] || "", lastName: existingRow.createdBy.split(" ").slice(1).join(" "), phone: "(555) 010-2200", email: `${existingRow.createdBy.toLowerCase().replace(/[^a-z]+/g, ".").replace(/^\.|\.$/g, "")}@customer.com` } : EMPTY_REVIEW;
+  const initialItems: ProductReviewItem[] = existingRows.map((row) => ({ id: `${row.pr}-${row.item}`, itemNumber: row.item, manufacturer: row.manufacturer, model: row.model, description: row.description, location: row.loc, division: row.division === "Lab" ? "Regular" : row.division || "Regular", createdDate: row.createdDate.split(" ")[0], dueDate: row.dueDate, completedDate: "", status: row.status, calibratedBefore: "Yes", calibrationReason: "", reportsAvailable: "Yes" }));
+  const requestedItem = searchParams.get("item");
+  const [review, setReview] = useState<ReviewDraft>(initialReview);
+  const [prNumber, setPrNumber] = useState(existingPrNumber || "");
+  const [activeTab, setActiveTab] = useState(existingPrNumber ? "items" : "general");
+  const [items, setItems] = useState<ProductReviewItem[]>(initialItems);
+  const [selectedItemId, setSelectedItemId] = useState<string | null>(() => requestedItem ? initialItems.find((item) => item.itemNumber === requestedItem)?.id || null : null);
   const [wizardOpen, setWizardOpen] = useState(false);
   const [wizardStep, setWizardStep] = useState(1);
   const [itemDraft, setItemDraft] = useState<ItemDraft>(EMPTY_ITEM);
@@ -134,7 +143,7 @@ export default function NewProductReview() {
       <main className="flex-1 overflow-auto px-2 py-3 sm:px-4 lg:px-6">
         <div className="mx-auto max-w-[1500px] space-y-3">
           <div className="sticky top-0 z-40 flex flex-wrap items-center justify-between gap-3 border-b bg-background py-2">
-            <div><h1 className="text-lg font-semibold">{prNumber || "Adding New Product Review"}</h1><p className="text-xs text-muted-foreground">Product Review Details · {review.customer || "Customer not selected"}</p></div>
+            <div><h1 className="text-lg font-semibold">{prNumber || "Adding New Product Review"}</h1><p className="text-xs text-muted-foreground">{existingPrNumber ? "Saved Product Review" : "Product Review Details"} · {review.customer || "Customer not selected"}</p></div>
             <div className="flex items-center gap-2"><span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-1 text-[10px] font-medium"><span className="h-1.5 w-1.5 rounded-full bg-info" />{review.status}</span>{prNumber && <span className="text-[10px] text-muted-foreground">Created by Admin User · Today</span>}</div>
           </div>
 

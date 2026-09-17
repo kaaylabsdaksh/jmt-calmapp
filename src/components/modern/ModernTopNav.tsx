@@ -31,6 +31,7 @@ const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
   "/manage-products/new": { title: "Add New Product", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Products", to: "/manage-products" }, { label: "Add New Product" }] },
   "/manage-products/product-reviews": { title: "Product Reviews", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Products", to: "/manage-products" }, { label: "Product Reviews" }] },
   "/manage-products/product-review/new": { title: "Product Review Details", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Products", to: "/manage-products" }, { label: "Add New Product Review" }] },
+  "/manage-products/product-review/:prNumber": { title: "Product Review Details", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Product Reviews", to: "/manage-products/product-reviews" }, { label: "Product Review Details" }] },
   "/manage-products/:id": { title: "Product Details", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Products", to: "/manage-products" }, { label: "Product Details" }] },
   "/manage-customers/retest-notices": { title: "Retest Notice Management", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Retest Notices" }] },
   "/manage-customers/cdr": { title: "Customer Document Reviews", crumbs: [{ label: "Home", to: "/" }, { label: "Manage Customers", to: "/manage-customers" }, { label: "Manage CDR" }] },
@@ -76,9 +77,12 @@ const ModernTopNav = () => {
   const srDetailMatch = !exactMeta && /^\/manage-customers\/sr-documents\/[^/]+$/.test(location.pathname);
   const customerDetailMatch = !exactMeta && !cdrDetailMatch && !contractReviewDetailMatch && !srDetailMatch && /^\/manage-customers\/[^/]+$/.test(location.pathname);
   const productDetailMatch = !exactMeta && /^\/manage-products\/[^/]+$/.test(location.pathname);
+  const productReviewDetailMatch = !exactMeta && /^\/manage-products\/product-review\/[^/]+$/.test(location.pathname);
   const pmTemplateDetailMatch = !exactMeta && /^\/standards\/manage-pm-interim-checks\/templates\/[^/]+$/.test(location.pathname);
   const pmScheduleDetailMatch = !exactMeta && /^\/standards\/manage-pm-interim-checks\/schedules\/[^/]+$/.test(location.pathname);
-  const meta = pmScheduleDetailMatch
+  const meta = productReviewDetailMatch
+    ? routeMeta["/manage-products/product-review/:prNumber"]
+    : pmScheduleDetailMatch
     ? routeMeta["/standards/manage-pm-interim-checks/schedules/:scheduleId"]
     : pmTemplateDetailMatch
     ? routeMeta["/standards/manage-pm-interim-checks/templates/:templateId"]
