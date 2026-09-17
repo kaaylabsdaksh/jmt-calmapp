@@ -347,6 +347,27 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <Dialog open={dueDateOpen} onOpenChange={setDueDateOpen}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader><DialogTitle className="text-sm">Update Due Date</DialogTitle></DialogHeader>
+          <p className="text-xs font-semibold">By clicking 'Ok', you acknowledge that the customer has been notified of this date change.</p>
+          <div className="space-y-3">
+            <div className="grid grid-cols-[130px_1fr] items-center gap-2">
+              <Label className="text-right text-xs text-muted-foreground">New Due Date:</Label>
+              <Input aria-label="New Due Date" placeholder="mm/dd/yyyy" className="h-8 text-xs" value={dueDateDraft} onChange={(event) => setDueDateDraft(event.target.value)} />
+            </div>
+            <div className="grid grid-cols-[130px_1fr] items-start gap-2">
+              <Label className="pt-2 text-right text-xs text-muted-foreground">Comment:</Label>
+              <Textarea aria-label="Due Date Comment" className="min-h-28 resize-none text-xs" value={dueDateComment} onChange={(event) => setDueDateComment(event.target.value)} />
+            </div>
+          </div>
+          <DialogFooter className="sm:justify-center">
+            <Button variant="outline" size="sm" className="h-8 min-w-24 text-xs" onClick={() => setDueDateOpen(false)}>Cancel</Button>
+            <Button size="sm" className="h-8 min-w-24 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={confirmDueDate}>Ok</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
