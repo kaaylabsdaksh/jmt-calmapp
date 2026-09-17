@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AlertTriangle, ArrowLeft, Mail, MoreHorizontal, Save } from "lucide-react";
+import { AlertTriangle, ArrowLeft, FileText, Mail, MoreHorizontal, Plus, Save, Trash2, Upload } from "lucide-react";
 import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,7 +8,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 
 export type ProductReviewItem = {
@@ -37,17 +39,41 @@ type Props = {
 
 const LOCATIONS = ["Alexandria", "Baton Rouge", "Houston", "Round Rock", "Lafayette", "Beaumont", "Mobile", "Gonzales", "OnSite"];
 const DUPLICATES = [{ manufacturer: "FLUKE", model: "789-12" }, { manufacturer: "AMTI", model: "MC3A-500" }];
+const DOCUMENT_TYPES = ["Calibration Procedure", "Datasheet", "Manufacturer Specification", "Product Manual", "Other"];
+
+type DocumentRow = { id: string; name: string; type: string; description: string };
+type HoursRow = { id: string; date: string; technician: string; workType: string; hours: number; notes: string };
 
 export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onUpdate }: Props) {
   const { toast } = useToast();
   const [draft, setDraft] = useState(item);
   const [capableLocations, setCapableLocations] = useState<Record<string, boolean>>({});
+  const [documents, setDocuments] = useState<DocumentRow[]>([]);
+  const [documentType, setDocumentType] = useState(DOCUMENT_TYPES[0]);
+  const [documentDescription, setDocumentDescription] = useState("");
+  const [hours, setHours] = useState<HoursRow[]>([]);
+  const [hoursDraft, setHoursDraft] = useState({ date: new Date().toLocaleDateString("en-CA"), technician: "Admin User", workType: "Product Review", hours: "", notes: "" });
   const duplicate = DUPLICATES.some((candidate) => candidate.manufacturer === draft.manufacturer.toUpperCase() && candidate.model === draft.model.toUpperCase());
   const setField = (key: keyof ProductReviewItem, value: string) => setDraft((previous) => ({ ...previous, [key]: value }));
   const save = () => {
     onUpdate(draft);
     toast({ title: "PR item saved", description: `${prNumber}-${draft.itemNumber} has been updated.` });
   };
+  const addDocuments = (files: FileList | null) => {
+    if (!files?.length) return;
+    setDocuments((previous) => [...previous, ...Array.from(files).map((file, index) => ({ id: `${Date.now()}-${index}`, name: file.name, type: documentType, description: documentDescription }))]);
+    setDocumentDescription("");
+  };
+  const addHours = () => {
+    const value = Number(hoursDraft.hours);
+    if (!hoursDraft.date || !hoursDraft.technician.trim() || !Number.isFinite(value) || value <= 0) {
+      toast({ title: "Hours not added", description: "Enter a date, technician, and hours greater than zero.", variant: "destructive" });
+      return;
+    }
+    setHours((previous) => [...previous, { id: String(Date.now()), date: hoursDraft.date, technician: hoursDraft.technician.trim(), workType: hoursDraft.workType, hours: value, notes: hoursDraft.notes.trim() }]);
+    setHoursDraft((previous) => ({ ...previous, hours: "", notes: "" }));
+  };
+  const totalHours = hours.reduce((total, row) => total + row.hours, 0);
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
@@ -61,9 +87,18 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
             <div className="text-right text-[10px] text-muted-foreground">Item Created by: Admin User, {draft.createdDate}<br />Item Modified by: Admin User, Today</div>
           </div>
 
-          {duplicate && <div className="flex items-start gap-2 border border-destructive/30 bg-destructive/10 p-3 text-xs text-destructive"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" /><span><strong>Warning:</strong> This manufacturer and model already exists on another open Product Review.</span></div>}
+          <Tabs defaultValue="details" className="space-y-3">
+            <TabsList className="h-9 max-w-full justify-start overflow-x-auto">
+              <TabsTrigger value="details" className="h-7 px-4 text-xs">PR Item Details</TabsTrigger>
+              <TabsTrigger value="locations" className="h-7 px-4 text-xs">Capable Locations</TabsTrigger>
+              <TabsTrigger value="documents" className="h-7 px-4 text-xs">Documents</TabsTrigger>
+              <TabsTrigger value="hours" className="h-7 px-4 text-xs">Hours</TabsTrigger>
+            </TabsList>
 
-          <Card><CardContent className="p-4">
+            <TabsContent value="details" className="mt-0 space-y-3">
+              {duplicate && <div className="flex items-start gap-2 border border-destructive/30 bg-destructive/10 p-3 text-xs text-destructive"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" /><span><strong>Warning:</strong> This manufacturer and model already exists on another open Product Review.</span></div>}
+
+              <Card><CardContent className="p-4">
             <div className="grid gap-x-8 gap-y-4 lg:grid-cols-3">
               <section className="space-y-3">
                 <SectionHeading>Item Identification</SectionHeading>
@@ -112,29 +147,62 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                 <CheckField label="Automation Available" />
               </section>
             </div>
-          </CardContent></Card>
+              </CardContent></Card>
 
-          <Card><CardContent className="p-0">
-            <div className="border-b bg-muted/30 px-3 py-2 text-xs font-semibold">Capable Locations</div>
-            <div className="grid gap-2 p-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">{LOCATIONS.map((location) => <label key={location} className="flex items-center gap-2 text-xs"><Checkbox checked={Boolean(capableLocations[location])} onCheckedChange={() => setCapableLocations((previous) => ({ ...previous, [location]: !previous[location] }))} />{location}</label>)}</div>
-          </CardContent></Card>
-
-          <Card><CardContent className="p-0">
+              <Card><CardContent className="p-0">
             <div className="border-b bg-muted/30 px-3 py-2 text-xs font-semibold">Calibration and Report Information</div>
             <div className="grid gap-x-8 gap-y-3 p-3 md:grid-cols-2">
               <SelectField label="Has Unit been calibrated before?" value={draft.calibratedBefore} options={["Yes", "No"]} onChange={(value) => setField("calibratedBefore", value)} />
               <SelectField label="Can datasheet/test reports be provided?" value={draft.reportsAvailable} options={["Yes", "No"]} onChange={(value) => setField("reportsAvailable", value)} />
               {draft.calibratedBefore === "No" && <div className="md:col-span-2"><Field label="Why does the product need to be calibrated?" value={draft.calibrationReason} onChange={(value) => setField("calibrationReason", value)} /></div>}
             </div>
-          </CardContent></Card>
+              </CardContent></Card>
 
-          <Card><CardContent className="overflow-x-auto p-0">
+              <Card><CardContent className="overflow-x-auto p-0">
             <Table><TableHeader><TableRow className="bg-muted/40"><TableHead>Dept/Area</TableHead><TableHead>Date Sent</TableHead><TableHead>Ack</TableHead><TableHead>Ack Date</TableHead><TableHead>Ack User</TableHead><TableHead>Completed</TableHead><TableHead>Completed Date</TableHead><TableHead>Completed User</TableHead></TableRow></TableHeader>
               <TableBody><TableRow className="text-xs"><TableCell>{draft.status}</TableCell><TableCell>{draft.createdDate}</TableCell><TableCell>Yes</TableCell><TableCell>{draft.createdDate}</TableCell><TableCell>Admin User</TableCell><TableCell>{draft.completedDate ? "Yes" : "—"}</TableCell><TableCell>{draft.completedDate || "—"}</TableCell><TableCell>{draft.completedDate ? "Admin User" : "—"}</TableCell></TableRow></TableBody>
             </Table>
-          </CardContent></Card>
+              </CardContent></Card>
 
-          <WorkOrderItemComments workOrderItemId={`${prNumber}-${draft.itemNumber}`} />
+              <WorkOrderItemComments workOrderItemId={`${prNumber}-${draft.itemNumber}`} />
+            </TabsContent>
+
+            <TabsContent value="locations" className="mt-0">
+              <Card><CardContent className="p-0">
+                <div className="border-b bg-muted/30 px-3 py-2"><h2 className="text-xs font-semibold">Capable Locations</h2><p className="mt-0.5 text-[10px] text-muted-foreground">Select every location equipped to service this product.</p></div>
+                <div className="grid gap-px bg-border sm:grid-cols-2 md:grid-cols-3">
+                  {LOCATIONS.map((location) => <label key={location} className="flex min-h-12 cursor-pointer items-center gap-3 bg-background px-4 py-2 text-xs"><Checkbox checked={Boolean(capableLocations[location])} onCheckedChange={(checked) => setCapableLocations((previous) => ({ ...previous, [location]: checked === true }))} /><span className="font-medium">{location}</span></label>)}
+                </div>
+              </CardContent></Card>
+            </TabsContent>
+
+            <TabsContent value="documents" className="mt-0 space-y-3">
+              <Card><CardContent className="p-0">
+                <div className="border-b bg-muted/30 px-3 py-2"><h2 className="flex items-center gap-2 text-xs font-semibold"><FileText className="h-3.5 w-3.5" />Documents</h2></div>
+                <div className="grid gap-2 border-b p-3 md:grid-cols-[220px_1fr_260px]">
+                  <Select value={documentType} onValueChange={setDocumentType}><SelectTrigger aria-label="Document Type" className="h-8 text-xs"><SelectValue /></SelectTrigger><SelectContent>{DOCUMENT_TYPES.map((type) => <SelectItem key={type} value={type} className="text-xs">{type}</SelectItem>)}</SelectContent></Select>
+                  <Input aria-label="Document Description" className="h-8 text-xs" value={documentDescription} onChange={(event) => setDocumentDescription(event.target.value)} placeholder="Description" />
+                  <label className="flex h-8 cursor-pointer items-center justify-center gap-2 rounded-md border border-dashed text-xs hover:bg-muted"><Upload className="h-3.5 w-3.5" />Select files<input type="file" multiple className="hidden" onChange={(event) => { addDocuments(event.target.files); event.target.value = ""; }} /></label>
+                </div>
+                <div className="overflow-x-auto"><Table><TableHeader><TableRow className="bg-muted/40"><TableHead>Document</TableHead><TableHead>Type</TableHead><TableHead>Description</TableHead><TableHead className="w-12" /></TableRow></TableHeader><TableBody>{documents.length ? documents.map((document) => <TableRow key={document.id} className="text-xs"><TableCell className="font-medium">{document.name}</TableCell><TableCell>{document.type}</TableCell><TableCell>{document.description || "—"}</TableCell><TableCell><Button variant="ghost" size="icon" className="h-7 w-7" aria-label={`Remove ${document.name}`} onClick={() => setDocuments((previous) => previous.filter((row) => row.id !== document.id))}><Trash2 className="h-3.5 w-3.5" /></Button></TableCell></TableRow>) : <TableRow><TableCell colSpan={4} className="h-20 text-center text-xs text-muted-foreground">No documents have been added.</TableCell></TableRow>}</TableBody></Table></div>
+              </CardContent></Card>
+            </TabsContent>
+
+            <TabsContent value="hours" className="mt-0 space-y-3">
+              <Card><CardContent className="p-0">
+                <div className="flex items-center justify-between border-b bg-muted/30 px-3 py-2"><div><h2 className="text-xs font-semibold">Hours</h2><p className="mt-0.5 text-[10px] text-muted-foreground">Track time spent completing this Product Review item.</p></div><div className="text-right"><div className="text-[10px] text-muted-foreground">Total Hours</div><div className="text-sm font-semibold">{totalHours.toFixed(2)}</div></div></div>
+                <div className="grid gap-2 border-b p-3 sm:grid-cols-2 lg:grid-cols-[140px_1fr_180px_110px_2fr_auto]">
+                  <Input aria-label="Work Date" type="date" className="h-8 text-xs" value={hoursDraft.date} onChange={(event) => setHoursDraft((previous) => ({ ...previous, date: event.target.value }))} />
+                  <Input aria-label="Technician" className="h-8 text-xs" value={hoursDraft.technician} onChange={(event) => setHoursDraft((previous) => ({ ...previous, technician: event.target.value }))} placeholder="Technician" />
+                  <Select value={hoursDraft.workType} onValueChange={(value) => setHoursDraft((previous) => ({ ...previous, workType: value }))}><SelectTrigger aria-label="Work Type" className="h-8 text-xs"><SelectValue /></SelectTrigger><SelectContent>{["Product Review", "Research", "Procedure", "Template", "Other"].map((type) => <SelectItem key={type} value={type} className="text-xs">{type}</SelectItem>)}</SelectContent></Select>
+                  <Input aria-label="Hours" type="number" min="0.25" step="0.25" className="h-8 text-xs" value={hoursDraft.hours} onChange={(event) => setHoursDraft((previous) => ({ ...previous, hours: event.target.value }))} placeholder="Hours" />
+                  <Textarea aria-label="Hours Notes" className="min-h-8 resize-none py-1.5 text-xs" value={hoursDraft.notes} onChange={(event) => setHoursDraft((previous) => ({ ...previous, notes: event.target.value }))} placeholder="Notes" />
+                  <Button size="sm" className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={addHours}><Plus />Add Hours</Button>
+                </div>
+                <div className="overflow-x-auto"><Table><TableHeader><TableRow className="bg-muted/40"><TableHead>Date</TableHead><TableHead>Technician</TableHead><TableHead>Work Type</TableHead><TableHead>Hours</TableHead><TableHead>Notes</TableHead><TableHead className="w-12" /></TableRow></TableHeader><TableBody>{hours.length ? hours.map((row) => <TableRow key={row.id} className="text-xs"><TableCell>{row.date}</TableCell><TableCell>{row.technician}</TableCell><TableCell>{row.workType}</TableCell><TableCell>{row.hours.toFixed(2)}</TableCell><TableCell>{row.notes || "—"}</TableCell><TableCell><Button variant="ghost" size="icon" className="h-7 w-7" aria-label={`Remove hours for ${row.date}`} onClick={() => setHours((previous) => previous.filter((entry) => entry.id !== row.id))}><Trash2 className="h-3.5 w-3.5" /></Button></TableCell></TableRow>) : <TableRow><TableCell colSpan={6} className="h-20 text-center text-xs text-muted-foreground">No hours have been recorded.</TableCell></TableRow>}</TableBody></Table></div>
+              </CardContent></Card>
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
 
