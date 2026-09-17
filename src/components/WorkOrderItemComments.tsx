@@ -362,12 +362,17 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                     className="p-4 space-y-2 hover:bg-muted/20 transition-colors"
                   >
                     <div className="flex items-start justify-between gap-2">
-                      <Badge
-                        variant="outline"
-                        className={`${getTypeColor(comment.type)} text-xs`}
-                      >
-                        {comment.type}
-                      </Badge>
+                      <div className="flex items-center gap-1.5">
+                        <Badge
+                          variant="outline"
+                          className={`${getTypeColor(comment.type)} text-xs`}
+                        >
+                          {comment.type}
+                        </Badge>
+                        {showItemColumn && comment.item && (
+                          <span className="text-[10px] text-muted-foreground">Item {comment.item}</span>
+                        )}
+                      </div>
                       <span className="text-xs text-muted-foreground font-mono">
                         {format(comment.dateEntered, "MM/dd/yyyy hh:mm a")}
                       </span>
