@@ -13,6 +13,7 @@ import { format } from "date-fns";
 interface Comment {
   id: string;
   type: string;
+  item?: string;
   user: string;
   dateEntered: Date;
   comment: string;
@@ -21,12 +22,16 @@ interface Comment {
 
 interface WorkOrderItemCommentsProps {
   workOrderItemId?: string;
+  /** Optional list of item numbers to offer in the Item dropdown (e.g. PR items). */
+  items?: string[];
 }
 
 export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({ 
-  workOrderItemId 
+  workOrderItemId,
+  items
 }) => {
-  const [commentType, setCommentType] = useState<string>("");
+  const [commentType, setCommentType] = useState<string>("PR");
+  const [commentItem, setCommentItem] = useState<string>("");
   const [commentText, setCommentText] = useState<string>("");
   const [includeInCopy, setIncludeInCopy] = useState<boolean>(false);
   
