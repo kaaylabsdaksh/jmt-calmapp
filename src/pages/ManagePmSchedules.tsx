@@ -5,6 +5,7 @@ import { ArrowLeft, ChevronDown, ChevronRight, Plus, RotateCcw, Search } from "l
 
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
