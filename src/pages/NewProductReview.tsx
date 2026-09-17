@@ -11,7 +11,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
@@ -75,7 +74,7 @@ export default function NewProductReview() {
   const requestedItem = searchParams.get("item");
   const [review, setReview] = useState<ReviewDraft>(initialReview);
   const [prNumber, setPrNumber] = useState(existingPrNumber || "");
-  const [activeTab, setActiveTab] = useState(existingPrNumber ? "items" : "general");
+
   const [items, setItems] = useState<ProductReviewItem[]>(initialItems);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(() => requestedItem ? initialItems.find((item) => item.itemNumber === requestedItem)?.id || null : null);
   const [wizardOpen, setWizardOpen] = useState(false);
@@ -195,7 +194,7 @@ export default function NewProductReview() {
         </div>
       </main>
 
-      <footer className="shrink-0 border-t bg-background px-2 py-2 sm:px-4 lg:px-6"><div className="flex flex-wrap items-center justify-between gap-2"><Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-products/product-reviews")}><ArrowLeft />Back to Product Reviews</Button><div className="flex items-center gap-2">{prNumber && <Button variant="outline" size="sm" className="h-8 text-xs text-destructive" onClick={() => navigate("/manage-products/product-reviews")}><Trash2 />Delete PR</Button>}<Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-products/product-reviews")}><X />Cancel</Button>{activeTab === "general" && <Button size="sm" className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={saveReview}><Save />{prNumber ? "Save Changes" : "Save & Continue"}</Button>}</div></div></footer>
+      <footer className="shrink-0 border-t bg-background px-2 py-2 sm:px-4 lg:px-6"><div className="flex flex-wrap items-center justify-between gap-2"><Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-products/product-reviews")}><ArrowLeft />Back to Product Reviews</Button><div className="flex items-center gap-2">{prNumber && <Button variant="outline" size="sm" className="h-8 text-xs text-destructive" onClick={() => navigate("/manage-products/product-reviews")}><Trash2 />Delete PR</Button>}<Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-products/product-reviews")}><X />Cancel</Button>{<Button size="sm" className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={saveReview}><Save />{prNumber ? "Save Changes" : "Save & Continue"}</Button>}</div></div></footer>
 
       <Dialog open={wizardOpen} onOpenChange={(open) => { setWizardOpen(open); if (!open) setErrors({}); }}><DialogContent className="max-h-[90vh] max-w-4xl overflow-y-auto p-0">
         <DialogHeader className="border-b px-5 py-4"><DialogTitle className="text-base">Add PR Item</DialogTitle><DialogDescription className="text-xs">Enter product information and review it before adding the item.</DialogDescription></DialogHeader>
