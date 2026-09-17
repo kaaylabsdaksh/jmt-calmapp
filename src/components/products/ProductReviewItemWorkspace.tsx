@@ -137,7 +137,7 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                 <SectionHeading>Item Identification</SectionHeading>
                 <Field label="PR Item #" value={`${prNumber}-${draft.itemNumber}`} disabled />
                 <Field label="Due Date" value={draft.dueDate} onChange={(value) => setField("dueDate", value)} />
-                <SelectField label="PR Item Status" value={draft.status} options={["Review Initiated", "Initiator", "Lab Management", "Metrology", "Lead Tech", "Completed", "Cancelled"]} onChange={(value) => setField("status", value)} />
+                <SelectField label="PR Item Status" value={draft.status} options={["Review Initiated", "Initiator", "Lab Management", "Metrology", "Lead Tech", "Approved", "Completed", "Cancelled"]} onChange={(value) => setField("status", value)} />
                 <SelectField label="Location" value={draft.location} options={["Alexandria", "Baton Rouge", "Houston", "Onsite"]} onChange={(value) => setField("location", value)} />
                 <SelectField label="Division" value={draft.division} options={["Regular", "OnSite", "ESL"]} onChange={(value) => setField("division", value)} />
                 <SelectField label="Work to be Performed" value="Calibration" options={["Calibration", "Repair", "Calibration & Repair", "Inspection"]} onChange={() => undefined} />
