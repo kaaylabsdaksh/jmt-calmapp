@@ -221,6 +221,34 @@ export default function NewProductReview() {
         </div>
         <div className="flex items-center justify-between border-t bg-muted/20 px-5 py-3"><Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => setWizardOpen(false)}><X />Cancel</Button><div className="flex gap-2">{wizardStep > 1 && <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => { setWizardStep((step) => step - 1); setErrors({}); }}><ArrowLeft />Previous</Button>}{wizardStep < 4 ? <Button size="sm" className="h-8 bg-info text-xs text-info-foreground hover:bg-info/90" onClick={validateWizard}>Next<ChevronRight /></Button> : <Button size="sm" className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={addItem}><Check />Add Item</Button>}</div></div>
       </DialogContent></Dialog>
+
+      <Dialog open={contactOpen} onOpenChange={(open) => { setContactOpen(open); if (!open) setContactErrors({}); }}><DialogContent className="max-w-md p-0">
+        <DialogHeader className="border-b px-4 py-3"><DialogTitle className="text-base">Add New Contact</DialogTitle><DialogDescription className="text-xs">Enter the contact details for this customer.</DialogDescription></DialogHeader>
+        <div className="space-y-2 px-4 py-3">
+          {([
+            { key: "firstName", label: "First Name", required: true, placeholder: "" },
+            { key: "lastName", label: "Last Name", required: true, placeholder: "" },
+            { key: "title", label: "Title", required: false, placeholder: "" },
+            { key: "phone", label: "Phone", required: true, placeholder: "(___) ___-____" },
+            { key: "fax", label: "Fax", required: false, placeholder: "(___) ___-____" },
+            { key: "cell", label: "Cell", required: false, placeholder: "(___) ___-____" },
+            { key: "email", label: "Email", required: true, placeholder: "" },
+          ] as { key: keyof ContactDraft; label: string; required: boolean; placeholder: string }[]).map((field) => (
+            <div key={field.key} className="grid grid-cols-[110px_1fr] items-center gap-2">
+              <Label className={cn("justify-self-end text-right text-xs", field.required ? "font-semibold text-foreground" : "text-muted-foreground")}>{field.label}:{field.required && <span className="text-destructive"> *</span>}</Label>
+              <div className="space-y-0.5">
+                <Input aria-label={field.label} value={contactDraft[field.key]} placeholder={field.placeholder} onChange={(event) => setContactDraft((previous) => ({ ...previous, [field.key]: event.target.value }))} className={cn("h-8 text-xs", contactErrors[field.key] && "border-destructive")} />
+                {contactErrors[field.key] && <ErrorText text={contactErrors[field.key]} />}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center justify-end gap-2 border-t bg-muted/20 px-4 py-3">
+          <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => setContactOpen(false)}>Cancel</Button>
+          <Button size="sm" className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={addContact}><Check />Add</Button>
+        </div>
+      </DialogContent></Dialog>
+
     </div>
   );
 }
