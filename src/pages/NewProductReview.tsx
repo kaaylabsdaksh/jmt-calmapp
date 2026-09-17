@@ -101,7 +101,24 @@ export default function NewProductReview() {
     return <div className="flex h-dvh flex-col bg-background"><ModernTopNav /><ProductReviewItemWorkspace prNumber={prNumber} item={selectedItem} onBack={() => setSelectedItemId(null)} onUpdate={(updated) => setItems((previous) => previous.map((item) => item.id === updated.id ? updated : item))} /></div>;
   }
 
+  const addContact = () => {
+    const nextErrors: Record<string, string> = {};
+    if (!contactDraft.firstName.trim()) nextErrors.firstName = "First name is required.";
+    if (!contactDraft.lastName.trim()) nextErrors.lastName = "Last name is required.";
+    if (!contactDraft.phone.trim()) nextErrors.phone = "Phone is required.";
+    if (!contactDraft.email.trim()) nextErrors.email = "Email is required.";
+    setContactErrors(nextErrors);
+    if (Object.keys(nextErrors).length) return;
+    const name = `${contactDraft.firstName.trim()} ${contactDraft.lastName.trim()}`;
+    setContactOptions((previous) => previous.includes(name) ? previous : [...previous, name]);
+    setReview((previous) => ({ ...previous, contact: name, ...contactDraft }));
+    setErrors((previous) => ({ ...previous, contact: "" }));
+    setContactOpen(false);
+    toast({ title: "Contact added", description: `${name} is now the selected customer contact.` });
+  };
+
   const saveReview = () => {
+
     const nextErrors: Record<string, string> = {};
     if (!review.account.trim()) nextErrors.account = "Account number is required.";
     if (!review.customer.trim()) nextErrors.customer = "Customer name is required.";
