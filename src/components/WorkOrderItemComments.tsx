@@ -145,7 +145,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
         {/* Add Comment Form - Minimal Design */}
         <div className="bg-muted/30 rounded-md p-2">
           <div className="flex items-end gap-2">
-            <div className="w-40 shrink-0">
+            <div className="w-32 shrink-0">
               <Label htmlFor="comment-type" className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground mb-1 block">
                 Type
               </Label>
@@ -154,7 +154,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent className="z-50 bg-popover border">
-                  <SelectItem value="General">General</SelectItem>
+                  <SelectItem value="PR">PR</SelectItem>
                   <SelectItem value="Estimate">Estimate</SelectItem>
                   <SelectItem value="Status">Status Change</SelectItem>
                   <SelectItem value="Other">Other</SelectItem>
@@ -164,16 +164,35 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
               </Select>
             </div>
 
+            {items && items.length > 0 && (
+              <div className="w-28 shrink-0">
+                <Label htmlFor="comment-item" className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground mb-1 block">
+                  Item
+                </Label>
+                <Select value={commentItem} onValueChange={setCommentItem}>
+                  <SelectTrigger className="h-7 bg-background border-border text-xs">
+                    <SelectValue placeholder="Item" />
+                  </SelectTrigger>
+                  <SelectContent className="z-50 bg-popover border">
+                    {items.map(item => (
+                      <SelectItem key={item} value={item}>{item}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
             <div className="flex-1">
               <Label htmlFor="comment-text" className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground mb-1 block">
                 Comment
               </Label>
-              <Input
+              <Textarea
                 id="comment-text"
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
                 placeholder="Enter your comment..."
-                className="h-7 bg-background border-border text-xs"
+                rows={3}
+                className="min-h-16 resize-y bg-background border-border text-xs"
               />
             </div>
 
