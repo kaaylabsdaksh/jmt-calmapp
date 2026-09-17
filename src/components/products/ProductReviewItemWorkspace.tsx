@@ -178,6 +178,13 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                 <CheckField label="Procedure Available" />
                 <CheckField label="Template Available" />
                 <CheckField label="Automation Available" />
+                {draft.status === "Approved" && (
+                  <div className="flex justify-end pt-1">
+                    <Button variant="link" className="h-auto p-0 text-xs font-semibold uppercase tracking-wide text-info underline" onClick={() => navigate(`/manage-products/${encodeURIComponent(draft.model || draft.itemNumber)}`)}>
+                      <ExternalLink className="mr-1 h-3.5 w-3.5" />View Product
+                    </Button>
+                  </div>
+                )}
               </section>
             </div>
               </CardContent></Card>
