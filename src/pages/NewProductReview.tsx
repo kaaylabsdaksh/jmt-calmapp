@@ -97,6 +97,7 @@ export default function NewProductReview() {
 
   const selectedItem = items.find((item) => item.id === selectedItemId);
   const matches = useMemo(() => MATCHES.filter((match) => (!itemDraft.manufacturer || match.manufacturer.includes(itemDraft.manufacturer.toUpperCase())) && (!itemDraft.model || match.model.includes(itemDraft.model.toUpperCase()))), [itemDraft.manufacturer, itemDraft.model]);
+  const exactDuplicate = useMemo(() => Boolean(itemDraft.manufacturer.trim() && itemDraft.model.trim() && MATCHES.some((match) => match.manufacturer === itemDraft.manufacturer.trim().toUpperCase() && match.model === itemDraft.model.trim().toUpperCase())), [itemDraft.manufacturer, itemDraft.model]);
   const setReviewField = (key: keyof ReviewDraft, value: string) => setReview((previous) => ({ ...previous, [key]: value }));
   const setItemField = <K extends keyof ItemDraft>(key: K, value: ItemDraft[K]) => setItemDraft((previous) => ({ ...previous, [key]: value }));
 
