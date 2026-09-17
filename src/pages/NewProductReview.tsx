@@ -147,10 +147,7 @@ export default function NewProductReview() {
             <div className="flex items-center gap-2"><span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-1 text-[10px] font-medium"><span className="h-1.5 w-1.5 rounded-full bg-info" />{review.status}</span>{prNumber && <span className="text-[10px] text-muted-foreground">Created by Admin User · Today</span>}</div>
           </div>
 
-          <Tabs value={activeTab} onValueChange={(value) => { if (value === "items" && !prNumber) { setErrors({ save: "Save the General information before adding PR items." }); return; } setActiveTab(value); }}>
-            <TabsList className="h-9"><TabsTrigger value="general" className="px-5 text-xs">General</TabsTrigger><TabsTrigger value="items" className="px-5 text-xs">PR Items {items.length > 0 && `(${items.length})`}</TabsTrigger></TabsList>
-
-            <TabsContent value="general" className="mt-3 space-y-3">
+          <div className="space-y-3">
               {errors.save && <ValidationMessage text={errors.save} />}
               <Card><CardContent className="p-0">
                 <SectionTitle title="Customer and review" />
@@ -184,19 +181,17 @@ export default function NewProductReview() {
                   <Field label="ZIP" value={review.zip} onChange={(value) => setReviewField("zip", value)} />
                 </div>
               </CardContent></Card>
-              {prNumber && <WorkOrderItemComments workOrderItemId={prNumber} />}
-            </TabsContent>
 
-            <TabsContent value="items" className="mt-3 space-y-3">
               <Card><CardContent className="p-0">
-                <SectionTitle title="PR Items" action={<Button size="sm" className="h-7 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={openWizard}><Plus />Add New Item</Button>} />
+                <SectionTitle title={`PR Items${items.length > 0 ? ` (${items.length})` : ""}`} action={<Button size="sm" className="h-7 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={() => { if (!prNumber) { setErrors({ save: "Save the review details before adding PR items." }); return; } openWizard(); }}><Plus />Add New Item</Button>} />
                 <div className="overflow-x-auto"><Table><TableHeader><TableRow className="bg-muted/40">{["Item", "Manufacturer", "Model", "Description", "Location", "Division", "Created Date", "Due Date", "Completed Date", "PR Item Status"].map((heading) => <TableHead key={heading} className="h-8 whitespace-nowrap px-2 text-[11px]">{heading}</TableHead>)}</TableRow></TableHeader>
                   <TableBody>{items.length === 0 ? <TableRow><TableCell colSpan={10} className="py-10 text-center text-xs text-muted-foreground">No PR items yet. Add the first item to this review.</TableCell></TableRow> : items.map((item) => <TableRow key={item.id} className="text-xs"><TableCell className="px-2 py-1.5"><Button variant="link" className="h-auto p-0 text-xs text-foreground underline" onClick={() => setSelectedItemId(item.id)}>{item.itemNumber}</Button></TableCell><TableCell>{item.manufacturer}</TableCell><TableCell>{item.model}</TableCell><TableCell className="max-w-64 truncate" title={item.description}>{item.description}</TableCell><TableCell>{item.location}</TableCell><TableCell>{item.division}</TableCell><TableCell>{item.createdDate}</TableCell><TableCell>{item.dueDate}</TableCell><TableCell>{item.completedDate || "—"}</TableCell><TableCell><span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-[10px]"><span className="h-1.5 w-1.5 rounded-full bg-info" />{item.status}</span></TableCell></TableRow>)}</TableBody>
                 </Table></div>
               </CardContent></Card>
-              <WorkOrderItemComments workOrderItemId={prNumber} />
-            </TabsContent>
-          </Tabs>
+
+              {prNumber && <WorkOrderItemComments workOrderItemId={prNumber} />}
+          </div>
+
         </div>
       </main>
 
