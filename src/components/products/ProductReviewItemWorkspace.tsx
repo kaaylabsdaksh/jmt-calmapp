@@ -99,6 +99,18 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
   const [routing, setRouting] = useState<RoutingRow[]>([]);
   const [pendingAction, setPendingAction] = useState<string | null>(null);
   const [routingComment, setRoutingComment] = useState("");
+  const [dueDateOpen, setDueDateOpen] = useState(false);
+  const [dueDateDraft, setDueDateDraft] = useState("");
+  const [dueDateComment, setDueDateComment] = useState("");
+  const confirmDueDate = () => {
+    if (!dueDateDraft.trim()) {
+      toast({ title: "Due date required", description: "Enter a new due date.", variant: "destructive" });
+      return;
+    }
+    setDraft((previous) => ({ ...previous, dueDate: dueDateDraft.trim() }));
+    setDueDateOpen(false);
+    toast({ title: "Due date updated", description: `New due date ${dueDateDraft.trim()}.` });
+  };
   const currentDept = routing[0]?.dept ?? "";
   const confirmRouting = () => {
     if (!pendingAction) return;
@@ -178,7 +190,13 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
               <section className="space-y-3">
                 <SectionHeading>Item Identification</SectionHeading>
                 <Field label="PR Item #" value={`${prNumber}-${draft.itemNumber}`} disabled />
-                <Field label="Due Date" value={draft.dueDate} onChange={(value) => setField("dueDate", value)} />
+                <div className="grid grid-cols-[minmax(8rem,42%)_1fr] items-center gap-2">
+                  <Label className="text-right text-[11px] text-muted-foreground">Due Date</Label>
+                  <div className="flex items-center gap-2">
+                    <Input aria-label="Due Date" className="h-7 text-xs" value={draft.dueDate} readOnly />
+                    <Button variant="link" size="sm" className="h-7 px-0 text-xs" onClick={() => { setDueDateDraft(draft.dueDate); setDueDateComment(""); setDueDateOpen(true); }}>Update Date</Button>
+                  </div>
+                </div>
                 <SelectField label="PR Item Status" value={draft.status} options={["Review Initiated", "Initiator", "Lab Management", "Metrology", "Lead Tech", "Approved", "Completed", "Cancelled"]} onChange={(value) => setField("status", value)} />
                 <SelectField label="Location" value={draft.location} options={["Alexandria", "Baton Rouge", "Houston", "Onsite"]} onChange={(value) => setField("location", value)} />
                 <SelectField label="Division" value={draft.division} options={["Regular", "OnSite", "ESL"]} onChange={(value) => setField("division", value)} />
@@ -326,6 +344,27 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
           <DialogFooter className="sm:justify-center">
             <Button variant="outline" size="sm" className="h-8 min-w-24 text-xs" onClick={() => { setPendingAction(null); setRoutingComment(""); }}>Cancel</Button>
             <Button size="sm" className="h-8 min-w-24 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={confirmRouting}>Ok</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={dueDateOpen} onOpenChange={setDueDateOpen}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader><DialogTitle className="text-sm">Update Due Date</DialogTitle></DialogHeader>
+          <p className="text-xs font-semibold">By clicking 'Ok', you acknowledge that the customer has been notified of this date change.</p>
+          <div className="space-y-3">
+            <div className="grid grid-cols-[130px_1fr] items-center gap-2">
+              <Label className="text-right text-xs text-muted-foreground">New Due Date:</Label>
+              <Input aria-label="New Due Date" placeholder="mm/dd/yyyy" className="h-8 text-xs" value={dueDateDraft} onChange={(event) => setDueDateDraft(event.target.value)} />
+            </div>
+            <div className="grid grid-cols-[130px_1fr] items-start gap-2">
+              <Label className="pt-2 text-right text-xs text-muted-foreground">Comment:</Label>
+              <Textarea aria-label="Due Date Comment" className="min-h-28 resize-none text-xs" value={dueDateComment} onChange={(event) => setDueDateComment(event.target.value)} />
+            </div>
+          </div>
+          <DialogFooter className="sm:justify-center">
+            <Button variant="outline" size="sm" className="h-8 min-w-24 text-xs" onClick={() => setDueDateOpen(false)}>Cancel</Button>
+            <Button size="sm" className="h-8 min-w-24 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={confirmDueDate}>Ok</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
