@@ -162,16 +162,6 @@ export default function NewProductReview() {
                   <Field label="SR Doc" value={review.srDoc} onChange={(value) => setReviewField("srDoc", value)} />
                   <Field label="OSR Doc" value={review.osrDoc} onChange={(value) => setReviewField("osrDoc", value)} />
                 </div>
-                <SectionTitle title="Shipping address" />
-                <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-3 xl:grid-cols-5">
-                  <Field label="Address Line 1" value={review.address1} onChange={(value) => setReviewField("address1", value)} />
-                  <Field label="Address Line 2" value={review.address2} onChange={(value) => setReviewField("address2", value)} />
-                  <Field label="Ship City" value={review.city} onChange={(value) => setReviewField("city", value)} />
-                  <SelectField label="State" value={review.state} options={["AL", "LA", "NJ", "NY", "TX"]} onChange={(value) => setReviewField("state", value)} />
-                  <Field label="ZIP" value={review.zip} onChange={(value) => setReviewField("zip", value)} />
-                </div>
-              </CardContent></Card>
-
               <Card><CardContent className="p-0"><SectionTitle title="Customer contact" action={<Button variant="outline" size="sm" className="h-7 text-xs"><UserPlus />Add Contact</Button>} />
                 <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-2 xl:grid-cols-4">
                   <SelectField label="Select Contact" value={review.contact} options={["AK Alpha", "Dana Scott", "Jordan Lee"]} onChange={(value) => { setReviewField("contact", value); if (value === "AK Alpha") setReview((previous) => ({ ...previous, contact: value, firstName: "AK", lastName: "Alpha", phone: "(123) 123-1231", cell: "(123) 123-1234" })); }} error={errors.contact} required />
@@ -182,6 +172,14 @@ export default function NewProductReview() {
                   <Field label="Fax" value={review.fax} onChange={(value) => setReviewField("fax", value)} />
                   <Field label="Cell" value={review.cell} onChange={(value) => setReviewField("cell", value)} />
                   <Field label="Email" value={review.email} onChange={(value) => setReviewField("email", value)} />
+                </div>
+                <SectionTitle title="Shipping address" />
+                <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-3 xl:grid-cols-5">
+                  <Field label="Address Line 1" value={review.address1} onChange={(value) => setReviewField("address1", value)} />
+                  <Field label="Address Line 2" value={review.address2} onChange={(value) => setReviewField("address2", value)} />
+                  <Field label="Ship City" value={review.city} onChange={(value) => setReviewField("city", value)} />
+                  <SelectField label="State" value={review.state} options={["AL", "LA", "NJ", "NY", "TX"]} onChange={(value) => setReviewField("state", value)} />
+                  <Field label="ZIP" value={review.zip} onChange={(value) => setReviewField("zip", value)} />
                 </div>
               </CardContent></Card>
               {prNumber && <WorkOrderItemComments workOrderItemId={prNumber} />}
