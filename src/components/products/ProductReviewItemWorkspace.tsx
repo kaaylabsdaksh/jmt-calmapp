@@ -35,13 +35,11 @@ type Props = {
   onUpdate: (item: ProductReviewItem) => void;
 };
 
-const LOCATIONS = ["Alexandria", "Baton Rouge", "Houston", "Round Rock", "Lafayette", "Beaumont", "Mobile", "Gonzales", "OnSite"];
 const DUPLICATES = [{ manufacturer: "FLUKE", model: "789-12" }, { manufacturer: "AMTI", model: "MC3A-500" }];
 
 export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onUpdate }: Props) {
   const { toast } = useToast();
   const [draft, setDraft] = useState(item);
-  const [capableLocations, setCapableLocations] = useState<Record<string, boolean>>({});
   const duplicate = DUPLICATES.some((candidate) => candidate.manufacturer === draft.manufacturer.toUpperCase() && candidate.model === draft.model.toUpperCase());
   const setField = (key: keyof ProductReviewItem, value: string) => setDraft((previous) => ({ ...previous, [key]: value }));
   const save = () => {
@@ -111,20 +109,6 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                 <CheckField label="Template Available" />
                 <CheckField label="Automation Available" />
               </section>
-            </div>
-          </CardContent></Card>
-
-          <Card><CardContent className="p-0">
-            <div className="border-b bg-muted/30 px-3 py-2 text-xs font-semibold">Capable Locations</div>
-            <div className="grid gap-2 p-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">{LOCATIONS.map((location) => <label key={location} className="flex items-center gap-2 text-xs"><Checkbox checked={Boolean(capableLocations[location])} onCheckedChange={() => setCapableLocations((previous) => ({ ...previous, [location]: !previous[location] }))} />{location}</label>)}</div>
-          </CardContent></Card>
-
-          <Card><CardContent className="p-0">
-            <div className="border-b bg-muted/30 px-3 py-2 text-xs font-semibold">Calibration and Report Information</div>
-            <div className="grid gap-x-8 gap-y-3 p-3 md:grid-cols-2">
-              <SelectField label="Has Unit been calibrated before?" value={draft.calibratedBefore} options={["Yes", "No"]} onChange={(value) => setField("calibratedBefore", value)} />
-              <SelectField label="Can datasheet/test reports be provided?" value={draft.reportsAvailable} options={["Yes", "No"]} onChange={(value) => setField("reportsAvailable", value)} />
-              {draft.calibratedBefore === "No" && <div className="md:col-span-2"><Field label="Why does the product need to be calibrated?" value={draft.calibrationReason} onChange={(value) => setField("calibrationReason", value)} /></div>}
             </div>
           </CardContent></Card>
 
