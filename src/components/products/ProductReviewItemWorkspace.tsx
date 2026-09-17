@@ -70,6 +70,7 @@ type HoursRow = { id: string; workPerformed: string; hours: number; recordedBy: 
 
 export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onUpdate }: Props) {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [draft, setDraft] = useState(item);
   const [capabilityMatrix, setCapabilityMatrix] = useState<Record<string, Record<string, boolean>>>({});
   const [documents, setDocuments] = useState<DocumentRow[]>([{ id: "existing-1", name: "Belt Tension Checker Instruction Sheet.pdf", type: "Other", description: "Instruction sheet", uploadedBy: "Kevin R. Young", uploadedDate: "06/30/2021" }]);
