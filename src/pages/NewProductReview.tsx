@@ -174,7 +174,7 @@ export default function NewProductReview() {
         <div className="mx-auto max-w-[1500px] space-y-3">
           <div className="sticky top-0 z-40 flex flex-wrap items-center justify-between gap-3 border-b bg-background py-2">
             <div><h1 className="text-lg font-semibold">{prNumber || "Adding New Product Review"}</h1><p className="text-xs text-muted-foreground">{existingPrNumber ? "Saved Product Review" : "Product Review Details"} · {review.customer || "Customer not selected"}</p></div>
-            <div className="flex items-center gap-2"><span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-1 text-[10px] font-medium"><span className="h-1.5 w-1.5 rounded-full bg-info" />{review.status}</span>{prNumber && <span className="text-[10px] text-muted-foreground">Created by Admin User · Today</span>}</div>
+            <div className="flex items-center gap-2"><span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-1 text-[10px] font-medium"><span className="h-1.5 w-1.5 rounded-full bg-info" />{review.status}</span>{prNumber && <span className="text-[10px] text-muted-foreground">Created by {audit.createdBy || "—"}{audit.modifiedBy ? ` · Modified by ${audit.modifiedBy}` : ""}</span>}</div>
           </div>
 
           <div className="space-y-3">
@@ -194,11 +194,6 @@ export default function NewProductReview() {
                       ? <Button variant="link" className="h-7 justify-start p-0 text-[11px] text-info underline hover:text-info/80" onClick={() => navigate("/quotes")}><ExternalLink className="h-3 w-3" />{review.quote}</Button>
                       : <Input aria-label="Quote #" value={review.quote} onChange={(event) => setReviewField("quote", event.target.value)} className="h-7 px-2 text-[11px]" placeholder="Enter quote #" />}
                   </div>
-                </div>
-                <SectionTitle title="Audit information" />
-                <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-2 xl:grid-cols-4">
-                  <AuditValue label="Created by" value={audit.createdBy} />
-                  <AuditValue label="Modified by" value={audit.modifiedBy} />
                 </div>
               </CardContent></Card>
 
@@ -292,6 +287,6 @@ function SelectField({ label, value, options, onChange, error, required }: { lab
 function WizardSearchField({ label, value, onChange, unknown, onUnknown, newItem, onNewItem, error }: { label: string; value: string; onChange: (value: string) => void; unknown: boolean; onUnknown: (checked: boolean) => void; newItem: boolean; onNewItem: (checked: boolean) => void; error?: string }) { return <div className="space-y-2"><Label className="text-xs font-medium">{label} <span className="text-destructive">*</span></Label><div className="flex gap-2"><Input aria-label={label} value={value} disabled={unknown} onChange={(event) => onChange(event.target.value)} className={cn("h-9 text-xs", error && "border-destructive")} /><Button variant="outline" size="icon" className="h-9 w-9" aria-label={`Search ${label}`}><Search /></Button></div><div className="flex flex-wrap gap-4 text-xs"><label className="flex items-center gap-2"><Checkbox checked={newItem} onCheckedChange={(checked) => onNewItem(checked === true)} />Not in CalMapp</label><label className="flex items-center gap-2"><Checkbox checked={unknown} onCheckedChange={(checked) => onUnknown(checked === true)} />Unknown</label></div>{error && <ErrorText text={error} />}</div>; }
 function SummaryStrip({ draft }: { draft: ItemDraft }) { return <div className="grid gap-2 rounded-md bg-muted/40 p-3 text-xs sm:grid-cols-3"><span>Manufacturer: <strong>{draft.manufacturerUnknown ? "Unknown" : draft.manufacturer || "—"}</strong></span><span>Model: <strong>{draft.modelUnknown ? "Unknown" : draft.model || "—"}</strong></span><span>Description: <strong>{draft.description || "—"}</strong></span></div>; }
 function ReviewValue({ label, value }: { label: string; value: string }) { return <div><div className="text-[10px] uppercase text-muted-foreground">{label}</div><div className="text-xs font-medium">{value || "—"}</div></div>; }
-function AuditValue({ label, value }: { label: string; value: string }) { return <div><div className="text-[9px] uppercase leading-none text-muted-foreground">{label}</div><div className="pt-1 text-[11px] font-medium">{value || "—"}</div></div>; }
+
 function ErrorText({ text }: { text: string }) { return <p className="text-[10px] text-destructive">{text}</p>; }
 function ValidationMessage({ text }: { text: string }) { return <div className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-xs text-destructive">{text}</div>; }
