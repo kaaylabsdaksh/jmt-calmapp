@@ -233,13 +233,12 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
 
 
               <Card><CardContent className="p-0">
-                <div className="flex flex-wrap items-center gap-2 border-b bg-muted/20 p-2">
-                  {ROUTING_ACTIONS.map((action) => {
-                    const isCurrent = currentDept === ACTION_STATUS[action];
-                    return <Button key={action} size="sm" variant="outline" className={`h-7 text-[11px] ${isCurrent ? "border-destructive font-semibold text-destructive" : ""}`} onClick={() => { setPendingAction(action); setRoutingComment(""); }}>{action}</Button>;
-                  })}
-                  <span className="mx-1 hidden h-5 w-px bg-border sm:block" />
-                  {DECISION_ACTIONS.map((action) => <Button key={action} size="sm" variant="outline" className="h-7 text-[11px]" onClick={() => { setPendingAction(action); setRoutingComment(""); }}>{action}</Button>)}
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b bg-muted/20 px-3 py-2">
+                  <h2 className="text-xs font-semibold">Routing History</h2>
+                  <span className="inline-flex items-center gap-2 rounded-full bg-background px-2.5 py-1 text-[11px] font-medium">
+                    <span className="h-1.5 w-1.5 rounded-full bg-destructive" />
+                    Current Status: {currentDept || draft.status || "—"}
+                  </span>
                 </div>
                 <div className="overflow-x-auto">
             <Table><TableHeader><TableRow className="bg-muted/40"><TableHead>Dept/Area</TableHead><TableHead>Date Sent</TableHead><TableHead className="w-16 text-center">Ack</TableHead><TableHead>Ack Date</TableHead><TableHead>Ack User</TableHead><TableHead className="w-20 text-center">Completed</TableHead><TableHead>Completed Date</TableHead><TableHead>Completed User</TableHead></TableRow></TableHeader>
@@ -307,7 +306,7 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
       </main>
 
       <footer className="shrink-0 border-t bg-background px-2 py-2 sm:px-4 lg:px-6"><div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2"><Button variant="outline" size="sm" className="h-8 text-xs" onClick={onBack}><ArrowLeft />Back to PR Items</Button><DropdownMenu><DropdownMenuTrigger asChild><Button variant="outline" size="sm" className="h-8 text-xs"><MoreHorizontal />More Actions</Button></DropdownMenuTrigger><DropdownMenuContent align="start">{[...ROUTING_ACTIONS, ...DECISION_ACTIONS].map((action) => <DropdownMenuItem key={action} onSelect={() => { setPendingAction(action); setRoutingComment(""); }}>{action}</DropdownMenuItem>)}</DropdownMenuContent></DropdownMenu></div>
+        <div className="flex items-center gap-2"><Button variant="outline" size="sm" className="h-8 text-xs" onClick={onBack}><ArrowLeft />Back to PR Items</Button><DropdownMenu><DropdownMenuTrigger asChild><Button variant="outline" size="sm" className="h-8 text-xs"><MoreHorizontal />More Actions</Button></DropdownMenuTrigger><DropdownMenuContent align="start">{[...ROUTING_ACTIONS, ...DECISION_ACTIONS].map((action) => <DropdownMenuItem key={action} className="text-xs" onSelect={() => { setPendingAction(action); setRoutingComment(""); }}><span className={currentDept === ACTION_STATUS[action] ? "font-semibold text-destructive" : ""}>{action}</span>{currentDept === ACTION_STATUS[action] && <span className="ml-auto text-[10px] text-destructive">Current</span>}</DropdownMenuItem>)}</DropdownMenuContent></DropdownMenu></div>
         <div className="flex items-center gap-2"><Button variant="outline" size="sm" className="h-8 text-xs"><Mail />Email Customer</Button><Button size="sm" className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={save}><Save />Save</Button></div>
       </div></footer>
 
