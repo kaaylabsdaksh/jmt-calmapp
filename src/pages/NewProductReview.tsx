@@ -1,719 +1,221 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import {
-  
-  Save,
-  X,
-  Mail,
-  MoreHorizontal,
-  Check,
-  AlertTriangle,
-  Ban,
-  ThumbsUp,
-  FileText,
-  Clock,
-  MapPin,
-  GripVertical,
-  Upload,
-
-} from "lucide-react";
+import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft, Check, ChevronRight, Plus, Save, Search, Trash2, UserPlus, X } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import ProductReviewItemWorkspace, { type ProductReviewItem } from "@/components/products/ProductReviewItemWorkspace";
+import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
-const CAPABILITY_COLUMNS = [
-  "Calibration",
-  "Limited Calibration",
-  "Adjustment (in lab)",
-  "17025 (Full)",
-  "17025 (Limited)",
-  "\"No\" 17025",
-  "Send to Alternate Lab",
-  "To Factory (Cal Outsource)",
-  "Adjustment (To Factory)",
-  "Repair (Full)",
-  "Repair (Limited)",
-  "Repair (No)",
-  "Unserviceable",
+const MATCHES = [
+  { manufacturer: "FLUKE", model: "789", description: "PROCESSMETER" },
+  { manufacturer: "FLUKE", model: "789", description: "MULTIFUNCTION PROCESS CALIBRATOR" },
+  { manufacturer: "FLUKE", model: "789-12", description: "PROCESSMETER" },
 ];
 
-const CAPABLE_LOCATIONS = [
-  "Alexandria",
-  "Baton Rouge",
-  "Houston",
-  "Round Rock",
-  "Lafayette",
-  "Beaumont",
-  "Mobile",
-  "Gonzales",
-  "OnSite",
-];
+type ReviewDraft = {
+  existingCustomer: string;
+  account: string;
+  customer: string;
+  address1: string;
+  address2: string;
+  city: string;
+  state: string;
+  zip: string;
+  status: string;
+  srDoc: string;
+  osrDoc: string;
+  contact: string;
+  firstName: string;
+  lastName: string;
+  title: string;
+  phone: string;
+  fax: string;
+  cell: string;
+  email: string;
+};
 
-const LEGEND = [
-  { term: "Calibration", def: "Full verification of UUT." },
-  { term: "Limited Calibration", def: "Limited parameter verification of UUT, including un-adjustable and TAR <2:1." },
-  { term: "Adjustment (in lab)", def: "Our ability to adjust in lab." },
-  { term: "17025 (Full)", def: "Can accredit to UUT full range." },
-  { term: "17025 (Limited)", def: "Can accredit to limited range of UUT." },
-  { term: "\"No\" 17025", def: "Can not accredit UUT, parameters not on scope, may require outsourcing." },
-  { term: "Send to Alternate Lab", def: "This lab must send it to another JM Test lab for calibration." },
-  { term: "To Factory (Cal Outsource)", def: "We are not able to calibrate in any lab." },
-  { term: "Adjustment (To Factory)", def: "We can \"calibrate\" but not \"adjust\" in lab." },
-  { term: "Repair (Full)", def: "Can completely repair unit." },
-  { term: "Repair (Limited)", def: "Can partially repair unit; certain repairs require to-factory/OEM service." },
-  { term: "Repair (No)", def: "Can not repair; must go to factory/OEM for repair." },
-  { term: "Unserviceable", def: "No OEM or alternate vendor to service this; parts/technical info unavailable." },
-];
+type ItemDraft = {
+  manufacturer: string;
+  model: string;
+  manufacturerUnknown: boolean;
+  modelUnknown: boolean;
+  manufacturerNew: boolean;
+  modelNew: boolean;
+  description: string;
+  calibratedBefore: string;
+  calibrationReason: string;
+  reportsAvailable: string;
+};
+
+const EMPTY_REVIEW: ReviewDraft = { existingCustomer: "Yes", account: "", customer: "", address1: "", address2: "", city: "", state: "", zip: "", status: "Open", srDoc: "", osrDoc: "", contact: "", firstName: "", lastName: "", title: "", phone: "", fax: "", cell: "", email: "" };
+const EMPTY_ITEM: ItemDraft = { manufacturer: "", model: "", manufacturerUnknown: false, modelUnknown: false, manufacturerNew: false, modelNew: false, description: "", calibratedBefore: "", calibrationReason: "", reportsAvailable: "" };
 
 export default function NewProductReview() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("details");
-  const [matrix, setMatrix] = useState<Record<string, Record<string, boolean>>>({});
-  const [docType, setDocType] = useState("");
-  const [docDescription, setDocDescription] = useState("");
-  const [docFile, setDocFile] = useState("");
-  const [docs, setDocs] = useState<
-    { id: string; type: string; name: string; description: string; uploadedBy: string; uploadedDate: string }[]
-  >([
-    {
-      id: "d1",
-      type: "Other",
-      name: "Belt Tension Checker Instruction Sheet.pdf",
-      description: "Instruction sheet",
-      uploadedBy: "Kevin R. Young",
-      uploadedDate: "06/30/2021",
-    },
-  ]);
+  const { toast } = useToast();
+  const [review, setReview] = useState<ReviewDraft>(EMPTY_REVIEW);
+  const [prNumber, setPrNumber] = useState("");
+  const [activeTab, setActiveTab] = useState("general");
+  const [items, setItems] = useState<ProductReviewItem[]>([]);
+  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+  const [wizardOpen, setWizardOpen] = useState(false);
+  const [wizardStep, setWizardStep] = useState(1);
+  const [itemDraft, setItemDraft] = useState<ItemDraft>(EMPTY_ITEM);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const [workPerformed, setWorkPerformed] = useState("");
-  const [hoursInput, setHoursInput] = useState("");
-  const [hoursEntries, setHoursEntries] = useState<
-    { id: string; name: string; date: string; hours: number; workPerformed: string }[]
-  >([]);
+  const selectedItem = items.find((item) => item.id === selectedItemId);
+  const matches = useMemo(() => MATCHES.filter((match) => (!itemDraft.manufacturer || match.manufacturer.includes(itemDraft.manufacturer.toUpperCase())) && (!itemDraft.model || match.model.includes(itemDraft.model.toUpperCase()))), [itemDraft.manufacturer, itemDraft.model]);
+  const setReviewField = (key: keyof ReviewDraft, value: string) => setReview((previous) => ({ ...previous, [key]: value }));
+  const setItemField = <K extends keyof ItemDraft>(key: K, value: ItemDraft[K]) => setItemDraft((previous) => ({ ...previous, [key]: value }));
 
+  if (selectedItem) {
+    return <div className="flex h-dvh flex-col bg-background"><ModernTopNav /><ProductReviewItemWorkspace prNumber={prNumber} item={selectedItem} onBack={() => setSelectedItemId(null)} onUpdate={(updated) => setItems((previous) => previous.map((item) => item.id === updated.id ? updated : item))} /></div>;
+  }
 
-  const toggleMatrix = (location: string, cap: string) => {
-    setMatrix((prev) => ({
-      ...prev,
-      [location]: { ...prev[location], [cap]: !prev[location]?.[cap] },
-    }));
+  const saveReview = () => {
+    const nextErrors: Record<string, string> = {};
+    if (!review.account.trim()) nextErrors.account = "Account number is required.";
+    if (!review.customer.trim()) nextErrors.customer = "Customer name is required.";
+    if (!review.contact.trim()) nextErrors.contact = "Select a customer contact.";
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length) return;
+    const number = prNumber || `PR${String(10579 + Math.floor(Math.random() * 300)).padStart(5, "0")}`;
+    setPrNumber(number);
+    toast({ title: "Product review saved", description: `${number} is ready for PR items.` });
   };
 
+  const validateWizard = () => {
+    const nextErrors: Record<string, string> = {};
+    if (wizardStep === 1) {
+      if (!itemDraft.manufacturer.trim() && !itemDraft.manufacturerUnknown) nextErrors.manufacturer = "Manufacturer is required or select Unknown.";
+      if (!itemDraft.model.trim() && !itemDraft.modelUnknown) nextErrors.model = "Model is required or select Unknown.";
+    }
+    if (wizardStep === 2 && !itemDraft.description.trim()) nextErrors.description = "Product description is required.";
+    if (wizardStep === 3) {
+      if (!itemDraft.calibratedBefore) nextErrors.calibratedBefore = "Select Yes or No.";
+      if (itemDraft.calibratedBefore === "No" && !itemDraft.calibrationReason.trim()) nextErrors.calibrationReason = "Explain why calibration is needed.";
+      if (!itemDraft.reportsAvailable) nextErrors.reportsAvailable = "Select Yes or No.";
+    }
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length) return false;
+    setWizardStep((step) => Math.min(4, step + 1));
+    return true;
+  };
+
+  const addItem = () => {
+    const item: ProductReviewItem = {
+      id: String(Date.now()), itemNumber: String(items.length + 1).padStart(3, "0"),
+      manufacturer: itemDraft.manufacturerUnknown ? "UNKNOWN" : itemDraft.manufacturer.toUpperCase(),
+      model: itemDraft.modelUnknown ? "UNKNOWN" : itemDraft.model.toUpperCase(), description: itemDraft.description.toUpperCase(),
+      location: "Alexandria", division: "Regular", createdDate: new Date().toLocaleDateString("en-US"),
+      dueDate: new Date(Date.now() + 86400000).toLocaleDateString("en-US"), completedDate: "", status: "Review Initiated",
+      calibratedBefore: itemDraft.calibratedBefore, calibrationReason: itemDraft.calibrationReason, reportsAvailable: itemDraft.reportsAvailable,
+    };
+    setItems((previous) => [...previous, item]);
+    setWizardOpen(false); setWizardStep(1); setItemDraft(EMPTY_ITEM); setErrors({}); setSelectedItemId(item.id);
+  };
+
+  const openWizard = () => { setWizardStep(1); setItemDraft(EMPTY_ITEM); setErrors({}); setWizardOpen(true); };
+
   return (
-    <div className="bg-background min-h-screen flex flex-col">
+    <div className="flex h-dvh flex-col bg-background">
       <ModernTopNav />
-      <main className="flex-1 w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-5">
-        <div className="max-w-7xl mx-auto space-y-4">
-          {/* Legacy-style subheader */}
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b pb-3">
-            <div>
-              <div className="text-lg font-semibold tracking-tight">New Product Review</div>
-              <div className="text-xs text-muted-foreground">
-                <Link to="/manage-customers/8639" className="hover:text-primary hover:underline">
-                  Account: 8639.03 - Trescal Inc
-                </Link>
-                <span className="mx-2">|</span>
-                <Link to="/quotes/86355" className="hover:text-primary hover:underline">
-                  Quote: 86355
-                </Link>
-              </div>
-            </div>
-            <div className="text-[10px] text-muted-foreground">
-              Item Created by: Felicia N Cooper, 03/20/2026 08:17 AM
-              <span className="mx-2">|</span>
-              Item Modified by: Thomas W. Blouin, 03/20/2026 03:36 PM
-            </div>
+      <main className="flex-1 overflow-auto px-2 py-3 sm:px-4 lg:px-6">
+        <div className="mx-auto max-w-[1500px] space-y-3">
+          <div className="sticky top-0 z-40 flex flex-wrap items-center justify-between gap-3 border-b bg-background py-2">
+            <div><h1 className="text-lg font-semibold">{prNumber || "Adding New Product Review"}</h1><p className="text-xs text-muted-foreground">Product Review Details · {review.customer || "Customer not selected"}</p></div>
+            <div className="flex items-center gap-2"><span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-1 text-[10px] font-medium"><span className="h-1.5 w-1.5 rounded-full bg-info" />{review.status}</span>{prNumber && <span className="text-[10px] text-muted-foreground">Created by Admin User · Today</span>}</div>
           </div>
 
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="h-9">
-              <TabsTrigger value="details" className="text-xs px-4">
-                PR Item Details
-              </TabsTrigger>
-              <TabsTrigger value="capable" className="text-xs px-4">
-                Capable Locations
-              </TabsTrigger>
-              <TabsTrigger value="documents" className="text-xs px-4">
-                Documents
-              </TabsTrigger>
-              <TabsTrigger value="hours" className="text-xs px-4">
-                Hours
-              </TabsTrigger>
-            </TabsList>
+          <Tabs value={activeTab} onValueChange={(value) => { if (value === "items" && !prNumber) { setErrors({ save: "Save the General information before adding PR items." }); return; } setActiveTab(value); }}>
+            <TabsList className="h-9"><TabsTrigger value="general" className="px-5 text-xs">General</TabsTrigger><TabsTrigger value="items" className="px-5 text-xs">PR Items {items.length > 0 && `(${items.length})`}</TabsTrigger></TabsList>
 
-            <TabsContent value="details" className="mt-4 space-y-4">
-              <Card>
-                <CardContent className="p-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-4">
-                    {/* Column 1 */}
-                    <div className="space-y-3">
-                      <div className="text-xs font-semibold text-foreground border-b pb-1">Item Identification</div>
-                      <FieldRow label="PR Item #" value="PR18917-001" readOnly />
-                      <FieldRow label="Due Date" value="03/21/2026" />
-                      <FieldRow label="PR Item Status" value="Lab Management" />
-                      <FieldRow label="Division" value="Lab" />
-
-                      <div className="text-xs font-semibold text-foreground border-b pb-1 pt-2">Product</div>
-                      <FieldRow label="Manufacturer" value="AMTI" />
-                      <FieldRow label="Model" value="MC3A-500" />
-                      <FieldRow label="Description" value="LOAD CELL" />
-                      <FieldRow label="Lab Code" />
-                    </div>
-
-                    {/* Column 2 */}
-                    <div className="space-y-3">
-                      <div className="text-xs font-semibold text-foreground border-b pb-1">Specification</div>
-                      <FieldRow label="Accuracy" />
-                      <FieldRow label="Range" />
-                      <FieldRow label="Option" />
-                      <FieldRow label="Category 4" />
-                      <FieldRow label="Category 5" />
-                      <FieldRow label="Category 6" />
-
-                      <div className="text-xs font-semibold text-foreground border-b pb-1 pt-2">
-                        Physical Dimensions
-                        <span className="ml-2 rounded bg-yellow-400 px-1 text-[9px] text-black">NEW</span>
-                      </div>
-                      <FieldRow label="Weight" placeholder="lb" />
-                      <FieldRow label="Height" placeholder="in" />
-                      <FieldRow label="Width" placeholder="in" />
-                      <FieldRow label="Depth" placeholder="in" />
-                    </div>
-
-                    {/* Column 3 */}
-                    <div className="space-y-3">
-                      <div className="text-xs font-semibold text-foreground border-b pb-1">Accreditation & Cost</div>
-                      <CheckboxRow label="Requested 17025" />
-                      <FieldRow label="Accredited Cal" />
-                      <FieldRow label="Cal/Cert Cost" value="0.00" />
-                      <FieldRow label="Est. Cert. Time" placeholder="hrs">
-                        <span className="ml-2 rounded bg-yellow-400 px-1 text-[9px] text-black">NEW</span>
-                      </FieldRow>
-                      <CheckboxRow label="Override Zero Price" />
-                      <CheckboxRow label="Equipment at JM" />
-
-                      <div className="text-xs font-semibold text-foreground border-b pb-1 pt-2">
-                        Servicing Readiness
-                        <span className="ml-2 rounded bg-yellow-400 px-1 text-[9px] text-black">NEW</span>
-                      </div>
-                      <CheckboxRow label="Procedure" />
-                      <CheckboxRow label="Template" />
-                      <CheckboxRow label="Automation Available" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-
-                {/* Log table */}
-                <Card>
-                  <CardContent className="p-0">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="bg-muted/50 hover:bg-muted/50">
-                          <TableHead className="text-[11px] font-semibold">Dept/Area</TableHead>
-                          <TableHead className="text-[11px] font-semibold">Date Sent</TableHead>
-                          <TableHead className="text-[11px] font-semibold">Ack</TableHead>
-                          <TableHead className="text-[11px] font-semibold">Ack Date</TableHead>
-                          <TableHead className="text-[11px] font-semibold">Ack User</TableHead>
-                          <TableHead className="text-[11px] font-semibold">Completed</TableHead>
-                          <TableHead className="text-[11px] font-semibold">Completed Date</TableHead>
-                          <TableHead className="text-[11px] font-semibold">Completed User</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        <TableRow>
-                          <TableCell className="text-xs">Lab Management</TableCell>
-                          <TableCell className="text-xs">03/20/2026 03:36 PM</TableCell>
-                          <TableCell className="text-xs" />
-                          <TableCell className="text-xs" />
-                          <TableCell className="text-xs" />
-                          <TableCell className="text-xs" />
-                          <TableCell className="text-xs" />
-                          <TableCell className="text-xs" />
-                        </TableRow>
-                        <TableRow>
-                          <TableCell className="text-xs">Lab Management</TableCell>
-                          <TableCell className="text-xs">03/20/2026 08:17 AM</TableCell>
-                          <TableCell className="text-xs" />
-                          <TableCell className="text-xs">03/20/2026 03:36 PM</TableCell>
-                          <TableCell className="text-xs">Thomas W. Blouin</TableCell>
-                          <TableCell className="text-xs" />
-                          <TableCell className="text-xs">03/20/2026 03:36 PM</TableCell>
-                          <TableCell className="text-xs">Thomas W. Blouin</TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  </CardContent>
-                </Card>
-            </TabsContent>
-
-            <TabsContent value="capable" className="mt-4 space-y-4">
-              <div className="rounded border border-blue-200 bg-blue-50 p-3 text-xs text-blue-900">
-                Capable locations are tracked per PR item. Check the boxes that apply to this specific product review.
-              </div>
-              <Card>
-                <CardContent className="p-0 overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow className="bg-muted/50 hover:bg-muted/50">
-                        <TableHead className="text-[11px] font-semibold whitespace-nowrap">Capable Location</TableHead>
-                        {CAPABILITY_COLUMNS.map((cap) => (
-                          <TableHead
-                            key={cap}
-                            className="text-[10px] font-semibold text-center vertical-text"
-                            style={{ writingMode: "vertical-rl", transform: "rotate(180deg)", minWidth: "2.5rem" }}
-                          >
-                            {cap}
-                          </TableHead>
-                        ))}
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {CAPABLE_LOCATIONS.map((loc) => (
-                        <TableRow key={loc}>
-                          <TableCell className="text-xs font-medium bg-muted/30">{loc}</TableCell>
-                          {CAPABILITY_COLUMNS.map((cap) => (
-                            <TableCell key={cap} className="text-center p-2">
-                              <Checkbox
-                                checked={!!matrix[loc]?.[cap]}
-                                onCheckedChange={() => toggleMatrix(loc, cap)}
-                                className="h-4 w-4"
-                              />
-                            </TableCell>
-                          ))}
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-4">
-                  <div className="text-xs font-semibold text-foreground mb-2">Breakdown of Matrix (Definitions)</div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-xs">
-                    {LEGEND.map((l) => (
-                      <div key={l.term} className="flex gap-2">
-                        <span className="font-semibold whitespace-nowrap">{l.term}:</span>
-                        <span className="text-muted-foreground">{l.def}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-[10px] text-muted-foreground mt-2">** Onsite capabilities are influenced by the supporting lab.</p>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="documents" className="mt-4 space-y-4">
-              {/* Upload document card */}
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-100">
-                      <FileText className="h-4 w-4 text-slate-600" />
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold">Add Document</h3>
-                      <p className="text-[10px] text-muted-foreground">Upload supporting files for this product review.</p>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
-                    <div className="space-y-1.5">
-                      <Label className="text-[11px] font-medium text-muted-foreground">Document Type</Label>
-                      <Select value={docType} onValueChange={setDocType}>
-                        <SelectTrigger className="h-8 text-xs">
-                          <SelectValue placeholder="Select type..." />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {["Other", "Instruction Sheet", "Manual", "Datasheet", "Quote", "Certificate", "Email"].map((t) => (
-                            <SelectItem key={t} value={t} className="text-xs">{t}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-1.5">
-                      <Label className="text-[11px] font-medium text-muted-foreground">Description</Label>
-                      <Input
-                        className="h-8 text-xs"
-                        value={docDescription}
-                        onChange={(e) => setDocDescription(e.target.value)}
-                        placeholder="Brief description..."
-                      />
-                    </div>
-                    <div className="space-y-1.5">
-                      <Label className="text-[11px] font-medium text-muted-foreground">Select File</Label>
-                      <label
-                        htmlFor="pr-doc-file"
-                        className="flex h-8 items-center gap-2 rounded-md border border-input bg-background px-2 text-xs cursor-pointer hover:bg-muted/50 transition-colors"
-                      >
-                        <span className="inline-flex items-center gap-1 rounded bg-muted px-1.5 py-0.5 text-[10px] font-medium shrink-0">
-                          <Upload className="h-3 w-3" />
-                          Browse
-                        </span>
-                        <span className={cn("truncate", !docFile && "text-muted-foreground")}>
-                          {docFile || "No file selected"}
-                        </span>
-                        <input
-                          id="pr-doc-file"
-                          type="file"
-                          className="sr-only"
-                          onChange={(e) => setDocFile(e.target.files?.[0]?.name ?? "")}
-                        />
-                      </label>
-                    </div>
-
-                    <Button
-                      size="sm"
-                      className="h-8 text-xs bg-success text-success-foreground hover:bg-success/90 w-full"
-                      disabled={!docType || !docFile}
-                      onClick={() => {
-                        setDocs((prev) => [
-                          ...prev,
-                          {
-                            id: `${Date.now()}`,
-                            type: docType,
-                            name: docFile,
-                            description: docDescription,
-                            uploadedBy: "Jay R Jackson",
-                            uploadedDate: new Date().toLocaleDateString("en-US"),
-                          },
-                        ]);
-                        setDocType("");
-                        setDocDescription("");
-                        setDocFile("");
-                      }}
-                    >
-                      Upload Document
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Attached documents card */}
-              <Card className="overflow-hidden">
-                <CardContent className="p-0">
-                  <div className="flex items-center justify-between px-4 py-3 border-b bg-muted/30">
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-sm font-semibold">Attached Documents</h3>
-                      <span className="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-muted text-[10px] font-medium text-muted-foreground">
-                        {docs.length}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="bg-muted/50 hover:bg-muted/50">
-                          <TableHead className="h-8 text-[11px] px-3 font-semibold">Type</TableHead>
-                          <TableHead className="h-8 text-[11px] px-3 font-semibold">Document</TableHead>
-                          <TableHead className="h-8 text-[11px] px-3 font-semibold">Description</TableHead>
-                          <TableHead className="h-8 text-[11px] px-3 font-semibold">Uploaded By</TableHead>
-                          <TableHead className="h-8 text-[11px] px-3 font-semibold">Uploaded Date</TableHead>
-                          <TableHead className="h-8 text-[11px] px-3 w-12"></TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {docs.length === 0 ? (
-                          <TableRow>
-                            <TableCell colSpan={6} className="text-center py-8">
-                              <FileText className="h-8 w-8 mx-auto mb-2 text-muted-foreground/40" />
-                              <p className="text-xs text-muted-foreground">No documents attached.</p>
-                              <p className="text-[10px] text-muted-foreground mt-0.5">Upload a document to attach it to this review.</p>
-                            </TableCell>
-                          </TableRow>
-                        ) : (
-                          docs.map((d) => (
-                            <TableRow key={d.id} className="group">
-                              <TableCell className="text-[11px] px-3 py-2">
-                                <span className="inline-flex items-center px-2 py-0.5 rounded bg-secondary text-[10px] font-medium">
-                                  {d.type}
-                                </span>
-                              </TableCell>
-                              <TableCell className="text-[11px] px-3 py-2">
-                                <button className="font-medium text-foreground hover:text-primary hover:underline underline-offset-2">
-                                  {d.name}
-                                </button>
-                              </TableCell>
-                              <TableCell className="text-[11px] px-3 py-2 text-muted-foreground">{d.description}</TableCell>
-                              <TableCell className="text-[11px] px-3 py-2">{d.uploadedBy}</TableCell>
-                              <TableCell className="text-[11px] px-3 py-2 text-muted-foreground">{d.uploadedDate}</TableCell>
-                              <TableCell className="text-[11px] px-3 py-2 text-right">
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity"
-                                  onClick={() => setDocs((prev) => prev.filter((x) => x.id !== d.id))}
-                                >
-                                  <X className="h-3.5 w-3.5 text-destructive" />
-                                </Button>
-                              </TableCell>
-                            </TableRow>
-                          ))
-                        )}
-                      </TableBody>
-                    </Table>
-                  </div>
-                  <div className="flex items-center justify-between border-t px-4 py-2 text-[11px] text-muted-foreground bg-muted/30">
-                    <span>Showing {docs.length} record{docs.length === 1 ? "" : "s"}</span>
-                    <span>Page 1 of 1</span>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-
-            <TabsContent value="hours" className="mt-4">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-                {/* Add Hours form */}
-                <div className="lg:col-span-4">
-                  <Card className="h-full">
-                    <CardContent className="p-4">
-                      <div className="flex items-center gap-2 mb-4">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-md bg-slate-100">
-                          <Clock className="h-4 w-4 text-slate-600" />
-                        </div>
-                        <div>
-                          <h3 className="text-sm font-semibold">Log Time</h3>
-                          <p className="text-[10px] text-muted-foreground">Record work performed and time spent.</p>
-                        </div>
-                      </div>
-
-                      <div className="space-y-3">
-                        <div className="space-y-1.5">
-                          <Label className="text-[11px] font-medium text-muted-foreground">Work Performed</Label>
-                          <Textarea
-                            value={workPerformed}
-                            onChange={(e) => setWorkPerformed(e.target.value)}
-                            placeholder="Describe the work completed..."
-                            className="min-h-[110px] text-xs resize-none"
-                          />
-                        </div>
-
-                        <div className="space-y-1.5">
-                          <Label className="text-[11px] font-medium text-muted-foreground">Hours</Label>
-                          <Input
-                            type="number"
-                            step="0.01"
-                            value={hoursInput}
-                            onChange={(e) => setHoursInput(e.target.value)}
-                            placeholder="0.00"
-                            className="h-8 text-xs"
-                          />
-                        </div>
-
-                        <Button
-                          className="w-full h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
-                          onClick={() => {
-                            const h = parseFloat(hoursInput);
-                            if (!isNaN(h) && h > 0) {
-                              setHoursEntries((prev) => [
-                                ...prev,
-                                {
-                                  id: Math.random().toString(36).slice(2),
-                                  name: "Admin User",
-                                  date: new Date().toLocaleString("en-US", {
-                                    month: "2-digit",
-                                    day: "2-digit",
-                                    year: "numeric",
-                                    hour: "2-digit",
-                                    minute: "2-digit",
-                                    hour12: true,
-                                  }),
-                                  hours: h,
-                                  workPerformed,
-                                },
-                              ]);
-                              setWorkPerformed("");
-                              setHoursInput("");
-                            }
-                          }}
-                        >
-                          Add Hours
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
+            <TabsContent value="general" className="mt-3 space-y-3">
+              {errors.save && <ValidationMessage text={errors.save} />}
+              <Card><CardContent className="p-0">
+                <SectionTitle title="Customer and review" />
+                <div className="grid gap-x-6 gap-y-3 p-3 md:grid-cols-2 xl:grid-cols-4">
+                  <SelectField label="Existing Customer" value={review.existingCustomer} options={["Yes", "No"]} onChange={(value) => setReviewField("existingCustomer", value)} />
+                  <Field label="Account #" value={review.account} onChange={(value) => setReviewField("account", value)} error={errors.account} required suffix={<Button variant="outline" size="sm" className="h-8 px-2 text-xs" onClick={() => { setReview((previous) => ({ ...previous, account: "00000.00", customer: "Test", address1: "123 Test Drive", city: "Toms River", state: "NJ", zip: "70353", contact: "AK Alpha", firstName: "AK", lastName: "Alpha", phone: "(123) 123-1231", cell: "(123) 123-1234" })); setErrors({}); }}><Search />Find</Button>} />
+                  <Field label="Customer Name" value={review.customer} onChange={(value) => setReviewField("customer", value)} error={errors.customer} required />
+                  <SelectField label="PR Status" value={review.status} options={["Open", "On Hold", "Completed", "Cancelled"]} onChange={(value) => setReviewField("status", value)} />
+                  <Field label="SR Doc" value={review.srDoc} onChange={(value) => setReviewField("srDoc", value)} />
+                  <Field label="OSR Doc" value={review.osrDoc} onChange={(value) => setReviewField("osrDoc", value)} />
                 </div>
-
-                {/* Hours History */}
-                <div className="lg:col-span-8">
-                  <Card className="h-full">
-                    <CardContent className="p-4">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-2">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-slate-100">
-                            <Clock className="h-4 w-4 text-slate-600" />
-                          </div>
-                          <div>
-                            <h3 className="text-sm font-semibold">Hours History</h3>
-                            <p className="text-[10px] text-muted-foreground">All recorded time entries.</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2 px-2.5 py-1 rounded-md bg-slate-100">
-                          <span className="text-[10px] text-muted-foreground">Total</span>
-                          <span className="text-xs font-semibold text-slate-900">
-                            {hoursEntries.reduce((sum, e) => sum + e.hours, 0).toFixed(2)} hrs
-                          </span>
-                        </div>
-                      </div>
-
-                      {hoursEntries.length === 0 ? (
-                        <div className="flex flex-col items-center justify-center py-10 text-center border rounded-md bg-muted/20">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted mb-2">
-                            <Clock className="h-5 w-5 text-muted-foreground/50" />
-                          </div>
-                          <p className="text-xs font-medium text-muted-foreground">No hours recorded yet</p>
-                          <p className="text-[10px] text-muted-foreground mt-0.5">Use the form to log your first entry.</p>
-                        </div>
-                      ) : (
-                        <div className="border rounded-md overflow-hidden">
-                          <Table>
-                            <TableHeader>
-                              <TableRow className="hover:bg-transparent bg-muted/30">
-                                <TableHead className="text-[10px] h-7 px-3">Name</TableHead>
-                                <TableHead className="text-[10px] h-7 px-3">Date</TableHead>
-                                <TableHead className="text-[10px] h-7 px-3 text-right">Hours</TableHead>
-                                <TableHead className="text-[10px] h-7 px-3">Work Performed</TableHead>
-                                <TableHead className="text-[10px] h-7 px-3 w-10"></TableHead>
-                              </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                              {hoursEntries.map((entry) => (
-                                <TableRow key={entry.id} className="group">
-                                  <TableCell className="text-[11px] px-3 py-2 font-medium">{entry.name}</TableCell>
-                                  <TableCell className="text-[11px] px-3 py-2 text-muted-foreground">{entry.date}</TableCell>
-                                  <TableCell className="text-[11px] px-3 py-2 text-right font-medium">{entry.hours.toFixed(2)}</TableCell>
-                                  <TableCell className="text-[11px] px-3 py-2 max-w-[220px] truncate" title={entry.workPerformed}>
-                                    {entry.workPerformed}
-                                  </TableCell>
-                                  <TableCell className="px-3 py-2 text-right">
-                                    <Button
-                                      variant="ghost"
-                                      size="icon"
-                                      className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity"
-                                      onClick={() => setHoursEntries((prev) => prev.filter((x) => x.id !== entry.id))}
-                                    >
-                                      <X className="h-3.5 w-3.5 text-destructive" />
-                                    </Button>
-                                  </TableCell>
-                                </TableRow>
-                              ))}
-                            </TableBody>
-                          </Table>
-                        </div>
-                      )}
-
-                      <div className="flex items-center justify-between mt-3 text-[11px] text-muted-foreground px-1">
-                        <span>{hoursEntries.length} {hoursEntries.length === 1 ? "entry" : "entries"} recorded</span>
-                        <span>Page 1 of 1</span>
-                      </div>
-                    </CardContent>
-                  </Card>
+                <SectionTitle title="Shipping address" />
+                <div className="grid gap-x-6 gap-y-3 p-3 md:grid-cols-2 xl:grid-cols-4">
+                  <Field label="Address Line 1" value={review.address1} onChange={(value) => setReviewField("address1", value)} />
+                  <Field label="Address Line 2" value={review.address2} onChange={(value) => setReviewField("address2", value)} />
+                  <Field label="Ship City" value={review.city} onChange={(value) => setReviewField("city", value)} />
+                  <SelectField label="State" value={review.state} options={["AL", "LA", "NJ", "NY", "TX"]} onChange={(value) => setReviewField("state", value)} />
+                  <Field label="ZIP" value={review.zip} onChange={(value) => setReviewField("zip", value)} />
                 </div>
-              </div>
+              </CardContent></Card>
+
+              <Card><CardContent className="p-0"><SectionTitle title="Customer contact" action={<Button variant="outline" size="sm" className="h-7 text-xs"><UserPlus />Add Contact</Button>} />
+                <div className="grid gap-x-6 gap-y-3 p-3 md:grid-cols-2 xl:grid-cols-4">
+                  <SelectField label="Select Contact" value={review.contact} options={["AK Alpha", "Dana Scott", "Jordan Lee"]} onChange={(value) => { setReviewField("contact", value); if (value === "AK Alpha") setReview((previous) => ({ ...previous, contact: value, firstName: "AK", lastName: "Alpha", phone: "(123) 123-1231", cell: "(123) 123-1234" })); }} error={errors.contact} required />
+                  <Field label="First Name" value={review.firstName} onChange={(value) => setReviewField("firstName", value)} />
+                  <Field label="Last Name" value={review.lastName} onChange={(value) => setReviewField("lastName", value)} />
+                  <Field label="Title" value={review.title} onChange={(value) => setReviewField("title", value)} />
+                  <Field label="Phone" value={review.phone} onChange={(value) => setReviewField("phone", value)} />
+                  <Field label="Fax" value={review.fax} onChange={(value) => setReviewField("fax", value)} />
+                  <Field label="Cell" value={review.cell} onChange={(value) => setReviewField("cell", value)} />
+                  <Field label="Email" value={review.email} onChange={(value) => setReviewField("email", value)} />
+                </div>
+              </CardContent></Card>
+              {prNumber && <WorkOrderItemComments workOrderItemId={prNumber} />}
+            </TabsContent>
+
+            <TabsContent value="items" className="mt-3 space-y-3">
+              <Card><CardContent className="p-0">
+                <SectionTitle title="PR Items" action={<Button size="sm" className="h-7 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={openWizard}><Plus />Add New Item</Button>} />
+                <div className="overflow-x-auto"><Table><TableHeader><TableRow className="bg-muted/40">{["Item", "Manufacturer", "Model", "Description", "Location", "Division", "Created Date", "Due Date", "Completed Date", "PR Item Status"].map((heading) => <TableHead key={heading} className="h-8 whitespace-nowrap px-2 text-[11px]">{heading}</TableHead>)}</TableRow></TableHeader>
+                  <TableBody>{items.length === 0 ? <TableRow><TableCell colSpan={10} className="py-10 text-center text-xs text-muted-foreground">No PR items yet. Add the first item to this review.</TableCell></TableRow> : items.map((item) => <TableRow key={item.id} className="text-xs"><TableCell className="px-2 py-1.5"><Button variant="link" className="h-auto p-0 text-xs text-foreground underline" onClick={() => setSelectedItemId(item.id)}>{item.itemNumber}</Button></TableCell><TableCell>{item.manufacturer}</TableCell><TableCell>{item.model}</TableCell><TableCell className="max-w-64 truncate" title={item.description}>{item.description}</TableCell><TableCell>{item.location}</TableCell><TableCell>{item.division}</TableCell><TableCell>{item.createdDate}</TableCell><TableCell>{item.dueDate}</TableCell><TableCell>{item.completedDate || "—"}</TableCell><TableCell><span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-[10px]"><span className="h-1.5 w-1.5 rounded-full bg-info" />{item.status}</span></TableCell></TableRow>)}</TableBody>
+                </Table></div>
+              </CardContent></Card>
+              <WorkOrderItemComments workOrderItemId={prNumber} />
             </TabsContent>
           </Tabs>
         </div>
       </main>
 
-      {/* Sticky footer actions */}
-      <div className="sticky bottom-0 z-30 w-full border-t bg-white shadow-[0_-1px_3px_rgba(0,0,0,0.06)] px-2 sm:px-4 lg:px-6 py-2">
-        <div className="flex items-center justify-between gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="h-8 text-xs">
-                <MoreHorizontal className="h-3.5 w-3.5 mr-1.5" />
-                More Actions
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="min-w-[12rem]">
-              <DropdownMenuItem className="text-xs">To Lab Management</DropdownMenuItem>
-              <DropdownMenuItem className="text-xs">To Metrology</DropdownMenuItem>
-              <DropdownMenuItem className="text-xs">To Lead Tech</DropdownMenuItem>
-              <DropdownMenuItem className="text-xs">Cancel Review</DropdownMenuItem>
-              <DropdownMenuItem className="text-xs">Cannot Service</DropdownMenuItem>
-              <DropdownMenuItem className="text-xs">Approve Capability</DropdownMenuItem>
-              <DropdownMenuItem className="text-xs">Approve PR Completion</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-products")}>
-              <X className="h-3.5 w-3.5 mr-1.5" />
-              Cancel
-            </Button>
-            <Button variant="outline" size="sm" className="h-8 text-xs">
-              <Mail className="h-3.5 w-3.5 mr-1.5" />
-              Email Cust
-            </Button>
-            <Button size="sm" className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white">
-              <Save className="h-3.5 w-3.5 mr-1.5" />
-              Save
-            </Button>
-          </div>
+      <footer className="shrink-0 border-t bg-background px-2 py-2 sm:px-4 lg:px-6"><div className="flex flex-wrap items-center justify-between gap-2"><Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-products/product-reviews")}><ArrowLeft />Back to Product Reviews</Button><div className="flex items-center gap-2">{prNumber && <Button variant="outline" size="sm" className="h-8 text-xs text-destructive" onClick={() => navigate("/manage-products/product-reviews")}><Trash2 />Delete PR</Button>}<Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => navigate("/manage-products/product-reviews")}><X />Cancel</Button>{activeTab === "general" && <Button size="sm" className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={saveReview}><Save />{prNumber ? "Save Changes" : "Save & Continue"}</Button>}</div></div></footer>
+
+      <Dialog open={wizardOpen} onOpenChange={(open) => { setWizardOpen(open); if (!open) setErrors({}); }}><DialogContent className="max-h-[90vh] max-w-4xl overflow-y-auto p-0">
+        <DialogHeader className="border-b px-5 py-4"><DialogTitle className="text-base">Add PR Item</DialogTitle><DialogDescription className="text-xs">Enter product information and review it before adding the item.</DialogDescription></DialogHeader>
+        <div className="px-5 pt-4"><div className="grid grid-cols-4 gap-1">{["Product", "Description", "Calibration", "Review"].map((label, index) => <div key={label} className="space-y-1"><div className={cn("h-1 rounded-full", wizardStep >= index + 1 ? "bg-info" : "bg-muted")} /><div className={cn("text-[10px]", wizardStep === index + 1 ? "font-semibold text-foreground" : "text-muted-foreground")}>{index + 1}. {label}</div></div>)}</div></div>
+        <div className="min-h-72 p-5">
+          {wizardStep === 1 && <div className="space-y-4"><div className="rounded-md border border-info/30 bg-info/10 p-3 text-xs text-foreground">Search by manufacturer and model to check whether the product already exists.</div><div className="grid gap-4 md:grid-cols-2">
+            <WizardSearchField label="Manufacturer" value={itemDraft.manufacturer} onChange={(value) => setItemField("manufacturer", value)} unknown={itemDraft.manufacturerUnknown} onUnknown={(checked) => setItemDraft((previous) => ({ ...previous, manufacturerUnknown: checked, manufacturer: checked ? "" : previous.manufacturer }))} newItem={itemDraft.manufacturerNew} onNewItem={(checked) => setItemField("manufacturerNew", checked)} error={errors.manufacturer} />
+            <WizardSearchField label="Model" value={itemDraft.model} onChange={(value) => setItemField("model", value)} unknown={itemDraft.modelUnknown} onUnknown={(checked) => setItemDraft((previous) => ({ ...previous, modelUnknown: checked, model: checked ? "" : previous.model }))} newItem={itemDraft.modelNew} onNewItem={(checked) => setItemField("modelNew", checked)} error={errors.model} />
+          </div>{matches.length > 0 && <div className="rounded-md border"><Table><TableHeader><TableRow className="bg-muted/40"><TableHead>Manufacturer</TableHead><TableHead>Model</TableHead><TableHead>Description</TableHead><TableHead className="w-20" /></TableRow></TableHeader><TableBody>{matches.map((match) => <TableRow key={`${match.model}-${match.description}`} className="text-xs"><TableCell>{match.manufacturer}</TableCell><TableCell>{match.model}</TableCell><TableCell>{match.description}</TableCell><TableCell><Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => setItemDraft((previous) => ({ ...previous, manufacturer: match.manufacturer, model: match.model, description: match.description }))}>Use</Button></TableCell></TableRow>)}</TableBody></Table></div>}</div>}
+          {wizardStep === 2 && <div className="mx-auto max-w-2xl space-y-4"><SummaryStrip draft={itemDraft} /><div className="space-y-1"><Label className="text-xs font-medium">Product Description <span className="text-destructive">*</span></Label><div className="flex gap-2"><Input value={itemDraft.description} onChange={(event) => setItemField("description", event.target.value)} className="h-9 text-xs" placeholder="Describe the product" /><Button variant="outline" size="icon" className="h-9 w-9" aria-label="Search descriptions"><Search /></Button></div>{errors.description && <ErrorText text={errors.description} />}</div></div>}
+          {wizardStep === 3 && <div className="mx-auto max-w-2xl space-y-4"><SummaryStrip draft={itemDraft} /><SelectField label="Has the unit been calibrated before?" value={itemDraft.calibratedBefore} options={["Yes", "No"]} onChange={(value) => setItemField("calibratedBefore", value)} error={errors.calibratedBefore} required />{itemDraft.calibratedBefore === "No" && <div className="space-y-1"><Label className="text-xs">Why does the product need to be calibrated? <span className="text-destructive">*</span></Label><Textarea value={itemDraft.calibrationReason} onChange={(event) => setItemField("calibrationReason", event.target.value)} className="min-h-24 text-xs" />{errors.calibrationReason && <ErrorText text={errors.calibrationReason} />}</div>}<SelectField label="Can datasheet/test reports be provided if needed?" value={itemDraft.reportsAvailable} options={["Yes", "No"]} onChange={(value) => setItemField("reportsAvailable", value)} error={errors.reportsAvailable} required /></div>}
+          {wizardStep === 4 && <div className="mx-auto max-w-2xl space-y-4"><div className="rounded-md border border-success/30 bg-success/10 p-3 text-center text-xs font-medium">Review your choices, then add this item to the Product Review.</div><Card><CardContent className="grid gap-4 p-4 sm:grid-cols-2"><ReviewValue label="Manufacturer" value={itemDraft.manufacturerUnknown ? "Unknown" : itemDraft.manufacturer} /><ReviewValue label="Model" value={itemDraft.modelUnknown ? "Unknown" : itemDraft.model} /><ReviewValue label="Description" value={itemDraft.description} /><ReviewValue label="Calibrated Before" value={itemDraft.calibratedBefore} /><ReviewValue label="Reports Available" value={itemDraft.reportsAvailable} /><ReviewValue label="Calibration Reason" value={itemDraft.calibrationReason || "Not required"} /></CardContent></Card></div>}
         </div>
-      </div>
+        <div className="flex items-center justify-between border-t bg-muted/20 px-5 py-3"><Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => setWizardOpen(false)}><X />Cancel</Button><div className="flex gap-2">{wizardStep > 1 && <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => { setWizardStep((step) => step - 1); setErrors({}); }}><ArrowLeft />Previous</Button>}{wizardStep < 4 ? <Button size="sm" className="h-8 bg-info text-xs text-info-foreground hover:bg-info/90" onClick={validateWizard}>Next<ChevronRight /></Button> : <Button size="sm" className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={addItem}><Check />Add Item</Button>}</div></div>
+      </DialogContent></Dialog>
     </div>
   );
 }
 
-function FieldRow({
-  label,
-  value,
-  placeholder,
-  readOnly,
-  children,
-}: {
-  label: string;
-  value?: string;
-  placeholder?: string;
-  readOnly?: boolean;
-  children?: React.ReactNode;
-}) {
-  return (
-    <div className="flex items-center gap-2">
-      <Label className="w-36 text-[11px] font-medium text-right shrink-0">
-        {label}
-        {children}
-      </Label>
-      <Input
-        defaultValue={value}
-        placeholder={placeholder}
-        readOnly={readOnly}
-        className={cn("h-7 text-xs", readOnly && "bg-muted/30")}
-      />
-    </div>
-  );
-}
-
-function CheckboxRow({ label }: { label: string }) {
-  return (
-    <div className="flex items-center gap-2">
-      <Label className="w-36 text-[11px] font-medium text-right shrink-0">{label}</Label>
-      <Checkbox className="h-4 w-4" />
-    </div>
-  );
-}
+function SectionTitle({ title, action }: { title: string; action?: React.ReactNode }) { return <div className="flex items-center justify-between border-b bg-muted/30 px-3 py-2"><h2 className="text-xs font-semibold">{title}</h2>{action}</div>; }
+function Field({ label, value, onChange, error, required, suffix }: { label: string; value: string; onChange: (value: string) => void; error?: string; required?: boolean; suffix?: React.ReactNode }) { return <div className="space-y-1"><Label className="text-[10px] uppercase text-muted-foreground">{label}{required && <span className="text-destructive"> *</span>}</Label><div className="flex gap-1"><Input aria-label={label} value={value} onChange={(event) => onChange(event.target.value)} className={cn("h-8 text-xs", error && "border-destructive")} />{suffix}</div>{error && <ErrorText text={error} />}</div>; }
+function SelectField({ label, value, options, onChange, error, required }: { label: string; value: string; options: string[]; onChange: (value: string) => void; error?: string; required?: boolean }) { return <div className="space-y-1"><Label className="text-[10px] uppercase text-muted-foreground">{label}{required && <span className="text-destructive"> *</span>}</Label><Select value={value || undefined} onValueChange={onChange}><SelectTrigger aria-label={label} className={cn("h-8 text-xs", error && "border-destructive")}><SelectValue placeholder="Select..." /></SelectTrigger><SelectContent>{options.map((option) => <SelectItem key={option} value={option} className="text-xs">{option}</SelectItem>)}</SelectContent></Select>{error && <ErrorText text={error} />}</div>; }
+function WizardSearchField({ label, value, onChange, unknown, onUnknown, newItem, onNewItem, error }: { label: string; value: string; onChange: (value: string) => void; unknown: boolean; onUnknown: (checked: boolean) => void; newItem: boolean; onNewItem: (checked: boolean) => void; error?: string }) { return <div className="space-y-2"><Label className="text-xs font-medium">{label} <span className="text-destructive">*</span></Label><div className="flex gap-2"><Input aria-label={label} value={value} disabled={unknown} onChange={(event) => onChange(event.target.value)} className={cn("h-9 text-xs", error && "border-destructive")} /><Button variant="outline" size="icon" className="h-9 w-9" aria-label={`Search ${label}`}><Search /></Button></div><div className="flex flex-wrap gap-4 text-xs"><label className="flex items-center gap-2"><Checkbox checked={newItem} onCheckedChange={(checked) => onNewItem(checked === true)} />Not in CalMapp</label><label className="flex items-center gap-2"><Checkbox checked={unknown} onCheckedChange={(checked) => onUnknown(checked === true)} />Unknown</label></div>{error && <ErrorText text={error} />}</div>; }
+function SummaryStrip({ draft }: { draft: ItemDraft }) { return <div className="grid gap-2 rounded-md bg-muted/40 p-3 text-xs sm:grid-cols-3"><span>Manufacturer: <strong>{draft.manufacturerUnknown ? "Unknown" : draft.manufacturer || "—"}</strong></span><span>Model: <strong>{draft.modelUnknown ? "Unknown" : draft.model || "—"}</strong></span><span>Description: <strong>{draft.description || "—"}</strong></span></div>; }
+function ReviewValue({ label, value }: { label: string; value: string }) { return <div><div className="text-[10px] uppercase text-muted-foreground">{label}</div><div className="text-xs font-medium">{value || "—"}</div></div>; }
+function ErrorText({ text }: { text: string }) { return <p className="text-[10px] text-destructive">{text}</p>; }
+function ValidationMessage({ text }: { text: string }) { return <div className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-xs text-destructive">{text}</div>; }
