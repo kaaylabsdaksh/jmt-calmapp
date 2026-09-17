@@ -60,7 +60,7 @@ type ItemDraft = {
   reportsAvailable: string;
 };
 
-const EMPTY_REVIEW: ReviewDraft = { existingCustomer: "Yes", account: "", customer: "", address1: "", address2: "", address3: "", city: "", state: "", zip: "", status: "Open", srDoc: "", osrDoc: "", contact: "", firstName: "", lastName: "", title: "", phone: "", fax: "", cell: "", email: "" };
+const EMPTY_REVIEW: ReviewDraft = { quote: "", existingCustomer: "Yes", account: "", customer: "", address1: "", address2: "", address3: "", city: "", state: "", zip: "", status: "Open", srDoc: "", osrDoc: "", contact: "", firstName: "", lastName: "", title: "", phone: "", fax: "", cell: "", email: "" };
 const EMPTY_ITEM: ItemDraft = { manufacturer: "", model: "", manufacturerUnknown: false, modelUnknown: false, manufacturerNew: false, modelNew: false, description: "", calibratedBefore: "", calibrationReason: "", reportsAvailable: "" };
 
 type ContactDraft = { firstName: string; lastName: string; title: string; phone: string; fax: string; cell: string; email: string };
