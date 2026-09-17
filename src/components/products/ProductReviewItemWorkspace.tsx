@@ -194,7 +194,7 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                   <Label className="text-right text-[11px] text-muted-foreground">Due Date</Label>
                   <div className="flex items-center gap-2">
                     <Input aria-label="Due Date" className="h-7 text-xs" value={draft.dueDate} readOnly />
-                    <Button variant="link" size="sm" className="h-7 px-0 text-xs" onClick={() => { setDueDateDraft(draft.dueDate); setDueDateComment(""); setDueDateOpen(true); }}>Update Date</Button>
+                    <Button variant="link" size="sm" className="h-7 px-0 text-xs text-foreground underline-offset-4 hover:underline" onClick={() => { setDueDateDraft(draft.dueDate); setDueDateComment(""); setDueDateOpen(true); }}>Update Date</Button>
                   </div>
                 </div>
                 <SelectField label="PR Item Status" value={draft.status} options={["Review Initiated", "Initiator", "Lab Management", "Metrology", "Lead Tech", "Approved", "Completed", "Cancelled"]} onChange={(value) => setField("status", value)} />
