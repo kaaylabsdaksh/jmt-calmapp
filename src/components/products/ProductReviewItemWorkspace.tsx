@@ -99,6 +99,18 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
   const [routing, setRouting] = useState<RoutingRow[]>([]);
   const [pendingAction, setPendingAction] = useState<string | null>(null);
   const [routingComment, setRoutingComment] = useState("");
+  const [dueDateOpen, setDueDateOpen] = useState(false);
+  const [dueDateDraft, setDueDateDraft] = useState("");
+  const [dueDateComment, setDueDateComment] = useState("");
+  const confirmDueDate = () => {
+    if (!dueDateDraft.trim()) {
+      toast({ title: "Due date required", description: "Enter a new due date.", variant: "destructive" });
+      return;
+    }
+    setDraft((previous) => ({ ...previous, dueDate: dueDateDraft.trim() }));
+    setDueDateOpen(false);
+    toast({ title: "Due date updated", description: `New due date ${dueDateDraft.trim()}.` });
+  };
   const currentDept = routing[0]?.dept ?? "";
   const confirmRouting = () => {
     if (!pendingAction) return;
