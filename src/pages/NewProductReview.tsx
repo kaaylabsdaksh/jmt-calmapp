@@ -29,6 +29,7 @@ type ReviewDraft = {
   customer: string;
   address1: string;
   address2: string;
+  address3: string;
   city: string;
   state: string;
   zip: string;
@@ -58,7 +59,7 @@ type ItemDraft = {
   reportsAvailable: string;
 };
 
-const EMPTY_REVIEW: ReviewDraft = { existingCustomer: "Yes", account: "", customer: "", address1: "", address2: "", city: "", state: "", zip: "", status: "Open", srDoc: "", osrDoc: "", contact: "", firstName: "", lastName: "", title: "", phone: "", fax: "", cell: "", email: "" };
+const EMPTY_REVIEW: ReviewDraft = { existingCustomer: "Yes", account: "", customer: "", address1: "", address2: "", address3: "", city: "", state: "", zip: "", status: "Open", srDoc: "", osrDoc: "", contact: "", firstName: "", lastName: "", title: "", phone: "", fax: "", cell: "", email: "" };
 const EMPTY_ITEM: ItemDraft = { manufacturer: "", model: "", manufacturerUnknown: false, modelUnknown: false, manufacturerNew: false, modelNew: false, description: "", calibratedBefore: "", calibrationReason: "", reportsAvailable: "" };
 
 type ContactDraft = { firstName: string; lastName: string; title: string; phone: string; fax: string; cell: string; email: string };
@@ -203,6 +204,7 @@ export default function NewProductReview() {
                 <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-3 xl:grid-cols-5">
                   <Field label="Address Line 1" value={review.address1} onChange={(value) => setReviewField("address1", value)} />
                   <Field label="Address Line 2" value={review.address2} onChange={(value) => setReviewField("address2", value)} />
+                  <Field label="Address Line 3" value={review.address3} onChange={(value) => setReviewField("address3", value)} />
                   <Field label="Ship City" value={review.city} onChange={(value) => setReviewField("city", value)} />
                   <SelectField label="State" value={review.state} options={["AL", "LA", "NJ", "NY", "TX"]} onChange={(value) => setReviewField("state", value)} />
                   <Field label="ZIP" value={review.zip} onChange={(value) => setReviewField("zip", value)} />
