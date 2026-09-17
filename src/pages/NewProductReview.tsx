@@ -160,9 +160,10 @@ export default function NewProductReview() {
                 </div>
               </CardContent></Card>
 
-              <Card><CardContent className="p-0"><SectionTitle title="Customer contact" action={<Button variant="outline" size="sm" className="h-7 text-xs"><UserPlus />Add Contact</Button>} />
+              <Card><CardContent className="p-0"><SectionTitle title="Customer contact" action={<Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => { setContactDraft(EMPTY_CONTACT); setContactErrors({}); setContactOpen(true); }}><UserPlus />Add Contact</Button>} />
                 <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-2 xl:grid-cols-4">
-                  <SelectField label="Select Contact" value={review.contact} options={["AK Alpha", "Dana Scott", "Jordan Lee"]} onChange={(value) => { setReviewField("contact", value); if (value === "AK Alpha") setReview((previous) => ({ ...previous, contact: value, firstName: "AK", lastName: "Alpha", phone: "(123) 123-1231", cell: "(123) 123-1234" })); }} error={errors.contact} required />
+                  <SelectField label="Select Contact" value={review.contact} options={contactOptions} onChange={(value) => { setReviewField("contact", value); if (value === "AK Alpha") setReview((previous) => ({ ...previous, contact: value, firstName: "AK", lastName: "Alpha", phone: "(123) 123-1231", cell: "(123) 123-1234" })); }} error={errors.contact} required />
+
                   <Field label="First Name" value={review.firstName} onChange={(value) => setReviewField("firstName", value)} />
                   <Field label="Last Name" value={review.lastName} onChange={(value) => setReviewField("lastName", value)} />
                   <Field label="Title" value={review.title} onChange={(value) => setReviewField("title", value)} />
