@@ -98,6 +98,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
     const newComment: Comment = {
       id: Date.now().toString(),
       type: commentType,
+      item: items?.length ? commentItem || items[0] : undefined,
       user: "Current User", // This should come from auth context
       dateEntered: new Date(),
       comment: commentText,
@@ -106,7 +107,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
 
     setComments([newComment, ...comments]);
     setCommentText("");
-    setCommentType("");
+    setCommentItem("");
     setIncludeInCopy(false);
   };
 
