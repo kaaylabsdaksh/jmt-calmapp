@@ -67,6 +67,22 @@ const DOCUMENT_TYPES = ["Calibration Procedure", "Datasheet", "Manufacturer Spec
 
 type DocumentRow = { id: string; name: string; type: string; description: string; uploadedBy: string; uploadedDate: string };
 type HoursRow = { id: string; workPerformed: string; hours: number; recordedBy: string; recordedDate: string };
+type RoutingRow = { id: string; dept: string; dateSent: string; ack: boolean; ackDate: string; ackUser: string; completed: boolean; completedDate: string; completedUser: string; comment: string };
+
+const ROUTING_ACTIONS = ["To Lab Management", "To Metrology", "To Lead Tech", "To T/F Clerk", "To Initiator"];
+const DECISION_ACTIONS = ["Cancel Review", "Maybe", "Cannot Service", "Approve"];
+const ACTION_STATUS: Record<string, string> = {
+  "To Lab Management": "Lab Management",
+  "To Metrology": "Metrology",
+  "To Lead Tech": "Lead Tech",
+  "To T/F Clerk": "T/F Clerk",
+  "To Initiator": "Initiator",
+  "Cancel Review": "Cancelled",
+  Maybe: "Maybe",
+  "Cannot Service": "Cannot Service",
+  Approve: "Approved",
+};
+const stamp = () => new Date().toLocaleString("en-US", { month: "2-digit", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
 
 export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onUpdate }: Props) {
   const { toast } = useToast();
