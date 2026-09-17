@@ -61,6 +61,11 @@ type ItemDraft = {
 const EMPTY_REVIEW: ReviewDraft = { existingCustomer: "Yes", account: "", customer: "", address1: "", address2: "", city: "", state: "", zip: "", status: "Open", srDoc: "", osrDoc: "", contact: "", firstName: "", lastName: "", title: "", phone: "", fax: "", cell: "", email: "" };
 const EMPTY_ITEM: ItemDraft = { manufacturer: "", model: "", manufacturerUnknown: false, modelUnknown: false, manufacturerNew: false, modelNew: false, description: "", calibratedBefore: "", calibrationReason: "", reportsAvailable: "" };
 
+type ContactDraft = { firstName: string; lastName: string; title: string; phone: string; fax: string; cell: string; email: string };
+const EMPTY_CONTACT: ContactDraft = { firstName: "", lastName: "", title: "", phone: "", fax: "", cell: "", email: "" };
+const DEFAULT_CONTACTS = ["AK Alpha", "Dana Scott", "Jordan Lee"];
+
+
 export default function NewProductReview() {
   const navigate = useNavigate();
   const { prNumber: existingPrNumber } = useParams();
@@ -81,6 +86,11 @@ export default function NewProductReview() {
   const [wizardStep, setWizardStep] = useState(1);
   const [itemDraft, setItemDraft] = useState<ItemDraft>(EMPTY_ITEM);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [contactOpen, setContactOpen] = useState(false);
+  const [contactDraft, setContactDraft] = useState<ContactDraft>(EMPTY_CONTACT);
+  const [contactErrors, setContactErrors] = useState<Record<string, string>>({});
+  const [contactOptions, setContactOptions] = useState<string[]>(DEFAULT_CONTACTS);
+
 
   const selectedItem = items.find((item) => item.id === selectedItemId);
   const matches = useMemo(() => MATCHES.filter((match) => (!itemDraft.manufacturer || match.manufacturer.includes(itemDraft.manufacturer.toUpperCase())) && (!itemDraft.model || match.model.includes(itemDraft.model.toUpperCase()))), [itemDraft.manufacturer, itemDraft.model]);
@@ -91,7 +101,24 @@ export default function NewProductReview() {
     return <div className="flex h-dvh flex-col bg-background"><ModernTopNav /><ProductReviewItemWorkspace prNumber={prNumber} item={selectedItem} onBack={() => setSelectedItemId(null)} onUpdate={(updated) => setItems((previous) => previous.map((item) => item.id === updated.id ? updated : item))} /></div>;
   }
 
+  const addContact = () => {
+    const nextErrors: Record<string, string> = {};
+    if (!contactDraft.firstName.trim()) nextErrors.firstName = "First name is required.";
+    if (!contactDraft.lastName.trim()) nextErrors.lastName = "Last name is required.";
+    if (!contactDraft.phone.trim()) nextErrors.phone = "Phone is required.";
+    if (!contactDraft.email.trim()) nextErrors.email = "Email is required.";
+    setContactErrors(nextErrors);
+    if (Object.keys(nextErrors).length) return;
+    const name = `${contactDraft.firstName.trim()} ${contactDraft.lastName.trim()}`;
+    setContactOptions((previous) => previous.includes(name) ? previous : [...previous, name]);
+    setReview((previous) => ({ ...previous, contact: name, ...contactDraft }));
+    setErrors((previous) => ({ ...previous, contact: "" }));
+    setContactOpen(false);
+    toast({ title: "Contact added", description: `${name} is now the selected customer contact.` });
+  };
+
   const saveReview = () => {
+
     const nextErrors: Record<string, string> = {};
     if (!review.account.trim()) nextErrors.account = "Account number is required.";
     if (!review.customer.trim()) nextErrors.customer = "Customer name is required.";
@@ -160,9 +187,10 @@ export default function NewProductReview() {
                 </div>
               </CardContent></Card>
 
-              <Card><CardContent className="p-0"><SectionTitle title="Customer contact" action={<Button variant="outline" size="sm" className="h-7 text-xs"><UserPlus />Add Contact</Button>} />
+              <Card><CardContent className="p-0"><SectionTitle title="Customer contact" action={<Button variant="outline" size="sm" className="h-7 text-xs" onClick={() => { setContactDraft(EMPTY_CONTACT); setContactErrors({}); setContactOpen(true); }}><UserPlus />Add Contact</Button>} />
                 <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-2 xl:grid-cols-4">
-                  <SelectField label="Select Contact" value={review.contact} options={["AK Alpha", "Dana Scott", "Jordan Lee"]} onChange={(value) => { setReviewField("contact", value); if (value === "AK Alpha") setReview((previous) => ({ ...previous, contact: value, firstName: "AK", lastName: "Alpha", phone: "(123) 123-1231", cell: "(123) 123-1234" })); }} error={errors.contact} required />
+                  <SelectField label="Select Contact" value={review.contact} options={contactOptions} onChange={(value) => { setReviewField("contact", value); if (value === "AK Alpha") setReview((previous) => ({ ...previous, contact: value, firstName: "AK", lastName: "Alpha", phone: "(123) 123-1231", cell: "(123) 123-1234" })); }} error={errors.contact} required />
+
                   <Field label="First Name" value={review.firstName} onChange={(value) => setReviewField("firstName", value)} />
                   <Field label="Last Name" value={review.lastName} onChange={(value) => setReviewField("lastName", value)} />
                   <Field label="Title" value={review.title} onChange={(value) => setReviewField("title", value)} />
@@ -210,6 +238,34 @@ export default function NewProductReview() {
         </div>
         <div className="flex items-center justify-between border-t bg-muted/20 px-5 py-3"><Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => setWizardOpen(false)}><X />Cancel</Button><div className="flex gap-2">{wizardStep > 1 && <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => { setWizardStep((step) => step - 1); setErrors({}); }}><ArrowLeft />Previous</Button>}{wizardStep < 4 ? <Button size="sm" className="h-8 bg-info text-xs text-info-foreground hover:bg-info/90" onClick={validateWizard}>Next<ChevronRight /></Button> : <Button size="sm" className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={addItem}><Check />Add Item</Button>}</div></div>
       </DialogContent></Dialog>
+
+      <Dialog open={contactOpen} onOpenChange={(open) => { setContactOpen(open); if (!open) setContactErrors({}); }}><DialogContent className="max-w-md p-0">
+        <DialogHeader className="border-b px-4 py-3"><DialogTitle className="text-base">Add New Contact</DialogTitle><DialogDescription className="text-xs">Enter the contact details for this customer.</DialogDescription></DialogHeader>
+        <div className="space-y-2 px-4 py-3">
+          {([
+            { key: "firstName", label: "First Name", required: true, placeholder: "" },
+            { key: "lastName", label: "Last Name", required: true, placeholder: "" },
+            { key: "title", label: "Title", required: false, placeholder: "" },
+            { key: "phone", label: "Phone", required: true, placeholder: "(___) ___-____" },
+            { key: "fax", label: "Fax", required: false, placeholder: "(___) ___-____" },
+            { key: "cell", label: "Cell", required: false, placeholder: "(___) ___-____" },
+            { key: "email", label: "Email", required: true, placeholder: "" },
+          ] as { key: keyof ContactDraft; label: string; required: boolean; placeholder: string }[]).map((field) => (
+            <div key={field.key} className="grid grid-cols-[110px_1fr] items-center gap-2">
+              <Label className={cn("justify-self-end text-right text-xs", field.required ? "font-semibold text-foreground" : "text-muted-foreground")}>{field.label}:{field.required && <span className="text-destructive"> *</span>}</Label>
+              <div className="space-y-0.5">
+                <Input aria-label={field.label} value={contactDraft[field.key]} placeholder={field.placeholder} onChange={(event) => setContactDraft((previous) => ({ ...previous, [field.key]: event.target.value }))} className={cn("h-8 text-xs", contactErrors[field.key] && "border-destructive")} />
+                {contactErrors[field.key] && <ErrorText text={contactErrors[field.key]} />}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center justify-end gap-2 border-t bg-muted/20 px-4 py-3">
+          <Button variant="outline" size="sm" className="h-8 text-xs" onClick={() => setContactOpen(false)}>Cancel</Button>
+          <Button size="sm" className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={addContact}><Check />Add</Button>
+        </div>
+      </DialogContent></Dialog>
+
     </div>
   );
 }
