@@ -130,6 +130,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
   const uniqueTypes = Array.from(new Set(comments.map(c => c.type)));
   const uniqueUsers = Array.from(new Set(comments.map(c => c.user)));
   const uniqueDates = Array.from(new Set(comments.map(c => format(c.dateEntered, "MM/dd/yyyy"))));
+  const showItemColumn = (items?.length ?? 0) > 0 || comments.some(c => c.item);
 
   // Filter comments
   const filteredComments = comments.filter(comment => {
