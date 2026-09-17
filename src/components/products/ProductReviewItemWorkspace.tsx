@@ -5,6 +5,7 @@ import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -67,6 +68,22 @@ const DOCUMENT_TYPES = ["Calibration Procedure", "Datasheet", "Manufacturer Spec
 
 type DocumentRow = { id: string; name: string; type: string; description: string; uploadedBy: string; uploadedDate: string };
 type HoursRow = { id: string; workPerformed: string; hours: number; recordedBy: string; recordedDate: string };
+type RoutingRow = { id: string; dept: string; dateSent: string; ack: boolean; ackDate: string; ackUser: string; completed: boolean; completedDate: string; completedUser: string; comment: string };
+
+const ROUTING_ACTIONS = ["To Lab Management", "To Metrology", "To Lead Tech", "To T/F Clerk", "To Initiator"];
+const DECISION_ACTIONS = ["Cancel Review", "Maybe", "Cannot Service", "Approve"];
+const ACTION_STATUS: Record<string, string> = {
+  "To Lab Management": "Lab Management",
+  "To Metrology": "Metrology",
+  "To Lead Tech": "Lead Tech",
+  "To T/F Clerk": "T/F Clerk",
+  "To Initiator": "Initiator",
+  "Cancel Review": "Cancelled",
+  Maybe: "Maybe",
+  "Cannot Service": "Cannot Service",
+  Approve: "Approved",
+};
+const stamp = () => new Date().toLocaleString("en-US", { month: "2-digit", day: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
 
 export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onUpdate }: Props) {
   const { toast } = useToast();
@@ -79,6 +96,29 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [hours, setHours] = useState<HoursRow[]>([]);
   const [hoursDraft, setHoursDraft] = useState({ workPerformed: "", hours: "" });
+  const [routing, setRouting] = useState<RoutingRow[]>([]);
+  const [pendingAction, setPendingAction] = useState<string | null>(null);
+  const [routingComment, setRoutingComment] = useState("");
+  const currentDept = routing[0]?.dept ?? "";
+  const confirmRouting = () => {
+    if (!pendingAction) return;
+    const dept = ACTION_STATUS[pendingAction] ?? pendingAction;
+    const now = stamp();
+    setRouting((previous) => [
+      { id: String(Date.now()), dept, dateSent: now, ack: false, ackDate: "", ackUser: "", completed: false, completedDate: "", completedUser: "", comment: routingComment.trim() },
+      ...previous.map((row, index) => (index === 0 && !row.completed ? { ...row, completed: true, completedDate: now, completedUser: "Admin User" } : row)),
+    ]);
+    setDraft((previous) => ({ ...previous, status: dept }));
+    setPendingAction(null);
+    setRoutingComment("");
+    toast({ title: "Item routed", description: `Sent to ${dept}.` });
+  };
+  const toggleAck = (id: string) => setRouting((previous) => previous.map((row) => (row.id === id
+    ? (row.ack ? { ...row, ack: false, ackDate: "", ackUser: "" } : { ...row, ack: true, ackDate: stamp(), ackUser: "Admin User" })
+    : row)));
+  const toggleCompleted = (id: string) => setRouting((previous) => previous.map((row) => (row.id === id
+    ? (row.completed ? { ...row, completed: false, completedDate: "", completedUser: "" } : { ...row, completed: true, completedDate: stamp(), completedUser: "Admin User" })
+    : row)));
   const duplicate = DUPLICATES.some((candidate) => candidate.manufacturer === draft.manufacturer.toUpperCase() && candidate.model === draft.model.toUpperCase());
   const setField = (key: keyof ProductReviewItem, value: string) => setDraft((previous) => ({ ...previous, [key]: value }));
   const save = () => {
@@ -192,10 +232,29 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
               </CardContent></Card>
 
 
-              <Card><CardContent className="overflow-x-auto p-0">
-            <Table><TableHeader><TableRow className="bg-muted/40"><TableHead>Dept/Area</TableHead><TableHead>Date Sent</TableHead><TableHead>Ack</TableHead><TableHead>Ack Date</TableHead><TableHead>Ack User</TableHead><TableHead>Completed</TableHead><TableHead>Completed Date</TableHead><TableHead>Completed User</TableHead></TableRow></TableHeader>
-              <TableBody><TableRow className="text-xs"><TableCell>{draft.status}</TableCell><TableCell>{draft.createdDate}</TableCell><TableCell>Yes</TableCell><TableCell>{draft.createdDate}</TableCell><TableCell>Admin User</TableCell><TableCell>{draft.completedDate ? "Yes" : "—"}</TableCell><TableCell>{draft.completedDate || "—"}</TableCell><TableCell>{draft.completedDate ? "Admin User" : "—"}</TableCell></TableRow></TableBody>
+              <Card><CardContent className="p-0">
+                <div className="flex flex-wrap items-center gap-2 border-b bg-muted/20 p-2">
+                  {ROUTING_ACTIONS.map((action) => {
+                    const isCurrent = currentDept === ACTION_STATUS[action];
+                    return <Button key={action} size="sm" variant="outline" className={`h-7 text-[11px] ${isCurrent ? "border-destructive font-semibold text-destructive" : ""}`} onClick={() => { setPendingAction(action); setRoutingComment(""); }}>{action}</Button>;
+                  })}
+                  <span className="mx-1 hidden h-5 w-px bg-border sm:block" />
+                  {DECISION_ACTIONS.map((action) => <Button key={action} size="sm" variant="outline" className="h-7 text-[11px]" onClick={() => { setPendingAction(action); setRoutingComment(""); }}>{action}</Button>)}
+                </div>
+                <div className="overflow-x-auto">
+            <Table><TableHeader><TableRow className="bg-muted/40"><TableHead>Dept/Area</TableHead><TableHead>Date Sent</TableHead><TableHead className="w-16 text-center">Ack</TableHead><TableHead>Ack Date</TableHead><TableHead>Ack User</TableHead><TableHead className="w-20 text-center">Completed</TableHead><TableHead>Completed Date</TableHead><TableHead>Completed User</TableHead></TableRow></TableHeader>
+              <TableBody>{routing.length ? routing.map((row) => <TableRow key={row.id} className="text-xs">
+                <TableCell className="font-medium">{row.dept}</TableCell>
+                <TableCell>{row.dateSent}</TableCell>
+                <TableCell className="text-center"><Checkbox aria-label={`Ack ${row.dept}`} checked={row.ack} onCheckedChange={() => toggleAck(row.id)} className="mx-auto h-3.5 w-3.5" /></TableCell>
+                <TableCell>{row.ackDate || "—"}</TableCell>
+                <TableCell>{row.ackUser || "—"}</TableCell>
+                <TableCell className="text-center"><Checkbox aria-label={`Completed ${row.dept}`} checked={row.completed} onCheckedChange={() => toggleCompleted(row.id)} className="mx-auto h-3.5 w-3.5" /></TableCell>
+                <TableCell>{row.completedDate || "—"}</TableCell>
+                <TableCell>{row.completedUser || "—"}</TableCell>
+              </TableRow>) : <TableRow><TableCell colSpan={8} className="h-16 text-center text-xs text-muted-foreground">No routing history yet. Use the buttons above to send this item to a department.</TableCell></TableRow>}</TableBody>
             </Table>
+                </div>
               </CardContent></Card>
 
               <WorkOrderItemComments workOrderItemId={`${prNumber}-${draft.itemNumber}`} />
@@ -248,9 +307,29 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
       </main>
 
       <footer className="shrink-0 border-t bg-background px-2 py-2 sm:px-4 lg:px-6"><div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2"><Button variant="outline" size="sm" className="h-8 text-xs" onClick={onBack}><ArrowLeft />Back to PR Items</Button><DropdownMenu><DropdownMenuTrigger asChild><Button variant="outline" size="sm" className="h-8 text-xs"><MoreHorizontal />More Actions</Button></DropdownMenuTrigger><DropdownMenuContent align="start">{["To Lab Management", "To Metrology", "To Lead Tech", "To Initiator", "Cancel Review", "Cannot Service", "Approve Capability", "Approve PR Completion"].map((action) => <DropdownMenuItem key={action}>{action}</DropdownMenuItem>)}</DropdownMenuContent></DropdownMenu></div>
+        <div className="flex items-center gap-2"><Button variant="outline" size="sm" className="h-8 text-xs" onClick={onBack}><ArrowLeft />Back to PR Items</Button><DropdownMenu><DropdownMenuTrigger asChild><Button variant="outline" size="sm" className="h-8 text-xs"><MoreHorizontal />More Actions</Button></DropdownMenuTrigger><DropdownMenuContent align="start">{[...ROUTING_ACTIONS, ...DECISION_ACTIONS].map((action) => <DropdownMenuItem key={action} onSelect={() => { setPendingAction(action); setRoutingComment(""); }}>{action}</DropdownMenuItem>)}</DropdownMenuContent></DropdownMenu></div>
         <div className="flex items-center gap-2"><Button variant="outline" size="sm" className="h-8 text-xs"><Mail />Email Customer</Button><Button size="sm" className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={save}><Save />Save</Button></div>
       </div></footer>
+
+      <Dialog open={Boolean(pendingAction)} onOpenChange={(open) => { if (!open) { setPendingAction(null); setRoutingComment(""); } }}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader><DialogTitle className="text-sm">Add Comments</DialogTitle></DialogHeader>
+          <div className="space-y-3">
+            <div className="grid grid-cols-[130px_1fr] items-center gap-2">
+              <Label className="text-right text-xs text-muted-foreground">Going to Status:</Label>
+              <Input readOnly value={pendingAction ? ACTION_STATUS[pendingAction] ?? pendingAction : ""} className="h-8 bg-muted/40 text-xs" />
+            </div>
+            <div className="grid grid-cols-[130px_1fr] items-start gap-2">
+              <Label className="pt-2 text-right text-xs text-muted-foreground">Comment:</Label>
+              <Textarea aria-label="Comment" className="min-h-28 resize-none text-xs" value={routingComment} onChange={(event) => setRoutingComment(event.target.value)} />
+            </div>
+          </div>
+          <DialogFooter className="sm:justify-center">
+            <Button variant="outline" size="sm" className="h-8 min-w-24 text-xs" onClick={() => { setPendingAction(null); setRoutingComment(""); }}>Cancel</Button>
+            <Button size="sm" className="h-8 min-w-24 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={confirmRouting}>Ok</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
