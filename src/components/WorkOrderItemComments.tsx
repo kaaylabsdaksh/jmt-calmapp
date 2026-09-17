@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
+
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
@@ -13,6 +13,7 @@ import { format } from "date-fns";
 interface Comment {
   id: string;
   type: string;
+  item?: string;
   user: string;
   dateEntered: Date;
   comment: string;
@@ -21,12 +22,16 @@ interface Comment {
 
 interface WorkOrderItemCommentsProps {
   workOrderItemId?: string;
+  /** Optional list of item numbers to offer in the Item dropdown (e.g. PR items). */
+  items?: string[];
 }
 
 export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({ 
-  workOrderItemId 
+  workOrderItemId,
+  items
 }) => {
-  const [commentType, setCommentType] = useState<string>("");
+  const [commentType, setCommentType] = useState<string>("PR");
+  const [commentItem, setCommentItem] = useState<string>("");
   const [commentText, setCommentText] = useState<string>("");
   const [includeInCopy, setIncludeInCopy] = useState<boolean>(false);
   
@@ -93,6 +98,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
     const newComment: Comment = {
       id: Date.now().toString(),
       type: commentType,
+      item: items?.length ? commentItem || items[0] : undefined,
       user: "Current User", // This should come from auth context
       dateEntered: new Date(),
       comment: commentText,
@@ -101,7 +107,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
 
     setComments([newComment, ...comments]);
     setCommentText("");
-    setCommentType("");
+    setCommentItem("");
     setIncludeInCopy(false);
   };
 
@@ -124,6 +130,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
   const uniqueTypes = Array.from(new Set(comments.map(c => c.type)));
   const uniqueUsers = Array.from(new Set(comments.map(c => c.user)));
   const uniqueDates = Array.from(new Set(comments.map(c => format(c.dateEntered, "MM/dd/yyyy"))));
+  const showItemColumn = (items?.length ?? 0) > 0 || comments.some(c => c.item);
 
   // Filter comments
   const filteredComments = comments.filter(comment => {
@@ -139,7 +146,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
         {/* Add Comment Form - Minimal Design */}
         <div className="bg-muted/30 rounded-md p-2">
           <div className="flex items-end gap-2">
-            <div className="w-40 shrink-0">
+            <div className="w-32 shrink-0">
               <Label htmlFor="comment-type" className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground mb-1 block">
                 Type
               </Label>
@@ -148,7 +155,7 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent className="z-50 bg-popover border">
-                  <SelectItem value="General">General</SelectItem>
+                  <SelectItem value="PR">PR</SelectItem>
                   <SelectItem value="Estimate">Estimate</SelectItem>
                   <SelectItem value="Status">Status Change</SelectItem>
                   <SelectItem value="Other">Other</SelectItem>
@@ -158,16 +165,35 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
               </Select>
             </div>
 
+            {items && items.length > 0 && (
+              <div className="w-28 shrink-0">
+                <Label htmlFor="comment-item" className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground mb-1 block">
+                  Item
+                </Label>
+                <Select value={commentItem} onValueChange={setCommentItem}>
+                  <SelectTrigger className="h-7 bg-background border-border text-xs">
+                    <SelectValue placeholder="Item" />
+                  </SelectTrigger>
+                  <SelectContent className="z-50 bg-popover border">
+                    {items.map(item => (
+                      <SelectItem key={item} value={item}>{item}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
             <div className="flex-1">
               <Label htmlFor="comment-text" className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground mb-1 block">
                 Comment
               </Label>
-              <Input
+              <Textarea
                 id="comment-text"
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
                 placeholder="Enter your comment..."
-                className="h-7 bg-background border-border text-xs"
+                rows={3}
+                className="min-h-16 resize-y bg-background border-border text-xs"
               />
             </div>
 
@@ -276,14 +302,19 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                       <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground w-[90px]">
                         Type
                       </th>
+                      {showItemColumn && (
+                        <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground w-[70px]">
+                          Item
+                        </th>
+                      )}
                       <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground w-[120px]">
-                        User
+                        Created By
                       </th>
                       <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground w-[140px]">
-                        Date
+                        Date Entered
                       </th>
                       <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-                        Details
+                        Comment
                       </th>
                     </tr>
                   </thead>
@@ -301,6 +332,11 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                             {comment.type}
                           </Badge>
                         </td>
+                        {showItemColumn && (
+                          <td className="px-2 py-1.5 text-xs text-foreground">
+                            {comment.item || "—"}
+                          </td>
+                        )}
                         <td className="px-2 py-1.5 text-xs text-foreground">
                           {comment.user}
                         </td>
@@ -326,12 +362,17 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                     className="p-4 space-y-2 hover:bg-muted/20 transition-colors"
                   >
                     <div className="flex items-start justify-between gap-2">
-                      <Badge
-                        variant="outline"
-                        className={`${getTypeColor(comment.type)} text-xs`}
-                      >
-                        {comment.type}
-                      </Badge>
+                      <div className="flex items-center gap-1.5">
+                        <Badge
+                          variant="outline"
+                          className={`${getTypeColor(comment.type)} text-xs`}
+                        >
+                          {comment.type}
+                        </Badge>
+                        {showItemColumn && comment.item && (
+                          <span className="text-[10px] text-muted-foreground">Item {comment.item}</span>
+                        )}
+                      </div>
                       <span className="text-xs text-muted-foreground font-mono">
                         {format(comment.dateEntered, "MM/dd/yyyy hh:mm a")}
                       </span>
