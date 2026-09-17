@@ -89,7 +89,7 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                 <Field label="Category 4" value="" />
                 <Field label="Category 5" value="" />
                 <Field label="Category 6" value="" />
-                <SectionHeading>Physical Dimensions</SectionHeading>
+                <SectionHeading isNew>Physical Dimensions</SectionHeading>
                 <Field label="Weight" value="" suffix="lb" />
                 <Field label="Height" value="" suffix="in" />
                 <Field label="Width" value="" suffix="in" />
@@ -103,10 +103,10 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                 <CheckField label="R&D" />
                 <Field label="Accredited Calibration" value="" />
                 <Field label="Cal/Cert Cost" value="0.00" />
-                <Field label="Estimated Certification Time" value="" suffix="hrs" />
+                <Field label="Estimated Certification Time" value="" suffix="hrs" isNew />
                 <CheckField label="Override Zero Price" />
                 <CheckField label="Equipment at JM" />
-                <SectionHeading>Servicing Readiness</SectionHeading>
+                <SectionHeading isNew>Servicing Readiness</SectionHeading>
                 <CheckField label="Procedure Available" />
                 <CheckField label="Template Available" />
                 <CheckField label="Automation Available" />
@@ -146,7 +146,8 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
   );
 }
 
-function SectionHeading({ children }: { children: React.ReactNode }) { return <h2 className="border-b pb-1 text-xs font-semibold">{children}</h2>; }
-function Field({ label, value, onChange, disabled, suffix }: { label: string; value: string; onChange?: (value: string) => void; disabled?: boolean; suffix?: string }) { return <div className="grid grid-cols-[minmax(8rem,42%)_1fr] items-center gap-2"><Label className="text-right text-[11px] text-muted-foreground">{label}</Label><div className="flex items-center gap-2"><Input aria-label={label} className="h-7 text-xs" value={value} disabled={disabled} onChange={(event) => onChange?.(event.target.value)} />{suffix && <span className="text-[10px] text-muted-foreground">{suffix}</span>}</div></div>; }
+function NewTag() { return <span className="inline-flex rounded bg-primary px-1 py-0.5 text-[9px] font-bold leading-none text-primary-foreground">NEW</span>; }
+function SectionHeading({ children, isNew = false }: { children: React.ReactNode; isNew?: boolean }) { return <h2 className="flex items-center gap-2 border-b pb-1 text-xs font-semibold">{children}{isNew && <NewTag />}</h2>; }
+function Field({ label, value, onChange, disabled, suffix, isNew = false }: { label: string; value: string; onChange?: (value: string) => void; disabled?: boolean; suffix?: string; isNew?: boolean }) { return <div className="grid grid-cols-[minmax(8rem,42%)_1fr] items-center gap-2"><Label className="flex items-center justify-end gap-1 text-right text-[11px] text-muted-foreground">{label}{isNew && <NewTag />}</Label><div className="flex items-center gap-2"><Input aria-label={label} className="h-7 text-xs" value={value} disabled={disabled} onChange={(event) => onChange?.(event.target.value)} />{suffix && <span className="text-[10px] text-muted-foreground">{suffix}</span>}</div></div>; }
 function SelectField({ label, value, options, onChange }: { label: string; value: string; options: string[]; onChange: (value: string) => void }) { return <div className="grid grid-cols-[minmax(8rem,42%)_1fr] items-center gap-2"><Label className="text-right text-[11px] text-muted-foreground">{label}</Label><Select value={value || undefined} onValueChange={onChange}><SelectTrigger aria-label={label} className="h-7 text-xs"><SelectValue placeholder="Select..." /></SelectTrigger><SelectContent>{options.map((option) => <SelectItem key={option} value={option} className="text-xs">{option}</SelectItem>)}</SelectContent></Select></div>; }
 function CheckField({ label }: { label: string }) { return <label className="grid grid-cols-[minmax(8rem,42%)_1fr] items-center gap-2 text-[11px]"><span className="text-right text-muted-foreground">{label}</span><Checkbox /></label>; }
