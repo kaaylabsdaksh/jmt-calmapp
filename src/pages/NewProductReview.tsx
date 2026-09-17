@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { ArrowLeft, Check, ChevronRight, Plus, Save, Search, Trash2, UserPlus, X } from "lucide-react";
+import { ArrowLeft, Check, ChevronRight, ExternalLink, Plus, Save, Search, Trash2, UserPlus, X } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
 import ProductReviewItemWorkspace, { type ProductReviewItem } from "@/components/products/ProductReviewItemWorkspace";
 import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
