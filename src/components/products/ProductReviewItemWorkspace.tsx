@@ -41,7 +41,6 @@ const DUPLICATES = [{ manufacturer: "FLUKE", model: "789-12" }, { manufacturer: 
 export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onUpdate }: Props) {
   const { toast } = useToast();
   const [draft, setDraft] = useState(item);
-  const [capableLocations, setCapableLocations] = useState<Record<string, boolean>>({});
   const duplicate = DUPLICATES.some((candidate) => candidate.manufacturer === draft.manufacturer.toUpperCase() && candidate.model === draft.model.toUpperCase());
   const setField = (key: keyof ProductReviewItem, value: string) => setDraft((previous) => ({ ...previous, [key]: value }));
   const save = () => {
