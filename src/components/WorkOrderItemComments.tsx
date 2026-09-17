@@ -332,6 +332,11 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                             {comment.type}
                           </Badge>
                         </td>
+                        {showItemColumn && (
+                          <td className="px-2 py-1.5 text-xs text-foreground">
+                            {comment.item || "—"}
+                          </td>
+                        )}
                         <td className="px-2 py-1.5 text-xs text-foreground">
                           {comment.user}
                         </td>
