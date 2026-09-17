@@ -95,6 +95,29 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [hours, setHours] = useState<HoursRow[]>([]);
   const [hoursDraft, setHoursDraft] = useState({ workPerformed: "", hours: "" });
+  const [routing, setRouting] = useState<RoutingRow[]>([]);
+  const [pendingAction, setPendingAction] = useState<string | null>(null);
+  const [routingComment, setRoutingComment] = useState("");
+  const currentDept = routing[0]?.dept ?? "";
+  const confirmRouting = () => {
+    if (!pendingAction) return;
+    const dept = ACTION_STATUS[pendingAction] ?? pendingAction;
+    const now = stamp();
+    setRouting((previous) => [
+      { id: String(Date.now()), dept, dateSent: now, ack: false, ackDate: "", ackUser: "", completed: false, completedDate: "", completedUser: "", comment: routingComment.trim() },
+      ...previous.map((row, index) => (index === 0 && !row.completed ? { ...row, completed: true, completedDate: now, completedUser: "Admin User" } : row)),
+    ]);
+    setDraft((previous) => ({ ...previous, status: dept }));
+    setPendingAction(null);
+    setRoutingComment("");
+    toast({ title: "Item routed", description: `Sent to ${dept}.` });
+  };
+  const toggleAck = (id: string) => setRouting((previous) => previous.map((row) => (row.id === id
+    ? (row.ack ? { ...row, ack: false, ackDate: "", ackUser: "" } : { ...row, ack: true, ackDate: stamp(), ackUser: "Admin User" })
+    : row)));
+  const toggleCompleted = (id: string) => setRouting((previous) => previous.map((row) => (row.id === id
+    ? (row.completed ? { ...row, completed: false, completedDate: "", completedUser: "" } : { ...row, completed: true, completedDate: stamp(), completedUser: "Admin User" })
+    : row)));
   const duplicate = DUPLICATES.some((candidate) => candidate.manufacturer === draft.manufacturer.toUpperCase() && candidate.model === draft.model.toUpperCase());
   const setField = (key: keyof ProductReviewItem, value: string) => setDraft((previous) => ({ ...previous, [key]: value }));
   const save = () => {
