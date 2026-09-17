@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { AlertTriangle, ArrowLeft, Clock3, FileText, Mail, MoreHorizontal, Save, Upload } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { AlertTriangle, ArrowLeft, Clock3, ExternalLink, FileText, Mail, MoreHorizontal, Save, Upload } from "lucide-react";
 import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -69,6 +70,7 @@ type HoursRow = { id: string; workPerformed: string; hours: number; recordedBy: 
 
 export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onUpdate }: Props) {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [draft, setDraft] = useState(item);
   const [capabilityMatrix, setCapabilityMatrix] = useState<Record<string, Record<string, boolean>>>({});
   const [documents, setDocuments] = useState<DocumentRow[]>([{ id: "existing-1", name: "Belt Tension Checker Instruction Sheet.pdf", type: "Other", description: "Instruction sheet", uploadedBy: "Kevin R. Young", uploadedDate: "06/30/2021" }]);
@@ -137,7 +139,7 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                 <SectionHeading>Item Identification</SectionHeading>
                 <Field label="PR Item #" value={`${prNumber}-${draft.itemNumber}`} disabled />
                 <Field label="Due Date" value={draft.dueDate} onChange={(value) => setField("dueDate", value)} />
-                <SelectField label="PR Item Status" value={draft.status} options={["Review Initiated", "Initiator", "Lab Management", "Metrology", "Lead Tech", "Completed", "Cancelled"]} onChange={(value) => setField("status", value)} />
+                <SelectField label="PR Item Status" value={draft.status} options={["Review Initiated", "Initiator", "Lab Management", "Metrology", "Lead Tech", "Approved", "Completed", "Cancelled"]} onChange={(value) => setField("status", value)} />
                 <SelectField label="Location" value={draft.location} options={["Alexandria", "Baton Rouge", "Houston", "Onsite"]} onChange={(value) => setField("location", value)} />
                 <SelectField label="Division" value={draft.division} options={["Regular", "OnSite", "ESL"]} onChange={(value) => setField("division", value)} />
                 <SelectField label="Work to be Performed" value="Calibration" options={["Calibration", "Repair", "Calibration & Repair", "Inspection"]} onChange={() => undefined} />
@@ -178,6 +180,13 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                 <CheckField label="Procedure Available" />
                 <CheckField label="Template Available" />
                 <CheckField label="Automation Available" />
+                {draft.status === "Approved" && (
+                  <div className="flex justify-end pt-1">
+                    <Button variant="link" className="h-auto p-0 text-xs font-semibold uppercase tracking-wide text-info underline" onClick={() => navigate(`/manage-products/${encodeURIComponent(draft.model || draft.itemNumber)}`)}>
+                      <ExternalLink className="mr-1 h-3.5 w-3.5" />View Product
+                    </Button>
+                  </div>
+                )}
               </section>
             </div>
               </CardContent></Card>
