@@ -162,6 +162,8 @@ export default function NewProductReview() {
                   <Field label="SR Doc" value={review.srDoc} onChange={(value) => setReviewField("srDoc", value)} />
                   <Field label="OSR Doc" value={review.osrDoc} onChange={(value) => setReviewField("osrDoc", value)} />
                 </div>
+              </CardContent></Card>
+
               <Card><CardContent className="p-0"><SectionTitle title="Customer contact" action={<Button variant="outline" size="sm" className="h-7 text-xs"><UserPlus />Add Contact</Button>} />
                 <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-2 xl:grid-cols-4">
                   <SelectField label="Select Contact" value={review.contact} options={["AK Alpha", "Dana Scott", "Jordan Lee"]} onChange={(value) => { setReviewField("contact", value); if (value === "AK Alpha") setReview((previous) => ({ ...previous, contact: value, firstName: "AK", lastName: "Alpha", phone: "(123) 123-1231", cell: "(123) 123-1234" })); }} error={errors.contact} required />
