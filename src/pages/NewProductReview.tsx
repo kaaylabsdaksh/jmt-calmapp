@@ -81,6 +81,7 @@ export default function NewProductReview() {
   const requestedItem = searchParams.get("item");
   const [review, setReview] = useState<ReviewDraft>(initialReview);
   const [prNumber, setPrNumber] = useState(existingPrNumber || "");
+  const [audit, setAudit] = useState({ createdBy: existingRow?.createdBy || "", modifiedBy: existingRow?.createdBy || "" });
 
   const [items, setItems] = useState<ProductReviewItem[]>(initialItems);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(() => requestedItem ? initialItems.find((item) => item.itemNumber === requestedItem)?.id || null : null);
