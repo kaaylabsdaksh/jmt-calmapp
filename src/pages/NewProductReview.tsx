@@ -174,7 +174,7 @@ export default function NewProductReview() {
         <div className="mx-auto max-w-[1500px] space-y-3">
           <div className="sticky top-0 z-40 flex flex-wrap items-center justify-between gap-3 border-b bg-background py-2">
             <div><h1 className="text-lg font-semibold">{prNumber || "Adding New Product Review"}</h1><p className="text-xs text-muted-foreground">{existingPrNumber ? "Saved Product Review" : "Product Review Details"} · {review.customer || "Customer not selected"}</p></div>
-            <div className="flex items-center gap-2"><span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-1 text-[10px] font-medium"><span className="h-1.5 w-1.5 rounded-full bg-info" />{review.status}</span>{prNumber && <span className="text-[10px] text-muted-foreground">Created by Admin User · Today</span>}</div>
+            <div className="flex items-center gap-2"><span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-1 text-[10px] font-medium"><span className="h-1.5 w-1.5 rounded-full bg-info" />{review.status}</span>{prNumber && <span className="text-[10px] text-muted-foreground">Created by {audit.createdBy || "—"}{audit.modifiedBy ? ` · Modified by ${audit.modifiedBy}` : ""}</span>}</div>
           </div>
 
           <div className="space-y-3">
@@ -194,11 +194,6 @@ export default function NewProductReview() {
                       ? <Button variant="link" className="h-7 justify-start p-0 text-[11px] text-info underline hover:text-info/80" onClick={() => navigate("/quotes")}><ExternalLink className="h-3 w-3" />{review.quote}</Button>
                       : <Input aria-label="Quote #" value={review.quote} onChange={(event) => setReviewField("quote", event.target.value)} className="h-7 px-2 text-[11px]" placeholder="Enter quote #" />}
                   </div>
-                </div>
-                <SectionTitle title="Audit information" />
-                <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-2 xl:grid-cols-4">
-                  <AuditValue label="Created by" value={audit.createdBy} />
-                  <AuditValue label="Modified by" value={audit.modifiedBy} />
                 </div>
               </CardContent></Card>
 
