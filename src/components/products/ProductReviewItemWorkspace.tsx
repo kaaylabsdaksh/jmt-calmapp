@@ -35,7 +35,6 @@ type Props = {
   onUpdate: (item: ProductReviewItem) => void;
 };
 
-const LOCATIONS = ["Alexandria", "Baton Rouge", "Houston", "Round Rock", "Lafayette", "Beaumont", "Mobile", "Gonzales", "OnSite"];
 const DUPLICATES = [{ manufacturer: "FLUKE", model: "789-12" }, { manufacturer: "AMTI", model: "MC3A-500" }];
 
 export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onUpdate }: Props) {
