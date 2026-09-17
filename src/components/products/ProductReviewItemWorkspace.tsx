@@ -37,7 +37,30 @@ type Props = {
   onUpdate: (item: ProductReviewItem) => void;
 };
 
-const LOCATIONS = ["Alexandria", "Baton Rouge", "Houston", "Round Rock", "Lafayette", "Beaumont", "Mobile", "Gonzales", "OnSite"];
+const CAPABLE_LOCATIONS = [
+  "Baton Rouge", "Alexandria", "Odessa", "Clute", "Mattoon", "Groves", "San Angelo", "Berthold", "Mount Braddock",
+  "Port Arthur", "Mathiston", "Billings", "Mobile", "Edmonton", "Wichita", "Onsite", "Leechburg",
+];
+const CAPABILITY_COLUMNS = [
+  "Calibration", "Limited Calibration", "Adjustment (in lab)", "17025 (Full)", "17025 (Limited)", '"No" 17025',
+  "Send to Alternate Lab", "To Factory (Cal Outsource)", "Adjustment (To Factory)", "Repair (Full)", "Repair (Limited)",
+  "Repair (No)", "Unserviceable",
+];
+const CAPABILITY_LEGEND = [
+  { term: "Calibration", def: "Full verification of UUT." },
+  { term: "Limited Calibration", def: "Limited parameter verification of UUT, including un-adjustable and TAR <2:1." },
+  { term: "Adjustment (in lab)", def: "Our ability to adjust in lab." },
+  { term: "17025 (Full)", def: "Can accredit to UUT full range." },
+  { term: "17025 (Limited)", def: "Can accredit to limited range of UUT." },
+  { term: '"No" 17025', def: "Can not accredit UUT, parameters not on scope, may require outsourcing." },
+  { term: "Send to Alternate Lab", def: "This lab must send it to another JM Test lab for calibration." },
+  { term: "To Factory (Cal Outsource)", def: "We are not able to calibrate in any lab." },
+  { term: "Adjustment (To Factory)", def: 'We can "calibrate" but not "adjust" in lab.' },
+  { term: "Repair (Full)", def: "Can completely repair unit." },
+  { term: "Repair (Limited)", def: "Can partially repair unit; certain repairs require to-factory/OEM service." },
+  { term: "Repair (No)", def: "Can not repair; must go to factory/OEM for repair." },
+  { term: "Unserviceable", def: "No OEM or alternate vendor to service this; parts/technical info unavailable." },
+];
 const DUPLICATES = [{ manufacturer: "FLUKE", model: "789-12" }, { manufacturer: "AMTI", model: "MC3A-500" }];
 const DOCUMENT_TYPES = ["Calibration Procedure", "Datasheet", "Manufacturer Specification", "Product Manual", "Other"];
 
@@ -47,7 +70,7 @@ type HoursRow = { id: string; date: string; technician: string; workType: string
 export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onUpdate }: Props) {
   const { toast } = useToast();
   const [draft, setDraft] = useState(item);
-  const [capableLocations, setCapableLocations] = useState<Record<string, boolean>>({});
+  const [capabilityMatrix, setCapabilityMatrix] = useState<Record<string, Record<string, boolean>>>({});
   const [documents, setDocuments] = useState<DocumentRow[]>([]);
   const [documentType, setDocumentType] = useState(DOCUMENT_TYPES[0]);
   const [documentDescription, setDocumentDescription] = useState("");
@@ -74,6 +97,10 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
     setHoursDraft((previous) => ({ ...previous, hours: "", notes: "" }));
   };
   const totalHours = hours.reduce((total, row) => total + row.hours, 0);
+  const toggleCapability = (location: string, capability: string) => setCapabilityMatrix((previous) => ({
+    ...previous,
+    [location]: { ...previous[location], [capability]: !previous[location]?.[capability] },
+  }));
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
@@ -168,12 +195,26 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
             </TabsContent>
 
             <TabsContent value="locations" className="mt-0">
-              <Card><CardContent className="p-0">
-                <div className="border-b bg-muted/30 px-3 py-2"><h2 className="text-xs font-semibold">Capable Locations</h2><p className="mt-0.5 text-[10px] text-muted-foreground">Select every location equipped to service this product.</p></div>
-                <div className="grid gap-px bg-border sm:grid-cols-2 md:grid-cols-3">
-                  {LOCATIONS.map((location) => <label key={location} className="flex min-h-12 cursor-pointer items-center gap-3 bg-background px-4 py-2 text-xs"><Checkbox checked={Boolean(capableLocations[location])} onCheckedChange={(checked) => setCapableLocations((previous) => ({ ...previous, [location]: checked === true }))} /><span className="font-medium">{location}</span></label>)}
-                </div>
-              </CardContent></Card>
+              <div className="space-y-3">
+                <Card className="w-fit max-w-full"><CardContent className="overflow-x-auto p-0">
+                  <Table className="w-auto table-fixed">
+                    <colgroup><col className="w-48" />{CAPABLE_LOCATIONS.map((location) => <col key={location} className="w-16" />)}</colgroup>
+                    <TableHeader><TableRow className="bg-muted/50 hover:bg-muted/50">
+                      <TableHead className="h-7 w-48 whitespace-nowrap px-2 text-[10px] font-semibold">Capability</TableHead>
+                      {CAPABLE_LOCATIONS.map((location) => <TableHead key={location} className="h-10 w-16 px-0.5 text-center align-middle text-[9px] font-semibold leading-tight"><span className="inline-block max-w-14 break-words">{location}</span></TableHead>)}
+                    </TableRow></TableHeader>
+                    <TableBody>{CAPABILITY_COLUMNS.map((capability) => <TableRow key={capability} className="h-6">
+                      <TableCell className="w-48 whitespace-nowrap bg-muted/30 px-2 py-0.5 text-[11px] font-medium">{capability}</TableCell>
+                      {CAPABLE_LOCATIONS.map((location) => <TableCell key={location} className="px-0.5 py-0.5 text-center"><Checkbox aria-label={`${location} ${capability}`} checked={Boolean(capabilityMatrix[location]?.[capability])} onCheckedChange={() => toggleCapability(location, capability)} className="mx-auto h-3 w-3" /></TableCell>)}
+                    </TableRow>)}</TableBody>
+                  </Table>
+                </CardContent></Card>
+                <Card><CardContent className="p-4">
+                  <div className="mb-2 text-xs font-semibold text-foreground">Breakdown of Matrix (Definitions)</div>
+                  <div className="grid grid-cols-1 gap-x-6 gap-y-1 text-xs sm:grid-cols-2">{CAPABILITY_LEGEND.map((entry) => <div key={entry.term} className="flex gap-2"><span className="whitespace-nowrap font-semibold">{entry.term}:</span><span className="text-muted-foreground">{entry.def}</span></div>)}</div>
+                  <p className="mt-2 text-[10px] text-muted-foreground">** Onsite capabilities are influenced by the supporting lab.</p>
+                </CardContent></Card>
+              </div>
             </TabsContent>
 
             <TabsContent value="documents" className="mt-0 space-y-3">
