@@ -86,6 +86,11 @@ export default function NewProductReview() {
   const [wizardStep, setWizardStep] = useState(1);
   const [itemDraft, setItemDraft] = useState<ItemDraft>(EMPTY_ITEM);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [contactOpen, setContactOpen] = useState(false);
+  const [contactDraft, setContactDraft] = useState<ContactDraft>(EMPTY_CONTACT);
+  const [contactErrors, setContactErrors] = useState<Record<string, string>>({});
+  const [contactOptions, setContactOptions] = useState<string[]>(DEFAULT_CONTACTS);
+
 
   const selectedItem = items.find((item) => item.id === selectedItemId);
   const matches = useMemo(() => MATCHES.filter((match) => (!itemDraft.manufacturer || match.manufacturer.includes(itemDraft.manufacturer.toUpperCase())) && (!itemDraft.model || match.model.includes(itemDraft.model.toUpperCase()))), [itemDraft.manufacturer, itemDraft.model]);
