@@ -154,7 +154,7 @@ export default function NewProductReview() {
               {errors.save && <ValidationMessage text={errors.save} />}
               <Card><CardContent className="p-0">
                 <SectionTitle title="Customer and review" />
-                <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-3 xl:grid-cols-6">
+                <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-2 xl:grid-cols-4">
                   <SelectField label="Existing Customer" value={review.existingCustomer} options={["Yes", "No"]} onChange={(value) => setReviewField("existingCustomer", value)} />
                   <Field label="Account #" value={review.account} onChange={(value) => setReviewField("account", value)} error={errors.account} required suffix={<Button variant="outline" size="sm" className="h-8 px-2 text-xs" onClick={() => { setReview((previous) => ({ ...previous, account: "00000.00", customer: "Test", address1: "123 Test Drive", city: "Toms River", state: "NJ", zip: "70353", contact: "AK Alpha", firstName: "AK", lastName: "Alpha", phone: "(123) 123-1231", cell: "(123) 123-1234" })); setErrors({}); }}><Search />Find</Button>} />
                   <Field label="Customer Name" value={review.customer} onChange={(value) => setReviewField("customer", value)} error={errors.customer} required />
@@ -163,7 +163,7 @@ export default function NewProductReview() {
                   <Field label="OSR Doc" value={review.osrDoc} onChange={(value) => setReviewField("osrDoc", value)} />
                 </div>
                 <SectionTitle title="Shipping address" />
-                <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-3 xl:grid-cols-6">
+                <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-3 xl:grid-cols-5">
                   <Field label="Address Line 1" value={review.address1} onChange={(value) => setReviewField("address1", value)} />
                   <Field label="Address Line 2" value={review.address2} onChange={(value) => setReviewField("address2", value)} />
                   <Field label="Ship City" value={review.city} onChange={(value) => setReviewField("city", value)} />
@@ -173,7 +173,7 @@ export default function NewProductReview() {
               </CardContent></Card>
 
               <Card><CardContent className="p-0"><SectionTitle title="Customer contact" action={<Button variant="outline" size="sm" className="h-7 text-xs"><UserPlus />Add Contact</Button>} />
-                <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-4 xl:grid-cols-8">
+                <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-2 xl:grid-cols-4">
                   <SelectField label="Select Contact" value={review.contact} options={["AK Alpha", "Dana Scott", "Jordan Lee"]} onChange={(value) => { setReviewField("contact", value); if (value === "AK Alpha") setReview((previous) => ({ ...previous, contact: value, firstName: "AK", lastName: "Alpha", phone: "(123) 123-1231", cell: "(123) 123-1234" })); }} error={errors.contact} required />
                   <Field label="First Name" value={review.firstName} onChange={(value) => setReviewField("firstName", value)} />
                   <Field label="Last Name" value={review.lastName} onChange={(value) => setReviewField("lastName", value)} />
