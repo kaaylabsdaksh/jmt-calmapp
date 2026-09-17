@@ -113,9 +113,9 @@ const ProductReviews = () => {
   };
 
   return (
-    <div className="bg-background min-h-full">
+    <div className="flex min-h-full flex-col bg-background">
       <ModernTopNav />
-      <main className="w-full max-w-none px-2 sm:px-4 lg:px-6 py-3 sm:py-5 space-y-3">
+      <main className="w-full max-w-none flex-1 space-y-3 px-2 py-3 sm:px-4 sm:py-5 lg:px-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h1 className="text-xl font-semibold tracking-tight">Product Reviews</h1>
           <Button
@@ -191,11 +191,7 @@ const ProductReviews = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-1.5 pt-0.5">
-              <Button size="sm" variant="outline" className="h-7 text-[11px] px-2" onClick={() => navigate("/manage-products")}>
-                <Package className="h-3.5 w-3.5 mr-1.5" />
-                Products
-              </Button>
+            <div className="flex flex-wrap items-center justify-end gap-1.5 pt-0.5">
               <div className="flex items-center gap-1.5">
                 <Button variant="ghost" size="sm" className="h-7 text-[11px] px-2" onClick={clearAll}>
                   <X className="h-3.5 w-3.5 mr-1.5" />
@@ -311,6 +307,12 @@ const ProductReviews = () => {
           </CardContent>
         </Card>
       </main>
+      <footer className="sticky bottom-0 z-40 shrink-0 border-t bg-background px-2 py-2 sm:px-4 lg:px-6">
+        <Button size="sm" variant="outline" className="h-8 text-xs" onClick={() => navigate("/manage-products")}>
+          <Package className="mr-1.5 h-3.5 w-3.5" />
+          Products
+        </Button>
+      </footer>
     </div>
   );
 };

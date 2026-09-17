@@ -18,5 +18,5 @@
 - [x] Prefill existing Product Reviews and open their saved PR items directly
 - [x] Restore Capable Locations, Documents, and Hours tabs on PR item details
 
-- [ ] Align PR item Documents and Hours tabs to the supplied older-screen references
-- [ ] Move Product Reviews Products action to a sticky bottom footer
+- [x] Align PR item Documents and Hours tabs to the supplied older-screen references
+- [x] Move Product Reviews Products action to a sticky bottom footer
