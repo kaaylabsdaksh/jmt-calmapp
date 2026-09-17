@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AlertTriangle, ArrowLeft, FileText, Mail, MoreHorizontal, Plus, Save, Trash2, Upload } from "lucide-react";
+import { AlertTriangle, ArrowLeft, Clock3, FileText, Mail, MoreHorizontal, Save, Upload } from "lucide-react";
 import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -64,37 +64,43 @@ const CAPABILITY_LEGEND = [
 const DUPLICATES = [{ manufacturer: "FLUKE", model: "789-12" }, { manufacturer: "AMTI", model: "MC3A-500" }];
 const DOCUMENT_TYPES = ["Calibration Procedure", "Datasheet", "Manufacturer Specification", "Product Manual", "Other"];
 
-type DocumentRow = { id: string; name: string; type: string; description: string };
-type HoursRow = { id: string; date: string; technician: string; workType: string; hours: number; notes: string };
+type DocumentRow = { id: string; name: string; type: string; description: string; uploadedBy: string; uploadedDate: string };
+type HoursRow = { id: string; workPerformed: string; hours: number; recordedBy: string; recordedDate: string };
 
 export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onUpdate }: Props) {
   const { toast } = useToast();
   const [draft, setDraft] = useState(item);
   const [capabilityMatrix, setCapabilityMatrix] = useState<Record<string, Record<string, boolean>>>({});
-  const [documents, setDocuments] = useState<DocumentRow[]>([]);
-  const [documentType, setDocumentType] = useState(DOCUMENT_TYPES[0]);
+  const [documents, setDocuments] = useState<DocumentRow[]>([{ id: "existing-1", name: "Belt Tension Checker Instruction Sheet.pdf", type: "Other", description: "Instruction sheet", uploadedBy: "Kevin R. Young", uploadedDate: "06/30/2021" }]);
+  const [documentType, setDocumentType] = useState("");
   const [documentDescription, setDocumentDescription] = useState("");
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [hours, setHours] = useState<HoursRow[]>([]);
-  const [hoursDraft, setHoursDraft] = useState({ date: new Date().toLocaleDateString("en-CA"), technician: "Admin User", workType: "Product Review", hours: "", notes: "" });
+  const [hoursDraft, setHoursDraft] = useState({ workPerformed: "", hours: "" });
   const duplicate = DUPLICATES.some((candidate) => candidate.manufacturer === draft.manufacturer.toUpperCase() && candidate.model === draft.model.toUpperCase());
   const setField = (key: keyof ProductReviewItem, value: string) => setDraft((previous) => ({ ...previous, [key]: value }));
   const save = () => {
     onUpdate(draft);
     toast({ title: "PR item saved", description: `${prNumber}-${draft.itemNumber} has been updated.` });
   };
-  const addDocuments = (files: FileList | null) => {
-    if (!files?.length) return;
-    setDocuments((previous) => [...previous, ...Array.from(files).map((file, index) => ({ id: `${Date.now()}-${index}`, name: file.name, type: documentType, description: documentDescription }))]);
+  const addDocuments = () => {
+    if (!documentType || selectedFiles.length === 0) {
+      toast({ title: "Document not uploaded", description: "Select a document type and file.", variant: "destructive" });
+      return;
+    }
+    setDocuments((previous) => [...previous, ...selectedFiles.map((file, index) => ({ id: `${Date.now()}-${index}`, name: file.name, type: documentType, description: documentDescription, uploadedBy: "Admin User", uploadedDate: new Date().toLocaleDateString("en-US") }))]);
+    setDocumentType("");
     setDocumentDescription("");
+    setSelectedFiles([]);
   };
   const addHours = () => {
     const value = Number(hoursDraft.hours);
-    if (!hoursDraft.date || !hoursDraft.technician.trim() || !Number.isFinite(value) || value <= 0) {
-      toast({ title: "Hours not added", description: "Enter a date, technician, and hours greater than zero.", variant: "destructive" });
+    if (!hoursDraft.workPerformed.trim() || !Number.isFinite(value) || value <= 0) {
+      toast({ title: "Hours not added", description: "Describe the work performed and enter hours greater than zero.", variant: "destructive" });
       return;
     }
-    setHours((previous) => [...previous, { id: String(Date.now()), date: hoursDraft.date, technician: hoursDraft.technician.trim(), workType: hoursDraft.workType, hours: value, notes: hoursDraft.notes.trim() }]);
-    setHoursDraft((previous) => ({ ...previous, hours: "", notes: "" }));
+    setHours((previous) => [...previous, { id: String(Date.now()), workPerformed: hoursDraft.workPerformed.trim(), hours: value, recordedBy: "Admin User", recordedDate: new Date().toLocaleDateString("en-US") }]);
+    setHoursDraft({ workPerformed: "", hours: "" });
   };
   const totalHours = hours.reduce((total, row) => total + row.hours, 0);
   const toggleCapability = (location: string, capability: string) => setCapabilityMatrix((previous) => ({
@@ -218,30 +224,23 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
             </TabsContent>
 
             <TabsContent value="documents" className="mt-0 space-y-3">
-              <Card><CardContent className="p-0">
-                <div className="border-b bg-muted/30 px-3 py-2"><h2 className="flex items-center gap-2 text-xs font-semibold"><FileText className="h-3.5 w-3.5" />Documents</h2></div>
-                <div className="grid gap-2 border-b p-3 md:grid-cols-[220px_1fr_260px]">
-                  <Select value={documentType} onValueChange={setDocumentType}><SelectTrigger aria-label="Document Type" className="h-8 text-xs"><SelectValue /></SelectTrigger><SelectContent>{DOCUMENT_TYPES.map((type) => <SelectItem key={type} value={type} className="text-xs">{type}</SelectItem>)}</SelectContent></Select>
-                  <Input aria-label="Document Description" className="h-8 text-xs" value={documentDescription} onChange={(event) => setDocumentDescription(event.target.value)} placeholder="Description" />
-                  <label className="flex h-8 cursor-pointer items-center justify-center gap-2 rounded-md border border-dashed text-xs hover:bg-muted"><Upload className="h-3.5 w-3.5" />Select files<input type="file" multiple className="hidden" onChange={(event) => { addDocuments(event.target.files); event.target.value = ""; }} /></label>
+              <Card><CardContent className="p-4">
+                <div className="mb-5 flex items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground"><FileText className="h-5 w-5" /></span><div><h2 className="text-sm font-semibold">Add Document</h2><p className="text-xs text-muted-foreground">Upload supporting files for this product review.</p></div></div>
+                <div className="grid items-end gap-3 lg:grid-cols-4">
+                  <div className="space-y-1"><Label className="text-xs text-muted-foreground">Document Type</Label><Select value={documentType || undefined} onValueChange={setDocumentType}><SelectTrigger aria-label="Document Type" className="h-9 text-xs"><SelectValue placeholder="Select type..." /></SelectTrigger><SelectContent>{DOCUMENT_TYPES.map((type) => <SelectItem key={type} value={type} className="text-xs">{type}</SelectItem>)}</SelectContent></Select></div>
+                  <div className="space-y-1"><Label className="text-xs text-muted-foreground">Description</Label><Input aria-label="Document Description" className="h-9 text-xs" value={documentDescription} onChange={(event) => setDocumentDescription(event.target.value)} placeholder="Brief description..." /></div>
+                  <div className="space-y-1"><Label className="text-xs text-muted-foreground">Select File</Label><label className="flex h-9 cursor-pointer items-center gap-2 rounded-md border bg-background px-3 text-xs hover:bg-muted"><Upload className="h-3.5 w-3.5" /><span className="font-medium">Browse</span><span className="min-w-0 truncate text-muted-foreground">{selectedFiles.length ? selectedFiles.map((file) => file.name).join(", ") : "No file selected"}</span><input type="file" multiple className="hidden" onChange={(event) => { setSelectedFiles(Array.from(event.target.files || [])); event.target.value = ""; }} /></label></div>
+                  <Button className="h-9 bg-success text-xs text-success-foreground hover:bg-success/90" disabled={!documentType || selectedFiles.length === 0} onClick={addDocuments}>Upload Document</Button>
                 </div>
-                <div className="overflow-x-auto"><Table><TableHeader><TableRow className="bg-muted/40"><TableHead>Document</TableHead><TableHead>Type</TableHead><TableHead>Description</TableHead><TableHead className="w-12" /></TableRow></TableHeader><TableBody>{documents.length ? documents.map((document) => <TableRow key={document.id} className="text-xs"><TableCell className="font-medium">{document.name}</TableCell><TableCell>{document.type}</TableCell><TableCell>{document.description || "—"}</TableCell><TableCell><Button variant="ghost" size="icon" className="h-7 w-7" aria-label={`Remove ${document.name}`} onClick={() => setDocuments((previous) => previous.filter((row) => row.id !== document.id))}><Trash2 className="h-3.5 w-3.5" /></Button></TableCell></TableRow>) : <TableRow><TableCell colSpan={4} className="h-20 text-center text-xs text-muted-foreground">No documents have been added.</TableCell></TableRow>}</TableBody></Table></div>
               </CardContent></Card>
+              <Card><CardContent className="p-0"><div className="border-b px-4 py-3"><h2 className="flex items-center gap-2 text-sm font-semibold">Attached Documents <span className="rounded-full bg-muted px-2 py-0.5 text-[10px]">{documents.length}</span></h2></div><div className="overflow-x-auto"><Table><TableHeader><TableRow className="bg-muted/40"><TableHead>Type</TableHead><TableHead>Document</TableHead><TableHead>Description</TableHead><TableHead>Uploaded By</TableHead><TableHead>Uploaded Date</TableHead></TableRow></TableHeader><TableBody>{documents.length ? documents.map((document) => <TableRow key={document.id} className="text-xs"><TableCell><span className="rounded bg-muted px-2 py-1 font-medium">{document.type}</span></TableCell><TableCell className="font-medium">{document.name}</TableCell><TableCell>{document.description || "—"}</TableCell><TableCell>{document.uploadedBy}</TableCell><TableCell>{document.uploadedDate}</TableCell></TableRow>) : <TableRow><TableCell colSpan={5} className="h-20 text-center text-xs text-muted-foreground">No documents have been added.</TableCell></TableRow>}</TableBody></Table></div><div className="flex items-center justify-between border-t bg-muted/20 px-4 py-2 text-xs text-muted-foreground"><span>Showing {documents.length} {documents.length === 1 ? "record" : "records"}</span><span>Page 1 of 1</span></div></CardContent></Card>
             </TabsContent>
 
             <TabsContent value="hours" className="mt-0 space-y-3">
-              <Card><CardContent className="p-0">
-                <div className="flex items-center justify-between border-b bg-muted/30 px-3 py-2"><div><h2 className="text-xs font-semibold">Hours</h2><p className="mt-0.5 text-[10px] text-muted-foreground">Track time spent completing this Product Review item.</p></div><div className="text-right"><div className="text-[10px] text-muted-foreground">Total Hours</div><div className="text-sm font-semibold">{totalHours.toFixed(2)}</div></div></div>
-                <div className="grid gap-2 border-b p-3 sm:grid-cols-2 lg:grid-cols-[140px_1fr_180px_110px_2fr_auto]">
-                  <Input aria-label="Work Date" type="date" className="h-8 text-xs" value={hoursDraft.date} onChange={(event) => setHoursDraft((previous) => ({ ...previous, date: event.target.value }))} />
-                  <Input aria-label="Technician" className="h-8 text-xs" value={hoursDraft.technician} onChange={(event) => setHoursDraft((previous) => ({ ...previous, technician: event.target.value }))} placeholder="Technician" />
-                  <Select value={hoursDraft.workType} onValueChange={(value) => setHoursDraft((previous) => ({ ...previous, workType: value }))}><SelectTrigger aria-label="Work Type" className="h-8 text-xs"><SelectValue /></SelectTrigger><SelectContent>{["Product Review", "Research", "Procedure", "Template", "Other"].map((type) => <SelectItem key={type} value={type} className="text-xs">{type}</SelectItem>)}</SelectContent></Select>
-                  <Input aria-label="Hours" type="number" min="0.25" step="0.25" className="h-8 text-xs" value={hoursDraft.hours} onChange={(event) => setHoursDraft((previous) => ({ ...previous, hours: event.target.value }))} placeholder="Hours" />
-                  <Textarea aria-label="Hours Notes" className="min-h-8 resize-none py-1.5 text-xs" value={hoursDraft.notes} onChange={(event) => setHoursDraft((previous) => ({ ...previous, notes: event.target.value }))} placeholder="Notes" />
-                  <Button size="sm" className="h-8 bg-success text-xs text-success-foreground hover:bg-success/90" onClick={addHours}><Plus />Add Hours</Button>
-                </div>
-                <div className="overflow-x-auto"><Table><TableHeader><TableRow className="bg-muted/40"><TableHead>Date</TableHead><TableHead>Technician</TableHead><TableHead>Work Type</TableHead><TableHead>Hours</TableHead><TableHead>Notes</TableHead><TableHead className="w-12" /></TableRow></TableHeader><TableBody>{hours.length ? hours.map((row) => <TableRow key={row.id} className="text-xs"><TableCell>{row.date}</TableCell><TableCell>{row.technician}</TableCell><TableCell>{row.workType}</TableCell><TableCell>{row.hours.toFixed(2)}</TableCell><TableCell>{row.notes || "—"}</TableCell><TableCell><Button variant="ghost" size="icon" className="h-7 w-7" aria-label={`Remove hours for ${row.date}`} onClick={() => setHours((previous) => previous.filter((entry) => entry.id !== row.id))}><Trash2 className="h-3.5 w-3.5" /></Button></TableCell></TableRow>) : <TableRow><TableCell colSpan={6} className="h-20 text-center text-xs text-muted-foreground">No hours have been recorded.</TableCell></TableRow>}</TableBody></Table></div>
-              </CardContent></Card>
+              <div className="grid items-stretch gap-4 lg:grid-cols-[minmax(280px,1fr)_2fr]">
+                <Card><CardContent className="flex h-full flex-col p-4"><div className="mb-5 flex items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground"><Clock3 className="h-5 w-5" /></span><div><h2 className="text-sm font-semibold">Log Time</h2><p className="text-xs text-muted-foreground">Record work performed and time spent.</p></div></div><div className="space-y-4"><div className="space-y-1"><Label className="text-xs text-muted-foreground">Work Performed</Label><Textarea aria-label="Work Performed" className="min-h-28 resize-none text-xs" value={hoursDraft.workPerformed} onChange={(event) => setHoursDraft((previous) => ({ ...previous, workPerformed: event.target.value }))} placeholder="Describe the work completed..." /></div><div className="space-y-1"><Label className="text-xs text-muted-foreground">Hours</Label><Input aria-label="Hours" type="number" min="0.25" step="0.25" className="h-9 text-xs" value={hoursDraft.hours} onChange={(event) => setHoursDraft((previous) => ({ ...previous, hours: event.target.value }))} placeholder="0.00" /></div><Button className="h-9 w-full bg-success text-xs text-success-foreground hover:bg-success/90" onClick={addHours}>Add Hours</Button></div></CardContent></Card>
+                <Card><CardContent className="flex h-full min-h-80 flex-col p-4"><div className="flex items-center justify-between gap-3"><div className="flex items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground"><Clock3 className="h-5 w-5" /></span><div><h2 className="text-sm font-semibold">Hours History</h2><p className="text-xs text-muted-foreground">All recorded time entries.</p></div></div><div className="rounded-md bg-muted px-3 py-2 text-xs text-muted-foreground">Total <strong className="ml-2 text-sm text-foreground">{totalHours.toFixed(2)} hrs</strong></div></div><div className="mt-5 flex min-h-48 flex-1 flex-col overflow-hidden rounded-md border">{hours.length ? <Table><TableHeader><TableRow className="bg-muted/40"><TableHead>Work Performed</TableHead><TableHead>Recorded By</TableHead><TableHead>Recorded Date</TableHead><TableHead className="text-right">Hours</TableHead></TableRow></TableHeader><TableBody>{hours.map((row) => <TableRow key={row.id} className="text-xs"><TableCell className="font-medium">{row.workPerformed}</TableCell><TableCell>{row.recordedBy}</TableCell><TableCell>{row.recordedDate}</TableCell><TableCell className="text-right">{row.hours.toFixed(2)}</TableCell></TableRow>)}</TableBody></Table> : <div className="flex flex-1 flex-col items-center justify-center text-center"><span className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted text-muted-foreground"><Clock3 className="h-6 w-6" /></span><p className="text-sm font-medium">No hours recorded yet</p><p className="mt-1 text-xs text-muted-foreground">Use the form to log your first entry.</p></div>}</div><div className="flex items-center justify-between px-1 pt-3 text-xs text-muted-foreground"><span>{hours.length} {hours.length === 1 ? "entry" : "entries"} recorded</span><span>Page 1 of 1</span></div></CardContent></Card>
+              </div>
             </TabsContent>
           </Tabs>
         </div>
