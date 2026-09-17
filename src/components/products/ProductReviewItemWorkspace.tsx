@@ -191,14 +191,6 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
             </div>
               </CardContent></Card>
 
-              <Card><CardContent className="p-0">
-            <div className="border-b bg-muted/30 px-3 py-2 text-xs font-semibold">Calibration and Report Information</div>
-            <div className="grid gap-x-8 gap-y-3 p-3 md:grid-cols-2">
-              <SelectField label="Has Unit been calibrated before?" value={draft.calibratedBefore} options={["Yes", "No"]} onChange={(value) => setField("calibratedBefore", value)} />
-              <SelectField label="Can datasheet/test reports be provided?" value={draft.reportsAvailable} options={["Yes", "No"]} onChange={(value) => setField("reportsAvailable", value)} />
-              {draft.calibratedBefore === "No" && <div className="md:col-span-2"><Field label="Why does the product need to be calibrated?" value={draft.calibrationReason} onChange={(value) => setField("calibrationReason", value)} /></div>}
-            </div>
-              </CardContent></Card>
 
               <Card><CardContent className="overflow-x-auto p-0">
             <Table><TableHeader><TableRow className="bg-muted/40"><TableHead>Dept/Area</TableHead><TableHead>Date Sent</TableHead><TableHead>Ack</TableHead><TableHead>Ack Date</TableHead><TableHead>Ack User</TableHead><TableHead>Completed</TableHead><TableHead>Completed Date</TableHead><TableHead>Completed User</TableHead></TableRow></TableHeader>
