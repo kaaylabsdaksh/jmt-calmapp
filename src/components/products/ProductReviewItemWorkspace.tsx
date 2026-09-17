@@ -231,10 +231,29 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
               </CardContent></Card>
 
 
-              <Card><CardContent className="overflow-x-auto p-0">
-            <Table><TableHeader><TableRow className="bg-muted/40"><TableHead>Dept/Area</TableHead><TableHead>Date Sent</TableHead><TableHead>Ack</TableHead><TableHead>Ack Date</TableHead><TableHead>Ack User</TableHead><TableHead>Completed</TableHead><TableHead>Completed Date</TableHead><TableHead>Completed User</TableHead></TableRow></TableHeader>
-              <TableBody><TableRow className="text-xs"><TableCell>{draft.status}</TableCell><TableCell>{draft.createdDate}</TableCell><TableCell>Yes</TableCell><TableCell>{draft.createdDate}</TableCell><TableCell>Admin User</TableCell><TableCell>{draft.completedDate ? "Yes" : "—"}</TableCell><TableCell>{draft.completedDate || "—"}</TableCell><TableCell>{draft.completedDate ? "Admin User" : "—"}</TableCell></TableRow></TableBody>
+              <Card><CardContent className="p-0">
+                <div className="flex flex-wrap items-center gap-2 border-b bg-muted/20 p-2">
+                  {ROUTING_ACTIONS.map((action) => {
+                    const isCurrent = currentDept === ACTION_STATUS[action];
+                    return <Button key={action} size="sm" variant="outline" className={`h-7 text-[11px] ${isCurrent ? "border-destructive font-semibold text-destructive" : ""}`} onClick={() => { setPendingAction(action); setRoutingComment(""); }}>{action}</Button>;
+                  })}
+                  <span className="mx-1 hidden h-5 w-px bg-border sm:block" />
+                  {DECISION_ACTIONS.map((action) => <Button key={action} size="sm" variant="outline" className="h-7 text-[11px]" onClick={() => { setPendingAction(action); setRoutingComment(""); }}>{action}</Button>)}
+                </div>
+                <div className="overflow-x-auto">
+            <Table><TableHeader><TableRow className="bg-muted/40"><TableHead>Dept/Area</TableHead><TableHead>Date Sent</TableHead><TableHead className="w-16 text-center">Ack</TableHead><TableHead>Ack Date</TableHead><TableHead>Ack User</TableHead><TableHead className="w-20 text-center">Completed</TableHead><TableHead>Completed Date</TableHead><TableHead>Completed User</TableHead></TableRow></TableHeader>
+              <TableBody>{routing.length ? routing.map((row) => <TableRow key={row.id} className="text-xs">
+                <TableCell className="font-medium">{row.dept}</TableCell>
+                <TableCell>{row.dateSent}</TableCell>
+                <TableCell className="text-center"><Checkbox aria-label={`Ack ${row.dept}`} checked={row.ack} onCheckedChange={() => toggleAck(row.id)} className="mx-auto h-3.5 w-3.5" /></TableCell>
+                <TableCell>{row.ackDate || "—"}</TableCell>
+                <TableCell>{row.ackUser || "—"}</TableCell>
+                <TableCell className="text-center"><Checkbox aria-label={`Completed ${row.dept}`} checked={row.completed} onCheckedChange={() => toggleCompleted(row.id)} className="mx-auto h-3.5 w-3.5" /></TableCell>
+                <TableCell>{row.completedDate || "—"}</TableCell>
+                <TableCell>{row.completedUser || "—"}</TableCell>
+              </TableRow>) : <TableRow><TableCell colSpan={8} className="h-16 text-center text-xs text-muted-foreground">No routing history yet. Use the buttons above to send this item to a department.</TableCell></TableRow>}</TableBody>
             </Table>
+                </div>
               </CardContent></Card>
 
               <WorkOrderItemComments workOrderItemId={`${prNumber}-${draft.itemNumber}`} />
