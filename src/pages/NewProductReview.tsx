@@ -130,6 +130,7 @@ export default function NewProductReview() {
     if (Object.keys(nextErrors).length) return;
     const number = prNumber || `PR${String(10579 + Math.floor(Math.random() * 300)).padStart(5, "0")}`;
     setPrNumber(number);
+    setAudit({ createdBy: audit.createdBy || "Admin User", modifiedBy: "Admin User" });
     toast({ title: "Product review saved", description: `${number} is ready for PR items.` });
   };
 
