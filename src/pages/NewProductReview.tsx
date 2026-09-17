@@ -181,12 +181,18 @@ export default function NewProductReview() {
               <Card><CardContent className="p-0">
                 <SectionTitle title="Customer and review" />
                 <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-2 xl:grid-cols-4">
+                  <Field label="Quote #" value={review.quote} onChange={(value) => setReviewField("quote", value)} />
                   <SelectField label="Existing Customer" value={review.existingCustomer} options={["Yes", "No"]} onChange={(value) => setReviewField("existingCustomer", value)} />
                   <Field label="Account #" value={review.account} onChange={(value) => setReviewField("account", value)} error={errors.account} required suffix={<Button variant="outline" size="sm" className="h-8 px-2 text-xs" onClick={() => { setReview((previous) => ({ ...previous, account: "00000.00", customer: "Test", address1: "123 Test Drive", city: "Toms River", state: "NJ", zip: "70353", contact: "AK Alpha", firstName: "AK", lastName: "Alpha", phone: "(123) 123-1231", cell: "(123) 123-1234" })); setErrors({}); }}><Search />Find</Button>} />
                   <Field label="Customer Name" value={review.customer} onChange={(value) => setReviewField("customer", value)} error={errors.customer} required />
                   <SelectField label="PR Status" value={review.status} options={["Open", "On Hold", "Completed", "Cancelled"]} onChange={(value) => setReviewField("status", value)} />
                   <Field label="SR Doc" value={review.srDoc} onChange={(value) => setReviewField("srDoc", value)} />
                   <Field label="OSR Doc" value={review.osrDoc} onChange={(value) => setReviewField("osrDoc", value)} />
+                </div>
+                <SectionTitle title="Audit information" />
+                <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-2 xl:grid-cols-4">
+                  <AuditValue label="Created by" value={audit.createdBy} />
+                  <AuditValue label="Modified by" value={audit.modifiedBy} />
                 </div>
               </CardContent></Card>
 
