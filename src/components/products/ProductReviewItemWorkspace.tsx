@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { AlertTriangle, ArrowLeft, Clock3, FileText, Mail, MoreHorizontal, Save, Upload } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { AlertTriangle, ArrowLeft, Clock3, ExternalLink, FileText, Mail, MoreHorizontal, Save, Upload } from "lucide-react";
 import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
