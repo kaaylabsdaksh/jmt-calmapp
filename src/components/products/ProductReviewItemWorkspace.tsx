@@ -178,7 +178,13 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
               <section className="space-y-3">
                 <SectionHeading>Item Identification</SectionHeading>
                 <Field label="PR Item #" value={`${prNumber}-${draft.itemNumber}`} disabled />
-                <Field label="Due Date" value={draft.dueDate} onChange={(value) => setField("dueDate", value)} />
+                <div className="grid grid-cols-[minmax(8rem,42%)_1fr] items-center gap-2">
+                  <Label className="text-right text-[11px] text-muted-foreground">Due Date</Label>
+                  <div className="flex items-center gap-2">
+                    <Input aria-label="Due Date" className="h-7 text-xs" value={draft.dueDate} readOnly />
+                    <Button variant="link" size="sm" className="h-7 px-0 text-xs" onClick={() => { setDueDateDraft(draft.dueDate); setDueDateComment(""); setDueDateOpen(true); }}>Update Date</Button>
+                  </div>
+                </div>
                 <SelectField label="PR Item Status" value={draft.status} options={["Review Initiated", "Initiator", "Lab Management", "Metrology", "Lead Tech", "Approved", "Completed", "Cancelled"]} onChange={(value) => setField("status", value)} />
                 <SelectField label="Location" value={draft.location} options={["Alexandria", "Baton Rouge", "Houston", "Onsite"]} onChange={(value) => setField("location", value)} />
                 <SelectField label="Division" value={draft.division} options={["Regular", "OnSite", "ESL"]} onChange={(value) => setField("division", value)} />
