@@ -195,7 +195,7 @@ const ScheduleEditor = ({ schedule, isNew, onChange, onSave, onLifecycle, onBack
   return <section className="flex min-h-0 flex-1 flex-col bg-card">
     <div className="flex-1 overflow-auto">
       <Accordion type="multiple" defaultValue={["assignment", "settings", ...(isNew ? [] : ["history", "comments"] as string[])]} className="space-y-3 px-4 py-4">
-        <AccordionItem value="assignment" className="border bg-card">
+        <AccordionItem value="assignment" className="rounded-lg border bg-card shadow-xs overflow-hidden">
           <AccordionTrigger className="px-4 py-2.5 hover:no-underline">
             <span className="flex items-center gap-2"><span className="h-3 w-1 bg-info" /><span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Schedule Assignment</span></span>
           </AccordionTrigger>
@@ -210,7 +210,7 @@ const ScheduleEditor = ({ schedule, isNew, onChange, onSave, onLifecycle, onBack
             </div>
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="settings" className="border bg-card">
+        <AccordionItem value="settings" className="rounded-lg border bg-card shadow-xs overflow-hidden">
           <AccordionTrigger className="px-4 py-2.5 hover:no-underline">
             <span className="flex items-center gap-2"><span className="h-3 w-1 bg-info" /><span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Schedule Settings</span></span>
             <span className="flex items-center gap-2 pr-2"><span className="text-[10px] text-muted-foreground">ID: {isNew ? "Assigned on save" : schedule.id}</span><StatusBadge status={schedule.scheduleStatus} /></span>
@@ -225,14 +225,14 @@ const ScheduleEditor = ({ schedule, isNew, onChange, onSave, onLifecycle, onBack
           </AccordionContent>
         </AccordionItem>
         {!isNew && <>
-          <AccordionItem value="history" className="border bg-card">
+          <AccordionItem value="history" className="rounded-lg border bg-card shadow-xs overflow-hidden">
             <AccordionTrigger className="px-4 py-2.5 hover:no-underline">
               <span className="flex items-center gap-2"><span className="h-3 w-1 bg-info" /><span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">History</span></span>
               <span className="pr-2 text-[10px] text-muted-foreground">{schedule.histories.length} record{schedule.histories.length === 1 ? "" : "s"}</span>
             </AccordionTrigger>
             <AccordionContent className="px-4 pb-4 pt-0"><HistoryTable schedule={schedule} /></AccordionContent>
           </AccordionItem>
-          <AccordionItem value="comments" className="border bg-card">
+          <AccordionItem value="comments" className="rounded-lg border bg-card shadow-xs overflow-hidden">
             <AccordionTrigger className="px-4 py-2.5 hover:no-underline">
               <span className="flex items-center gap-2"><span className="h-3 w-1 bg-info" /><span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Comments</span></span>
             </AccordionTrigger>
