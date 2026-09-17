@@ -24,6 +24,7 @@ const MATCHES = [
 ];
 
 type ReviewDraft = {
+  quote: string;
   existingCustomer: string;
   account: string;
   customer: string;
