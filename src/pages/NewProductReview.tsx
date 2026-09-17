@@ -24,6 +24,7 @@ const MATCHES = [
 ];
 
 type ReviewDraft = {
+  quote: string;
   existingCustomer: string;
   account: string;
   customer: string;
@@ -59,7 +60,7 @@ type ItemDraft = {
   reportsAvailable: string;
 };
 
-const EMPTY_REVIEW: ReviewDraft = { existingCustomer: "Yes", account: "", customer: "", address1: "", address2: "", address3: "", city: "", state: "", zip: "", status: "Open", srDoc: "", osrDoc: "", contact: "", firstName: "", lastName: "", title: "", phone: "", fax: "", cell: "", email: "" };
+const EMPTY_REVIEW: ReviewDraft = { quote: "", existingCustomer: "Yes", account: "", customer: "", address1: "", address2: "", address3: "", city: "", state: "", zip: "", status: "Open", srDoc: "", osrDoc: "", contact: "", firstName: "", lastName: "", title: "", phone: "", fax: "", cell: "", email: "" };
 const EMPTY_ITEM: ItemDraft = { manufacturer: "", model: "", manufacturerUnknown: false, modelUnknown: false, manufacturerNew: false, modelNew: false, description: "", calibratedBefore: "", calibrationReason: "", reportsAvailable: "" };
 
 type ContactDraft = { firstName: string; lastName: string; title: string; phone: string; fax: string; cell: string; email: string };
@@ -80,6 +81,7 @@ export default function NewProductReview() {
   const requestedItem = searchParams.get("item");
   const [review, setReview] = useState<ReviewDraft>(initialReview);
   const [prNumber, setPrNumber] = useState(existingPrNumber || "");
+  const [audit, setAudit] = useState({ createdBy: existingRow?.createdBy || "", modifiedBy: existingRow?.createdBy || "" });
 
   const [items, setItems] = useState<ProductReviewItem[]>(initialItems);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(() => requestedItem ? initialItems.find((item) => item.itemNumber === requestedItem)?.id || null : null);
@@ -128,6 +130,7 @@ export default function NewProductReview() {
     if (Object.keys(nextErrors).length) return;
     const number = prNumber || `PR${String(10579 + Math.floor(Math.random() * 300)).padStart(5, "0")}`;
     setPrNumber(number);
+    setAudit({ createdBy: audit.createdBy || "Admin User", modifiedBy: "Admin User" });
     toast({ title: "Product review saved", description: `${number} is ready for PR items.` });
   };
 
@@ -179,12 +182,18 @@ export default function NewProductReview() {
               <Card><CardContent className="p-0">
                 <SectionTitle title="Customer and review" />
                 <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-2 xl:grid-cols-4">
+                  <Field label="Quote #" value={review.quote} onChange={(value) => setReviewField("quote", value)} />
                   <SelectField label="Existing Customer" value={review.existingCustomer} options={["Yes", "No"]} onChange={(value) => setReviewField("existingCustomer", value)} />
                   <Field label="Account #" value={review.account} onChange={(value) => setReviewField("account", value)} error={errors.account} required suffix={<Button variant="outline" size="sm" className="h-8 px-2 text-xs" onClick={() => { setReview((previous) => ({ ...previous, account: "00000.00", customer: "Test", address1: "123 Test Drive", city: "Toms River", state: "NJ", zip: "70353", contact: "AK Alpha", firstName: "AK", lastName: "Alpha", phone: "(123) 123-1231", cell: "(123) 123-1234" })); setErrors({}); }}><Search />Find</Button>} />
                   <Field label="Customer Name" value={review.customer} onChange={(value) => setReviewField("customer", value)} error={errors.customer} required />
                   <SelectField label="PR Status" value={review.status} options={["Open", "On Hold", "Completed", "Cancelled"]} onChange={(value) => setReviewField("status", value)} />
                   <Field label="SR Doc" value={review.srDoc} onChange={(value) => setReviewField("srDoc", value)} />
                   <Field label="OSR Doc" value={review.osrDoc} onChange={(value) => setReviewField("osrDoc", value)} />
+                </div>
+                <SectionTitle title="Audit information" />
+                <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-2 xl:grid-cols-4">
+                  <AuditValue label="Created by" value={audit.createdBy} />
+                  <AuditValue label="Modified by" value={audit.modifiedBy} />
                 </div>
               </CardContent></Card>
 
@@ -278,5 +287,6 @@ function SelectField({ label, value, options, onChange, error, required }: { lab
 function WizardSearchField({ label, value, onChange, unknown, onUnknown, newItem, onNewItem, error }: { label: string; value: string; onChange: (value: string) => void; unknown: boolean; onUnknown: (checked: boolean) => void; newItem: boolean; onNewItem: (checked: boolean) => void; error?: string }) { return <div className="space-y-2"><Label className="text-xs font-medium">{label} <span className="text-destructive">*</span></Label><div className="flex gap-2"><Input aria-label={label} value={value} disabled={unknown} onChange={(event) => onChange(event.target.value)} className={cn("h-9 text-xs", error && "border-destructive")} /><Button variant="outline" size="icon" className="h-9 w-9" aria-label={`Search ${label}`}><Search /></Button></div><div className="flex flex-wrap gap-4 text-xs"><label className="flex items-center gap-2"><Checkbox checked={newItem} onCheckedChange={(checked) => onNewItem(checked === true)} />Not in CalMapp</label><label className="flex items-center gap-2"><Checkbox checked={unknown} onCheckedChange={(checked) => onUnknown(checked === true)} />Unknown</label></div>{error && <ErrorText text={error} />}</div>; }
 function SummaryStrip({ draft }: { draft: ItemDraft }) { return <div className="grid gap-2 rounded-md bg-muted/40 p-3 text-xs sm:grid-cols-3"><span>Manufacturer: <strong>{draft.manufacturerUnknown ? "Unknown" : draft.manufacturer || "—"}</strong></span><span>Model: <strong>{draft.modelUnknown ? "Unknown" : draft.model || "—"}</strong></span><span>Description: <strong>{draft.description || "—"}</strong></span></div>; }
 function ReviewValue({ label, value }: { label: string; value: string }) { return <div><div className="text-[10px] uppercase text-muted-foreground">{label}</div><div className="text-xs font-medium">{value || "—"}</div></div>; }
+function AuditValue({ label, value }: { label: string; value: string }) { return <div><div className="text-[9px] uppercase leading-none text-muted-foreground">{label}</div><div className="pt-1 text-[11px] font-medium">{value || "—"}</div></div>; }
 function ErrorText({ text }: { text: string }) { return <p className="text-[10px] text-destructive">{text}</p>; }
 function ValidationMessage({ text }: { text: string }) { return <div className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-xs text-destructive">{text}</div>; }
