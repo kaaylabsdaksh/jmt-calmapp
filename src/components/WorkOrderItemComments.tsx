@@ -302,14 +302,19 @@ export const WorkOrderItemComments: React.FC<WorkOrderItemCommentsProps> = ({
                       <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground w-[90px]">
                         Type
                       </th>
+                      {showItemColumn && (
+                        <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground w-[70px]">
+                          Item
+                        </th>
+                      )}
                       <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground w-[120px]">
-                        User
+                        Created By
                       </th>
                       <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground w-[140px]">
-                        Date
+                        Date Entered
                       </th>
                       <th className="text-left px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-                        Details
+                        Comment
                       </th>
                     </tr>
                   </thead>
