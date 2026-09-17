@@ -1,12 +1,26 @@
-# Match PR Item Documents and Hours
+# Improve Manage Schedules and Add Schedule
 
-## Changes
-- Rebuild Documents as two stacked sections: labeled Add Document fields with a separate upload action, then Attached Documents with count, uploader/date columns, and record/page footer.
-- Prefill the existing document shown in the reference while retaining uploaded documents in the current session.
-- Rebuild Hours as a two-column layout: Log Time with only Work Performed and Hours, plus Hours History with total, empty/history state, and record/page footer.
-- Keep the existing PR Item Details and Capable Locations tabs unchanged.
+## Goal
+Refresh both schedule screens using the existing CalMApp design system and Work Sans typography. Keep every current field, lifecycle action, validation rule, linked-standard view, history, comments, search behavior, and pagination intact.
+
+## Manage Schedules
+- Reorganize Search Criteria into three compact horizontal groups: schedule identity, assignment, and dates/status.
+- Add a concise results summary band showing total, active, pending, and attention-needed counts from the current records.
+- Improve the dense schedule table with stronger row hierarchy, clearer schedule links, compact status/frequency presentation, and a more polished expanded-history area.
+- Retain sticky table headings, sticky first columns, expandable rows, and the bottom Back/pagination bar.
+
+## Add / Edit Schedule
+- Replace the current split-column form with structured full-width bands:
+  1. Schedule overview and lifecycle status
+  2. Template and station assignment
+  3. Frequency and date settings
+  4. Linked standards
+  5. Audit information
+- Keep required fields visually clear and improve empty/read-only states.
+- Preserve existing History and shared Comments sections for saved schedules.
+- Keep Back and lifecycle/Save actions in the sticky footer, with the primary action clearly emphasized.
 
 ## Technical details
-- Update only the Product Review item workspace presentation and its local Documents/Hours state.
-- Use existing design tokens, shared controls, validation, and responsive stacking on smaller screens.
-- Verify both tabs visually and confirm the current app build remains clean.
+- Update only `ManagePmSchedules.tsx`; no data model, routing, dependency, or backend changes.
+- Use existing semantic colors, shared controls, status badges, and date pickers.
+- Verify the list, Add New Schedule, and an existing schedule at desktop and narrow widths; confirm no overflow, broken actions, or build errors.
