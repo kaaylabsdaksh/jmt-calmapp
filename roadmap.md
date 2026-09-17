@@ -16,4 +16,4 @@
 - [x] Build modern Manage Schedules list and Add/Edit workflow for PM / Interim Checks
 - [x] Build modern direct-add Product Review workflow with PR setup, item wizard, and details
 - [x] Prefill existing Product Reviews and open their saved PR items directly
-- [ ] Restore Capable Locations, Documents, and Hours tabs on PR item details
+- [x] Restore Capable Locations, Documents, and Hours tabs on PR item details
