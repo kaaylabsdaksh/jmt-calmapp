@@ -182,18 +182,18 @@ export default function NewProductReview() {
               <Card><CardContent className="p-0">
                 <SectionTitle title="Customer and review" />
                 <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-2 xl:grid-cols-4">
-                  <div className="space-y-0.5">
-                    <Label className="text-[9px] uppercase leading-none text-muted-foreground">Quote #</Label>
-                    {review.quote
-                      ? <Button variant="link" className="h-7 justify-start p-0 text-[11px] text-info underline hover:text-info/80" onClick={() => navigate("/quotes")}><ExternalLink className="h-3 w-3" />{review.quote}</Button>
-                      : <Input aria-label="Quote #" value={review.quote} onChange={(event) => setReviewField("quote", event.target.value)} className="h-7 px-2 text-[11px]" placeholder="Enter quote #" />}
-                  </div>
                   <SelectField label="Existing Customer" value={review.existingCustomer} options={["Yes", "No"]} onChange={(value) => setReviewField("existingCustomer", value)} />
                   <Field label="Account #" value={review.account} onChange={(value) => setReviewField("account", value)} error={errors.account} required suffix={<Button variant="outline" size="sm" className="h-8 px-2 text-xs" onClick={() => { setReview((previous) => ({ ...previous, account: "00000.00", customer: "Test", address1: "123 Test Drive", city: "Toms River", state: "NJ", zip: "70353", contact: "AK Alpha", firstName: "AK", lastName: "Alpha", phone: "(123) 123-1231", cell: "(123) 123-1234" })); setErrors({}); }}><Search />Find</Button>} />
                   <Field label="Customer Name" value={review.customer} onChange={(value) => setReviewField("customer", value)} error={errors.customer} required />
                   <SelectField label="PR Status" value={review.status} options={["Open", "On Hold", "Completed", "Cancelled"]} onChange={(value) => setReviewField("status", value)} />
                   <Field label="SR Doc" value={review.srDoc} onChange={(value) => setReviewField("srDoc", value)} />
                   <Field label="OSR Doc" value={review.osrDoc} onChange={(value) => setReviewField("osrDoc", value)} />
+                  <div className="space-y-0.5">
+                    <Label className="text-[9px] uppercase leading-none text-muted-foreground">Quote #</Label>
+                    {review.quote
+                      ? <Button variant="link" className="h-7 justify-start p-0 text-[11px] text-info underline hover:text-info/80" onClick={() => navigate("/quotes")}><ExternalLink className="h-3 w-3" />{review.quote}</Button>
+                      : <Input aria-label="Quote #" value={review.quote} onChange={(event) => setReviewField("quote", event.target.value)} className="h-7 px-2 text-[11px]" placeholder="Enter quote #" />}
+                  </div>
                 </div>
                 <SectionTitle title="Audit information" />
                 <div className="grid gap-x-3 gap-y-2 p-2 md:grid-cols-2 xl:grid-cols-4">
