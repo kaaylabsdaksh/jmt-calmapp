@@ -18,6 +18,7 @@ type Crumb = { label: string; to?: string };
 const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
   "/": { title: "Work Order Management", crumbs: [{ label: "Home", to: "/" }, { label: "Work Orders" }] },
   "/transit-log": { title: "Transit Log", crumbs: [{ label: "Home", to: "/" }, { label: "Work Orders", to: "/" }, { label: "Transit Log" }] },
+  "/assign-departure-info": { title: "Assign Departure Information", crumbs: [{ label: "Home", to: "/" }, { label: "Work Orders", to: "/" }, { label: "Assign Departure Information" }] },
   "/onsite-projects": { title: "Onsite Projects", crumbs: [{ label: "Home", to: "/" }, { label: "Onsite Projects" }] },
   "/onsite-scheduling": { title: "Onsite Scheduling", crumbs: [{ label: "Home", to: "/" }, { label: "Onsite Scheduling" }] },
   "/onsite-scheduling-prototype": { title: "Onsite Scheduling", crumbs: [{ label: "Home", to: "/" }, { label: "Onsite Scheduling" }] },

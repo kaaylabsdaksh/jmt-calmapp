@@ -53,6 +53,7 @@ import Invoicing from "./pages/Invoicing";
 import InvoicingUnified from "./pages/InvoicingUnified";
 import DeliveryTickets from "./pages/DeliveryTickets";
 import TransitLog from "./pages/TransitLog";
+import AssignDepartureInfo from "./pages/AssignDepartureInfo";
 import ManageCustomers from "./pages/ManageCustomers";
 import ManageProducts from "./pages/ManageProducts";
 import ManageManufacturers from "./pages/ManageManufacturers";
@@ -161,6 +162,7 @@ const App = () => {
                 <Route path="/invoicing-unified" element={<InvoicingUnified />} />
                 <Route path="/delivery-tickets" element={<DeliveryTickets />} />
                 <Route path="/transit-log" element={<TransitLog />} />
+                <Route path="/assign-departure-info" element={<AssignDepartureInfo />} />
                 <Route path="/manage-customers" element={<ManageCustomers />} />
                 <Route path="/quotes" element={<Quotes />} />
                 <Route path="/quotes/new" element={<NewQuote />} />

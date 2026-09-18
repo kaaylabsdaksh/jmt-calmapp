@@ -21,3 +21,4 @@
 - [x] Align PR item Documents and Hours tabs to the supplied older-screen references
 - [x] Move Product Reviews Products action to a sticky bottom footer
 - [x] Condense the Product Review customer, shipping, and contact fields
+- [x] Modernize the Assign Departure Information workflow
