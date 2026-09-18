@@ -64,7 +64,7 @@ export const workOrderQuickActions = [
   { title: "Rental Batch Certs", icon: FileCheck },
   { title: "PO/Change Orders", icon: FileText },
   { title: "Assign Techs", icon: Users },
-  { title: "Assign Departure Info", icon: MapPin },
+  { title: "Assign Departure Info", icon: MapPin, url: "/assign-departure-info" },
   { title: "Export Excel", icon: FileSpreadsheet },
   { title: "Missing Cost", icon: DollarSign, url: "/missing-cost" },
   { title: "Create Barcode", icon: Barcode },
