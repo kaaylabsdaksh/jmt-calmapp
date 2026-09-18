@@ -331,10 +331,6 @@ const AssignDepartureInfo = () => {
           Back
         </Button>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" className="h-8" onClick={() => navigate("/")}>
-            <Menu className="mr-1.5 h-3.5 w-3.5" />
-            Menu
-          </Button>
           <Button size="sm" className="h-8 bg-success text-success-foreground hover:bg-success/90" onClick={assignDeparture}>
             <CheckCircle2 className="mr-1.5 h-3.5 w-3.5" />
             Assign
