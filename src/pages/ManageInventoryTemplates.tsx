@@ -160,8 +160,9 @@ export const AddInventoryTemplate = () => {
         <div className={cn("rounded-lg border p-4", tested ? "border-success/30 bg-success/5" : "bg-muted/20")}><div className="flex items-center gap-2">{tested ? <CheckCircle2 className="h-4 w-4 text-success" /> : <FileCheck2 className="h-4 w-4 text-muted-foreground" />}<div><p className="text-xs font-semibold">Sample Preview</p><p className="text-[11px] text-muted-foreground">{tested ? "Template passed testing and the sample PDF is ready." : "Run Test Template to generate a sample preview."}</p></div></div>{tested && <Button variant="outline" size="sm" className="mt-3 h-7 text-[11px]" onClick={() => toast({ title: "Sample PDF", description: "The mock sample preview passed all validation checks." })}>View Sample PDF</Button>}</div>
       </div>
     </div></div>
-    <div className="flex shrink-0 items-center justify-between border-t bg-card px-4 py-3"><Button variant="outline" className="h-8 gap-1.5 text-xs" onClick={() => navigate("/inventory/templates")}><ArrowLeft className="h-3.5 w-3.5" /> Back</Button><Button className="h-8 text-xs" onClick={save}>Move to Templates</Button></div>
-  </section></main></div>;
+  </section>
+  <footer className="sticky bottom-0 z-30 flex shrink-0 items-center justify-between gap-2 border-t bg-card px-3 py-3 shadow-[0_-1px_3px_rgba(0,0,0,0.06)] sm:px-4 lg:px-6"><Button variant="outline" className="h-8 gap-1.5 text-xs" onClick={() => navigate("/inventory/templates")}><ArrowLeft className="h-3.5 w-3.5" /> Back</Button><Button className="h-8 text-xs" onClick={save}>Move to Templates</Button></footer>
+</main></div>;
 };
 
 export default ManageInventoryTemplates;
