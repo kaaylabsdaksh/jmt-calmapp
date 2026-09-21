@@ -102,7 +102,7 @@ export const quickActionCategories: Record<string, { title: string; icon: React.
     { title: "Manage Batch Inventories", icon: Archive },
     { title: "Manage MPG Accuracies", icon: CheckCircle },
     { title: "Manage Procedures", icon: Clipboard },
-    { title: "Manage Templates", icon: FileSpreadsheet },
+    { title: "Manage Templates", icon: FileSpreadsheet, url: "/inventory/templates" },
   ],
   "Project Management": [
     { title: "Onsite Projects", icon: MapPin, url: "/onsite-projects" },

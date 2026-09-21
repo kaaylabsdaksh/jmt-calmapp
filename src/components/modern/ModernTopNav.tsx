@@ -29,6 +29,8 @@ const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
   "/quotes/new": { title: "Add New Quote", crumbs: [{ label: "Home", to: "/" }, { label: "Quotes", to: "/quotes" }, { label: "Add New Quote" }] },
   "/manage-products": { title: "Manage Products", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Products" }] },
   "/manage-manufacturers": { title: "Manage Manufacturers", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Manufacturers" }] },
+  "/inventory/templates": { title: "Manage Templates", crumbs: [{ label: "Home", to: "/" }, { label: "Inventory & Templates" }, { label: "Manage Templates" }] },
+  "/inventory/templates/new": { title: "Add Template", crumbs: [{ label: "Home", to: "/" }, { label: "Inventory & Templates" }, { label: "Manage Templates", to: "/inventory/templates" }, { label: "Add Template" }] },
   "/manage-products/new": { title: "Add New Product", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Products", to: "/manage-products" }, { label: "Add New Product" }] },
   "/manage-products/product-reviews": { title: "Product Reviews", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Products", to: "/manage-products" }, { label: "Product Reviews" }] },
   "/manage-products/product-review/new": { title: "Product Review Details", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Products", to: "/manage-products" }, { label: "Add New Product Review" }] },
