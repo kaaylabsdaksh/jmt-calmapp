@@ -22,3 +22,4 @@
 - [x] Move Product Reviews Products action to a sticky bottom footer
 - [x] Condense the Product Review customer, shipping, and contact fields
 - [x] Modernize the Assign Departure Information workflow
+- [x] Build modern Inventory Manage Templates list and add workflow

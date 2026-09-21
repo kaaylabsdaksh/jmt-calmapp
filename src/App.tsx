@@ -57,6 +57,7 @@ import AssignDepartureInfo from "./pages/AssignDepartureInfo";
 import ManageCustomers from "./pages/ManageCustomers";
 import ManageProducts from "./pages/ManageProducts";
 import ManageManufacturers from "./pages/ManageManufacturers";
+import ManageInventoryTemplates, { AddInventoryTemplate } from "./pages/ManageInventoryTemplates";
 import ProductDetail from "./pages/ProductDetail";
 import NewProductReview from "./pages/NewProductReview";
 import NewProduct from "./pages/NewProduct";
@@ -168,6 +169,8 @@ const App = () => {
                 <Route path="/quotes/new" element={<NewQuote />} />
                 <Route path="/manage-products" element={<ManageProducts />} />
                 <Route path="/manage-manufacturers" element={<ManageManufacturers />} />
+                <Route path="/inventory/templates" element={<ManageInventoryTemplates />} />
+                <Route path="/inventory/templates/new" element={<AddInventoryTemplate />} />
                 <Route path="/manage-products/new" element={<NewProduct />} />
                 <Route path="/manage-products/product-reviews" element={<ProductReviews />} />
                 <Route path="/manage-products/product-review/new" element={<NewProductReview />} />
