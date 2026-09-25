@@ -158,10 +158,21 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
     setHoursDraft({ workPerformed: "", hours: "" });
   };
   const totalHours = hours.reduce((total, row) => total + row.hours, 0);
-  const toggleCapability = (location: string, capability: string) => setCapabilityMatrix((previous) => ({
-    ...previous,
-    [location]: { ...previous[location], [capability]: !previous[location]?.[capability] },
-  }));
+  const CAPABILITY_GROUPS: string[][] = [
+    ["17025 (Full)", "17025 (Limited)", '"No" 17025'],
+    ["Repair (Full)", "Repair (Limited)", "Repair (No)"],
+  ];
+  const toggleCapability = (location: string, capability: string) => setCapabilityMatrix((previous) => {
+    const group = CAPABILITY_GROUPS.find((candidates) => candidates.includes(capability));
+    const nextLocation = { ...previous[location] };
+    if (group) {
+      group.forEach((candidate) => { delete nextLocation[candidate]; });
+      if (!previous[location]?.[capability]) nextLocation[capability] = true;
+    } else {
+      nextLocation[capability] = !previous[location]?.[capability];
+    }
+    return { ...previous, [location]: nextLocation };
+  });
   const notesLocations = CAPABLE_LOCATIONS.filter((location) => capabilityMatrix[location]?.["17025 (Limited)"]);
   const limitedNotesRow = notesLocations.length > 0;
 
