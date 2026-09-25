@@ -320,10 +320,9 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                     <TableBody><TableRow className="h-6 border-b border-border bg-muted/40"><TableCell className="w-48 whitespace-nowrap py-0.5 pl-2 pr-2 text-[11px] font-semibold bg-muted/30">All</TableCell>
                       {CAPABLE_LOCATIONS.map((location) => {
                         const checkedCount = locationCheckedCount(location);
-                        const allChecked = checkedCount === CAPABILITY_COLUMNS.length;
                         return (
                           <TableCell key={location} className="px-0.5 py-0.5 text-center align-top">
-                            <Checkbox aria-label={`${location} All`} checked={allChecked ? true : checkedCount > 0 ? "indeterminate" : false} onCheckedChange={() => toggleAllCapabilities(location)} className={`${matrixCheckboxClass} mx-auto`} />
+                            <Checkbox aria-label={`${location} All`} checked={isLocationFullyCapable(capabilityMatrix[location]) ? true : checkedCount > 0 ? "indeterminate" : false} onCheckedChange={() => toggleAllCapabilities(location)} className={`${matrixCheckboxClass} mx-auto`} />
                           </TableCell>
                         );
                       })}
