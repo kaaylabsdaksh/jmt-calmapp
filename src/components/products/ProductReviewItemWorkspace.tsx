@@ -190,6 +190,7 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
     });
     return { ...previous, [location]: nextLocation };
   });
+  const locationCheckedCount = (location: string) => CAPABILITY_COLUMNS.filter((capability) => capabilityMatrix[location]?.[capability]).length;
   const notesLocations = CAPABLE_LOCATIONS.filter((location) => capabilityMatrix[location]?.["17025 (Limited)"]);
   const limitedNotesRow = notesLocations.length > 0;
 
