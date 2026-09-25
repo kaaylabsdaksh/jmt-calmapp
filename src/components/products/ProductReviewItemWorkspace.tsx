@@ -292,7 +292,7 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                     <TableBody>{CAPABILITY_COLUMNS.map((capability) => {
                       const isLimited = capability === "17025 (Limited)";
                       return (
-                        <TableRow key={capability} className={isLimited && limitedNotesRow ? "h-10" : "h-6"}>
+                        <TableRow key={capability} className="h-6">
                           <TableCell className="w-48 whitespace-nowrap bg-muted/30 px-2 py-0.5 text-[11px] font-medium">{capability}</TableCell>
                           {CAPABLE_LOCATIONS.map((location) => {
                             const checked = Boolean(capabilityMatrix[location]?.[capability]);
