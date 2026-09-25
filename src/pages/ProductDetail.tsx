@@ -181,6 +181,26 @@ const ProductDetail = () => {
       return { ...previous, [location]: nextLocation };
     });
   };
+  const isLocationFullyCapable = (current: Record<string, boolean> | undefined) => CAPABILITY_COLUMNS.every((capability) => {
+    const group = CAPABILITY_GROUPS.find((candidates) => candidates.includes(capability));
+    if (group) return Boolean(current?.[group[0]]);
+    return Boolean(current?.[capability]);
+  });
+  const toggleAllCapabilities = (location: string) => setCapabilityMatrix((previous) => {
+    if (isLocationFullyCapable(previous[location])) {
+      setLimitedNotes((notes) => { const next = { ...notes }; delete next[location]; return next; });
+      return { ...previous, [location]: {} };
+    }
+    const nextLocation: Record<string, boolean> = {};
+    CAPABILITY_GROUPS.forEach((group) => { nextLocation[group[0]] = true; });
+    CAPABILITY_COLUMNS.forEach((capability) => {
+      if (!CAPABILITY_GROUPS.some((group) => group.includes(capability))) nextLocation[capability] = true;
+    });
+    return { ...previous, [location]: nextLocation };
+  });
+  const locationCheckedCount = (location: string) => CAPABILITY_COLUMNS.filter((capability) => capabilityMatrix[location]?.[capability]).length;
+  const notesLocations = CAPABLE_LOCATIONS.filter((location) => capabilityMatrix[location]?.["17025 (Limited)"]);
+
 
 
 
