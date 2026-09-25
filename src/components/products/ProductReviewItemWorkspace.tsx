@@ -177,6 +177,7 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
   const toggleAllCapabilities = (location: string) => setCapabilityMatrix((previous) => {
     const current = previous[location] ?? {};
     if (CAPABILITY_COLUMNS.every((capability) => current[capability])) {
+      setLimitedNotes((notes) => { const next = { ...notes }; delete next[location]; return next; });
       return { ...previous, [location]: {} };
     }
     const nextLocation: Record<string, boolean> = {};
