@@ -372,11 +372,11 @@ const ProductDetail = () => {
                     </colgroup>
                     <TableHeader>
                       <TableRow className="bg-muted/50 hover:bg-muted/50">
-                        <TableHead className="h-7 w-48 text-[10px] font-semibold whitespace-nowrap px-2">Capability</TableHead>
+                        <TableHead className="h-7 w-48 text-[10px] font-bold text-foreground whitespace-nowrap px-2">Capability</TableHead>
                         {CAPABLE_LOCATIONS.map((location) => (
                           <TableHead
                             key={location}
-                            className="h-10 w-16 px-0.5 text-center align-middle text-[9px] font-semibold leading-tight"
+                            className="h-10 w-16 px-0.5 text-center align-middle text-[9px] font-bold leading-tight text-foreground"
                           >
                             <span className="inline-block max-w-14 break-words">{location}</span>
                           </TableHead>
