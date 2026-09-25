@@ -319,7 +319,7 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                                     setLimitedNotes((previous) => { const next = { ...previous }; delete next[location]; return next; });
                                   }
                                   toggleCapability(location, capability);
-                                }} className={`mx-auto h-3 w-3 ${group ? "rounded-full" : ""}`} />
+                                }} className="mx-auto h-3 w-3" />
                               </TableCell>
                             );
                           })}
