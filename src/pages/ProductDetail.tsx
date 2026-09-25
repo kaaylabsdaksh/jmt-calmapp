@@ -456,6 +456,19 @@ const ProductDetail = () => {
                 </CardContent>
               </Card>
 
+              {notesLocations.length > 0 && (
+                <Card><CardContent className="space-y-2 p-4">
+                  <div className="text-xs font-semibold text-foreground">17025 (Limited) Notes</div>
+                  <p className="text-[10px] text-muted-foreground">Notes for locations with 17025 (Limited) selected in the matrix above.</p>
+                  {notesLocations.map((location) => (
+                    <div key={location} className="flex items-center gap-2">
+                      <span className="w-28 shrink-0 text-xs font-medium">{location}</span>
+                      <Input aria-label={`${location} 17025 Limited note`} className="h-8 text-xs" placeholder="Add a note..." value={limitedNotes[location] ?? ""} onChange={(event) => setLimitedNotes((previous) => ({ ...previous, [location]: event.target.value }))} />
+                    </div>
+                  ))}
+                </CardContent></Card>
+              )}
+
               <Card>
                 <CardContent className="p-4">
                   <div className="mb-2 text-xs font-semibold text-foreground">Breakdown of Matrix (Definitions)</div>
