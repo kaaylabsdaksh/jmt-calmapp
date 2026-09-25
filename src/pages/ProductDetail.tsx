@@ -81,7 +81,7 @@ const CAPABILITY_COLUMNS = [
   "17025 (Full)",
   "17025 (Limited)",
   "\"No\" 17025",
-  "Send to Alternate Lab",
+  "Standards Only",
   "To Factory (Cal Outsource)",
   "Adjustment (To Factory)",
   "Repair (Full)",
@@ -97,7 +97,7 @@ const CAPABILITY_LEGEND = [
   { term: "17025 (Full)", def: "Can accredit to UUT full range." },
   { term: "17025 (Limited)", def: "Can accredit to limited range of UUT." },
   { term: "\"No\" 17025", def: "Can not accredit UUT, parameters not on scope, may require outsourcing." },
-  { term: "Send to Alternate Lab", def: "This lab must send it to another JM Test lab for calibration." },
+  { term: "Standards Only", def: "Used for standards work only; customer units are not calibrated at this location." },
   { term: "To Factory (Cal Outsource)", def: "We are not able to calibrate in any lab." },
   { term: "Adjustment (To Factory)", def: "We can \"calibrate\" but not \"adjust\" in lab." },
   { term: "Repair (Full)", def: "Can completely repair unit." },
@@ -162,6 +162,7 @@ const ProductDetail = () => {
       });
     return initialMatrix;
   });
+  const [limitedNotes, setLimitedNotes] = useState<Record<string, string>>({});
 
   const CAPABILITY_GROUPS: string[][] = [
     ["17025 (Full)", "17025 (Limited)", '"No" 17025'],
