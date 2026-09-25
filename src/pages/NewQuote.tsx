@@ -1190,6 +1190,12 @@ const NewQuote = () => {
           icon={Package}
           title="Quote Items"
           badge={items.length}
+          summary={
+            <>
+              <SumItem label="Items" value={String(items.length)} />
+              <SumItem label="Total" value={`$${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}`} />
+            </>
+          }
         >
           {allMandatoryFilled ? (
             <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border bg-muted/30 px-2 py-1.5">
