@@ -413,6 +413,17 @@ const ProductDetail = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
+                      <TableRow className="h-6 border-b border-border bg-muted/40">
+                        <TableCell className="w-48 whitespace-nowrap py-0.5 pl-2 pr-2 text-[11px] font-semibold bg-muted/30">All</TableCell>
+                        {CAPABLE_LOCATIONS.map((location) => {
+                          const checkedCount = locationCheckedCount(location);
+                          return (
+                            <TableCell key={location} className="px-0.5 py-0.5 text-center align-top">
+                              <Checkbox aria-label={`${location} All`} checked={isLocationFullyCapable(capabilityMatrix[location]) ? true : checkedCount > 0 ? "indeterminate" : false} onCheckedChange={() => toggleAllCapabilities(location)} className={`${matrixCheckboxClass} mx-auto`} />
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
                       {CAPABILITY_COLUMNS.map((capability) => {
                         const group = CAPABILITY_GROUPS.find((g) => g.includes(capability));
                         const isFirst = group?.[0] === capability;
@@ -427,7 +438,12 @@ const ProductDetail = () => {
                               <Checkbox
                                 aria-label={`${location} ${capability}`}
                                 checked={!!capabilityMatrix[location]?.[capability]}
-                                onCheckedChange={() => toggleCapability(location, capability)}
+                                onCheckedChange={() => {
+                                  if (capability === "17025 (Limited)" && capabilityMatrix[location]?.[capability]) {
+                                    setLimitedNotes((previous) => { const next = { ...previous }; delete next[location]; return next; });
+                                  }
+                                  toggleCapability(location, capability);
+                                }}
                                 className={`${matrixCheckboxClass} mx-auto`}
                               />
                             </TableCell>
