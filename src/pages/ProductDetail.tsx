@@ -163,14 +163,22 @@ const ProductDetail = () => {
     return initialMatrix;
   });
 
+  const CAPABILITY_GROUPS: string[][] = [
+    ["17025 (Full)", "17025 (Limited)", '"No" 17025'],
+    ["Repair (Full)", "Repair (Limited)", "Repair (No)"],
+  ];
   const toggleCapability = (location: string, capability: string) => {
-    setCapabilityMatrix((previous) => ({
-      ...previous,
-      [location]: {
-        ...previous[location],
-        [capability]: !previous[location]?.[capability],
-      },
-    }));
+    setCapabilityMatrix((previous) => {
+      const group = CAPABILITY_GROUPS.find((candidates) => candidates.includes(capability));
+      const nextLocation = { ...previous[location] };
+      if (group) {
+        group.forEach((candidate) => { delete nextLocation[candidate]; });
+        if (!previous[location]?.[capability]) nextLocation[capability] = true;
+      } else {
+        nextLocation[capability] = !previous[location]?.[capability];
+      }
+      return { ...previous, [location]: nextLocation };
+    });
   };
 
 
