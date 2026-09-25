@@ -893,7 +893,7 @@ const NewQuote = () => {
               {/* 01 Quote Setup */}
               <div className="space-y-3">
                 <SectionHeader number="01" title="Quote Setup" />
-                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                   <Field label="Quote Type" required>
                     <SelectField value={quoteType} onChange={setQuoteType} options={QUOTE_TYPES} placeholder="Select type" className={cn(invalid("Quote Type") && errorCls)} />
                   </Field>
