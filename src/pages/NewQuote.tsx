@@ -924,7 +924,7 @@ const NewQuote = () => {
               <div className="space-y-3">
                 <SectionHeader number="02" title="Customer, Origin & References" />
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-2 items-end">
-                  <Field label="Existing Customer" className="xl:col-span-3">
+                  <Field label="Existing Customer" className="xl:col-span-4">
                     <RadioGroup
                       value={existingCustomer}
                       onValueChange={setExistingCustomer}
@@ -940,7 +940,7 @@ const NewQuote = () => {
                       </div>
                     </RadioGroup>
                   </Field>
-                  <Field label="New Onsite" className="xl:col-span-3">
+                  <Field label="New Onsite" className="xl:col-span-4">
                     <RadioGroup
                       value={newOnsite}
                       onValueChange={setNewOnsite}
@@ -956,16 +956,16 @@ const NewQuote = () => {
                       </div>
                     </RadioGroup>
                   </Field>
-                  <Field label="Source" className="xl:col-span-2">
+                  <Field label="Source" className="xl:col-span-4">
                     <SelectField value={source} onChange={setSource} options={SOURCES} placeholder="Select source" />
                   </Field>
-                  <Field label="SR Doc" className="xl:col-span-2">
+                  <Field label="SR Doc" className="xl:col-span-4">
                     <Input value={srDoc} onChange={(e) => setSrDoc(e.target.value)} className={inputCls} />
                   </Field>
-                  <Field label="OSR Doc" className="xl:col-span-2">
+                  <Field label="OSR Doc" className="xl:col-span-4">
                     <Input value={osrDoc} onChange={(e) => setOsrDoc(e.target.value)} className={inputCls} />
                   </Field>
-                  <div className="flex items-center gap-1.5 xl:col-span-3">
+                  <div className="flex items-center gap-1.5 xl:col-span-4">
                     <Field label="Account #" required className="flex-1">
                       <Input
                         value={acctNo}
@@ -986,13 +986,13 @@ const NewQuote = () => {
                       <Search className="h-3 w-3 mr-1" /> Find
                     </Button>
                   </div>
-                  <Field label="Customer Name" className="xl:col-span-3">
+                  <Field label="Customer Name" className="xl:col-span-4">
                     <Input value={customerName} onChange={(e) => setCustomerName(e.target.value)} className={inputCls} />
                   </Field>
-                  <Field label="Customer PO #" className="xl:col-span-2">
+                  <Field label="Customer PO #" className="xl:col-span-4">
                     <Input value={custPo} onChange={(e) => setCustPo(e.target.value)} className={inputCls} />
                   </Field>
-                  <div className="flex items-center gap-1.5 xl:col-span-2">
+                  <div className="flex items-center gap-1.5 xl:col-span-4">
                     <Input
                       value={opportunity}
                       onChange={(e) => setOpportunity(e.target.value)}
@@ -1003,10 +1003,10 @@ const NewQuote = () => {
                       Find
                     </Button>
                   </div>
-                  <Field label="Associated Product Review" className="xl:col-span-2">
+                  <Field label="Associated Product Review" className="xl:col-span-6">
                     <Input value={productReview} onChange={(e) => setProductReview(e.target.value)} className={inputCls} />
                   </Field>
-                  <Field label="Source Info" className="xl:col-span-12">
+                  <Field label="Source Info" className="xl:col-span-6">
                     <AutoTextarea
                       value={sourceInfo}
                       onChange={(e) => setSourceInfo(e.target.value)}
@@ -1018,7 +1018,7 @@ const NewQuote = () => {
               {/* 03 Contract Pricing & Scheduling */}
               <div className="space-y-3">
                 <SectionHeader number="03" title="Contract Pricing & Scheduling" />
-                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                   <div className="flex items-center gap-2 h-6 px-2.5 rounded-lg border bg-background">
                     <Checkbox id="override" checked={override} onCheckedChange={(v) => setOverride(!!v)} />
                     <Label htmlFor="override" className="text-[11px] font-medium">Override</Label>
