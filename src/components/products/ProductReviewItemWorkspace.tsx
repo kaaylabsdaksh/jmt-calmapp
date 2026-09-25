@@ -173,10 +173,13 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
     }
     return { ...previous, [location]: nextLocation };
   });
-  const locationCheckedCount = (location: string) => CAPABILITY_COLUMNS.filter((capability) => capabilityMatrix[location]?.[capability]).length;
+  const isLocationFullyCapable = (current: Record<string, boolean> | undefined) => CAPABILITY_COLUMNS.every((capability) => {
+    const group = CAPABILITY_GROUPS.find((candidates) => candidates.includes(capability));
+    if (group) return Boolean(current?.[group[0]]);
+    return Boolean(current?.[capability]);
+  });
   const toggleAllCapabilities = (location: string) => setCapabilityMatrix((previous) => {
-    const current = previous[location] ?? {};
-    if (CAPABILITY_COLUMNS.every((capability) => current[capability])) {
+    if (isLocationFullyCapable(previous[location])) {
       setLimitedNotes((notes) => { const next = { ...notes }; delete next[location]; return next; });
       return { ...previous, [location]: {} };
     }
