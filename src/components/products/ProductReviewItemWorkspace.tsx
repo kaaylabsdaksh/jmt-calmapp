@@ -163,6 +163,8 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
     ...previous,
     [location]: { ...previous[location], [capability]: !previous[location]?.[capability] },
   }));
+  const notesLocations = CAPABLE_LOCATIONS.filter((location) => limitedNotesEnabled[location]);
+  const limitedNotesRow = notesLocations.length > 0 || CAPABLE_LOCATIONS.some((location) => capabilityMatrix[location]?.["17025 (Limited)"]);
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
