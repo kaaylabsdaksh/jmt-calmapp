@@ -90,7 +90,6 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
   const navigate = useNavigate();
   const [draft, setDraft] = useState(item);
   const [capabilityMatrix, setCapabilityMatrix] = useState<Record<string, Record<string, boolean>>>({});
-  const [limitedNotesEnabled, setLimitedNotesEnabled] = useState<Record<string, boolean>>({});
   const [limitedNotes, setLimitedNotes] = useState<Record<string, string>>({});
   const [documents, setDocuments] = useState<DocumentRow[]>([{ id: "existing-1", name: "Belt Tension Checker Instruction Sheet.pdf", type: "Other", description: "Instruction sheet", uploadedBy: "Kevin R. Young", uploadedDate: "06/30/2021" }]);
   const [documentType, setDocumentType] = useState("");
@@ -163,8 +162,8 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
     ...previous,
     [location]: { ...previous[location], [capability]: !previous[location]?.[capability] },
   }));
-  const notesLocations = CAPABLE_LOCATIONS.filter((location) => limitedNotesEnabled[location]);
-  const limitedNotesRow = notesLocations.length > 0 || CAPABLE_LOCATIONS.some((location) => capabilityMatrix[location]?.["17025 (Limited)"]);
+  const notesLocations = CAPABLE_LOCATIONS.filter((location) => capabilityMatrix[location]?.["17025 (Limited)"]);
+  const limitedNotesRow = notesLocations.length > 0;
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
@@ -301,14 +300,10 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                               <TableCell key={location} className="px-0.5 py-0.5 text-center align-top">
                                 <Checkbox aria-label={`${location} ${capability}`} checked={checked} onCheckedChange={() => {
                                   if (isLimited && checked) {
-                                    setLimitedNotesEnabled((previous) => { const next = { ...previous }; delete next[location]; return next; });
                                     setLimitedNotes((previous) => { const next = { ...previous }; delete next[location]; return next; });
                                   }
                                   toggleCapability(location, capability);
                                 }} className="mx-auto h-3 w-3" />
-                                {isLimited && checked && (
-                                  <Checkbox aria-label={`${location} 17025 Limited notes`} title="Add notes" checked={Boolean(limitedNotesEnabled[location])} onCheckedChange={(value) => setLimitedNotesEnabled((previous) => ({ ...previous, [location]: Boolean(value) }))} className="mx-auto mt-0.5 block h-2.5 w-2.5" />
-                                )}
                               </TableCell>
                             );
                           })}
