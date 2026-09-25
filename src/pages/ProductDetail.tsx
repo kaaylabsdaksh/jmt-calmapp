@@ -81,7 +81,7 @@ const CAPABILITY_COLUMNS = [
   "17025 (Full)",
   "17025 (Limited)",
   "\"No\" 17025",
-  "Send to Alternate Lab",
+  "Standards Only",
   "To Factory (Cal Outsource)",
   "Adjustment (To Factory)",
   "Repair (Full)",
@@ -97,7 +97,7 @@ const CAPABILITY_LEGEND = [
   { term: "17025 (Full)", def: "Can accredit to UUT full range." },
   { term: "17025 (Limited)", def: "Can accredit to limited range of UUT." },
   { term: "\"No\" 17025", def: "Can not accredit UUT, parameters not on scope, may require outsourcing." },
-  { term: "Send to Alternate Lab", def: "This lab must send it to another JM Test lab for calibration." },
+  { term: "Standards Only", def: "Used for standards work only; customer units are not calibrated at this location." },
   { term: "To Factory (Cal Outsource)", def: "We are not able to calibrate in any lab." },
   { term: "Adjustment (To Factory)", def: "We can \"calibrate\" but not \"adjust\" in lab." },
   { term: "Repair (Full)", def: "Can completely repair unit." },
@@ -162,6 +162,7 @@ const ProductDetail = () => {
       });
     return initialMatrix;
   });
+  const [limitedNotes, setLimitedNotes] = useState<Record<string, string>>({});
 
   const CAPABILITY_GROUPS: string[][] = [
     ["17025 (Full)", "17025 (Limited)", '"No" 17025'],
@@ -180,6 +181,26 @@ const ProductDetail = () => {
       return { ...previous, [location]: nextLocation };
     });
   };
+  const isLocationFullyCapable = (current: Record<string, boolean> | undefined) => CAPABILITY_COLUMNS.every((capability) => {
+    const group = CAPABILITY_GROUPS.find((candidates) => candidates.includes(capability));
+    if (group) return Boolean(current?.[group[0]]);
+    return Boolean(current?.[capability]);
+  });
+  const toggleAllCapabilities = (location: string) => setCapabilityMatrix((previous) => {
+    if (isLocationFullyCapable(previous[location])) {
+      setLimitedNotes((notes) => { const next = { ...notes }; delete next[location]; return next; });
+      return { ...previous, [location]: {} };
+    }
+    const nextLocation: Record<string, boolean> = {};
+    CAPABILITY_GROUPS.forEach((group) => { nextLocation[group[0]] = true; });
+    CAPABILITY_COLUMNS.forEach((capability) => {
+      if (!CAPABILITY_GROUPS.some((group) => group.includes(capability))) nextLocation[capability] = true;
+    });
+    return { ...previous, [location]: nextLocation };
+  });
+  const locationCheckedCount = (location: string) => CAPABILITY_COLUMNS.filter((capability) => capabilityMatrix[location]?.[capability]).length;
+  const notesLocations = CAPABLE_LOCATIONS.filter((location) => capabilityMatrix[location]?.["17025 (Limited)"]);
+
 
 
 
@@ -392,6 +413,17 @@ const ProductDetail = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
+                      <TableRow className="h-6 border-b border-border bg-muted/40">
+                        <TableCell className="w-48 whitespace-nowrap py-0.5 pl-2 pr-2 text-[11px] font-semibold bg-muted/30">All</TableCell>
+                        {CAPABLE_LOCATIONS.map((location) => {
+                          const checkedCount = locationCheckedCount(location);
+                          return (
+                            <TableCell key={location} className="px-0.5 py-0.5 text-center align-top">
+                              <Checkbox aria-label={`${location} All`} checked={isLocationFullyCapable(capabilityMatrix[location]) ? true : checkedCount > 0 ? "indeterminate" : false} onCheckedChange={() => toggleAllCapabilities(location)} className={`${matrixCheckboxClass} mx-auto`} />
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
                       {CAPABILITY_COLUMNS.map((capability) => {
                         const group = CAPABILITY_GROUPS.find((g) => g.includes(capability));
                         const isFirst = group?.[0] === capability;
@@ -406,7 +438,12 @@ const ProductDetail = () => {
                               <Checkbox
                                 aria-label={`${location} ${capability}`}
                                 checked={!!capabilityMatrix[location]?.[capability]}
-                                onCheckedChange={() => toggleCapability(location, capability)}
+                                onCheckedChange={() => {
+                                  if (capability === "17025 (Limited)" && capabilityMatrix[location]?.[capability]) {
+                                    setLimitedNotes((previous) => { const next = { ...previous }; delete next[location]; return next; });
+                                  }
+                                  toggleCapability(location, capability);
+                                }}
                                 className={`${matrixCheckboxClass} mx-auto`}
                               />
                             </TableCell>
@@ -418,6 +455,19 @@ const ProductDetail = () => {
                   </Table>
                 </CardContent>
               </Card>
+
+              {notesLocations.length > 0 && (
+                <Card><CardContent className="space-y-2 p-4">
+                  <div className="text-xs font-semibold text-foreground">17025 (Limited) Notes</div>
+                  <p className="text-[10px] text-muted-foreground">Notes for locations with 17025 (Limited) selected in the matrix above.</p>
+                  {notesLocations.map((location) => (
+                    <div key={location} className="flex items-center gap-2">
+                      <span className="w-28 shrink-0 text-xs font-medium">{location}</span>
+                      <Input aria-label={`${location} 17025 Limited note`} className="h-8 text-xs" placeholder="Add a note..." value={limitedNotes[location] ?? ""} onChange={(event) => setLimitedNotes((previous) => ({ ...previous, [location]: event.target.value }))} />
+                    </div>
+                  ))}
+                </CardContent></Card>
+              )}
 
               <Card>
                 <CardContent className="p-4">
