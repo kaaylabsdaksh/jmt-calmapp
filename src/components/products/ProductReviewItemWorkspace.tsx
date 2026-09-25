@@ -45,7 +45,7 @@ const CAPABLE_LOCATIONS = [
 ];
 const CAPABILITY_COLUMNS = [
   "Calibration", "Limited Calibration", "Adjustment (in lab)", "17025 (Full)", "17025 (Limited)", '"No" 17025',
-  "Send to Alternate Lab", "To Factory (Cal Outsource)", "Adjustment (To Factory)", "Repair (Full)", "Repair (Limited)",
+  "Standards Only", "To Factory (Cal Outsource)", "Adjustment (To Factory)", "Repair (Full)", "Repair (Limited)",
   "Repair (No)", "Unserviceable",
 ];
 const CAPABILITY_LEGEND = [
@@ -55,7 +55,7 @@ const CAPABILITY_LEGEND = [
   { term: "17025 (Full)", def: "Can accredit to UUT full range." },
   { term: "17025 (Limited)", def: "Can accredit to limited range of UUT." },
   { term: '"No" 17025', def: "Can not accredit UUT, parameters not on scope, may require outsourcing." },
-  { term: "Send to Alternate Lab", def: "This lab must send it to another JM Test lab for calibration." },
+  { term: "Standards Only", def: "Used for standards work only; customer units are not calibrated at this location." },
   { term: "To Factory (Cal Outsource)", def: "We are not able to calibrate in any lab." },
   { term: "Adjustment (To Factory)", def: 'We can "calibrate" but not "adjust" in lab.' },
   { term: "Repair (Full)", def: "Can completely repair unit." },
@@ -90,6 +90,8 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
   const navigate = useNavigate();
   const [draft, setDraft] = useState(item);
   const [capabilityMatrix, setCapabilityMatrix] = useState<Record<string, Record<string, boolean>>>({});
+  const [limitedNotesEnabled, setLimitedNotesEnabled] = useState<Record<string, boolean>>({});
+  const [limitedNotes, setLimitedNotes] = useState<Record<string, string>>({});
   const [documents, setDocuments] = useState<DocumentRow[]>([{ id: "existing-1", name: "Belt Tension Checker Instruction Sheet.pdf", type: "Other", description: "Instruction sheet", uploadedBy: "Kevin R. Young", uploadedDate: "06/30/2021" }]);
   const [documentType, setDocumentType] = useState("");
   const [documentDescription, setDocumentDescription] = useState("");
@@ -286,12 +288,45 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                       <TableHead className="h-7 w-48 whitespace-nowrap px-2 text-[10px] font-bold text-foreground">Capability</TableHead>
                       {CAPABLE_LOCATIONS.map((location) => <TableHead key={location} className="h-10 w-16 px-0.5 text-center align-middle text-[9px] font-bold leading-tight text-foreground"><span className="inline-block max-w-14 break-words">{location}</span></TableHead>)}
                     </TableRow></TableHeader>
-                    <TableBody>{CAPABILITY_COLUMNS.map((capability) => <TableRow key={capability} className="h-6">
-                      <TableCell className="w-48 whitespace-nowrap bg-muted/30 px-2 py-0.5 text-[11px] font-medium">{capability}</TableCell>
-                      {CAPABLE_LOCATIONS.map((location) => <TableCell key={location} className="px-0.5 py-0.5 text-center"><Checkbox aria-label={`${location} ${capability}`} checked={Boolean(capabilityMatrix[location]?.[capability])} onCheckedChange={() => toggleCapability(location, capability)} className="mx-auto h-3 w-3" /></TableCell>)}
-                    </TableRow>)}</TableBody>
+                    <TableBody>{CAPABILITY_COLUMNS.map((capability) => {
+                      const isLimited = capability === "17025 (Limited)";
+                      return (
+                        <TableRow key={capability} className={isLimited && limitedNotesRow ? "h-10" : "h-6"}>
+                          <TableCell className="w-48 whitespace-nowrap bg-muted/30 px-2 py-0.5 text-[11px] font-medium">{capability}</TableCell>
+                          {CAPABLE_LOCATIONS.map((location) => {
+                            const checked = Boolean(capabilityMatrix[location]?.[capability]);
+                            return (
+                              <TableCell key={location} className="px-0.5 py-0.5 text-center align-top">
+                                <Checkbox aria-label={`${location} ${capability}`} checked={checked} onCheckedChange={() => {
+                                  if (isLimited && checked) {
+                                    setLimitedNotesEnabled((previous) => { const next = { ...previous }; delete next[location]; return next; });
+                                    setLimitedNotes((previous) => { const next = { ...previous }; delete next[location]; return next; });
+                                  }
+                                  toggleCapability(location, capability);
+                                }} className="mx-auto h-3 w-3" />
+                                {isLimited && checked && (
+                                  <Checkbox aria-label={`${location} 17025 Limited notes`} title="Add notes" checked={Boolean(limitedNotesEnabled[location])} onCheckedChange={(value) => setLimitedNotesEnabled((previous) => ({ ...previous, [location]: Boolean(value) }))} className="mx-auto mt-0.5 block h-2.5 w-2.5" />
+                                )}
+                              </TableCell>
+                            );
+                          })}
+                        </TableRow>
+                      );
+                    })}</TableBody>
                   </Table>
                 </CardContent></Card>
+                {notesLocations.length > 0 && (
+                  <Card><CardContent className="space-y-2 p-4">
+                    <div className="text-xs font-semibold text-foreground">17025 (Limited) Notes</div>
+                    <p className="text-[10px] text-muted-foreground">Notes for locations with 17025 (Limited) selected in the matrix above.</p>
+                    {notesLocations.map((location) => (
+                      <div key={location} className="flex items-center gap-2">
+                        <span className="w-28 shrink-0 text-xs font-medium">{location}</span>
+                        <Input aria-label={`${location} 17025 Limited note`} className="h-8 text-xs" placeholder="Add a note..." value={limitedNotes[location] ?? ""} onChange={(event) => setLimitedNotes((previous) => ({ ...previous, [location]: event.target.value }))} />
+                      </div>
+                    ))}
+                  </CardContent></Card>
+                )}
                 <Card><CardContent className="p-4">
                   <div className="mb-2 text-xs font-semibold text-foreground">Breakdown of Matrix (Definitions)</div>
                   <div className="grid grid-cols-1 gap-x-6 gap-y-1 text-xs sm:grid-cols-2">{CAPABILITY_LEGEND.map((entry) => <div key={entry.term} className="flex gap-2"><span className="whitespace-nowrap font-semibold">{entry.term}:</span><span className="text-muted-foreground">{entry.def}</span></div>)}</div>
