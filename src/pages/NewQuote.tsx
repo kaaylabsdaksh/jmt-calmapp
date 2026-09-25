@@ -908,9 +908,7 @@ const NewQuote = () => {
         <AccSection value="quote-info" icon={ClipboardList} title="Quote Information" summary={
           <>
             <SumItem label="Type" value={quoteType} />
-            <SumItem label="Location" value={location} />
             <SumItem label="Priority" value={priority} />
-            <SumItem label="Project #" value={projectNo} />
             <SumItem label="Customer" value={customerName} />
             <SumItem label="Follow Up" value={followUp ? followUp.toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" }) : ""} />
           </>
@@ -1190,12 +1188,7 @@ const NewQuote = () => {
           icon={Package}
           title="Quote Items"
           badge={items.length}
-          summary={
-            <>
-              <SumItem label="Items" value={String(items.length)} />
-              <SumItem label="Total" value={`$${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}`} />
-            </>
-          }
+          summary={<SumItem label="Total" value={`$${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}`} />}
         >
           {allMandatoryFilled ? (
             <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border bg-muted/30 px-2 py-1.5">
