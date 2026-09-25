@@ -397,9 +397,9 @@ const ProductDetail = () => {
                         const isFirst = group?.[0] === capability;
                         const isLast = group?.[group.length - 1] === capability;
                         return (
-                        <TableRow key={capability} className={`h-6 ${group ? "bg-accent/40 hover:bg-accent/60" : ""} ${isFirst ? "border-t-2 border-t-foreground/30" : ""} ${isLast ? "border-b-2 border-b-foreground/30" : ""}`}>
-                          <TableCell className={`w-48 text-[11px] font-medium whitespace-nowrap px-2 py-0.5 ${group ? "border-l-4 border-l-foreground/60 bg-accent/60" : "bg-muted/30"}`}>
-                            <span className="flex items-center justify-between gap-2">{capability}{isFirst && <span className="rounded-full bg-background px-1.5 text-[9px] font-semibold uppercase tracking-wide text-muted-foreground">Pick one</span>}</span>
+                        <TableRow key={capability} className={`h-6 ${isFirst ? "border-t border-border" : ""} ${isLast && group ? "border-b border-border" : ""}`}>
+                          <TableCell className={`w-48 text-[11px] font-medium whitespace-nowrap py-0.5 bg-muted/30 ${group ? "pl-4" : "pl-2"} pr-2`}>
+                            {capability}
                           </TableCell>
                           {CAPABLE_LOCATIONS.map((location) => (
                             <TableCell key={location} className="px-0.5 py-0.5 text-center">
