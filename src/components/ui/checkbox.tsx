@@ -26,3 +26,7 @@ const Checkbox = React.forwardRef<
 Checkbox.displayName = CheckboxPrimitive.Root.displayName
 
 export { Checkbox }
+
+/** Neutral checkbox styling for dense capability matrices (no brand yellow). */
+export const matrixCheckboxClass =
+  "h-3.5 w-3.5 shrink-0 rounded-[3px] border-input bg-card text-background transition-colors hover:border-foreground/60 data-[state=checked]:border-foreground data-[state=checked]:bg-foreground data-[state=checked]:text-background [&_svg]:h-3 [&_svg]:w-3 [&_svg]:stroke-[3]"
