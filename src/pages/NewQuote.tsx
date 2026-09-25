@@ -20,6 +20,8 @@ import {
   MoreHorizontal,
   ChevronDown,
   ChevronRight,
+  ChevronsDownUp,
+  ChevronsUpDown,
 
 } from "lucide-react";
 import ModernTopNav from "@/components/modern/ModernTopNav";
@@ -533,6 +535,16 @@ const NewQuote = () => {
   const [copyItem, setCopyItem] = useState("");
   const [copySource, setCopySource] = useState<"quote" | "wo" | null>(null);
 
+  // Accordion sections
+  const SECTION_VALUES = ["quote-info", "customer", "items", "project", "comments"];
+  const [openSections, setOpenSections] = useState<string[]>([
+    "quote-info",
+    "customer",
+    "items",
+    "project",
+    "comments",
+  ]);
+
   // Items
   const [items, setItems] = useState<QuoteItem[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -849,9 +861,30 @@ const NewQuote = () => {
 
         <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px] gap-3 items-start">
           <div className="min-w-0">
+          <div className="flex items-center justify-end gap-1.5">
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="h-7 gap-1.5 rounded-md px-2 text-[11px] font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+              onClick={() => setOpenSections(SECTION_VALUES)}
+            >
+              <ChevronsUpDown className="h-3.5 w-3.5" /> Expand All
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="h-7 gap-1.5 rounded-md px-2 text-[11px] font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+              onClick={() => setOpenSections([])}
+            >
+              <ChevronsDownUp className="h-3.5 w-3.5" /> Collapse All
+            </Button>
+          </div>
           <Accordion
             type="multiple"
-            defaultValue={["quote-info", "customer", "items", "project", "comments"]}
+            value={openSections}
+            onValueChange={setOpenSections}
             className="space-y-3"
           >
         {/* Quote setup */}
