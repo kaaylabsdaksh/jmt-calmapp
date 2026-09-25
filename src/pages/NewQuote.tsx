@@ -326,12 +326,21 @@ const SectionCard = ({
   </Card>
 );
 
+const SumItem = ({ label, value }: { label: string; value?: string | null }) =>
+  value ? (
+    <span className="flex min-w-0 items-baseline gap-1 whitespace-nowrap text-[11px] text-muted-foreground">
+      <span>{label}:</span>
+      <span className="max-w-[14rem] truncate font-medium text-foreground">{value}</span>
+    </span>
+  ) : null;
+
 const AccSection = ({
   value,
   icon: Icon,
   title,
   badge,
   action,
+  summary,
   children,
 }: {
   value: string;
@@ -339,18 +348,26 @@ const AccSection = ({
   title: string;
   badge?: number;
   action?: React.ReactNode;
+  summary?: React.ReactNode;
   children: React.ReactNode;
 }) => (
   <AccordionItem
     value={value}
-    className="rounded-xl border border-slate-200 shadow-sm bg-white px-3 data-[state=open]:shadow-md"
+    className="group rounded-xl border border-slate-200 shadow-sm bg-white px-3 data-[state=open]:shadow-md"
   >
     <AccordionTrigger className="py-2 hover:no-underline data-[state=open]:border-b-2 data-[state=open]:border-slate-200">
-      <div className="flex items-center gap-2">
-        <Icon className="h-4 w-4 text-slate-600" />
-        <span className="text-[13px] font-semibold tracking-tight">{title}</span>
-        {typeof badge === "number" && (
-          <Badge variant="secondary" className="text-[10px] px-1.5 py-0">{badge}</Badge>
+      <div className="flex min-w-0 flex-1 items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
+          <Icon className="h-4 w-4 text-slate-600" />
+          <span className="text-[13px] font-semibold tracking-tight">{title}</span>
+          {typeof badge === "number" && (
+            <Badge variant="secondary" className="text-[10px] px-1.5 py-0">{badge}</Badge>
+          )}
+        </div>
+        {summary && (
+          <div className="mr-1 ml-auto hidden min-w-0 items-center gap-3 overflow-hidden group-data-[state=open]:hidden md:flex">
+            {summary}
+          </div>
         )}
       </div>
     </AccordionTrigger>
