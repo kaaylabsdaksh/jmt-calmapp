@@ -908,7 +908,6 @@ const NewQuote = () => {
         <AccSection value="quote-info" icon={ClipboardList} title="Quote Information" summary={
           <>
             <SumItem label="Type" value={quoteType} />
-            <SumItem label="Priority" value={priority} />
             <SumItem label="Customer" value={customerName} />
             <SumItem label="Follow Up" value={followUp ? followUp.toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" }) : ""} />
           </>
