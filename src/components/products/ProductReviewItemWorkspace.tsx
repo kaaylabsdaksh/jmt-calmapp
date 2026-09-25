@@ -302,9 +302,14 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                     </TableRow></TableHeader>
                     <TableBody>{CAPABILITY_COLUMNS.map((capability) => {
                       const isLimited = capability === "17025 (Limited)";
+                      const group = CAPABILITY_GROUPS.find((g) => g.includes(capability));
+                      const isFirst = group?.[0] === capability;
+                      const isLast = group?.[group.length - 1] === capability;
                       return (
-                        <TableRow key={capability} className="h-6">
-                          <TableCell className="w-48 whitespace-nowrap bg-muted/30 px-2 py-0.5 text-[11px] font-medium">{capability}</TableCell>
+                        <TableRow key={capability} className={`h-6 ${group ? "bg-accent/40 hover:bg-accent/60" : ""} ${isFirst ? "border-t-2 border-t-foreground/30" : ""} ${isLast ? "border-b-2 border-b-foreground/30" : ""}`}>
+                          <TableCell className={`w-48 whitespace-nowrap px-2 py-0.5 text-[11px] font-medium ${group ? "border-l-4 border-l-foreground/60 bg-accent/60" : "bg-muted/30"}`}>
+                            <span className="flex items-center justify-between gap-2">{capability}{isFirst && <span className="rounded-full bg-background px-1.5 text-[9px] font-semibold uppercase tracking-wide text-muted-foreground">Pick one</span>}</span>
+                          </TableCell>
                           {CAPABLE_LOCATIONS.map((location) => {
                             const checked = Boolean(capabilityMatrix[location]?.[capability]);
                             return (
@@ -314,7 +319,7 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                                     setLimitedNotes((previous) => { const next = { ...previous }; delete next[location]; return next; });
                                   }
                                   toggleCapability(location, capability);
-                                }} className="mx-auto h-3 w-3" />
+                                }} className={`mx-auto h-3 w-3 ${group ? "rounded-full" : ""}`} />
                               </TableCell>
                             );
                           })}
