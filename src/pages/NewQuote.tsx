@@ -905,7 +905,16 @@ const NewQuote = () => {
             className="space-y-3"
           >
         {/* Quote setup */}
-        <AccSection value="quote-info" icon={ClipboardList} title="Quote Information">
+        <AccSection value="quote-info" icon={ClipboardList} title="Quote Information" summary={
+          <>
+            <SumItem label="Type" value={quoteType} />
+            <SumItem label="Location" value={location} />
+            <SumItem label="Priority" value={priority} />
+            <SumItem label="Project #" value={projectNo} />
+            <SumItem label="Customer" value={customerName} />
+            <SumItem label="Follow Up" value={followUp ? followUp.toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" }) : ""} />
+          </>
+        }>
           <div className="grid grid-cols-1 xl:grid-cols-12 gap-5">
             {/* Primary configuration column */}
             <div className="xl:col-span-8 space-y-5">
@@ -1089,7 +1098,13 @@ const NewQuote = () => {
 
 
         {/* Customer & Contact */}
-        <AccSection value="customer" icon={Users} title="Customer & Contact">
+        <AccSection value="customer" icon={Users} title="Customer & Contact" summary={
+          <>
+            <SumItem label="Contact" value={[contactFirst, contactLast].filter(Boolean).join(" ")} />
+            <SumItem label="Salesperson" value={salesperson} />
+            <SumItem label="Ship To" value={shipTo} />
+          </>
+        }>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="space-y-2.5">
               <div className="flex items-center gap-1.5">
@@ -1640,7 +1655,13 @@ const NewQuote = () => {
         </AccSection>
 
         {/* Project details */}
-          <AccSection value="project" icon={FileText} title="Project Details">
+          <AccSection value="project" icon={FileText} title="Project Details" summary={
+            <>
+              <SumItem label="Ship Method" value={shipMethod} />
+              <SumItem label="Service Type" value={serviceType} />
+              <SumItem label="Proposed Project" value={proposedProject} />
+            </>
+          }>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <Field label="Proposed Project">
                 <AutoTextarea value={proposedProject} onChange={(e) => setProposedProject(e.target.value)}  />
@@ -1661,7 +1682,9 @@ const NewQuote = () => {
 
 
         {/* Comments */}
-        <AccSection value="comments" icon={MessageSquare} title="Comments" badge={comments.length}>
+        <AccSection value="comments" icon={MessageSquare} title="Comments" badge={comments.length} summary={
+          <SumItem label="Latest" value={comments[comments.length - 1]?.text} />
+        }>
               <div className="flex flex-col md:flex-row gap-2 items-start">
                   <div className="w-full md:w-40">
                     <SelectField value={commentType} onChange={setCommentType} options={COMMENT_TYPES} placeholder="Type" />
