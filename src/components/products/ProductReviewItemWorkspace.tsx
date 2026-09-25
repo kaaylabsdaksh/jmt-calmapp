@@ -4,7 +4,7 @@ import { AlertTriangle, ArrowLeft, Clock3, ExternalLink, FileText, Mail, MoreHor
 import { WorkOrderItemComments } from "@/components/WorkOrderItemComments";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox, matrixCheckboxClass } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -319,7 +319,7 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                                     setLimitedNotes((previous) => { const next = { ...previous }; delete next[location]; return next; });
                                   }
                                   toggleCapability(location, capability);
-                                }} className="mx-auto h-3 w-3" />
+                                }} className={`${matrixCheckboxClass} mx-auto`} />
                               </TableCell>
                             );
                           })}
