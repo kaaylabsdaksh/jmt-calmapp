@@ -986,68 +986,52 @@ const NewQuote = () => {
                       <Search className="h-3 w-3 mr-1" /> Find
                     </Button>
                   </div>
-                  <Field label="Customer Name">
+                  <Field label="Customer Name" className="xl:col-span-3">
                     <Input value={customerName} onChange={(e) => setCustomerName(e.target.value)} className={inputCls} />
                   </Field>
-                </div>
-                <Field label="Source Info">
-                  <AutoTextarea
-                    value={sourceInfo}
-                    onChange={(e) => setSourceInfo(e.target.value)}
-                  />
-                </Field>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                  <Field label="SR Doc">
-                    <Input value={srDoc} onChange={(e) => setSrDoc(e.target.value)} className={inputCls} />
+                  <Field label="Customer PO #" className="xl:col-span-2">
+                    <Input value={custPo} onChange={(e) => setCustPo(e.target.value)} className={inputCls} />
                   </Field>
-                  <Field label="OSR Doc">
-                    <Input value={osrDoc} onChange={(e) => setOsrDoc(e.target.value)} className={inputCls} />
-                  </Field>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 xl:col-span-2">
                     <Input
                       value={opportunity}
                       onChange={(e) => setOpportunity(e.target.value)}
-                      className={cn(inputCls, "placeholder:font-normal placeholder:text-black placeholder:opacity-100")}
+                      className={cn(inputCls, "flex-1", "placeholder:font-normal placeholder:text-black placeholder:opacity-100")}
                       placeholder="Opportunity"
                     />
                     <Button variant="outline" size="sm" className="h-6 text-[11px] px-2 shrink-0">
                       Find
                     </Button>
                   </div>
-                  <Field label="Customer PO #">
-                    <Input value={custPo} onChange={(e) => setCustPo(e.target.value)} className={inputCls} />
+                  <Field label="Associated Product Review" className="xl:col-span-2">
+                    <Input value={productReview} onChange={(e) => setProductReview(e.target.value)} className={inputCls} />
+                  </Field>
+                  <Field label="Source Info" className="xl:col-span-12">
+                    <AutoTextarea
+                      value={sourceInfo}
+                      onChange={(e) => setSourceInfo(e.target.value)}
+                    />
                   </Field>
                 </div>
-                <Field label="Associated Product Review">
-                  <Input value={productReview} onChange={(e) => setProductReview(e.target.value)} className={inputCls} />
-                </Field>
               </div>
-            </div>
 
-            {/* Secondary details column */}
-            <div className="xl:col-span-4 space-y-5">
               {/* 03 Contract Pricing & Scheduling */}
               <div className="space-y-3">
                 <SectionHeader number="03" title="Contract Pricing & Scheduling" />
-                <div className="flex items-center gap-2">
-                  <Checkbox id="override" checked={override} onCheckedChange={(v) => setOverride(!!v)} />
-                  <Label htmlFor="override" className="text-[11px] font-medium">Override</Label>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2">
+                  <div className="flex items-center gap-2 h-6 px-2.5 rounded-lg border bg-background">
+                    <Checkbox id="override" checked={override} onCheckedChange={(v) => setOverride(!!v)} />
+                    <Label htmlFor="override" className="text-[11px] font-medium">Override</Label>
+                  </div>
                   <Field label="Hourly">
                     <Input value={hourly} onChange={(e) => setHourly(e.target.value)} disabled={!override} className={cn(inputCls, "text-right")} />
                   </Field>
                   <Field label="Percent">
                     <Input value={percent} onChange={(e) => setPercent(e.target.value)} disabled={!override} className={cn(inputCls, "text-right")} />
                   </Field>
-                </div>
-                <Field label="Exp. Date">
-                  <ModernDatePicker value={expDate} onChange={setExpDate} size="xs" inputClassName={inputCls} placeholder="MM/DD/YYYY" />
-                </Field>
-                <div className="h-px bg-slate-200" />
-                <div className="grid grid-cols-2 gap-2">
+                  <Field label="Exp. Date">
+                    <ModernDatePicker value={expDate} onChange={setExpDate} size="xs" inputClassName={inputCls} placeholder="MM/DD/YYYY" />
+                  </Field>
                   <Field label="Need By Date">
                     <ModernDatePicker value={needBy} onChange={setNeedBy} size="xs" inputClassName={inputCls} placeholder="MM/DD/YYYY" />
                   </Field>
@@ -1064,7 +1048,6 @@ const NewQuote = () => {
                   <AutoTextarea value={terms} onChange={(e) => setTerms(e.target.value)} />
                 </Field>
               </div>
-            </div>
           </div>
         </AccSection>
 
