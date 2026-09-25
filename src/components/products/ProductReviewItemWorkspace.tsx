@@ -173,6 +173,19 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
     }
     return { ...previous, [location]: nextLocation };
   });
+  const locationCheckedCount = (location: string) => CAPABILITY_COLUMNS.filter((capability) => capabilityMatrix[location]?.[capability]).length;
+  const toggleAllCapabilities = (location: string) => setCapabilityMatrix((previous) => {
+    const current = previous[location] ?? {};
+    if (CAPABILITY_COLUMNS.every((capability) => current[capability])) {
+      return { ...previous, [location]: {} };
+    }
+    const nextLocation: Record<string, boolean> = {};
+    CAPABILITY_GROUPS.forEach((group) => { nextLocation[group[0]] = true; });
+    CAPABILITY_COLUMNS.forEach((capability) => {
+      if (!CAPABILITY_GROUPS.some((group) => group.includes(capability))) nextLocation[capability] = true;
+    });
+    return { ...previous, [location]: nextLocation };
+  });
   const notesLocations = CAPABLE_LOCATIONS.filter((location) => capabilityMatrix[location]?.["17025 (Limited)"]);
   const limitedNotesRow = notesLocations.length > 0;
 
