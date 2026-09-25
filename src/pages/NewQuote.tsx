@@ -533,6 +533,16 @@ const NewQuote = () => {
   const [copyItem, setCopyItem] = useState("");
   const [copySource, setCopySource] = useState<"quote" | "wo" | null>(null);
 
+  // Accordion sections
+  const SECTION_VALUES = ["quote-info", "customer", "items", "project", "comments"];
+  const [openSections, setOpenSections] = useState<string[]>([
+    "quote-info",
+    "customer",
+    "items",
+    "project",
+    "comments",
+  ]);
+
   // Items
   const [items, setItems] = useState<QuoteItem[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
