@@ -407,7 +407,7 @@ const ProductDetail = () => {
                                 aria-label={`${location} ${capability}`}
                                 checked={!!capabilityMatrix[location]?.[capability]}
                                 onCheckedChange={() => toggleCapability(location, capability)}
-                                className={`h-3 w-3 mx-auto ${group ? "rounded-full" : ""}`}
+                                className="h-3 w-3 mx-auto"
                               />
                             </TableCell>
                           ))}
