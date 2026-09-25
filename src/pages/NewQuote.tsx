@@ -889,13 +889,11 @@ const NewQuote = () => {
           >
         {/* Quote setup */}
         <AccSection value="quote-info" icon={ClipboardList} title="Quote Information">
-          <div className="grid grid-cols-1 xl:grid-cols-12 gap-5">
-            {/* Primary configuration column */}
-            <div className="xl:col-span-8 space-y-5">
+          <div className="space-y-5">
               {/* 01 Quote Setup */}
               <div className="space-y-3">
                 <SectionHeader number="01" title="Quote Setup" />
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2">
                   <Field label="Quote Type" required>
                     <SelectField value={quoteType} onChange={setQuoteType} options={QUOTE_TYPES} placeholder="Select type" className={cn(invalid("Quote Type") && errorCls)} />
                   </Field>
@@ -908,11 +906,6 @@ const NewQuote = () => {
                   <Field label="Priority" required>
                     <SelectField value={priority} onChange={setPriority} options={PRIORITIES} placeholder="Select priority" className={cn(invalid("Priority") && errorCls)} />
                   </Field>
-                </div>
-                {!quoteType && (
-                  <p className="text-[10px] text-red-600 -mt-1">Quote type is required to save.</p>
-                )}
-                <div className="grid grid-cols-2 gap-2">
                   <div className="flex items-center gap-2 h-6 px-2.5 rounded-lg border bg-background">
                     <Checkbox id="poco" checked={pocoReq} onCheckedChange={(v) => setPocoReq(!!v)} />
                     <Label htmlFor="poco" className="text-[11px] font-medium">PO/CO Req?</Label>
@@ -922,13 +915,16 @@ const NewQuote = () => {
                     <span className="text-[11px] font-semibold">{itemQuantity}</span>
                   </div>
                 </div>
+                {!quoteType && (
+                  <p className="text-[10px] text-red-600 -mt-1">Quote type is required to save.</p>
+                )}
               </div>
 
               {/* 02 Customer, Origin & References */}
               <div className="space-y-3">
                 <SectionHeader number="02" title="Customer, Origin & References" />
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end">
-                  <Field label="Existing Customer">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-2 items-end">
+                  <Field label="Existing Customer" className="xl:col-span-3">
                     <RadioGroup
                       value={existingCustomer}
                       onValueChange={setExistingCustomer}
@@ -944,7 +940,7 @@ const NewQuote = () => {
                       </div>
                     </RadioGroup>
                   </Field>
-                  <Field label="New Onsite">
+                  <Field label="New Onsite" className="xl:col-span-3">
                     <RadioGroup
                       value={newOnsite}
                       onValueChange={setNewOnsite}
@@ -960,12 +956,16 @@ const NewQuote = () => {
                       </div>
                     </RadioGroup>
                   </Field>
-                  <Field label="Source">
+                  <Field label="Source" className="xl:col-span-2">
                     <SelectField value={source} onChange={setSource} options={SOURCES} placeholder="Select source" />
                   </Field>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                  <div className="flex items-center gap-1.5">
+                  <Field label="SR Doc" className="xl:col-span-2">
+                    <Input value={srDoc} onChange={(e) => setSrDoc(e.target.value)} className={inputCls} />
+                  </Field>
+                  <Field label="OSR Doc" className="xl:col-span-2">
+                    <Input value={osrDoc} onChange={(e) => setOsrDoc(e.target.value)} className={inputCls} />
+                  </Field>
+                  <div className="flex items-center gap-1.5 xl:col-span-3">
                     <Field label="Account #" required className="flex-1">
                       <Input
                         value={acctNo}
