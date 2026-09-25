@@ -283,8 +283,8 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
                   <Table className="w-auto table-fixed">
                     <colgroup><col className="w-48" />{CAPABLE_LOCATIONS.map((location) => <col key={location} className="w-16" />)}</colgroup>
                     <TableHeader><TableRow className="bg-muted/50 hover:bg-muted/50">
-                      <TableHead className="h-7 w-48 whitespace-nowrap px-2 text-[10px] font-semibold">Capability</TableHead>
-                      {CAPABLE_LOCATIONS.map((location) => <TableHead key={location} className="h-10 w-16 px-0.5 text-center align-middle text-[9px] font-semibold leading-tight"><span className="inline-block max-w-14 break-words">{location}</span></TableHead>)}
+                      <TableHead className="h-7 w-48 whitespace-nowrap px-2 text-[10px] font-bold text-foreground">Capability</TableHead>
+                      {CAPABLE_LOCATIONS.map((location) => <TableHead key={location} className="h-10 w-16 px-0.5 text-center align-middle text-[9px] font-bold leading-tight text-foreground"><span className="inline-block max-w-14 break-words">{location}</span></TableHead>)}
                     </TableRow></TableHeader>
                     <TableBody>{CAPABILITY_COLUMNS.map((capability) => <TableRow key={capability} className="h-6">
                       <TableCell className="w-48 whitespace-nowrap bg-muted/30 px-2 py-0.5 text-[11px] font-medium">{capability}</TableCell>
