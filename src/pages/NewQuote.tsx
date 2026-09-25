@@ -326,12 +326,21 @@ const SectionCard = ({
   </Card>
 );
 
+const SumItem = ({ label, value }: { label: string; value?: string | null }) =>
+  value ? (
+    <span className="flex min-w-0 items-baseline gap-1 whitespace-nowrap text-[11px] text-muted-foreground">
+      <span>{label}:</span>
+      <span className="max-w-[14rem] truncate font-medium text-foreground">{value}</span>
+    </span>
+  ) : null;
+
 const AccSection = ({
   value,
   icon: Icon,
   title,
   badge,
   action,
+  summary,
   children,
 }: {
   value: string;
@@ -339,18 +348,26 @@ const AccSection = ({
   title: string;
   badge?: number;
   action?: React.ReactNode;
+  summary?: React.ReactNode;
   children: React.ReactNode;
 }) => (
   <AccordionItem
     value={value}
-    className="rounded-xl border border-slate-200 shadow-sm bg-white px-3 data-[state=open]:shadow-md"
+    className="group rounded-xl border border-slate-200 shadow-sm bg-white px-3 data-[state=open]:shadow-md"
   >
     <AccordionTrigger className="py-2 hover:no-underline data-[state=open]:border-b-2 data-[state=open]:border-slate-200">
-      <div className="flex items-center gap-2">
-        <Icon className="h-4 w-4 text-slate-600" />
-        <span className="text-[13px] font-semibold tracking-tight">{title}</span>
-        {typeof badge === "number" && (
-          <Badge variant="secondary" className="text-[10px] px-1.5 py-0">{badge}</Badge>
+      <div className="flex min-w-0 flex-1 items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
+          <Icon className="h-4 w-4 text-slate-600" />
+          <span className="text-[13px] font-semibold tracking-tight">{title}</span>
+          {typeof badge === "number" && (
+            <Badge variant="secondary" className="text-[10px] px-1.5 py-0">{badge}</Badge>
+          )}
+        </div>
+        {summary && (
+          <div className="mr-1 ml-auto hidden min-w-0 items-center gap-3 overflow-hidden group-data-[state=open]:hidden md:flex">
+            {summary}
+          </div>
         )}
       </div>
     </AccordionTrigger>
@@ -888,7 +905,13 @@ const NewQuote = () => {
             className="space-y-3"
           >
         {/* Quote setup */}
-        <AccSection value="quote-info" icon={ClipboardList} title="Quote Information">
+        <AccSection value="quote-info" icon={ClipboardList} title="Quote Information" summary={
+          <>
+            <SumItem label="Type" value={quoteType} />
+            <SumItem label="Customer" value={customerName} />
+            <SumItem label="Follow Up" value={followUp ? followUp.toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "numeric" }) : ""} />
+          </>
+        }>
           <div className="grid grid-cols-1 xl:grid-cols-12 gap-5">
             {/* Primary configuration column */}
             <div className="xl:col-span-8 space-y-5">
@@ -1072,7 +1095,13 @@ const NewQuote = () => {
 
 
         {/* Customer & Contact */}
-        <AccSection value="customer" icon={Users} title="Customer & Contact">
+        <AccSection value="customer" icon={Users} title="Customer & Contact" summary={
+          <>
+            <SumItem label="Contact" value={[contactFirst, contactLast].filter(Boolean).join(" ")} />
+            <SumItem label="Salesperson" value={salesperson} />
+            <SumItem label="Ship To" value={shipTo} />
+          </>
+        }>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="space-y-2.5">
               <div className="flex items-center gap-1.5">
@@ -1158,6 +1187,7 @@ const NewQuote = () => {
           icon={Package}
           title="Quote Items"
           badge={items.length}
+          summary={<SumItem label="Total" value={`$${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}`} />}
         >
           {allMandatoryFilled ? (
             <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border bg-muted/30 px-2 py-1.5">
@@ -1623,7 +1653,13 @@ const NewQuote = () => {
         </AccSection>
 
         {/* Project details */}
-          <AccSection value="project" icon={FileText} title="Project Details">
+          <AccSection value="project" icon={FileText} title="Project Details" summary={
+            <>
+              <SumItem label="Ship Method" value={shipMethod} />
+              <SumItem label="Service Type" value={serviceType} />
+              <SumItem label="Proposed Project" value={proposedProject} />
+            </>
+          }>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <Field label="Proposed Project">
                 <AutoTextarea value={proposedProject} onChange={(e) => setProposedProject(e.target.value)}  />
@@ -1644,7 +1680,9 @@ const NewQuote = () => {
 
 
         {/* Comments */}
-        <AccSection value="comments" icon={MessageSquare} title="Comments" badge={comments.length}>
+        <AccSection value="comments" icon={MessageSquare} title="Comments" badge={comments.length} summary={
+          <SumItem label="Latest" value={comments[comments.length - 1]?.text} />
+        }>
               <div className="flex flex-col md:flex-row gap-2 items-start">
                   <div className="w-full md:w-40">
                     <SelectField value={commentType} onChange={setCommentType} options={COMMENT_TYPES} placeholder="Type" />
