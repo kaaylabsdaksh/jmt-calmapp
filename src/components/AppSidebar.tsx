@@ -213,7 +213,7 @@ export function AppSidebar() {
               placeholder="Search menu..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="h-7 pl-7 pr-6 text-xs bg-sidebar-foreground/10 border-0 rounded-md text-sidebar-foreground placeholder:text-sidebar-foreground/60 focus-visible:ring-1 focus-visible:ring-sidebar-ring"
+              className="!h-7 pl-7 pr-6 text-xs bg-sidebar-foreground/10 border-0 rounded-md text-sidebar-foreground placeholder:text-sidebar-foreground/60 focus-visible:ring-1 focus-visible:ring-sidebar-ring"
             />
             {searchQuery ? (
               <button
@@ -271,11 +271,11 @@ export function AppSidebar() {
                                   <SidebarMenuButton
                                     asChild
                                     tooltip={action.title}
-                                    className="group flex-1"
+                                    className="group flex-1 !h-7"
                                   >
                                     <Link
                                       to="/"
-                                      className="flex items-center w-full h-7 px-2 rounded-md text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1"
+                                      className="flex items-center w-full !h-7 px-2 rounded-md text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1"
                                     >
                                       {React.createElement(action.icon, { className: "h-3.5 w-3.5 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
                                       <span className="ml-2 font-medium text-[13px] animate-fade-in">
@@ -287,7 +287,7 @@ export function AppSidebar() {
                                     <Button
                                       variant="ghost"
                                       size="sm"
-                                      className="h-6 w-6 p-0 hover:bg-sidebar-accent"
+                                      className="!h-6 !w-6 p-0 hover:bg-sidebar-accent"
                                     >
                                       {isSearching || expandedWorkOrders ? (
                                         <ChevronDown className="h-3 w-3" />
@@ -305,7 +305,7 @@ export function AppSidebar() {
                                           key={subAction.title}
                                           variant="ghost"
                                           size="sm"
-                                          className="w-full justify-start h-6 px-1.5 text-sidebar-foreground/80 hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all"
+                                          className="w-full justify-start !h-6 px-1.5 text-sidebar-foreground/80 hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all"
                                           onClick={() => {
                                             const url = (subAction as { url?: string }).url;
                                             if (url) navigate(url);
@@ -328,10 +328,10 @@ export function AppSidebar() {
                                 <div className="flex items-center gap-1">
                                   <SidebarMenuButton
                                     tooltip={action.title}
-                                    className="group flex-1"
+                                    className="group flex-1 !h-7"
                                   >
                                     <div
-                                      className="flex items-center w-full h-7 px-2 rounded-md text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1 cursor-pointer"
+                                      className="flex items-center w-full !h-7 px-2 rounded-md text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1 cursor-pointer"
                                       onClick={() => setExpandedViews(!expandedViews)}
                                     >
                                       {React.createElement(action.icon, { className: "h-3.5 w-3.5 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
@@ -344,7 +344,7 @@ export function AppSidebar() {
                                     <Button
                                       variant="ghost"
                                       size="sm"
-                                      className="h-6 w-6 p-0 hover:bg-sidebar-accent"
+                                      className="!h-6 !w-6 p-0 hover:bg-sidebar-accent"
                                     >
                                       {isSearching || expandedViews ? (
                                         <ChevronDown className="h-3 w-3" />
@@ -362,7 +362,7 @@ export function AppSidebar() {
                                           <Button
                                             variant="ghost"
                                             size="sm"
-                                            className={`w-full justify-start h-6 px-1.5 rounded-md hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all ${
+                                            className={`w-full justify-start !h-6 px-1.5 rounded-md hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all ${
                                               location.pathname === subAction.url
                                                 ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
                                                 : "text-sidebar-foreground/80"
@@ -393,7 +393,7 @@ export function AppSidebar() {
                                       ? "customers-nav"
                                       : undefined
                                   }
-                                  className={`flex items-center w-full h-7 px-2 rounded-md hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1 ${
+                                  className={`flex items-center w-full !h-7 px-2 rounded-md hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1 ${
                                     location.pathname === (action as any).url
                                       ? "bg-sidebar-accent text-sidebar-accent-foreground font-semibold"
                                       : "text-sidebar-foreground"
@@ -415,7 +415,7 @@ export function AppSidebar() {
                                 <Button
                                   variant="ghost"
                                   size="sm"
-                                  className="w-full justify-start h-7 px-2 rounded-md text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1"
+                                  className="w-full justify-start !h-7 px-2 rounded-md text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1"
                                   style={{
                                     animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
                                   }}
@@ -448,7 +448,7 @@ export function AppSidebar() {
                         {action.title === "Work Orders" || (action as any).url ? (
                           <Link
                             to={action.title === "Work Orders" ? "/" : (action as any).url}
-                            className={`flex items-center justify-center w-full h-7 px-0 rounded-md hover:text-sidebar-accent-foreground hover:bg-sidebar-accent hover:shadow-sm transition-all duration-200 ease-in-out ${
+                            className={`flex items-center justify-center w-full !h-7 px-0 rounded-md hover:text-sidebar-accent-foreground hover:bg-sidebar-accent hover:shadow-sm transition-all duration-200 ease-in-out ${
                               location.pathname === ((action as any).url ?? "/")
                                 ? "bg-sidebar-accent text-sidebar-accent-foreground"
                                 : "text-sidebar-foreground"
@@ -463,7 +463,7 @@ export function AppSidebar() {
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="w-full justify-center h-7 px-0 rounded-md text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent hover:shadow-sm transition-all duration-200 ease-in-out"
+                            className="w-full justify-center !h-7 px-0 rounded-md text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent hover:shadow-sm transition-all duration-200 ease-in-out"
                             style={{
                               animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
                             }}
@@ -494,7 +494,7 @@ export function AppSidebar() {
               variant="ghost"
               size="sm"
               onClick={openDrawer}
-              className="w-full justify-start h-7 px-2 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+              className="w-full justify-start !h-7 px-2 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
               <Sparkles className="h-3.5 w-3.5 mr-2" />
               <span className="text-[13px] font-medium flex items-center gap-1">
@@ -505,7 +505,7 @@ export function AppSidebar() {
             <Button
               variant="ghost"
               size="sm"
-              className="w-full justify-start h-7 px-2 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+              className="w-full justify-start !h-7 px-2 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
               <span className="h-3.5 w-3.5 mr-2 text-[10px] font-bold flex items-center justify-center">JM</span>
               <span className="text-[13px] font-medium">Old App</span>
@@ -514,7 +514,7 @@ export function AppSidebar() {
               variant="ghost"
               size="sm"
               onClick={handleLogout}
-              className="w-full justify-start h-7 px-2 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+              className="w-full justify-start !h-7 px-2 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
               <LogOut className="h-3.5 w-3.5 mr-2" />
               <span className="text-[13px] font-medium">Logout</span>
@@ -526,7 +526,7 @@ export function AppSidebar() {
               variant="ghost"
               size="icon"
               onClick={openDrawer}
-              className="w-full h-7 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 relative"
+              className="w-full !h-7 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 relative"
               title="What's New"
             >
               <Sparkles className="h-3.5 w-3.5" />
@@ -538,7 +538,7 @@ export function AppSidebar() {
             <Button
               variant="ghost"
               size="icon"
-              className="w-full h-7 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+              className="w-full !h-7 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
               <span className="text-[9px] font-bold">JM</span>
             </Button>
@@ -546,7 +546,7 @@ export function AppSidebar() {
               variant="ghost"
               size="icon"
               onClick={handleLogout}
-              className="w-full h-7 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+              className="w-full !h-7 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
               <LogOut className="h-3.5 w-3.5" />
             </Button>
