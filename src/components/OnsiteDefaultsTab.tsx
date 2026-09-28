@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ModernDatePicker } from "@/components/ui/modern-date-picker";
-import { Info, Settings } from "lucide-react";
+import { Info, Check } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 
@@ -59,6 +59,39 @@ interface OnsiteDefaultsTabProps {
   metadata?: { createdBy?: string; modifiedBy?: string; lastUpdated?: string };
 }
 
+const SectionHeader = ({ title }: { title: string }) => (
+  <div className="flex items-center gap-3 mb-2">
+    <h4 className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">
+      {title}
+    </h4>
+    <div className="h-px flex-1 bg-border/60" />
+  </div>
+);
+
+const Field = ({
+  id,
+  label,
+  required,
+  error,
+  children,
+  className = "",
+}: {
+  id: string;
+  label: string;
+  required?: boolean;
+  error?: string;
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <div className={`space-y-0.5 ${className}`}>
+    <Label htmlFor={id} className="text-[10px] font-medium">
+      {label} {required && <span className="text-destructive">*</span>}
+    </Label>
+    {children}
+    {error ? <p className="text-[10px] text-destructive mt-0.5">{error}</p> : null}
+  </div>
+);
+
 export const OnsiteDefaultsTab = ({
   value,
   onChange,
@@ -88,13 +121,10 @@ export const OnsiteDefaultsTab = ({
     toast({ variant: "success", title: "Onsite defaults updated successfully.", duration: 2000 });
   };
 
-  const err = (key: string) =>
-    errors[key] ? <p className="text-[10px] text-destructive mt-0.5">{errors[key]}</p> : null;
-
   return (
-    <div className="space-y-2">
+    <Card className="overflow-hidden">
       {!configured && (
-        <div className="flex items-start gap-2 rounded-md border border-border bg-muted/50 px-3 py-2">
+        <div className="flex items-start gap-2 border-b border-border/60 bg-muted/40 px-4 py-2">
           <Info className="w-3.5 h-3.5 mt-0.5 text-muted-foreground shrink-0" />
           <p className="text-[11px] text-muted-foreground">
             No onsite defaults have been configured yet. Set default values here to automatically
@@ -103,19 +133,12 @@ export const OnsiteDefaultsTab = ({
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+      <div className="px-4 py-3 space-y-4">
         {/* Default Settings */}
-        <Card>
-          <CardHeader className="px-2.5 py-1.5 pb-1">
-            <h4 className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-              Default Settings
-            </h4>
-          </CardHeader>
-          <CardContent className="px-2.5 py-1.5 pt-0 space-y-1.5">
-            <div className="space-y-0.5">
-              <Label htmlFor="od-location" className="text-[10px] font-medium">
-                Location <span className="text-destructive">*</span>
-              </Label>
+        <section>
+          <SectionHeader title="Default Settings" />
+          <div className="grid grid-cols-12 gap-x-3 gap-y-2.5">
+            <Field id="od-location" label="Location" required error={errors.location} className="col-span-12 md:col-span-6">
               <Select value={value.location} onValueChange={(v) => set({ location: v })}>
                 <SelectTrigger id="od-location" className="h-7 text-[11px]">
                   <SelectValue placeholder="Select location..." />
@@ -126,13 +149,9 @@ export const OnsiteDefaultsTab = ({
                   ))}
                 </SelectContent>
               </Select>
-              {err("location")}
-            </div>
+            </Field>
 
-            <div className="space-y-0.5">
-              <Label htmlFor="od-division" className="text-[10px] font-medium">
-                Division <span className="text-destructive">*</span>
-              </Label>
+            <Field id="od-division" label="Division" required error={errors.division} className="col-span-6 md:col-span-3">
               <Select value={value.division} onValueChange={(v) => set({ division: v })}>
                 <SelectTrigger id="od-division" className="h-7 text-[11px]">
                   <SelectValue placeholder="Select division..." />
@@ -143,13 +162,9 @@ export const OnsiteDefaultsTab = ({
                   ))}
                 </SelectContent>
               </Select>
-              {err("division")}
-            </div>
+            </Field>
 
-            <div className="space-y-0.5">
-              <Label htmlFor="od-priority" className="text-[10px] font-medium">
-                Priority <span className="text-destructive">*</span>
-              </Label>
+            <Field id="od-priority" label="Priority" required error={errors.priority} className="col-span-6 md:col-span-3">
               <Select value={value.priority} onValueChange={(v) => set({ priority: v })}>
                 <SelectTrigger id="od-priority" className="h-7 text-[11px]">
                   <SelectValue placeholder="Select priority..." />
@@ -160,42 +175,33 @@ export const OnsiteDefaultsTab = ({
                   ))}
                 </SelectContent>
               </Select>
-              {err("priority")}
-            </div>
+            </Field>
 
-            <div className="space-y-0.5">
-              <Label htmlFor="od-start" className="text-[10px] font-medium">Start Date</Label>
+            <Field id="od-start" label="Start Date" className="col-span-6 md:col-span-6">
               <ModernDatePicker
                 id="od-start"
                 size="sm"
                 value={value.startDate}
                 onChange={(d) => set({ startDate: d ? format(d, "yyyy-MM-dd") : "" })}
               />
-            </div>
+            </Field>
 
-            <div className="space-y-0.5">
-              <Label htmlFor="od-end" className="text-[10px] font-medium">End / Need By Date</Label>
+            <Field id="od-end" label="End / Need By Date" error={errors.endDate} className="col-span-6 md:col-span-6">
               <ModernDatePicker
                 id="od-end"
                 size="sm"
                 value={value.endDate}
                 onChange={(d) => set({ endDate: d ? format(d, "yyyy-MM-dd") : "" })}
               />
-              {err("endDate")}
-            </div>
-          </CardContent>
-        </Card>
+            </Field>
+          </div>
+        </section>
 
         {/* Additional Defaults */}
-        <Card>
-          <CardHeader className="px-2.5 py-1.5 pb-1">
-            <h4 className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-              Additional Defaults
-            </h4>
-          </CardHeader>
-          <CardContent className="px-2.5 py-1.5 pt-0 space-y-1.5">
-            <div className="space-y-0.5">
-              <Label htmlFor="od-po" className="text-[10px] font-medium">PO Number</Label>
+        <section>
+          <SectionHeader title="Additional Defaults" />
+          <div className="grid grid-cols-12 gap-x-3 gap-y-2.5">
+            <Field id="od-po" label="PO Number" className="col-span-12 md:col-span-4">
               <Input
                 id="od-po"
                 className="h-7 text-[11px]"
@@ -204,12 +210,9 @@ export const OnsiteDefaultsTab = ({
                 onChange={(e) => set({ poNumber: e.target.value })}
                 placeholder="Enter PO number"
               />
-            </div>
+            </Field>
 
-            <div className="space-y-0.5">
-              <Label htmlFor="od-calfreq" className="text-[10px] font-medium">
-                Calibration Frequency (months)
-              </Label>
+            <Field id="od-calfreq" label="Calibration Frequency (months)" className="col-span-6 md:col-span-4">
               <Input
                 id="od-calfreq"
                 type="number"
@@ -220,10 +223,9 @@ export const OnsiteDefaultsTab = ({
                 onChange={(e) => set({ calFreq: e.target.value })}
                 placeholder="e.g. 12"
               />
-            </div>
+            </Field>
 
-            <div className="space-y-0.5">
-              <Label htmlFor="od-action" className="text-[10px] font-medium">Action Code</Label>
+            <Field id="od-action" label="Action Code" className="col-span-6 md:col-span-4">
               <Select value={value.actionCode} onValueChange={(v) => set({ actionCode: v })}>
                 <SelectTrigger id="od-action" className="h-7 text-[11px]">
                   <SelectValue placeholder="Select action code..." />
@@ -234,10 +236,9 @@ export const OnsiteDefaultsTab = ({
                   ))}
                 </SelectContent>
               </Select>
-            </div>
+            </Field>
 
-            <div className="space-y-0.5">
-              <Label htmlFor="od-arrival" className="text-[10px] font-medium">Arrival Type</Label>
+            <Field id="od-arrival" label="Arrival Type" className="col-span-6 md:col-span-6">
               <Select value={value.arrivalType} onValueChange={(v) => set({ arrivalType: v })}>
                 <SelectTrigger id="od-arrival" className="h-7 text-[11px]">
                   <SelectValue placeholder="Select arrival type..." />
@@ -248,10 +249,9 @@ export const OnsiteDefaultsTab = ({
                   ))}
                 </SelectContent>
               </Select>
-            </div>
+            </Field>
 
-            <div className="space-y-0.5">
-              <Label htmlFor="od-project" className="text-[10px] font-medium">OS Project Number</Label>
+            <Field id="od-project" label="OS Project Number" className="col-span-6 md:col-span-6">
               <Input
                 id="od-project"
                 className="h-7 text-[11px]"
@@ -260,19 +260,15 @@ export const OnsiteDefaultsTab = ({
                 onChange={(e) => set({ osProjectNumber: e.target.value })}
                 placeholder="Enter project number"
               />
-            </div>
-          </CardContent>
-        </Card>
+            </Field>
+          </div>
+        </section>
       </div>
 
-      <div className="flex flex-col items-center gap-2 pt-1">
-        <Button size="sm" onClick={handleSave} className="gap-1.5 h-8 text-xs">
-          <Settings className="w-3.5 h-3.5" />
-          Set Onsite Defaults
-        </Button>
-
+      {/* Action bar */}
+      <div className="border-t border-border bg-muted/30 px-4 py-2.5 flex items-center justify-end gap-3">
         {false && (
-          <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 text-[11px] text-muted-foreground">
+          <div className="flex flex-wrap justify-end gap-x-6 gap-y-1 mr-auto text-[11px] text-muted-foreground">
             <span>
               Created By <span className="text-foreground">{metadata?.createdBy || "—"}</span>
             </span>
@@ -284,8 +280,12 @@ export const OnsiteDefaultsTab = ({
             </span>
           </div>
         )}
+        <Button size="sm" onClick={handleSave} className="gap-1.5 h-8 text-xs bg-green-600 hover:bg-green-700 text-white">
+          <Check className="w-3.5 h-3.5" />
+          Set Onsite Defaults
+        </Button>
       </div>
-    </div>
+    </Card>
   );
 };
 
