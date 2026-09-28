@@ -10094,7 +10094,7 @@ const FormVariationsDemo = () => {
         push('To Factory', formData.toFactory ? 'Yes' : 'No');
         push('PO', formData.tfPoNumber);
         push('Vendor RMA', formData.vendorRmaNumber);
-        push('Cert File', formData.certFile);
+        push('Cert File', formData.certFile, 20);
         break;
       case 'transit':
         push('From', titleize(formData.originLocation));
@@ -10105,12 +10105,12 @@ const FormVariationsDemo = () => {
       case 'parts': {
         const parts = partsList.filter((part) => part.partNumber || part.description);
         const qty = parts.reduce((total, part) => total + (parseInt(part.qty, 10) || 0), 0);
-        push('Parts', parts.length ? `${parts.length} item${parts.length > 1 ? 's' : ''}` : 'None');
+        push('', parts.length ? `${parts.length} part${parts.length > 1 ? 's' : ''}` : 'No parts');
         if (qty) push('Qty', String(qty));
         break;
       }
       case 'images':
-        push('Images', 'None uploaded');
+        push('', 'No images');
         break;
       case 'additional': {
         const flags: [string, boolean][] = [
@@ -10134,11 +10134,11 @@ const FormVariationsDemo = () => {
           ['CO Std Check', formData.coStdCheckOverride],
         ];
         const on = flags.filter(([, active]) => active).map(([name]) => name);
-        push('Flags', on.length ? `${on.length} on: ${on.slice(0, 2).join(', ')}${on.length > 2 ? '…' : ''}` : 'None', 54);
+        push('', on.length ? `${on.length} on: ${on.slice(0, 2).join(', ')}${on.length > 2 ? '…' : ''}` : 'No flags selected', 54);
         break;
       }
       case 'activity-log': {
-        push('Entries', activityHistory.length ? String(activityHistory.length) : '');
+        push('', activityHistory.length ? `${activityHistory.length} entries` : 'No comments');
         const latest = activityHistory[0];
         if (latest) push('Latest', `${latest.type}: ${latest.details}`, 48);
         break;
