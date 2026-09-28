@@ -180,11 +180,11 @@ export function AppSidebar() {
 
   return (
     <Sidebar
-      className={`${open ? "w-64" : "w-16"} border-r-0 bg-sidebar backdrop-blur-sm animate-fade-in shadow-lg`}
+      className={`${open ? "w-60" : "w-14"} border-r-0 bg-sidebar backdrop-blur-sm animate-fade-in shadow-lg`}
       collapsible="icon"
     >
       {/* Header with Logo */}
-      <SidebarHeader className="border-b border-sidebar-border p-2.5">
+      <SidebarHeader className="border-b border-sidebar-border px-2 py-2.5">
         <div className="flex items-center gap-2">
           {open && (
             <div className="flex flex-col animate-fade-in">
@@ -233,7 +233,7 @@ export function AppSidebar() {
         )}
       </SidebarHeader>
 
-      <SidebarContent className="px-1.5 py-2">
+      <SidebarContent className="px-1 py-2">
         {Object.entries(filteredCategories).map(([categoryName, actions], categoryIndex) => (
           <SidebarGroup key={categoryName} className="mb-2">
             {open ? (
@@ -275,7 +275,7 @@ export function AppSidebar() {
                                   >
                                     <Link
                                       to="/"
-                                      className="flex items-center w-full !h-7 px-2 rounded-md text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1"
+                                      className="flex items-center w-full !h-7 px-1.5 rounded-md text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1"
                                     >
                                       {React.createElement(action.icon, { className: "h-3.5 w-3.5 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
                                       <span className="ml-2 font-medium text-[13px] animate-fade-in">
@@ -299,13 +299,13 @@ export function AppSidebar() {
                                 </div>
 
                                 <CollapsibleContent>
-                                    <div className="ml-4 mt-0.5 space-y-0.5 border-l border-sidebar-border pl-2">
+                                    <div className="ml-3.5 mt-0.5 space-y-0.5 border-l border-sidebar-border pl-1.5">
                                       {visibleWorkOrderActions.map((subAction) => (
                                         <Button
                                           key={subAction.title}
                                           variant="ghost"
                                           size="sm"
-                                          className="w-full justify-start !h-6 px-1.5 text-sidebar-foreground/80 hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all"
+                                          className="w-full justify-start !h-6 px-1 text-sidebar-foreground/80 hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all"
                                           onClick={() => {
                                             const url = (subAction as { url?: string }).url;
                                             if (url) navigate(url);
@@ -331,7 +331,7 @@ export function AppSidebar() {
                                     className="group flex-1 !h-7"
                                   >
                                     <div
-                                      className="flex items-center w-full !h-7 px-2 rounded-md text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1 cursor-pointer"
+                                      className="flex items-center w-full !h-7 px-1.5 rounded-md text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1 cursor-pointer"
                                       onClick={() => setExpandedViews(!expandedViews)}
                                     >
                                       {React.createElement(action.icon, { className: "h-3.5 w-3.5 shrink-0 text-sidebar-foreground group-hover:scale-110 transition-transform duration-200" })}
@@ -356,13 +356,13 @@ export function AppSidebar() {
                                 </div>
 
                                 <CollapsibleContent>
-                                    <div className="ml-4 mt-0.5 space-y-0.5 border-l border-sidebar-border pl-2">
+                                    <div className="ml-3.5 mt-0.5 space-y-0.5 border-l border-sidebar-border pl-1.5">
                                       {visibleViewsItems.map((subAction) => (
                                         <Link key={subAction.title} to={subAction.url}>
                                           <Button
                                             variant="ghost"
                                             size="sm"
-                                            className={`w-full justify-start !h-6 px-1.5 rounded-md hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all ${
+                                            className={`w-full justify-start !h-6 px-1 rounded-md hover:text-sidebar-accent-foreground hover:bg-sidebar-accent/50 transition-all ${
                                               location.pathname === subAction.url
                                                 ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
                                                 : "text-sidebar-foreground/80"
@@ -393,7 +393,7 @@ export function AppSidebar() {
                                       ? "customers-nav"
                                       : undefined
                                   }
-                                  className={`flex items-center w-full !h-7 px-2 rounded-md hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1 ${
+                                  className={`flex items-center w-full !h-7 px-1.5 rounded-md hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1 ${
                                     location.pathname === (action as any).url
                                       ? "bg-sidebar-accent text-sidebar-accent-foreground font-semibold"
                                       : "text-sidebar-foreground"
@@ -415,7 +415,7 @@ export function AppSidebar() {
                                 <Button
                                   variant="ghost"
                                   size="sm"
-                                  className="w-full justify-start !h-7 px-2 rounded-md text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1"
+                                  className="w-full justify-start !h-7 px-1.5 rounded-md text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 ease-in-out group-hover:translate-x-1"
                                   style={{
                                     animationDelay: `${(categoryIndex * 100) + (index * 50)}ms`
                                   }}
@@ -487,14 +487,14 @@ export function AppSidebar() {
         )}
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-sidebar-border p-1.5 space-y-0.5">
+      <SidebarFooter className="border-t border-sidebar-border px-1 py-1.5 space-y-0.5">
         {open ? (
           <>
             <Button
               variant="ghost"
               size="sm"
               onClick={openDrawer}
-              className="w-full justify-start !h-7 px-2 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+              className="w-full justify-start !h-7 px-1.5 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
               <Sparkles className="h-3.5 w-3.5 mr-2" />
               <span className="text-[13px] font-medium flex items-center gap-1">
@@ -505,7 +505,7 @@ export function AppSidebar() {
             <Button
               variant="ghost"
               size="sm"
-              className="w-full justify-start !h-7 px-2 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+              className="w-full justify-start !h-7 px-1.5 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
               <span className="h-3.5 w-3.5 mr-2 text-[10px] font-bold flex items-center justify-center">JM</span>
               <span className="text-[13px] font-medium">Old App</span>
@@ -514,7 +514,7 @@ export function AppSidebar() {
               variant="ghost"
               size="sm"
               onClick={handleLogout}
-              className="w-full justify-start !h-7 px-2 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+              className="w-full justify-start !h-7 px-1.5 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
               <LogOut className="h-3.5 w-3.5 mr-2" />
               <span className="text-[13px] font-medium">Logout</span>
