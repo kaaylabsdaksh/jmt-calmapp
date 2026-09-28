@@ -10039,6 +10039,116 @@ const FormVariationsDemo = () => {
     </Tabs>
   );
 
+  // Essentials read-out for a collapsed accordion header, so the form can be
+  // scanned end to end without opening every section.
+  function sectionSummary(sectionId: string): { label: string; value: string }[] {
+    const items: { label: string; value: string }[] = [];
+    const push = (label: string, raw: unknown, max = 26) => {
+      const text = String(raw ?? '').trim();
+      if (!text) return;
+      items.push({ label, value: text.length > max ? `${text.slice(0, max - 1)}…` : text });
+    };
+    const titleize = (value: string) => (value || '')
+      .split(/[-_\s]+/)
+      .filter(Boolean)
+      .map((word) => (/^(qa|ar|po|sr|tf|hu|dt|rfid|esl|itl|mfg|gmfg|co|ndt)$/.test(word.toLowerCase())
+        ? word.toUpperCase()
+        : word.charAt(0).toUpperCase() + word.slice(1)))
+      .join(' ');
+    const yesNo = (value: boolean) => (value ? 'Yes' : 'No');
+
+    switch (sectionId) {
+      case 'general':
+        push('Status', titleize(formData.itemStatus));
+        push('Priority', titleize(formData.priority));
+        push('Location', titleize(formData.location));
+        push('Division', titleize(formData.division));
+        push('Assigned', formData.assignedTo);
+        push('Scheduled', formData.scheduledDate);
+        break;
+      case 'product':
+        push('Mfr', formData.manufacturer);
+        push('Model', formData.model);
+        push('Lab Code', formData.labCode);
+        push('Serial', formData.mfgSerial);
+        push('Qty', formData.quantity);
+        push('Description', formData.description, 34);
+        break;
+      case 'logistics':
+        push('Arrival', formData.arrivalDate);
+        push('PU Date', formData.puDate);
+        push('Need By', formData.needBy);
+        push('Deliver By', formData.deliverByDate);
+        push('Ship Type', titleize(formData.shipType));
+        break;
+      case 'lab-cost': {
+        const techs = [formData.technician1, formData.technician2, formData.technician3].filter(Boolean);
+        push('Tech', techs.join(', '), 30);
+        push('Test', formData.testDate);
+        push('Cert', formData.certificationDate);
+        push('Recal', formData.recalibrationDate);
+        push('Total', formData.allTotal && formData.allTotal !== '0.00' ? `$${formData.allTotal}` : '');
+        break;
+      }
+      case 'factory':
+        push('To Factory', formData.toFactory ? 'Yes' : 'No');
+        push('PO', formData.tfPoNumber);
+        push('Vendor RMA', formData.vendorRmaNumber);
+        push('Cert File', formData.certFile);
+        break;
+      case 'transit':
+        push('From', titleize(formData.originLocation));
+        push('To', titleize(formData.destinationLocation));
+        push('HU', formData.huQty ? `${formData.huQty} ${titleize(formData.huType || '')}`.trim() : '');
+        push('Delivery', titleize(formData.deliveryType));
+        break;
+      case 'parts': {
+        const parts = partsList.filter((part) => part.partNumber || part.description);
+        const qty = parts.reduce((total, part) => total + (parseInt(part.qty, 10) || 0), 0);
+        push('Parts', parts.length ? `${parts.length} item${parts.length > 1 ? 's' : ''}` : 'None');
+        if (qty) push('Qty', String(qty));
+        break;
+      }
+      case 'images':
+        push('Images', 'None uploaded');
+        break;
+      case 'additional': {
+        const flags: [string, boolean][] = [
+          ['Warranty', formData.warranty],
+          ['Estimate', formData.estimate],
+          ['New Equip', formData.newEquip],
+          ['Used Surplus', formData.usedSurplus],
+          ['ISO 17025', formData.iso17025],
+          ['Hot List', formData.hotList],
+          ['Ready to Bill', formData.readyToBill],
+          ['In QA', formData.inQa],
+          ['To Shipping', formData.toShipping],
+          ['Multi Parts', formData.multiParts],
+          ['Lost Equip', formData.lostEquipment],
+          ['Customer Pickup', formData.toCustomerPickup],
+          ['To Logistics', formData.toLogistics],
+          ['Red Tag', formData.redTag],
+          ['Returned', formData.returned],
+          ['CO Override', formData.coOverride],
+          ['Date Valid', formData.dateValidOverride],
+          ['CO Std Check', formData.coStdCheckOverride],
+        ];
+        const on = flags.filter(([, active]) => active).map(([name]) => name);
+        push('Flags', on.length ? `${on.length} on: ${on.slice(0, 2).join(', ')}${on.length > 2 ? '…' : ''}` : 'None', 54);
+        break;
+      }
+      case 'activity-log': {
+        push('Entries', activityHistory.length ? String(activityHistory.length) : '');
+        const latest = activityHistory[0];
+        if (latest) push('Latest', `${latest.type}: ${latest.details}`, 48);
+        break;
+      }
+      default:
+        break;
+    }
+    return items.slice(0, 5);
+  }
+
   // Render accordion-based tabs interface (new version with tabs as accordions)
   const renderAccordionTabsInterface = () => (
     <div className="space-y-4" style={{ paddingBottom: `${footerHeight}px` }}>
