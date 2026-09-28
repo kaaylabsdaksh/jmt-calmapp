@@ -415,7 +415,50 @@ const FormVariationsDemo = () => {
   };
   
   // Main section state
-  const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'fail-log' | 'cert-files'>('work-order-items');
+  const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'fail-log' | 'cert-files' | 'warranty'>('work-order-items');
+
+  // Warranty state (single items only)
+  const [warrantyData, setWarrantyData] = useState({
+    reportedProblem: "accessories",
+    problemFound: "missing",
+    warrantyType: "jm-test",
+    customerCharged: "yes",
+  });
+  const [warrantySaved, setWarrantySaved] = useState(false);
+  const [warrantyCommentType, setWarrantyCommentType] = useState("Warranty");
+  const [warrantyComment, setWarrantyComment] = useState("");
+  const [warrantyHistory, setWarrantyHistory] = useState([
+    { id: "1", type: "Warranty", user: "Admin User", date: "09/28/2026 03:09 AM", comment: "WO 418960-001 has been marked as a JM Test Warranty." },
+    { id: "2", type: "Other", user: "Kim-Viet Le", date: "03/24/2025 02:04 PM", comment: "Status changed from ASSIGNED TO TECH to LAB MANAGEMENT" },
+    { id: "3", type: "User Status Change", user: "Kim-Viet Le", date: "03/24/2025 02:03 PM", comment: "Status changed from LAB MANAGEMENT to ASSIGNED TO TECH" },
+    { id: "4", type: "Receiving", user: "Admin User", date: "03/21/2025 09:43 AM", comment: "CalMapp user marked 418960-001 for warranty review. Problem Type: Accessories." },
+    { id: "5", type: "Other", user: "Admin User", date: "03/21/2025 09:43 AM", comment: "Need By Date changed from 06/26/2023 to 09/02/2022" },
+    { id: "6", type: "Technical", user: "Admin User", date: "03/21/2025 09:43 AM", comment: "SR1068 has been acknowledged." },
+  ]);
+
+  const saveWarranty = () => {
+    setWarrantySaved(true);
+    setWarrantyHistory((previous) => [{
+      id: Date.now().toString(),
+      type: "Warranty",
+      user: "Current User",
+      date: format(new Date(), "MM/dd/yyyy hh:mm a"),
+      comment: `Warranty updated to ${warrantyData.warrantyType === "jm-test" ? "JM Test Warranty" : "Manufacturer Warranty"}.`,
+    }, ...previous]);
+    toast({ title: "Warranty saved", description: "The warranty details have been updated." });
+  };
+
+  const addWarrantyComment = () => {
+    if (!warrantyComment.trim()) return;
+    setWarrantyHistory((previous) => [{
+      id: Date.now().toString(),
+      type: warrantyCommentType,
+      user: "Current User",
+      date: format(new Date(), "MM/dd/yyyy hh:mm a"),
+      comment: warrantyComment.trim(),
+    }, ...previous]);
+    setWarrantyComment("");
+  };
   
   // Fail Log state
   const [failLogLocation, setFailLogLocation] = useState("");
@@ -12057,6 +12100,17 @@ const FormVariationsDemo = () => {
                   <Settings className="h-4 w-4" />
                   QF3
                 </button>
+                 <button
+                   onClick={() => setActiveSection('warranty')}
+                   className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${
+                     activeSection === 'warranty'
+                       ? 'bg-primary text-primary-foreground'
+                       : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                   }`}
+                 >
+                   <Shield className="h-4 w-4" />
+                   Warranty
+                 </button>
               </>
             )}
             <button
@@ -12136,6 +12190,18 @@ const FormVariationsDemo = () => {
                     <Settings className="h-4 w-4" />
                     QF3
                   </Button>
+                   <Button
+                     variant="ghost"
+                     onClick={() => setActiveSection('warranty')}
+                     className={`flex items-center gap-2 h-7 px-2.5 py-1 rounded-md text-xs font-medium transition-all border ${
+                       activeSection === 'warranty'
+                         ? 'bg-primary text-primary-foreground shadow-sm border-primary'
+                         : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+                     }`}
+                   >
+                     <Shield className="h-4 w-4" />
+                     Warranty
+                   </Button>
                 </>
               )}
               <Button
@@ -13434,6 +13500,176 @@ const FormVariationsDemo = () => {
               </div>
             </CardContent>
           </Card>
+        )}
+
+        {activeSection === 'warranty' && !isESLType && (
+          <div className="space-y-3 pb-4">
+            <Card className="border-border shadow-sm">
+              <CardHeader className="px-4 py-3 border-b border-border">
+                <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <CardTitle className="text-base">Warranty Details</CardTitle>
+                    <CardDescription className="text-xs">Review and update the warranty classification for this item.</CardDescription>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs">
+                    <span className="text-muted-foreground">Warranty ID</span>
+                    <span className="font-semibold text-foreground">0000081</span>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="p-4 space-y-4">
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
+                  <div className="space-y-1">
+                    <Label className="text-xs">Reported Problem</Label>
+                    <Select
+                      value={warrantyData.reportedProblem}
+                      onValueChange={(value) => {
+                        setWarrantyData((current) => ({ ...current, reportedProblem: value }));
+                        setWarrantySaved(false);
+                      }}
+                    >
+                      <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="accessories">Accessories</SelectItem>
+                        <SelectItem value="calibration">Calibration</SelectItem>
+                        <SelectItem value="functionality">Functionality</SelectItem>
+                        <SelectItem value="physical-damage">Physical Damage</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs">Notes / Problems Found</Label>
+                    <Select
+                      value={warrantyData.problemFound}
+                      onValueChange={(value) => {
+                        setWarrantyData((current) => ({ ...current, problemFound: value }));
+                        setWarrantySaved(false);
+                      }}
+                    >
+                      <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="missing">Missing</SelectItem>
+                        <SelectItem value="damaged">Damaged</SelectItem>
+                        <SelectItem value="incorrect">Incorrect</SelectItem>
+                        <SelectItem value="not-reproducible">Not Reproducible</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs">Type of Warranty</Label>
+                    <Select
+                      value={warrantyData.warrantyType}
+                      onValueChange={(value) => {
+                        setWarrantyData((current) => ({ ...current, warrantyType: value }));
+                        setWarrantySaved(false);
+                      }}
+                    >
+                      <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="jm-test">JM Test Warranty</SelectItem>
+                        <SelectItem value="manufacturer">Manufacturer Warranty</SelectItem>
+                        <SelectItem value="service">Service Warranty</SelectItem>
+                        <SelectItem value="not-covered">Not Covered</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs">Was the Customer Charged?</Label>
+                    <Select
+                      value={warrantyData.customerCharged}
+                      onValueChange={(value) => {
+                        setWarrantyData((current) => ({ ...current, customerCharged: value }));
+                        setWarrantySaved(false);
+                      }}
+                    >
+                      <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="yes">Yes</SelectItem>
+                        <SelectItem value="no">No</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="flex items-center justify-end gap-3 border-t border-border pt-3">
+                  {warrantySaved && (
+                    <span className="flex items-center gap-1.5 text-xs font-medium text-success">
+                      <CheckCircle className="h-3.5 w-3.5" /> Warranty data saved
+                    </span>
+                  )}
+                  <Button size="sm" onClick={saveWarranty} className="h-8 bg-success text-success-foreground hover:bg-success/90">
+                    <Save className="mr-1.5 h-3.5 w-3.5" /> Save Warranty
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-border shadow-sm">
+              <CardHeader className="px-4 py-3 border-b border-border">
+                <CardTitle className="text-sm">Comments & Activity</CardTitle>
+              </CardHeader>
+              <CardContent className="p-4 space-y-3">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-[160px_minmax(0,1fr)_auto] sm:items-end">
+                  <div className="space-y-1">
+                    <Label className="text-xs">Type</Label>
+                    <Select value={warrantyCommentType} onValueChange={setWarrantyCommentType}>
+                      <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Warranty">Warranty</SelectItem>
+                        <SelectItem value="Receiving">Receiving</SelectItem>
+                        <SelectItem value="Technical">Technical</SelectItem>
+                        <SelectItem value="User Status Change">User Status Change</SelectItem>
+                        <SelectItem value="Other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label htmlFor="warranty-comment" className="text-xs">Comment</Label>
+                    <Textarea
+                      id="warranty-comment"
+                      value={warrantyComment}
+                      onChange={(event) => setWarrantyComment(event.target.value)}
+                      placeholder="Add warranty notes or comments"
+                      className="min-h-8 h-8 resize-y text-xs"
+                    />
+                  </div>
+                  <Button size="sm" variant="outline" onClick={addWarrantyComment} disabled={!warrantyComment.trim()} className="h-8">
+                    <Plus className="mr-1.5 h-3.5 w-3.5" /> Add
+                  </Button>
+                </div>
+
+                <div className="overflow-hidden rounded-md border border-border">
+                  <div className="overflow-x-auto">
+                    <Table className="min-w-[760px]">
+                      <TableHeader>
+                        <TableRow className="bg-muted/50 hover:bg-muted/50">
+                          <TableHead className="h-8 w-[170px] text-xs font-semibold text-foreground">Type</TableHead>
+                          <TableHead className="h-8 w-[140px] text-xs font-semibold text-foreground">User</TableHead>
+                          <TableHead className="h-8 w-[190px] text-xs font-semibold text-foreground">Date Entered</TableHead>
+                          <TableHead className="h-8 text-xs font-semibold text-foreground">Comment</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {warrantyHistory.map((entry) => (
+                          <TableRow key={entry.id}>
+                            <TableCell className="py-2 text-xs font-medium">{entry.type}</TableCell>
+                            <TableCell className="py-2 text-xs">{entry.user}</TableCell>
+                            <TableCell className="py-2 text-xs whitespace-nowrap">{entry.date}</TableCell>
+                            <TableCell className="py-2 text-xs">{entry.comment}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                  <div className="flex items-center justify-between border-t border-border bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
+                    <span>Page 1 of 1 ({warrantyHistory.length} items)</span>
+                    <span>Page size: 10</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         )}
 
 
