@@ -487,34 +487,37 @@ export function AppSidebar() {
         )}
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-sidebar-border p-2 space-y-1">
+      <SidebarFooter className="border-t border-sidebar-border p-1.5 space-y-0.5">
         {open ? (
           <>
             <Button
               variant="ghost"
+              size="sm"
               onClick={openDrawer}
-              className="w-full justify-start text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+              className="w-full justify-start h-7 px-2 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
-              <Sparkles className="h-4 w-4 mr-3" />
-              <span className="text-sm font-medium flex items-center gap-1.5">
+              <Sparkles className="h-3.5 w-3.5 mr-2" />
+              <span className="text-[13px] font-medium flex items-center gap-1">
                 What's New
                 <NewBadge featureKey={FEATURE_KEYS.whatsNew} />
               </span>
             </Button>
             <Button
               variant="ghost"
-              className="w-full justify-start text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+              size="sm"
+              className="w-full justify-start h-7 px-2 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
-              <span className="h-4 w-4 mr-3 text-xs font-bold flex items-center justify-center">JM</span>
-              <span className="text-sm font-medium">Old App</span>
+              <span className="h-3.5 w-3.5 mr-2 text-[10px] font-bold flex items-center justify-center">JM</span>
+              <span className="text-[13px] font-medium">Old App</span>
             </Button>
             <Button
               variant="ghost"
+              size="sm"
               onClick={handleLogout}
-              className="w-full justify-start text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+              className="w-full justify-start h-7 px-2 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
-              <LogOut className="h-4 w-4 mr-3" />
-              <span className="text-sm font-medium">Logout</span>
+              <LogOut className="h-3.5 w-3.5 mr-2" />
+              <span className="text-[13px] font-medium">Logout</span>
             </Button>
           </>
         ) : (
@@ -523,10 +526,10 @@ export function AppSidebar() {
               variant="ghost"
               size="icon"
               onClick={openDrawer}
-              className="w-full text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 relative"
+              className="w-full h-7 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200 relative"
               title="What's New"
             >
-              <Sparkles className="h-4 w-4" />
+              <Sparkles className="h-3.5 w-3.5" />
               <NewBadge
                 featureKey={FEATURE_KEYS.whatsNew}
                 className="absolute -top-0.5 -right-0.5 text-[8px] px-1 py-0"
@@ -535,17 +538,17 @@ export function AppSidebar() {
             <Button
               variant="ghost"
               size="icon"
-              className="w-full text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+              className="w-full h-7 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
-              <span className="text-[10px] font-bold">JM</span>
+              <span className="text-[9px] font-bold">JM</span>
             </Button>
             <Button
               variant="ghost"
               size="icon"
               onClick={handleLogout}
-              className="w-full text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
+              className="w-full h-7 text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent transition-all duration-200"
             >
-              <LogOut className="h-4 w-4" />
+              <LogOut className="h-3.5 w-3.5" />
             </Button>
           </>
         )}
