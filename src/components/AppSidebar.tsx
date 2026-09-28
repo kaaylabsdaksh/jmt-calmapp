@@ -190,6 +190,13 @@ export function AppSidebar() {
             <div className="flex flex-col animate-fade-in">
               <h1 className="text-lg font-bold text-sidebar-foreground tracking-tight">CalMApp</h1>
               <p className="text-xs text-sidebar-foreground/70">Work Order Management</p>
+              <div
+                className="mt-2 inline-flex w-fit items-center gap-1.5 rounded-full bg-foreground px-2 py-0.5"
+                title="This environment is for testing only — data entered here is not live."
+              >
+                <span className="text-[9px] font-bold uppercase tracking-wide text-background">Test System</span>
+                <span className="text-[9px] text-background/60">· Do not use for live data</span>
+              </div>
             </div>
           )}
         </div>
