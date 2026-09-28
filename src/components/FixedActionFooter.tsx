@@ -15,7 +15,7 @@ interface FixedActionFooterProps {
   saveText?: string;
   cancelText?: string;
   isLoading?: boolean;
-  currentSection?: 'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'fail-log' | 'cert-files' | 'general';
+  currentSection?: 'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'fail-log' | 'cert-files' | 'warranty' | 'general';
   userRole?: 'admin' | 'technician';
   onUserRoleChange?: (role: 'admin' | 'technician') => void;
   footerRef?: React.RefObject<HTMLDivElement>;

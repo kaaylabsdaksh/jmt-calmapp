@@ -1,0 +1,1 @@
+Warranty is a single-item-only top-level work-order section with local mock state, because ESL item workflows must remain unchanged.
