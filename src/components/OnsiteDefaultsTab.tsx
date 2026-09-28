@@ -138,7 +138,7 @@ export const OnsiteDefaultsTab = ({
         <section>
           <SectionHeader title="Default Settings" />
           <div className="grid grid-cols-12 gap-x-3 gap-y-2.5">
-            <Field id="od-location" label="Location" required error={errors.location} className="col-span-12 md:col-span-6">
+            <Field id="od-location" label="Location" required error={errors.location} className="col-span-12 md:col-span-4">
               <Select value={value.location} onValueChange={(v) => set({ location: v })}>
                 <SelectTrigger id="od-location" className="h-7 text-[11px]">
                   <SelectValue placeholder="Select location..." />
@@ -151,7 +151,7 @@ export const OnsiteDefaultsTab = ({
               </Select>
             </Field>
 
-            <Field id="od-division" label="Division" required error={errors.division} className="col-span-6 md:col-span-3">
+            <Field id="od-division" label="Division" required error={errors.division} className="col-span-6 md:col-span-2">
               <Select value={value.division} onValueChange={(v) => set({ division: v })}>
                 <SelectTrigger id="od-division" className="h-7 text-[11px]">
                   <SelectValue placeholder="Select division..." />
@@ -164,7 +164,7 @@ export const OnsiteDefaultsTab = ({
               </Select>
             </Field>
 
-            <Field id="od-priority" label="Priority" required error={errors.priority} className="col-span-6 md:col-span-3">
+            <Field id="od-priority" label="Priority" required error={errors.priority} className="col-span-6 md:col-span-2">
               <Select value={value.priority} onValueChange={(v) => set({ priority: v })}>
                 <SelectTrigger id="od-priority" className="h-7 text-[11px]">
                   <SelectValue placeholder="Select priority..." />
@@ -177,7 +177,7 @@ export const OnsiteDefaultsTab = ({
               </Select>
             </Field>
 
-            <Field id="od-start" label="Start Date" className="col-span-6 md:col-span-6">
+            <Field id="od-start" label="Start Date" className="col-span-6 md:col-span-2">
               <ModernDatePicker
                 id="od-start"
                 size="sm"
@@ -186,7 +186,7 @@ export const OnsiteDefaultsTab = ({
               />
             </Field>
 
-            <Field id="od-end" label="End / Need By Date" error={errors.endDate} className="col-span-6 md:col-span-6">
+            <Field id="od-end" label="End / Need By Date" error={errors.endDate} className="col-span-6 md:col-span-2">
               <ModernDatePicker
                 id="od-end"
                 size="sm"
