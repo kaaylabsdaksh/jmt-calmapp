@@ -10486,6 +10486,8 @@ const FormVariationsDemo = () => {
                   if (!config) return null;
                   const IconComp = config.icon;
                   const isLast = sectionOrder.indexOf(sectionId) === sectionOrder.length - 1;
+                  const isOpen = openAccordions.includes(sectionId);
+                  const summary = isOpen ? [] : sectionSummary(sectionId);
                     return (
                     <div
                       key={sectionId}
@@ -10493,16 +10495,26 @@ const FormVariationsDemo = () => {
                     >
                       <AccordionItem value={sectionId} className={cn(isLast ? "border-b-0" : "border-b", "group")}>
                         <AccordionTrigger className="hover:no-underline py-2.5 px-2 text-sm transition-colors hover:bg-muted/40 [&>svg]:h-4 [&>svg]:w-4">
-                          <div className="flex items-center gap-2.5">
-                            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-muted group-hover:bg-muted/70">
+                          <div className="flex min-w-0 flex-1 items-center gap-2.5">
+                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-muted group-hover:bg-muted/70">
                               <IconComp className="h-3.5 w-3.5 text-muted-foreground" />
                             </span>
-                            <span className="font-medium">{config.label}</span>
+                            <span className="shrink-0 font-medium">{config.label}</span>
+                            {!isOpen && summary.length > 0 && (
+                              <div className="flex min-w-0 flex-1 items-center gap-x-4 overflow-hidden">
+                                {summary.map((item) => (
+                                  <span key={item.label} className="flex min-w-0 items-baseline gap-1.5">
+                                    <span className="shrink-0 text-[11px] font-normal text-muted-foreground">{item.label}</span>
+                                    <span className="truncate text-[11px] font-semibold text-foreground">{item.value}</span>
+                                  </span>
+                                ))}
+                              </div>
+                            )}
                             {config.statusKey && tabStatus[config.statusKey] === 'completed' && (
-                              <CheckCircle className="h-3.5 w-3.5 ml-auto mr-1 text-green-600" />
+                              <CheckCircle className="h-3.5 w-3.5 ml-auto mr-1 shrink-0 text-green-600" />
                             )}
                             {config.statusKey && tabStatus[config.statusKey] === 'error' && (
-                              <AlertCircle className="h-3.5 w-3.5 ml-auto mr-1 text-destructive" />
+                              <AlertCircle className="h-3.5 w-3.5 ml-auto mr-1 shrink-0 text-destructive" />
                             )}
                           </div>
                         </AccordionTrigger>
