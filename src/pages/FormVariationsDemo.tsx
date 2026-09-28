@@ -10039,6 +10039,116 @@ const FormVariationsDemo = () => {
     </Tabs>
   );
 
+  // Essentials read-out for a collapsed accordion header, so the form can be
+  // scanned end to end without opening every section.
+  function sectionSummary(sectionId: string): { label: string; value: string }[] {
+    const items: { label: string; value: string }[] = [];
+    const push = (label: string, raw: unknown, max = 26) => {
+      const text = String(raw ?? '').trim();
+      if (!text) return;
+      items.push({ label, value: text.length > max ? `${text.slice(0, max - 1)}…` : text });
+    };
+    const titleize = (value: string) => (value || '')
+      .split(/[-_\s]+/)
+      .filter(Boolean)
+      .map((word) => (/^(qa|ar|po|sr|tf|hu|dt|rfid|esl|itl|mfg|gmfg|co|ndt)$/.test(word.toLowerCase())
+        ? word.toUpperCase()
+        : word.charAt(0).toUpperCase() + word.slice(1)))
+      .join(' ');
+    const yesNo = (value: boolean) => (value ? 'Yes' : 'No');
+
+    switch (sectionId) {
+      case 'general':
+        push('Status', titleize(formData.itemStatus));
+        push('Priority', titleize(formData.priority));
+        push('Location', titleize(formData.location));
+        push('Division', titleize(formData.division));
+        push('Assigned', formData.assignedTo);
+        push('Scheduled', formData.scheduledDate);
+        break;
+      case 'product':
+        push('Mfr', formData.manufacturer);
+        push('Model', formData.model);
+        push('Lab Code', formData.labCode);
+        push('Serial', formData.mfgSerial);
+        push('Qty', formData.quantity);
+        push('Description', formData.description, 34);
+        break;
+      case 'logistics':
+        push('Arrival', formData.arrivalDate);
+        push('PU Date', formData.puDate);
+        push('Need By', formData.needBy);
+        push('Deliver By', formData.deliverByDate);
+        push('Ship Type', titleize(formData.shipType));
+        break;
+      case 'lab-cost': {
+        const techs = [formData.technician1, formData.technician2, formData.technician3].filter(Boolean);
+        push('Tech', techs.join(', '), 30);
+        push('Test', formData.testDate);
+        push('Cert', formData.certificationDate);
+        push('Recal', formData.recalibrationDate);
+        push('Total', formData.allTotal && formData.allTotal !== '0.00' ? `$${formData.allTotal}` : '');
+        break;
+      }
+      case 'factory':
+        push('To Factory', formData.toFactory ? 'Yes' : 'No');
+        push('PO', formData.tfPoNumber);
+        push('Vendor RMA', formData.vendorRmaNumber);
+        push('Cert File', formData.certFile, 20);
+        break;
+      case 'transit':
+        push('From', titleize(formData.originLocation));
+        push('To', titleize(formData.destinationLocation));
+        push('HU', formData.huQty ? `${formData.huQty} ${titleize(formData.huType || '')}`.trim() : '');
+        push('Delivery', titleize(formData.deliveryType));
+        break;
+      case 'parts': {
+        const parts = partsList.filter((part) => part.partNumber || part.description);
+        const qty = parts.reduce((total, part) => total + (parseInt(part.qty, 10) || 0), 0);
+        push('', parts.length ? `${parts.length} part${parts.length > 1 ? 's' : ''}` : 'No parts');
+        if (qty) push('Qty', String(qty));
+        break;
+      }
+      case 'images':
+        push('', 'No images');
+        break;
+      case 'additional': {
+        const flags: [string, boolean][] = [
+          ['Warranty', formData.warranty],
+          ['Estimate', formData.estimate],
+          ['New Equip', formData.newEquip],
+          ['Used Surplus', formData.usedSurplus],
+          ['ISO 17025', formData.iso17025],
+          ['Hot List', formData.hotList],
+          ['Ready to Bill', formData.readyToBill],
+          ['In QA', formData.inQa],
+          ['To Shipping', formData.toShipping],
+          ['Multi Parts', formData.multiParts],
+          ['Lost Equip', formData.lostEquipment],
+          ['Customer Pickup', formData.toCustomerPickup],
+          ['To Logistics', formData.toLogistics],
+          ['Red Tag', formData.redTag],
+          ['Returned', formData.returned],
+          ['CO Override', formData.coOverride],
+          ['Date Valid', formData.dateValidOverride],
+          ['CO Std Check', formData.coStdCheckOverride],
+        ];
+        const on = flags.filter(([, active]) => active).map(([name]) => name);
+        push('', on.length ? `${on.length} on: ${on.slice(0, 2).join(', ')}${on.length > 2 ? '…' : ''}` : 'No flags selected', 54);
+        break;
+      }
+      case 'activity-log': {
+        push('', activityHistory.length ? `${activityHistory.length} entries` : 'No comments');
+        const latest = activityHistory[0];
+        if (latest) push('Latest', `${latest.type}: ${latest.details}`, 48);
+        break;
+      }
+      default:
+        break;
+    }
+    return items.slice(0, 5);
+  }
+
   // Render accordion-based tabs interface (new version with tabs as accordions)
   const renderAccordionTabsInterface = () => (
     <div className="space-y-4" style={{ paddingBottom: `${footerHeight}px` }}>
@@ -10486,6 +10596,8 @@ const FormVariationsDemo = () => {
                   if (!config) return null;
                   const IconComp = config.icon;
                   const isLast = sectionOrder.indexOf(sectionId) === sectionOrder.length - 1;
+                  const isOpen = openAccordions.includes(sectionId);
+                  const summary = isOpen ? [] : sectionSummary(sectionId);
                     return (
                     <div
                       key={sectionId}
@@ -10493,16 +10605,28 @@ const FormVariationsDemo = () => {
                     >
                       <AccordionItem value={sectionId} className={cn(isLast ? "border-b-0" : "border-b", "group")}>
                         <AccordionTrigger className="hover:no-underline py-2.5 px-2 text-sm transition-colors hover:bg-muted/40 [&>svg]:h-4 [&>svg]:w-4">
-                          <div className="flex items-center gap-2.5">
-                            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-muted group-hover:bg-muted/70">
+                          <div className="flex min-w-0 flex-1 items-center gap-2.5">
+                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-muted group-hover:bg-muted/70">
                               <IconComp className="h-3.5 w-3.5 text-muted-foreground" />
                             </span>
-                            <span className="font-medium">{config.label}</span>
+                            <span className="shrink-0 font-medium">{config.label}</span>
+                            {!isOpen && summary.length > 0 && (
+                              <div className="flex min-w-0 flex-1 items-center gap-x-4 overflow-hidden">
+                                {summary.map((item, index) => (
+                                  <span key={`${item.label}-${index}`} className="flex min-w-0 items-baseline gap-1.5">
+                                    {item.label && (
+                                      <span className="shrink-0 text-[11px] font-normal text-muted-foreground">{item.label}</span>
+                                    )}
+                                    <span className="truncate text-[11px] font-semibold text-foreground">{item.value}</span>
+                                  </span>
+                                ))}
+                              </div>
+                            )}
                             {config.statusKey && tabStatus[config.statusKey] === 'completed' && (
-                              <CheckCircle className="h-3.5 w-3.5 ml-auto mr-1 text-green-600" />
+                              <CheckCircle className="h-3.5 w-3.5 ml-auto mr-1 shrink-0 text-green-600" />
                             )}
                             {config.statusKey && tabStatus[config.statusKey] === 'error' && (
-                              <AlertCircle className="h-3.5 w-3.5 ml-auto mr-1 text-destructive" />
+                              <AlertCircle className="h-3.5 w-3.5 ml-auto mr-1 shrink-0 text-destructive" />
                             )}
                           </div>
                         </AccordionTrigger>
