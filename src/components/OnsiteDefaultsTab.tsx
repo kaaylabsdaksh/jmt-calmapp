@@ -201,7 +201,7 @@ export const OnsiteDefaultsTab = ({
         <section>
           <SectionHeader title="Additional Defaults" />
           <div className="grid grid-cols-12 gap-x-3 gap-y-2.5">
-            <Field id="od-po" label="PO Number" className="col-span-12 md:col-span-4">
+            <Field id="od-po" label="PO Number" className="col-span-12 md:col-span-3">
               <Input
                 id="od-po"
                 className="h-7 text-[11px]"
@@ -212,7 +212,7 @@ export const OnsiteDefaultsTab = ({
               />
             </Field>
 
-            <Field id="od-calfreq" label="Calibration Frequency (months)" className="col-span-6 md:col-span-4">
+            <Field id="od-calfreq" label="Calibration Frequency (months)" className="col-span-6 md:col-span-3">
               <Input
                 id="od-calfreq"
                 type="number"
@@ -225,7 +225,7 @@ export const OnsiteDefaultsTab = ({
               />
             </Field>
 
-            <Field id="od-action" label="Action Code" className="col-span-6 md:col-span-4">
+            <Field id="od-action" label="Action Code" className="col-span-6 md:col-span-2">
               <Select value={value.actionCode} onValueChange={(v) => set({ actionCode: v })}>
                 <SelectTrigger id="od-action" className="h-7 text-[11px]">
                   <SelectValue placeholder="Select action code..." />
@@ -238,7 +238,7 @@ export const OnsiteDefaultsTab = ({
               </Select>
             </Field>
 
-            <Field id="od-arrival" label="Arrival Type" className="col-span-6 md:col-span-6">
+            <Field id="od-arrival" label="Arrival Type" className="col-span-6 md:col-span-2">
               <Select value={value.arrivalType} onValueChange={(v) => set({ arrivalType: v })}>
                 <SelectTrigger id="od-arrival" className="h-7 text-[11px]">
                   <SelectValue placeholder="Select arrival type..." />
@@ -251,7 +251,7 @@ export const OnsiteDefaultsTab = ({
               </Select>
             </Field>
 
-            <Field id="od-project" label="OS Project Number" className="col-span-6 md:col-span-6">
+            <Field id="od-project" label="OS Project Number" className="col-span-6 md:col-span-2">
               <Input
                 id="od-project"
                 className="h-7 text-[11px]"
