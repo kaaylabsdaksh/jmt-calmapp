@@ -10612,9 +10612,11 @@ const FormVariationsDemo = () => {
                             <span className="shrink-0 font-medium">{config.label}</span>
                             {!isOpen && summary.length > 0 && (
                               <div className="flex min-w-0 flex-1 items-center gap-x-4 overflow-hidden">
-                                {summary.map((item) => (
-                                  <span key={item.label} className="flex min-w-0 items-baseline gap-1.5">
-                                    <span className="shrink-0 text-[11px] font-normal text-muted-foreground">{item.label}</span>
+                                {summary.map((item, index) => (
+                                  <span key={`${item.label}-${index}`} className="flex min-w-0 items-baseline gap-1.5">
+                                    {item.label && (
+                                      <span className="shrink-0 text-[11px] font-normal text-muted-foreground">{item.label}</span>
+                                    )}
                                     <span className="truncate text-[11px] font-semibold text-foreground">{item.value}</span>
                                   </span>
                                 ))}
