@@ -12100,17 +12100,19 @@ const FormVariationsDemo = () => {
                   <Settings className="h-4 w-4" />
                   QF3
                 </button>
-                 <button
-                   onClick={() => setActiveSection('warranty')}
-                   className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${
-                     activeSection === 'warranty'
-                       ? 'bg-primary text-primary-foreground'
-                       : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                   }`}
-                 >
-                   <Shield className="h-4 w-4" />
-                   Warranty
-                 </button>
+                 {formData.type === 'single' && (
+                   <button
+                     onClick={() => setActiveSection('warranty')}
+                     className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-all whitespace-nowrap ${
+                       activeSection === 'warranty'
+                         ? 'bg-primary text-primary-foreground'
+                         : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                     }`}
+                   >
+                     <Shield className="h-4 w-4" />
+                     Warranty
+                   </button>
+                 )}
               </>
             )}
             <button
@@ -12190,18 +12192,20 @@ const FormVariationsDemo = () => {
                     <Settings className="h-4 w-4" />
                     QF3
                   </Button>
-                   <Button
-                     variant="ghost"
-                     onClick={() => setActiveSection('warranty')}
-                     className={`flex items-center gap-2 h-7 px-2.5 py-1 rounded-md text-xs font-medium transition-all border ${
-                       activeSection === 'warranty'
-                         ? 'bg-primary text-primary-foreground shadow-sm border-primary'
-                         : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
-                     }`}
-                   >
-                     <Shield className="h-4 w-4" />
-                     Warranty
-                   </Button>
+                   {formData.type === 'single' && (
+                     <Button
+                       variant="ghost"
+                       onClick={() => setActiveSection('warranty')}
+                       className={`flex items-center gap-2 h-7 px-2.5 py-1 rounded-md text-xs font-medium transition-all border ${
+                         activeSection === 'warranty'
+                           ? 'bg-primary text-primary-foreground shadow-sm border-primary'
+                           : 'bg-background text-muted-foreground hover:text-foreground border-border hover:border-border/80'
+                       }`}
+                     >
+                       <Shield className="h-4 w-4" />
+                       Warranty
+                     </Button>
+                   )}
                 </>
               )}
               <Button
@@ -13502,7 +13506,7 @@ const FormVariationsDemo = () => {
           </Card>
         )}
 
-        {activeSection === 'warranty' && !isESLType && (
+        {activeSection === 'warranty' && formData.type === 'single' && (
           <div className="space-y-3 pb-4">
             <Card className="border-border shadow-sm">
               <CardHeader className="px-4 py-3 border-b border-border">
