@@ -191,11 +191,16 @@ export function AppSidebar() {
               <h1 className="text-lg font-bold text-sidebar-foreground tracking-tight">CalMApp</h1>
               <p className="text-xs text-sidebar-foreground/70">Work Order Management</p>
               <div
-                className="mt-2 inline-flex w-fit items-center gap-1.5 rounded-full bg-foreground px-2 py-0.5"
+                className="mt-2 inline-flex w-fit items-center rounded-lg border border-sidebar-foreground/20 bg-sidebar-foreground/10 px-2.5 py-1.5 backdrop-blur-sm"
                 title="This environment is for testing only — data entered here is not live."
               >
-                <span className="text-[9px] font-bold uppercase tracking-wide text-background">Test System</span>
-                <span className="text-[9px] text-background/60">· Do not use for live data</span>
+                <span className="whitespace-nowrap text-[11px] font-extrabold uppercase tracking-tight text-sidebar-foreground">
+                  Test System
+                </span>
+                <span className="mx-2 h-3 w-px shrink-0 bg-sidebar-foreground/20" />
+                <span className="whitespace-nowrap text-[10px] font-normal leading-none text-sidebar-foreground/80">
+                  Do not use for live data
+                </span>
               </div>
             </div>
           )}
