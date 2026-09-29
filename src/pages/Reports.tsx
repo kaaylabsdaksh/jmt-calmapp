@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import {
   AlertTriangle,
   CheckCircle2,
+  ChevronsUpDown,
 
   FileDown,
   FileText,
@@ -14,8 +15,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -132,6 +135,39 @@ function SelectField({ label, value, onChange, options }: { label: string; value
         <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
         <SelectContent>{options.map((option) => <SelectItem key={option} value={option}>{option}</SelectItem>)}</SelectContent>
       </Select>
+    </div>
+  );
+}
+
+function SearchableSelectField({ label, value, onChange, options, placeholder }: { label: string; value: string; onChange: (value: string) => void; options: string[]; placeholder?: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="space-y-1.5">
+      <Label className="text-xs font-medium">{label}</Label>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button variant="outline" role="combobox" aria-expanded={open} className="h-9 w-full justify-between font-normal">
+            <span className="truncate">{value}</span>
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" align="start">
+          <Command>
+            <CommandInput placeholder={placeholder ?? `Search ${label.toLowerCase()}...`} className="h-8 text-xs" />
+            <CommandList>
+              <CommandEmpty className="py-2 text-xs text-center">No matches.</CommandEmpty>
+              <CommandGroup>
+                {options.map((option) => (
+                  <CommandItem key={option} value={option} onSelect={() => { onChange(option); setOpen(false); }} className="text-xs">
+                    <CheckCircle2 className={cn("mr-1.5 h-3 w-3", value === option ? "opacity-100" : "opacity-0")} />
+                    {option}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 }
@@ -386,7 +422,7 @@ export default function Reports() {
                 {selectedReport.criteria === "daily" && (
                   <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <DateField label="Created Date" value={dateFrom} onChange={setDateFrom} />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
                     <SelectField label="Lab Code" value={labCode} onChange={setLabCode} options={labCodes} />
                     <SelectField label="Created By" value={createdBy} onChange={setCreatedBy} options={["Admin User", "M. Alvarez", "S. Patel"]} />
@@ -415,7 +451,7 @@ export default function Reports() {
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                       {selectedReport.criteria === "esl-lab" && <DateField label="Comment Date Start" value={dateFrom} onChange={setDateFrom} />}
                       {selectedReport.criteria === "esl-lab" && <DateField label="Comment Date End" value={dateTo} onChange={setDateTo} />}
-                      <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                      <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                       <SelectField label="Technician" value={technician} onChange={setTechnician} options={technicians} />
                       {selectedReport.criteria === "esl-lab" && <SelectField label="Report Type" value={reportType} onChange={setReportType} options={["Summary", "Detail"]} />}
                     </div>
@@ -431,7 +467,7 @@ export default function Reports() {
                     <DateField label="Cert/Completion Start" value={dateFrom} onChange={setDateFrom} />
                     <DateField label="Cert/Completion End" value={dateTo} onChange={setDateTo} />
                     <TextField label="Work Order #" value={workOrder} onChange={setWorkOrder} numeric />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
                     <SelectField label="Lab Code" value={labCode} onChange={setLabCode} options={labCodes} />
                     <SelectField label="Technician" value={technician} onChange={setTechnician} options={technicians} />
@@ -449,7 +485,7 @@ export default function Reports() {
                   <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <DateField label="Cert/Completion Start" value={dateFrom} onChange={setDateFrom} />
                     <DateField label="Cert/Completion End" value={dateTo} onChange={setDateTo} />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
                     <SelectField label="Technician" value={technician} onChange={setTechnician} options={technicians} />
                     <SelectField label="Account Type" value={acctType} onChange={setAcctType} options={["All", "Customer", "Internal"]} />
@@ -469,7 +505,7 @@ export default function Reports() {
                   <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <DateField label="Cert Created Start" value={dateFrom} onChange={setDateFrom} />
                     <DateField label="Cert Created End" value={dateTo} onChange={setDateTo} />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
                     <SelectField label="Lab Code" value={labCode} onChange={setLabCode} options={labCodes} />
                     <SelectField label="Technician" value={technician} onChange={setTechnician} options={technicians} />
@@ -482,7 +518,7 @@ export default function Reports() {
                   <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <DateField label="Start Date" value={dateFrom} onChange={setDateFrom} />
                     <DateField label="End Date" value={dateTo} onChange={setDateTo} />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Report Type" value={reportType} onChange={setReportType} options={["Summary", "Detail"]} />
                   </div>
                 )}
@@ -492,7 +528,7 @@ export default function Reports() {
                     <DateField label="Start Date" value={dateFrom} onChange={setDateFrom} />
                     <DateField label="End Date" value={dateTo} onChange={setDateTo} />
                     <SelectField label="Date Type" value={dateType} onChange={setDateType} options={["Departure", "Arrival"]} />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
                   </div>
                 )}
@@ -501,7 +537,7 @@ export default function Reports() {
                   <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <DateField label="Need By Start" value={dateFrom} onChange={setDateFrom} />
                     <DateField label="Need By End" value={dateTo} onChange={setDateTo} />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
                     <SelectField label="Work Order Type" value={woType} onChange={setWoType} options={["All Types", "Regular", "OnSite", "ESL"]} />
                     <SelectField label="Lab Code" value={labCode} onChange={setLabCode} options={labCodes} />
@@ -542,7 +578,7 @@ export default function Reports() {
                   <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <DateField label="Cert/Completion Start" value={dateFrom} onChange={setDateFrom} />
                     <DateField label="Cert/Completion End" value={dateTo} onChange={setDateTo} />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
                     <SelectField label="Lab Code" value={labCode} onChange={setLabCode} options={labCodes} />
                     <SelectField label="Technician" value={technician} onChange={setTechnician} options={technicians} />
@@ -557,7 +593,7 @@ export default function Reports() {
                   <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <DateField label="Cert Created Start" value={dateFrom} onChange={setDateFrom} />
                     <DateField label="Cert Created End" value={dateTo} onChange={setDateTo} />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
                     <SelectField label="Lab Code" value={labCode} onChange={setLabCode} options={labCodes} />
                     <SelectField label="Technician" value={technician} onChange={setTechnician} options={technicians} />
@@ -581,14 +617,8 @@ export default function Reports() {
                 )}
 
                 {selectedReport.criteria === "location" && (
-                  <div className="max-w-sm space-y-1.5">
-                    <Label className="text-xs font-medium">Location</Label>
-                    <Select value={location} onValueChange={setLocation}>
-                      <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        {locations.map((item) => <SelectItem key={item} value={item}>{item}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
+                  <div className="max-w-sm">
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                   </div>
                 )}
 
