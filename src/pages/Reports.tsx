@@ -23,7 +23,7 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
-type CriteriaKind = "work-order" | "cert-sheets" | "daily" | "account" | "equipment-list" | "esl-lab" | "esl-open" | "finished-items" | "labor-audit" | "labor-hours" | "lab-log" | "lab-production" | "labor-transfer" | "logistics" | "need-by" | "onsite-log" | "onsite-open-returned" | "date-range" | "month" | "location" | "none";
+type CriteriaKind = "work-order" | "cert-sheets" | "daily" | "account" | "equipment-list" | "esl-lab" | "esl-open" | "finished-items" | "labor-audit" | "labor-hours" | "tech-details" | "lab-log" | "lab-production" | "labor-transfer" | "logistics" | "need-by" | "onsite-log" | "onsite-open-returned" | "date-range" | "month" | "location" | "none";
 
 type ReportDefinition = {
   name: string;
@@ -60,7 +60,7 @@ const reportGroups: Array<{ category: string; reports: Omit<ReportDefinition, "c
       { name: "Open Items Summary", criteria: "location", description: "Summarize currently open items by location." },
       { name: "Receiving Count", criteria: "date-range", description: "Count items received during a selected period." },
       { name: "Rental Accessories", criteria: "location", description: "List rental accessories by location." },
-      { name: "Tech Details", criteria: "date-range", description: "Review technician activity details." },
+      { name: "Tech Details", criteria: "tech-details", description: "Review technician activity details." },
       { name: "Tech Labor", criteria: "date-range", description: "Summarize technician labor for a selected period." },
       { name: "Unfinished Items Count", criteria: "location", description: "Count unfinished items by location." },
       { name: "Work Order Data", criteria: "work-order", description: "Export detailed work order information." },
@@ -83,7 +83,7 @@ const reportGroups: Array<{ category: string; reports: Omit<ReportDefinition, "c
       { name: "Onsite Log", criteria: "onsite-log", description: "Review onsite activity for a selected period." },
       { name: "Onsite Open Items - Returned", criteria: "onsite-open-returned", description: "Review returned onsite items that remain open." },
       { name: "Onsite Project List", criteria: "location", description: "List onsite projects by location." },
-      { name: "Onsite Tally", criteria: "date-range", description: "Summarize onsite item totals." },
+      { name: "Onsite Tally", criteria: "work-order", description: "Summarize onsite item totals." },
     ],
   },
   {
@@ -522,6 +522,21 @@ export default function Reports() {
                         {locations.slice(1).map((item) => <Label key={item} className="flex cursor-pointer items-center gap-2 text-xs font-normal"><Checkbox checked={selectedLocations.includes(item)} onCheckedChange={(checked) => setSelectedLocations((current) => checked ? [...current, item] : current.filter((value) => value !== item))} />{item}</Label>)}
                       </div>
                     </div>
+                  </div>
+                )}
+
+                {selectedReport.criteria === "tech-details" && (
+                  <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <DateField label="Cert/Completion Start" value={dateFrom} onChange={setDateFrom} />
+                    <DateField label="Cert/Completion End" value={dateTo} onChange={setDateTo} />
+                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
+                    <SelectField label="Lab Code" value={labCode} onChange={setLabCode} options={labCodes} />
+                    <SelectField label="Technician" value={technician} onChange={setTechnician} options={technicians} />
+                    <SelectField label="Manufacturer" value={manufacturer} onChange={setManufacturer} options={["All Manufacturers", "Fluke", "Megger", "Hubbell"]} />
+                    <SelectField label="Model Number" value={modelNumber} onChange={setModelNumber} options={["All Models", "Model 1", "Model 2"]} />
+                    <TextField label="Product Description" value={productDescription} onChange={setProductDescription} />
+                    <TextField label="Account Number" value={accountNumber} onChange={setAccountNumber} numeric />
                   </div>
                 )}
 
