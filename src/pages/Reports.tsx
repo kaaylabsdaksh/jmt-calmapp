@@ -422,7 +422,7 @@ export default function Reports() {
                 {selectedReport.criteria === "daily" && (
                   <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <DateField label="Created Date" value={dateFrom} onChange={setDateFrom} />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
                     <SelectField label="Lab Code" value={labCode} onChange={setLabCode} options={labCodes} />
                     <SelectField label="Created By" value={createdBy} onChange={setCreatedBy} options={["Admin User", "M. Alvarez", "S. Patel"]} />
@@ -451,7 +451,7 @@ export default function Reports() {
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                       {selectedReport.criteria === "esl-lab" && <DateField label="Comment Date Start" value={dateFrom} onChange={setDateFrom} />}
                       {selectedReport.criteria === "esl-lab" && <DateField label="Comment Date End" value={dateTo} onChange={setDateTo} />}
-                      <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                      <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                       <SelectField label="Technician" value={technician} onChange={setTechnician} options={technicians} />
                       {selectedReport.criteria === "esl-lab" && <SelectField label="Report Type" value={reportType} onChange={setReportType} options={["Summary", "Detail"]} />}
                     </div>
@@ -467,7 +467,7 @@ export default function Reports() {
                     <DateField label="Cert/Completion Start" value={dateFrom} onChange={setDateFrom} />
                     <DateField label="Cert/Completion End" value={dateTo} onChange={setDateTo} />
                     <TextField label="Work Order #" value={workOrder} onChange={setWorkOrder} numeric />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
                     <SelectField label="Lab Code" value={labCode} onChange={setLabCode} options={labCodes} />
                     <SelectField label="Technician" value={technician} onChange={setTechnician} options={technicians} />
@@ -485,7 +485,7 @@ export default function Reports() {
                   <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <DateField label="Cert/Completion Start" value={dateFrom} onChange={setDateFrom} />
                     <DateField label="Cert/Completion End" value={dateTo} onChange={setDateTo} />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
                     <SelectField label="Technician" value={technician} onChange={setTechnician} options={technicians} />
                     <SelectField label="Account Type" value={acctType} onChange={setAcctType} options={["All", "Customer", "Internal"]} />
@@ -505,7 +505,7 @@ export default function Reports() {
                   <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <DateField label="Cert Created Start" value={dateFrom} onChange={setDateFrom} />
                     <DateField label="Cert Created End" value={dateTo} onChange={setDateTo} />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
                     <SelectField label="Lab Code" value={labCode} onChange={setLabCode} options={labCodes} />
                     <SelectField label="Technician" value={technician} onChange={setTechnician} options={technicians} />
@@ -518,7 +518,7 @@ export default function Reports() {
                   <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <DateField label="Start Date" value={dateFrom} onChange={setDateFrom} />
                     <DateField label="End Date" value={dateTo} onChange={setDateTo} />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Report Type" value={reportType} onChange={setReportType} options={["Summary", "Detail"]} />
                   </div>
                 )}
@@ -528,7 +528,7 @@ export default function Reports() {
                     <DateField label="Start Date" value={dateFrom} onChange={setDateFrom} />
                     <DateField label="End Date" value={dateTo} onChange={setDateTo} />
                     <SelectField label="Date Type" value={dateType} onChange={setDateType} options={["Departure", "Arrival"]} />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
                   </div>
                 )}
@@ -537,7 +537,7 @@ export default function Reports() {
                   <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <DateField label="Need By Start" value={dateFrom} onChange={setDateFrom} />
                     <DateField label="Need By End" value={dateTo} onChange={setDateTo} />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
                     <SelectField label="Work Order Type" value={woType} onChange={setWoType} options={["All Types", "Regular", "OnSite", "ESL"]} />
                     <SelectField label="Lab Code" value={labCode} onChange={setLabCode} options={labCodes} />
@@ -578,7 +578,7 @@ export default function Reports() {
                   <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <DateField label="Cert/Completion Start" value={dateFrom} onChange={setDateFrom} />
                     <DateField label="Cert/Completion End" value={dateTo} onChange={setDateTo} />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
                     <SelectField label="Lab Code" value={labCode} onChange={setLabCode} options={labCodes} />
                     <SelectField label="Technician" value={technician} onChange={setTechnician} options={technicians} />
@@ -593,7 +593,7 @@ export default function Reports() {
                   <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <DateField label="Cert Created Start" value={dateFrom} onChange={setDateFrom} />
                     <DateField label="Cert Created End" value={dateTo} onChange={setDateTo} />
-                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                     <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
                     <SelectField label="Lab Code" value={labCode} onChange={setLabCode} options={labCodes} />
                     <SelectField label="Technician" value={technician} onChange={setTechnician} options={technicians} />
