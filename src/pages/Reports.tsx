@@ -139,6 +139,39 @@ function SelectField({ label, value, onChange, options }: { label: string; value
   );
 }
 
+function SearchableSelectField({ label, value, onChange, options, placeholder }: { label: string; value: string; onChange: (value: string) => void; options: string[]; placeholder?: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="space-y-1.5">
+      <Label className="text-xs font-medium">{label}</Label>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button variant="outline" role="combobox" aria-expanded={open} className="h-9 w-full justify-between font-normal">
+            <span className="truncate">{value}</span>
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" align="start">
+          <Command>
+            <CommandInput placeholder={placeholder ?? `Search ${label.toLowerCase()}...`} className="h-8 text-xs" />
+            <CommandList>
+              <CommandEmpty className="py-2 text-xs text-center">No matches.</CommandEmpty>
+              <CommandGroup>
+                {options.map((option) => (
+                  <CommandItem key={option} value={option} onSelect={() => { onChange(option); setOpen(false); }} className="text-xs">
+                    <CheckCircle2 className={cn("mr-1.5 h-3 w-3", value === option ? "opacity-100" : "opacity-0")} />
+                    {option}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+}
+
 function TextField({ label, value, onChange, numeric = false }: { label: string; value: string; onChange: (value: string) => void; numeric?: boolean }) {
   return (
     <div className="space-y-1.5">
