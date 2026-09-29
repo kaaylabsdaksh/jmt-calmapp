@@ -86,7 +86,7 @@ export const quickActionCategories: Record<string, { title: string; icon: React.
     { title: "Invoicing", icon: CreditCard, url: "/invoicing" },
     { title: "Delivery Tickets", icon: Truck, url: "/delivery-tickets" },
     { title: "Quotes", icon: FileText, url: "/quotes" },
-    { title: "Reports", icon: BarChart3 },
+    { title: "Reports", icon: BarChart3, url: "/reports" },
   ],
   "User Management": [
     { title: "Manage Users", icon: Users },

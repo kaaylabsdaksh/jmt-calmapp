@@ -23,6 +23,7 @@ const routeMeta: Record<string, { title: string; crumbs: Crumb[] }> = {
   "/onsite-scheduling": { title: "Onsite Scheduling", crumbs: [{ label: "Home", to: "/" }, { label: "Onsite Scheduling" }] },
   "/onsite-scheduling-prototype": { title: "Onsite Scheduling", crumbs: [{ label: "Home", to: "/" }, { label: "Onsite Scheduling" }] },
   "/onsite-scheduling-v2": { title: "Onsite Scheduling V2", crumbs: [{ label: "Home", to: "/" }, { label: "Onsite Scheduling V2" }] },
+  "/reports": { title: "Reports", crumbs: [{ label: "Home", to: "/" }, { label: "Core Operations" }, { label: "Reports" }] },
   "/onsite-projects/new": { title: "Onsite Project # XXX", crumbs: [{ label: "Onsite Projects", to: "/onsite-projects" }, { label: "New Project" }] },
   "/manage-customers": { title: "Manage Customers", crumbs: [{ label: "Home", to: "/" }, { label: "Product & Customer" }, { label: "Manage Customers" }] },
   "/quotes": { title: "Quotes", crumbs: [{ label: "Home", to: "/" }, { label: "Quotes" }] },
