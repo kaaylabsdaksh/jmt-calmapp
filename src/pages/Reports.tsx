@@ -23,7 +23,7 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
-type CriteriaKind = "work-order" | "cert-sheets" | "daily" | "account" | "equipment-list" | "esl-lab" | "esl-open" | "finished-items" | "labor-audit" | "date-range" | "month" | "location" | "none";
+type CriteriaKind = "work-order" | "cert-sheets" | "daily" | "account" | "equipment-list" | "esl-lab" | "esl-open" | "finished-items" | "labor-audit" | "labor-hours" | "lab-log" | "lab-production" | "labor-transfer" | "logistics" | "need-by" | "onsite-log" | "onsite-open-returned" | "date-range" | "month" | "location" | "none";
 
 type ReportDefinition = {
   name: string;
@@ -52,11 +52,11 @@ const reportGroups: Array<{ category: string; reports: Omit<ReportDefinition, "c
       { name: "Equipment Performance", criteria: "date-range", description: "Review equipment performance over time." },
       { name: "Finished Items Count", criteria: "finished-items", description: "Count completed items using detailed certification and equipment criteria." },
       { name: "Labor Audit", criteria: "labor-audit", description: "Review labor activity using certification, technician, and standards criteria." },
-      { name: "Labor Hours", criteria: "date-range", description: "Summarize labor hours for a selected period." },
-      { name: "Lab Log", criteria: "date-range", description: "Create the lab activity log." },
-      { name: "Lab Production", criteria: "date-range", description: "Summarize lab production activity." },
-      { name: "Labor Transfer", criteria: "date-range", description: "Review labor transferred between work areas." },
-      { name: "Logistics", criteria: "date-range", description: "Summarize logistics activity for the selected period." },
+      { name: "Labor Hours", criteria: "labor-hours", description: "Summarize labor hours for a selected period." },
+      { name: "Lab Log", criteria: "lab-log", description: "Create the lab activity log." },
+      { name: "Lab Production", criteria: "lab-production", description: "Summarize lab production activity." },
+      { name: "Labor Transfer", criteria: "labor-transfer", description: "Review labor transferred between work areas." },
+      { name: "Logistics", criteria: "logistics", description: "Summarize logistics activity for the selected period." },
       { name: "Open Items Summary", criteria: "location", description: "Summarize currently open items by location." },
       { name: "Receiving Count", criteria: "date-range", description: "Count items received during a selected period." },
       { name: "Rental Accessories", criteria: "location", description: "List rental accessories by location." },
@@ -79,9 +79,9 @@ const reportGroups: Array<{ category: string; reports: Omit<ReportDefinition, "c
   {
     category: "Onsite",
     reports: [
-      { name: "Onsite EOJ Data", criteria: "date-range", description: "Export end-of-job onsite data." },
-      { name: "Onsite Log", criteria: "date-range", description: "Review onsite activity for a selected period." },
-      { name: "Onsite Open Items - Returned", criteria: "location", description: "Review returned onsite items that remain open." },
+      { name: "Onsite EOJ Data", criteria: "work-order", description: "Export end-of-job onsite data." },
+      { name: "Onsite Log", criteria: "onsite-log", description: "Review onsite activity for a selected period." },
+      { name: "Onsite Open Items - Returned", criteria: "onsite-open-returned", description: "Review returned onsite items that remain open." },
       { name: "Onsite Project List", criteria: "location", description: "List onsite projects by location." },
       { name: "Onsite Tally", criteria: "date-range", description: "Summarize onsite item totals." },
     ],
@@ -99,8 +99,8 @@ const reportGroups: Array<{ category: string; reports: Omit<ReportDefinition, "c
   {
     category: "Planning",
     reports: [
-      { name: "Need By - Customer", criteria: "date-range", description: "Review customer need-by commitments." },
-      { name: "Need By - Lab", criteria: "date-range", description: "Review lab need-by commitments." },
+      { name: "Need By - Customer", criteria: "need-by", description: "Review customer need-by commitments." },
+      { name: "Need By - Lab", criteria: "need-by", description: "Review lab need-by commitments." },
       { name: "Turnaround Time Lab", criteria: "date-range", description: "Review lab turnaround performance." },
     ],
   },
@@ -175,6 +175,13 @@ export default function Reports() {
   const [productDescription, setProductDescription] = useState("");
   const [labStandards, setLabStandards] = useState("All Standards");
   const [creating, setCreating] = useState(false);
+  const [acctType, setAcctType] = useState("All");
+  const [itemStatus, setItemStatus] = useState("All Statuses");
+  const [sortBy, setSortBy] = useState("Report Number");
+  const [dateType, setDateType] = useState("Departure");
+  const [woType, setWoType] = useState("All Types");
+  const [customerGroup, setCustomerGroup] = useState("All Groups");
+  const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
 
   const selectedReport = reports.find((report) => report.name === selectedName) ?? reports[0];
   const normalizedSearch = search.trim().toLowerCase();
@@ -211,11 +218,20 @@ export default function Reports() {
     setModelNumber("All Models");
     setProductDescription("");
     setLabStandards("All Standards");
+    setAcctType("All");
+    setItemStatus("All Statuses");
+    setSortBy(selectedName === "Onsite Log" ? "Cert Date" : "Report Number");
+    setDateType("Departure");
+    setWoType("All Types");
+    setCustomerGroup("All Groups");
+    setSelectedLocations([]);
   };
 
   const selectReport = (name: string) => {
     setSelectedName(name);
     clearCriteria();
+    setSortBy(name === "Onsite Log" ? "Cert Date" : name === "Onsite Open Items - Returned" ? "Need By Date" : "Report Number");
+    setReportType(name === "Labor Hours" ? "Location/Division" : "Summary");
   };
 
   const createPdf = () => {
@@ -413,6 +429,99 @@ export default function Reports() {
                     <SelectField label="Model Number" value={modelNumber} onChange={setModelNumber} options={["All Models", "Model 1", "Model 2"]} />
                     <TextField label="Product Description" value={productDescription} onChange={setProductDescription} />
                     <SelectField label="Report Type" value={reportType} onChange={setReportType} options={["Summary", "Detail"]} />
+                  </div>
+                )}
+
+                {selectedReport.criteria === "labor-hours" && (
+                  <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <DateField label="Cert/Completion Start" value={dateFrom} onChange={setDateFrom} />
+                    <DateField label="Cert/Completion End" value={dateTo} onChange={setDateTo} />
+                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
+                    <SelectField label="Technician" value={technician} onChange={setTechnician} options={technicians} />
+                    <SelectField label="Account Type" value={acctType} onChange={setAcctType} options={["All", "Customer", "Internal"]} />
+                    <SelectField label="Report Type" value={reportType} onChange={setReportType} options={["Location/Division", "Technician", "Summary", "Detail"]} />
+                  </div>
+                )}
+
+                {selectedReport.criteria === "lab-log" && (
+                  <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <TextField label="Work Order #" value={workOrder} onChange={setWorkOrder} numeric />
+                    <SelectField label="Item Status" value={itemStatus} onChange={setItemStatus} options={["All Statuses", "Open", "In Progress", "Completed", "Back to Customer"]} />
+                    <SelectField label="Sort Report By" value={sortBy} onChange={setSortBy} options={["Report Number", "Cert Date", "Item Status"]} />
+                  </div>
+                )}
+
+                {selectedReport.criteria === "lab-production" && (
+                  <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <DateField label="Cert Created Start" value={dateFrom} onChange={setDateFrom} />
+                    <DateField label="Cert Created End" value={dateTo} onChange={setDateTo} />
+                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
+                    <SelectField label="Lab Code" value={labCode} onChange={setLabCode} options={labCodes} />
+                    <SelectField label="Technician" value={technician} onChange={setTechnician} options={technicians} />
+                    <SelectField label="Lab Standards" value={labStandards} onChange={setLabStandards} options={["All Standards", "STD-1001", "STD-1002", "STD-2040"]} />
+                    <SelectField label="Report Type" value={reportType} onChange={setReportType} options={["Summary", "Detail"]} />
+                  </div>
+                )}
+
+                {selectedReport.criteria === "labor-transfer" && (
+                  <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <DateField label="Start Date" value={dateFrom} onChange={setDateFrom} />
+                    <DateField label="End Date" value={dateTo} onChange={setDateTo} />
+                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SelectField label="Report Type" value={reportType} onChange={setReportType} options={["Summary", "Detail"]} />
+                  </div>
+                )}
+
+                {selectedReport.criteria === "logistics" && (
+                  <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <DateField label="Start Date" value={dateFrom} onChange={setDateFrom} />
+                    <DateField label="End Date" value={dateTo} onChange={setDateTo} />
+                    <SelectField label="Date Type" value={dateType} onChange={setDateType} options={["Departure", "Arrival"]} />
+                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
+                  </div>
+                )}
+
+                {selectedReport.criteria === "need-by" && (
+                  <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <DateField label="Need By Start" value={dateFrom} onChange={setDateFrom} />
+                    <DateField label="Need By End" value={dateTo} onChange={setDateTo} />
+                    <SelectField label="Location" value={location} onChange={setLocation} options={locations} />
+                    <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
+                    <SelectField label="Work Order Type" value={woType} onChange={setWoType} options={["All Types", "Regular", "OnSite", "ESL"]} />
+                    <SelectField label="Lab Code" value={labCode} onChange={setLabCode} options={labCodes} />
+                  </div>
+                )}
+
+                {selectedReport.criteria === "onsite-log" && (
+                  <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <TextField label="Work Order #" value={workOrder} onChange={setWorkOrder} numeric />
+                    <SelectField label="Item Status" value={itemStatus} onChange={setItemStatus} options={["All Statuses", "Open", "In Progress", "Completed"]} />
+                    <SelectField label="Sort Report By" value={sortBy} onChange={setSortBy} options={["Cert Date", "Report Number", "Item Status"]} />
+                  </div>
+                )}
+
+                {selectedReport.criteria === "onsite-open-returned" && (
+                  <div className="grid max-w-4xl gap-5 md:grid-cols-2">
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <DateField label="Item Created Start" value={dateFrom} onChange={setDateFrom} />
+                      <DateField label="Item Created End" value={dateTo} onChange={setDateTo} />
+                      <SelectField label="Customer Group" value={customerGroup} onChange={setCustomerGroup} options={["All Groups", "Utilities", "Industrial", "Government"]} />
+                      <SelectField label="Sort Report By" value={sortBy} onChange={setSortBy} options={["Need By Date", "Report Number", "Account"]} />
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between gap-2">
+                        <Label className="text-xs font-medium">Location(s)</Label>
+                        <Button variant="link" className="h-auto p-0 text-xs text-foreground" onClick={() => { const all = locations.slice(1); setSelectedLocations(selectedLocations.length === all.length ? [] : all); }}>
+                          {selectedLocations.length === locations.length - 1 ? "Clear All" : "Select All"}
+                        </Button>
+                      </div>
+                      <div className="grid max-h-44 grid-cols-2 gap-2 overflow-y-auto rounded-md border border-border p-3">
+                        {locations.slice(1).map((item) => <Label key={item} className="flex cursor-pointer items-center gap-2 text-xs font-normal"><Checkbox checked={selectedLocations.includes(item)} onCheckedChange={(checked) => setSelectedLocations((current) => checked ? [...current, item] : current.filter((value) => value !== item))} />{item}</Label>)}
+                      </div>
+                    </div>
                   </div>
                 )}
 
