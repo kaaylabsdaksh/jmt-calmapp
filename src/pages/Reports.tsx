@@ -23,6 +23,11 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
+/** Neutral selection styling for Reports controls (no brand yellow). */
+const neutralRadioClass = "border-foreground/40 text-foreground hover:border-foreground";
+const neutralCheckboxClass = "data-[state=checked]:border-foreground data-[state=checked]:bg-foreground data-[state=checked]:text-background";
+
+
 type CriteriaKind = "work-order" | "cert-sheets" | "daily" | "account" | "equipment-list" | "esl-lab" | "esl-open" | "finished-items" | "labor-audit" | "labor-hours" | "tech-details" | "lab-log" | "lab-production" | "labor-transfer" | "logistics" | "need-by" | "onsite-log" | "onsite-open-returned" | "date-range" | "month" | "location" | "none";
 
 type ReportDefinition = {
@@ -302,7 +307,7 @@ export default function Reports() {
                                 isSelected ? "border-border bg-muted text-foreground" : "text-foreground hover:bg-muted/60",
                               )}
                             >
-                              <RadioGroupItem id={`report-${report.name}`} value={report.name} className="h-3.5 w-3.5" />
+                              <RadioGroupItem id={`report-${report.name}`} value={report.name} className={cn("h-3.5 w-3.5", neutralRadioClass)} />
                               <span className="min-w-0 flex-1 leading-4">{report.name}</span>
                             </Label>
                           );
@@ -364,7 +369,7 @@ export default function Reports() {
                         </Button>
                       </div>
                       <div className="grid max-h-44 grid-cols-2 gap-2 overflow-y-auto rounded-md border border-border p-3">
-                        {divisions.map((item) => <Label key={item} className="flex cursor-pointer items-center gap-2 text-xs font-normal"><Checkbox checked={selectedDivisions.includes(item)} onCheckedChange={(checked) => setSelectedDivisions((current) => checked ? [...current, item] : current.filter((value) => value !== item))} />{item}</Label>)}
+                        {divisions.map((item) => <Label key={item} className="flex cursor-pointer items-center gap-2 text-xs font-normal"><Checkbox className={neutralCheckboxClass} checked={selectedDivisions.includes(item)} onCheckedChange={(checked) => setSelectedDivisions((current) => checked ? [...current, item] : current.filter((value) => value !== item))} />{item}</Label>)}
                       </div>
                     </div>
                   </div>
@@ -377,7 +382,7 @@ export default function Reports() {
                     <SelectField label="Division" value={division} onChange={setDivision} options={divisions} />
                     <SelectField label="Lab Code" value={labCode} onChange={setLabCode} options={labCodes} />
                     <SelectField label="Created By" value={createdBy} onChange={setCreatedBy} options={["Admin User", "M. Alvarez", "S. Patel"]} />
-                    <Label className="flex h-9 cursor-pointer items-center gap-2 self-end rounded-md border border-border px-3 text-xs font-normal"><Checkbox checked={reprintDailyItems} onCheckedChange={(checked) => setReprintDailyItems(checked === true)} />Reprint Daily Items</Label>
+                    <Label className="flex h-9 cursor-pointer items-center gap-2 self-end rounded-md border border-border px-3 text-xs font-normal"><Checkbox className={neutralCheckboxClass} checked={reprintDailyItems} onCheckedChange={(checked) => setReprintDailyItems(checked === true)} />Reprint Daily Items</Label>
                     <p className="sm:col-span-2 lg:col-span-3 text-xs text-muted-foreground">Running this report marks items as printed. Select Reprint Daily Items to include them again.</p>
                   </div>
                 )}
@@ -408,7 +413,7 @@ export default function Reports() {
                     </div>
                     <div className="max-w-xl space-y-2">
                       <div className="flex items-center justify-between gap-2"><Label className="text-xs font-medium">Groupable(s)</Label><Button variant="link" className="h-auto p-0 text-xs text-foreground" onClick={() => setSelectedGroupables(selectedGroupables.length === groupables.length ? [] : groupables)}>{selectedGroupables.length === groupables.length ? "Clear All" : "Select All"}</Button></div>
-                      <div className="grid grid-cols-2 gap-2 rounded-md border border-border p-3 sm:grid-cols-4">{groupables.map((item) => <Label key={item} className="flex cursor-pointer items-center gap-2 text-xs font-normal"><Checkbox checked={selectedGroupables.includes(item)} onCheckedChange={(checked) => setSelectedGroupables((current) => checked ? [...current, item] : current.filter((value) => value !== item))} />{item}</Label>)}</div>
+                      <div className="grid grid-cols-2 gap-2 rounded-md border border-border p-3 sm:grid-cols-4">{groupables.map((item) => <Label key={item} className="flex cursor-pointer items-center gap-2 text-xs font-normal"><Checkbox className={neutralCheckboxClass} checked={selectedGroupables.includes(item)} onCheckedChange={(checked) => setSelectedGroupables((current) => checked ? [...current, item] : current.filter((value) => value !== item))} />{item}</Label>)}</div>
                     </div>
                   </div>
                 )}
@@ -519,7 +524,7 @@ export default function Reports() {
                         </Button>
                       </div>
                       <div className="grid max-h-44 grid-cols-2 gap-2 overflow-y-auto rounded-md border border-border p-3">
-                        {locations.slice(1).map((item) => <Label key={item} className="flex cursor-pointer items-center gap-2 text-xs font-normal"><Checkbox checked={selectedLocations.includes(item)} onCheckedChange={(checked) => setSelectedLocations((current) => checked ? [...current, item] : current.filter((value) => value !== item))} />{item}</Label>)}
+                        {locations.slice(1).map((item) => <Label key={item} className="flex cursor-pointer items-center gap-2 text-xs font-normal"><Checkbox className={neutralCheckboxClass} checked={selectedLocations.includes(item)} onCheckedChange={(checked) => setSelectedLocations((current) => checked ? [...current, item] : current.filter((value) => value !== item))} />{item}</Label>)}
                       </div>
                     </div>
                   </div>
