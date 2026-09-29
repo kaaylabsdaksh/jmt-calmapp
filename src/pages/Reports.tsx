@@ -617,14 +617,8 @@ export default function Reports() {
                 )}
 
                 {selectedReport.criteria === "location" && (
-                  <div className="max-w-sm space-y-1.5">
-                    <Label className="text-xs font-medium">Location</Label>
-                    <Select value={location} onValueChange={setLocation}>
-                      <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        {locations.map((item) => <SelectItem key={item} value={item}>{item}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
+                  <div className="max-w-sm">
+                    <SearchableSelectField label="Location" value={location} onChange={setLocation} options={locations} />
                   </div>
                 )}
 
