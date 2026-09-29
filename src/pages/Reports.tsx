@@ -235,7 +235,7 @@ export default function Reports() {
   };
 
   const createPdf = () => {
-    if (["work-order", "cert-sheets", "onsite-log"].includes(selectedReport.criteria) && !workOrder.trim()) {
+    if (["work-order", "cert-sheets"].includes(selectedReport.criteria) && !workOrder.trim()) {
       toast({ title: "Work order required", description: "Enter a work order number before creating this report.", variant: "destructive" });
       return;
     }
@@ -497,7 +497,7 @@ export default function Reports() {
 
                 {selectedReport.criteria === "onsite-log" && (
                   <div className="grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    <TextField label="Work Order # *" value={workOrder} onChange={setWorkOrder} numeric />
+                    <TextField label="Work Order #" value={workOrder} onChange={setWorkOrder} numeric />
                     <SelectField label="Item Status" value={itemStatus} onChange={setItemStatus} options={["All Statuses", "Open", "In Progress", "Completed"]} />
                     <SelectField label="Sort Report By" value={sortBy} onChange={setSortBy} options={["Cert Date", "Report Number", "Item Status"]} />
                   </div>
