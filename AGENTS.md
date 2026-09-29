@@ -1,1 +1,2 @@
 Warranty is a single-item-only top-level work-order section with local mock state, because ESL item workflows must remain unchanged.
+Reports is a top-level Core Operations route with local report criteria and mock PDF feedback, preserving the complete legacy catalog without backend dependencies.

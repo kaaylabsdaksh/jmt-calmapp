@@ -24,3 +24,4 @@
 - [x] Modernize the Assign Departure Information workflow
 - [x] Build modern Inventory Manage Templates list and add workflow
 - [x] Add a modern Warranty tab for single work-order items
+- [x] Build the modern Core Operations Reports workspace
