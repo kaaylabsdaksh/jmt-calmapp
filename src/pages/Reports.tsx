@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import {
   AlertTriangle,
-  CalendarDays,
   CheckCircle2,
+
   FileDown,
   FileText,
   Search,
@@ -22,6 +22,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { ModernDatePicker } from "@/components/ui/modern-date-picker";
+
 
 /** Neutral selection styling for Reports controls (no brand yellow). */
 const neutralRadioClass = "border-foreground/40 text-foreground hover:border-foreground";
@@ -142,17 +145,22 @@ function TextField({ label, value, onChange, numeric = false }: { label: string;
   );
 }
 
-function DateField({ label, value, onChange }: { label: string; value: string; onChange: (value: string) => void }) {
+function DateField({ label, value, onChange, id }: { label: string; value: string; onChange: (value: string) => void; id?: string }) {
   return (
     <div className="space-y-1.5">
-      <Label className="text-xs font-medium">{label}</Label>
-      <div className="relative">
-        <CalendarDays className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
-        <Input type="date" value={value} onChange={(event) => onChange(event.target.value)} className="h-9 pl-8" />
-      </div>
+      <Label htmlFor={id} className="text-xs font-medium">{label}</Label>
+      <ModernDatePicker
+        id={id}
+        value={value || undefined}
+        onChange={(date) => onChange(date ? format(date, "MM/dd/yyyy") : "")}
+        size="lg"
+        className="[&_button]:h-9"
+        inputClassName="h-9"
+      />
     </div>
   );
 }
+
 
 export default function Reports() {
   const [selectedName, setSelectedName] = useState("Blank Datasheets");
@@ -559,22 +567,11 @@ export default function Reports() {
 
                 {selectedReport.criteria === "date-range" && (
                   <div className="grid max-w-2xl gap-4 sm:grid-cols-2">
-                    <div className="space-y-1.5">
-                      <Label htmlFor="report-date-from" className="text-xs font-medium">From Date</Label>
-                      <div className="relative">
-                        <CalendarDays className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
-                        <Input id="report-date-from" type="date" value={dateFrom} onChange={(event) => setDateFrom(event.target.value)} className="h-9 pl-8" />
-                      </div>
-                    </div>
-                    <div className="space-y-1.5">
-                      <Label htmlFor="report-date-to" className="text-xs font-medium">To Date</Label>
-                      <div className="relative">
-                        <CalendarDays className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
-                        <Input id="report-date-to" type="date" value={dateTo} onChange={(event) => setDateTo(event.target.value)} className="h-9 pl-8" />
-                      </div>
-                    </div>
+                    <DateField id="report-date-from" label="From Date" value={dateFrom} onChange={setDateFrom} />
+                    <DateField id="report-date-to" label="To Date" value={dateTo} onChange={setDateTo} />
                   </div>
                 )}
+
 
                 {selectedReport.criteria === "month" && (
                   <div className="max-w-sm space-y-1.5">
