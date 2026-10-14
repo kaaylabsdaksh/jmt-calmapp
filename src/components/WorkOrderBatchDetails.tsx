@@ -333,7 +333,6 @@ const WorkOrderBatchDetails: React.FC<WorkOrderBatchDetailsProps> = ({
     // Create workOrderData from item
     const workOrderData = {
       id: mockBatch.batchNumber + "-" + item.id,
-      itemNumber: item.id,
       srDoc: mockBatch.srNumber,
       salesperson: "Not assigned",
       contact: "Brad Morrison",

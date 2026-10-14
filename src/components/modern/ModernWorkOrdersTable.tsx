@@ -5031,7 +5031,6 @@ const ModernWorkOrdersTable = ({ viewMode, onViewModeChange, searchFilters, hasS
     // Create workOrderData from item
     const workOrderData = {
       id: item.workOrderNumber,
-      itemNumber: item.itemNumber,
       srDoc: "SR Document",
       salesperson: "Not assigned",
       contact: "Brad Morrison",
