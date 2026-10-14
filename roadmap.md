@@ -1,5 +1,7 @@
 # CalmApp Task Roadmap
 
+- [ ] Improve capable-location summaries, detail pop-ups, and location search on Product and Product Review grids
+
 - [x] Modernize On-Site Batch Loans inside Standards with search, results, details, and add flow
 - [x] Expand Add New On-Site Batch with movement details and standard selection
 - [x] Replace batch ID details with status-aware Edit Batch workflow
