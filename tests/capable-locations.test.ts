@@ -1,6 +1,6 @@
 import { describe, test } from "node:test";
 import assert from "node:assert/strict";
-import { matchesCapableLocation, selectedCapabilities } from "./capable-locations";
+import { matchesCapableLocation, selectedCapabilities } from "../src/lib/capable-locations";
 
 describe("capable location grid rules", () => {
   test("no checked options yields zero selected locations", () => {
