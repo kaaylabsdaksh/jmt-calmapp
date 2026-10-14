@@ -219,7 +219,7 @@ const ProductReviews = () => {
               <Table>
                 <TableHeader>
                   <TableRow className="bg-muted/40">
-                    {["PR #", "Item", "Division", "Loc", "Created Date", "Created By", "Due Date", "PR Item Status", "Status Date", "Manufacturer", "Model", "Description", "Capable Location(s)", "LabCode", "Quote #", "Customer"].map((h) => (
+                    {["PR #", "Item", "Capable Location(s)", "Division", "Loc", "Created Date", "Created By", "Due Date", "PR Item Status", "Status Date", "Manufacturer", "Model", "Description", "LabCode", "Quote #", "Customer"].map((h) => (
                       <TableHead key={h} className="h-8 px-2 text-[11px] font-semibold whitespace-nowrap">
                         {h}
                       </TableHead>
@@ -238,6 +238,7 @@ const ProductReviews = () => {
                         </Link>
                       </TableCell>
                       <TableCell className="px-2 py-1.5"><Link to={`/manage-products/product-review/${r.pr}?item=${r.item}`} className="font-medium text-foreground underline underline-offset-2">{r.item}</Link></TableCell>
+                      <TableCell className="px-2 py-1.5"><CapableLocationsCell selectionKey={`review:${r.pr}:${r.item}`} /></TableCell>
                       <TableCell className="px-2 py-1.5">{r.division}</TableCell>
                       <TableCell className="px-2 py-1.5">{r.loc}</TableCell>
                       <TableCell className="px-2 py-1.5 whitespace-nowrap">{r.createdDate}</TableCell>
@@ -258,7 +259,6 @@ const ProductReviews = () => {
                       <TableCell className="px-2 py-1.5 max-w-[16rem] truncate" title={r.description}>
                         {r.description}
                       </TableCell>
-                      <TableCell className="px-2 py-1.5"><CapableLocationsCell selectionKey={`review:${r.pr}:${r.item}`} /></TableCell>
                       <TableCell className="px-2 py-1.5">{r.labCode}</TableCell>
                       <TableCell className="px-2 py-1.5 text-slate-900">{r.quote}</TableCell>
                       <TableCell className="px-2 py-1.5">{r.customer}</TableCell>
