@@ -5,9 +5,10 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { useCapabilitySelection } from "@/hooks/use-capability-selection";
 import { selectedCapabilities, type CapabilitySelection } from "@/lib/capable-locations";
 
-export default function CapableLocationsCell({ selectionKey, fallback = { matrix: {}, notes: {} } }: { selectionKey: string; fallback?: CapabilitySelection }) {
+export default function CapableLocationsCell({ selectionKey, fallback = { matrix: {}, notes: {} }, selection: override }: { selectionKey: string; fallback?: CapabilitySelection; selection?: CapabilitySelection }) {
   const [open, setOpen] = useState(false);
-  const selection = useCapabilitySelection(selectionKey, fallback);
+  const stored = useCapabilitySelection(selectionKey, fallback);
+  const selection = override ?? stored;
   const locations = selectedCapabilities(selection.matrix, selection.notes);
   if (!locations.length) return <span className="whitespace-nowrap text-muted-foreground">None selected</span>;
   return (

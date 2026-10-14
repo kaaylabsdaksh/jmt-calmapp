@@ -383,19 +383,30 @@ const ProductDetail = () => {
             </TabsContent>
 
             <TabsContent value="capable" className="mt-4 space-y-4">
+              <div className="flex flex-wrap items-center gap-3 rounded-md border bg-card px-3 py-2 text-xs">
+                <span className="font-semibold">Capable Locations:</span>
+                <CapableLocationsCell selectionKey={`product:${id}`} selection={{ matrix: capabilityMatrix, notes: limitedNotes }} />
+                <div className="relative ml-auto w-64 max-w-full">
+                  <Search className="pointer-events-none absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+                  <Input aria-label="Search locations" placeholder="Search locations, e.g. Alexandria" value={locationQuery} onChange={(e) => setLocationQuery(e.target.value)} className="h-7 pl-7 text-xs" />
+                </div>
+              </div>
+              {visibleLocations.length === 0 ? (
+                <p className="text-xs text-muted-foreground">No locations match “{locationQuery}”.</p>
+              ) : (
               <Card className="w-fit max-w-full">
                 <CardContent className="p-0 overflow-x-auto">
                   <Table className="w-auto table-fixed">
                     <colgroup>
                       <col className="w-48" />
-                      {CAPABLE_LOCATIONS.map((location) => (
+                      {visibleLocations.map((location) => (
                         <col key={location} className="w-16" />
                       ))}
                     </colgroup>
                     <TableHeader>
                       <TableRow className="bg-muted/50 hover:bg-muted/50">
                         <TableHead className="h-7 w-48 text-[10px] font-bold text-foreground whitespace-nowrap px-2">Capability</TableHead>
-                        {CAPABLE_LOCATIONS.map((location) => (
+                        {visibleLocations.map((location) => (
                           <TableHead
                             key={location}
                             className="h-10 w-16 px-0.5 text-center align-middle text-[9px] font-bold leading-tight text-foreground"
