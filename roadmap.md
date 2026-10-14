@@ -27,3 +27,4 @@
 - [x] Build modern Inventory Manage Templates list and add workflow
 - [x] Add a modern Warranty tab for single work-order items
 - [x] Build the modern Core Operations Reports workspace
+- [x] Show work order and item number combined in the Edit Work Order Item header
