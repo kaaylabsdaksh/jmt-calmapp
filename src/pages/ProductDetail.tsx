@@ -50,6 +50,7 @@ import { PRODUCTS } from "@/lib/products";
 import ProductFilesTab from "@/components/products/ProductFilesTab";
 import ProductAccessoriesTab from "@/components/products/ProductAccessoriesTab";
 import ActivityLog, { type ActivityEntry } from "@/components/shared/ActivityLog";
+import { getCapabilitySelection, matrixFromLocations, saveCapabilitySelection } from "@/lib/capable-locations";
 
 
 
@@ -152,17 +153,9 @@ const ProductDetail = () => {
   ]);
   const [accred17025, setAccred17025] = useState<Record<string, Accred17025>>({});
   const [capabilityMatrix, setCapabilityMatrix] = useState<Record<string, Record<string, boolean>>>(() => {
-    const initialMatrix: Record<string, Record<string, boolean>> = {};
-    (product?.locations || "")
-      .split(",")
-      .map((location) => location.trim())
-      .filter(Boolean)
-      .forEach((location) => {
-        initialMatrix[location] = { Calibration: true };
-      });
-    return initialMatrix;
+    return getCapabilitySelection(`product:${id}`)?.matrix ?? matrixFromLocations(product?.locations || "");
   });
-  const [limitedNotes, setLimitedNotes] = useState<Record<string, string>>({});
+  const [limitedNotes, setLimitedNotes] = useState<Record<string, string>>(() => getCapabilitySelection(`product:${id}`)?.notes ?? {});
 
   const CAPABILITY_GROUPS: string[][] = [
     ["17025 (Full)", "17025 (Limited)", '"No" 17025'],
@@ -623,6 +616,7 @@ const ProductDetail = () => {
               size="sm"
               className="h-8 text-xs bg-green-600 hover:bg-green-700 text-white"
               onClick={() => {
+                saveCapabilitySelection(`product:${id}`, { matrix: capabilityMatrix, notes: limitedNotes });
                 toast({ title: "Product saved", description: "Changes have been saved." });
                 navigate("/manage-products");
               }}

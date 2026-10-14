@@ -38,6 +38,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Product, PRODUCTS } from "@/lib/products";
+import CapableLocationsCell from "@/components/products/CapableLocationsCell";
+import { getCapabilitySelection, matchesCapableLocation, matrixFromLocations, selectedCapabilities } from "@/lib/capable-locations";
+import { useCapabilityRevision } from "@/hooks/use-capability-selection";
 
 const SELECT_FILTERS = [
   { key: "labCode", label: "Lab Code", options: ["BR", "HOU", "GON", "MOB"] },
@@ -145,6 +148,7 @@ const DEFAULT_ORDER = COLUMNS.map((c) => c.key as string);
 
 const ManageProductsV1 = () => {
   const navigate = useNavigate();
+  const capabilityRevision = useCapabilityRevision();
   const [generalSearch, setGeneralSearch] = useState("");
   const [selects, setSelects] = useState<Record<string, string>>({ ...emptySelects });
   const [categorySelects, setCategorySelects] = useState<{ tech2nd: string; tech3rd: string; rental2nd: string; rental3rd: string }>({
@@ -210,9 +214,11 @@ const ManageProductsV1 = () => {
 
   const rows = useMemo(() => {
     return PRODUCTS.filter((p) => {
+      const matrix = getCapabilitySelection(`product:${p.id}`)?.matrix ?? matrixFromLocations(p.locations);
+      const locationNames = selectedCapabilities(matrix).map(({ location }) => location).join(" ");
       if (
         generalSearch &&
-        !`${p.manufacturer} ${p.model} ${p.description}`
+        !`${p.manufacturer} ${p.model} ${p.description} ${locationNames}`
           .toLowerCase()
           .includes(generalSearch.toLowerCase())
       )
@@ -223,12 +229,13 @@ const ManageProductsV1 = () => {
       return COLUMNS.every((c) => {
         const v = columnFilters[c.key];
         if (!v || v === "all") return true;
+        if (c.key === "locations") return matchesCapableLocation(matrix, v);
         const cell = String(p[c.key as keyof Product] ?? "");
         if (c.type === "select") return cell.toLowerCase() === v.toLowerCase();
         return cell.toLowerCase().includes(v.toLowerCase());
       });
     });
-  }, [generalSearch, selects, columnFilters]);
+  }, [generalSearch, selects, columnFilters, capabilityRevision]);
 
   const size = Number(pageSize);
   const totalPages = Math.max(1, Math.ceil(rows.length / size));
@@ -288,7 +295,7 @@ const ManageProductsV1 = () => {
                     <Input
                       value={generalSearch}
                       onChange={(e) => setGeneralSearch(e.target.value)}
-                      placeholder="Manufacturer, model or description"
+                      placeholder="Manufacturer, model, description or capable location"
                       className="h-8 text-[11px] pl-8"
                     />
                   </div>
@@ -585,6 +592,7 @@ const ManageProductsV1 = () => {
                             ) : (
                               <div className="relative">
                                 <Input
+                                  aria-label={`Filter ${c.label}`}
                                   value={columnFilters[c.key]}
                                   onChange={(e) =>
                                     setColumnFilters((p) => ({ ...p, [c.key]: e.target.value }))
@@ -634,6 +642,8 @@ const ManageProductsV1 = () => {
                                 >
                                   {p.id}
                                 </Link>
+                              ) : c.key === "locations" ? (
+                                <CapableLocationsCell selectionKey={`product:${p.id}`} fallback={{ matrix: matrixFromLocations(p.locations), notes: {} }} />
                               ) : (
                                 String(p[c.key as keyof Product] ?? "")
                               )}

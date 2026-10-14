@@ -23,6 +23,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { PRODUCT_REVIEWS } from "@/lib/product-reviews";
+import CapableLocationsCell from "@/components/products/CapableLocationsCell";
+import { getCapabilitySelection, matchesCapableLocation } from "@/lib/capable-locations";
+import { useCapabilityRevision } from "@/hooks/use-capability-selection";
 
 function parseDate(value: string): Date | undefined {
   if (!value) return undefined;
@@ -53,6 +56,7 @@ const TEXT_FILTERS = [
   { key: "model", label: "Model" },
   { key: "description", label: "Description" },
   { key: "quote", label: "Quote #" },
+  { key: "capableLocations", label: "Capable Location(s)" },
 ] as const;
 
 const SELECT_FILTERS = [
@@ -68,6 +72,7 @@ const emptySelect = Object.fromEntries(SELECT_FILTERS.map((f) => [f.key, ""])) a
 
 const ProductReviews = () => {
   const navigate = useNavigate();
+  const capabilityRevision = useCapabilityRevision();
   const [text, setText] = useState<Record<string, string>>({ ...emptyText });
   const [selects, setSelects] = useState<Record<string, string>>({ ...emptySelect });
   const [createdBy, setCreatedBy] = useState("");
@@ -87,6 +92,7 @@ const ProductReviews = () => {
       if (!match(text.model, r.model)) return false;
       if (!match(text.description, r.description)) return false;
       if (!match(text.quote, r.quote)) return false;
+      if (!matchesCapableLocation(getCapabilitySelection(`review:${r.pr}:${r.item}`)?.matrix ?? {}, text.capableLocations)) return false;
       if (!match(createdBy, r.createdBy)) return false;
       if (selects.prStatus && r.status !== selects.prStatus) return false;
       if (selects.location && r.loc !== selects.location) return false;
@@ -94,7 +100,7 @@ const ProductReviews = () => {
       if (selects.labCode && r.labCode !== selects.labCode) return false;
       return true;
     });
-  }, [text, selects, createdBy]);
+  }, [text, selects, createdBy, capabilityRevision]);
 
   const size = Number(pageSize);
   const totalPages = Math.max(1, Math.ceil(rows.length / size));
@@ -135,6 +141,7 @@ const ProductReviews = () => {
                 <div key={f.key} className="space-y-0.5">
                   <Label className="text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">{f.label}</Label>
                   <Input
+                    aria-label={f.label}
                     value={text[f.key]}
                     onChange={(e) => {
                       setText((p) => ({ ...p, [f.key]: e.target.value }));
@@ -212,7 +219,7 @@ const ProductReviews = () => {
               <Table>
                 <TableHeader>
                   <TableRow className="bg-muted/40">
-                    {["PR #", "Item", "Division", "Loc", "Created Date", "Created By", "Due Date", "PR Item Status", "Status Date", "Manufacturer", "Model", "Description", "LabCode", "Quote #", "Customer"].map((h) => (
+                    {["PR #", "Item", "Division", "Loc", "Created Date", "Created By", "Due Date", "PR Item Status", "Status Date", "Manufacturer", "Model", "Description", "Capable Location(s)", "LabCode", "Quote #", "Customer"].map((h) => (
                       <TableHead key={h} className="h-8 px-2 text-[11px] font-semibold whitespace-nowrap">
                         {h}
                       </TableHead>
@@ -251,6 +258,7 @@ const ProductReviews = () => {
                       <TableCell className="px-2 py-1.5 max-w-[16rem] truncate" title={r.description}>
                         {r.description}
                       </TableCell>
+                      <TableCell className="px-2 py-1.5"><CapableLocationsCell selectionKey={`review:${r.pr}:${r.item}`} /></TableCell>
                       <TableCell className="px-2 py-1.5">{r.labCode}</TableCell>
                       <TableCell className="px-2 py-1.5 text-slate-900">{r.quote}</TableCell>
                       <TableCell className="px-2 py-1.5">{r.customer}</TableCell>
@@ -258,7 +266,7 @@ const ProductReviews = () => {
                   ))}
                   {paged.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={15} className="py-8 text-center text-xs text-muted-foreground">
+                      <TableCell colSpan={16} className="py-8 text-center text-xs text-muted-foreground">
                         No product reviews match your filters.
                       </TableCell>
                     </TableRow>
