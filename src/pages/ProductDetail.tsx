@@ -17,6 +17,7 @@ import {
   Paperclip,
   Trash2,
   Check,
+  Search,
 
   type LucideIcon,
 } from "lucide-react";
@@ -24,6 +25,7 @@ import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import CapableLocationsCell from "@/components/products/CapableLocationsCell";
 import { Label } from "@/components/ui/label";
 import { Checkbox, matrixCheckboxClass } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
@@ -192,6 +194,8 @@ const ProductDetail = () => {
     return { ...previous, [location]: nextLocation };
   });
   const locationCheckedCount = (location: string) => CAPABILITY_COLUMNS.filter((capability) => capabilityMatrix[location]?.[capability]).length;
+  const [locationQuery, setLocationQuery] = useState("");
+  const visibleLocations = CAPABLE_LOCATIONS.filter((l) => l.toLowerCase().includes(locationQuery.trim().toLowerCase()));
   const notesLocations = CAPABLE_LOCATIONS.filter((location) => capabilityMatrix[location]?.["17025 (Limited)"]);
 
 
@@ -383,19 +387,30 @@ const ProductDetail = () => {
             </TabsContent>
 
             <TabsContent value="capable" className="mt-4 space-y-4">
+              <div className="flex flex-wrap items-center gap-3 rounded-md border bg-card px-3 py-2 text-xs">
+                <span className="font-semibold">Capable Locations:</span>
+                <CapableLocationsCell selectionKey={`product:${id}`} selection={{ matrix: capabilityMatrix, notes: limitedNotes }} />
+                <div className="relative ml-auto w-64 max-w-full">
+                  <Search className="pointer-events-none absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+                  <Input aria-label="Search locations" placeholder="Search locations, e.g. Alexandria" value={locationQuery} onChange={(e) => setLocationQuery(e.target.value)} className="h-7 pl-7 text-xs" />
+                </div>
+              </div>
+              {visibleLocations.length === 0 ? (
+                <p className="text-xs text-muted-foreground">No locations match “{locationQuery}”.</p>
+              ) : (
               <Card className="w-fit max-w-full">
                 <CardContent className="p-0 overflow-x-auto">
                   <Table className="w-auto table-fixed">
                     <colgroup>
                       <col className="w-48" />
-                      {CAPABLE_LOCATIONS.map((location) => (
+                      {visibleLocations.map((location) => (
                         <col key={location} className="w-16" />
                       ))}
                     </colgroup>
                     <TableHeader>
                       <TableRow className="bg-muted/50 hover:bg-muted/50">
                         <TableHead className="h-7 w-48 text-[10px] font-bold text-foreground whitespace-nowrap px-2">Capability</TableHead>
-                        {CAPABLE_LOCATIONS.map((location) => (
+                        {visibleLocations.map((location) => (
                           <TableHead
                             key={location}
                             className="h-10 w-16 px-0.5 text-center align-middle text-[9px] font-bold leading-tight text-foreground"
@@ -408,7 +423,7 @@ const ProductDetail = () => {
                     <TableBody>
                       <TableRow className="h-6 border-b border-border bg-muted/40">
                         <TableCell className="w-48 whitespace-nowrap py-0.5 pl-2 pr-2 text-[11px] font-semibold bg-muted/30">All</TableCell>
-                        {CAPABLE_LOCATIONS.map((location) => {
+                        {visibleLocations.map((location) => {
                           const checkedCount = locationCheckedCount(location);
                           return (
                             <TableCell key={location} className="px-0.5 py-0.5 text-center align-top">
@@ -426,7 +441,7 @@ const ProductDetail = () => {
                           <TableCell className={`w-48 text-[11px] font-medium whitespace-nowrap py-0.5 bg-muted/30 ${group ? "pl-4" : "pl-2"} pr-2`}>
                             {capability}
                           </TableCell>
-                          {CAPABLE_LOCATIONS.map((location) => (
+                          {visibleLocations.map((location) => (
                             <TableCell key={location} className="px-0.5 py-0.5 text-center">
                               <Checkbox
                                 aria-label={`${location} ${capability}`}
@@ -448,6 +463,7 @@ const ProductDetail = () => {
                   </Table>
                 </CardContent>
               </Card>
+              )}
 
               {notesLocations.length > 0 && (
                 <Card><CardContent className="space-y-2 p-4">
