@@ -17,6 +17,7 @@ import {
   Paperclip,
   Trash2,
   Check,
+  Search,
 
   type LucideIcon,
 } from "lucide-react";
