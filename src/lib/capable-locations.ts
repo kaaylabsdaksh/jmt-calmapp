@@ -20,9 +20,12 @@ export function matrixFromLocations(locations: string): CapabilityMatrix {
 // Local mock selections survive navigation, but never leave this browser session.
 const selections = new Map<string, CapabilitySelection>();
 const listeners = new Set<() => void>();
+let revision = 0;
+export function capabilityRevision(): number { return revision; }
 export function getCapabilitySelection(key: string): CapabilitySelection | undefined { return selections.get(key); }
 export function saveCapabilitySelection(key: string, selection: CapabilitySelection): void {
   selections.set(key, selection);
+  revision += 1;
   listeners.forEach((listener) => listener());
 }
 export function subscribeCapabilities(listener: () => void): () => void {
