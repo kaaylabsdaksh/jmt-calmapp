@@ -28,6 +28,22 @@ const EditOrder = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const workOrderData = location.state?.workOrderData;
+
+  // The header shows the work order number with its item number combined
+  // (e.g. "385737" + "009" -> "385737-009") so a tech on this screen can tell
+  // which item in the batch they are working on at a glance.
+  const trailingNumber = (value: unknown) => {
+    const match = String(value ?? "").match(/(\d+)\s*$/);
+    return match ? match[1].padStart(3, "0") : "";
+  };
+  const workOrderItemNumber =
+    trailingNumber(workOrderData?.itemNumber ?? workOrderData?.details?.itemNumber) ||
+    (typeof workOrderData?.details?.batch === "string" && workOrderData.details.batch.includes("-")
+      ? trailingNumber(workOrderData.details.batch)
+      : "");
+  const displayWorkOrderNumber = workOrderItemNumber
+    ? `${String(workOrderData?.id ?? "5432").replace(/-0*\d+$/, "")}-${workOrderItemNumber}`
+    : String(workOrderData?.id ?? "5432");
   
   // Map action code from dialog format to form format
   const mapActionCode = (actionCode: string) => {
@@ -598,17 +614,6 @@ const EditOrder = () => {
           </Select>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="reportNumber" className="text-sm font-medium">Report Number *</Label>
-          <Input
-            id="reportNumber"
-            value={formData.reportNumber}
-            onChange={(e) => handleInputChange("reportNumber", e.target.value)}
-            placeholder="0152.01-802930-001"
-            className="h-11"
-            readOnly
-          />
-        </div>
 
         <div className="space-y-2">
           <Label htmlFor="itemStatus" className="text-sm font-medium">Item Status</Label>
@@ -3600,11 +3605,12 @@ const EditOrder = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 auto-rows-min">
         <div>
           <Label className="text-sm font-medium text-muted-foreground">Work Order #</Label>
-          <Input
-            value={formData.workOrderNumber}
-            onChange={(e) => handleInputChange("workOrderNumber", e.target.value)}
-            className="mt-1 font-semibold text-lg"
-          />
+          <div
+            className="mt-1 flex h-9 items-center text-2xl font-bold leading-none tracking-tight tabular-nums text-foreground"
+            title={`Work order ${displayWorkOrderNumber}`}
+          >
+            {displayWorkOrderNumber}
+          </div>
         </div>
         <div>
           <Label className="text-sm font-medium text-muted-foreground">SR Doc</Label>
