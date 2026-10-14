@@ -18,7 +18,12 @@ export function matrixFromLocations(locations: string): CapabilityMatrix {
 }
 
 // Local mock selections survive navigation, but never leave this browser session.
-const selections = new Map<string, CapabilitySelection>();
+// Demo seeds so the Product Review grid shows the counted link before any edit.
+const selections = new Map<string, CapabilitySelection>([
+  ["review:PR05524:002", { matrix: { Alexandria: { Calibration: true, "17025 (Full)": true }, Houston: { "Limited Cal": true, "17025 (Limited)": true }, "Baton Rouge": { Adjustment: true } }, notes: { Houston: "Voltage ranges only" } }],
+  ["review:PR05701:001", { matrix: { Clute: { Calibration: true, "Op Check": true }, Alexandria: { "Limited Cal": true } }, notes: {} }],
+  ["review:PR06961:001", { matrix: { Houston: { Calibration: true, Adjustment: true, "17025 (Full)": true } }, notes: {} }],
+]);
 const listeners = new Set<() => void>();
 let revision = 0;
 export function capabilityRevision(): number { return revision; }
