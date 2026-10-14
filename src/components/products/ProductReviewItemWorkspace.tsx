@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { getCapabilitySelection, saveCapabilitySelection } from "@/lib/capable-locations";
 
 export type ProductReviewItem = {
   id: string;
@@ -89,8 +90,9 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
   const { toast } = useToast();
   const navigate = useNavigate();
   const [draft, setDraft] = useState(item);
-  const [capabilityMatrix, setCapabilityMatrix] = useState<Record<string, Record<string, boolean>>>({});
-  const [limitedNotes, setLimitedNotes] = useState<Record<string, string>>({});
+  const selectionKey = `review:${prNumber}:${item.itemNumber}`;
+  const [capabilityMatrix, setCapabilityMatrix] = useState<Record<string, Record<string, boolean>>>(() => getCapabilitySelection(selectionKey)?.matrix ?? {});
+  const [limitedNotes, setLimitedNotes] = useState<Record<string, string>>(() => getCapabilitySelection(selectionKey)?.notes ?? {});
   const [documents, setDocuments] = useState<DocumentRow[]>([{ id: "existing-1", name: "Belt Tension Checker Instruction Sheet.pdf", type: "Other", description: "Instruction sheet", uploadedBy: "Kevin R. Young", uploadedDate: "06/30/2021" }]);
   const [documentType, setDocumentType] = useState("");
   const [documentDescription, setDocumentDescription] = useState("");
@@ -135,6 +137,7 @@ export default function ProductReviewItemWorkspace({ prNumber, item, onBack, onU
   const duplicate = DUPLICATES.some((candidate) => candidate.manufacturer === draft.manufacturer.toUpperCase() && candidate.model === draft.model.toUpperCase());
   const setField = (key: keyof ProductReviewItem, value: string) => setDraft((previous) => ({ ...previous, [key]: value }));
   const save = () => {
+    saveCapabilitySelection(selectionKey, { matrix: capabilityMatrix, notes: limitedNotes });
     onUpdate(draft);
     toast({ title: "PR item saved", description: `${prNumber}-${draft.itemNumber} has been updated.` });
   };

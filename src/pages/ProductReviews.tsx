@@ -258,6 +258,7 @@ const ProductReviews = () => {
                       <TableCell className="px-2 py-1.5 max-w-[16rem] truncate" title={r.description}>
                         {r.description}
                       </TableCell>
+                      <TableCell className="px-2 py-1.5"><CapableLocationsCell selectionKey={`review:${r.pr}:${r.item}`} /></TableCell>
                       <TableCell className="px-2 py-1.5">{r.labCode}</TableCell>
                       <TableCell className="px-2 py-1.5 text-slate-900">{r.quote}</TableCell>
                       <TableCell className="px-2 py-1.5">{r.customer}</TableCell>
@@ -265,7 +266,7 @@ const ProductReviews = () => {
                   ))}
                   {paged.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={15} className="py-8 text-center text-xs text-muted-foreground">
+                      <TableCell colSpan={16} className="py-8 text-center text-xs text-muted-foreground">
                         No product reviews match your filters.
                       </TableCell>
                     </TableRow>
