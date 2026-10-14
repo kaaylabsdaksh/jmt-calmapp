@@ -24,6 +24,7 @@ import ModernTopNav from "@/components/modern/ModernTopNav";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import CapableLocationsCell from "@/components/products/CapableLocationsCell";
 import { Label } from "@/components/ui/label";
 import { Checkbox, matrixCheckboxClass } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
@@ -192,6 +193,8 @@ const ProductDetail = () => {
     return { ...previous, [location]: nextLocation };
   });
   const locationCheckedCount = (location: string) => CAPABILITY_COLUMNS.filter((capability) => capabilityMatrix[location]?.[capability]).length;
+  const [locationQuery, setLocationQuery] = useState("");
+  const visibleLocations = CAPABLE_LOCATIONS.filter((l) => l.toLowerCase().includes(locationQuery.trim().toLowerCase()));
   const notesLocations = CAPABLE_LOCATIONS.filter((location) => capabilityMatrix[location]?.["17025 (Limited)"]);
 
 
@@ -419,7 +422,7 @@ const ProductDetail = () => {
                     <TableBody>
                       <TableRow className="h-6 border-b border-border bg-muted/40">
                         <TableCell className="w-48 whitespace-nowrap py-0.5 pl-2 pr-2 text-[11px] font-semibold bg-muted/30">All</TableCell>
-                        {CAPABLE_LOCATIONS.map((location) => {
+                        {visibleLocations.map((location) => {
                           const checkedCount = locationCheckedCount(location);
                           return (
                             <TableCell key={location} className="px-0.5 py-0.5 text-center align-top">
@@ -437,7 +440,7 @@ const ProductDetail = () => {
                           <TableCell className={`w-48 text-[11px] font-medium whitespace-nowrap py-0.5 bg-muted/30 ${group ? "pl-4" : "pl-2"} pr-2`}>
                             {capability}
                           </TableCell>
-                          {CAPABLE_LOCATIONS.map((location) => (
+                          {visibleLocations.map((location) => (
                             <TableCell key={location} className="px-0.5 py-0.5 text-center">
                               <Checkbox
                                 aria-label={`${location} ${capability}`}
@@ -459,6 +462,7 @@ const ProductDetail = () => {
                   </Table>
                 </CardContent>
               </Card>
+              )}
 
               {notesLocations.length > 0 && (
                 <Card><CardContent className="space-y-2 p-4">
