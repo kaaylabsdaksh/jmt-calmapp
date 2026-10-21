@@ -415,7 +415,7 @@ const FormVariationsDemo = () => {
   };
   
   // Main section state
-  const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'fail-log' | 'cert-files' | 'warranty'>('work-order-items');
+  const [activeSection, setActiveSection] = useState<'work-order-items' | 'estimate' | 'qf3' | 'external-files' | 'fail-log' | 'cert-files' | 'warranty'>(location.state?.section === 'qf3' ? 'qf3' : 'work-order-items');
 
   // Warranty state (single items only)
   const [warrantyData, setWarrantyData] = useState({
@@ -12633,7 +12633,7 @@ const FormVariationsDemo = () => {
                 <Button variant="outline" size="sm">Cancel</Button>
                 <Button variant="outline" size="sm">Save</Button>
                 <Button variant="outline" size="sm">Back</Button>
-                <Button variant="outline" size="sm">T/F View</Button>
+                <Button variant="outline" size="sm" onClick={() => navigate('/to-factory', { state: { returnTo: location.pathname } })}>T/F View</Button>
               </div>
             </CardContent>
           </Card>
