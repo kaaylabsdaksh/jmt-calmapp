@@ -161,7 +161,33 @@ export const FixedActionFooter = ({
       <div ref={footerRef} className="fixed bottom-0 left-[256px] right-0 bg-background border-t border-border shadow-lg z-[100]">
         <div className="px-4 py-3">
           {/* Conditional Footer based on current section */}
-          {currentSection === 'general' ? (
+          {currentSection === 'qf3' ? (
+            // QF3 Tab Footer - Cancel / Save / Back / T/F View, right-aligned
+            <div className="flex items-center justify-end gap-2 text-xs">
+              <Button size="sm" variant="outline" onClick={onCancel}>
+                <X className="h-3 w-3 mr-1" />
+                Cancel
+              </Button>
+              <Button
+                size="sm"
+                onClick={onSave}
+                disabled={isLoading}
+                className="bg-success text-success-foreground hover:bg-success/90"
+              >
+                <Save className="h-3 w-3 mr-1" />
+                Save
+              </Button>
+              <Button size="sm" variant="outline" onClick={onCancel}>
+                <ArrowLeft className="h-3 w-3 mr-1" />
+                Back
+              </Button>
+              <Button size="sm" variant="outline" onClick={onTfView}>
+                <Package className="h-3 w-3 mr-1" />
+                T/F View
+              </Button>
+            </div>
+          ) : currentSection === 'general' ? (
+
             // General Tab Footer
             <div className="flex items-center justify-between gap-2 text-xs">
               {/* Left side buttons */}
