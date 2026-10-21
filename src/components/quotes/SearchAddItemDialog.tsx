@@ -130,6 +130,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd, existingSerials = [] }
     knownSerials.push(...review.valid);
   });
   const hasMultiSerial = addedProducts.some((product) => splitSerials(detailOf(product.id).mfrSerial).length > 1);
+  const hasSerial = addedProducts.some((product) => !!detailOf(product.id).mfrSerial.trim());
   const batch = buildSerialBatch(addedProducts.map((product) => ({ product, detail: detailOf(product.id), removed: removedSerials[product.id] })), existingSerials);
 
   /** Clears only the search filters/results, keeping staged items intact. */
@@ -208,7 +209,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd, existingSerials = [] }
   /** Commit every staged row to the quote and close. */
   const handleDone = () => {
     if (batch.lines.length === 0 || batch.error) return;
-    onAdd({ products: addedProducts, groupAsOneLineItem: groupAsOne && !hasMultiSerial, details: rowDetails, lines: batch.lines, skipped: { duplicates: batch.duplicates, invalid: batch.invalid, removed: batch.removed } });
+    onAdd({ products: addedProducts, groupAsOneLineItem: groupAsOne && !hasSerial, details: rowDetails, lines: batch.lines, skipped: { duplicates: batch.duplicates, invalid: batch.invalid, removed: batch.removed } });
     close();
   };
 
@@ -386,7 +387,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd, existingSerials = [] }
                 <label className="flex items-center gap-1.5 text-[11px] text-muted-foreground cursor-pointer">
                   <Checkbox
                     checked={groupAsOne}
-                    disabled={hasMultiSerial}
+                    disabled={hasSerial}
                     onCheckedChange={(v) => setGroupAsOne(!!v)}
                     className={cn(
                       "h-4 w-4 rounded-md border-2 border-slate-300 bg-white",
@@ -406,7 +407,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd, existingSerials = [] }
                 </Badge>
               </div>
             </div>
-            <div className="max-h-[280px] overflow-auto rounded-md border bg-white">
+            <div className={cn("overflow-auto rounded-md border bg-card", hasMultiSerial ? "max-h-[600px]" : "max-h-[280px]")}>
               <table className="w-full min-w-[1250px] text-[11px] table-fixed">
                 <thead className="sticky top-0 z-10 bg-muted/60 backdrop-blur">
                   <tr>
@@ -673,7 +674,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd, existingSerials = [] }
               onClick={handleDone}
             >
               <Check className="h-3 w-3 mr-1" />
-              Done{addedIds.size > 0 ? ` (${groupAsOne && !hasMultiSerial ? 1 : batch.lines.length})` : ""}
+              Done{addedIds.size > 0 ? ` (${groupAsOne && !hasSerial ? 1 : batch.lines.length})` : ""}
             </Button>
           </div>
         </div>
