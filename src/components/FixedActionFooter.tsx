@@ -19,7 +19,9 @@ interface FixedActionFooterProps {
   userRole?: 'admin' | 'technician';
   onUserRoleChange?: (role: 'admin' | 'technician') => void;
   footerRef?: React.RefObject<HTMLDivElement>;
+  onTfView?: () => void;
 }
+
 
 export const FixedActionFooter = ({ 
   onCancel, 
@@ -30,8 +32,10 @@ export const FixedActionFooter = ({
   currentSection = 'work-order-items',
   userRole = 'technician',
   onUserRoleChange,
-  footerRef
+  footerRef,
+  onTfView
 }: FixedActionFooterProps) => {
+
   const [numTags, setNumTags] = useState("1");
   const [acctNum, setAcctNum] = useState("");
   const [woNum, setWoNum] = useState("");
