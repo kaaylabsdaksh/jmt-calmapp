@@ -7,14 +7,8 @@ export async function readQuoteImport(file: File, onProgress: (message: string) 
   checkCancelled();
   if (extension === "xlsx") {
     const { default: readXlsxFile } = await import("read-excel-file/browser");
-    const sheets = await readXlsxFile(file, { getSheets: true });
-    const result = [];
-    for (let index = 0; index < sheets.length; index++) {
-      checkCancelled();
-      onProgress(`Reading sheet ${index + 1} of ${sheets.length}…`);
-      const data = await readXlsxFile(file, { sheet: index + 1 });
-      result.push({ name: sheets[index].name, table: data.map((row) => row.map((cell) => cell === null ? "" : String(cell))) });
-    }
+    const sheets = await readXlsxFile(file, { parseNumber: (value) => value });
+    const result = sheets.map((sheet) => ({ name: sheet.sheet, table: sheet.data.map((row) => row.map((cell) => cell === null ? "" : String(cell))) }));
     checkCancelled();
     return { sheets: result, screenshot: false };
   }
