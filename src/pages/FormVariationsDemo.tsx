@@ -12628,7 +12628,9 @@ const FormVariationsDemo = () => {
                 </div>
               </div>
 
+              </CardContent>
           </Card>
+
         )}
         
         {activeSection === 'external-files' && (
