@@ -32,6 +32,7 @@ import LabTriage from "./pages/LabTriage";
 import UpdateRfid from "./pages/UpdateRfid";
 import MissingCost from "./pages/MissingCost";
 import Reports from "./pages/Reports";
+import ToFactoryWorkOrders from "./pages/ToFactoryWorkOrders";
 import OutsourceVendors from "./pages/OutsourceVendors";
 import OnsiteProjects from "./pages/OnsiteProjects";
 import ManageStandards from "./pages/ManageStandards";
@@ -136,6 +137,7 @@ const App = () => {
                 <Route path="/update-rfid" element={<UpdateRfid />} />
                 <Route path="/missing-cost" element={<MissingCost />} />
                 <Route path="/reports" element={<Reports />} />
+                <Route path="/to-factory" element={<ToFactoryWorkOrders />} />
                 <Route path="/outsource-vendors" element={<OutsourceVendors />} />
 
 

@@ -3,3 +3,4 @@ Reports is a top-level Core Operations route with local report criteria and mock
 Product and product-review capability grids share a checked-option selector, popover, and session-local mock selection store; search, counts, and saved editor selections stay consistent without backend dependencies.
 Quote equipment serial parsing and validation share a pure batch helper, rechecked at the local quote state boundary; one state update adds all equipment lines without backend requests.
 Quote file import reads spreadsheets and recognizes screenshot text in browser workers, then requires editable column mapping and catalog-matched review before the shared local batch commit; customer IDs are not uniqueness keys and files are not uploaded.
+To Factory is a dedicated local-mock work-order search route opened from QF3, with batch and item views derived from one shared dataset and item-level criteria matched together, so filtering stays consistent without backend dependencies.
