@@ -1,5 +1,7 @@
 # CalmApp Task Roadmap
 
+- [x] Allow and test repeated customer IDs across models; add and verify Excel/screenshot quote item import
+
 - [x] Add and verify quote multi-serial paste, preview, validation, batch lines and summary
 
 - [x] Improve capable-location summaries, detail pop-ups, and location search on Product and Product Review grids
