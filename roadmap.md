@@ -1,6 +1,6 @@
 # CalmApp Task Roadmap
 
-- [ ] Create and verify the modern To Factory work-order screen opened by QF3 T/F View
+- [x] Create and verify the modern To Factory work-order screen opened by QF3 T/F View
 
 - [x] Allow and test repeated customer IDs across models; add and verify Excel/screenshot quote item import
 
