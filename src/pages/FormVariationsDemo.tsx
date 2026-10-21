@@ -1401,7 +1401,11 @@ const FormVariationsDemo = () => {
   // Measure footer height dynamically
   useEffect(() => {
     const footer = footerRef.current;
-    if (!footer) return;
+    if (!footer) {
+      // No footer on this section (e.g. QF3) — keep only a small bottom gap.
+      setFooterHeight(24);
+      return;
+    }
     
     const updateHeight = () => {
       const height = footer.getBoundingClientRect().height;

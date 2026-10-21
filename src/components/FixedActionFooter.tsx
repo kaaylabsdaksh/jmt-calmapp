@@ -147,6 +147,9 @@ export const FixedActionFooter = ({
     onCancel();
   };
 
+  // QF3 is a self-contained form with its own actions, so no item footer is shown there.
+  if (currentSection === 'qf3') return null;
+
   return (
     <TooltipProvider>
       {/* Spacer to prevent content overlap */}
