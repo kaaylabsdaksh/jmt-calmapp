@@ -12628,15 +12628,9 @@ const FormVariationsDemo = () => {
                 </div>
               </div>
 
-              {/* Footer Actions */}
-              <div className="flex items-center justify-center gap-3 pt-4 border-t">
-                <Button variant="outline" size="sm">Cancel</Button>
-                <Button variant="outline" size="sm">Save</Button>
-                <Button variant="outline" size="sm">Back</Button>
-                <Button variant="outline" size="sm" onClick={() => navigate('/to-factory', { state: { returnTo: location.pathname } })}>T/F View</Button>
-              </div>
-            </CardContent>
+              </CardContent>
           </Card>
+
         )}
         
         {activeSection === 'external-files' && (
@@ -14298,6 +14292,8 @@ const FormVariationsDemo = () => {
         <FixedActionFooter 
           onCancel={handleCancel}
           onSave={handleSave}
+          onTfView={() => navigate('/to-factory', { state: { returnTo: location.pathname } })}
+
           currentSection={isESLType && activeEslTab === 'general' ? 'general' : activeSection}
           userRole={userRole}
           onUserRoleChange={setUserRole}
