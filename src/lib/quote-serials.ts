@@ -31,3 +31,28 @@ export function reviewSerials(value: string, existing: readonly string[] = [], r
     error: undefined as string | undefined,
   };
 }
+
+export function buildSerialBatch<P, D extends { qty: string; mfrSerial: string }>(rows: { product: P; detail: D; removed?: number[] }[], existing: readonly string[]) {
+  const known = [...existing];
+  const lines: { product: P; detail: D }[] = [];
+  let duplicates = 0;
+  let invalid = 0;
+  let removedCount = 0;
+  let error: string | undefined;
+  for (const row of rows) {
+    if (!row.detail.mfrSerial.trim()) {
+      lines.push({ product: row.product, detail: row.detail });
+      continue;
+    }
+    const review = reviewSerials(row.detail.mfrSerial, known, row.removed);
+    error ||= review.error;
+    duplicates += review.duplicates;
+    invalid += review.invalid;
+    removedCount += review.entries.filter((entry) => entry.removed && !entry.issue).length;
+    for (const serial of review.valid) {
+      lines.push({ product: row.product, detail: { ...row.detail, mfrSerial: serial, qty: review.entries.length > 1 ? "1" : row.detail.qty } });
+      known.push(serial);
+    }
+  }
+  return { lines, duplicates, invalid, removed: removedCount, error };
+}

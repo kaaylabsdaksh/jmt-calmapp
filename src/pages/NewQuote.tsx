@@ -80,6 +80,7 @@ import {
 } from "@/components/ui/collapsible";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { buildSerialBatch } from "@/lib/quote-serials";
 
 const QUOTE_TYPES = ["All", "Regular", "OnSite", "ESL", "Rental", "Sales"];
 const LOCATIONS = ["All", "BR", "CL", "GR", "MT", "HOU"];
@@ -777,7 +778,11 @@ const NewQuote = () => {
     setSearchAddOpen(true);
   };
 
-  const handleSearchAdd = ({ products, groupAsOneLineItem }: SearchAddItemResult) => {
+  const handleSearchAdd = ({ groupAsOneLineItem, lines, skipped }: SearchAddItemResult) => {
+    // Revalidate the entire batch at the local quote boundary before one state update.
+    const checked = buildSerialBatch(lines.map((line) => ({ product: line.product, detail: line.detail })), items.map((item) => item.serial));
+    if (checked.error || checked.lines.length === 0) return;
+    const products = checked.lines.map((line) => line.product);
     if (groupAsOneLineItem) {
       const total = products.reduce((s, p) => s + parseFloat(p.calCost || "0"), 0);
       setItems((prev) => [
@@ -796,20 +801,25 @@ const NewQuote = () => {
     } else {
       setItems((prev) => [
         ...prev,
-        ...products.map((p) => ({
+        ...checked.lines.map(({ product: p, detail }) => ({
           ...emptyItem(),
           manufacturer: p.manufacturer,
           model: p.model,
           description: p.description,
+          qty: detail.qty,
+          serial: detail.mfrSerial,
+          custId: detail.custId,
+          custSerial: detail.custSerial,
+          rep: detail.repair ? "Yes" : "",
           baseAmt: p.calCost,
           calCert: p.calCost,
-          is17025: p.accredCal === "Yes",
+          is17025: detail.add17025 || p.accredCal === "Yes",
         })),
       ]);
     }
     toast({
       title: "Items added",
-      description: `${groupAsOneLineItem ? 1 : products.length} line item(s) added to the quote.`,
+      description: `${groupAsOneLineItem ? 1 : checked.lines.length} lines added, ${skipped.duplicates + checked.duplicates} duplicates skipped, ${skipped.invalid + checked.invalid} invalid skipped, ${skipped.removed} removed.`,
     });
   };
 
@@ -1886,6 +1896,7 @@ const NewQuote = () => {
         open={searchAddOpen}
         onOpenChange={setSearchAddOpen}
         onAdd={handleSearchAdd}
+        existingSerials={items.map((item) => item.serial)}
       />
 
       <AddTestingItemsDialog

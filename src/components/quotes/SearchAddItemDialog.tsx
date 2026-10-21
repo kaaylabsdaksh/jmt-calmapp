@@ -13,6 +13,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { PRODUCTS, type Product } from "@/lib/products";
 import { cn } from "@/lib/utils";
+import { buildSerialBatch, reviewSerials, splitSerials } from "@/lib/quote-serials";
+import { SerialPasteField } from "@/components/quotes/SerialPasteField";
 
 export type AddedItemDetail = {
   qty: string;
@@ -36,6 +38,8 @@ export type SearchAddItemResult = {
   products: Product[];
   groupAsOneLineItem: boolean;
   details: Record<string, AddedItemDetail>;
+  lines: { product: Product; detail: AddedItemDetail }[];
+  skipped: { duplicates: number; invalid: number; removed: number };
 };
 
 
@@ -43,6 +47,7 @@ interface SearchAddItemDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onAdd: (result: SearchAddItemResult) => void;
+  existingSerials?: string[];
 }
 
 type ExtraRow = { name: string; qty: string; cost: string };
@@ -62,7 +67,7 @@ const inputCls =
   "h-7 text-[11px] px-2 rounded-md bg-background border-border focus-visible:ring-1";
 
 
-const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogProps) => {
+const SearchAddItemDialog = ({ open, onOpenChange, onAdd, existingSerials = [] }: SearchAddItemDialogProps) => {
   const [manufacturer, setManufacturer] = useState("");
   const [model, setModel] = useState("");
   const [description, setDescription] = useState("");
@@ -71,6 +76,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
   const [groupAsOne, setGroupAsOne] = useState(false);
   const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
   const [rowDetails, setRowDetails] = useState<Record<string, AddedItemDetail>>({});
+  const [removedSerials, setRemovedSerials] = useState<Record<string, number[]>>({});
 
   const detailOf = (id: string) => rowDetails[id] ?? emptyItemDetail();
   const setDetail = (id: string, patch: Partial<AddedItemDetail>) =>
@@ -116,6 +122,15 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
   const allChecked =
     notAddedResults.length > 0 && notAddedResults.every((p) => selected[p.id]);
   const addedProducts = PRODUCTS.filter((p) => addedIds.has(p.id));
+  const serialReviews: Record<string, ReturnType<typeof reviewSerials>> = {};
+  const knownSerials = [...existingSerials];
+  addedProducts.forEach((product) => {
+    const review = reviewSerials(detailOf(product.id).mfrSerial, knownSerials, removedSerials[product.id]);
+    serialReviews[product.id] = review;
+    knownSerials.push(...review.valid);
+  });
+  const hasMultiSerial = addedProducts.some((product) => splitSerials(detailOf(product.id).mfrSerial).length > 1);
+  const batch = buildSerialBatch(addedProducts.map((product) => ({ product, detail: detailOf(product.id), removed: removedSerials[product.id] })), existingSerials);
 
   /** Clears only the search filters/results, keeping staged items intact. */
   const clearSearch = () => {
@@ -130,6 +145,8 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
     clearSearch();
     setGroupAsOne(false);
     setAddedIds(new Set());
+    setRowDetails({});
+    setRemovedSerials({});
     setServiceRows([]);
     setPartRows([]);
     setServiceDraft({ name: "", qty: "1", cost: "0.00" });
@@ -147,6 +164,8 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
       setAddedIds(new Set());
       setSelected({});
       setGroupAsOne(false);
+      setRowDetails({});
+      setRemovedSerials({});
     }
   }, [open]);
 
@@ -188,8 +207,8 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
 
   /** Commit every staged row to the quote and close. */
   const handleDone = () => {
-    if (addedProducts.length === 0) return;
-    onAdd({ products: addedProducts, groupAsOneLineItem: groupAsOne, details: rowDetails });
+    if (batch.lines.length === 0 || batch.error) return;
+    onAdd({ products: addedProducts, groupAsOneLineItem: groupAsOne && !hasMultiSerial, details: rowDetails, lines: batch.lines, skipped: { duplicates: batch.duplicates, invalid: batch.invalid, removed: batch.removed } });
     close();
   };
 
@@ -367,6 +386,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                 <label className="flex items-center gap-1.5 text-[11px] text-muted-foreground cursor-pointer">
                   <Checkbox
                     checked={groupAsOne}
+                    disabled={hasMultiSerial}
                     onCheckedChange={(v) => setGroupAsOne(!!v)}
                     className={cn(
                       "h-4 w-4 rounded-md border-2 border-slate-300 bg-white",
@@ -387,7 +407,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
               </div>
             </div>
             <div className="max-h-[280px] overflow-auto rounded-md border bg-white">
-              <table className="w-full text-[11px] table-fixed">
+              <table className="w-full min-w-[1250px] text-[11px] table-fixed">
                 <thead className="sticky top-0 z-10 bg-muted/60 backdrop-blur">
                   <tr>
                     <th className="px-2 py-1.5 text-left font-semibold text-muted-foreground w-[200px]">
@@ -414,7 +434,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                     <th className="px-2 py-1.5 text-left font-semibold text-muted-foreground w-[120px]">
                       Location
                     </th>
-                    <th className="px-2 py-1.5 text-left font-semibold text-muted-foreground w-[110px]">
+                    <th className="px-2 py-1.5 text-left font-semibold text-muted-foreground w-[260px]">
                       Mfr Serial
                     </th>
                     <th className="px-2 py-1.5 text-left font-semibold text-muted-foreground w-[90px]">
@@ -444,6 +464,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                             type="number"
                             min={1}
                             value={d.qty}
+                            disabled={splitSerials(d.mfrSerial).length > 1}
                             onChange={(e) => setDetail(p.id, { qty: e.target.value })}
                             className={cn(inputCls, "h-6 w-full text-center px-1")}
                           />
@@ -484,11 +505,14 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
                           {p.locations || "—"}
                         </td>
                         <td className="px-2 py-1.5 align-top">
-                          <Input
-                            placeholder="Mfr Serial"
+                          <SerialPasteField
                             value={d.mfrSerial}
-                            onChange={(e) => setDetail(p.id, { mfrSerial: e.target.value })}
-                            className={cn(inputCls, "h-6 w-full text-[10px] px-1.5")}
+                            onChange={(value) => {
+                              setDetail(p.id, { mfrSerial: value });
+                              setRemovedSerials((previous) => ({ ...previous, [p.id]: [] }));
+                            }}
+                            review={serialReviews[p.id]}
+                            onRemove={(indices) => setRemovedSerials((previous) => ({ ...previous, [p.id]: [...(previous[p.id] || []), ...indices] }))}
                           />
                         </td>
                         <td className="px-2 py-1.5 align-top">
@@ -624,7 +648,8 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
 
         {/* Footer */}
 
-        <div className="flex items-center justify-end gap-2 border-t bg-muted/20 px-4 py-2.5 shrink-0">
+        <div className="flex flex-wrap items-center justify-end gap-2 border-t bg-muted/20 px-4 py-2.5 shrink-0">
+          {addedIds.size > 0 && <div role="status" className="mr-auto text-[11px] text-muted-foreground">{batch.lines.length} lines ready · {batch.duplicates} duplicates skipped · {batch.invalid} invalid skipped · {batch.removed} removed{hasMultiSerial ? " · Qty 1 per serial" : ""}{batch.error && <span className="text-destructive"> · {batch.error}</span>}</div>}
           <div className="flex items-center gap-1.5">
             <Button variant="outline" size="sm" className="h-7 px-3 text-[11px]" onClick={close}>
               <X className="h-3 w-3 mr-1" />
@@ -644,11 +669,11 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd }: SearchAddItemDialogP
             <Button
               size="sm"
               className="h-7 px-3 text-[11px] bg-green-600 hover:bg-green-700 text-white"
-              disabled={addedIds.size === 0}
+              disabled={batch.lines.length === 0 || !!batch.error}
               onClick={handleDone}
             >
               <Check className="h-3 w-3 mr-1" />
-              Done{addedIds.size > 0 ? ` (${addedIds.size})` : ""}
+              Done{addedIds.size > 0 ? ` (${groupAsOne && !hasMultiSerial ? 1 : batch.lines.length})` : ""}
             </Button>
           </div>
         </div>

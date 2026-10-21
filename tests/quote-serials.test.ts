@@ -1,6 +1,6 @@
 import { describe, test } from "node:test";
 import assert from "node:assert/strict";
-import { reviewSerials, splitSerials } from "../src/lib/quote-serials";
+import { buildSerialBatch, reviewSerials, splitSerials } from "../src/lib/quote-serials";
 
 describe("quote multi-serial rules", () => {
   test("accepts newline comma semicolon tab and space separators, ignoring blanks", () => {
@@ -26,6 +26,19 @@ describe("quote multi-serial rules", () => {
   test("supports 75 serials in a single paste", () => {
     const serials = Array.from({ length: 75 }, (_, index) => `SN-${index + 1}`);
     assert.deepEqual(reviewSerials(serials.join("\n")).valid, serials);
+  });
+  test("each of 75 serials creates one Qty 1 line preserving equipment and selected attributes", () => {
+    const product = { manufacturer: "Fluke", model: "87V", description: "Multimeter" };
+    const batch = buildSerialBatch([{ product, detail: { qty: "9", mfrSerial: Array.from({ length: 75 }, (_, index) => `SN-${index}`).join("\n"), add17025: true, repair: true, custId: "CUSTOMER-1" } }], []);
+    assert.equal(batch.lines.length, 75);
+    assert.ok(batch.lines.every((line) => line.product === product && line.detail.qty === "1" && line.detail.add17025 && line.detail.repair && line.detail.custId === "CUSTOMER-1"));
+    assert.equal(batch.lines[74].detail.mfrSerial, "SN-74");
+  });
+  test("batch skips repeated serials across equipment rows and returns summary counts", () => {
+    const batch = buildSerialBatch([{ product: "A", detail: { qty: "1", mfrSerial: "SN1 SN2 SN2 <bad>" } }, { product: "B", detail: { qty: "1", mfrSerial: "SN1 SN3" } }], ["SN3"]);
+    assert.equal(batch.lines.length, 2);
+    assert.equal(batch.duplicates, 3);
+    assert.equal(batch.invalid, 1);
   });
   test("single serial and empty input retain single-entry behavior", () => {
     assert.deepEqual(reviewSerials(" SN-01 ").valid, ["SN-01"]);
