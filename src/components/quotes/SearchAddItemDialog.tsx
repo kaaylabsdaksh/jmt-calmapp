@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
-import { Search, X, RotateCcw, Plus, Check, Trash2 } from "lucide-react";
+import { Search, X, RotateCcw, Plus, Check, Trash2, Upload } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -15,6 +15,7 @@ import { PRODUCTS, type Product } from "@/lib/products";
 import { cn } from "@/lib/utils";
 import { buildSerialBatch, reviewSerials, splitSerials } from "@/lib/quote-serials";
 import { SerialPasteField } from "@/components/quotes/SerialPasteField";
+import { QuoteImportDialog } from "@/components/quotes/QuoteImportDialog";
 
 export type AddedItemDetail = {
   qty: string;
@@ -77,6 +78,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd, existingSerials = [] }
   const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
   const [rowDetails, setRowDetails] = useState<Record<string, AddedItemDetail>>({});
   const [removedSerials, setRemovedSerials] = useState<Record<string, number[]>>({});
+  const [importOpen, setImportOpen] = useState(false);
 
   const detailOf = (id: string) => rowDetails[id] ?? emptyItemDetail();
   const setDetail = (id: string, patch: Partial<AddedItemDetail>) =>
@@ -148,6 +150,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd, existingSerials = [] }
     setAddedIds(new Set());
     setRowDetails({});
     setRemovedSerials({});
+    setImportOpen(false);
     setServiceRows([]);
     setPartRows([]);
     setServiceDraft({ name: "", qty: "1", cost: "0.00" });
@@ -214,7 +217,9 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd, existingSerials = [] }
   };
 
   return (
-    <Dialog open={open} onOpenChange={(o) => (o ? onOpenChange(true) : close())}>
+    <>
+    <QuoteImportDialog open={importOpen} onOpenChange={setImportOpen} existingSerials={existingSerials} onAdd={(result) => { onAdd(result); close(); }} />
+    <Dialog open={open && !importOpen} onOpenChange={(o) => (o ? onOpenChange(true) : close())}>
       <DialogContent className="max-w-7xl p-0 gap-0 overflow-hidden flex flex-col max-h-[90vh]">
         <DialogHeader className="px-4 py-3 border-b bg-muted/30 space-y-0.5 shrink-0">
           <DialogTitle className="text-sm font-semibold flex items-center gap-2">
@@ -227,6 +232,11 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd, existingSerials = [] }
         </DialogHeader>
 
         <div className="flex-1 overflow-y-auto min-h-0">
+        <div className="flex justify-end px-4 pt-3">
+          <Button variant="outline" size="sm" className="h-8 text-xs" disabled={addedIds.size > 0} onClick={() => setImportOpen(true)} title={addedIds.size > 0 ? "Finish or remove staged items before importing" : "Import Excel or screenshot"}>
+            <Upload className="h-3.5 w-3.5 mr-1.5" />Import Excel / Screenshot
+          </Button>
+        </div>
         {/* Filters */}
         <div className="px-4 py-3 border-b">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -680,6 +690,7 @@ const SearchAddItemDialog = ({ open, onOpenChange, onAdd, existingSerials = [] }
         </div>
       </DialogContent>
     </Dialog>
+    </>
   );
 };
 
